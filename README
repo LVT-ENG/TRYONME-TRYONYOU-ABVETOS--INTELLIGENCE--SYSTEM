@@ -1,0 +1,63 @@
+READ ME 
+
+# TRYONME / TRYONYOU — AVBETOS INTELLIGENCE SYSTEM™
+
+## 📌 Descripción General
+**AVBETOS™** es un sistema modular de inteligencia avanzada, propietario y protegido por patente, diseñado para automatizar procesos de análisis, recomendación y ejecución en entornos digitales y físicos, sin intervención humana.
+
+Este sistema integra múltiples módulos especializados que trabajan de forma independiente o combinada, ofreciendo un ecosistema completo y escalable para distintas industrias.
+
+---
+
+## 🚀 Módulos Principales
+
+- **Avatar 3D embebido**  
+  Generación dinámica de avatares a partir de medidas reales.
+
+- **Comparador textil inteligente**  
+  Coincidencia de prendas con una base de datos textil avanzada.
+
+- **Recomendador emocional (PAU)**  
+  Motor de recomendaciones personalizadas basado en IA emocional.
+
+- **Pago biométrico AVBET™ (Iris + Voz)**  
+  Autenticación y ejecución de transacciones sin dispositivos físicos.
+
+- **AutoDonate™**  
+  Redistribución automática de artículos no utilizados.
+
+- **Bots internos multi-función**  
+  Ejecución autónoma de tareas técnicas, comerciales y administrativas.
+
+- **Conexión EPCT/WIPO**  
+  Detección y contacto automático con nuevas invenciones relacionadas para colaboración o absorción tecnológica.
+
+---
+
+## 🛡 Protección y Licencia
+Este software es **propietario** y está protegido por patente.  
+No se permite su uso, copia, modificación o distribución sin autorización expresa y por escrito de **Rubén Espinar Rodríguez**.
+
+© 2025 Rubén Espinar Rodríguez — Todos los derechos reservados.
+
+---
+
+## ⚙️ Tecnologías y Entorno
+- **Lenguajes:** Node.js / React / Next.js (según módulo)
+- **Integraciones:** API REST / Webhooks / Make / Shopify / Sistemas externos
+- **Infraestructura:** GitHub + Vercel + Servicios en la nube
+
+---
+
+## 📈 Estado del Proyecto
+Actualmente en fase de despliegue y conexión con entornos de producción.  
+Optimizado para integración con plataformas de terceros bajo licenciamiento B2B.
+
+---
+
+## 🤝 Contacto
+Para licencias, colaboraciones o integraciones:
+- 📧 **rubén.espinar.10@icloud.com**
+- 🔗 [LinkedIn](https://www.linkedin.com)
+
+---
