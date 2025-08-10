@@ -1,0 +1,173 @@
+{
+  "package_name": "TRYONME_TRYONYOU_ULTRA_AVBET_VERSION_ULTRA_PLUS",
+  "version": "1.0.0",
+  "owner": "solo_tu",
+  "sources_ref": {
+    "patent_es_core": "texto-14EC5AECA163-1.txt",
+    "patent_es_core_ref": "",
+    "readme_pack": "README_TRYONME_FINAL.txt",
+    "readme_pack_ref": "",
+    "patent_fr_variants": "12Dossier_INPI_TryOn_RubenEspinar_LANG_FR_FINAL.docx",
+    "patent_fr_variants_ref": "",
+    "make_scenario": "make_upload_scenario.json",
+    "make_scenario_ref": "",
+    "openai_example": "index.js",
+    "openai_example_ref": ""
+  },
+
+  "patent_epct": {
+    "title": "Sistema inteligente de vestidor virtual con producción textil instantánea, pago biométrico y generación automática de prendas",
+    "format": { "font": "Times New Roman", "size_pt": 12, "line_spacing": 1.5,
+      "margins_mm": { "top": 20, "right": 20, "bottom": 25, "left": 20 } },
+    "sections": [
+      "Resumen (250–300 palabras, sin marketing)",
+      "1. Campo técnico",
+      "2. Estado de la técnica",
+      "3. Objeto de la invención",
+      "4. Descripción detallada (Avatar 3D; Comparador; PAU; CAP; AVBET; JIT; Reoferta)",
+      "5. Ventajas técnicas",
+      "6. Reivindicaciones (preámbulo + caracterizador, dependientes RA/kioscos/móviles/biometría alternativa/accesorios)",
+      "7. Dibujos (FIG.1–5) A4 B/N"
+    ],
+    "notes": [
+      "Usar la versión más actualizada y corregida como base (ES). ",
+      "Apoyar variantes y dependientes con el dossier FR. ",
+      "El README del pack anterior guía el empaquetado y orden. "
+    ]
+  },
+
+  "web": {
+    "hosting": "Vercel",
+    "domain_primary": "https://tryonme.com",
+    "redirects": [
+      { "from": "https://tryonyou.app", "to": "https://tryonme.com", "code": 301 }
+    ],
+    "seo": {
+      "title": "TryOn Suite — El fin de las devoluciones",
+      "description": "Avatar 3D, comparador textil, recomendación emocional, CAP bajo demanda, pago biométrico AVBET y producción JIT.",
+      "og": { "image": "/public/og.jpg", "type": "website" },
+      "sitemap": "/sitemap.xml",
+      "robots": "allow_all",
+      "schema_org": "Organization + Product + WebSite"
+    },
+    "pages": [
+      { "path": "/", "blocks": ["Hero", "Cómo funciona (FIG.1)", "Galería productos (fotos HD)", "Testimonios", "CTA"] },
+      { "path": "/vestidor-virtual", "blocks": ["Medidas/Avatar 3D", "Demo (gif/vídeo)", "CTA Generar avatar"] },
+      { "path": "/comparador-y-pau", "blocks": ["Ranking ajuste", "PAU por estado emocional", "CTA Ver recomendaciones"] },
+      { "path": "/creative-auto-production", "blocks": ["Antes/Después", "Mockups", "Archivos producción listos"] },
+      { "path": "/pago-avbet", "blocks": ["Iris + Voz", "Cumplimiento PSD2/GDPR"] },
+      { "path": "/produccion-jit", "blocks": ["Timeline fábrica", "Tracking envío"] },
+      { "path": "/reoferta", "blocks": ["Email incentivo", "Wishlist"] },
+      { "path": "/catalogo", "blocks": ["Grid fotos HD sin huecos", "Filtros", "Vista 360º"] },
+      { "path": "/empresa", "blocks": ["Patente", "Hitos", "Equipo", "Partners/Prensa"] },
+      { "path": "/blog", "blocks": ["I+D", "Casos de uso", "Integraciones"] },
+      { "path": "/contacto", "blocks": ["Formulario → /api/lead-proxy", "Datos legales"] }
+    ],
+    "static_assets": {
+      "folders": ["/public/img", "/public/video", "/public/fonts"],
+      "quality_rules": ["sin huecos ni faltas", "coherencia de color/branding", "alt text exhaustivo"]
+    },
+    "api_stubs": [
+      { "route": "/api/lead-proxy", "method": "POST", "env": ["MAKE_WEBHOOK_URL"], "desc": "envía leads a Make para orquestación" },
+      { "route": "/api/health", "method": "GET", "desc": "salud del servicio" }
+    ]
+  },
+
+  "shopify": {
+    "goal": "Importar 60 referencias coherentes con el branding",
+    "csv_candidates": [
+      "Descargar TRYONYOU_60_PRODUCTS.csv",
+      "Descargar TRYON_LIVEIT_60_PRODUCTS_READY.csv"
+    ],
+    "note": "Consolidar en un único CSV final antes de importación (evitar duplicados y asegurar imágenes)."
+  },
+
+  "automation": {
+    "make": {
+      "scenario_name": "Shopify Upload Trigger",
+      "source_ref": "make_upload_scenario.json — ajustar destino/webhook",
+      "ref": "",
+      "flow": [
+        "Make recibe lead/orden",
+        "Opcional: sube CSV a Shopify por API",
+        "Dispara Deploy Hook de Vercel",
+        "Envía correo de confirmación al equipo"
+      ]
+    },
+    "vercel_deploy_hook": "CONFIGURAR_EN_VERCEL"
+  },
+
+  "security": {
+    "team_contributions": [
+      "Backend: rate limiting, validación, logs sin PII, DTOs, verificación de payload",
+      "Frontend: CSP estricta, SRI en recursos, lazy-load, accesibilidad AA",
+      "DevOps: rotación de secretos, backups, auditoría de dependencias",
+      "Legal: GDPR/PSD2, DPA con proveedores, política de privacidad/cookies",
+      "Data/BI: minimización, plantillas biométricas hash, retención limitada"
+    ],
+    "secrets": [
+      "OPENAI_API_KEY",
+      "MAKE_WEBHOOK_URL",
+      "SMTP_HOST",
+      "SMTP_USER",
+      "SMTP_PASS",
+      "SHOPIFY_TOKEN"
+    ],
+    "backup_codes_info": "Existen códigos de respaldo (no publicar, custodiar en lugar seguro). "
+  },
+
+  "marketing_3_months": {
+    "month_1": {
+      "objective": "0% venta — humor/awareness",
+      "channels": ["TikTok","Instagram","Facebook"],
+      "content": ["memes", "expectativa vs realidad", "retos #TryOnChallenge"]
+    },
+    "month_2": {
+      "objective": "0% venta — interacción",
+      "actions": ["duetos", "votaciones de look", "UGC", "stories encuestas"]
+    },
+    "month_3": {
+      "objective": "≤30% venta sutil",
+      "actions": ["demos breves", "microinfluencers", "stories con códigos"]
+    },
+    "slogans": [
+      "El fin de las devoluciones",
+      "Pruébatelo sin probártelo",
+      "Tu mood, tu outfit"
+    ]
+  },
+
+  "openai_validation": {
+    "node_example_file": "index.js",
+    "note": "prueba de SDK y claves (sustituir modelo por el vigente). "
+  },
+
+  "ci_cd": {
+    "github_actions": {
+      "workflow": "full-deploy.yml",
+      "must_include": [
+        "npm ci",
+        "npm run build",
+        "vercel --prod --token=${{ secrets.VERCEL_TOKEN }}"
+      ]
+    },
+    "vercel": {
+      "project": "TryOnMe_TryOnYou_Ultra_Avbet_Version_Ultra_Plus",
+      "env_required": ["MAKE_WEBHOOK_URL","OPENAI_API_KEY","SMTP_HOST","SMTP_USER","SMTP_PASS","SHOPIFY_TOKEN"],
+      "dns": {
+        "A": { "host": "@", "value": "76.76.21.21" },
+        "CNAME": { "host": "www", "value": "cname.vercel-dns.com" }
+      }
+    }
+  },
+
+  "go_live_checklist": [
+    "Textos e imágenes revisados (sin huecos) en todas las páginas",
+    "SEO verificado (meta/OG/sitemap/robots) y Lighthouse ≥90",
+    "Deploy Hook conectado a Make",
+    "CSV consolidado importado en Shopify",
+    "Dominios conectados en Vercel (A + CNAME)",
+    "Pago (sandbox) y flujo JIT probados",
+    "Reoferta (email/push) activa y KPIs configurados"
+  ]
+}
