@@ -1,0 +1,21 @@
+tryon-suite/
+├─ web/                  # Web para Vercel (Next.js mínimo)
+│  ├─ pages/
+│  │  └─ index.jsx
+│  ├─ public/
+│  │  └─ favicon.ico
+│  ├─ package.json
+│  ├─ next.config.mjs
+│  └─ vercel.json
+├─ docs/                 # Patente, pitch, company docs (PDF/MD)
+│  ├─ PATENTE_EPCT_v1.pdf
+│  └─ README_PRODUCTO.md
+├─ shopify/
+│  ├─ import.csv         # tu CSV de 60 productos
+│  └─ flows/             # (opcional) mapeos Make para alta por API
+├─ .github/
+│  └─ workflows/
+│     └─ deploy.yml
+└─ README.md
+
+
