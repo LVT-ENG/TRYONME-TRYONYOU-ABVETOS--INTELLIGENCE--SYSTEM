@@ -33,7 +33,7 @@ Añadir imágenes o diagramas en `docs/`.
 ## ⚙️ Instalación
 ```bash
 git clone <URL_DEL_REPO>
-cd TRYONME-TRYONYOU-AVBETOS-INTELLIGENCE-SYSTEM
+cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
 npm install
 cp .env.example .env
 npm run dev

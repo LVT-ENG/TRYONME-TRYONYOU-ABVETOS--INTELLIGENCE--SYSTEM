@@ -31,12 +31,27 @@ Eliminar fricciones entre usuario final y procesos de compra, recomendación y r
 Añadir imágenes o diagramas en `docs/`.
 
 ## ⚙️ Instalación
+
+### Instalación Manual
 ```bash
-git clone <URL_DEL_REPO>
-cd TRYONME-TRYONYOU-AVBETOS-INTELLIGENCE-SYSTEM
+git clone https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git
+cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
 npm install
 cp .env.example .env
 npm run dev
+```
+
+### Instalación Automática con Script
+Para una instalación más rápida y automática:
+```bash
+# Descargar y ejecutar el script de instalación
+curl -O https://raw.githubusercontent.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/main/clone-setup.sh
+bash clone-setup.sh
+```
+
+O si ya tienes el repositorio:
+```bash
+bash clone-setup.sh
 ```
 
 ## 🛡 Licencia y Protección
