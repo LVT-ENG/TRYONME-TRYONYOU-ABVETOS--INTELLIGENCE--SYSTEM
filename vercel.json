@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "tryonyou-lux/package.json", "use": "@vercel/static-build" }
+  ],
+  "env": {},
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rootDirectory": "tryonyou-lux",
+  "routes": [{ "src": "/(.*)", "dest": "tryonyou-lux/dist/$1" }]
+}
