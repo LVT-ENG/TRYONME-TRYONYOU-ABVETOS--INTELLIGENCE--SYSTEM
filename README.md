@@ -1,44 +1,74 @@
-# TRYONME / TRYONYOU — AVBETOS INTELLIGENCE SYSTEM™
+# TryOnMe / TryOnYou - AVBETOS Intelligence System
 
-## 📌 Descripción General
-**AVBETOS™** es un sistema modular de inteligencia avanzada, propietario y protegido por patente, diseñado para automatizar procesos de análisis, recomendación y ejecución en entornos digitales y físicos, sin intervención humana.
+Sistema de inteligencia avanzada para recomendaciones de moda y análisis de preferencias.
 
-## 🎯 Objetivo del Proyecto
-Eliminar fricciones entre usuario final y procesos de compra, recomendación y redistribución, integrando pagos biométricos, análisis de datos y conexión con ecosistemas globales.
+## 🚀 Componentes del Sistema
 
-## 🚀 Módulos Principales
-- Avatar 3D embebido
-- Comparador textil inteligente
-- Recomendador emocional (PAU)
-- Pago biométrico AVBET™ (Iris + Voz)
-- AutoDonate™
-- Bots internos multi-función
-- Conexión EPCT/WIPO
+### 📊 Google Apps Script Motor
+Motor central del sistema de recomendaciones implementado en Google Sheets como prototipo funcional.
 
-## 📊 Casos de Uso
-- E-commerce de moda
-- Logística inversa
-- Eventos VIP
-- Retail físico
+**Ubicación**: `/google-apps-script/`
 
-## 🛠 Roadmap
-- Integración completa con pasarelas de pago biométricas
-- Conexión con redes de distribución solidaria
-- Optimización de IA emocional
-- Interfaz pública para licenciatarios B2B
+**Características**:
+- Sistema completo de recomendaciones basado en preferencias de usuario
+- Algoritmo de matching que combina gustos personales, tendencias y medidas corporales
+- Interfaz de prototipo en Google Sheets para validación rápida
+- Validaciones automáticas y catálogos de datos configurables
 
-## 📸 Vista previa
-Añadir imágenes o diagramas en `docs/`.
+**Inicio Rápido**:
+1. Ve a [script.google.com](https://script.google.com)
+2. Crea un nuevo proyecto
+3. Copia los archivos de `/google-apps-script/` al proyecto
+4. Ejecuta la función `initTryOnMe()`
 
-## ⚙️ Instalación
-```bash
-git clone <URL_DEL_REPO>
-cd TRYONME-TRYONYOU-AVBETOS-INTELLIGENCE-SYSTEM
-npm install
-cp .env.example .env
-npm run dev
+Ver [Guía de Despliegue](./google-apps-script/DEPLOYMENT.md) para instrucciones detalladas.
+
+### 🌐 Web Interface
+Interfaz web principal del sistema TryOnMe.
+
+**Archivos principales**:
+- `index.html` - Página principal
+- `main.js` - Lógica JavaScript
+- `styles.css` - Estilos
+- `mailer.php` - Sistema de contacto
+
+### 📦 AVBETOS Package
+Módulo core del sistema de inteligencia AVBETOS.
+
+**Ubicación**: `/AVBETOS_repo_package/`
+
+## 🔧 Desarrollo
+
+### Estructura del Proyecto
+```
+├── google-apps-script/          # Motor de recomendaciones (Google Apps Script)
+│   ├── motor.gs                 # Función principal initTryOnMe()
+│   ├── helpers.gs               # Funciones auxiliares
+│   ├── utils.gs                 # Utilidades de mantenimiento
+│   ├── appsscript.json         # Configuración del proyecto
+│   └── DEPLOYMENT.md           # Guía de despliegue
+├── AVBETOS_repo_package/       # Módulo core AVBETOS
+├── src/                        # Código fuente adicional
+├── tests/                      # Pruebas
+└── docs/                       # Documentación
 ```
 
-## 🛡 Licencia y Protección
+### Tecnologías
+- **Backend**: Google Apps Script, PHP
+- **Frontend**: HTML5, CSS3, JavaScript
+- **Datos**: Google Sheets (prototipo), bases de datos (producción)
+- **AI/ML**: Sistema propietario AVBETOS
+
+## 📝 Licencia
+
 Este software es propietario y está protegido por patente.
 © 2025 Rubén Espinar Rodríguez — Todos los derechos reservados.
+
+## 🎯 Estado del Proyecto
+
+- [x] Motor de recomendaciones (Google Apps Script)
+- [x] Interfaz web básica
+- [x] Sistema de contacto
+- [ ] Integración con APIs de moda
+- [ ] Dashboard de administración
+- [ ] Sistema de pagos biométricos
