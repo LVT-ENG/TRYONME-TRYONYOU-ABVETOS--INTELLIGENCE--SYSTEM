@@ -1,0 +1,70 @@
+name: AdbetOrchestrator
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  ci:
+    name: CI (lint • types • test • build)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test -- --coverage
+      - run: npm run build
+  deploy:
+    name: Deploy to Vercel (prod)
+    needs: [ci]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm i -g vercel@latest
+      - run: vercel pull --yes --environment=production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - run: vercel build --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - id: deploy
+        run: |
+          URL=$(vercel deploy --prebuilt --prod --yes)
+          echo "url=$URL" >> $GITHUB_OUTPUT
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      - name: Comment deployment URL
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `✅ Deployed to **${{ steps.deploy.outputs.url }}**`;
+            const pr = context.payload.pull_request?.number || 53;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: pr,
+              body
+            });
+  verify:
+    name: Post-deploy Health Check
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping /api/health
+        id: health
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.HEALTH_URL }}")
+          echo "code=$code" >> $GITHUB_OUTPUT
+          test "$code" = "200"
+      - name: Notify Slack on failure
+        if: failure()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"❌ Health check failed after deploy. Status: ${{ steps.health.outputs.code }}\"}" \
+            "${{ secrets.SLACK_WEBHOOK_URL }}"

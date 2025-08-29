@@ -1,0 +1,248 @@
+Patente  TRYONME–TRYONYOU–ULTRA–AVBET — Ultra-Plus
+📄 1. ABSTRACT (máx. 300 palabras)
+
+Título de la invención:
+Sistema Inteligente de Vestidor Virtual, Producción Textil Instantánea y Pago Biométrico con Generación Automática de Prendas.
+
+Resumen:
+La presente invención describe un sistema integral para la personalización, recomendación, producción y venta de prendas de vestir en tiempo real, denominado TRYONME–TRYONYOU–ULTRA–AVBET — Ultra-Plus. El sistema combina un motor de vestidor virtual 3D que genera un avatar del usuario a partir de sus medidas reales, con un comparador textil inteligente y un recomendador emocional (PAU) que adapta las sugerencias al estado de ánimo del cliente.
+
+En caso de no existir en catálogo una prenda que cumpla el ajuste y estilo ideales, el sistema integra un módulo de producción creativa automática (Creative Auto-Production), capaz de generar nuevos diseños mediante inteligencia artificial siguiendo un prompt estético predefinido. El usuario puede confirmar la compra mediante un sistema de pago biométrico dual (AVBET) que combina verificación de iris y voz.
+
+La invención conecta de forma directa con fábricas textiles mediante API, enviando los patrones y archivos listos para impresión y confección, activando una producción Just-In-Time que permite fabricar y enviar la prenda directamente al cliente final, sin stock intermedio.
+
+El sistema incluye un ciclo de reoferta automatizada que guarda looks no comprados y los presenta nuevamente al usuario con incentivos. Esta integración de tecnologías reduce devoluciones, optimiza la producción, permite personalización total y crea una experiencia de compra única y emocional.
+
+⸻
+
+📄 2. MEMORIA DESCRIPTIVA (Extracto para patente)
+
+Título de la invención:
+Sistema Inteligente de Vestidor Virtual con Producción Textil Instantánea, Pago Biométrico y Generación Automática de Prendas.
+
+Campo técnico
+
+La invención se enmarca en los sectores de comercio electrónico, tecnología textil, realidad aumentada, inteligencia artificial aplicada a la moda y métodos de pago biométricos.
+
+Estado de la técnica
+
+Actualmente, el comercio electrónico de moda enfrenta elevados índices de devoluciones por problemas de talla, falta de personalización en la oferta y tiempos de producción prolongados. Los sistemas existentes no integran en una única plataforma la medición precisa, la recomendación emocional, la producción instantánea y el pago biométrico seguro.
+
+Objeto de la invención
+
+Proporcionar un sistema integral que:
+	1.	Permita al usuario probarse virtualmente prendas con ajuste preciso.
+	2.	Recomiende prendas adaptadas tanto a medidas físicas como al estado emocional.
+	3.	Genere nuevas prendas en tiempo real cuando no exista una coincidencia perfecta.
+	4.	Active la producción y envío inmediato desde fábrica al cliente.
+	5.	Integre un método de pago biométrico dual seguro.
+
+Descripción detallada de la invención
+	1.	Vestidor Virtual 3D
+	•	Captura medidas del usuario (altura, peso, perímetros corporales) para generar un avatar paramétrico.
+	•	Visualización de prendas en tiempo real con física textil simulada.
+	2.	Comparador Textil Inteligente y Recomendador Emocional (PAU)
+	•	Motor que cruza datos de medidas con base de datos textil.
+	•	Algoritmo de recomendación adaptado a emociones detectadas por interacción o input directo.
+	3.	Módulo Creative Auto-Production (CAP)
+	•	Genera diseños originales en tiempo real siguiendo directrices estéticas y de marca.
+	•	Produce archivos listos para impresión y confección.
+	4.	Pago Biométrico AVBET
+	•	Verificación dual por iris y voz.
+	•	Cumplimiento de estándares de seguridad (PSD2, GDPR).
+	5.	Producción Just-In-Time (JIT) y conexión con fábrica
+	•	API para envío directo de patrones y archivos de impresión a fábricas conectadas.
+	•	Control de estado de producción y envío en tiempo real.
+	6.	Ciclo de reoferta automatizada
+	•	Guarda looks no comprados y los reofrece con incentivos dinámicos.
+
+Ventajas técnicas
+	•	Reducción drástica de devoluciones.
+	•	Eliminación de stock no vendido.
+	•	Personalización total de la experiencia.
+	•	Producción sostenible bajo demanda.
+1. Sistema integral de personalización, producción y venta de prendas de vestir en tiempo real, que comprende:
+	•	un módulo de vestidor virtual tridimensional configurado para generar un avatar paramétrico del usuario a partir de medidas corporales reales;
+	•	un módulo de comparador textil inteligente configurado para identificar prendas compatibles con las medidas del usuario;
+	•	un módulo de recomendador emocional configurado para adaptar la selección de prendas al estado emocional del usuario;
+	•	un módulo de producción creativa automática configurado para generar diseños de prendas en tiempo real cuando no existe en catálogo una coincidencia perfecta;
+	•	un módulo de pago biométrico dual configurado para autenticar al usuario mediante reconocimiento de iris y de voz;
+	•	un módulo de producción Just-In-Time conectado por API a fábricas textiles para la confección y envío directo de la prenda;
+	•	un módulo de reoferta automatizada configurado para presentar nuevamente al usuario prendas no adquiridas con incentivos adicionales.
+
+⸻
+
+2. Sistema según la reivindicación 1, en el que el vestidor virtual tridimensional incorpora simulación física textil en tiempo real.
+
+3. Sistema según la reivindicación 1 o 2, en el que el comparador textil inteligente utiliza una base de datos de patrones y materiales previamente indexados por tolerancia y elasticidad.
+
+4. Sistema según cualquiera de las reivindicaciones anteriores, en el que el recomendador emocional obtiene datos de entrada a partir de análisis de interacción del usuario, entradas manuales o sensores externos.
+
+5. Sistema según cualquiera de las reivindicaciones anteriores, en el que el módulo de producción creativa automática utiliza inteligencia artificial para generar diseños siguiendo directrices estéticas predefinidas y asociadas a una marca comercial.
+
+6. Sistema según cualquiera de las reivindicaciones anteriores, en el que el pago biométrico dual verifica de forma secuencial o simultánea la coincidencia de parámetros de iris y de voz con plantillas biométricas almacenadas cifradas.
+
+7. Sistema según cualquiera de las reivindicaciones anteriores, en el que la conexión con fábricas textiles se realiza mediante protocolos API REST o SFTP seguro, transmitiendo archivos listos para impresión y confección.
+
+8. Sistema según cualquiera de las reivindicaciones anteriores, en el que el módulo de reoferta automatizada utiliza reglas de segmentación y personalización basadas en comportamiento histórico del usuario.
+
+9. Sistema según cualquiera de las reivindicaciones anteriores, en el que el ciclo completo de personalización, producción y entrega se ejecuta de forma totalmente automatizada sin intervención humana.
+
+10. Método implementado por ordenador para ejecutar el sistema descrito en cualquiera de las reivindicaciones anteriores.
+
+⸻
+
+📄 4. DIBUJOS TÉCNICOS (DESCRIPCIÓN)
+
+En la patente los dibujos se entregan en formato A4, blanco y negro, pero aquí te los detallo para que podamos generarlos:
+
+FIG. 1 – Diagrama general del sistema
+	•	Usuario (101)
+	•	Captura de medidas / avatar 3D (102)
+	•	Comparador textil (103)
+	•	Recomendador emocional (104)
+	•	Producción creativa automática (105)
+	•	Pago biométrico AVBET (106)
+	•	API de fábrica / Producción JIT (107)
+	•	Envío directo (108)
+	•	Reoferta automatizada (109)
+
+FIG. 2 – Arquitectura interna de módulos
+	•	Capa de experiencia de usuario (UI/UX)
+	•	Capa de inteligencia (IA, comparador, PAU, CAP)
+	•	Capa de transacciones (AVBET, orquestador de pedidos)
+	•	Capa de operaciones (fábrica, logística, reoferta)
+
+FIG. 3 – Flujo de producción JIT
+	1.	Confirmación de compra
+	2.	Generación de patrón y archivo de impresión
+	3.	Envío a fábrica
+	4.	Producción
+	5.	Envío directo al cliente
+
+FIG. 4 – Integración de pago biométrico
+	•	Captura iris (201)
+	•	Captura voz (202)
+	•	Motor de validación biométrica (203)
+	•	Autorización de pago (204)
+
+FIG. 5 – Módulo Creative Auto-Production
+	•	Entrada: medidas + preferencias + estado emocional
+	•	Motor IA de diseño (301)
+	•	Mockup generado (302)
+	•	Archivos listos para producción (303)
+￼
+101 – Cliente
+Entidad física o usuario final que interactúa con el sistema para la selección, compra y recepción de prendas.
+
+102 – Vestidor Virtual 3D
+Módulo que genera un avatar paramétrico a partir de medidas reales del usuario para visualización de prendas.
+
+103 – Comparador Textil Inteligente
+Motor de búsqueda y comparación de prendas en base a medidas, patrón y tolerancias de tejido.
+
+104 – Recomendador Emocional (PAU)
+Sistema que ajusta la sugerencia de prendas en función del estado emocional detectado o declarado por el cliente.
+
+105 – Creative Auto-Production
+Módulo de generación automática de diseños de prendas mediante inteligencia artificial, siguiendo parámetros de marca y preferencias del usuario.
+
+106 – Pago Biométrico AVBET
+Sistema de autenticación y pago que combina verificación de iris y voz para confirmar la transacción.
+
+107 – Producción Just-In-Time (JIT)
+Proceso de fabricación bajo pedido, conectado por API a fábricas textiles para enviar archivos listos para impresión y confección.
+
+108 – Envío Directo al Cliente
+Etapa logística que gestiona la entrega de la prenda desde fábrica al domicilio del cliente, sin pasar por almacenes intermedios.
+
+109 – Reoferta Automatizada
+Módulo que guarda looks no comprados y los presenta nuevamente al cliente con incentivos dinámicos para cerrar la venta.
+📄 ANEXO TÉCNICO – DIAGRAMAS DE SECUENCIA Y APIs
+
+1. Diagrama de Secuencia – Flujo de Venta y Producción JIT
+
+Actor 1: Cliente (101)
+Actor 2: Sistema TryOnMe Ultra-Plus
+Actor 3: Fábrica Conectada (107)
+Actor 4: Pasarela de Pago AVBET (106)
+
+⸻
+
+Secuencia Paso a Paso:
+	1.	Captura de Medidas y Avatar 3D
+	•	Cliente envía datos físicos → Módulo (102) genera avatar paramétrico.
+	2.	Comparador Textil Inteligente
+	•	Avatar se compara con catálogo → Módulo (103) filtra prendas por ajuste.
+	3.	Recomendador Emocional PAU
+	•	Estado emocional + contexto → Módulo (104) adapta sugerencias.
+	4.	Creative Auto-Production (si no hay coincidencia perfecta)
+	•	Módulo (105) genera nuevo diseño → produce patrón y print file.
+	5.	Pago Biométrico AVBET
+	•	Cliente autentica con iris + voz → Módulo (106) confirma transacción.
+	6.	Producción Just-In-Time
+	•	Sistema envía patrón + print file a Fábrica (107).
+	7.	Fabricación y Envío Directo
+	•	Fábrica confecciona → envía al cliente (108).
+	8.	Reoferta Automatizada
+	•	Looks no comprados → Módulo (109) los reofrece vía email/push.
+
+⸻
+
+2. API PRINCIPALES DEL SISTEMA
+
+2.1 API Avatar 3D
+
+POST /avatar/build
+Input: medidas corporales, foto opcional.
+Output: ID de avatar + archivo 3D paramétrico (.glb).
+
+2.2 API Comparador Textil
+
+POST /fit/compare
+Input: ID avatar, lista de prendas.
+Output: ranking de ajuste con puntuación (0–100).
+
+2.3 API PAU (Recomendador Emocional)
+
+POST /recommend/pau
+Input: ID avatar, estado emocional, contexto.
+Output: lista de prendas recomendadas con razones.
+
+2.4 API Creative Auto-Production
+
+POST /cap/generate
+Input: medidas, preferencias, prompt estético de marca.
+Output: mockup .png + print file .tiff + patrón .dxf.
+
+2.5 API AVBET (Pago Biométrico)
+
+POST /avbet/verify
+Input: iris_scan, voice_sample.
+Output: token de sesión segura.
+
+POST /avbet/pay
+Input: token sesión, importe.
+Output: estado de transacción.
+
+2.6 API Producción JIT
+
+POST /factory/order
+Input: print file, patrón, datos de envío.
+Output: ID pedido fábrica + fecha estimada entrega.
+
+GET /factory/order/{id}/status
+Output: estado de producción, tracking envío.
+
+2.7 API Reoferta
+
+POST /reoffer/send
+Input: ID usuario, ID look, incentivo.
+Output: estado de envío.
+
+⸻
+
+3. Consideraciones Técnicas
+	•	Todas las APIs usan REST/JSON sobre HTTPS.
+	•	Archivos de producción se envían cifrados (AES-256) a través de canales seguros (SFTP/API TLS 1.3).
+	•	Todos los logs cumplen GDPR y la biometría nunca se almacena en bruto (solo plantillas hash).

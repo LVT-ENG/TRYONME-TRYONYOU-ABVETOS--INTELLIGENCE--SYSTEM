@@ -1,31 +1,30 @@
 {
-  "name": "tryonme-tryonyou-abvetos--intelligence--system",
+  "name": "tryonyou-app",
   "version": "1.0.0",
-  "description": "<<<<<<< HEAD // Placeholder content for docs/README.md ======= # AvBet Biometrics (demo)",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
-  },
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build",
+    "test": "vitest run",
+    "lint": "eslint .",
+    "slint": "npm run lint",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "preview": "vite preview"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/issues"
-  },
-  "homepage": "https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM#readme",
   "dependencies": {
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "@vercel/speed-insights": "^1.2.0",
+    "autoprefixer": "^10.4.21",
+    "framer-motion": "^12.23.12",
+    "postcss": "^8.5.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.1.12"
   },
   "devDependencies": {
-    "vercel": "^46.0.2"
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.3.1"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   }
 }

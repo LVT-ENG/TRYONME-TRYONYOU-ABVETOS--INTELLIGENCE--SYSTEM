@@ -1,74 +1,28 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <title>TRYONME</title>
-</head>
-<body>
-  <h1>Bienvenido a TryOnMe</h1>
-  <video src="/assets/video_portada-CsZd-N-X.mp4" controls autoplay></video>
-=======
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TRYONME / TRYONYOU – ABVETOS Intelligence System™</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg:#fafafc; --fg:#0f172a; --muted:#475569; --card:#ffffff; --cta:#111827; }
-    *{box-sizing:border-box}
-    body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 "Inter",system-ui,-apple-system}
-    .wrap{max-width:1080px;margin:0 auto;padding:32px}
-    .hero{display:grid;gap:20px;padding:36px;border-radius:24px;background:var(--card);box-shadow:0 10px 30px rgba(2,6,23,.06)}
-    .title{font-size:clamp(28px,5vw,48px);line-height:1.1;font-weight:800;letter-spacing:-.02em}
-    .subtitle{color:var(--muted);font-size:clamp(14px,2.5vw,18px)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px}
-    .card{background:var(--card);padding:18px;border-radius:18px;border:1px solid #eef2ff;box-shadow:0 8px 24px rgba(2,6,23,.04)}
-    .card h3{margin:0 0 6px;font-size:18px}
-    .muted{color:var(--muted);font-size:14px}
-    .cta{display:inline-block;margin-top:12px;padding:12px 16px;border-radius:12px;background:var(--cta);color:#fff;text-decoration:none;font-weight:600}
-    footer{margin:28px 0 0;color:var(--muted);font-size:13px}
-    code{background:#f1f5f9;border-radius:8px;padding:2px 6px}
-    .mono{font-family: ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",Menlo,monospace}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <section class="hero">
-      <div class="title">TRYONME / TRYONYOU – <span class="muted">ABVETOS Intelligence System™</span></div>
-      <div class="subtitle">
-        Sistema embebible para <strong>análisis de cuerpo</strong>, <strong>matching textil</strong>, <strong>recomendación asistida</strong>
-        y <strong>verificación biométrica (voz + iris)</strong> para compras sin fricción.
-      </div>
-      <div class="grid">
-        <div class="card">
-          <h3>Demo Salud</h3>
-          <p class="muted">API biométrica mock. Endpoints: <code class="mono">/health</code>, <code class="mono">/enroll</code>, <code class="mono">/verify</code>, <code class="mono">/payments/intent</code>.</p>
-          <a class="cta" href="../api-avbet-biometrics/README.md">Abrir README API</a>
-        </div>
-        <div class="card">
-          <h3>Docs Patente</h3>
-          <p class="muted">Descripción y dossier técnico.</p>
-          <a class="cta" href="../docs/" target="_blank">Ver documentación</a>
-        </div>
-        <div class="card">
-          <h3>Integraciones</h3>
-          <p class="muted">Make/HTTP y ejemplo de cliente JS.</p>
-          <a class="cta" href="../integrations/" target="_blank">Ver integraciones</a>
-        </div>
-        <div class="card">
-          <h3>Despliegue</h3>
-          <p class="muted">Guía rápida para Render/Vercel + Wix + Shopify.</p>
-          <a class="cta" href="./DEPLOY.md">Abrir guía</a>
-        </div>
-      </div>
-      <footer>© TRYONME / TRYONYOU – ABVETOS Intelligence System™</footer>
-    </section>
-  </div>
->>>>>>> 25aefc0 (update: cambios de branding y diseño)
-</body>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRYONYOU Luxe</title>
+    <style>
+      body,html { margin:0; padding:0; height:100%; overflow:hidden; }
+      video { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; }
+      .overlay { position:absolute; top:0; left:0; width:100%; height:100%;
+        display:flex; flex-direction:column; justify-content:center; align-items:center;
+        background:rgba(0,0,0,0.3); color:#fff; text-align:center; }
+      h1 { font-size:3em; margin:0; }
+      p { font-size:1.5em; }
+    </style>
+    <script type="module" crossorigin src="./assets/index-BCKCStlH.js"></script>
+  </head>
+  <body>
+    <video autoplay muted loop playsinline>
+      <source src="./video_portada.mp4" type="video/mp4" />
+      Tu navegador no soporta video.
+    </video>
+    <div class="overlay">
+      <h1>TRYONYOU</h1>
+      <p>Luxury Digital Wardrobe Experience</p>
+    </div>
+  </body>
 </html>

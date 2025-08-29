@@ -1,0 +1,24 @@
+name: AutoUpdatePRDescription
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  autoprep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write PR description from secret
+        run: echo "${{ secrets.PR_DESCRIPTION }}" > pr_description.md
+      - name: Update PR fields
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} \
+            --title "feat(core): setup for issue #49" \
+            --body-file pr_description.md \
+            --add-label "type:feature" \
+            --add-label "priority:high" \
+            --add-reviewer RubensEspinar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-// Placeholder content for docs/README.md
-=======
 # AvBet Biometrics (demo)
 
 API mínima de ejemplo para matrícula y verificación biométrica (voz + iris, **mock**).
@@ -17,4 +14,3 @@ API mínima de ejemplo para matrícula y verificación biométrica (voz + iris, 
 - `POST /payments/intent` `{ amount, currency?, metadata? }`
 
 > **Aviso**: Este código es un demo *no apto para producción* y no realiza verificación biométrica real.
->>>>>>> 25aefc0 (update: cambios de branding y diseño)

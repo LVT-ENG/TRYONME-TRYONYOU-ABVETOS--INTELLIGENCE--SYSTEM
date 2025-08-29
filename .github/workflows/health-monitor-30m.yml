@@ -1,0 +1,28 @@
+name: HealthMonitor30Minutos
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check /api/health
+        id: h
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.HEALTH_URL }}")
+          echo "code=$code" >> $GITHUB_OUTPUT
+          test "$code" = "200"
+      - name: Incident issue + Slack
+        if: failure()
+        run: |
+          MSG="❌ Health FAIL (${{ steps.h.outputs.code }}) — sha:${GITHUB_SHA}"
+          gh issue create --title "Incident: Health check failed" --body "$MSG" --label "ops:incident"
+          curl -X POST -H 'Content-type: application/json' \
+            --data "{\"text\":\"$MSG\"}" \
+            "${{ secrets.SLACK_WEBHOOK_URL }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
