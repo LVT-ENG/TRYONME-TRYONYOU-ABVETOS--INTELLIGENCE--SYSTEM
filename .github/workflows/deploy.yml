@@ -1,0 +1,20 @@
+name: Deploy • TRYONYOU
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 👉 aquí iría tu build + deploy a Vercel
+
+      - name: Notificar a Telegram
+        run: |
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="✅ Deploy TRYONYOU completado con éxito en Vercel. Commit: $GITHUB_SHA"
