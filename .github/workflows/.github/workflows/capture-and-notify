@@ -1,0 +1,53 @@
+capture-and-notify
+on:
+  workflow_dispatch: {}
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_URL: https://tryonyou.app
+      TELEGRAM_API: https://api.telegram.org
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: |
+          npm i -D playwright@1
+          npx playwright install --with-deps chromium
+      - name: Take screenshots
+        run: |
+          node - <<'NODE'
+          const { chromium } = require('playwright');
+          (async () => {
+            const url = process.env.DEPLOY_URL;
+            const browser = await chromium.launch();
+            // Desktop
+            { const ctx = await browser.newContext({ viewport: { width:1440, height:900 }});
+              const p = await ctx.newPage(); await p.goto(url,{waitUntil:'networkidle'});
+              await p.screenshot({ path:'screenshot-desktop.png', fullPage:true });
+              await ctx.close(); }
+            // Mobile
+            { const ctx = await browser.newContext({ viewport:{ width:390, height:844 }, deviceScaleFactor:3, userAgent:'Mozilla/5.0 iPhone' });
+              const p = await ctx.newPage(); await p.goto(url,{waitUntil:'networkidle'});
+              await p.screenshot({ path:'screenshot-mobile.png', fullPage:true });
+              await ctx.close(); }
+            await browser.close();
+          })();
+          NODE
+      - name: Notify Telegram (text)
+        run: |
+          MSG="<b>✅ Capturas generadas</b>%0A<b>URL:</b> $DEPLOY_URL%0A<b>Commit:</b> $GITHUB_SHA"
+          curl -s -X POST "${TELEGRAM_API}/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" -d parse_mode=HTML -d text="$MSG"
+      - name: Notify Telegram (desktop)
+        run: |
+          curl -s -X POST "${TELEGRAM_API}/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendPhoto" \
+            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" -F caption="Desktop" \
+            -F photo=@screenshot-desktop.png
+      - name: Notify Telegram (mobile)
+        run: |
+          curl -s -X POST "${TELEGRAM_API}/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendPhoto" \
+            -F chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" -F caption="Mobile" \
+            -F photo=@screenshot-mobile.png
