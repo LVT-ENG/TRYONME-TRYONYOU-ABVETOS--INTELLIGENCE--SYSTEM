@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import PatentTimeline from "./PatentTimeline";
 
 const PEACOCK = "#0F5E68";
 
@@ -57,6 +58,10 @@ export default function App() {
           ))}
         </div>
       </section>
+      
+      {/* Patent Timeline Section */}
+      <PatentTimeline />
+      
       <section className="py-20 bg-white text-center">
         <h2 className="text-3xl font-bold mb-6" style={{ color: PEACOCK }}>
           Sobre TryonU
