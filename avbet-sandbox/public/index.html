@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVBET Advanced Sandbox - Biometric Payments</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 18px;
+        }
+
+        .section {
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .section h3 {
+            margin-top: 0;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+            color: white;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .status {
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: #f0fff4;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        .status.error {
+            background: #fed7d7;
+            color: #9b2c2c;
+            border: 1px solid #fc8181;
+        }
+
+        .status.info {
+            background: #ebf8ff;
+            color: #2c5282;
+            border: 1px solid #90cdf4;
+        }
+
+        .status.warning {
+            background: #fffaf0;
+            color: #c05621;
+            border: 1px solid #f6ad55;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+        }
+
+        .challenge-phrase {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+            margin: 10px 0;
+            border: 1px dashed #cbd5e0;
+        }
+
+        .file-input {
+            border: 2px dashed #cbd5e0;
+            border-radius: 6px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .file-input:hover {
+            border-color: #667eea;
+        }
+
+        .file-input.dragover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+
+        .progress {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .test-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .test-card {
+            background: #f7fafc;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .test-card:hover, .test-card.selected {
+            border-color: #667eea;
+            background: #ebf8ff;
+        }
+
+        .test-card-number {
+            font-family: monospace;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .test-card-type {
+            font-size: 12px;
+            color: #718096;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .flow-step {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .flow-step.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .flow-step.completed {
+            opacity: 0.8;
+        }
+
+        .confidence-meter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .confidence-bar {
+            flex: 1;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f56565, #ed8936, #ecc94b, #48bb78);
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🔐 AVBET ADVANCED SANDBOX</div>
+            <div class="subtitle">Biometric Payment Verification System</div>
+        </div>
+
+        <!-- Step 1: User Registration/Login -->
+        <div class="section flow-step active" id="step-registration">
+            <h3>👤 User Registration & WebAuthn Setup</h3>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" placeholder="user@example.com" value="demo@tryonyou.app">
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Your display name" value="Demo User">
+            </div>
+            <button class="btn btn-primary" onclick="registerUser()">
+                🔐 Register & Setup Biometric Authentication
+            </button>
+            <div id="registration-status"></div>
+        </div>
+
+        <!-- Step 2: Payment Creation -->
+        <div class="section flow-step" id="step-payment">
+            <h3>💳 Create Biometric Payment</h3>
+            <div class="form-group">
+                <label for="amount">Amount (EUR):</label>
+                <input type="number" id="amount" min="0.50" step="0.01" value="10.00">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" placeholder="Payment description" value="AVBET Test Payment">
+            </div>
+            
+            <h4>🃏 Test Cards</h4>
+            <div class="test-cards">
+                <div class="test-card" data-card="4242424242424242" onclick="selectTestCard(this)">
+                    <div class="test-card-number">4242 4242 4242 4242</div>
+                    <div class="test-card-type">Visa (Success)</div>
+                </div>
+                <div class="test-card" data-card="4000000000000002" onclick="selectTestCard(this)">
+                    <div class="test-card-number">4000 0000 0000 0002</div>
+                    <div class="test-card-type">Visa (Decline)</div>
+                </div>
+                <div class="test-card" data-card="4000002500003155" onclick="selectTestCard(this)">
+                    <div class="test-card-number">4000 0025 0000 3155</div>
+                    <div class="test-card-type">Visa (Requires Auth)</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="createPayment()">
+                💰 Create Payment Intent
+            </button>
+            <div id="payment-status"></div>
+        </div>
+
+        <!-- Step 3: Biometric Verification -->
+        <div class="section flow-step" id="step-biometric">
+            <h3>🔒 Biometric Verification</h3>
+            
+            <div class="grid">
+                <!-- WebAuthn Verification -->
+                <div class="card">
+                    <h4>👆 WebAuthn (TouchID/FaceID)</h4>
+                    <p>Use your device's biometric authentication</p>
+                    <button class="btn btn-primary" onclick="authenticateWebAuthn()">
+                        🔐 Authenticate with WebAuthn
+                    </button>
+                    <div id="webauthn-status"></div>
+                </div>
+
+                <!-- Voice Challenge -->
+                <div class="card">
+                    <h4>🎤 Voice Challenge (Optional)</h4>
+                    <button class="btn btn-secondary" onclick="startVoiceChallenge()">
+                        🎙️ Start Voice Challenge
+                    </button>
+                    <div id="voice-challenge-phrase" class="challenge-phrase hidden"></div>
+                    <div class="file-input hidden" id="voice-upload" onclick="document.getElementById('voice-file').click()">
+                        📼 Click to upload voice recording or drag & drop
+                        <input type="file" id="voice-file" accept="audio/*" style="display: none" onchange="uploadVoiceRecording()">
+                    </div>
+                    <div id="voice-status"></div>
+                </div>
+
+                <!-- Ocular Challenge -->
+                <div class="card">
+                    <h4>👁️ Ocular Challenge (Optional)</h4>
+                    <button class="btn btn-secondary" onclick="startOcularChallenge()">
+                        📷 Start Ocular Challenge
+                    </button>
+                    <div class="file-input hidden" id="ocular-upload" onclick="document.getElementById('ocular-file').click()">
+                        📸 Click to upload eye image or drag & drop
+                        <input type="file" id="ocular-file" accept="image/*" style="display: none" onchange="uploadOcularImage()">
+                    </div>
+                    <div id="ocular-status"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: Payment Processing -->
+        <div class="section flow-step" id="step-process">
+            <h3>⚡ Process Payment</h3>
+            <p>All biometric verifications complete. Ready to process payment.</p>
+            <button class="btn btn-success" onclick="processPayment()">
+                ✅ Process Biometric-Verified Payment
+            </button>
+            <div id="process-status"></div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div>Processing biometric verification...</div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let currentPayment = null;
+        let sessionToken = null;
+        let selectedCard = '4242424242424242';
+        let voiceChallengeId = null;
+        let ocularChallengeId = null;
+        let stripe = null;
+
+        // Initialize Stripe
+        if (window.Stripe) {
+            stripe = Stripe('pk_test_demo'); // Use your publishable key
+        }
+
+        // Utility functions
+        function showStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showLoading(show = true) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function activateStep(stepId) {
+            document.querySelectorAll('.flow-step').forEach(step => {
+                step.classList.remove('active');
+                if (step.id !== stepId) {
+                    step.classList.add('completed');
+                }
+            });
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        function selectTestCard(element) {
+            document.querySelectorAll('.test-card').forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedCard = element.dataset.card;
+        }
+
+        // Step 1: User Registration and WebAuthn Setup
+        async function registerUser() {
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+
+            if (!email || !username) {
+                showStatus('registration-status', 'Please fill in all fields', 'error');
+                return;
+            }
+
+            try {
+                showLoading(true);
+
+                // Start WebAuthn registration
+                const registrationResponse = await fetch('/api/biometric/register/begin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, username })
+                });
+
+                const registrationData = await registrationResponse.json();
+
+                if (!registrationData.success) {
+                    throw new Error(registrationData.message);
+                }
+
+                // Start WebAuthn ceremony
+                const { options, userId } = registrationData.data;
+                
+                // Use SimpleWebAuthn browser library
+                const credential = await SimpleWebAuthnBrowser.startRegistration(options);
+
+                // Complete registration
+                const verificationResponse = await fetch('/api/biometric/register/complete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        credential, 
+                        userId,
+                        email 
+                    })
+                });
+
+                const verificationData = await verificationResponse.json();
+
+                if (verificationData.success) {
+                    currentUser = { id: userId, email, username };
+                    showStatus('registration-status', '✅ WebAuthn registration successful! You can now create payments.', 'success');
+                    activateStep('step-payment');
+                } else {
+                    throw new Error(verificationData.message);
+                }
+
+            } catch (error) {
+                console.error('Registration error:', error);
+                showStatus('registration-status', `❌ Registration failed: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Step 2: Create Payment Intent
+        async function createPayment() {
+            const amount = Math.round(parseFloat(document.getElementById('amount').value) * 100); // Convert to cents
+            const description = document.getElementById('description').value;
+            const email = document.getElementById('email').value;
+
+            if (!amount || amount < 50) {
+                showStatus('payment-status', 'Amount must be at least 0.50 EUR', 'error');
+                return;
+            }
+
+            try {
+                showLoading(true);
+
+                // Create payment with test card
+                const response = await fetch('/api/payments/test-card', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        cardNumber: selectedCard,
+                        email,
+                        amount,
+                        description
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    currentPayment = data.data;
+                    showStatus('payment-status', 
+                        `✅ Payment created! Amount: €${(amount/100).toFixed(2)} | Card: ${data.data.cardType}`, 
+                        'success'
+                    );
+                    activateStep('step-biometric');
+                } else {
+                    throw new Error(data.message);
+                }
+
+            } catch (error) {
+                console.error('Payment creation error:', error);
+                showStatus('payment-status', `❌ Payment creation failed: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Step 3: WebAuthn Authentication
+        async function authenticateWebAuthn() {
+            const email = document.getElementById('email').value;
+
+            try {
+                showLoading(true);
+
+                // Start authentication
+                const authResponse = await fetch('/api/biometric/authenticate/begin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const authData = await authResponse.json();
+
+                if (!authData.success) {
+                    throw new Error(authData.message);
+                }
+
+                // Start WebAuthn ceremony
+                const credential = await SimpleWebAuthnBrowser.startAuthentication(authData.data.options);
+
+                // Complete authentication
+                const verificationResponse = await fetch('/api/biometric/authenticate/complete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        credential, 
+                        email 
+                    })
+                });
+
+                const verificationData = await verificationResponse.json();
+
+                if (verificationData.success) {
+                    sessionToken = verificationData.data.sessionToken;
+                    
+                    // Verify biometric for payment
+                    await verifyBiometricForPayment();
+                    
+                    showStatus('webauthn-status', '✅ WebAuthn authentication successful!', 'success');
+                    activateStep('step-process');
+                } else {
+                    throw new Error(verificationData.message);
+                }
+
+            } catch (error) {
+                console.error('WebAuthn authentication error:', error);
+                showStatus('webauthn-status', `❌ Authentication failed: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Verify biometric for payment
+        async function verifyBiometricForPayment() {
+            const response = await fetch('/api/payments/verify-biometric', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    paymentId: currentPayment.paymentId,
+                    sessionToken,
+                    biometricType: 'webauthn'
+                })
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message);
+            }
+        }
+
+        // Voice Challenge Functions
+        async function startVoiceChallenge() {
+            const email = document.getElementById('email').value;
+
+            try {
+                const response = await fetch('/api/challenges/voice/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email, 
+                        paymentId: currentPayment?.paymentId 
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    voiceChallengeId = data.data.challengeId;
+                    document.getElementById('voice-challenge-phrase').textContent = data.data.phrase;
+                    document.getElementById('voice-challenge-phrase').classList.remove('hidden');
+                    document.getElementById('voice-upload').classList.remove('hidden');
+                    showStatus('voice-status', '🎤 Please record yourself saying the phrase above', 'info');
+                } else {
+                    throw new Error(data.message);
+                }
+
+            } catch (error) {
+                console.error('Voice challenge error:', error);
+                showStatus('voice-status', `❌ Voice challenge failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function uploadVoiceRecording() {
+            const file = document.getElementById('voice-file').files[0];
+            if (!file || !voiceChallengeId) return;
+
+            try {
+                showLoading(true);
+
+                const formData = new FormData();
+                formData.append('voiceRecording', file);
+                formData.append('challengeId', voiceChallengeId);
+
+                const response = await fetch('/api/challenges/voice/verify', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showStatus('voice-status', 
+                        `✅ Voice verified! Confidence: ${data.data.confidence}%`, 
+                        'success'
+                    );
+                } else {
+                    throw new Error(data.message);
+                }
+
+            } catch (error) {
+                console.error('Voice verification error:', error);
+                showStatus('voice-status', `❌ Voice verification failed: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Ocular Challenge Functions
+        async function startOcularChallenge() {
+            const email = document.getElementById('email').value;
+
+            try {
+                const response = await fetch('/api/challenges/ocular/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        email, 
+                        paymentId: currentPayment?.paymentId 
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    ocularChallengeId = data.data.challengeId;
+                    document.getElementById('ocular-upload').classList.remove('hidden');
+                    showStatus('ocular-status', '👁️ Please take a clear photo of your eyes', 'info');
+                } else {
+                    throw new Error(data.message);
+                }
+
+            } catch (error) {
+                console.error('Ocular challenge error:', error);
+                showStatus('ocular-status', `❌ Ocular challenge failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function uploadOcularImage() {
+            const file = document.getElementById('ocular-file').files[0];
+            if (!file || !ocularChallengeId) return;
+
+            try {
+                showLoading(true);
+
+                const formData = new FormData();
+                formData.append('ocularImage', file);
+                formData.append('challengeId', ocularChallengeId);
+
+                const response = await fetch('/api/challenges/ocular/verify', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showStatus('ocular-status', 
+                        `✅ Ocular pattern verified! Confidence: ${data.data.confidence}%`, 
+                        'success'
+                    );
+                } else {
+                    throw new Error(data.message);
+                }
+
+            } catch (error) {
+                console.error('Ocular verification error:', error);
+                showStatus('ocular-status', `❌ Ocular verification failed: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Step 4: Process Payment
+        async function processPayment() {
+            if (!currentPayment || !sessionToken) {
+                showStatus('process-status', 'Biometric verification required first', 'error');
+                return;
+            }
+
+            try {
+                showLoading(true);
+
+                const response = await fetch('/api/payments/process', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        paymentId: currentPayment.paymentId,
+                        paymentMethodId: currentPayment.paymentMethodId
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    if (data.data.status === 'completed') {
+                        showStatus('process-status', 
+                            `🎉 Payment completed successfully! Amount: €${currentPayment.amount/100}`, 
+                            'success'
+                        );
+                    } else if (data.data.status === 'requires_action') {
+                        showStatus('process-status', 
+                            '⚠️ Payment requires additional authentication', 
+                            'warning'
+                        );
+                    } else {
+                        showStatus('process-status', 
+                            `❌ Payment failed: ${data.data.message}`, 
+                            'error'
+                        );
+                    }
+                } else {
+                    throw new Error(data.message);
+                }
+
+            } catch (error) {
+                console.error('Payment processing error:', error);
+                showStatus('process-status', `❌ Payment processing failed: ${error.message}`, 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select first test card by default
+            document.querySelector('.test-card').classList.add('selected');
+            
+            // Setup drag & drop for file uploads
+            setupFileUpload('voice-upload', 'voice-file');
+            setupFileUpload('ocular-upload', 'ocular-file');
+        });
+
+        function setupFileUpload(containerId, fileInputId) {
+            const container = document.getElementById(containerId);
+            const fileInput = document.getElementById(fileInputId);
+
+            container.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                container.classList.add('dragover');
+            });
+
+            container.addEventListener('dragleave', () => {
+                container.classList.remove('dragover');
+            });
+
+            container.addEventListener('drop', (e) => {
+                e.preventDefault();
+                container.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            });
+        }
+    </script>
+</body>
+</html>
