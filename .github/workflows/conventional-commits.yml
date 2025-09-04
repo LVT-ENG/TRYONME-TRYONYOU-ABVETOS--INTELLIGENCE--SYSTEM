@@ -1,0 +1,79 @@
+name: Conventional Commits
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+  push:
+    branches: [main, develop]
+
+jobs:
+  validate-commits:
+    runs-on: ubuntu-latest
+    name: Validate Conventional Commits
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install commitlint
+        run: |
+          npm install -g @commitlint/cli @commitlint/config-conventional
+          
+      - name: Validate commit messages
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            # Validate commits in PR
+            npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+          else
+            # Validate last commit on push
+            npx commitlint --from HEAD~1 --to HEAD --verbose
+          fi
+          
+  validate-pr-title:
+    runs-on: ubuntu-latest
+    name: Validate PR Title
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Validate PR title format
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            style
+            refactor
+            perf
+            test
+            build
+            ci
+            chore
+            revert
+          scopes: |
+            core
+            ui
+            api
+            auth
+            db
+            deploy
+            config
+            docs
+            test
+          requireScope: true
+          disallowScopes: |
+            release
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            didn't match the configured pattern. Please ensure that the subject
+            doesn't start with an uppercase character.
