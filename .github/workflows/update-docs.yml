@@ -1,0 +1,60 @@
+name: Update Docs
+
+on:
+  workflow_dispatch: # lo lanzas manualmente desde GitHub
+  schedule:
+    - cron: '0 9 * * 1' # opcional, cada lunes a las 9h
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Update README.md
+        run: |
+          cat > README.md << 'EOF'
+          # TRYONYOU – AVBETOS INTELLIGENCE SYSTEM
+          Sistema modular avanzado, propietario y patentado, diseñado para automatizar análisis, recomendaciones y ejecución en entornos digitales y físicos sin intervención humana.
+
+          ## 🚀 Módulos principales
+          - **Avatar 3D embebido**: Generación dinámica de avatares basados en medidas reales.
+          - **Comparador textil inteligente**: Coincidencia de prendas con base de datos avanzada.
+          - **Recomendador emocional (PAU)**: Motor de IA que adapta recomendaciones según emociones.
+          - **Pago biométrico AVBET (Iris + Voz)**: Autenticación y pagos sin dispositivos físicos.
+          - **AutoDonate (Armario solidario)**: Redistribución automática de artículos no usados.
+          - **Bots internos multifunción**: Automatización técnica, comercial y administrativa.
+          - **Conexión EPCT/WIPO**: Integración con bases de patentes para absorción tecnológica.
+
+          ## 🛠️ Tecnologías
+          - Node.js, React, Next.js
+          - API REST, Webhooks, Make
+          - Shopify y sistemas externos
+          - Infraestructura en GitHub, Vercel y servicios cloud
+
+          ## 📊 Estado actual
+          - Proyecto en fase de despliegue y conexión con entornos de producción
+          - Optimizado para integraciones B2B
+
+          ## 🤝 Contacto
+          - **Autor**: Rubén Espinar Rodríguez © 2025
+          - 📧 Email: ruben.espinar.10@icloud.com
+          - 🔗 LinkedIn: https://www.linkedin.com/in/rubenespinar
+
+          ## 📜 Licencia
+          Este proyecto es **propietario y patentado** (PCT/EP2025/067317).
+          No está bajo licencia open-source.
+
+          Queda **prohibido** el uso, copia, modificación o distribución sin autorización expresa por escrito del autor.
+
+          Para licencias comerciales o colaboraciones: contacte directamente con Rubén Espinar Rodríguez.
+          EOF
+
+      - name: Commit & Push
+        run: |
+          git config --global user.name "agent-bot"
+          git config --global user.email "bot@tryonyou.com"
+          git add README.md
+          git commit -m "docs: update README with patent/licensing info"
+          git push origin main
