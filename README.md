@@ -73,9 +73,11 @@ Módulo core del sistema de inteligencia AVBETOS.
 
 ### Tecnologías
 - **Backend**: Google Apps Script, PHP
-- **Frontend**: HTML5, CSS3, JavaScript
+- **Frontend**: HTML5, CSS3, JavaScript, React 18
 - **Datos**: Google Sheets (prototipo), bases de datos (producción)
 - **AI/ML**: Sistema propietario AVBETOS
+- **Computer Vision**: jsQR, WebRTC, marcadores QR/ArUco
+- **PDF Generation**: jsPDF para marcadores de calibración A4
 
 ## 📝 Licencia
 
@@ -87,6 +89,11 @@ Este software es propietario y está protegido por patente.
 - [x] Motor de recomendaciones (Google Apps Script)
 - [x] Interfaz web básica
 - [x] Sistema de contacto
+- [x] **Sistema de medición corporal con Avatar Pau**
+- [x] **Generación de marcadores QR/ArUco en PDF A4**
+- [x] **Captura de vídeo WebRTC y calibración px/mm**
+- [x] **Medición de cintura, pecho, largo de pierna y altura**
+- [x] **Precisión validada ≤ ±10 mm**
 - [ ] Integración con APIs de moda
 - [ ] Dashboard de administración
 - [ ] Sistema de pagos biométricos

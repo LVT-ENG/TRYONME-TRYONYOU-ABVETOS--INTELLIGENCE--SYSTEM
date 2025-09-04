@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import BodyMeasurement from "./components/BodyMeasurement";
 
 const PEACOCK = "#0F5E68";
 
@@ -14,6 +15,17 @@ const products = [
 
 export default function App() {
   const [selected, setSelected] = useState(null);
+  const [showMeasurement, setShowMeasurement] = useState(false);
+  const [userMeasurements, setUserMeasurements] = useState(null);
+
+  const handleMeasurementComplete = (measurements) => {
+    setUserMeasurements(measurements);
+    setShowMeasurement(false);
+  };
+
+  if (showMeasurement) {
+    return <BodyMeasurement onMeasurementComplete={handleMeasurementComplete} />;
+  }
 
   return (
     <div className="font-sans bg-white text-gray-900">
@@ -35,6 +47,34 @@ export default function App() {
           Vive el futuro de la moda digital. Colecciones interactivas,
           pruebas virtuales y experiencias inmersivas.
         </motion.p>
+
+        {/* Add measurement system button */}
+        <motion.button
+          onClick={() => setShowMeasurement(true)}
+          className="mt-8 px-8 py-4 bg-gradient-to-r from-[#0F5E68] to-[#1a7a85] text-white rounded-lg font-semibold"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          🔬 Sistema de Medición Corporal con Avatar Pau
+        </motion.button>
+
+        {userMeasurements && (
+          <motion.div
+            className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg max-w-md mx-auto"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <h3 className="font-semibold text-green-800 mb-2">✅ Medidas Completadas</h3>
+            <div className="text-sm text-green-700">
+              <p>Altura: {userMeasurements.altura_cm} cm</p>
+              <p>Precisión: ±{userMeasurements.precision_mm} mm</p>
+              <p>Avatar Pau configurado</p>
+            </div>
+          </motion.div>
+        )}
       </section>
       <section className="py-16 px-6 bg-gray-50">
         <h2 className="text-3xl font-semibold text-center mb-10" style={{ color: PEACOCK }}>
