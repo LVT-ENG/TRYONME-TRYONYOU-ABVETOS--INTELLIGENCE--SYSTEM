@@ -1,2 +1,4 @@
 Env.secrets
 .vercel
+node_modules
+dist
