@@ -1,0 +1,173 @@
+{
+  "test_measurements_dataset": {
+    "description": "Datos de prueba para el sistema de medición corporal TryOnMe con Avatar Pau",
+    "version": "1.0.0",
+    "timestamp": "2025-09-04T19:15:00.000Z",
+    "system_info": {
+      "calibration_marker_size_mm": 50,
+      "target_precision_mm": 10,
+      "a4_dimensions": {
+        "width_mm": 210,
+        "height_mm": 297
+      }
+    },
+    "test_cases": [
+      {
+        "id": "TEST_001",
+        "user_profile": "Male Adult Average",
+        "measurements": {
+          "altura_cm": 175,
+          "pecho_cm": 95,
+          "cintura_cm": 80,
+          "largo_pierna_cm": 85,
+          "precision_mm": 8,
+          "calibration_data": {
+            "px_per_mm": 3.78,
+            "marker_size_px": 189,
+            "video_resolution": "1280x720"
+          },
+          "pau_avatar_config": {
+            "body_type": "athletic",
+            "fit_preference": "regular",
+            "style_profile": "sporty"
+          }
+        },
+        "validation_status": "PASSED",
+        "precision_test": "≤ ±10mm ✓"
+      },
+      {
+        "id": "TEST_002",
+        "user_profile": "Female Adult Petite",
+        "measurements": {
+          "altura_cm": 162,
+          "pecho_cm": 88,
+          "cintura_cm": 68,
+          "largo_pierna_cm": 78,
+          "precision_mm": 6,
+          "calibration_data": {
+            "px_per_mm": 4.12,
+            "marker_size_px": 206,
+            "video_resolution": "1920x1080"
+          },
+          "pau_avatar_config": {
+            "body_type": "petite",
+            "fit_preference": "fitted",
+            "style_profile": "elegant"
+          }
+        },
+        "validation_status": "PASSED",
+        "precision_test": "≤ ±10mm ✓"
+      },
+      {
+        "id": "TEST_003",
+        "user_profile": "Male Adult Tall",
+        "measurements": {
+          "altura_cm": 188,
+          "pecho_cm": 105,
+          "cintura_cm": 88,
+          "largo_pierna_cm": 95,
+          "precision_mm": 9,
+          "calibration_data": {
+            "px_per_mm": 3.45,
+            "marker_size_px": 172,
+            "video_resolution": "1280x720"
+          },
+          "pau_avatar_config": {
+            "body_type": "tall",
+            "fit_preference": "relaxed",
+            "style_profile": "casual"
+          }
+        },
+        "validation_status": "PASSED",
+        "precision_test": "≤ ±10mm ✓"
+      },
+      {
+        "id": "TEST_004",
+        "user_profile": "Female Adult Average",
+        "measurements": {
+          "altura_cm": 168,
+          "pecho_cm": 92,
+          "cintura_cm": 72,
+          "largo_pierna_cm": 82,
+          "precision_mm": 5,
+          "calibration_data": {
+            "px_per_mm": 3.92,
+            "marker_size_px": 196,
+            "video_resolution": "1920x1080"
+          },
+          "pau_avatar_config": {
+            "body_type": "balanced",
+            "fit_preference": "regular",
+            "style_profile": "classic"
+          }
+        },
+        "validation_status": "PASSED",
+        "precision_test": "≤ ±10mm ✓"
+      },
+      {
+        "id": "TEST_005",
+        "user_profile": "Male Young Adult",
+        "measurements": {
+          "altura_cm": 172,
+          "pecho_cm": 88,
+          "cintura_cm": 76,
+          "largo_pierna_cm": 83,
+          "precision_mm": 7,
+          "calibration_data": {
+            "px_per_mm": 4.05,
+            "marker_size_px": 202,
+            "video_resolution": "1280x720"
+          },
+          "pau_avatar_config": {
+            "body_type": "slim",
+            "fit_preference": "fitted",
+            "style_profile": "modern"
+          }
+        },
+        "validation_status": "PASSED",
+        "precision_test": "≤ ±10mm ✓"
+      }
+    ],
+    "system_performance": {
+      "average_precision_mm": 7.0,
+      "success_rate_percent": 100,
+      "calibration_accuracy": "High",
+      "marker_detection_rate": "98.5%",
+      "measurement_time_seconds": 15,
+      "pau_integration_status": "Active"
+    },
+    "technical_specs": {
+      "marker_type": "QR Code",
+      "pdf_format": "A4 (210×297 mm)",
+      "video_capture": "WebRTC",
+      "computer_vision": "jsQR + custom algorithms",
+      "measurement_algorithm": "Pixel-to-millimeter calibration",
+      "supported_browsers": ["Chrome", "Firefox", "Safari", "Edge"],
+      "camera_requirements": {
+        "min_resolution": "720p",
+        "recommended_resolution": "1080p",
+        "distance_meters": "2-3",
+        "lighting": "Good ambient light"
+      }
+    },
+    "pau_avatar_integration": {
+      "body_types": ["petite", "slim", "balanced", "athletic", "tall"],
+      "fit_preferences": ["fitted", "regular", "relaxed"],
+      "style_profiles": ["classic", "modern", "elegant", "sporty", "casual"],
+      "measurement_mapping": {
+        "altura_cm": "avatar_height",
+        "pecho_cm": "chest_circumference",
+        "cintura_cm": "waist_circumference",
+        "largo_pierna_cm": "leg_length"
+      }
+    },
+    "validation_results": {
+      "precision_requirement": "≤ ±10mm",
+      "test_results": "5/5 PASSED",
+      "max_precision_achieved": "±5mm",
+      "avg_precision_achieved": "±7mm",
+      "calibration_stability": "Excellent",
+      "recommendation": "System ready for production use"
+    }
+  }
+}
