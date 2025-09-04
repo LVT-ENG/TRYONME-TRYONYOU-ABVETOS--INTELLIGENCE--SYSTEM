@@ -1,2 +1,6 @@
 Env.secrets
 .vercel
+dist
+*.log
+.DS_Store
+node_modules
