@@ -17,28 +17,94 @@ export default function App() {
 
   return (
     <div className="font-sans bg-white text-gray-900">
-      <section className="h-screen flex flex-col justify-center items-center text-center bg-gradient-to-b from-white to-gray-100">
-        <motion.h1
-          className="text-5xl font-bold mb-4"
-          style={{ color: PEACOCK }}
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
+      {/* Hero Section with Video Background */}
+      <section className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden">
+        <video
+          autoPlay
+          muted
+          loop
+          className="absolute inset-0 w-full h-full object-cover z-0"
         >
-          TryonU Luxury Digital Workflow Experience
-        </motion.h1>
-        <motion.p
-          className="text-lg max-w-2xl text-gray-600"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          Vive el futuro de la moda digital. Colecciones interactivas,
-          pruebas virtuales y experiencias inmersivas.
-        </motion.p>
+          <source src="/video_portada.mp4" type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
+        <div className="relative z-20 text-white">
+          <motion.h1
+            className="text-5xl font-bold mb-4"
+            initial={{ opacity: 0, y: -40 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            TryonU Luxury Digital Workflow Experience
+          </motion.h1>
+          <motion.p
+            className="text-lg max-w-2xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Vive el futuro de la moda digital. Colecciones interactivas,
+            pruebas virtuales y experiencias inmersivas.
+          </motion.p>
+        </div>
+      </section>
+
+      {/* Avatar Pau Section */}
+      <section className="py-16 px-6 bg-gray-50">
+        <h2 className="text-3xl font-semibold text-center mb-10" style={{ color: PEACOCK }}>
+          Avatar Digital Pau
+        </h2>
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.div
+            className="bg-white rounded-2xl shadow-lg p-8 mb-8"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+          >
+            <div className="w-48 h-48 mx-auto mb-6 bg-gradient-to-b from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
+              <span className="text-6xl text-white">👤</span>
+            </div>
+            <h3 className="text-2xl font-bold mb-4">Avatar Pau</h3>
+            <p className="text-gray-600">
+              Asistente virtual inteligente para recomendaciones de moda personalizadas
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Digital Wardrobes Section */}
+      <section className="py-16 px-6 bg-white">
+        <h2 className="text-3xl font-semibold text-center mb-10" style={{ color: PEACOCK }}>
+          Armarios Digitales Inteligentes
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <motion.div
+            className="bg-gray-50 rounded-2xl p-6 text-center"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="text-4xl mb-4">👔</div>
+            <h3 className="text-xl font-bold mb-2">Armario Formal</h3>
+            <p className="text-gray-600">Colección de trajes y vestimenta formal</p>
+          </motion.div>
+          <motion.div
+            className="bg-gray-50 rounded-2xl p-6 text-center"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="text-4xl mb-4">👗</div>
+            <h3 className="text-xl font-bold mb-2">Armario Casual</h3>
+            <p className="text-gray-600">Ropa cómoda para el día a día</p>
+          </motion.div>
+          <motion.div
+            className="bg-gray-50 rounded-2xl p-6 text-center"
+            whileHover={{ scale: 1.05 }}
+          >
+            <div className="text-4xl mb-4">🎩</div>
+            <h3 className="text-xl font-bold mb-2">Armario Premium</h3>
+            <p className="text-gray-600">Piezas exclusivas y de lujo</p>
+          </motion.div>
+        </div>
       </section>
       <section className="py-16 px-6 bg-gray-50">
         <h2 className="text-3xl font-semibold text-center mb-10" style={{ color: PEACOCK }}>
-          Colección Exclusiva
+          Catálogo TryOnYou
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {products.map((p) => (
