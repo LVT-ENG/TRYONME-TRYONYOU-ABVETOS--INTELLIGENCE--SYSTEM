@@ -1,7 +1,7 @@
 {
   "name": "tryonyou-abvetos-ultra-plus-ultimatum",
   "version": "1.0.0",
-  "description": "Proyecto TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM",
+  "description": "Proyecto TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM - Minimal Official Landing Page",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
-    "framer-motion": "^12.23.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "vite": "^7.1.4"
