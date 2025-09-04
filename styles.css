@@ -1,4 +1,25 @@
-:root { --bg:#0b0c10; --fg:#e6f5ee; --muted:#b7c9c2; --brand:#00e0a4; }
+:root {
+  /* New TryOnMe Color Palette */
+  --color-turquesa-pastel: #7DD9DC;
+  --color-blanco-pastel: #F4F6F7;
+  --color-plata-mate: #D5DADD;
+  --color-grafito-gris: #4B4F52;
+  --color-negro-suave: #2B2B2B;
+  
+  /* Mapped variables for compatibility */
+  --bg: var(--color-blanco-pastel);
+  --fg: var(--color-grafito-gris);
+  --muted: var(--color-plata-mate);
+  --brand: var(--color-turquesa-pastel);
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px) saturate(150%);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
 *{ box-sizing:border-box }
 html,body{ margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif }
 .container{ max-width:1080px; margin:0 auto; padding:24px }
@@ -10,12 +31,12 @@ html,body{ margin:0; padding:0; background:var(--bg); color:var(--fg); font-fami
 .hero h1{ font-size:44px; line-height:1.05; margin:0 0 12px }
 .hero p{ color:var(--muted); font-size:18px }
 .cta{ display:flex; gap:12px; margin-top:16px }
-.btn{ background:var(--brand); color:#041f14; border:none; padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer }
+.btn{ background:linear-gradient(145deg, #7DD9DC, #6cc6c9); color:var(--color-negro-suave); border:none; padding:12px 18px; border-radius:10px; font-weight:700; cursor:pointer; box-shadow: 0 4px 12px rgba(125, 217, 220, 0.4); }
 .btn:disabled{ opacity:.6; cursor:not-allowed }
-.card{ background:#0f1318; border:1px solid #141a20; padding:18px; border-radius:14px }
+.card{ background:var(--color-plata-mate); border:1px solid var(--color-grafito-gris); padding:18px; border-radius:14px }
 .grid{ display:grid; gap:16px; grid-template-columns: repeat(3, 1fr) }
 .section{ margin:32px 0 }
 .form{ display:grid; gap:12px }
-.input, textarea{ width:100%; padding:12px 14px; border-radius:10px; border:1px solid #28323b; background:#0f1418; color:var(--fg) }
+.input, textarea{ width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--color-grafito-gris); background:var(--color-blanco-pastel); color:var(--fg) }
 .footer{ color:var(--muted); font-size:14px; padding:24px 0 48px }
 @media (max-width: 900px){ .hero{ grid-template-columns: 1fr } .grid{ grid-template-columns:1fr } }
