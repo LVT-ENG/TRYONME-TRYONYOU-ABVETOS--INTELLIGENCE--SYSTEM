@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TryOnYou SDK - Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .test-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #007cba;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .test-button:hover {
+            background: #005a8b;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .status.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .status.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .status.info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 TryOnYou SDK - Test Page</h1>
+        <p>Esta página permite probar todas las funcionalidades del SDK TryOnYou.</p>
+        
+        <div class="test-section">
+            <h3>📊 Estado del SDK</h3>
+            <div id="sdk-status" class="status info">Inicializando...</div>
+            <button class="test-button" onclick="initSDK()">Inicializar SDK</button>
+            <button class="test-button" onclick="destroySDK()">Destruir SDK</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🎛️ Control del Panel</h3>
+            <button class="test-button" onclick="openPanel()">Abrir Panel</button>
+            <button class="test-button" onclick="closePanel()">Cerrar Panel</button>
+            <button class="test-button" onclick="togglePanel()">Toggle Panel</button>
+        </div>
+
+        <div class="test-section">
+            <h3>👗 Probador Virtual</h3>
+            <button class="test-button" onclick="tryOnJacket()">Probar Chaqueta</button>
+            <button class="test-button" onclick="tryOnJeans()">Probar Jeans</button>
+            <button class="test-button" onclick="tryOnDress()">Probar Vestido</button>
+        </div>
+
+        <div class="test-section">
+            <h3>🎨 Configuración</h3>
+            <button class="test-button" onclick="switchTheme()">Cambiar Tema</button>
+            <button class="test-button" onclick="changeLanguage()">Cambiar Idioma</button>
+            <button class="test-button" onclick="updateColors()">Colores Personalizados</button>
+        </div>
+
+        <div class="test-section">
+            <h3>👤 Avatar</h3>
+            <button class="test-button" onclick="createAvatar()">Crear Avatar</button>
+            <button class="test-button" onclick="setTestAvatar()">Establecer Avatar de Prueba</button>
+        </div>
+
+        <div class="test-section">
+            <h3>📨 Eventos</h3>
+            <div id="events-log" style="max-height: 200px; overflow-y: auto; background: #f8f9fa; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 12px;"></div>
+            <button class="test-button" onclick="clearEvents()">Limpiar Log</button>
+        </div>
+    </div>
+
+    <!-- TryOnYou SDK -->
+    <script src="embed.js"></script>
+    
+    <script>
+        let currentTheme = 'light';
+        let currentLanguage = 'es';
+        
+        // Initialize event logging
+        const eventsLog = document.getElementById('events-log');
+        
+        function logEvent(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.style.color = type === 'error' ? '#d32f2f' : type === 'success' ? '#388e3c' : '#1976d2';
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            eventsLog.appendChild(logEntry);
+            eventsLog.scrollTop = eventsLog.scrollHeight;
+        }
+        
+        // Listen to all TryOnYou events
+        ['initialized', 'panelOpened', 'panelClosed', 'tryOnStarted', 'avatarCreationStarted', 'avatarSet', 'configUpdated', 'destroyed'].forEach(eventName => {
+            document.addEventListener(`tryonyou:${eventName}`, (e) => {
+                logEvent(`Event: ${eventName} - ${JSON.stringify(e.detail)}`, 'info');
+            });
+        });
+        
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('sdk-status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+        }
+        
+        function initSDK() {
+            try {
+                TryOnYou.init({
+                    partnerId: 'test-partner',
+                    theme: currentTheme,
+                    language: currentLanguage,
+                    currency: 'EUR',
+                    debug: true
+                });
+                updateStatus('SDK inicializado correctamente', 'success');
+                logEvent('SDK initialized with test configuration', 'success');
+            } catch (error) {
+                updateStatus(`Error: ${error.message}`, 'error');
+                logEvent(`Initialization error: ${error.message}`, 'error');
+            }
+        }
+        
+        function destroySDK() {
+            try {
+                TryOnYou.destroy();
+                updateStatus('SDK destruido', 'info');
+                logEvent('SDK destroyed', 'info');
+            } catch (error) {
+                updateStatus(`Error: ${error.message}`, 'error');
+                logEvent(`Destroy error: ${error.message}`, 'error');
+            }
+        }
+        
+        function openPanel() {
+            TryOnYou.openPanel();
+            logEvent('Panel opened manually', 'info');
+        }
+        
+        function closePanel() {
+            TryOnYou.closePanel();
+            logEvent('Panel closed manually', 'info');
+        }
+        
+        function togglePanel() {
+            TryOnYou.togglePanel();
+            logEvent('Panel toggled manually', 'info');
+        }
+        
+        function tryOnJacket() {
+            const product = {
+                id: 'test-jacket-001',
+                name: 'Chaqueta de Prueba',
+                price: '89.99',
+                image: 'https://via.placeholder.com/200x200/667eea/ffffff?text=Chaqueta',
+                brand: 'test-partner',
+                category: 'outerwear'
+            };
+            TryOnYou.tryOnProduct(product);
+            logEvent(`Try-on started for jacket: ${product.name}`, 'success');
+        }
+        
+        function tryOnJeans() {
+            const product = {
+                id: 'test-jeans-001',
+                name: 'Jeans de Prueba',
+                price: '59.99',
+                image: 'https://via.placeholder.com/200x200/764ba2/ffffff?text=Jeans',
+                brand: 'test-partner',
+                category: 'pants'
+            };
+            TryOnYou.tryOnProduct(product);
+            logEvent(`Try-on started for jeans: ${product.name}`, 'success');
+        }
+        
+        function tryOnDress() {
+            const product = {
+                id: 'test-dress-001',
+                name: 'Vestido de Prueba',
+                price: '79.99',
+                image: 'https://via.placeholder.com/200x200/48bb78/ffffff?text=Vestido',
+                brand: 'test-partner',
+                category: 'dresses'
+            };
+            TryOnYou.tryOnProduct(product);
+            logEvent(`Try-on started for dress: ${product.name}`, 'success');
+        }
+        
+        function switchTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            TryOnYou.updateConfig({ theme: currentTheme });
+            logEvent(`Theme switched to: ${currentTheme}`, 'info');
+        }
+        
+        function changeLanguage() {
+            currentLanguage = currentLanguage === 'es' ? 'en' : 'es';
+            TryOnYou.updateConfig({ language: currentLanguage });
+            logEvent(`Language changed to: ${currentLanguage}`, 'info');
+        }
+        
+        function updateColors() {
+            const colors = [
+                { primary: '#e74c3c', secondary: '#ffffff', accent: '#f8f9fa' },
+                { primary: '#2ecc71', secondary: '#ffffff', accent: '#e8f5e8' },
+                { primary: '#3498db', secondary: '#ffffff', accent: '#e3f2fd' },
+                { primary: '#9b59b6', secondary: '#ffffff', accent: '#f3e5f5' }
+            ];
+            
+            const randomColors = colors[Math.floor(Math.random() * colors.length)];
+            TryOnYou.updateConfig({ customStyles: randomColors });
+            logEvent(`Colors updated: ${JSON.stringify(randomColors)}`, 'info');
+        }
+        
+        function createAvatar() {
+            TryOnYou.createAvatar();
+            logEvent('Avatar creation started', 'info');
+        }
+        
+        function setTestAvatar() {
+            const testAvatar = {
+                id: 'test-avatar-001',
+                measurements: {
+                    height: 175,
+                    chest: 92,
+                    waist: 78,
+                    hip: 95
+                },
+                preferences: {
+                    style: 'casual',
+                    colors: ['blue', 'black', 'white']
+                }
+            };
+            TryOnYou.setAvatar(testAvatar);
+            logEvent(`Test avatar set: ${JSON.stringify(testAvatar)}`, 'success');
+        }
+        
+        function clearEvents() {
+            eventsLog.innerHTML = '';
+            logEvent('Event log cleared', 'info');
+        }
+        
+        // Auto-initialize SDK when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            logEvent('Test page loaded', 'info');
+            setTimeout(() => {
+                initSDK();
+            }, 500);
+        });
+        
+        // Test error handling
+        window.addEventListener('error', (e) => {
+            logEvent(`JavaScript error: ${e.message}`, 'error');
+        });
+    </script>
+</body>
+</html>
