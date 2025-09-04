@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:commits": "commitlint --from HEAD~1 --to HEAD --verbose",
+    "prepare": "npm run build"
   },
   "dependencies": {
     "@vercel/analytics": "^1.5.0",
@@ -15,6 +17,8 @@
     "vite": "^7.1.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^5.0.2"
+    "@vitejs/plugin-react": "^5.0.2",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3"
   }
 }
