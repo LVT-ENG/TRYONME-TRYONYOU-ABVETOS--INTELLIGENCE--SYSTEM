@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zara - Ejemplo de Integración TryOnYou</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #fafafa;
+        }
+        .header {
+            background: #000;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+        .hero {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .product-section {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 24px;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .product-title {
+            font-size: 16px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .product-price {
+            font-size: 18px;
+            color: #000;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        .btn-primary {
+            background: #000;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #333;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: #000;
+            border: 1px solid #000;
+        }
+        .btn-secondary:hover {
+            background: #000;
+            color: white;
+        }
+        .integration-info {
+            background: #fff;
+            padding: 30px;
+            margin: 40px 20px;
+            border-left: 3px solid #000;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .tech-specs {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ZARA</h1>
+    </div>
+
+    <div class="hero">
+        <h2>Nueva Experiencia de Compra</h2>
+        <p>Descubre cómo te queda cada prenda antes de comprar con nuestro probador virtual powered by TryOnYou</p>
+    </div>
+
+    <div class="integration-info">
+        <h3>🎯 Integración Premium TryOnYou para Zara</h3>
+        <p>Esta demostración muestra cómo Zara puede implementar el SDK de TryOnYou manteniendo su identidad visual premium:</p>
+        
+        <div class="tech-specs">
+&lt;!-- Integración simple con configuración personalizada --&gt;
+&lt;script src="https://cdn.tryonyou.app/embed.js"
+        data-partner-id="zara"
+        data-theme="dark"
+        data-api-key="zara_production_key"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  // Configuración avanzada para Zara
+  TryOnYou.init({
+    partnerId: 'zara',
+    theme: 'dark',
+    language: 'es',
+    currency: 'EUR',
+    customStyles: {
+      primary: '#000000',
+      secondary: '#ffffff'
+    }
+  });
+&lt;/script&gt;
+        </div>
+    </div>
+
+    <div class="product-section">
+        <h2 class="section-title">NUEVA COLECCIÓN</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x300/000000/ffffff?text=BLAZER" alt="Blazer" class="product-image">
+                <div class="product-info">
+                    <div class="product-title">BLAZER ESTRUCTURA</div>
+                    <div class="product-price">89.95 EUR</div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="tryOnProduct('zara-blazer')">PROBAR</button>
+                        <button class="btn btn-secondary">AÑADIR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x300/2c3e50/ffffff?text=VESTIDO" alt="Vestido" class="product-image">
+                <div class="product-info">
+                    <div class="product-title">VESTIDO MIDI PLISADO</div>
+                    <div class="product-price">59.95 EUR</div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="tryOnProduct('zara-dress')">PROBAR</button>
+                        <button class="btn btn-secondary">AÑADIR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x300/34495e/ffffff?text=PANTALON" alt="Pantalón" class="product-image">
+                <div class="product-info">
+                    <div class="product-title">PANTALÓN WIDE LEG</div>
+                    <div class="product-price">39.95 EUR</div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="tryOnProduct('zara-pants')">PROBAR</button>
+                        <button class="btn btn-secondary">AÑADIR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://via.placeholder.com/280x300/7f8c8d/ffffff?text=ABRIGO" alt="Abrigo" class="product-image">
+                <div class="product-info">
+                    <div class="product-title">ABRIGO LANA</div>
+                    <div class="product-price">199.95 EUR</div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="tryOnProduct('zara-coat')">PROBAR</button>
+                        <button class="btn btn-secondary">AÑADIR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TryOnYou SDK Integration with Zara branding -->
+    <script src="embed.js" 
+            data-partner-id="zara"
+            data-theme="dark">
+    </script>
+
+    <script>
+        // Advanced configuration for Zara
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update TryOnYou with Zara-specific styling
+            TryOnYou.updateConfig({
+                customStyles: {
+                    primary: '#000000',
+                    secondary: '#ffffff',
+                    accent: '#f5f5f5'
+                },
+                language: 'es',
+                currency: 'EUR'
+            });
+        });
+
+        // Analytics integration
+        document.addEventListener('tryonyou:tryOnStarted', (e) => {
+            // Track with Zara's analytics
+            console.log('Zara Analytics: Try-on started', e.detail);
+            
+            // Example: Send to Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'virtual_try_on', {
+                    'custom_parameter': 'zara_tryon',
+                    'product_id': e.detail.product.id,
+                    'product_name': e.detail.product.name
+                });
+            }
+        });
+
+        document.addEventListener('tryonyou:panelOpened', () => {
+            console.log('Zara: TryOnYou panel opened');
+        });
+
+        // Product-specific try-on function
+        function tryOnProduct(productId) {
+            const products = {
+                'zara-blazer': {
+                    id: 'zara-blazer',
+                    name: 'Blazer Estructura',
+                    price: '89.95',
+                    image: 'https://via.placeholder.com/200x200/000000/ffffff?text=BLAZER',
+                    brand: 'zara',
+                    category: 'blazers',
+                    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+                    colors: ['Negro', 'Beige', 'Marino']
+                },
+                'zara-dress': {
+                    id: 'zara-dress',
+                    name: 'Vestido Midi Plisado',
+                    price: '59.95',
+                    image: 'https://via.placeholder.com/200x200/2c3e50/ffffff?text=VESTIDO',
+                    brand: 'zara',
+                    category: 'dresses'
+                },
+                'zara-pants': {
+                    id: 'zara-pants',
+                    name: 'Pantalón Wide Leg',
+                    price: '39.95',
+                    image: 'https://via.placeholder.com/200x200/34495e/ffffff?text=PANTALON',
+                    brand: 'zara',
+                    category: 'pants'
+                },
+                'zara-coat': {
+                    id: 'zara-coat',
+                    name: 'Abrigo Lana',
+                    price: '199.95',
+                    image: 'https://via.placeholder.com/200x200/7f8c8d/ffffff?text=ABRIGO',
+                    brand: 'zara',
+                    category: 'coats'
+                }
+            };
+
+            const product = products[productId];
+            if (product) {
+                TryOnYou.tryOnProduct(product);
+            }
+        }
+
+        // Example: Custom avatar creation flow for Zara
+        document.addEventListener('tryonyou:avatarCreationStarted', () => {
+            // You could redirect to a Zara-branded avatar creation page
+            console.log('Redirecting to Zara avatar creation...');
+        });
+    </script>
+</body>
+</html>

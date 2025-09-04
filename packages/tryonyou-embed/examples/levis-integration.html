@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Levi's - Ejemplo de Integración TryOnYou</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .header {
+            background: #1565c0;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .product-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .product-price {
+            font-size: 16px;
+            color: #1565c0;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .try-on-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        .try-on-button:hover {
+            opacity: 0.9;
+        }
+        .integration-info {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 4px solid #1565c0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Levi's® Store</h1>
+        <p>Probador Virtual Powered by TryOnYou</p>
+    </div>
+
+    <div class="integration-info">
+        <h3>🚀 Integración TryOnYou SDK</h3>
+        <p>Esta página demuestra cómo Levi's puede integrar el SDK de TryOnYou con solo unas líneas de código:</p>
+        <pre><code>&lt;script src="https://cdn.tryonyou.app/embed.js" 
+        data-partner-id="levis"
+        data-theme="light"&gt;&lt;/script&gt;</code></pre>
+        <p><strong>✨ Mira el widget flotante en la esquina inferior derecha!</strong></p>
+    </div>
+
+    <div class="product-grid">
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x200/1565c0/ffffff?text=501+Original" alt="Levi's 501" class="product-image">
+            <div class="product-title">Levi's® 501® Original Jeans</div>
+            <div class="product-price">€89.95</div>
+            <button class="try-on-button" onclick="tryOnProduct('levis-501')">
+                Probador Virtual
+            </button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x200/1565c0/ffffff?text=Trucker+Jacket" alt="Trucker Jacket" class="product-image">
+            <div class="product-title">Chaqueta Trucker de Mezclilla</div>
+            <div class="product-price">€119.95</div>
+            <button class="try-on-button" onclick="tryOnProduct('levis-trucker')">
+                Probador Virtual
+            </button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x200/1565c0/ffffff?text=511+Slim" alt="511 Slim" class="product-image">
+            <div class="product-title">Levi's® 511™ Slim Jeans</div>
+            <div class="product-price">€79.95</div>
+            <button class="try-on-button" onclick="tryOnProduct('levis-511')">
+                Probador Virtual
+            </button>
+        </div>
+
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x200/1565c0/ffffff?text=Graphic+Tee" alt="Graphic Tee" class="product-image">
+            <div class="product-title">Camiseta Gráfica Levi's®</div>
+            <div class="product-price">€34.95</div>
+            <button class="try-on-button" onclick="tryOnProduct('levis-tee')">
+                Probador Virtual
+            </button>
+        </div>
+    </div>
+
+    <!-- TryOnYou SDK Integration -->
+    <script src="embed.js" 
+            data-partner-id="levis"
+            data-theme="light">
+    </script>
+
+    <script>
+        // Optional: Listen to TryOnYou events
+        document.addEventListener('tryonyou:initialized', (e) => {
+            console.log('TryOnYou initialized:', e.detail);
+        });
+
+        document.addEventListener('tryonyou:tryOnStarted', (e) => {
+            console.log('Try-on started for product:', e.detail.product);
+            
+            // Here you could track analytics, send to your backend, etc.
+            // gtag('event', 'try_on_started', { product_id: e.detail.product.id });
+        });
+
+        // Function to trigger try-on from product buttons
+        function tryOnProduct(productId) {
+            // You can also manually trigger try-on for specific products
+            const product = {
+                id: productId,
+                name: `Producto ${productId}`,
+                price: '89.95',
+                image: `https://via.placeholder.com/200x200/1565c0/ffffff?text=${productId}`,
+                brand: 'levis'
+            };
+            
+            // This would integrate with your existing product data
+            TryOnYou.tryOnProduct(product);
+        }
+
+        // Example: Update theme based on user preference
+        function toggleTheme() {
+            const currentTheme = TryOnYou.config.theme;
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            TryOnYou.updateConfig({ theme: newTheme });
+        }
+    </script>
+</body>
+</html>
