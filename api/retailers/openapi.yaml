@@ -1,0 +1,455 @@
+openapi: 3.0.3
+info:
+  title: AVBETOS Retailers API
+  description: |
+    External API for retailers to consume AVBETOS intelligence system.
+    Allows brands like Levi's, Zara to integrate with TryOnMe/TryOnYou platform.
+    
+    ## Authentication
+    All endpoints require an API key passed in the `X-API-Key` header.
+    
+    ## Rate Limiting
+    API calls are limited to 100 requests per 15-minute window per IP address.
+    
+    ## Base URL
+    - Development: `http://localhost:3001`
+    - Production: `https://api.tryonyou.app`
+  version: 1.0.0
+  contact:
+    name: AVBETOS Support
+    email: api@tryonyou.app
+  license:
+    name: Proprietary
+    url: https://tryonyou.app/license
+
+servers:
+  - url: http://localhost:3001
+    description: Development server
+  - url: https://api.tryonyou.app
+    description: Production server
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /health:
+    get:
+      summary: Health check
+      description: Check if the API service is running
+      security: []
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  timestamp:
+                    type: string
+                    format: date-time
+                  service:
+                    type: string
+                    example: AVBETOS Retailers API
+                  version:
+                    type: string
+                    example: 1.0.0
+
+  /api/retailers/avatar/build:
+    post:
+      summary: Build 3D Avatar
+      description: Generate a parametric 3D avatar from body measurements
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - measurements
+              properties:
+                measurements:
+                  type: object
+                  properties:
+                    height:
+                      type: number
+                      example: 175
+                    weight:
+                      type: number
+                      example: 70
+                    chest:
+                      type: number
+                      example: 96
+                    waist:
+                      type: number
+                      example: 82
+                    hips:
+                      type: number
+                      example: 95
+                photo:
+                  type: string
+                  format: base64
+                  description: Optional photo for enhanced avatar generation
+                userId:
+                  type: string
+                  example: user_12345
+      responses:
+        '200':
+          description: Avatar created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvatarResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '500':
+          $ref: '#/components/responses/InternalError'
+
+  /api/retailers/fit/compare:
+    post:
+      summary: Compare Garment Fit
+      description: Compare how different garments fit on a specific avatar
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - avatarId
+                - garments
+              properties:
+                avatarId:
+                  type: string
+                  example: avatar_1234567890_abc123
+                garments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: LEVI_501_32x34
+                      brand:
+                        type: string
+                        example: Levi's
+                      size:
+                        type: string
+                        example: 32x34
+                      category:
+                        type: string
+                        example: jeans
+      responses:
+        '200':
+          description: Fit comparison completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FitComparisonResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /api/retailers/recommend/pau:
+    post:
+      summary: PAU Emotional Recommendations
+      description: Get personalized garment recommendations based on emotional state
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - avatarId
+              properties:
+                avatarId:
+                  type: string
+                  example: avatar_1234567890_abc123
+                emotionalState:
+                  type: string
+                  enum: [happy, confident, relaxed, professional, casual]
+                  example: confident
+                context:
+                  type: string
+                  example: work meeting
+                preferences:
+                  type: object
+                  properties:
+                    colors:
+                      type: array
+                      items:
+                        type: string
+                      example: [blue, black, white]
+                    styles:
+                      type: array
+                      items:
+                        type: string
+                      example: [classic, modern]
+      responses:
+        '200':
+          description: Recommendations generated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+
+  /api/retailers/cap/generate:
+    post:
+      summary: Creative Auto-Production
+      description: Generate custom designs using AI based on measurements and brand preferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - measurements
+                - brandPrompt
+              properties:
+                measurements:
+                  $ref: '#/components/schemas/Measurements'
+                preferences:
+                  type: object
+                  properties:
+                    style:
+                      type: string
+                      example: minimalist
+                    colors:
+                      type: array
+                      items:
+                        type: string
+                      example: [navy, white]
+                brandPrompt:
+                  type: string
+                  example: Create a sustainable, modern casual shirt with clean lines
+      responses:
+        '200':
+          description: Design generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DesignResponse'
+
+  /api/retailers/analytics:
+    get:
+      summary: Get Analytics
+      description: Retrieve usage analytics for the retailer
+      responses:
+        '200':
+          description: Analytics data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsResponse'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+
+  schemas:
+    Measurements:
+      type: object
+      properties:
+        height:
+          type: number
+        weight:
+          type: number
+        chest:
+          type: number
+        waist:
+          type: number
+        hips:
+          type: number
+
+    AvatarResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            avatarId:
+              type: string
+              example: avatar_1234567890_abc123
+            modelUrl:
+              type: string
+              format: uri
+              example: https://cdn.tryonyou.app/avatars/avatar_1234567890_abc123.glb
+            measurements:
+              $ref: '#/components/schemas/Measurements'
+            generatedAt:
+              type: string
+              format: date-time
+            retailer:
+              type: string
+              example: Levi's
+
+    FitComparisonResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            avatarId:
+              type: string
+            fitResults:
+              type: array
+              items:
+                type: object
+                properties:
+                  garmentId:
+                    type: string
+                  fitScore:
+                    type: number
+                    minimum: 0
+                    maximum: 100
+                  adjustments:
+                    type: object
+                  recommendation:
+                    type: string
+            processedAt:
+              type: string
+              format: date-time
+            retailer:
+              type: string
+
+    RecommendationResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            avatarId:
+              type: string
+            emotionalState:
+              type: string
+            recommendations:
+              type: array
+              items:
+                type: object
+                properties:
+                  garmentId:
+                    type: string
+                  reason:
+                    type: string
+                  emotionalFit:
+                    type: number
+                  styleMatch:
+                    type: number
+            processedAt:
+              type: string
+              format: date-time
+            retailer:
+              type: string
+
+    DesignResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            designId:
+              type: string
+            mockupUrl:
+              type: string
+              format: uri
+            printFile:
+              type: string
+              format: uri
+            pattern:
+              type: string
+              format: uri
+            measurements:
+              $ref: '#/components/schemas/Measurements'
+            brandPrompt:
+              type: string
+            createdAt:
+              type: string
+              format: date-time
+            retailer:
+              type: string
+
+    AnalyticsResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            retailer:
+              type: string
+            apiCalls:
+              type: object
+              properties:
+                total:
+                  type: number
+                thisMonth:
+                  type: number
+                today:
+                  type: number
+            popularEndpoints:
+              type: array
+              items:
+                type: object
+                properties:
+                  endpoint:
+                    type: string
+                  calls:
+                    type: number
+            period:
+              type: string
+              format: date-time
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    
+    Unauthorized:
+      description: Unauthorized - Invalid API key
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

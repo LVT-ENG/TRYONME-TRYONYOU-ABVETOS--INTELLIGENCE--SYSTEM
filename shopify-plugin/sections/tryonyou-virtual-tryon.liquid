@@ -1,0 +1,154 @@
+{% comment %}
+  TRYONYOU Virtual Try-On Section
+  This section can be added to product pages to enable virtual try-on functionality
+{% endcomment %}
+
+<div class="tryonyou-section">
+  {% if section.settings.enable_tryonyou %}
+    <div id="tryonyou-widget"></div>
+    
+    <script>
+      // Pass Shopify variables to the widget
+      window.TRYONYOU_API_KEY = '{{ section.settings.api_key | default: "demo-key" }}';
+      window.PRODUCT_ID = {{ product.id | default: 'null' }};
+      window.CUSTOMER_ID = {% if customer %}{{ customer.id }}{% else %}null{% endif %};
+      
+      // Initialize widget with product-specific settings
+      document.addEventListener('DOMContentLoaded', function() {
+        if (window.TryOnYouWidget) {
+          new TryOnYouWidget({
+            apiKey: window.TRYONYOU_API_KEY,
+            productId: window.PRODUCT_ID,
+            customerId: window.CUSTOMER_ID,
+            containerId: 'tryonyou-widget'
+          });
+        }
+      });
+    </script>
+  {% else %}
+    <div class="tryonyou-disabled">
+      <p>Virtual try-on is currently disabled for this product.</p>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "TRYONYOU Virtual Try-On",
+  "tag": "section",
+  "class": "tryonyou-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_tryonyou",
+      "label": "Enable Virtual Try-On",
+      "default": true,
+      "info": "Show the TRYONYOU widget on this product"
+    },
+    {
+      "type": "text",
+      "id": "api_key",
+      "label": "TRYONYOU API Key",
+      "info": "Your AVBETOS API key for retailers",
+      "placeholder": "Enter your API key"
+    },
+    {
+      "type": "select",
+      "id": "widget_position",
+      "label": "Widget Position",
+      "options": [
+        {
+          "value": "before_cart",
+          "label": "Before Add to Cart"
+        },
+        {
+          "value": "after_cart",
+          "label": "After Add to Cart"
+        },
+        {
+          "value": "product_tabs",
+          "label": "In Product Tabs"
+        }
+      ],
+      "default": "before_cart"
+    },
+    {
+      "type": "header",
+      "content": "Styling Options"
+    },
+    {
+      "type": "color",
+      "id": "primary_color",
+      "label": "Primary Color",
+      "default": "#667eea"
+    },
+    {
+      "type": "color",
+      "id": "success_color",
+      "label": "Success Color",
+      "default": "#48bb78"
+    },
+    {
+      "type": "range",
+      "id": "widget_width",
+      "min": 300,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "label": "Widget Width",
+      "default": 400
+    },
+    {
+      "type": "header",
+      "content": "Product Compatibility"
+    },
+    {
+      "type": "product",
+      "id": "compatible_products",
+      "label": "Compatible Products",
+      "info": "Select products that support virtual try-on"
+    },
+    {
+      "type": "collection",
+      "id": "compatible_collections",
+      "label": "Compatible Collections",
+      "info": "Select collections that support virtual try-on"
+    }
+  ],
+  "presets": [
+    {
+      "name": "TRYONYOU Virtual Try-On",
+      "settings": {
+        "enable_tryonyou": true
+      }
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .tryonyou-section {
+    margin: {{ section.settings.widget_width | default: 400 }}px auto;
+    max-width: 100%;
+  }
+  
+  .tryonyou-disabled {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: #6c757d;
+  }
+  
+  {% if section.settings.primary_color %}
+  .tryonyou-widget .tryonyou-btn.primary {
+    background: {{ section.settings.primary_color }} !important;
+  }
+  {% endif %}
+  
+  {% if section.settings.success_color %}
+  .tryonyou-widget .tryonyou-btn.success {
+    background: {{ section.settings.success_color }} !important;
+  }
+  {% endif %}
+</style>

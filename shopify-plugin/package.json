@@ -1,0 +1,30 @@
+{
+  "name": "tryonyou-shopify-plugin",
+  "version": "1.0.0",
+  "description": "TRYONYOU integration plugin for Shopify stores",
+  "main": "index.js",
+  "scripts": {
+    "dev": "shopify app dev",
+    "build": "shopify app build",
+    "deploy": "shopify app deploy"
+  },
+  "keywords": ["shopify", "tryonyou", "virtual-try-on", "fashion", "ai"],
+  "author": "AVBETOS Intelligence System",
+  "license": "PROPRIETARY",
+  "dependencies": {
+    "@shopify/app": "^3.52.0",
+    "@shopify/cli": "^3.52.0"
+  },
+  "devDependencies": {
+    "@shopify/theme": "^3.52.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "shopify": {
+    "theme": {
+      "name": "TRYONYOU Integration",
+      "role": "development"
+    }
+  }
+}
