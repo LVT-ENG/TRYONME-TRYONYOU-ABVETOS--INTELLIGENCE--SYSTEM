@@ -1,0 +1,26 @@
+#!/bin/bash
+set -e
+
+cd ~/ruta/a/tryonme-tryonyou-abvetos-intelligence-system
+
+git checkout main
+git pull origin main
+git checkout -b fusion-ultra
+
+git remote add tryonapp https://github.com/Tryonme-com/tryon-app.git || true
+git fetch tryonapp
+git checkout tryonapp/main -- .
+
+mkdir -p legacy/tryonapp
+mv vite.config.* legacy/tryonapp/ 2>/dev/null || true
+mv publicUtils.* legacy/tryonapp/ 2>/dev/null || true
+
+jq -s '.[0] * .[1]' package.json legacy/tryonapp/package.json > package.merged.json && mv package.merged.json package.json
+
+npm install
+npm run build
+npm run preview
+
+git add .
+git commit -m "Fusion ULTRA + tryon-app, utilidades en /legacy"
+git push origin fusion-ultra

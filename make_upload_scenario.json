@@ -1,0 +1,33 @@
+{
+  "scenarios": [
+    {
+      "name": "Shopify Upload Trigger",
+      "modules": [
+        {
+          "module": "http.makeRequest",
+          "parameters": {
+            "url": "https://tu-servidor.onrender.com/upload",
+            "method": "POST",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "bodyType": "raw",
+            "contentType": "application/json",
+            "body": "{}"
+          },
+          "mapper": {},
+          "position": {
+            "x": 100,
+            "y": 100
+          }
+        }
+      ],
+      "metadata": {
+        "version": 1
+      }
+    }
+  ]
+}
