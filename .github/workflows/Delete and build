@@ -1,0 +1,111 @@
+# 1. Ir al repo oficial
+cd ~/Desktop/TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM
+
+# 2. Limpiar todos los restos del core de Vite
+rm -rf dep-*.js chunks/ index.js constants.js cli.js module-runner.js \
+       moduleRunnerTransport-*.d.ts index.d.ts client.d.ts import-meta.d.ts \
+       env.mjs client.mjs
+
+# 3. Crear estructura mínima del proyecto
+mkdir -p src/components public docs
+
+# 4. Crear package.json con nombre correcto y dependencias mínimas
+cat > package.json << 'EOF'
+{
+  "name": "tryonyou-abvetos-ultra-plus-ultimatum",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "@vitejs/plugin-react": "^4.3.0"
+  }
+}
+EOF
+
+# 5. Crear configuración de Vite
+cat > vite.config.js << 'EOF'
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 5173
+  }
+})
+EOF
+
+# 6. Crear index.html (landing base)
+cat > index.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRYONYOU – ABVETOS ULTRA–PLUS–ULTIMATUM</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+EOF
+
+# 7. Crear src/main.jsx
+cat > src/main.jsx << 'EOF'
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './components/App'
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+)
+EOF
+
+# 8. Crear componente principal App.jsx
+cat > src/components/App.jsx << 'EOF'
+import React from 'react'
+
+export default function App() {
+  return (
+    <div style={{ fontFamily: 'Arial, sans-serif', padding: '2rem' }}>
+      <h1>TRYONYOU – ABVETOS ULTRA–PLUS–ULTIMATUM</h1>
+      <p>Patent Protected Technology</p>
+      <ul>
+        <li>Virtual Smart Wardrobe</li>
+        <li>Solidarity Wardrobe</li>
+        <li>ABVET Dual-Biometric Payment</li>
+        <li>Fashion Trend Tracker</li>
+        <li>CAP Auto-Production & LiveIt Factory</li>
+      </ul>
+    </div>
+  )
+}
+EOF
+
+# 9. Crear .gitignore para no subir basura
+cat > .gitignore << 'EOF'
+node_modules
+dist
+.env
+.DS_Store
+EOF
+
+# 10. Instalar dependencias
+npm install
+
+# 11. Commit y push al repo
+git add .
+git commit -m "Cleanup + Base structure TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM"
+git push origin main
