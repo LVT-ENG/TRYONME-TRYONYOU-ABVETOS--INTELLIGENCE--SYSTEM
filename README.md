@@ -85,9 +85,16 @@ Este software es propietario y está protegido por patente.
 ## 🎯 Estado del Proyecto
 
 - [x] Motor de recomendaciones (Google Apps Script)
-- [x] Interfaz web básica
+- [x] Interfaz web básica con React Router
 - [x] Sistema de contacto
+- [x] Navegación entre páginas principales
+- [x] Estructura base para componentes
+- [x] Stub components para features principales
 - [ ] Integración con APIs de moda
-- [ ] Dashboard de administración
-- [ ] Sistema de pagos biométricos
+- [ ] Dashboard de administración completo
+- [ ] Sistema de pagos biométricos funcional
+
+## 🗺️ Planificación
+
+Ver [ROADMAP.md](./ROADMAP.md) para la hoja de ruta completa y [FEATURE_ISSUES.md](./FEATURE_ISSUES.md) para los issues individuales planificados.
 >>>>>>> 64eec70b9cacfa043d4974482c5fa6daed352623
