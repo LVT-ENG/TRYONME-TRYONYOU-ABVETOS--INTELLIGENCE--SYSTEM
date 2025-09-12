@@ -37,6 +37,7 @@ Este repositorio utiliza [Conventional Commits](https://www.conventionalcommits.
 - `config`: archivos de configuración
 - `docs`: documentación
 - `test`: testing
+- `build`: sistema de build y artefactos
 - `avbetos`: sistema AVBETOS específico
 - `tryonme`: funcionalidad TryOnMe
 - `tryonyou`: funcionalidad TryOnYou
