@@ -126,7 +126,7 @@ Bienvenido a la documentación completa del sistema TryOnMe / TryOnYou - AVBETOS
 
 ### Para Partners/Empresas
 - 🤝 business@tryonme.com
-- 📞 +34 xxx xxx xxx (horario comercial)
+- 📞 +34 [número de contacto pendiente] (horario comercial)
 
 ---
 
