@@ -4,7 +4,7 @@ Documentación completa de la API del sistema TryOnMe / TryOnYou - AVBETOS Intel
 
 ## 🔍 Información General
 
-**Base URL**: `https://tu-dominio.com`  
+**Base URL**: `https://tu-dominio.com` _(placeholder, reemplazar por el dominio real de la API)_  
 **Versión**: v1.0.0  
 **Formato**: JSON  
 **Autenticación**: Bearer Token (para endpoints protegidos)
