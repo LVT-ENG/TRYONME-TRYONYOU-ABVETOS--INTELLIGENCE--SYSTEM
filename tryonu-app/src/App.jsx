@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { trackFashionEvent, captureException, SentryErrorBoundary } from "./sentry.js";
+import MetricsDashboard from "./MetricsDashboard.jsx";
 
 const PEACOCK = "#0F5E68";
 
@@ -14,9 +16,82 @@ const products = [
 
 export default function App() {
   const [selected, setSelected] = useState(null);
+  const [currentView, setCurrentView] = useState('app'); // 'app' or 'dashboard'
+
+  // Track app initialization
+  useEffect(() => {
+    try {
+      trackFashionEvent("app_loaded", {
+        timestamp: Date.now(),
+        userAgent: navigator.userAgent
+      });
+    } catch (error) {
+      captureException(error);
+    }
+  }, []);
+
+  // Handle product selection with tracking
+  const handleProductSelect = (product) => {
+    try {
+      setSelected(product);
+      trackFashionEvent("product_view", {
+        productId: product.id,
+        productName: product.name,
+        price: product.price,
+        timestamp: Date.now()
+      });
+    } catch (error) {
+      captureException(error);
+    }
+  };
+
+  // Navigation component
+  const Navigation = () => (
+    <div className="fixed top-4 right-4 z-50 flex space-x-2">
+      <button
+        onClick={() => setCurrentView('app')}
+        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+          currentView === 'app'
+            ? 'bg-blue-600 text-white'
+            : 'bg-white text-gray-700 hover:bg-gray-50 border'
+        }`}
+      >
+        Fashion App
+      </button>
+      <button
+        onClick={() => setCurrentView('dashboard')}
+        className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+          currentView === 'dashboard'
+            ? 'bg-blue-600 text-white'
+            : 'bg-white text-gray-700 hover:bg-gray-50 border'
+        }`}
+      >
+        📊 Dashboard
+      </button>
+    </div>
+  );
 
   return (
-    <div className="font-sans bg-white text-gray-900">
+    <SentryErrorBoundary fallback={({ error, resetError }) => (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Something went wrong</h1>
+          <p className="text-gray-600 mb-4">We're working to fix this issue. Please try again.</p>
+          <button 
+            onClick={resetError}
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    )}>
+      <Navigation />
+      
+      {currentView === 'dashboard' ? (
+        <MetricsDashboard />
+      ) : (
+        <div className="font-sans bg-white text-gray-900">
       {/* Hero Section */}
       <section className="h-screen flex flex-col justify-center items-center text-center bg-gradient-to-b from-white to-gray-100">
         <motion.h1
@@ -49,7 +124,7 @@ export default function App() {
               key={p.id}
               className="bg-white rounded-2xl shadow hover:shadow-lg cursor-pointer overflow-hidden"
               whileHover={{ scale: 1.03 }}
-              onClick={() => setSelected(p)}
+              onClick={() => handleProductSelect(p)}
             >
               <img src={p.img} alt={p.name} className="w-full h-80 object-cover" />
               <div className="p-4">
@@ -88,7 +163,19 @@ export default function App() {
           >
             <button
               className="absolute top-3 right-4 text-gray-500 hover:text-black"
-              onClick={() => setSelected(null)}
+              onClick={() => {
+                try {
+                  trackFashionEvent("product_close", {
+                    productId: selected.id,
+                    productName: selected.name,
+                    viewDuration: Date.now() // Could calculate actual duration
+                  });
+                  setSelected(null);
+                } catch (error) {
+                  captureException(error);
+                  setSelected(null);
+                }
+              }}
             >
               ✕
             </button>
@@ -98,6 +185,20 @@ export default function App() {
             <button
               className="mt-6 px-6 py-2 rounded-xl text-white"
               style={{ backgroundColor: PEACOCK }}
+              onClick={() => {
+                try {
+                  trackFashionEvent("purchase_intent", {
+                    productId: selected.id,
+                    productName: selected.name,
+                    price: selected.price,
+                    timestamp: Date.now()
+                  });
+                  // Here you would normally integrate with shopping cart/checkout
+                  alert(`${selected.name} añadido al Armario Inteligente`);
+                } catch (error) {
+                  captureException(error);
+                }
+              }}
             >
               Añadir al Armario Inteligente
             </button>
@@ -105,5 +206,7 @@ export default function App() {
         </motion.div>
       )}
     </div>
+      )}
+    </SentryErrorBoundary>
   );
 }

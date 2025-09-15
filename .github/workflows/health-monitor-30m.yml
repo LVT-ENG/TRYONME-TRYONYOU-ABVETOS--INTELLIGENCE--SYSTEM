@@ -13,16 +13,109 @@ jobs:
       - name: Check /api/health
         id: h
         run: |
+          # Fetch health data and save response
+          curl -s "${{ secrets.HEALTH_URL }}" -o health_response.json
           code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.HEALTH_URL }}")
           echo "code=$code" >> $GITHUB_OUTPUT
-          test "$code" = "200"
-      - name: Incident issue + Slack
+          
+          # Extract metrics from response
+          if [ "$code" = "200" ]; then
+            # Parse JSON metrics using jq
+            error_rate=$(jq -r '.metrics.error_rate_percent // 0' health_response.json)
+            p95_time=$(jq -r '.metrics.p95_response_time_ms // 0' health_response.json)
+            response_time=$(jq -r '.metrics.response_time_ms // 0' health_response.json)
+            status=$(jq -r '.status // "unknown"' health_response.json)
+            active_users=$(jq -r '.metrics.active_users.current // 0' health_response.json)
+            
+            echo "error_rate=$error_rate" >> $GITHUB_OUTPUT
+            echo "p95_time=$p95_time" >> $GITHUB_OUTPUT
+            echo "response_time=$response_time" >> $GITHUB_OUTPUT
+            echo "status=$status" >> $GITHUB_OUTPUT
+            echo "active_users=$active_users" >> $GITHUB_OUTPUT
+            
+            # Check thresholds
+            error_rate_exceeded=$(echo "$error_rate > 1.0" | bc -l)
+            p95_exceeded=$(echo "$p95_time > 300" | bc -l)
+            
+            echo "error_rate_exceeded=$error_rate_exceeded" >> $GITHUB_OUTPUT
+            echo "p95_exceeded=$p95_exceeded" >> $GITHUB_OUTPUT
+            
+            # Print metrics for debugging
+            echo "📊 Health Metrics:"
+            echo "  Status: $status"
+            echo "  Error Rate: $error_rate%"
+            echo "  P95 Response Time: $p95_time ms"
+            echo "  Current Response Time: $response_time ms"
+            echo "  Active Users: $active_users"
+            echo "  Error Rate Exceeded: $error_rate_exceeded"
+            echo "  P95 Exceeded: $p95_exceeded"
+            
+            # Fail if any threshold is exceeded or status is not ok
+            if [ "$error_rate_exceeded" = "1" ] || [ "$p95_exceeded" = "1" ] || [ "$status" != "ok" ]; then
+              echo "❌ Health thresholds exceeded or system degraded"
+              exit 1
+            fi
+          else
+            echo "❌ Health endpoint returned HTTP $code"
+            exit 1
+          fi
+
+      - name: Alert for threshold violations
         if: failure()
         run: |
-          MSG="❌ Health FAIL (${{ steps.h.outputs.code }}) — sha:${GITHUB_SHA}"
-          gh issue create --title "Incident: Health check failed" --body "$MSG" --label "ops:incident"
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"$MSG\"}" \
+          # Determine alert type and message
+          ERROR_RATE="${{ steps.h.outputs.error_rate }}"
+          P95_TIME="${{ steps.h.outputs.p95_time }}"
+          STATUS="${{ steps.h.outputs.status }}"
+          CODE="${{ steps.h.outputs.code }}"
+          
+          # Create detailed alert message
+          if [ "$CODE" != "200" ]; then
+            ALERT_TYPE="🚨 CRITICAL: Health Endpoint Down"
+            MSG="$ALERT_TYPE (HTTP $CODE)\n\nThe health endpoint is not responding correctly.\n\nAction Required: Immediate investigation needed.\n\nCommit: ${GITHUB_SHA:0:7}"
+            SEVERITY="critical"
+          elif [ "${{ steps.h.outputs.error_rate_exceeded }}" = "1" ]; then
+            ALERT_TYPE="⚠️ HIGH ERROR RATE ALERT"
+            MSG="$ALERT_TYPE\n\nError Rate: $ERROR_RATE% (Threshold: 1.0%)\nP95 Response Time: $P95_TIME ms\nSystem Status: $STATUS\n\nAction Required: Investigate error causes immediately.\n\nCommit: ${GITHUB_SHA:0:7}"
+            SEVERITY="high"
+          elif [ "${{ steps.h.outputs.p95_exceeded }}" = "1" ]; then
+            ALERT_TYPE="⚠️ PERFORMANCE DEGRADATION ALERT"
+            MSG="$ALERT_TYPE\n\nP95 Response Time: $P95_TIME ms (Threshold: 300ms)\nError Rate: $ERROR_RATE%\nSystem Status: $STATUS\n\nAction Required: Check system performance and scaling.\n\nCommit: ${GITHUB_SHA:0:7}"
+            SEVERITY="medium"
+          else
+            ALERT_TYPE="⚠️ SYSTEM DEGRADED"
+            MSG="$ALERT_TYPE\n\nSystem Status: $STATUS\nError Rate: $ERROR_RATE%\nP95 Response Time: $P95_TIME ms\n\nAction Required: System health check required.\n\nCommit: ${GITHUB_SHA:0:7}"
+            SEVERITY="medium"
+          fi
+          
+          # Create GitHub issue
+          gh issue create \
+            --title "Incident: $ALERT_TYPE" \
+            --body "$MSG" \
+            --label "ops:incident,severity:$SEVERITY"
+          
+          # Send Slack notification
+          SLACK_MSG="{\"text\":\"$ALERT_TYPE\",\"blocks\":[{\"type\":\"section\",\"text\":{\"type\":\"mrkdwn\",\"text\":\"$MSG\"}}]}"
+          curl -X POST \
+            -H 'Content-type: application/json' \
+            --data "$SLACK_MSG" \
             "${{ secrets.SLACK_WEBHOOK_URL }}"
+            
+          # Send email alert if configured
+          if [ -n "${{ secrets.EMAIL_WEBHOOK_URL }}" ]; then
+            EMAIL_DATA="{\"to\":\"${{ secrets.ALERT_EMAIL }}\",\"subject\":\"TRYONU Alert: $ALERT_TYPE\",\"body\":\"$MSG\"}"
+            curl -X POST \
+              -H 'Content-type: application/json' \
+              --data "$EMAIL_DATA" \
+              "${{ secrets.EMAIL_WEBHOOK_URL }}"
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Success notification
+        if: success()
+        run: |
+          echo "✅ All health checks passed"
+          echo "  Error Rate: ${{ steps.h.outputs.error_rate }}%"
+          echo "  P95 Response Time: ${{ steps.h.outputs.p95_time }}ms"
+          echo "  Active Users: ${{ steps.h.outputs.active_users }}"
