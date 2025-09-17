@@ -4,14 +4,7 @@ import { trackFashionEvent, captureException } from "../sentry.js";
 
 const PEACOCK = "#0F5E68";
 
-const products = [
-  { id: 1, name: "Luxury Jacket", price: "€1200", img: "https://via.placeholder.com/400x500" },
-  { id: 2, name: "Digital Dress", price: "€980", img: "https://via.placeholder.com/400x500" },
-  { id: 3, name: "Virtual Blazer", price: "€1500", img: "https://via.placeholder.com/400x500" },
-  { id: 4, name: "AI Sneakers", price: "€680", img: "https://via.placeholder.com/400x500" },
-  { id: 5, name: "LVT Coat", price: "€2200", img: "https://via.placeholder.com/400x500" },
-  { id: 6, name: "TRYON Suit", price: "€1850", img: "https://via.placeholder.com/400x500" }
-];
+import { products } from "../mockProducts";
 
 export default function HomePage() {
   const [selected, setSelected] = useState(null);
