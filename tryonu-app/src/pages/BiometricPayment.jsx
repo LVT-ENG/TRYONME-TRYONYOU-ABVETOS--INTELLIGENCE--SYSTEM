@@ -11,11 +11,13 @@ export default function BiometricPayment() {
     item: ''
   });
 
-  const handleBiometricStep = (nextStep) => {
+  // Promise-based delay function for better testability
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const handleBiometricStep = async (nextStep) => {
     // Mock biometric validation
-    setTimeout(() => {
-      setStep(nextStep);
-    }, 2000);
+    await delay(2000);
+    setStep(nextStep);
   };
 
   const BiometricSetup = () => (
