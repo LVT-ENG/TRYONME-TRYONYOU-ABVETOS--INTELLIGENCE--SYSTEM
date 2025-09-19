@@ -31,7 +31,7 @@
 ### Para Desarrolladores
 1. [Configurar entorno de desarrollo](./development-setup.md)
 2. [Leer guía de contribución](./contributing.md)  
-3. [Revisar convenciones de código](./contributing.md#convenciones-de-código)
+3. [Revisar convenciones de código](./coding-conventions.md)
 
 ### Para Usuarios
 1. [Guía de usuario del sistema](./user-guide.md)
