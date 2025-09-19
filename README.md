@@ -40,6 +40,22 @@ Módulo core del sistema de inteligencia AVBETOS.
 
 ## 🔧 Desarrollo
 
+### 📋 Contribuir al Proyecto
+
+**Issue Templates Mejorados**: El proyecto utiliza templates de GitHub que siguen conventional commits para mantener la calidad y consistencia:
+
+- **🚀 Feature Request**: Para nuevas funcionalidades - `feat(scope): descripción`
+- **🐛 Bug Report**: Para reportar errores - `fix(scope): descripción` 
+- **📚 Documentation**: Para mejoras de documentación - `docs(scope): descripción`
+
+**Guía rápida**:
+1. Al crear un issue, selecciona el template apropiado
+2. Reemplaza `SCOPE` con uno válido: `core`, `ui`, `api`, `auth`, `db`, etc.
+3. Reemplaza los placeholders en MAYÚSCULAS con información específica
+4. Consulta la [Guía de Templates](./.github/ISSUE_TEMPLATE/template-guide.md) para ejemplos
+
+**Validación**: Los templates se validan automáticamente con `npm run validate:templates`
+
 ### Estructura del Proyecto
 ```
 ├── google-apps-script/          # Motor de recomendaciones (Google Apps Script)

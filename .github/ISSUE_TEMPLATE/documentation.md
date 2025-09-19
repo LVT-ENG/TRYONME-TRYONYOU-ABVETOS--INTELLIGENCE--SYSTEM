@@ -1,10 +1,21 @@
 ---
 name: Documentation
 about: Mejoras en documentación
-title: 'docs(scope): descripción breve'
+title: 'docs(SCOPE): REPLACE_WITH_DOCS_DESCRIPTION'
 labels: documentation
 assignees: ''
 ---
+
+<!-- 
+🚨 IMPORTANTE: Reemplaza el título con un scope válido y descripción específica
+Formato: docs(scope): descripción breve
+Scopes válidos: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
+
+Ejemplos válidos:
+- docs(api): update endpoint documentation
+- docs(deploy): add deployment guide
+- docs(core): document recommendation system
+-->
 
 ## Motivación
 - ¿Qué documentación necesita mejora?

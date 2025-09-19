@@ -1,11 +1,17 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Documentación del Proyecto
+  - name: 📋 Guía de Templates de Issues
+    url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/.github/ISSUE_TEMPLATE/template-guide.md
+    about: ¿No sabes qué template usar? Consulta esta guía
+  - name: 📝 Conventional Commits Guide
+    url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/CONVENTIONAL_COMMITS.md  
+    about: Guía completa de conventional commits y scopes válidos
+  - name: 📚 Documentación del Proyecto
     url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/README.md
     about: Consulta la documentación principal del proyecto
-  - name: GitHub Copilot Instructions
+  - name: 🤖 GitHub Copilot Instructions
     url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/.github/copilot-instructions.md
     about: Guías para desarrollo con GitHub Copilot
-  - name: Contributing Guidelines
+  - name: 🚀 Contributing Guidelines
     url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/.github/CONTRIBUTING.md
     about: Cómo contribuir al proyecto

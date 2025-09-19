@@ -1,0 +1,49 @@
+name: Validate Issue Templates
+
+on:
+  push:
+    paths:
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'scripts/validate-templates.sh'
+  pull_request:
+    paths:
+      - '.github/ISSUE_TEMPLATE/**'
+      - 'scripts/validate-templates.sh'
+
+jobs:
+  validate-templates:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Make validation script executable
+      run: chmod +x scripts/validate-templates.sh
+      
+    - name: Validate issue templates
+      run: ./scripts/validate-templates.sh
+      
+    - name: Check conventional commit compliance
+      run: |
+        echo "🔍 Checking templates follow conventional commit format..."
+        
+        # Check that templates use valid scopes from commitlint.config.js
+        SCOPES=$(awk '/scope-enum/,/\]/' commitlint.config.js | grep -E "^\s*'[a-z]+'" | cut -d"'" -f2 | grep -v always | tr '\n' '|' | sed 's/|$//')
+        
+        echo "Valid scopes: $SCOPES"
+        
+        # Check each template has valid scope placeholder
+        for template in .github/ISSUE_TEMPLATE/*.md; do
+          if [[ "$(basename "$template")" != "template-guide.md" ]]; then
+            echo "  Checking $(basename "$template")..."
+            if grep -q "SCOPE" "$template"; then
+              echo "    ✅ Has SCOPE placeholder"
+            else
+              echo "    ❌ Missing SCOPE placeholder"
+              exit 1
+            fi
+          fi
+        done
+        
+        echo "✅ All templates are conventional commit compliant!"
