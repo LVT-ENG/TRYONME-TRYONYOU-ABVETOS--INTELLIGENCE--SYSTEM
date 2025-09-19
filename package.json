@@ -7,6 +7,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint:commits": "commitlint --from HEAD~1 --to HEAD --verbose",
+    "validate:templates": "./scripts/validate-templates.sh",
     "prepare": "npm run build"
   },
   "dependencies": {

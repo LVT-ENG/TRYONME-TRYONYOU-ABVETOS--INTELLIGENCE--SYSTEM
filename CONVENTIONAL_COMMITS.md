@@ -57,11 +57,31 @@ npm install
 
 ## 📝 Templates de Issues
 
-Se han creado templates para diferentes tipos de issues:
+Se han creado templates mejorados para diferentes tipos de issues que **previenen la creación de issues con placeholders**:
 
-- **Feature Request**: `feat(scope): descripción breve`
-- **Bug Report**: `fix(scope): descripción del bug`
-- **Documentation**: `docs(scope): descripción breve`
+- **Feature Request**: `feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION`
+- **Bug Report**: `fix(SCOPE): REPLACE_WITH_BUG_DESCRIPTION`  
+- **Documentation**: `docs(SCOPE): REPLACE_WITH_DOCS_DESCRIPTION`
+
+### 🎯 Cómo usar los templates
+
+1. **Al crear un issue**, GitHub te mostrará los templates disponibles
+2. **Elige el template apropiado** según el tipo de cambio
+3. **Reemplaza los placeholders en MAYÚSCULAS** con información específica
+4. **Usa un scope válido** de la lista definida en `commitlint.config.js`
+
+### ✅ Ejemplos de títulos correctos después de reemplazar placeholders:
+
+```bash
+feat(tryonme): add virtual wardrobe feature
+fix(ui): resolve mobile navigation overlay  
+docs(api): update recommendation endpoints
+feat(auth): implement biometric authentication
+```
+
+### 📋 Guía de Templates
+
+Si no estás seguro qué template usar, consulta la [Guía de Templates](../.github/ISSUE_TEMPLATE/template-guide.md) que incluye ejemplos detallados y mejores prácticas.
 
 ## 🚀 Validación Automática
 
