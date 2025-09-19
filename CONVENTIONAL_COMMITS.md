@@ -59,9 +59,9 @@ npm install
 
 Se han creado templates para diferentes tipos de issues:
 
-- **Feature Request**: `feat(scope): descripción breve`
-- **Bug Report**: `fix(scope): descripción del bug`
-- **Documentation**: `docs(scope): descripción breve`
+- **Feature Request**: `feat(core): descripción específica de la nueva funcionalidad`
+- **Bug Report**: `fix(core): descripción específica del bug`
+- **Documentation**: `docs(docs): descripción específica de la mejora de documentación`
 
 ## 🚀 Validación Automática
 

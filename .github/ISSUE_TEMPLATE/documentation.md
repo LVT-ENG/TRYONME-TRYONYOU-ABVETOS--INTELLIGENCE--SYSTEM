@@ -1,10 +1,28 @@
 ---
 name: Documentation
 about: Mejoras en documentación
-title: 'docs(scope): descripción breve'
+title: 'docs(docs): descripción específica de la mejora de documentación'
 labels: documentation
 assignees: ''
 ---
+
+<!-- 
+INSTRUCCIONES: 
+- Reemplaza "docs" en el título por el scope apropiado: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
+- Para documentación general usa "docs", para documentación específica usa el scope correspondiente
+- Reemplaza "descripción específica de la mejora de documentación" con una descripción breve y clara
+
+SCOPES DISPONIBLES:
+- docs: documentación general
+- core: funcionalidad principal del sistema
+- ui: interfaz de usuario  
+- api: endpoints y servicios
+- auth: autenticación y autorización
+- config: archivos de configuración
+- avbetos: sistema AVBETOS específico
+- tryonme: funcionalidad TryOnMe
+- tryonyou: funcionalidad TryOnYou
+-->
 
 ## Motivación
 - ¿Qué documentación necesita mejora?

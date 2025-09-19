@@ -1,10 +1,28 @@
 ---
 name: Bug Report
 about: Reporte de errores o problemas
-title: 'fix(scope): descripción del bug'
+title: 'fix(core): descripción específica del bug'
 labels: bug
 assignees: ''
 ---
+
+<!-- 
+INSTRUCCIONES: 
+- Reemplaza "core" en el título por el scope apropiado: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
+- Reemplaza "descripción específica del bug" con una descripción breve y clara del problema
+
+SCOPES DISPONIBLES:
+- core: funcionalidad principal del sistema
+- ui: interfaz de usuario  
+- api: endpoints y servicios
+- auth: autenticación y autorización
+- db: base de datos
+- config: archivos de configuración
+- avbetos: sistema AVBETOS específico
+- tryonme: funcionalidad TryOnMe
+- tryonyou: funcionalidad TryOnYou
+- health: health checks y monitoring
+-->
 
 ## Descripción del problema
 - ¿Qué está fallando?
