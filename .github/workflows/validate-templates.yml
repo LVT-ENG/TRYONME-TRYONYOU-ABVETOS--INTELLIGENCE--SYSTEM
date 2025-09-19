@@ -29,7 +29,7 @@ jobs:
         echo "🔍 Checking templates follow conventional commit format..."
         
         # Check that templates use valid scopes from commitlint.config.js
-        SCOPES=$(grep -A 15 'scope-enum' commitlint.config.js | grep "'" | cut -d"'" -f2 | grep -v scope | tr '\n' '|' | sed 's/|$//')
+        SCOPES=$(awk '/scope-enum/,/\]/' commitlint.config.js | grep -E "^\s*'[a-z]+'" | cut -d"'" -f2 | grep -v always | tr '\n' '|' | sed 's/|$//')
         
         echo "Valid scopes: $SCOPES"
         

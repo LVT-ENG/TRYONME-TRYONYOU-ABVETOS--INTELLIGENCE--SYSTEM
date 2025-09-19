@@ -79,6 +79,14 @@ docs(api): update recommendation endpoints
 feat(auth): implement biometric authentication
 ```
 
+### ❌ Títulos incorrectos (que causan problemas como #136):
+
+```bash
+feat(scope): descripción breve                    # ❌ Placeholders sin reemplazar
+feat(templates): add issue templates               # ❌ Scope inválido 
+Feature request for new dashboard                  # ❌ No sigue formato conventional
+```
+
 ### 📋 Guía de Templates
 
 Si no estás seguro qué template usar, consulta la [Guía de Templates](../.github/ISSUE_TEMPLATE/template-guide.md) que incluye ejemplos detallados y mejores prácticas.
