@@ -1,7 +1,7 @@
 name: Ultimate Integrator
 
 on:
-  workflow_dispatch:   # puedes lanzarlo a mano desde Actions
+  workflow_dispatch: {}   # puedes lanzarlo a mano desde Actions
   push:
     paths:
       - "ALL_TRYONYOU_ZIPS_ULTIMATUM.zip"  # o cualquier ZIP maestro que subas
