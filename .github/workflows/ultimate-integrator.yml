@@ -1,0 +1,67 @@
+name: Ultimate Integrator
+
+on:
+  workflow_dispatch:   # puedes lanzarlo a mano desde Actions
+  push:
+    paths:
+      - "ALL_TRYONYOU_ZIPS_ULTIMATUM.zip"  # o cualquier ZIP maestro que subas
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Preparar entorno
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip rsync zip
+
+      - name: Generar ZIP maestro desde docs/media
+        run: |
+          mkdir -p /tmp/all_files
+          # Recolecta cualquier archivo relevante del repo
+          cp -r docs || true
+          cp -r media || true
+          cp -r *.docx || true
+          cp -r *.md || true
+          cp -r *.mp4 || true
+          cp -r *.zip || true
+          mkdir -p /tmp/all_files
+          cp -r * /tmp/all_files/ || true
+
+          cd /tmp/all_files
+          zip -r ALL_TRYONYOU_ZIPS_ULTIMATUM.zip ./*
+          mv ALL_TRYONYOU_ZIPS_ULTIMATUM.zip $GITHUB_WORKSPACE/
+
+      - name: Copiar ZIP al repo
+        run: |
+          mkdir -p docs/legacy_rewrite
+          mv ALL_TRYONYOU_ZIPS_ULTIMATUM.zip docs/legacy_rewrite/
+
+      - name: Commit & Push cambios
+        run: |
+          git config --global user.name "ABVETOS-Bot"
+          git config --global user.email "bot@tryonyou.com"
+          git add docs/legacy_rewrite/ALL_TRYONYOU_ZIPS_ULTIMATUM.zip
+          git commit -m "AUTO: Integración de ALL_TRYONYOU_ZIPS_ULTIMATUM.zip en Ultimátum" || echo "Sin cambios"
+          git push
+
+      - name: Deploy a Vercel
+        run: |
+          npm install -g vercel
+          DEPLOY_OUTPUT=$(vercel --prod --token "${{ secrets.VERCEL_TOKEN }}" --confirm \
+            --project "${{ secrets.VERCEL_PROJECT_ID }}" --scope "${{ secrets.VERCEL_ORG_ID }}")
+          echo "$DEPLOY_OUTPUT" > deploy.log
+          DEPLOY_URL=$(grep -Eo 'https://[a-zA-Z0-9./_-]+\.vercel\.app' deploy.log | tail -n1)
+          echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_ENV
+
+      - name: Notificar en Telegram
+        if: env.DEPLOY_URL != ''
+        run: |
+          MESSAGE="✅ Deploy completado%0ARepo: TRYONYOU–ULTIMATUM%0ACommit: AUTO%0AURL: $DEPLOY_URL"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="$MESSAGE"
