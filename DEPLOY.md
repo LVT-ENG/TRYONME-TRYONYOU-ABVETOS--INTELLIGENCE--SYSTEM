@@ -21,6 +21,36 @@ Esta guía cubre el despliegue completo del sistema TryOnMe/TryOnYou AVBETOS Int
 
 ---
 
+## 🤖 Automatización de Despliegue (Nuevo)
+
+### Update from ZIPs - Automatización Completa
+
+**Nuevo sistema automatizado** para procesar archivos ZIP y desplegar automáticamente:
+
+- **Workflow**: `.github/workflows/update-from-zips.yml`
+- **Script local**: `scripts/update-from-zips.sh`
+- **Documentación**: [docs/UPDATE_FROM_ZIPS.md](docs/UPDATE_FROM_ZIPS.md)
+
+**Activación automática**:
+- Al hacer push de archivos `*.zip` al repositorio
+- Manualmente desde GitHub Actions
+
+**Funcionalidades**:
+- Extracción automática de ZIPs
+- Sincronización de contenido con rsync
+- Build y deploy automático a Vercel
+- Notificaciones por Telegram
+- Limpieza automática de archivos temporales
+
+**Configuración rápida**:
+1. Configura secrets en GitHub: `VERCEL_TOKEN`, `VERCEL_PROJECT_ID`, `VERCEL_ORG_ID`
+2. Opcionalmente: `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`
+3. Sube archivos ZIP al repositorio o ejecuta manualmente
+
+📖 **Ver guía completa**: [docs/UPDATE_FROM_ZIPS.md](docs/UPDATE_FROM_ZIPS.md)
+
+---
+
 ## 🌐 Despliegue Frontend (Web Interface)
 
 ### Requisitos Previos

@@ -1,0 +1,130 @@
+name: Update from ZIPs
+
+on:
+  push:
+    paths:
+      - "*.zip"   # Trigger when ZIP files are pushed to root
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unzip rsync curl
+
+      - name: Process and extract ZIP files
+        run: |
+          echo "➤ Processing ZIP files in repository root..."
+          mkdir -p /tmp/incoming
+          
+          # Find and process all ZIP files
+          for zip in *.zip; do
+            if [ -f "$zip" ]; then
+              echo "➤ Extracting $zip"
+              unzip -o "$zip" -d /tmp/incoming
+            else
+              echo "No ZIP files found"
+            fi
+          done
+
+      - name: Synchronize extracted content
+        run: |
+          echo "➤ Synchronizing extracted content with repository..."
+          if [ -d "/tmp/incoming" ] && [ "$(ls -A /tmp/incoming)" ]; then
+            # Use rsync to merge content, preserving existing files and updating when source is newer
+            rsync -avh /tmp/incoming/ ./ --ignore-existing
+            rsync -avh /tmp/incoming/ ./ --update
+            echo "✅ Content synchronized successfully"
+          else
+            echo "No content to synchronize"
+          fi
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "ABVETOS-Bot"
+          git config --global user.email "bot@tryonyou.com"
+
+      - name: Commit and push changes
+        run: |
+          echo "➤ Applying changes to Git..."
+          git add .
+          
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "AUTO: Integración de archivos externos (Manu + otros) en proyecto oficial (Ultimátum)"
+            git push origin main
+            echo "✅ Changes committed and pushed"
+          fi
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to Vercel
+        id: deploy
+        run: |
+          echo "➤ Deploying to Vercel..."
+          npm install -g vercel
+          
+          DEPLOY_OUTPUT=$(vercel --prod --token "${{ secrets.VERCEL_TOKEN }}" --confirm \
+            --project "${{ secrets.VERCEL_PROJECT_ID }}" --scope "${{ secrets.VERCEL_ORG_ID }}" 2>&1)
+          
+          echo "$DEPLOY_OUTPUT"
+          echo "$DEPLOY_OUTPUT" > deploy.log
+          
+          # Extract deployment URL
+          DEPLOY_URL=$(echo "$DEPLOY_OUTPUT" | grep -Eo 'https://[a-zA-Z0-9./_-]+\.vercel\.app' | tail -n1)
+          
+          if [ -n "$DEPLOY_URL" ]; then
+            echo "Deploy URL: $DEPLOY_URL"
+            echo "DEPLOY_URL=$DEPLOY_URL" >> $GITHUB_ENV
+            echo "✅ Deployment successful"
+          else
+            echo "❌ Could not extract deployment URL"
+            exit 1
+          fi
+
+      - name: Send Telegram notification
+        if: env.DEPLOY_URL != ''
+        run: |
+          echo "➤ Sending Telegram notification..."
+          
+          MESSAGE="✅ Deploy completado%0ARepo: TRYONYOU–ULTIMATUM%0ACommit: AUTO - Integración de ZIPs%0AURL: $DEPLOY_URL%0ABranch: main%0AWorkflow: update-from-zips"
+          
+          RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="$MESSAGE" \
+            -d parse_mode="HTML")
+          
+          if echo "$RESPONSE" | grep -q '"ok":true'; then
+            echo "✅ Telegram notification sent successfully"
+          else
+            echo "❌ Failed to send Telegram notification"
+            echo "Response: $RESPONSE"
+          fi
+
+      - name: Cleanup
+        if: always()
+        run: |
+          echo "➤ Cleaning up temporary files..."
+          rm -rf /tmp/incoming
+          rm -f deploy.log
+          echo "✅ Cleanup completed"
