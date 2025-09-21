@@ -28,7 +28,8 @@ jobs:
       - name: Empaquetar logs
         if: ${{ always() }}
         run: |
-          mkdir -p logs && cp -R $GITHUB_WORKSPACE logs/workspace || true
+          mkdir -p logs
+          find . -type f -name "*.log" -exec cp --parents {} logs/ \; || true
 
       - name: Subir artefacto de logs
         if: ${{ always() }}
