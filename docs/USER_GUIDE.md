@@ -257,7 +257,6 @@ Sí, puedes actualizar tus muestras biométricas en Configuración > Seguridad >
 
 - 💬 **Chat en vivo**: Disponible 24/7 en la aplicación
 - 📧 **Email**: soporte@tryonme.com
-- 📱 **WhatsApp**: [número disponible próximamente] (horario comercial)
 - 🎫 **Sistema de tickets**: Crea un ticket desde tu dashboard
 
 ### Horarios de Atención
