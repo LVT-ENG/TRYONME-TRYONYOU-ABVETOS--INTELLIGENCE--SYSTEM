@@ -3,9 +3,165 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TryonU Luxury Digital Workflow Experience</title>
+    <title>TRYONYOU – ABVETOS – ULTRA – PLUS – ULTIMATUM</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Helvetica Neue', Arial, sans-serif;
+        color: #333;
+        line-height: 1.6;
+      }
+      
+      .hero {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .hero video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+      }
+      
+      .overlay {
+        position: relative;
+        text-align: center;
+        color: white;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        border-radius: 10px;
+      }
+      
+      .overlay h1 {
+        font-size: 3rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        animation: fadeInUp 1.5s ease-out;
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .claims {
+        padding: 4rem 2rem;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      .claim {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .claim:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      }
+      
+      .claim h2 {
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+      
+      .claim p {
+        color: #666;
+        font-size: 0.95rem;
+      }
+      
+      @media (max-width: 768px) {
+        .overlay h1 {
+          font-size: 2rem;
+        }
+        
+        .claims {
+          padding: 2rem 1rem;
+          grid-template-columns: 1fr;
+        }
+        
+        .claim {
+          padding: 1.5rem;
+        }
+      }
+    </style>
   </head>
   <body>
+    <div class="hero">
+      <video autoplay muted loop playsinline>
+        <source src="/video_portada.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="overlay">
+        <h1>Bonjour… soy Pau, tu Personal Shopper</h1>
+      </div>
+    </div>
+
+    <section class="claims">
+      <div class="claim">
+        <h2>1. Avatar 3D hiperreal</h2>
+        <p>Prueba prendas en tu gemelo digital con precisión milimétrica.</p>
+      </div>
+      <div class="claim">
+        <h2>2. Fit Score sin devoluciones</h2>
+        <p>Algoritmo que elimina el 90% de devoluciones.</p>
+      </div>
+      <div class="claim">
+        <h2>3. Mockups dinámicos</h2>
+        <p>Visualiza variaciones en tiempo real antes de comprar.</p>
+      </div>
+      <div class="claim">
+        <h2>4. Armario Inteligente</h2>
+        <p>Organiza, digitaliza y combina tu ropa con IA.</p>
+      </div>
+      <div class="claim">
+        <h2>5. Armario Solidario</h2>
+        <p>Dona y revende prendas fácilmente, con trazabilidad.</p>
+      </div>
+      <div class="claim">
+        <h2>6. CAP Auto-Production</h2>
+        <p>Generación de patrones y órdenes de producción instantáneas.</p>
+      </div>
+      <div class="claim">
+        <h2>7. Orquestador JIT</h2>
+        <p>Producción Just-in-Time conectada a fábrica.</p>
+      </div>
+      <div class="claim">
+        <h2>8. Pago biométrico ABVET</h2>
+        <p>Doble verificación con iris + voz, 100% seguro.</p>
+      </div>
+    </section>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
