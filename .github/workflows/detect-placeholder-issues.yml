@@ -26,18 +26,30 @@ jobs:
             'descripción breve'
           ];
           
+          // More precise body placeholder detection - look for patterns that indicate unfilled templates
           const bodyPlaceholders = [
-            '¿Qué problema resuelve?**: ',
-            '¿Por qué es necesario ahora?**: ',
-            '¿Qué valor aporta a los usuarios?**: ',
-            'Cambios clave**: ',
-            'Arquitectura/impacto**: ',
-            'Componentes afectados**: ',
+            /¿Qué problema resuelve\?\*\*:\s*$/m,           // Empty field at end of line
+            /¿Por qué es necesario ahora\?\*\*:\s*$/m,      // Empty field at end of line  
+            /¿Qué valor aporta a los usuarios\?\*\*:\s*$/m, // Empty field at end of line
+            /Cambios clave\*\*:\s*$/m,                      // Empty field at end of line
+            /Arquitectura\/impacto\*\*:\s*$/m,              // Empty field at end of line
+            /Componentes afectados\*\*:\s*$/m,              // Empty field at end of line
             '<!-- Paso específico -->',
             '<!-- Riesgo técnico o de negocio -->',
             '<!-- Cómo mitigar el riesgo -->',
             '<!-- Alternativa si la implementación falla -->',
-            '<!-- número del issue relacionado -->'
+            '<!-- número del issue relacionado -->',
+            '⚠️ REEMPLAZA',
+            '[DESCRIBE',
+            '[EXPLICA',
+            '[DETALLA',
+            '[LISTA',
+            '[ENUMERA',
+            '[ESPECIFICA',
+            '[PASO',
+            '[IDENTIFICA',
+            '[PROPORCIONA',
+            '[NUMERO_DEL_ISSUE_RELACIONADO'
           ];
           
           // Check if title contains placeholders
@@ -46,9 +58,48 @@ jobs:
           );
           
           // Check if body contains multiple placeholder patterns (indicating template wasn't filled)
-          const placeholderCount = bodyPlaceholders.filter(placeholder => 
+          const placeholderPatterns = [
+            /¿Qué problema resuelve\?\*\*:\s*\n/,           // Empty field followed by newline
+            /¿Por qué es necesario ahora\?\*\*:\s*\n/,      // Empty field followed by newline
+            /¿Qué valor aporta a los usuarios\?\*\*:\s*\n/, // Empty field followed by newline
+            /Cambios clave\*\*:\s*\n/,                      // Empty field followed by newline
+            /Arquitectura\/impacto\*\*:\s*\n/,              // Empty field followed by newline
+            /Componentes afectados\*\*:\s*\n/,              // Empty field followed by newline
+          ];
+          
+          const commentPlaceholders = [
+            '<!-- Paso específico -->',
+            '<!-- Riesgo técnico o de negocio -->',
+            '<!-- Cómo mitigar el riesgo -->',
+            '<!-- Alternativa si la implementación falla -->',
+            '<!-- número del issue relacionado -->',
+            '⚠️ REEMPLAZA',
+            '[DESCRIBE',
+            '[EXPLICA',
+            '[DETALLA',
+            '[LISTA',
+            '[ENUMERA',
+            '[ESPECIFICA',
+            '[PASO',
+            '[IDENTIFICA',
+            '[PROPORCIONA',
+            '[NUMERO_DEL_ISSUE_RELACIONADO'
+          ];
+          
+          // Count regex pattern matches
+          let regexMatches = 0;
+          placeholderPatterns.forEach(pattern => {
+            if (pattern.test(body)) {
+              regexMatches++;
+            }
+          });
+          
+          // Count string pattern matches  
+          const stringMatches = commentPlaceholders.filter(placeholder => 
             body.includes(placeholder)
           ).length;
+          
+          const placeholderCount = regexMatches + stringMatches;
           
           const hasPlaceholderBody = placeholderCount >= 3; // If 3+ placeholders remain, likely unfilled template
           

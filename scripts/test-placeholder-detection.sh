@@ -33,6 +33,17 @@ check_placeholder_content() {
         "<!-- Cómo mitigar el riesgo -->"
         "<!-- Alternativa si la implementación falla -->"
         "<!-- número del issue relacionado -->"
+        "⚠️ REEMPLAZA"
+        "[DESCRIBE"
+        "[EXPLICA"
+        "[DETALLA"
+        "[LISTA"
+        "[ENUMERA"
+        "[ESPECIFICA"
+        "[PASO"
+        "[IDENTIFICA"
+        "[PROPORCIONA"
+        "[NUMERO_DEL_ISSUE_RELACIONADO"
     )
     
     local has_placeholder_title=false
@@ -79,14 +90,26 @@ check_placeholder_content "feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION" "Real co
 
 echo
 echo "Test 2: Issue with placeholder body"
-check_placeholder_content "feat(ui): real title" "¿Qué problema resuelve?**: 
-¿Por qué es necesario ahora?**: 
-¿Qué valor aporta a los usuarios?**: 
-Cambios clave**: "
+check_placeholder_content "feat(ui): real title" "## Motivación
+- **¿Qué problema resuelve?**: 
+- **¿Por qué es necesario ahora?**: 
+- **¿Qué valor aporta a los usuarios?**: 
+- **Cambios clave**: 
+- **Arquitectura/impacto**: "
 
 echo
-echo "Test 3: Valid issue"
-check_placeholder_content "feat(ui): add responsive navigation" "This adds responsive navigation to improve mobile UX"
+echo "Test 3: Valid issue with content"
+check_placeholder_content "feat(ui): add responsive navigation" "## Motivación
+- **¿Qué problema resuelve?**: Los usuarios móviles no pueden navegar eficientemente
+- **¿Por qué es necesario ahora?**: El 60% del tráfico viene de móviles
+- **¿Qué valor aporta a los usuarios?**: Navegación intuitiva y accesible"
+
+echo
+echo "Test 4: Issue with placeholder instructions"
+check_placeholder_content "feat(ui): new feature" "## Motivación
+- **¿Qué problema resuelve?**: [DESCRIBE el problema específico que esta funcionalidad resuelve]
+- **¿Por qué es necesario ahora?**: [EXPLICA la urgencia y timing]
+- **¿Qué valor aporta a los usuarios?**: [DETALLA los beneficios concretos]"
 
 echo
 echo "🎯 Testing completed!"
