@@ -25,10 +25,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Run health check (Vite preview)
-        run: |
-          npx vite build --mode production
-
       - name: Empaquetar logs
         if: ${{ always() }}
         run: |
