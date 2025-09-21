@@ -16,7 +16,7 @@ Esta tabla muestra las versiones del sistema TryOnMe/TryOnYou que reciben actual
 Si descubres una vulnerabilidad de seguridad en el sistema AVBETOS Intelligence System, por favor sigue estos pasos:
 
 1. **NO** abras un issue público en GitHub
-2. Envía un email a la dirección de seguridad: `security@avbetos.com`
+2. Envía un email a la dirección de seguridad: `security@yourcompany.com`
 3. Incluye la siguiente información:
    - Descripción detallada de la vulnerabilidad
    - Pasos para reproducir el problema
