@@ -1,43 +1,81 @@
-# Documentación del Sistema AVBETOS
+# 📚 Documentation Hub - TRYONME/TRYONYOU-ABVETOS Intelligence System
 
-## Componentes del Sistema
+## 🎯 Master Specification
 
-### 📊 Google Apps Script Motor
-- [Guía de Despliegue](../google-apps-script/DEPLOYMENT.md)
-- [Referencia de la API](./api-reference.md)
-- [Guía de Usuario](./user-guide.md)
+### [PROJECT_SCOPE.md](./PROJECT_SCOPE.md)
+**Complete functional and technical scope definition** - This is the master document consolidating all previous repositories and drafts into a unified framework. **Start here for comprehensive system overview.**
 
-### 🌐 Web Interface  
-- [Documentación Frontend](./frontend-guide.md)
-- [Guía de Integración](./integration-guide.md)
+---
 
-### 📦 AVBETOS Package
-- [Documentación del Core](./avbetos-core.md)
-- [Referencia de Algoritmos](./algorithms.md)
+## 📂 Documentation Structure
 
-## Guías de Desarrollo
-- [Configuración del Entorno](./development-setup.md)
-- [Convenciones de Código](./coding-conventions.md)
-- [Guía de Contribución](./contributing.md)
-- [Solución de Problemas](./troubleshooting.md)
+### 🔧 [Technical Documentation](./technical/)
+Complete technical specifications, API documentation, architecture diagrams, and development guides.
 
-## Despliegue y Operaciones
-- [Guía de Despliegue Completa](../DEPLOY.md)
-- [Integración de Sistemas](./integration-guide.md)
-- [Monitoreo y Observabilidad](../OBSERVABILITY.md)
+- System Architecture & Design
+- API Specifications & Endpoints  
+- Core Module Documentation (Avatar 3D, ABVET, PAU, JIT)
+- Development & Deployment Guides
+- Security & Monitoring Protocols
 
-## Inicio Rápido
+### ⚖️ [Legal Documentation](./legal/)
+Patent information, trademark compliance, and intellectual property protection strategies.
 
-### Para Desarrolladores
-1. [Configurar entorno de desarrollo](./development-setup.md)
-2. [Leer guía de contribución](./contributing.md)  
-3. [Revisar convenciones de código](./contributing.md#convenciones-de-código)
+- EPCT International Patent Filing (Ultimátum version)
+- INPI Trademark Registrations (TryOnYou, TryOnMe, ABVET, etc.)
+- IP Portfolio & Brand Protection
+- Regulatory Compliance (GDPR, PSD2)
 
-### Para Usuarios
-1. [Guía de usuario del sistema](./user-guide.md)
-2. [Solución de problemas comunes](./troubleshooting.md)
+### 💼 [Business Documentation](./business/)
+Market analysis, business requirements, user stories, and product specifications.
 
-### Para Administradores
-1. [Desplegar el sistema](../DEPLOY.md)
-2. [Configurar integraciones](./integration-guide.md)
-3. [Monitoreo del sistema](../OBSERVABILITY.md)
+- Market Analysis & Competitive Landscape
+- Product Requirements & User Stories
+- Go-to-Market & Revenue Strategy
+- Success Metrics & Analytics Framework
+
+---
+
+## 📖 Quick Reference
+
+### Key Documents
+- **[PROJECT_SCOPE.md](./PROJECT_SCOPE.md)** - 🎯 Master specification & complete scope
+- **[ONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM.md](./ONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM.md)** - Final project report (English)
+- **[development-setup.md](./development-setup.md)** - Developer environment setup
+- **[integration-guide.md](./integration-guide.md)** - System integration specifications
+
+### Development Resources
+- **[algorithms.md](./algorithms.md)** - Core AI/ML algorithms
+- **[api-reference.md](./api-reference.md)** - API endpoint reference
+- **[coding-conventions.md](./coding-conventions.md)** - Code standards & practices
+- **[frontend-guide.md](./frontend-guide.md)** - Frontend development guide
+
+### Support & Operations
+- **[user-guide.md](./user-guide.md)** - End-user documentation
+- **[troubleshooting.md](./troubleshooting.md)** - Common issues & solutions
+- **[contributing.md](./contributing.md)** - Contribution guidelines
+
+---
+
+## 🎯 Navigation by Role
+
+### 👨‍💻 **Developers**
+Start with [development-setup.md](./development-setup.md) → [technical/](./technical/) → [integration-guide.md](./integration-guide.md)
+
+### 💼 **Product Managers**
+Start with [PROJECT_SCOPE.md](./PROJECT_SCOPE.md) → [business/](./business/) → Success metrics
+
+### ⚖️ **Legal/Compliance**
+Start with [legal/](./legal/) → Patent documentation → Trademark compliance
+
+### 🎨 **Designers**
+Start with [frontend-guide.md](./frontend-guide.md) → Brand guidelines → UX specifications
+
+### 👥 **End Users**
+Start with [user-guide.md](./user-guide.md) → Feature documentation → [troubleshooting.md](./troubleshooting.md)
+
+---
+
+**Repository**: [LVT-ENG/TRYONME-TRYONYOU-ABVETOS–INTELLIGENCE–SYSTEM](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM)  
+**Last Updated**: 2025-01-21  
+**Maintained by**: Documentation Team

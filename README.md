@@ -99,6 +99,7 @@ Ver [ROADMAP.md](./ROADMAP.md) para la hoja de ruta completa y [FEATURE_ISSUES.m
 
 ## 📄 Documentación Completa
 
+- **[PROJECT SCOPE](./docs/PROJECT_SCOPE.md)** - 🎯 **Master Specification** - Definición completa del alcance funcional y técnico del sistema
 - **[ONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM](./docs/ONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM.md)** - Informe final completo del proyecto en inglés
 - **[Entrega Final](./entrega-final.md)** - Resumen del proyecto en español
 - **[Documentación Técnica](./docs/)** - Guías técnicas y de desarrollo
