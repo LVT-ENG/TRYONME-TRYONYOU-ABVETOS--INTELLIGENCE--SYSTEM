@@ -1,0 +1,43 @@
+﻿2025-08-26T15:26:04.3610501Z ##[group]Run npm ci
+2025-08-26T15:26:04.3610799Z [36;1mnpm ci[0m
+2025-08-26T15:26:04.3689287Z shell: /usr/bin/bash -e {0}
+2025-08-26T15:26:04.3689541Z env:
+2025-08-26T15:26:04.3689843Z   pythonLocation: /opt/hostedtoolcache/Python/3.13.7/x64
+2025-08-26T15:26:04.3690264Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.13.7/x64/lib/pkgconfig
+2025-08-26T15:26:04.3690670Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.7/x64
+2025-08-26T15:26:04.3691021Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.7/x64
+2025-08-26T15:26:04.3691363Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.13.7/x64
+2025-08-26T15:26:04.3691711Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.13.7/x64/lib
+2025-08-26T15:26:04.3691994Z ##[endgroup]
+2025-08-26T15:26:06.8746537Z npm warn EBADENGINE Unsupported engine {
+2025-08-26T15:26:06.8747533Z npm warn EBADENGINE   package: 'vite@7.0.6',
+2025-08-26T15:26:06.8748358Z npm warn EBADENGINE   required: { node: '^20.19.0 || >=22.12.0' },
+2025-08-26T15:26:06.8749224Z npm warn EBADENGINE   current: { node: 'v18.20.8', npm: '10.8.2' }
+2025-08-26T15:26:06.8749981Z npm warn EBADENGINE }
+2025-08-26T15:26:08.6260364Z npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-08-26T15:26:09.5349963Z npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-08-26T15:26:11.1899699Z 
+2025-08-26T15:26:11.1900752Z > tryon-app@1.0.0 postinstall
+2025-08-26T15:26:11.1901528Z > npm run build && vercel --prod
+2025-08-26T15:26:11.1902716Z 
+2025-08-26T15:26:11.3237523Z 
+2025-08-26T15:26:11.3239068Z > tryon-app@1.0.0 build
+2025-08-26T15:26:11.3239808Z > vite build
+2025-08-26T15:26:11.3241175Z 
+2025-08-26T15:26:11.8148754Z [36mvite v7.0.6 [32mbuilding for production...[36m[39m
+2025-08-26T15:26:11.8800968Z transforming...
+2025-08-26T15:26:11.9036766Z [32m✓[39m 4 modules transformed.
+2025-08-26T15:26:11.9251708Z rendering chunks...
+2025-08-26T15:26:11.9297116Z computing gzip size...
+2025-08-26T15:26:11.9620432Z [2mdist/[22m[2massets/[22m[32mfavicon-B_SY1GJM.ico  [39m[1m[2m0.00 kB[22m[1m[22m
+2025-08-26T15:26:11.9624004Z [2mdist/[22m[32mindex.html                   [39m[1m[2m1.62 kB[22m[1m[22m[2m │ gzip: 0.72 kB[22m
+2025-08-26T15:26:11.9626660Z [2mdist/[22m[2massets/[22m[35mindex-BaUMgnnf.css    [39m[1m[2m3.14 kB[22m[1m[22m[2m │ gzip: 1.06 kB[22m
+2025-08-26T15:26:11.9629023Z [2mdist/[22m[2massets/[22m[36mindex-DupiGmVH.js     [39m[1m[2m0.71 kB[22m[1m[22m[2m │ gzip: 0.40 kB[22m
+2025-08-26T15:26:11.9630872Z [32m✓ built in 124ms[39m
+2025-08-26T15:26:11.9757896Z sh: 1: vercel: not found
+2025-08-26T15:26:11.9796246Z npm error code 127
+2025-08-26T15:26:11.9799369Z npm error path /home/runner/work/tryon-app/tryon-app
+2025-08-26T15:26:11.9800213Z npm error command failed
+2025-08-26T15:26:11.9800871Z npm error command sh -c npm run build && vercel --prod
+2025-08-26T15:26:11.9810647Z npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2025-08-26T15_26_04_446Z-debug-0.log
+2025-08-26T15:26:12.0039345Z ##[error]Process completed with exit code 127.

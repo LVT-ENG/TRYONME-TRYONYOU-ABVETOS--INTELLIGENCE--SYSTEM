@@ -1,0 +1,1 @@
+API: `cd api-avbet-biometrics && npm install && npm run start`

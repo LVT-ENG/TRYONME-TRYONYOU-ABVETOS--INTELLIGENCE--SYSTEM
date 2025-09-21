@@ -1,0 +1,30 @@
+name: Monitor Vercel • TRYONYOU
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # cada 15 minutos
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TEAM_ID: ${{ secrets.VERCEL_TEAM_ID }}
+    steps:
+      - name: Consultar despliegues en Vercel
+        id: check
+        run: |
+          URL="https://api.vercel.com/v13/deployments?projectId=$VERCEL_PROJECT_ID&limit=5"
+          [ -n "$VERCEL_TEAM_ID" ] && URL="$URL&teamId=$VERCEL_TEAM_ID"
+          curl -fsSL -H "Authorization: Bearer $VERCEL_TOKEN" "$URL" -o resp.json
+          jq '.deployments | map(select(.state | IN("ERROR","FAILED","QUEUED","BLOCKED")))' resp.json > bad.json
+          COUNT=$(jq 'length' bad.json)
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          cat bad.json
+
+      - name: Falla si hay despliegues problemáticos
+        if: steps.check.outputs.count != '0'
+        run: |
+          echo "::error::Se detectaron despliegues con estado ERROR/FAILED/QUEUED/BLOCKED"
+          exit 1

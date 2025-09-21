@@ -1,0 +1,59 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: vercel-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.19.0'
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
+
+      # Prepara entorno de Vercel (lee Project/Org de los secrets)
+      - run: npx vercel pull --yes --environment=${{ github.event_name == 'push' && 'production' || 'preview' }} --token=$VERCEL_TOKEN
+
+      # Build de producción (Vite)
+      - run: pnpm build
+
+      # Despliegue: preview en PR, producción en push a main
+      - name: Deploy to Vercel
+        id: vercel
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            npx vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN > url.txt
+          else
+            npx vercel deploy --prebuilt --token=$VERCEL_TOKEN > url.txt
+          fi
+          echo "url=$(tail -n1 url.txt)" >> $GITHUB_OUTPUT
+
+      # Publica la URL en el summary del job (y en PR)
+      - name: Publish URL
+        run: |
+          echo "Deployed: ${{ steps.vercel.outputs.url }}" >> $GITHUB_STEP_SUMMARY

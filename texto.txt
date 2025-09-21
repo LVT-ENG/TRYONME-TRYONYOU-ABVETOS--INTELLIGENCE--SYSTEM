@@ -1,0 +1,350 @@
+🚀 TRYONME–TRYONYOU–ULTRA–AVBET – Versión Ultra-Plus
+Json
+{
+  "schema_version": "1.0.0",
+  "last_updated": "2025-08-09T16:00:00+02:00",
+  "project": {
+    "name": "TRYONME–TRYONYOU–ULTRA–AVBET — Ultra-Plus",
+    "short_name": "TRYON ULTRA-PLUS",
+    "owner": "Rubén Espinar Rodríguez",
+    "brands": ["LIVE IT", "VVL ART", "TryOnMe / TryOnYou"],
+    "mission": "Eliminar devoluciones por talla y producir moda on-demand con IA, pago biométrico y fábricas conectadas."
+  },
+  "legal_ip": {
+    "patent": {
+      "status": "presentada con prioridad",
+      "scope": [
+        "Avatar 3D con medidas reales",
+        "Comparador textil inteligente",
+        "Recomendador emocional (PAU)",
+        "Pago biométrico Iris+Voz (AVBET)",
+        "Producción JIT y generación creativa de prendas",
+        "Armario solidario / redistribución"
+      ],
+      "annexes": ["descripción técnica", "diagramas de flujo", "claims", "anexos de integración"]
+    }
+  },
+  "architecture": {
+    "layers": {
+      "experience": [
+        "Web App (Shopify + landing Wix)",
+        "Vestidor Virtual 3D",
+        "Panel cliente (pedidos, medidas, looks guardados)"
+      ],
+      "intelligence": [
+        "Avatar3D Engine",
+        "Fit Comparator",
+        "PAU Emotional Recommender",
+        "Creative Auto-Production (IA diseños)",
+        "Dynamic Pricing",
+        "Offer Re-Engagement Engine"
+      ],
+      "transactions": [
+        "AVBET (Iris+Voz)",
+        "Payments Gateway fallback",
+        "Order Orchestrator"
+      ],
+      "operations": [
+        "Factory Connectors (print&cut, confección)",
+        "Logistics Router (envío directo)",
+        "Returns→Reuse (Armario solidario)"
+      ],
+      "data": [
+        "User Profile & Measurements",
+        "Product & Materials DB",
+        "Events/Telemetry",
+        "Feature Store (ML)",
+        "Reporting/KPIs (Sheets/Looker)"
+      ],
+      "automation": [
+        "Make/Zapier scenarios",
+        "Apps Script (Calendar + Sheets)",
+        "GitHub Actions (CI/CD)",
+        "Webhooks (Shopify/Factories)"
+      ],
+      "security_compliance": [
+        "PII vault",
+        "Consent/Opt-in",
+        "Audit logs",
+        "Secrets manager (NUNCA en repos públicos)"
+      ]
+    }
+  },
+  "modules": {
+    "avatar3D": {
+      "id": "mod.avatar3d",
+      "inputs": ["altura", "peso", "circunferencias", "foto opcional"],
+      "outputs": ["avatar_paramétrico", "tabla_medidas_normalizada"],
+      "apis": ["POST /avatar/build", "GET /avatar/{id}"],
+      "kpis": ["latencia_ms", "error_medida_mm"]
+    },
+    "fitComparator": {
+      "id": "mod.fit",
+      "logic": ["matching morfológico", "tolerancias tejido", "historial ajuste"],
+      "apis": ["POST /fit/compare"],
+      "kpis": ["% acierto talla", "reducción devoluciones"]
+    },
+    "pauRecommender": {
+      "id": "mod.pau",
+      "signals": ["mood", "color_affinity", "contexto_evento"],
+      "apis": ["POST /recommend/pau"],
+      "kpis": ["CTR_reco", "AOV_uplift"]
+    },
+    "avbet": {
+      "id": "mod.avbet",
+      "factors": ["iris", "voz"],
+      "flows": ["enrolamiento", "verificación", "firma de pago"],
+      "apis": ["POST /avbet/enroll", "POST /avbet/verify", "POST /avbet/pay"],
+      "kpis": ["tasa_verificación", "fraude_ppm"]
+    },
+    "jitProduction": {
+      "id": "mod.jit",
+      "triggers": ["evento: add_to_try", "evento: intent_buy", "evento: reoffer_click"],
+      "artifacts": ["patrón", "print_file", "ficha_técnica"],
+      "apis": ["POST /factory/order", "GET /factory/order/{id}/status"],
+      "kpis": ["lead_time_horas", "OTD_%", "coste_unitario"]
+    },
+    "creativeAutoProduction": {
+      "id": "mod.cap",
+      "when": ["no-match-perfecto", "petición exlusiva"],
+      "inputs": ["medidas", "paleta", "brief_estético (marca)"],
+      "outputs": ["mockup", "archivos_producción"],
+      "kpis": ["ratio_aceptación_diseño", "tiempo_generación"]
+    },
+    "reofferEngine": {
+      "id": "mod.reoffer",
+      "rules": ["abandono", "view_sin_compra", "evento_emocional"],
+      "channels": ["email", "push", "whatsapp (opt-in)"],
+      "kpis": ["recovery_rate", "AOV_post_reoffer"]
+    },
+    "wardrobeSolidarity": {
+      "id": "mod.solid",
+      "logic": ["donación/reciclaje", "cupón retorno"],
+      "kpis": ["% reciclado", "impacto_CO2_estimado"]
+    }
+  },
+  "integrations": {
+    "ecommerce": ["Shopify Storefront/Admin API"],
+    "cms_landing": ["Wix"],
+    "automation": ["Make", "Zapier"],
+    "factories": ["Factory API v1 (print-on-demand)", "SFTP fallback"],
+    "logistics": ["Carrier APIs"],
+    "auth_payments": ["AVBET core", "Payment PSP fallback"],
+    "analytics": ["GA4", "Sheets", "Looker/Datastudio"],
+    "ip_office": ["EPCT/WIPO endpoints (consulta)"]
+  },
+  "repos": {
+    "main": {
+      "name": "TRYONME-TRYONYOU-AVBETOS--INTELLIGENCE--SYSTEM",
+      "components": [
+        "apps/web",
+        "services/avatar3d",
+        "services/fit",
+        "services/pau",
+        "services/avbet",
+        "services/jit",
+        "services/cap",
+        "services/reoffer",
+        "packages/ui",
+        "infra/ci-cd",
+        "docs/"
+      ]
+    },
+    "tryon_app": {
+      "ci_cd": "GitHub Actions → Vercel",
+      "notes": ["añadir devDependency vercel", "deploy --prebuilt --prod"]
+    }
+  },
+  "deployment": {
+    "platforms": ["Vercel (web)", "Node services (Docker)"],
+    "environments": ["dev", "staging", "prod"],
+    "config": {
+      "feature_flags": ["cap_enabled", "avbet_required", "reoffer_dynamic_pricing"],
+      "i18n": ["en", "es", "fr"]
+    }
+  },
+  "data_model": {
+    "entities": {
+      "User": ["user_id", "pii_ref", "medidas", "preferencias", "consent"],
+      "Product": ["sku", "pattern_id", "materiales", "tallas_meta", "colorways"],
+      "Design": ["design_id", "prompt_base", "assets", "factory_ready_files"],
+      "Order": ["order_id", "status", "factory_job_id", "tracking"],
+      "Event": ["event_id", "type", "payload", "timestamp"]
+    },
+    "events": [
+      "view_item",
+      "add_to_try",
+      "tryon_fit_score",
+      "intent_buy",
+      "avbet_verified",
+      "order_submitted",
+      "factory_started",
+      "order_shipped",
+      "reoffer_sent",
+      "reoffer_converted"
+    ]
+  },
+  "workflows": {
+    "realtime_production": [
+      "user: enters_vestidor",
+      "system: avatar3d->fitComparator->pau",
+      "branch: match_perfect? yes->offer; no->CAP generate",
+      "user: avbet pay",
+      "orchestrator: submit JIT to factory",
+      "factory: produce->ship",
+      "system: confirm_delivery->collect_feedback"
+    ],
+    "reoffer_loop": [
+      "detect abandono",
+      "segmentación emocional",
+      "incentivo dinámico",
+      "envío multicanal",
+      "medición y aprendizaje"
+    ],
+    "solidarity_cycle": [
+      "cliente dona",
+      "clasificación",
+      "cupón retorno",
+      "impacto ambiental"
+    ]
+  },
+  "security": {
+    "pii": "cifrado en reposo y tránsito",
+    "biometrics": "plantillas hash/no reversibles",
+    "secrets": "gestor de secretos (no en código)",
+    "compliance": ["GDPR", "PSD2 (pagos)", "ISO27001 (objetivo)"],
+    "audit": ["access_logs", "model_decisions (clave)"]
+  },
+  "dashboards": {
+    "google_sheets_master": {
+      "sheet_name": "PMV_Master_Dashboard",
+      "columns": [
+        "tarea",
+        "responsable",
+        "prioridad",
+        "fecha_entrega",
+        "estado",
+        "bloqueo",
+        "dependencias",
+        "comentarios",
+        "url_prueba",
+        "kpi_relacionado"
+      ]
+    },
+    "apps_script_calendar": {
+      "reminders": [
+        "deploy_prod_semana",
+        "revisión_kpis_viernes",
+        "renovación_claves_trimestral"
+      ]
+    },
+    "kpis": [
+      "fit_accuracy",
+      "return_rate",
+      "lead_time_horas",
+      "AOV",
+      "conversion_rate",
+      "reoffer_recovery",
+      "CO2_saved_est"
+    ]
+  },
+  "business": {
+    "models": [
+      "D2C on-demand",
+      "B2B SaaS (licencia motor FIT/PAU/AVBET)",
+      "Revenue share con fábricas"
+    ],
+    "pricing_examples": {
+      "SaaS_core": "€ por MAU",
+      "per_order_fee": "€ por pedido JIT",
+      "setup_factory": "fee integración"
+    },
+    "segments": ["denim/jeans (Levi’s target)", "streetwear premium", "made-to-measure lite"]
+  },
+  "internationalization": {
+    "default": "en",
+    "supported": ["es", "fr"],
+    "content_policy": "textos públicos en EN; internos en ES"
+  },
+  "agents": {
+    "PMV_Project_Manager_Virtual": {
+      "role": "gestión de tareas web",
+      "sheets": "PMV_Master_Dashboard",
+      "calendar": "recordatorios automáticos",
+      "reports": "semanal progreso"
+    },
+    "others": [
+      "Content Pro",
+      "Ficha Técnica Master",
+      "Proveedor Tracker",
+      "RRSS Automator",
+      "Tester UX Web",
+      "Factory Master",
+      "Mockup Artist",
+      "Checkout UX Master",
+      "Look Curator",
+      "Fit-AI Assistant",
+      "Brand Guardian",
+      "HR Supervisor"
+    ]
+  },
+  "pmv_runtime": {
+    "prioritization_rules": [
+      "bloqueantes de prod > todo",
+      "seguridad/secrets > alto",
+      "ventas/ci-cd > alto",
+      "nice_to_have > bajo"
+    ],
+    "redistribution_policy": "si responsable tiene >3 pendientes críticas, redistribuir por disponibilidad",
+    "weekly_report": ["resumen estado", "riesgos", "siguientes hitos", "KPIs vs objetivo"]
+  },
+  "roadmap": {
+    "current_sprint": "2025-W33",
+    "goals": [
+      "Stabilizar CI/CD Vercel",
+      "Activar reoffer_engine en prod",
+      "Pilotar 1 fábrica EU con JIT"
+    ],
+    "next": [
+      "CAP a catálogo cápsula",
+      "PSP fallback multi-pasarela",
+      "Panel cliente v1"
+    ]
+  },
+  "backlog_tasks": [
+    {
+      "tarea": "Arreglar pipeline vercel not found",
+      "responsable": "DevOps",
+      "prioridad": "crítica",
+      "fecha_entrega": "2025-08-10",
+      "estado": "en_progreso",
+      "dependencias": ["devDependency vercel", "token vercel en secrets CI"],
+      "kpi_relacionado": "deploy_success_rate"
+    },
+    {
+      "tarea": "Conectar reoffer_engine a email/push",
+      "responsable": "Automation",
+      "prioridad": "alta",
+      "fecha_entrega": "2025-08-12",
+      "estado": "pendiente",
+      "kpi_relacionado": "reoffer_recovery"
+    },
+    {
+      "tarea": "Factory connector EU piloto",
+      "responsable": "Factory Master",
+      "prioridad": "alta",
+      "fecha_entrega": "2025-08-20",
+      "estado": "pendiente",
+      "kpi_relacionado": "lead_time_horas"
+    }
+  ],
+  "monitoring": {
+    "alerts": ["errores 5xx >1%", "latencia avatar > 2s", "fallo verificación AVBET > 5%"],
+    "logs": ["app", "events", "security"],
+    "healthchecks": ["web", "apis", "factory connectors"]
+  },
+  "notes": {
+    "secrets_policy": "No incluir tokens/keys en issues, repos ni chats. Usar gestor de secretos.",
+    "factory_files": "Siempre generar y versionar print/patrón en storage privado."
+  }
+}

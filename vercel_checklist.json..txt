@@ -1,0 +1,44 @@
+{
+  "vercel_checklist": [
+    {
+      "step": "Verificar despliegue en Vercel",
+      "action": "Entrar en https://vercel.com y abrir el proyecto `tryonme-tryonyou-abvetos-intelligence-system`",
+      "status": "pending"
+    },
+    {
+      "step": "Confirmar build correcto",
+      "action": "Revisar en la pestaña 'Deployments' que el último commit aparece con estado ✅ Success",
+      "status": "pending"
+    },
+    {
+      "step": "Revisar dominio principal",
+      "action": "Abrir en navegador https://tryonyou.app y confirmar que la web carga sin errores",
+      "status": "pending"
+    },
+    {
+      "step": "Revisar dominio secundario",
+      "action": "Abrir en navegador https://abvetos.com y confirmar que muestra el mismo contenido actualizado",
+      "status": "pending"
+    },
+    {
+      "step": "Comprobar rutas principales",
+      "action": "Probar navegación en páginas clave (ej: /, /about, /shop si existen) para asegurarse que no hay fallos 404",
+      "status": "pending"
+    },
+    {
+      "step": "Verificar integración de módulos ULTRA",
+      "action": "Probar en la interfaz que funcionan los módulos fusionados (ej: armario, ADBET, FTT)",
+      "status": "pending"
+    },
+    {
+      "step": "Comprobar logs",
+      "action": "En Vercel → pestaña 'Functions' revisar que no hay errores en el runtime",
+      "status": "pending"
+    },
+    {
+      "step": "Confirmar producción estable",
+      "action": "Si todo funciona → marcar este checklist como DONE ✅",
+      "status": "pending"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+ "src/index.css": "
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-black text-white;
+  font-family: 'Didot', 'Playfair Display', serif;
+  letter-spacing: 0.03em;
+}
+",
