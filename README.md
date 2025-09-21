@@ -40,6 +40,35 @@ Módulo core del sistema de inteligencia AVBETOS.
 
 ## 🔧 Desarrollo
 
+### 🛠️ Comandos de Construcción (Make)
+
+El proyecto incluye un **Makefile** completo que proporciona comandos estandarizados para construir, probar y desplegar el sistema:
+
+```bash
+# Construir todo el proyecto desde cero
+make all
+
+# Comandos individuales
+make install     # Instalar dependencias
+make build       # Construir para producción  
+make clean       # Limpiar archivos temporales
+make test        # Ejecutar tests
+make dev         # Servidor de desarrollo
+make preview     # Preview de la build
+
+# Orquestación completa ABVET
+make orchestrate # Pipeline completo
+
+# Información del proyecto
+make status      # Estado del proyecto
+make help        # Ver todos los comandos disponibles
+```
+
+**Comandos principales:**
+- `make all` - **El comando principal** que ejecuta: install, clean, build, test, lint, validate
+- `make orchestrate` - Pipeline completo ABVET (clean, docs, install, build, preview, push, test)
+- `make status` - Muestra el estado actual del proyecto
+
 ### 📋 Contribuir al Proyecto
 
 **Issue Templates Mejorados**: El proyecto utiliza templates de GitHub que siguen conventional commits para mantener la calidad y consistencia:
