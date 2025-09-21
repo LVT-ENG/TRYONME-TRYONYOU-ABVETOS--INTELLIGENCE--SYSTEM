@@ -31,3 +31,28 @@ node_modules/
 dist/
 .DS_Store
 package-lock.json
+
+# Security - Never commit tokens, keys, or sensitive data
+*.key
+*.pem
+*.p12
+*.pfx
+tokens
+token
+api key
+api-key
+secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*token*
+*secret*
+*key*
+github_pat_*
+ghp_*
+gho_*
+ghu_*
+ghs_*
+ghr_*
