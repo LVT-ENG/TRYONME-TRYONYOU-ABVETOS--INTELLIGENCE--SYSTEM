@@ -31,6 +31,8 @@ Esta guía cubre el despliegue completo del sistema TryOnMe/TryOnYou AVBETOS Int
 
 ### Despliegue en Vercel (Recomendado)
 
+> **🤖 Despliegue Automático**: Este proyecto incluye un workflow de GitHub Actions que automatiza el despliegue. Ver [`docs/DEPLOYMENT_WORKFLOW.md`](docs/DEPLOYMENT_WORKFLOW.md) para más información.
+
 1. **Preparación del Código**
    ```bash
    # Clonar repositorio

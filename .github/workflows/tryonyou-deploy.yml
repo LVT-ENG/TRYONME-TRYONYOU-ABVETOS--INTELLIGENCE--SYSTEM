@@ -1,0 +1,71 @@
+name: TryOnYou Deployment & Health Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: write
+
+concurrency:
+  group: tryonyou-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy to Vercel
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    environment:
+      name: production
+      url: https://tryonyou.app
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to Vercel
+        run: |
+          npm install -g vercel@latest
+          vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --confirm --scope ${{ secrets.VERCEL_ORG_ID }}
+
+      - name: Health check
+        id: health
+        run: |
+          URL="https://tryonyou.app"   # ⚠️ cámbialo si quieres probar otro dominio
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$URL")
+          echo "STATUS=$STATUS" >> $GITHUB_ENV
+          echo "Health check returned $STATUS"
+          if [ "$STATUS" -ne 200 ]; then
+            exit 1
+          fi
+
+      - name: Notify Telegram on failure
+        if: failure()
+        run: |
+          MESSAGE="⚠️ Health check FAILED\nRepo: TRYONYOU–ULTIMATUM\nStatus: $STATUS\nURL: https://tryonyou.app\nCommit: $GITHUB_SHA"
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="$MESSAGE"
+
+      - name: Notify Telegram on success
+        if: success()
+        run: |
+          MESSAGE="✅ Health check OK\nRepo: TRYONYOU–ULTIMATUM\nURL: https://tryonyou.app\nCommit: $GITHUB_SHA"
+          curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="$MESSAGE"
