@@ -117,7 +117,6 @@ Bienvenido a la documentación completa del sistema TryOnMe / TryOnYou - AVBETOS
 ### Para Usuarios
 - 💬 Chat en vivo 24/7 en la aplicación
 - 📧 soporte@tryonme.com
-- 📱 WhatsApp: +34 xxx xxx xxx
 
 ### Para Desarrolladores
 - 🔧 Canal #development en Slack
