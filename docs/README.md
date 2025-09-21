@@ -15,6 +15,9 @@
 - [Documentación del Core](./avbetos-core.md)
 - [Referencia de Algoritmos](./algorithms.md)
 
+### 📋 Documentación Legal y Patentes
+- [ULTIMATUM PATENTE - Documentación Consolidada](./ULTIMATUM_PATENTE.md)
+
 ## Guías de Desarrollo
 - [Configuración del Entorno](./development-setup.md)
 - [Convenciones de Código](./coding-conventions.md)
