@@ -1,0 +1,120 @@
+name: Close Stale Placeholder Issues
+
+on:
+  schedule:
+    # Run daily at 9 AM UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  close-stale-issues:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Close issues with unresolved placeholders
+      uses: actions/github-script@v7
+      with:
+        script: |
+          // Get all open issues with 'invalid' label
+          const issues = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            state: 'open',
+            labels: 'invalid,needs-info',
+            sort: 'created',
+            direction: 'asc'
+          });
+          
+          console.log(`Found ${issues.data.length} issues with invalid/needs-info labels`);
+          
+          for (const issue of issues.data) {
+            // Check if issue was created more than 48 hours ago
+            const createdAt = new Date(issue.created_at);
+            const now = new Date();
+            const hoursDiff = (now - createdAt) / (1000 * 60 * 60);
+            
+            console.log(`Issue #${issue.number}: Created ${Math.round(hoursDiff)}h ago`);
+            
+            if (hoursDiff > 48) {
+              // Check if title still contains placeholders
+              const title = issue.title;
+              const hasPlaceholders = title.includes('REPLACE_WITH_') || 
+                                      title.includes('SCOPE') || 
+                                      title.includes('DESCRIPTION');
+              
+              if (hasPlaceholders) {
+                console.log(`Closing issue #${issue.number} - placeholders not resolved after 48h`);
+                
+                // Create comment body with proper escaping
+                const commentLines = [
+                  '## 🔒 Issue Automatically Closed',
+                  '',
+                  'This issue has been automatically closed because:',
+                  '',
+                  '1. ⏰ It was created more than 48 hours ago',
+                  `2. 📝 The title still contains placeholder text: \`${title}\``,
+                  '3. ❌ No updates were made to replace the required placeholders',
+                  '',
+                  '**To reopen this issue:**',
+                  '1. Edit the title to replace all placeholders with specific information',
+                  '2. Follow the [Conventional Commits](https://www.conventionalcommits.org/) format',
+                  '3. Use a valid scope from: `core`, `ui`, `api`, `auth`, `db`, `deploy`, `config`, `docs`, `test`, `avbetos`, `tryonme`, `tryonyou`, `health`, `workflow`',
+                  '',
+                  '**Need help?** Check our:',
+                  '- [Template Guide](.github/ISSUE_TEMPLATE/template-guide.md)',
+                  '- [Contributing Guidelines](.github/CONTRIBUTING.md)',
+                  '- [Conventional Commits Documentation](CONVENTIONAL_COMMITS.md)',
+                  '',
+                  '---',
+                  '*This is an automated action to maintain project quality.*'
+                ];
+                
+                const commentBody = commentLines.join('\n');
+                
+                // Add final comment
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: commentBody
+                });
+                
+                // Close the issue
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  state: 'closed'
+                });
+                
+                // Add closed label
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  labels: ['autoclosed']
+                });
+              } else {
+                console.log(`Issue #${issue.number} - placeholders resolved, removing invalid labels`);
+                
+                // Remove invalid labels as placeholders are resolved
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    name: 'invalid'
+                  });
+                } catch (e) {}
+                
+                try {
+                  await github.rest.issues.removeLabel({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: issue.number,
+                    name: 'needs-info'
+                  });
+                } catch (e) {}
+              }
+            }
+          }

@@ -50,9 +50,11 @@ Módulo core del sistema de inteligencia AVBETOS.
 
 **Guía rápida**:
 1. Al crear un issue, selecciona el template apropiado
-2. Reemplaza `SCOPE` con uno válido: `core`, `ui`, `api`, `auth`, `db`, etc.
-3. Reemplaza los placeholders en MAYÚSCULAS con información específica
+2. 🚨 **OBLIGATORIO**: Reemplaza `SCOPE` con uno válido: `core`, `ui`, `api`, `auth`, `db`, etc.
+3. 🚨 **OBLIGATORIO**: Reemplaza los placeholders en MAYÚSCULAS con información específica
 4. Consulta la [Guía de Templates](./.github/ISSUE_TEMPLATE/template-guide.md) para ejemplos
+
+**⚡ Automatización anti-placeholders**: Issues con placeholders sin reemplazar son detectados automáticamente, comentados con instrucciones, y cerrados después de 48 horas si no se corrigen.
 
 **Validación**: Los templates se validan automáticamente con `npm run validate:templates`
 

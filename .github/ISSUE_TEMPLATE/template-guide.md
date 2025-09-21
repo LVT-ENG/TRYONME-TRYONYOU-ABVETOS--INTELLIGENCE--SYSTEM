@@ -8,6 +8,25 @@ assignees: ''
 
 # 📋 Guía de Templates de Issues
 
+## 🚨 IMPORTANTE: Reemplazar Placeholders
+
+**TODOS los placeholders deben ser reemplazados antes de crear el issue.**
+
+**❌ NUNCA envíes títulos como estos:**
+- `feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION`
+- `fix(SCOPE): REPLACE_WITH_BUG_DESCRIPTION`
+- `docs(SCOPE): REPLACE_WITH_DOCS_DESCRIPTION`
+
+**✅ SIEMPRE reemplaza con información específica:**
+- `feat(tryonme): add virtual wardrobe feature`
+- `fix(ui): resolve mobile navigation overlay`
+- `docs(api): update recommendation endpoints`
+
+**⚡ Automatización:** Issues con placeholders sin reemplazar serán:
+1. Marcados automáticamente como inválidos
+2. Comentados con instrucciones de corrección
+3. Cerrados automáticamente después de 48 horas si no se corrigen
+
 ## 🎯 ¿Qué template usar?
 
 ### 🚀 Feature Request
@@ -57,11 +76,23 @@ fix(db): resolve user preferences query timeout
 ## ❌ Títulos a Evitar
 
 ```
-feat(scope): descripción breve           # ❌ Demasiado genérico
-Feature request                          # ❌ No sigue formato
-add new feature                          # ❌ Sin scope ni tipo
-feat(invalid): something                 # ❌ Scope no válido
+feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION  # ❌ Placeholders sin reemplazar
+fix(SCOPE): REPLACE_WITH_BUG_DESCRIPTION     # ❌ Placeholders sin reemplazar
+feat(scope): descripción breve               # ❌ Demasiado genérico
+Feature request                              # ❌ No sigue formato
+add new feature                              # ❌ Sin scope ni tipo
+feat(invalid): something                     # ❌ Scope no válido
 ```
+
+## ⚠️ Consecuencias de No Reemplazar Placeholders
+
+Si creas un issue sin reemplazar los placeholders:
+
+1. **Detección automática**: Un bot detectará el problema inmediatamente
+2. **Marcado como inválido**: Se añadirán labels `invalid` y `needs-info`
+3. **Comentario de advertencia**: Recibirás instrucciones específicas para corregir
+4. **Cierre automático**: El issue se cerrará después de 48 horas si no se corrige
+5. **Requerimiento de nueva creación**: Tendrás que crear un nuevo issue con información correcta
 
 ## 💡 Consejos
 

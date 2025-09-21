@@ -7,14 +7,23 @@ assignees: ''
 ---
 
 <!-- 
-🚨 IMPORTANTE: Reemplaza el título con un scope válido y descripción específica
-Formato: feat(scope): descripción breve
-Scopes válidos: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
+🚨🚨🚨 ACCIÓN REQUERIDA: DEBES EDITAR EL TÍTULO ANTES DE CREAR EL ISSUE 🚨🚨🚨
 
-Ejemplos válidos:
-- feat(tryonme): add virtual wardrobe feature
-- feat(ui): implement responsive navigation
-- feat(api): add recommendation endpoints
+❌ TÍTULO INCORRECTO (será rechazado automáticamente):
+   feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION
+
+✅ TÍTULO CORRECTO (reemplaza SCOPE y REPLACE_WITH_BRIEF_DESCRIPTION):
+   feat(tryonme): add virtual wardrobe feature
+   feat(ui): implement responsive navigation
+   feat(api): add recommendation endpoints
+
+📝 INSTRUCCIONES:
+1. Reemplaza "SCOPE" con uno válido: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
+2. Reemplaza "REPLACE_WITH_BRIEF_DESCRIPTION" con una descripción breve de la funcionalidad
+3. Usa minúsculas en la descripción
+4. Máximo 72 caracteres total
+
+⚠️ Issues con placeholders sin reemplazar serán cerrados automáticamente
 -->
 
 ## Motivación
