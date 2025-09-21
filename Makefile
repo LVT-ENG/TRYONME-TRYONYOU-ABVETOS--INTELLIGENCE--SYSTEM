@@ -29,8 +29,40 @@ commit:
 	echo "✔️ Git commit + push completado en branch $(BRANCH)"
 
 # ================================================================
+# Development Targets
+# ================================================================
+
+.PHONY: install
+install:
+	@echo "📦 Installing dependencies..."
+	npm install
+
+.PHONY: build
+build:
+	@echo "🔨 Building project..."
+	npm run build
+
+.PHONY: dev
+dev:
+	@echo "🚀 Starting development server..."
+	npm run dev
+
+.PHONY: lint
+lint:
+	@echo "🔍 Linting commits..."
+	npm run lint:commits
+
+# ================================================================
 # Utility Targets
 # ================================================================
+
+.PHONY: status
+status:
+	@echo "📊 Repository Status:"
+	@echo "Branch: $(BRANCH)"
+	@echo "Remote: $(REMOTE)"
+	@echo ""
+	git --no-pager status --short
 
 .PHONY: help
 help:
@@ -40,6 +72,11 @@ help:
 	@echo ""
 	@echo "Available targets:"
 	@echo "  commit       Git add, commit with standard message, and push"
+	@echo "  install      Install npm dependencies"
+	@echo "  build        Build the project"
+	@echo "  dev          Start development server"
+	@echo "  lint         Run commit linting"
+	@echo "  status       Show git repository status"
 	@echo "  help         Show this help message"
 	@echo ""
 	@echo "Variables:"
@@ -51,4 +88,5 @@ help:
 	@echo "  make commit"
 	@echo "  make commit REMOTE=upstream"
 	@echo "  make commit BRANCH=main"
+	@echo "  make install && make build"
 	@echo ""
