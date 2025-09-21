@@ -7,8 +7,14 @@ assignees: ''
 ---
 
 <!-- 
-🚨 IMPORTANTE: Reemplaza el título con un scope válido y descripción específica del bug
-Formato: fix(scope): descripción del bug
+🚨 REQUERIDO: DEBES reemplazar el título y TODO el contenido de placeholder antes de enviar
+
+❌ TÍTULO INVÁLIDO: "fix(SCOPE): REPLACE_WITH_BUG_DESCRIPTION"
+✅ TÍTULO VÁLIDO: "fix(ui): resolve mobile navigation overlay"
+
+⚠️ AVISO: Issues con placeholder text serán automáticamente marcados como inválidos y cerrados en 48h
+
+Formato requerido: fix(scope): descripción del bug
 Scopes válidos: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
 
 Ejemplos válidos:
@@ -18,19 +24,21 @@ Ejemplos válidos:
 -->
 
 ## Descripción del problema
-- ¿Qué está fallando?
-- ¿Cuándo ocurre?
+<!-- ⚠️ REEMPLAZA estos puntos con información específica del bug -->
+- **¿Qué está fallando?**: [DESCRIBE el comportamiento defectuoso específico]
+- **¿Cuándo ocurre?**: [EXPLICA bajo qué condiciones se reproduce el bug]
 
 ## Pasos para reproducir
-1. ...
-2. ...
-3. ...
+<!-- ⚠️ PROPORCIONA pasos específicos y detallados -->
+1. [PASO específico para reproducir]
+2. [PASO específico para reproducir]
+3. [PASO específico para reproducir]
 
 ## Comportamiento esperado
-- ¿Qué debería pasar?
+- **¿Qué debería pasar?**: [DESCRIBE el comportamiento correcto esperado]
 
 ## Comportamiento actual
-- ¿Qué está pasando realmente?
+- **¿Qué está pasando realmente?**: [DESCRIBE exactamente qué sucede en lugar del comportamiento esperado]
 
 ## Entorno
 - OS: [ej. macOS, Windows, Linux]

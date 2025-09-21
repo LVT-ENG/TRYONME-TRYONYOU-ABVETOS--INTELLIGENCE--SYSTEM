@@ -8,6 +8,21 @@ assignees: ''
 
 # 📋 Guía de Templates de Issues
 
+## 🚨 NUEVO: Sistema de Validación Automática
+
+**⚠️ IMPORTANTE**: A partir de ahora, los issues con placeholder text serán automáticamente detectados y cerrados.
+
+### ¿Qué detecta el sistema?
+- Títulos con texto como "SCOPE", "REPLACE_WITH_*"
+- Contenido con múltiples placeholders sin reemplazar
+- Templates no completados apropiadamente
+
+### ¿Qué ocurre si mi issue tiene placeholders?
+1. Se etiqueta automáticamente como `needs-template-completion` 
+2. Recibes un comentario explicativo con instrucciones
+3. Tienes **48 horas** para corregir el issue
+4. Si no se corrige, se cierra automáticamente
+
 ## 🎯 ¿Qué template usar?
 
 ### 🚀 Feature Request
@@ -57,18 +72,20 @@ fix(db): resolve user preferences query timeout
 ## ❌ Títulos a Evitar
 
 ```
-feat(scope): descripción breve           # ❌ Demasiado genérico
-Feature request                          # ❌ No sigue formato
-add new feature                          # ❌ Sin scope ni tipo
-feat(invalid): something                 # ❌ Scope no válido
+feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION  # ❌ Placeholders sin reemplazar - SE CIERRA AUTOMÁTICAMENTE
+fix(scope): descripción breve                # ❌ Demasiado genérico  
+Feature request                              # ❌ No sigue formato
+add new feature                              # ❌ Sin scope ni tipo
+feat(invalid): something                     # ❌ Scope no válido
 ```
 
-## 💡 Consejos
+## 💡 Consejos para Evitar Cierres Automáticos
 
-1. **Sé específico**: En lugar de "mejorar UI", usa "fix(ui): resolve mobile menu overflow"
-2. **Un issue, una funcionalidad**: No mezcles múltiples cambios en un issue
-3. **Reemplaza placeholders**: No dejes contenido como "descripción breve"
-4. **Usa el scope correcto**: Si no estás seguro, revisa la lista de scopes válidos
+1. **Reemplaza TODOS los placeholders**: Cambia "SCOPE" por un scope real como "ui" o "api"
+2. **Sé específico**: En lugar de "descripción breve", usa "add user authentication system"
+3. **Completa el template**: Rellena todas las secciones del template con información real
+4. **Revisa antes de enviar**: Asegúrate de que no quede texto como "REPLACE_WITH_*"
+5. **Un issue, una funcionalidad**: No mezcles múltiples cambios en un issue
 
 ---
 

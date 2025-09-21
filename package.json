@@ -8,6 +8,7 @@
     "preview": "vite preview",
     "lint:commits": "commitlint --from HEAD~1 --to HEAD --verbose",
     "validate:templates": "./scripts/validate-templates.sh",
+    "test:placeholder-detection": "./scripts/test-placeholder-detection.sh",
     "prepare": "npm run build"
   },
   "dependencies": {

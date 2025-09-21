@@ -1,0 +1,112 @@
+name: Detect and Handle Placeholder Issues
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  check-placeholder-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check for placeholder content
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const issue = context.payload.issue;
+          const title = issue.title;
+          const body = issue.body || '';
+          
+          // Define placeholder patterns to detect
+          const titlePlaceholders = [
+            'REPLACE_WITH_BRIEF_DESCRIPTION',
+            'REPLACE_WITH_BUG_DESCRIPTION', 
+            'REPLACE_WITH_DOCS_DESCRIPTION',
+            'SCOPE',
+            'descripción breve'
+          ];
+          
+          const bodyPlaceholders = [
+            '¿Qué problema resuelve?**: ',
+            '¿Por qué es necesario ahora?**: ',
+            '¿Qué valor aporta a los usuarios?**: ',
+            'Cambios clave**: ',
+            'Arquitectura/impacto**: ',
+            'Componentes afectados**: ',
+            '<!-- Paso específico -->',
+            '<!-- Riesgo técnico o de negocio -->',
+            '<!-- Cómo mitigar el riesgo -->',
+            '<!-- Alternativa si la implementación falla -->',
+            '<!-- número del issue relacionado -->'
+          ];
+          
+          // Check if title contains placeholders
+          const hasPlaceholderTitle = titlePlaceholders.some(placeholder => 
+            title.includes(placeholder)
+          );
+          
+          // Check if body contains multiple placeholder patterns (indicating template wasn't filled)
+          const placeholderCount = bodyPlaceholders.filter(placeholder => 
+            body.includes(placeholder)
+          ).length;
+          
+          const hasPlaceholderBody = placeholderCount >= 3; // If 3+ placeholders remain, likely unfilled template
+          
+          if (hasPlaceholderTitle || hasPlaceholderBody) {
+            console.log('🚨 Placeholder content detected in issue #' + issue.number);
+            console.log('Title placeholders:', hasPlaceholderTitle);
+            console.log('Body placeholder count:', placeholderCount);
+            
+            // Add label to identify placeholder issues
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              labels: ['needs-template-completion', 'invalid']
+            });
+            
+            // Add comment with helpful guidance
+            const commentBody = `## 🚨 Placeholder Content Detected
+            
+This issue appears to contain placeholder text from the issue template that hasn't been replaced with specific information.
+
+### ❌ Problems Found:
+${hasPlaceholderTitle ? '- **Title contains placeholders**: Please replace `SCOPE` and `REPLACE_WITH_*` with specific values' : ''}
+${hasPlaceholderBody ? '- **Body contains placeholder text**: Please fill in the template sections with actual information' : ''}
+
+### ✅ How to Fix:
+
+1. **Update the title** to follow this format:
+   - \`feat(scope): brief description\` for features
+   - \`fix(scope): bug description\` for bugs  
+   - \`docs(scope): docs description\` for documentation
+
+2. **Replace placeholder text** in the issue body with:
+   - Specific problem descriptions
+   - Actual implementation details
+   - Real test plans and evidence
+   - Concrete risks and mitigations
+
+3. **Use valid scopes**: \`core\`, \`ui\`, \`api\`, \`auth\`, \`db\`, \`deploy\`, \`config\`, \`docs\`, \`test\`, \`avbetos\`, \`tryonme\`, \`tryonyou\`, \`health\`, \`workflow\`
+
+### 📚 Resources:
+- [Template Guide](/.github/ISSUE_TEMPLATE/template-guide.md)
+- [Conventional Commits Guide](/CONVENTIONAL_COMMITS.md)
+- [Contributing Guidelines](/.github/CONTRIBUTING.md)
+
+**This issue will be automatically closed in 48 hours if not updated with proper content.**
+
+---
+*This is an automated message triggered by placeholder detection. If you believe this is an error, please mention @LVT-ENG.*`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: commentBody
+            });
+            
+            console.log('✅ Added label and comment to issue #' + issue.number);
+          } else {
+            console.log('✅ No placeholder content detected in issue #' + issue.number);
+          }
