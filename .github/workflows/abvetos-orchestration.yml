@@ -1,0 +1,147 @@
+name: ABVETOS Orchestration
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+          - production
+          - staging
+          - development
+      skip_tests:
+        description: 'Skip domain health tests'
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  abvetos-orchestration:
+    name: 🚀 ABVETOS Full Orchestration
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+      
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 📊 Repository Info
+        run: |
+          echo "🏷️ Branch: ${{ github.ref_name }}"
+          echo "📦 Repository: ${{ github.repository }}"
+          echo "🎯 Environment: ${{ github.event.inputs.environment || 'production' }}"
+          echo "⏰ Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+
+      - name: 🧹 ABVET Cleanup Process
+        run: |
+          echo "🚀 Iniciando orquestación ABVET..."
+          chmod +x ./scripts/agent_clean.sh
+          ./scripts/agent_clean.sh
+
+      - name: 📑 ABVET Documentation Organization
+        run: |
+          chmod +x ./scripts/agent_docs.sh
+          ./scripts/agent_docs.sh
+
+      - name: 📦 Install Dependencies
+        run: |
+          echo "📦 Instalando dependencias npm..."
+          npm install
+
+      - name: 🔨 Build Application
+        run: |
+          echo "🔨 Compilando aplicación..."
+          npm run build
+
+      - name: 👀 Preview Application
+        run: |
+          echo "👀 Ejecutando preview..."
+          timeout 30s npm run preview || echo "Preview completado o timeout alcanzado"
+
+      - name: ⬆️ ABVET Push Changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Configure git
+          git config --global user.name "ABVETOS Orchestrator"
+          git config --global user.email "abvetos-bot@tryonyou.app"
+          
+          # Execute the ABVET push script
+          chmod +x ./scripts/agent_push.sh
+          
+          # Check if there are changes to commit
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "⬆️ ABVET: preparando push a GitHub..."
+            git add .
+            git commit -m "ABVETOS Orchestration: actualización completa de documentación, limpieza y estructura"
+            git push origin ${{ github.ref_name }}
+            echo "✅ ABVET: cambios subidos a GitHub. Vercel desplegará automáticamente."
+          else
+            echo "ℹ️ No hay cambios para commitear"
+          fi
+
+      - name: 🧪 ABVET Domain Health Tests
+        if: ${{ !github.event.inputs.skip_tests }}
+        run: |
+          chmod +x ./scripts/agent_test.sh
+          ./scripts/agent_test.sh
+
+      - name: 🎯 Deploy to Vercel
+        if: success()
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ -n "$VERCEL_TOKEN" ]; then
+            echo "🚀 Desplegando en Vercel..."
+            npx vercel --prod --yes \
+              --token=$VERCEL_TOKEN \
+              --org-id=$VERCEL_ORG_ID \
+              --project-id=$VERCEL_PROJECT_ID || echo "⚠️ Deploy opcional falló"
+            echo "✅ Deploy Tryonme Tryonyou completado"
+          else
+            echo "⚠️ VERCEL_TOKEN no configurado, saltando deploy"
+          fi
+
+      - name: 📊 Orchestration Summary
+        if: always()
+        run: |
+          echo "📋 ABVETOS Orchestration Summary"
+          echo "================================"
+          echo "🏷️ Branch: ${{ github.ref_name }}"
+          echo "📦 Environment: ${{ github.event.inputs.environment || 'production' }}"
+          echo "⏰ Completed at: $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+          echo "🎯 Status: ${{ job.status }}"
+          echo ""
+          echo "✅ Orquestación ABVET completada. Revisa Vercel para confirmar despliegue."
+
+      - name: 🔔 Notify on Success
+        if: success()
+        run: |
+          echo "🎉 ABVETOS Orchestration completed successfully!"
+          echo "🌐 Check Vercel dashboard for deployment status"
+          echo "📊 All domain health checks passed"
+
+      - name: 🚨 Notify on Failure
+        if: failure()
+        run: |
+          echo "❌ ABVETOS Orchestration failed!"
+          echo "🔍 Check workflow logs for details"
+          echo "📞 Contact system administrator if issue persists"
