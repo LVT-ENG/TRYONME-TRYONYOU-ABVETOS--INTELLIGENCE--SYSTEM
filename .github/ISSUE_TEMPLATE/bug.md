@@ -7,14 +7,23 @@ assignees: ''
 ---
 
 <!-- 
-🚨 IMPORTANTE: Reemplaza el título con un scope válido y descripción específica del bug
-Formato: fix(scope): descripción del bug
-Scopes válidos: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
+🚨🚨🚨 ACCIÓN REQUERIDA: DEBES EDITAR EL TÍTULO ANTES DE CREAR EL ISSUE 🚨🚨🚨
 
-Ejemplos válidos:
-- fix(ui): resolve mobile navigation overlay
-- fix(api): correct recommendation endpoint timeout
-- fix(auth): handle invalid token error
+❌ TÍTULO INCORRECTO (será rechazado automáticamente):
+   fix(SCOPE): REPLACE_WITH_BUG_DESCRIPTION
+
+✅ TÍTULO CORRECTO (reemplaza SCOPE y REPLACE_WITH_BUG_DESCRIPTION):
+   fix(ui): resolve mobile navigation overlay
+   fix(api): correct recommendation endpoint timeout  
+   fix(auth): handle invalid token error
+
+📝 INSTRUCCIONES:
+1. Reemplaza "SCOPE" con uno válido: core, ui, api, auth, db, deploy, config, docs, test, avbetos, tryonme, tryonyou, health, workflow
+2. Reemplaza "REPLACE_WITH_BUG_DESCRIPTION" con una descripción breve del bug
+3. Usa minúsculas en la descripción
+4. Máximo 72 caracteres total
+
+⚠️ Issues con placeholders sin reemplazar serán cerrados automáticamente
 -->
 
 ## Descripción del problema

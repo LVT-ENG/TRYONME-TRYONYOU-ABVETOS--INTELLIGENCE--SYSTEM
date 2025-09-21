@@ -1,0 +1,104 @@
+name: Validate Issue Placeholders
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  validate-issue:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Check for placeholders in issue title
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const issue = context.payload.issue;
+          const title = issue.title;
+          
+          // Check if title contains unreplaced placeholders
+          const hasPlaceholders = title.includes('REPLACE_WITH_') || 
+                                  title.includes('SCOPE') || 
+                                  title.includes('DESCRIPTION');
+          
+          console.log(`Issue #${issue.number}: "${title}"`);
+          console.log(`Contains placeholders: ${hasPlaceholders}`);
+          
+          if (hasPlaceholders) {
+            // Create comment body with proper escaping
+            const user = issue.user.login;
+            const commentLines = [
+              '## ⚠️ Placeholder Text Detected',
+              '',
+              `Hello @${user}!`,
+              '',
+              'This issue contains placeholder text in the title that needs to be replaced:',
+              `\`${title}\``,
+              '',
+              '**Please edit the issue title to:**',
+              '1. Replace `SCOPE` with a valid scope: `core`, `ui`, `api`, `auth`, `db`, `deploy`, `config`, `docs`, `test`, `avbetos`, `tryonme`, `tryonyou`, `health`, `workflow`',
+              '2. Replace `REPLACE_WITH_*` with a specific description of your issue',
+              '3. Use lowercase for the description',
+              '4. Keep the total length under 72 characters',
+              '',
+              '**Examples of correct titles:**',
+              '- `feat(tryonme): add virtual wardrobe feature`',
+              '- `fix(ui): resolve mobile navigation overlay`',
+              '- `docs(api): update recommendation endpoints`',
+              '',
+              '**Why this matters:**',
+              '- Our project follows [Conventional Commits](https://www.conventionalcommits.org/) for automation',
+              '- Issues with placeholders cannot be processed properly',
+              '- This helps maintain project quality and organization',
+              '',
+              'Please edit your issue title and description with specific information. If you need help, check our [Template Guide](.github/ISSUE_TEMPLATE/template-guide.md).',
+              '',
+              '---',
+              '*This is an automated message. The issue will be automatically closed in 48 hours if placeholders are not replaced.*'
+            ];
+            
+            const commentBody = commentLines.join('\n');
+            
+            // Add warning comment
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: commentBody
+            });
+            
+            // Add label
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              labels: ['invalid', 'needs-info']
+            });
+            
+            console.log('Added warning comment and labels');
+          } else {
+            console.log('Issue title looks good - no placeholders detected');
+            
+            // Remove invalid/needs-info labels if they exist
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                name: 'invalid'
+              });
+            } catch (e) {
+              // Label might not exist, ignore
+            }
+            
+            try {
+              await github.rest.issues.removeLabel({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                name: 'needs-info'
+              });
+            } catch (e) {
+              // Label might not exist, ignore
+            }
+          }

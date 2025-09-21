@@ -57,18 +57,29 @@ npm install
 
 ## 📝 Templates de Issues
 
-Se han creado templates mejorados para diferentes tipos de issues que **previenen la creación de issues con placeholders**:
+Se han creado templates mejorados para diferentes tipos de issues que **previenen la creación de issues con placeholders mediante automatización**:
 
 - **Feature Request**: `feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION`
 - **Bug Report**: `fix(SCOPE): REPLACE_WITH_BUG_DESCRIPTION`  
 - **Documentation**: `docs(SCOPE): REPLACE_WITH_DOCS_DESCRIPTION`
 
+### 🤖 Automatización Anti-Placeholders
+
+**Issues con placeholders son detectados automáticamente y:**
+
+1. **Detección inmediata**: Bot detecta títulos con `SCOPE` o `REPLACE_WITH_*`
+2. **Marcado como inválido**: Se añaden labels `invalid` y `needs-info`
+3. **Comentario educativo**: Se explica cómo corregir el título
+4. **Cierre automático**: Después de 48 horas si no se corrige
+5. **Notificación al usuario**: Con ejemplos específicos y enlaces de ayuda
+
 ### 🎯 Cómo usar los templates
 
 1. **Al crear un issue**, GitHub te mostrará los templates disponibles
 2. **Elige el template apropiado** según el tipo de cambio
-3. **Reemplaza los placeholders en MAYÚSCULAS** con información específica
+3. **🚨 OBLIGATORIO: Reemplaza los placeholders en MAYÚSCULAS** con información específica
 4. **Usa un scope válido** de la lista definida en `commitlint.config.js`
+5. **Verifica el título** antes de crear (máximo 72 caracteres)
 
 ### ✅ Ejemplos de títulos correctos después de reemplazar placeholders:
 
@@ -79,12 +90,14 @@ docs(api): update recommendation endpoints
 feat(auth): implement biometric authentication
 ```
 
-### ❌ Títulos incorrectos (que causan problemas como #136):
+### ❌ Títulos incorrectos (que causan problemas como #136 - ahora detectados automáticamente):
 
 ```bash
-feat(scope): descripción breve                    # ❌ Placeholders sin reemplazar
-feat(templates): add issue templates               # ❌ Scope inválido 
-Feature request for new dashboard                  # ❌ No sigue formato conventional
+feat(SCOPE): REPLACE_WITH_BRIEF_DESCRIPTION    # ❌ Placeholders sin reemplazar - CERRADO AUTOMÁTICAMENTE
+fix(SCOPE): REPLACE_WITH_BUG_DESCRIPTION       # ❌ Placeholders sin reemplazar - CERRADO AUTOMÁTICAMENTE
+feat(scope): descripción breve                 # ❌ Placeholders sin reemplazar
+feat(templates): add issue templates            # ❌ Scope inválido 
+Feature request for new dashboard               # ❌ No sigue formato conventional
 ```
 
 ### 📋 Guía de Templates
