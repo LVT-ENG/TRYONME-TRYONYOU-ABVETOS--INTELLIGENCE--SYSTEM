@@ -1,0 +1,81 @@
+name: ABVETOS Orchestration
+on:
+  push:
+    branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+        - development
+
+jobs:
+  abvetos-orchestration:
+    name: ABVETOS Full Orchestration
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Make scripts executable
+        run: |
+          chmod +x scripts/abvet_orchestrator.sh
+          chmod +x scripts/agent_clean.sh
+          chmod +x scripts/agent_docs.sh
+          chmod +x scripts/agent_push.sh
+          chmod +x scripts/agent_test.sh
+          
+      - name: Run ABVETOS Orchestration
+        run: ./scripts/abvet_orchestrator.sh
+        env:
+          NODE_ENV: ${{ github.event.inputs.environment || 'production' }}
+          
+      - name: Post-orchestration validation
+        run: |
+          echo "🔍 Validating orchestration results..."
+          if [ -d "dist" ]; then
+            echo "✅ Build artifacts created successfully"
+          else
+            echo "❌ Build artifacts missing"
+            exit 1
+          fi
+          
+          if [ -d "docs/patents" ]; then
+            echo "✅ Documentation structure organized"
+          else
+            echo "⚠️ Documentation structure not found (may be expected)"
+          fi
+          
+      - name: Create deployment summary
+        run: |
+          echo "## ABVETOS Orchestration Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- **Environment**: ${{ github.event.inputs.environment || 'production' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ✅ Orchestration completed successfully" >> $GITHUB_STEP_SUMMARY
+          
+      - name: Notify completion
+        if: success()
+        run: |
+          echo "🎉 ABVETOS orchestration completed successfully!"
+          echo "✅ All stages executed: clean, docs, build, preview, push, test"
