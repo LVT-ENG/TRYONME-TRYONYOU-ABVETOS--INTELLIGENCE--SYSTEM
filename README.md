@@ -97,3 +97,9 @@ Este software es propietario y está protegido por patente.
 
 Ver [ROADMAP.md](./ROADMAP.md) para la hoja de ruta completa y [FEATURE_ISSUES.md](./FEATURE_ISSUES.md) para los issues individuales planificados.
 
+## 📄 Documentación Completa
+
+- **[ONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM](./docs/ONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM.md)** - Informe final completo del proyecto en inglés
+- **[Entrega Final](./entrega-final.md)** - Resumen del proyecto en español
+- **[Documentación Técnica](./docs/)** - Guías técnicas y de desarrollo
+
