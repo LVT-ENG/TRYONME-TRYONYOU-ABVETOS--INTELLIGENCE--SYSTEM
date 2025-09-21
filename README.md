@@ -3,6 +3,26 @@
 
 Sistema de inteligencia avanzada para recomendaciones de moda y análisis de preferencias.
 
+## 🚀 Inicio Rápido
+
+### Orquestación Automatizada (Recomendado)
+```bash
+# Flujo completo automatizado
+make all
+
+# Ver opciones disponibles
+make help
+```
+
+Ver [Documentación del Makefile](./docs/MAKEFILE_ORCHESTRATION.md) para detalles completos.
+
+### Desarrollo Manual
+```bash
+npm install
+npm run dev        # Desarrollo
+npm run build      # Producción
+```
+
 ## 🚀 Componentes del Sistema
 
 ### 📊 Google Apps Script Motor
