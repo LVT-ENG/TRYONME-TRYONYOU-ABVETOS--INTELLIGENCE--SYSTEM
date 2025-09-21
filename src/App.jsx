@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 
 // New TryOnMe Color Palette
 const TURQUESA_PASTEL = "#7DD9DC";
@@ -23,24 +22,19 @@ export default function App() {
   return (
     <div className="font-sans text-gray-900" style={{ backgroundColor: BLANCO_PASTEL, color: GRAFITO_GRIS }}>
       <section className="h-screen flex flex-col justify-center items-center text-center" style={{ background: `linear-gradient(to bottom, ${BLANCO_PASTEL}, ${PLATA_MATE})` }}>
-        <motion.h1
+        <h1
           className="text-5xl font-bold mb-4"
           style={{ color: TURQUESA_PASTEL }}
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
         >
           TryonU Luxury Digital Workflow Experience
-        </motion.h1>
-        <motion.p
+        </h1>
+        <p
           className="text-lg max-w-2xl"
           style={{ color: GRAFITO_GRIS }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
         >
           Vive el futuro de la moda digital. Colecciones interactivas,
           pruebas virtuales y experiencias inmersivas.
-        </motion.p>
+        </p>
       </section>
       <section className="py-16 px-6" style={{ backgroundColor: PLATA_MATE }}>
         <h2 className="text-3xl font-semibold text-center mb-10" style={{ color: TURQUESA_PASTEL }}>
@@ -48,11 +42,10 @@ export default function App() {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {products.map((p) => (
-            <motion.div
+            <div
               key={p.id}
-              className="rounded-2xl shadow hover:shadow-lg cursor-pointer overflow-hidden"
+              className="rounded-2xl shadow hover:shadow-lg cursor-pointer overflow-hidden transition-transform hover:scale-105"
               style={{ backgroundColor: BLANCO_PASTEL }}
-              whileHover={{ scale: 1.03 }}
               onClick={() => setSelected(p)}
             >
               <img src={p.img} alt={p.name} className="w-full h-80 object-cover" />
@@ -60,7 +53,7 @@ export default function App() {
                 <h3 className="text-xl font-semibold" style={{ color: GRAFITO_GRIS }}>{p.name}</h3>
                 <p style={{ color: GRAFITO_GRIS, opacity: 0.7 }}>{p.price}</p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>
@@ -76,16 +69,12 @@ export default function App() {
         </p>
       </section>
       {selected && (
-        <motion.div
+        <div
           className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
         >
-          <motion.div
-            className="rounded-2xl max-w-lg w-full p-6 relative shadow-lg glass"
+          <div
+            className="rounded-2xl max-w-lg w-full p-6 relative shadow-lg"
             style={{ backgroundColor: BLANCO_PASTEL }}
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
           >
             <button
               className="absolute top-3 right-4 hover:text-black"
@@ -106,8 +95,8 @@ export default function App() {
             >
               Añadir al Armario Inteligente
             </button>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       )}
     </div>
   );

@@ -1,25 +1,15 @@
 {
   "name": "tryonyou-abvetos-ultra-plus-ultimatum",
   "version": "1.0.0",
-  "description": "Proyecto TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint:commits": "commitlint --from HEAD~1 --to HEAD --verbose",
-    "validate:templates": "./scripts/validate-templates.sh",
-    "prepare": "npm run build"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@vercel/analytics": "^1.5.0",
-    "framer-motion": "^12.23.12",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "vite": "^7.1.4"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^5.0.2",
-    "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^18.4.3"
+    "vite": "7.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
