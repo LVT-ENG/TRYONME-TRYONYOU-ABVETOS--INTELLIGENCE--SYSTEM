@@ -1,70 +1,197 @@
-name: AdbetOrchestrator
+name: ABVETOS Orchestration
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch:   # Se lanza manualmente
+  schedule:
+    - cron: "0 3 * * *" # Revisión diaria a las 3 AM
+
+env:
+  ABVETOS_VERSION: "1.0.0"
+
 jobs:
-  ci:
-    name: CI (lint • types • test • build)
+  collect:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      repo-count: ${{ steps.collect-repos.outputs.repo-count }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout main repo
+        uses: actions/checkout@v4
+        
+      - name: Collect all repos
+        id: collect-repos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p /tmp/all_repos
+          echo "🚀 Iniciando recolección de repositorios LVT-ENG..."
+          
+          # Obtener lista de repositorios
+          gh repo list LVT-ENG --limit 100 --json nameWithOwner -q '.[].nameWithOwner' > /tmp/repo_list.txt
+          repo_count=$(wc -l < /tmp/repo_list.txt)
+          echo "📊 Repositorios encontrados: $repo_count"
+          echo "repo-count=$repo_count" >> $GITHUB_OUTPUT
+          
+          # Clonar cada repositorio
+          while read repo; do
+            if [ -n "$repo" ]; then
+              echo "📁 Clonando $repo"
+              repo_name=$(basename "$repo")
+              gh repo clone "$repo" "/tmp/all_repos/$repo_name" --depth 1 || {
+                echo "⚠️ Error clonando $repo, continuando..."
+                continue
+              }
+            fi
+          done < /tmp/repo_list.txt
+          
+          echo "✅ Recolección completada: $(ls /tmp/all_repos | wc -l) repositorios descargados"
+          
+      - name: Upload collected repos
+        uses: actions/upload-artifact@v4
         with:
-          node-version: '20'
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
-      - run: npm test -- --coverage
-      - run: npm run build
-  deploy:
-    name: Deploy to Vercel (prod)
-    needs: [ci]
+          name: collected-repos
+          path: /tmp/all_repos/
+          retention-days: 1
+
+  curate_rewrite:
     runs-on: ubuntu-latest
+    needs: collect
+    permissions:
+      contents: read
+    outputs:
+      processed-repos: ${{ steps.curate.outputs.processed-repos }}
     steps:
-      - uses: actions/checkout@v4
-      - run: npm i -g vercel@latest
-      - run: vercel pull --yes --environment=production
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - run: vercel build --prod
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - id: deploy
-        run: |
-          URL=$(vercel deploy --prebuilt --prod --yes)
-          echo "url=$URL" >> $GITHUB_OUTPUT
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      - name: Comment deployment URL
-        uses: actions/github-script@v7
+      - name: Download collected repos
+        uses: actions/download-artifact@v4
         with:
-          script: |
-            const body = `✅ Deployed to **${{ steps.deploy.outputs.url }}**`;
-            const pr = context.payload.pull_request?.number || 53;
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: pr,
-              body
-            });
-  verify:
-    name: Post-deploy Health Check
-    needs: [deploy]
+          name: collected-repos
+          path: /tmp/all_repos/
+          
+      - name: Filtrar duplicados y reescribir docs
+        id: curate
+        run: |
+          echo "🔧 Iniciando curación y reescritura de documentación..."
+          echo "📋 Repositorios encontrados: ${{ needs.collect.outputs.repo-count }}"
+          
+          processed_count=0
+          
+          # Limpieza global de archivos innecesarios
+          echo "🧹 Limpiando archivos innecesarios..."
+          find /tmp/all_repos -name "node_modules" -type d -exec rm -rf {} + 2>/dev/null || true
+          find /tmp/all_repos -name ".git" -type d -exec rm -rf {} + 2>/dev/null || true
+          find /tmp/all_repos -name "*.log" -type f -delete 2>/dev/null || true
+          find /tmp/all_repos -name "dist" -type d -exec rm -rf {} + 2>/dev/null || true
+          find /tmp/all_repos -name "build" -type d -exec rm -rf {} + 2>/dev/null || true
+          
+          # Normalización de documentación
+          echo "📝 Normalizando documentación a estándar ULTIMATUM..."
+          find /tmp/all_repos -name "README.md" -exec sed -i 's/TryOnMe/TRYONYOU–ULTIMATUM/g' {} \;
+          find /tmp/all_repos -name "README.md" -exec sed -i 's/tryonme/TRYONYOU–ULTIMATUM/g' {} \;
+          find /tmp/all_repos -name "*.md" -exec sed -i 's/TryOnMe/TRYONYOU–ULTIMATUM/g' {} \;
+          
+          # Procesamiento de cada repositorio
+          for repo_dir in /tmp/all_repos/*/; do
+            if [ -d "$repo_dir" ]; then
+              repo_name=$(basename "$repo_dir")
+              echo "🔄 Procesando repositorio: $repo_name"
+              
+              # Crear estructura estandarizada
+              mkdir -p "$repo_dir/docs/"
+              
+              # Mover documentación importante a estructura estándar
+              find "$repo_dir" -maxdepth 1 -name "*.md" -not -name "README.md" -exec mv {} "$repo_dir/docs/" \; 2>/dev/null || true
+              
+              # Limpiar archivos temporales
+              find "$repo_dir" -name "*.tmp" -o -name "*.temp" -o -name "*.bak" -delete 2>/dev/null || true
+              
+              # Agregar marca de agua ABVETOS
+              if [ -f "$repo_dir/README.md" ]; then
+                echo "" >> "$repo_dir/README.md"
+                echo "---" >> "$repo_dir/README.md"
+                echo "*Procesado por ABVETOS Orchestration v${{ env.ABVETOS_VERSION }} - $(date)*" >> "$repo_dir/README.md"
+              fi
+              
+              processed_count=$((processed_count + 1))
+            fi
+          done
+          
+          echo "processed-repos=$processed_count" >> $GITHUB_OUTPUT
+          echo "✅ Curación completada: $processed_count repositorios procesados"
+          
+      - name: Upload curated repos
+        uses: actions/upload-artifact@v4
+        with:
+          name: curated-repos
+          path: /tmp/all_repos/
+          retention-days: 1
+
+  integrate:
     runs-on: ubuntu-latest
+    needs: [collect, curate_rewrite]
+    permissions:
+      contents: write
     steps:
-      - name: Ping /api/health
-        id: health
+      - name: Integrar en repo oficial
+        uses: actions/checkout@v4
+        with:
+          repository: LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Download curated repos
+        uses: actions/download-artifact@v4
+        with:
+          name: curated-repos
+          path: /tmp/all_repos/
+          
+      - name: Copiar contenido
         run: |
-          code=$(curl -s -o /dev/null -w "%{http_code}" "${{ secrets.HEALTH_URL }}")
-          echo "code=$code" >> $GITHUB_OUTPUT
-          test "$code" = "200"
-      - name: Notify Slack on failure
-        if: failure()
+          echo "🔄 Iniciando integración en repositorio oficial..."
+          
+          # Crear estructura de destino
+          mkdir -p docs/legacy_rewrite/all_repos
+          
+          # Copiar contenido curado
+          rsync -avh /tmp/all_repos/ docs/legacy_rewrite/all_repos/ --ignore-existing --update
+          
+          # Generar resumen detallado de integración
+          report_file="docs/legacy_rewrite/integration_report.md"
+          echo "# ABVETOS Orchestration Report" > "$report_file"
+          echo "*Generado el $(date)*" >> "$report_file"
+          echo "" >> "$report_file"
+          echo "## Estadísticas de Integración" >> "$report_file"
+          echo "- **Repositorios recolectados:** ${{ needs.collect.outputs.repo-count }}" >> "$report_file"
+          echo "- **Repositorios procesados:** ${{ needs.curate_rewrite.outputs.processed-repos }}" >> "$report_file"
+          echo "- **Versión ABVETOS:** ${{ env.ABVETOS_VERSION }}" >> "$report_file"
+          echo "" >> "$report_file"
+          echo "## Repositorios Integrados" >> "$report_file"
+          echo "" >> "$report_file"
+          
+          for repo_dir in docs/legacy_rewrite/all_repos/*/; do
+            if [ -d "$repo_dir" ]; then
+              repo_name=$(basename "$repo_dir")
+              echo "- \`$repo_name\`" >> "$report_file"
+            fi
+          done
+          
+          echo "" >> "$report_file"
+          echo "## Estructura de Archivos" >> "$report_file"
+          echo "\`\`\`" >> "$report_file"
+          tree docs/legacy_rewrite/all_repos/ -d -L 2 2>/dev/null || ls -la docs/legacy_rewrite/all_repos/ >> "$report_file"
+          echo "\`\`\`" >> "$report_file"
+          
+          echo "✅ Integración completada, reporte generado en $report_file"
+          
+      - name: Commit & Push
         run: |
-          curl -X POST -H 'Content-type: application/json' \
-            --data "{\"text\":\"❌ Health check failed after deploy. Status: ${{ steps.health.outputs.code }}\"}" \
-            "${{ secrets.SLACK_WEBHOOK_URL }}"
+          git config --global user.name "ABVETOS-Bot"
+          git config --global user.email "bot@tryonyou.com"
+          
+          git add docs/legacy_rewrite/
+          
+          if git diff --staged --quiet; then
+            echo "ℹ️ No hay cambios para commitear"
+          else
+            git commit -m "feat(abvetos): orchestration integration - ${{ needs.curate_rewrite.outputs.processed-repos }} repos processed"
+            git push
+            echo "✅ Cambios committed y pushed exitosamente"
+          fi

@@ -31,3 +31,8 @@ node_modules/
 dist/
 .DS_Store
 package-lock.json
+
+# ABVETOS orchestration - ignore large repo collections but keep reports
+docs/legacy_rewrite/all_repos/
+!docs/legacy_rewrite/README.md
+!docs/legacy_rewrite/integration_report.md
