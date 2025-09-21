@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Questionnaire from "./components/Questionnaire";
+import MockupGrid from "./components/MockupGrid";
+import PauShop from "./components/PauShop";
 
 // New TryOnMe Color Palette
 const TURQUESA_PASTEL = "#7DD9DC";
@@ -19,6 +22,7 @@ const products = [
 
 export default function App() {
   const [selected, setSelected] = useState(null);
+  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
 
   return (
     <div className="font-sans text-gray-900" style={{ backgroundColor: BLANCO_PASTEL, color: GRAFITO_GRIS }}>
@@ -32,7 +36,7 @@ export default function App() {
           TryonU Luxury Digital Workflow Experience
         </motion.h1>
         <motion.p
-          className="text-lg max-w-2xl"
+          className="text-lg max-w-2xl mb-8"
           style={{ color: GRAFITO_GRIS }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -41,7 +45,42 @@ export default function App() {
           Vive el futuro de la moda digital. Colecciones interactivas,
           pruebas virtuales y experiencias inmersivas.
         </motion.p>
+        
+        <motion.button
+          onClick={() => setShowQuestionnaire(!showQuestionnaire)}
+          style={{
+            padding: '1rem 2rem',
+            background: `linear-gradient(145deg, ${TURQUESA_PASTEL}, #6cc6c9)`,
+            color: 'white',
+            border: 'none',
+            borderRadius: '15px',
+            fontSize: '1.1rem',
+            fontWeight: 'bold',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(125, 217, 220, 0.4)',
+            marginBottom: '2rem'
+          }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {showQuestionnaire ? 'Ocultar Perfil' : 'Crear tu Perfil TRYONYOU'}
+        </motion.button>
       </section>
+
+      {showQuestionnaire && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Questionnaire />
+        </motion.div>
+      )}
+
+      <MockupGrid />
+      
+      <PauShop />
+      
       <section className="py-16 px-6" style={{ backgroundColor: PLATA_MATE }}>
         <h2 className="text-3xl font-semibold text-center mb-10" style={{ color: TURQUESA_PASTEL }}>
           Colección Exclusiva
@@ -64,6 +103,7 @@ export default function App() {
           ))}
         </div>
       </section>
+      
       <section className="py-20 text-center" style={{ backgroundColor: BLANCO_PASTEL }}>
         <h2 className="text-3xl font-bold mb-6" style={{ color: TURQUESA_PASTEL }}>
           Sobre TryonU
