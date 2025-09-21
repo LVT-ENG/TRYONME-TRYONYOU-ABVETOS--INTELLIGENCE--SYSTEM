@@ -40,6 +40,38 @@ Módulo core del sistema de inteligencia AVBETOS.
 
 ## 🔧 Desarrollo
 
+### ⚡ Inicio Rápido con Makefile
+
+Este proyecto incluye un **Makefile completo** que automatiza todo el ciclo de desarrollo:
+
+```bash
+# Ver todos los comandos disponibles
+make help
+
+# Ejecutar todo el pipeline de construcción
+make all
+
+# Ciclo rápido de desarrollo
+make quick
+
+# Iniciar servidor de desarrollo
+make dev
+
+# Construir para producción
+make build
+
+# Ejecutar todas las validaciones
+make validate
+
+# Desplegar a producción
+make deploy
+```
+
+**Comandos principales**:
+- `make all` - Pipeline completo: limpieza, instalación, construcción, documentación y tests
+- `make quick` - Ciclo rápido: limpieza, instalación y construcción
+- `make production` - Ciclo completo de producción incluyendo despliegue
+
 ### 📋 Contribuir al Proyecto
 
 **Issue Templates Mejorados**: El proyecto utiliza templates de GitHub que siguen conventional commits para mantener la calidad y consistencia:
