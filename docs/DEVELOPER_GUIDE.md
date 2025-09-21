@@ -55,8 +55,8 @@ composer --version
 
 ```bash
 # 1. Clonar el repositorio
-git clone https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git
-cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+git clone https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS-INTELLIGENCE-SYSTEM.git
+cd TRYONME-TRYONYOU-ABVETOS-INTELLIGENCE-SYSTEM
 
 # 2. Instalar dependencias de Node.js
 npm install
