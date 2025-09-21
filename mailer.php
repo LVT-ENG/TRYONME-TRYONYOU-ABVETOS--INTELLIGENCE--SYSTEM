@@ -32,10 +32,27 @@ if (ENABLE_MAKE && MAKE_WEBHOOK_URL){
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+  // Add timeout settings for better error handling
+  curl_setopt($ch, CURLOPT_TIMEOUT, 15); // 15 second timeout
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5); // 5 second connection timeout
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false); // Don't follow redirects
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true); // Verify SSL certificates
+  
   $resp = curl_exec($ch);
   $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  $error = curl_error($ch);
   curl_close($ch);
-  $make_ok = ($code >= 200 && $code < 300);
+  
+  // Better error handling for Make webhook
+  if ($error) {
+    error_log("Make webhook curl error: " . $error);
+    $make_ok = false;
+  } else {
+    $make_ok = ($code >= 200 && $code < 300);
+    if (!$make_ok) {
+      error_log("Make webhook failed with HTTP code: " . $code);
+    }
+  }
 }
 
 echo json_encode(['ok'=>($sent || $make_ok),'mail'=>$sent,'make'=>$make_ok]);

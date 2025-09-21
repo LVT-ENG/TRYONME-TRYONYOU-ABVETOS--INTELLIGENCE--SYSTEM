@@ -1,6 +1,7 @@
 {
   "name": "tryonyou-abvetos-ultra-plus-ultimatum",
   "version": "1.0.0",
+  "type": "module",
   "description": "Proyecto TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM",
   "scripts": {
     "dev": "vite",
@@ -18,8 +19,12 @@
     "vite": "^7.1.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^5.0.2",
     "@commitlint/cli": "^18.4.3",
-    "@commitlint/config-conventional": "^18.4.3"
+    "@commitlint/config-conventional": "^18.4.3",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@vitejs/plugin-react": "^5.0.2",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.13"
   }
 }
