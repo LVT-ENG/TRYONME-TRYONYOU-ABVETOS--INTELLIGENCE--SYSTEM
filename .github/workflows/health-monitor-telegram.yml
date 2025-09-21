@@ -1,0 +1,53 @@
+---
+name: Health Monitor (30m) - Telegram
+"on":
+  schedule:
+    - cron: "*/30 * * * *"   # cada 30 minutos
+  workflow_dispatch:         # también se puede lanzar manualmente
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Vercel deployment
+        id: health_check
+        run: |
+          URL="https://tryonme-tryonyou-abvetos-intelligence-system.vercel.app"
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" "$URL")
+          echo "HTTP status: $STATUS"
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+
+          if [ "$STATUS" -ne 200 ]; then
+            echo "❌ Health check failed ($STATUS)"
+            exit 1
+          fi
+
+      - name: Notify Telegram on failure
+        if: failure()
+        run: |
+          URL="https://tryonme-tryonyou-abvetos-intelligence-system.vercel.app"
+          STATUS="${{ steps.health_check.outputs.status }}"
+          MESSAGE="⚠️ Health check FAILED
+          Repo: TRYONYOU–ULTIMATUM
+          Status: $STATUS
+          URL: $URL"
+
+          BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          BOT_URL="https://api.telegram.org/bot${BOT_TOKEN}"
+          curl -s -X POST "${BOT_URL}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="$MESSAGE"
+
+      - name: Notify Telegram on success
+        if: success()
+        run: |
+          URL="https://tryonme-tryonyou-abvetos-intelligence-system.vercel.app"
+          MESSAGE="✅ Health check OK
+          Repo: TRYONYOU–ULTIMATUM
+          URL: $URL"
+
+          BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          BOT_URL="https://api.telegram.org/bot${BOT_TOKEN}"
+          curl -s -X POST "${BOT_URL}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="$MESSAGE"
