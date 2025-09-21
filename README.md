@@ -38,6 +38,31 @@ Módulo core del sistema de inteligencia AVBETOS.
 
 **Ubicación**: `/AVBETOS_repo_package/`
 
+## 🤖 Automatización de Despliegue
+
+### 📦 Update from ZIPs - Automatización Completa
+
+**Nueva funcionalidad**: Sistema automatizado para procesar archivos ZIP y desplegar automáticamente:
+
+- **Trigger automático**: Al subir archivos `*.zip` al repositorio
+- **Trigger manual**: Desde GitHub Actions
+- **Funciones**: Extracción, sincronización, build, deploy a Vercel, notificaciones Telegram
+
+**Configuración rápida**:
+```bash
+# 1. Configura secrets en GitHub (ver docs/SECRETS_SETUP.md)
+# 2. Sube un ZIP al repositorio
+git add tu-archivo.zip
+git commit -m "feat: add new content via ZIP"
+git push origin main
+# 3. ¡El workflow se ejecuta automáticamente!
+```
+
+📖 **Documentación completa**: [docs/UPDATE_FROM_ZIPS.md](docs/UPDATE_FROM_ZIPS.md)  
+🔐 **Guía de configuración**: [docs/SECRETS_SETUP.md](docs/SECRETS_SETUP.md)
+
+---
+
 ## 🔧 Desarrollo
 
 ### 📋 Contribuir al Proyecto
