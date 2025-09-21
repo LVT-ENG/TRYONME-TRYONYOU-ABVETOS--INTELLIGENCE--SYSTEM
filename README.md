@@ -97,9 +97,37 @@ Este software es propietario y está protegido por patente.
 
 Ver [ROADMAP.md](./ROADMAP.md) para la hoja de ruta completa y [FEATURE_ISSUES.md](./FEATURE_ISSUES.md) para los issues individuales planificados.
 
-## 📄 Documentación Completa
+## 📚 Documentación Completa
 
-- **[ONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM](./docs/ONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM.md)** - Informe final completo del proyecto en inglés
-- **[Entrega Final](./entrega-final.md)** - Resumen del proyecto en español
-- **[Documentación Técnica](./docs/)** - Guías técnicas y de desarrollo
+### 🎯 Centro de Documentación
+- **[📚 Índice de Documentación](./docs/README.md)** - Portal principal con navegación organizada
+- **[🚀 Inicio Rápido](./docs/README.md#inicio-rápido)** - Guías específicas por tipo de usuario
+- **[🔍 Búsqueda por Tema](./docs/README.md#búsqueda-rápida-por-tema)** - Encuentra lo que necesitas rápidamente
+
+### 📖 Documentación por Audiencia
+
+#### 👩‍💻 Para Desarrolladores
+- **[Configuración del Entorno](./docs/development-setup.md)** - Setup, herramientas y dependencias
+- **[Convenciones de Código](./docs/coding-conventions.md)** - Estándares, naming, conventional commits
+- **[Guía de Contribución](./docs/contributing.md)** - PRs, issues, code review
+- **[API Reference](./docs/api-reference.md)** - Funciones y endpoints disponibles
+
+#### 👤 Para Usuarios
+- **[Guía de Usuario](./docs/user-guide.md)** - Cómo usar el sistema de recomendaciones
+- **[Solución de Problemas](./docs/troubleshooting.md)** - FAQ y problemas comunes
+
+#### 🔧 Para Administradores
+- **[Guía de Despliegue](./DEPLOY.md)** - Instalación y configuración production
+- **[Integración de Sistemas](./docs/integration-guide.md)** - APIs externas y webhooks  
+- **[Monitoreo y Observabilidad](./OBSERVABILITY.md)** - Logs, métricas, alertas
+
+### 🏗️ Documentación Técnica Avanzada
+- **[Arquitectura Frontend](./docs/frontend-guide.md)** - React, componentes, routing
+- **[Algoritmos de IA](./docs/algorithms.md)** - Machine Learning y recomendaciones
+- **[AVBETOS Core](./docs/avbetos-core.md)** - Motor de inteligencia artificial
+- **[Reporte Final Técnico](./docs/ONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM.md)** - Documentación completa del proyecto
+
+### 📁 Documentación de Componentes
+- **[Google Apps Script](./google-apps-script/DEPLOYMENT.md)** - Motor de recomendaciones
+- **[Templates de Issues](./.github/ISSUE_TEMPLATE/template-guide.md)** - Cómo crear issues efectivos
 

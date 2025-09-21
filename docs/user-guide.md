@@ -278,9 +278,34 @@ Para problemas técnicos complejos, el administrador puede:
 
 ---
 
-## 📚 Recursos Adicionales
+## 📚 Documentación Relacionada
 
-- [Guía de Despliegue](../google-apps-script/DEPLOYMENT.md)
-- [Referencia de API](./api-reference.md)
-- [Guía de Desarrollo](./development-setup.md)
+### 🔗 Para Usuarios
+- **[🏠 Centro de Documentación](./README.md)** - Volver al índice principal
+- **[🐛 Solución de Problemas](./troubleshooting.md)** - FAQ y errores comunes
+- **[🚀 Guía de Despliegue](../google-apps-script/DEPLOYMENT.md)** - Para administradores
+
+### 🛠️ Para Técnicos y Desarrolladores
+- **[📖 Referencia de API](./api-reference.md)** - Funciones disponibles
+- **[🔧 Setup de Desarrollo](./development-setup.md)** - Configurar entorno
+- **[🧮 Algoritmos](./algorithms.md)** - Cómo funcionan las recomendaciones
+- **[🌐 Frontend Guide](./frontend-guide.md)** - Interface web del sistema
+
+### 📞 Soporte
+- **[🤝 Contribuir](./contributing.md)** - Reportar bugs o mejoras
+- **[📋 Templates de Issues](../.github/ISSUE_TEMPLATE/template-guide.md)** - Crear issues efectivos
+
+---
+
+## 💡 Consejos y Trucos
+
+### Optimización del Uso
+- **Actualiza preferencias regularmente** para mejores recomendaciones
+- **Completa todas las medidas** para mayor precisión
+- **Revisa las tendencias** para estar al día con la moda
+
+### Personalización Avanzada
+- **Ajusta pesos de algoritmo** si eres usuario avanzado
+- **Experimenta con diferentes estilos** para descubrir nuevas opciones
+- **Usa filtros de clima** según tu ubicación y estación
 - [Solución de Problemas](./troubleshooting.md)
