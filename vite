@@ -1,0 +1,80 @@
+#!/bin/bash
+set -e
+
+echo "🚀 Iniciando fusión definitiva TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM..."
+
+# Variables principales
+REPO_MAIN="git@github.com:LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git"
+WORKDIR="$HOME/tryonyou-ultimatum"
+BOT_TOKEN="7052535931:AAFtrzzuTH2NGMxCZ1_RZ9vjnzKVW6bi-R4"
+CHAT_ID="@abvet_deploy_bot"
+
+# 1. Clonar repo oficial (Ultimatum)
+rm -rf "$WORKDIR"
+git clone "$REPO_MAIN" "$WORKDIR"
+cd "$WORKDIR"
+
+# 2. Agregar repositorios secundarios como remotes
+git remote add ultra https://github.com/.../tryonyou-ultra.git || true
+git remote add plus https://github.com/.../tryonyou-plus.git || true
+git remote add view https://github.com/.../tryonviewapp.git || true
+git remote add manus https://github.com/.../manus-repo.git || true
+
+# 3. Traer branches
+git fetch --all
+
+# 4. Usar Manus como base principal
+git checkout manus/main
+git checkout -b ultimatum-main
+
+# 5. Fusionar los demás, priorizando Manus
+for repo in ultra plus view; do
+  git merge "${repo}/main" --allow-unrelated-histories -m "Merge $repo into ultimatum-main" || true
+done
+
+# 6. Eliminar duplicados y regenerar dependencias
+rm -rf node_modules package-lock.json yarn.lock
+npm install
+npm audit fix
+
+# 7. Configurar workflow GitHub Actions
+mkdir -p .github/workflows
+cat > .github/workflows/ci.yml <<'YAML'
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+YAML
+
+# 8. Commit y push al repo oficial
+git add .
+git commit -m "🔥 Fusion definitiva: Manus como base + módulos útiles de Ultra/Plus/View"
+git branch -M main
+git push origin main --force
+
+# 9. Notificación a Telegram
+DEPLOY_URL="https://tryonyou.com"
+COMMIT_HASH=$(git rev-parse --short HEAD)
+MESSAGE="✅ Deploy Ultimatum listo!\nRepo: $REPO_MAIN\nCommit: $COMMIT_HASH\nURL: $DEPLOY_URL"
+curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+  -d chat_id="$CHAT_ID" \
+  -d text="$MESSAGE"
+
+echo "🎉 Fusión completada y notificada a Telegram"
+
