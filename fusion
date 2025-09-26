@@ -1,0 +1,28 @@
+# 1️⃣ Clonar tu repo oficial (si no lo tienes ya)
+git clone git@github.com:LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git
+cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+
+# 2️⃣ Guardar cualquier cambio pendiente
+git checkout main
+git pull origin main
+git add .
+git commit -m "Commit pending changes before ULTIMATUM fusion" || echo "No pending changes"
+
+# 3️⃣ Crear rama para la fusión
+git checkout -b fusion/ULTIMATUM
+
+# 4️⃣ Descomprimir el ZIP maestro en la carpeta actual
+unzip ~/ruta/TRYONYOU-ULTIMATUM-MASTER.zip -d ./ULTIMATUM_MERGE
+
+# 5️⃣ Copiar contenido al repo (sin tocar la carpeta .git)
+rsync -avh ./ULTIMATUM_MERGE/ ./ --exclude=.git
+
+# 6️⃣ Commit de la fusión
+git add .
+git commit -m "Fusion: Integrate TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM master structure"
+
+# 7️⃣ Push de la rama de fusión
+git push origin fusion/ULTIMATUM
+
+# 8️⃣ Volver a main (opcional)
+git checkout main
