@@ -209,14 +209,14 @@ deploy_to_vercel() {
   "version": 2,
   "builds": [
     {
-      "src": "src/index.html",
+      "src": "apps/web/index.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/src/\$1"
+      "dest": "/apps/web/\$1"
     }
   ],
   "alias": [
