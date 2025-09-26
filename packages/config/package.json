@@ -1,0 +1,7 @@
+{
+  "name": "@tryonyou/config",
+  "version": "1.0.0",
+  "description": "Shared configuration for TRYONYOU",
+  "main": "index.js",
+  "private": true
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@tryonyou/ui",
+  "version": "1.0.0",
+  "description": "UI components for TRYONYOU",
+  "main": "index.js",
+  "private": true
+}
