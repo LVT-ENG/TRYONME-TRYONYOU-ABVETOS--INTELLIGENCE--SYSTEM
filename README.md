@@ -1,188 +1,95 @@
-# TRYONYOU – ABVETOS Intelligence System
+# TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM
 
-[![Deploy Status](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/workflows/🚀%20Deploy%20TRYONYOU-ABVETOS%20System/badge.svg)](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/actions)
-[![Website](https://img.shields.io/website?url=https%3A%2F%2Ftryonyou.app)](https://tryonyou.app)
-[![License](https://img.shields.io/badge/license-Proprietary-red.svg)](LICENSE)
+**The Future of Fashion Intelligence is Here.**
 
-## Overview
+TRYONYOU is a revolutionary fashion technology platform that redefines the virtual try-on experience. Our intelligent, modular, and scalable system combines advanced AI, 3D avatar generation, and biometric payments to deliver a seamless and personalized fashion journey.
 
-The TRYONYOU–ABVETOS Intelligence System represents a revolutionary approach to fashion technology, combining advanced AI, computer vision, and biometric authentication to create the most sophisticated virtual try-on experience available today.
+https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/assets/178423938/531055c3-1492-4161-a1c1-52591e01083e
 
-## 🚀 Live Deployment
+## Key Features
 
-- **Primary Domain**: [tryonyou.app](https://tryonyou.app)
-- **WWW Domain**: [www.tryonyou.app](https://www.tryonyou.app)
+Our platform is built on a foundation of cutting-edge modules that work in harmony to create an unparalleled user experience.
 
-## 🏗️ System Architecture
+| Module | Description |
+| --- | --- |
+| **Avatar 3D** | Generate photorealistic 3D avatars with precise body measurements for a perfect fit. |
+| **Fabric Fit Comparator** | Simulate how different fabrics and garments will look and feel on your unique avatar. |
+| **Smart Wardrobe** | Digitize your closet, get AI-powered outfit recommendations, and rediscover your style. |
+| **Solidarity Wardrobe** | Participate in a sustainable fashion ecosystem by donating or exchanging clothing. |
+| **ABVET Biometric Payment** | Experience secure, frictionless payments with advanced iris and voice recognition. |
+| **Fashion Trend Tracker (FTT)** | Stay ahead of the curve with real-time trend analysis powered by AI. |
+| **Creative Auto-Production (CAP)** | Bring your designs to life with our automated, on-demand production system. |
+| **LiveIt Factory Orchestration** | Optimize your supply chain with our intelligent factory management platform. |
 
-### Core Modules
+## A Visual Journey into the Future of Fashion
 
-| Module | Description | Status |
-|--------|-------------|--------|
-| **Avatar 3D** | Parametric 3D avatar generation | ✅ Active |
-| **Fabric Fit Comparator** | Real-time textile simulation | ✅ Active |
-| **Smart Wardrobe** | Intelligent wardrobe management | ✅ Active |
-| **Solidarity Wardrobe** | Sustainable fashion exchange | ✅ Active |
-| **ABVET Payment** | Dual biometric authentication | ✅ Active |
-| **Fashion Trend Tracker** | AI-powered trend analysis | ✅ Active |
-| **Creative Auto-Production** | Automated design and production | ✅ Active |
-| **LiveIt Factory Orchestration** | Supply chain optimization | ✅ Active |
+Experience the power of TRYONYOU through our immersive visual content, showcasing the platform's futuristic aesthetic and cutting-edge technology.
 
-## 🛠️ Development
+### Holographic Fashion Runway
 
-### Prerequisites
+Step into a world where fashion meets the future. Our holographic runway showcases iridescent, color-shifting garments that flow like liquid light, offering a glimpse into the next generation of fashion.
 
-- Node.js 20+
-- npm or yarn
-- Git
+![Holographic Fashion Runway](src/hero_holographic_fashion.png)
 
-### Quick Start
+https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/assets/178423938/8050608c-9892-441d-839b-8321920830a3
 
-```bash
-# Clone the repository
-git clone https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git
-cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+### 3D Avatar Generation
 
-# Install dependencies
-make deps
+Create your digital twin with our advanced 3D avatar generation system. Input your measurements and watch as a photorealistic avatar is created, ready for a virtual fitting.
 
-# Start development server
-make dev
+![3D Avatar Generation](src/avatar_3d_generation.png)
 
-# Build for production
-make build
+https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/assets/178423938/0389312b-3a31-4797-862a-0e70036328a9
 
-# Deploy to production
-make deploy-all
-```
+### Virtual Try-On Interface
 
-### Available Make Targets
+Experience the most realistic virtual try-on solution available. Our interface allows you to see how different garments fit and move on your 3D avatar, all from the comfort of your home.
 
-```bash
-make help              # Show all available targets
-make deps              # Install dependencies
-make build             # Build for production
-make deploy-docs       # Deploy documentation
-make deploy-video      # Deploy video content
-make deploy-all        # Deploy complete system
-make health-check      # Perform system health check
-make setup             # Complete setup process
-```
+![Virtual Try-On Interface](src/virtual_tryon_interface.png)
 
-## 🚀 Deployment
+https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/assets/178423938/0c19a99c-3e3a-4e2d-905c-1961225a1b5c
 
-### Automated Deployment
+### Biometric Payment System
 
-The system features fully automated deployment with the following capabilities:
+Checkout with a glance. Our ABVET biometric payment system uses advanced iris and facial recognition to provide a secure and seamless payment experience.
 
-- **GitHub Actions CI/CD**: Automatic deployment on push to main branch
-- **Vercel Integration**: Seamless deployment to production
-- **Domain Management**: Automatic configuration of custom domains
-- **Telegram Notifications**: Real-time deployment status updates via @abvet_deploy_bot
+![Biometric Payment System](src/biometric_payment_system.png)
 
-### Manual Deployment
+https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/assets/178423938/77488835-212c-471a-b3c0-0d30241a6341
 
-```bash
-# Deploy complete system
-./deploy.sh all
+## Project Structure
 
-# Deploy specific components
-./deploy.sh docs
-./deploy.sh video
-```
-
-### Environment Variables
-
-Set the following environment variables for full functionality:
-
-```bash
-export VERCEL_TOKEN="your_vercel_token"
-export TELEGRAM_BOT_TOKEN="your_telegram_bot_token"
-export TELEGRAM_CHAT_ID="@abvet_deploy_bot"
-```
-
-## 📁 Project Structure
+Our repository is organized to ensure clarity, scalability, and ease of maintenance.
 
 ```
-├── src/                    # Source code
-│   ├── components/         # React components
-│   ├── pages/             # Application pages
-│   ├── styles/            # CSS and styling
-│   └── index.html         # Main HTML file
-├── docs/                  # Documentation
-├── .github/workflows/     # GitHub Actions
-├── TRYONYOU_DEPLOY_EXPRESS_INBOX/  # Deploy Express inbox
-├── Makefile              # Automation targets
-├── deploy.sh             # Deployment script
-├── vercel.json           # Vercel configuration
-└── package.json          # Node.js dependencies
+├── .env.example
+├── .gitignore
+├── LICENSE
+├── Makefile
+├── README.md
+├── deploy.sh
+├── docs/
+│   ├── arquitectura.md
+│   ├── casos_uso.md
+│   └── flujo_usuario.md
+├── package.json
+├── src/
+│   ├── index.js
+│   ├── modules/
+│   └── utils/
+├── tests/
+└── vercel.json
 ```
 
-## 🔧 Configuration
+## Getting Started
 
-### Vercel Configuration
+To get started with the TRYONYOU platform, please refer to our detailed documentation:
 
-The project is configured for deployment on Vercel with:
-- Custom domains: `tryonyou.app` and `www.tryonyou.app`
-- Static site generation
-- Security headers
-- Route optimization
+- [**Architecture Overview**](docs/arquitectura.md)
+- [**User Flow**](docs/flujo_usuario.md)
+- [**Use Cases**](docs/casos_uso.md)
 
-### GitHub Secrets
+## The 50 Intelligent Agents of TRYONYOU
 
-Configure the following secrets in your GitHub repository:
-- `VERCEL_TOKEN`: Vercel deployment token
-- `TELEGRAM_BOT_TOKEN`: Telegram bot token for notifications
-- `TELEGRAM_CHAT_ID`: Telegram chat ID for notifications
+Our platform is powered by a suite of 50 intelligent agents that automate and optimize every aspect of the fashion lifecycle. Discover the full list of agents and their capabilities in our [**Agent Documentation**](docs/agentes.md).
 
-## 🤖 Deploy Express by ABVET
-
-The system includes Deploy Express by ABVET, an autonomous deployment system that monitors the `TRYONYOU_DEPLOY_EXPRESS_INBOX` directory for changes and automatically triggers deployments.
-
-### Features
-
-- **Autonomous Operation**: 100% automatic deployment
-- **Real-time Monitoring**: Continuous monitoring of deployment inbox
-- **Telegram Integration**: Instant notifications via @abvet_deploy_bot
-- **Multi-target Deployment**: Support for docs, video, and complete system deployment
-
-## 📊 Monitoring and Health Checks
-
-The system includes comprehensive monitoring:
-
-- **Health Check Endpoints**: Automatic validation of deployment status
-- **Domain Monitoring**: Continuous monitoring of both primary and WWW domains
-- **Performance Metrics**: Real-time performance tracking
-- **Error Reporting**: Automatic error detection and reporting
-
-## 🔐 Security
-
-- **Biometric Authentication**: ABVET dual biometric payment system
-- **Secure Headers**: Comprehensive security header configuration
-- **Token Management**: Secure handling of API tokens and secrets
-- **Environment Isolation**: Proper separation of development and production environments
-
-## 📈 Performance
-
-- **Optimized Build Process**: Advanced Vite configuration for optimal performance
-- **CDN Integration**: Global content delivery via Vercel
-- **Caching Strategy**: Intelligent caching for improved load times
-- **Bundle Optimization**: Minimized bundle sizes for faster loading
-
-## 🤝 Contributing
-
-This is a proprietary project. For contribution guidelines and access requests, please contact the development team.
-
-## 📄 License
-
-This project is proprietary and confidential. All rights reserved.
-
-## 📞 Support
-
-For technical support and inquiries:
-- **Telegram**: @abvet_deploy_bot
-- **Repository**: [GitHub Issues](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/issues)
-
----
-
-**TRYONYOU – ABVETOS Intelligence System** | Revolutionizing Fashion Technology | © 2025 All Rights Reserved

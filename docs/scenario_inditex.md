@@ -1,0 +1,1 @@
+Placeholder for scenario_inditex.md
