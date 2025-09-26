@@ -1,0 +1,17 @@
+# 1️⃣ Entra en la carpeta de tu repositorio
+cd ~/ruta/a/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+
+# 2️⃣ Descomprime el ZIP maestro (si aún no lo hiciste)
+unzip TRYONYOU-ULTIMATUM-MASTER.zip -d ./ULTIMATUM_MERGE
+
+# 3️⃣ Copia el contenido del ZIP dentro del repo (sobreescribe lo necesario)
+rsync -avh ./ULTIMATUM_MERGE/ ./ --exclude=.git
+
+# 4️⃣ Añade todos los cambios
+git add .
+
+# 5️⃣ Crea el commit con mensaje claro
+git commit -m "Fusion: Integrate TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM master structure"
+
+# 6️⃣ Sube la rama actual al remoto (ej. main o fusion/ULTIMATUM)
+git push origin main
