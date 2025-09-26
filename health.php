@@ -88,17 +88,38 @@ $metrics['error_rate_percent'] = $error_rate_percent;
 $p95_response_time_ms = $response_time_ms + rand(50, 200); // Mock P95
 $metrics['p95_response_time_ms'] = $p95_response_time_ms;
 
-// Active users (mock data)
+// Simulate active users and fashion metrics based on time of day
+$hour = (int)date('G'); // 0-23
+// Simulate higher activity during 18:00-22:00, lower at night
+if ($hour >= 18 && $hour <= 22) {
+    $active_current = rand(80, 120);
+    $peak_24h = rand(150, 200);
+    $total_sessions_24h = rand(800, 1200);
+    $products_viewed_24h = rand(1800, 2200);
+    $try_on_sessions_24h = rand(600, 900);
+} elseif ($hour >= 8 && $hour < 18) {
+    $active_current = rand(40, 80);
+    $peak_24h = rand(120, 180);
+    $total_sessions_24h = rand(500, 900);
+    $products_viewed_24h = rand(1200, 1800);
+    $try_on_sessions_24h = rand(300, 600);
+} else {
+    $active_current = rand(10, 30);
+    $peak_24h = rand(80, 120);
+    $total_sessions_24h = rand(200, 500);
+    $products_viewed_24h = rand(500, 1200);
+    $try_on_sessions_24h = rand(100, 300);
+}
 $metrics['active_users'] = [
-    'current' => rand(10, 100),
-    'peak_24h' => rand(150, 500),
-    'total_sessions_24h' => rand(200, 1000)
+    'current' => $active_current,
+    'peak_24h' => $peak_24h,
+    'total_sessions_24h' => $total_sessions_24h
 ];
 
-// Fashion-specific metrics
+// Fashion-specific metrics (simulate conversion rate and session duration as before)
 $metrics['fashion_metrics'] = [
-    'products_viewed_24h' => rand(500, 2000),
-    'try_on_sessions_24h' => rand(100, 800),
+    'products_viewed_24h' => $products_viewed_24h,
+    'try_on_sessions_24h' => $try_on_sessions_24h,
     'conversion_rate_percent' => round(rand(200, 800) / 100, 2), // 2-8%
     'avg_session_duration_min' => round(rand(300, 1200) / 60, 2) // 5-20 min
 ];
