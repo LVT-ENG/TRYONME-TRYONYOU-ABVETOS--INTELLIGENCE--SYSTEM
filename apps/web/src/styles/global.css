@@ -1,0 +1,9 @@
+:root {
+  --gold:#D3B26A; --peacock:#0E6B6B; --anth:#141619;
+  --base:#0B0D10; --text:#EEF0F3;
+  --glass:rgba(255,255,255,.06); --glass-stroke:rgba(255,255,255,.18);
+  font-family:Inter,Roboto,system-ui,-apple-system,Segoe UI,sans-serif;
+}
+html,body,#app{height:100%;margin:0;background:var(--base);color:var(--text)}
+a{color:var(--gold)}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
