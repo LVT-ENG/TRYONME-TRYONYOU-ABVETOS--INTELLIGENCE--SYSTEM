@@ -1,0 +1,6 @@
+git clone https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git
+cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+unzip ../TRYONYOU-ABVETOS-ULTIMATUM.zip -o
+git add .
+git commit -m "🚀 Integración app TRYONYOU ULTIMÁTUM"
+git push origin main
