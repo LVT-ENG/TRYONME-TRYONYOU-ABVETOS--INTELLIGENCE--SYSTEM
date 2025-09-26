@@ -27,3 +27,7 @@ dist-ssr
 
 Env.secrets
 .vercel
+node_modules/
+dist/
+.DS_Store
+package-lock.json
