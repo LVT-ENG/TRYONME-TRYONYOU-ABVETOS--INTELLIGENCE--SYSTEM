@@ -34,8 +34,8 @@ jobs:
             echo "active_users=$active_users" >> $GITHUB_OUTPUT
             
             # Check thresholds
-            error_rate_exceeded=$(echo "$error_rate > 1.0" | bc -l)
-            p95_exceeded=$(echo "$p95_time > 300" | bc -l)
+            error_rate_exceeded=$(awk "BEGIN {print ($error_rate > 1.0) ? 1 : 0}")
+            p95_exceeded=$(awk "BEGIN {print ($p95_time > 300) ? 1 : 0}")
             
             echo "error_rate_exceeded=$error_rate_exceeded" >> $GITHUB_OUTPUT
             echo "p95_exceeded=$p95_exceeded" >> $GITHUB_OUTPUT
