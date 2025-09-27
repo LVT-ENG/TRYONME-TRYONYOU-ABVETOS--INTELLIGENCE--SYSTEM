@@ -80,9 +80,33 @@ $metrics['external_services'] = [
 $response_time_ms = round((microtime(true) - $response_start) * 1000, 2);
 $metrics['response_time_ms'] = $response_time_ms;
 
-// Mock error rate calculation (in real app, this would query logs/database)
-$error_rate_percent = rand(0, 50) / 100; // Mock: 0-0.5% error rate
-$metrics['error_rate_percent'] = $error_rate_percent;
+// Error rate calculation based on PHP error log (last 10 minutes)
+$error_log_path = ini_get('error_log');
+$error_count = 0;
+$total_lines = 0;
+$window_seconds = 600; // 10 minutes
+$now = time();
+if ($error_log_path && is_readable($error_log_path)) {
+    $lines = @file($error_log_path);
+    if ($lines !== false) {
+        $total_lines = count($lines);
+        foreach (array_reverse($lines) as $line) {
+            // Try to extract timestamp from error log line (format: [date time] ...)
+            if (preg_match('/\[(\d{2}-[A-Za-z]{3}-\d{4} \d{2}:\d{2}:\d{2})\]/', $line, $matches)) {
+                $log_time = strtotime($matches[1]);
+                if ($log_time !== false && ($now - $log_time) <= $window_seconds) {
+                    $error_count++;
+                } elseif ($log_time !== false && ($now - $log_time) > $window_seconds) {
+                    // Stop if log entry is older than window
+                    break;
+                }
+            }
+        }
+    }
+}
+// Estimate error rate as errors per 100 requests (if request count is available, use it; else, just report error count)
+// For now, just report error count in last 10 minutes as "error_rate_percent"
+$metrics['error_rate_percent'] = $error_count; // Number of errors in last 10 minutes
 
 // P95 response time simulation (in real app, this would be calculated from historical data)
 $p95_response_time_ms = $response_time_ms + rand(50, 200); // Mock P95
