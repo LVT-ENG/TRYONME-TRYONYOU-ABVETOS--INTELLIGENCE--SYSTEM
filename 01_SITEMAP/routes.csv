@@ -1,0 +1,14 @@
+Route,Component,Title,Description,Priority
+/,Home,TRYONYOU - The Future of Fashion Intelligence,Revolutionary fashion technology platform with AI-powered virtual try-on,1
+/features,Features,Advanced Fashion Features,Comprehensive overview of platform capabilities,2
+/about,About,About TRYONYOU,Company vision and technology overview,3
+/modules,Modules,Platform Modules,Detailed module documentation and integration guides,4
+/agents,AIAgents,50 AI Agents,Complete automation suite for fashion lifecycle,5
+/demo,Demo,Interactive Demo,Live demonstration of platform capabilities,6
+/contact,Contact,Contact Us,Business inquiries and partnership opportunities,7
+/docs/architecture,Architecture,System Architecture,Technical architecture documentation,8
+/docs/user-flow,UserFlow,User Journey,Complete user experience documentation,9
+/docs/use-cases,UseCases,Use Cases,Practical implementation examples,10
+/docs/api,APIDoc,API Documentation,Developer resources and API references,11
+/privacy,Privacy,Privacy Policy,Data protection and privacy information,12
+/terms,Terms,Terms of Service,Platform terms and conditions,13
