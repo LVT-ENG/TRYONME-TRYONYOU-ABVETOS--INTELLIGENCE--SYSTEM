@@ -1,23 +1,45 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Master Deployment Script
+### ───────── CONFIGURACIÓN ─────────
+REPO="LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM"
+BRANCH="main"
+DEST="$HOME/tryonyou-app"
+COMMIT_MSG="🚀 Deploy completo TRYONYOU – ABVETOS – ULTIMATUM"
+DOMAIN="www.tryonyou.app"
 
-echo "Starting deployment..."
+: "${VERCEL_TOKEN:?Debes exportar VERCEL_TOKEN primero}"
+: "${VERCEL_PROJECT_ID:?Debes exportar VERCEL_PROJECT_ID primero}"
+: "${VERCEL_ORG_ID:?Debes exportar VERCEL_ORG_ID primero}"
 
-# Set environment variables
-export VERCEL_TOKEN="w9VudSWcygLxH3gy9MDa3SWK"
-export VERCEL_PROJECT_ID="prj_b10SYuxdQTitsIOzBGMXJLqozB7N"
-export VERCEL_ORG_ID="team_7aBcDeFg12345"
-export TELEGRAM_BOT_TOKEN="8283479848:AAElqDLqzbJsoQts-OEdiL29EdyOw9kq1cc"
-export TELEGRAM_CHAT_ID="@abvet_deploy_bot"
+### ───────── CLONAR O ACTUALIZAR ─────────
+if [ ! -d "$DEST" ]; then
+  echo "📂 Clonando repo oficial..."
+  git clone -b $BRANCH "https://github.com/$REPO.git" "$DEST"
+else
+  echo "📂 Repo ya existe, actualizando..."
+  cd "$DEST"
+  git fetch origin
+  git checkout $BRANCH
+  git pull origin $BRANCH
+fi
 
-# Deploy to Vercel
-vercel --prod
+cd "$DEST"
 
-# Send notification to Telegram
-MESSAGE="Deployment successful! 🚀"
-URL="https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage"
-curl -s -X POST $URL -d chat_id=$TELEGRAM_CHAT_ID -d text="$MESSAGE"
+### ───────── COPIAR ARCHIVOS NUEVOS ─────────
+echo "📦 Copiando assets de deploy (intro Pau, configs, etc.)..."
+# Ejemplo: si tus archivos están en ~/deploy_inbox
+rsync -avh ~/deploy_inbox/ ./ --update
 
-echo "Deployment finished."
+### ───────── COMMIT Y PUSH ─────────
+git add .
+git commit -m "$COMMIT_MSG" || echo "✅ Nada nuevo que commitear"
+git push origin $BRANCH
 
+### ───────── DEPLOY EN VERCEL ─────────
+echo "🚀 Lanzando deploy en Vercel..."
+vercel --prod   --token "$VERCEL_TOKEN"   --confirm   --scope "$VERCEL_ORG_ID"   --project "$VERCEL_PROJECT_ID"
+
+### ───────── CONFIRMAR DOMINIO ─────────
+echo "🌍 Verifica dominio:"
+echo "   https://$DOMAIN"
