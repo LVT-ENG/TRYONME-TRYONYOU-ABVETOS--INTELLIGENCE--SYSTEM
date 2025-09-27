@@ -1,13 +1,64 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TRYONYOU — Ultimatum</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRYONYOU – Moda Inteligente</title>
+  <link rel="icon" href="/tryonyou_logo_gold.svg" type="image/svg+xml" />
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #141619; /* antracita */
+      color: #F5EFE6; /* hueso */
+    }
+    .hero {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: url('/hero_pau.webp') no-repeat center center;
+      background-size: cover;
+      position: relative;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .hero-text {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
+    .hero-text h1 {
+      font-size: 3rem;
+      color: #D3B26A; /* dorado */
+    }
+    .hero-text p {
+      font-size: 1.5rem;
+      color: #F5EFE6;
+    }
+    .cta-btn {
+      margin-top: 20px;
+      padding: 12px 28px;
+      border: none;
+      background: #0E6B6B; /* verde pavo real */
+      color: #F5EFE6;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 <body>
-  <div id="nav"></div>
-  <div id="app"></div>
-  <script type="module" src="/src/main.ts"></script>
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-text">
+      <h1>TRYONYOU</h1>
+      <p>“Lo importante no es solo cómo te ves, sino cómo te sientes.”</p>
+      <button class="cta-btn">Entrar</button>
+    </div>
+  </section>
 </body>
 </html>
