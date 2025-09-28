@@ -2,6 +2,68 @@
 @tailwind components;
 @tailwind utilities;
 
+/* TryOnMe Color System */
+:root {
+  --color-turquesa-pastel: #7DD9DC;
+  --color-blanco-pastel: #F4F6F7;
+  --color-plata-mate: #D5DADD;
+  --color-grafito-gris: #4B4F52;
+  --color-negro-suave: #2B2B2B;
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--color-blanco-pastel);
+  color: var(--color-grafito-gris);
+}
+
+/* Logo */
+.logo-wrap {
+  background-color: var(--color-negro-suave);
+  padding: 10px;
+  text-align: center;
+}
+
+.logo {
+  height: 60px;
+}
+
+/* Botones principales */
+button, .btn-primary {
+  background: linear-gradient(145deg, #7DD9DC, #6cc6c9);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(125, 217, 220, 0.4);
+}
+
+button:hover, .btn-primary:hover {
+  background-color: var(--color-plata-mate);
+  color: var(--color-negro-suave);
+}
+
+/* Tarjetas y modales */
+.card, .modal {
+  background-color: var(--color-plata-mate);
+  color: var(--color-grafito-gris);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Footer */
+footer {
+  background-color: var(--color-negro-suave);
+  color: var(--color-blanco-pastel);
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* Glassmorphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(15px) saturate(150%);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
