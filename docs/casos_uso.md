@@ -1,1 +1,1 @@
-Placeholder for casos_uso.md
+# Escenarios prácticos

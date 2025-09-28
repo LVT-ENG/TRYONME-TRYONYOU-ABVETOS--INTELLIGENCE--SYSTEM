@@ -1,31 +1,64 @@
-# System Architecture: TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM
+# System Architecture
 
 ## Introduction
 
-The TRYONYOU platform is designed as a modular, scalable, and interconnected ecosystem that seamlessly integrates various advanced technologies to deliver a comprehensive fashion intelligence solution. The architecture is built around a central core that communicates with a series of specialized modules, each responsible for a specific function. This modular approach allows for flexibility, easy maintenance, and future expansion.
+The TRYONME-TRYONYOU-ABVETOS-INTELLIGENCE-SYSTEM is a modular and scalable platform designed to revolutionize the fashion industry. It combines advanced technologies such as 3D modeling, artificial intelligence, and biometric security to provide a seamless and personalized virtual try-on experience.
 
-## Architectural Diagram (Closed Loop System)
+## Core Principles
 
-The following diagram illustrates the closed-loop architecture of the TRYONYOU system, where data and insights flow between modules to create a self-optimizing and intelligent platform.
+- **Modularity**: The system is composed of independent yet interconnected modules, allowing for flexibility and scalability.
+- **Intelligence**: AI is at the core of the platform, powering everything from personalized recommendations to trend forecasting.
+- **User-Centricity**: The user is at the center of the experience, with a focus on personalization, convenience, and security.
+- **Sustainability**: The platform promotes a more sustainable fashion ecosystem through features like the Solidarity Wardrobe.
 
-![Architecture Diagram](arquitectura.png)
+## System Components
 
-## Core Modules Explained
+The system is divided into several key components, each responsible for a specific set of functionalities:
 
-Our architecture is composed of several core modules that form the backbone of the TRYONYOU platform.
+### 1. Frontend Application
 
-| Module | Technology Stack | Key Responsibilities |
-| --- | --- | --- |
-| **Avatar 3D** | Three.js, WebGL, Computer Vision | - Generates photorealistic 3D avatars from user measurements.<br>- Customizes avatar appearance, including face, hair, and body shape.<br>- Provides a realistic canvas for virtual try-on. |
-| **Fabric Fit Comparator** | Physics Engine (e.g., NVIDIA PhysX), ML Models | - Simulates fabric drape, stretch, and movement in real-time.<br>- Analyzes garment fit based on avatar measurements and fabric properties.<br>- Provides detailed fit analysis and recommendations. |
-| **Smart Wardrobe** | AI/ML, Image Recognition, Database (PostgreSQL) | - Digitizes and catalogs users' existing clothing items.<br>- Offers AI-powered outfit recommendations based on style, weather, and occasion.<br>- Tracks clothing usage and provides insights. |
-| **Solidarity Wardrobe** | Blockchain, Smart Contracts, API Integrations | - Facilitates the donation and exchange of pre-owned clothing.<br>- Ensures transparency and traceability in the donation process.<br>- Connects users with charitable organizations and recycling partners. |
-| **ABVET Biometric Payment** | Biometric SDKs, Secure Enclave, Payment Gateway APIs | - Enables secure and frictionless payments using iris and voice recognition.<br>- Protects user data with end-to-end encryption.<br>- Integrates with major payment gateways. |
-| **Fashion Trend Tracker (FTT)** | Big Data Analytics, NLP, Social Media APIs | - Monitors and analyzes fashion trends from social media, news, and e-commerce sites.<br>- Provides brands and users with actionable insights and trend forecasts.<br>- Identifies emerging styles, colors, and patterns. |
-| **Creative Auto-Production (CAP)** | CAD/CAM Software, 3D Printing, API Integrations | - Automates the design-to-production workflow for on-demand manufacturing.<br>- Generates production-ready files from virtual designs.<br>- Integrates with manufacturing partners for seamless production. |
-| **LiveIt Factory Orchestration** | IoT, Supply Chain Management Software, API Integrations | - Provides a centralized platform for managing and optimizing factory operations.<br>- Tracks production status, inventory levels, and logistics in real-time.<br>- Improves supply chain efficiency and reduces lead times. |
+The frontend is a web-based application built with Vite and React. It provides the user interface for interacting with the platform, including:
 
-## Scalability and Performance
+- 3D avatar creation and customization
+- Virtual try-on interface
+- Intelligent wardrobe management
+- Secure biometric payments
 
-The TRYONYOU platform is built on a cloud-native infrastructure that ensures high availability, scalability, and performance. We leverage microservices architecture, containerization (Docker, Kubernetes), and serverless computing to handle fluctuating workloads and ensure a smooth user experience, even during peak demand.
+### 2. Backend Services
+
+The backend is composed of a set of microservices that provide the core functionalities of the platform. These services are responsible for:
+
+- **`avatar3D.js`**: 3D avatar generation and management
+- **`comparadorTextil.js`**: Intelligent garment comparison and fitting
+- **`recomendadorPAU.js`**: Emotional and personalized recommendations
+- **`pagoAVBET.js`**: Secure biometric payments
+- **`autoDonate.js`**: Automated donations to the Solidarity Wardrobe
+- **`botsInternos.js`**: Internal automation and assistance
+
+### 3. Intelligent Agents
+
+The platform is powered by a suite of 50 intelligent agents that automate and optimize various aspects of the fashion lifecycle. These agents are organized into functional blocks, as described in the [Agent Documentation](agentes.md).
+
+### 4. External APIs
+
+The system integrates with various external APIs to provide a comprehensive set of features, including:
+
+- **`apiClient.js`**: Connection to external APIs such as EPCT/WIPO, Shopify, and Amazon.
+
+## Data Flow
+
+The data flows through the system as follows:
+
+1. The user interacts with the frontend application to create an avatar, try on clothes, and make purchases.
+2. The frontend communicates with the backend services to perform the requested actions.
+3. The backend services interact with the intelligent agents and external APIs to provide the required functionalities.
+4. The data is stored in a secure and scalable database.
+
+## Technology Stack
+
+- **Frontend**: Vite, React
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB
+- **AI**: TensorFlow, PyTorch
+- **Deployment**: Vercel
 

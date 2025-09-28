@@ -1,4 +1,4 @@
-# TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM
+_# TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
 
 **The Future of Fashion Intelligence is Here.**
 
@@ -92,4 +92,5 @@ To get started with the TRYONYOU platform, please refer to our detailed document
 ## The 50 Intelligent Agents of TRYONYOU
 
 Our platform is powered by a suite of 50 intelligent agents that automate and optimize every aspect of the fashion lifecycle. Discover the full list of agents and their capabilities in our [**Agent Documentation**](docs/agentes.md).
+
 

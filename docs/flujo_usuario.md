@@ -1,1 +1,1 @@
-Placeholder for flujo_usuario.md
+# Flujo de interacción del usuario

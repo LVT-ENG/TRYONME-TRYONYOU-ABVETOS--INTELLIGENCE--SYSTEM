@@ -1,1 +1,1 @@
-Placeholder for testAutoDonate.js
+// Test de donación automática

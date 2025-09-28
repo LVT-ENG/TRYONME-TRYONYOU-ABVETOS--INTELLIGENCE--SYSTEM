@@ -1,1 +1,1 @@
-Placeholder for testAvatar3D.js
+// Test de generación de avatar 3D
