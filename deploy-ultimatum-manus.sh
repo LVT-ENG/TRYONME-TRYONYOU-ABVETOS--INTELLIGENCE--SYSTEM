@@ -126,7 +126,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: cd apps/web && npm install && npx vite build
+      - run: cd apps/web && npm install && npm run build
       - run: |
           npm i -g vercel@latest
           vercel pull --yes --environment=production --token "$VERCEL_TOKEN"
