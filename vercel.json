@@ -3,8 +3,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "apps/web/index.html",
-      "use": "@vercel/static"
+      "src": "apps/web/package.json",
+      "use": "@vercel/next"
     }
   ],
   "routes": [

@@ -2,14 +2,13 @@
 node_modules/
 dist/
 .DS_Store
-node_modules/
-dist/
-.DS_Store
 .Trash/
 .nvm/
 Library/
 
-
+# Next.js build output
+.next/
+out/
 
 # Environment variables
 .env
