@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentación del Proyecto
+    url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/README.md
+    about: Consulta la documentación principal del proyecto
+  - name: GitHub Copilot Instructions
+    url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/.github/copilot-instructions.md
+    about: Guías para desarrollo con GitHub Copilot
+  - name: Contributing Guidelines
+    url: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/blob/main/.github/CONTRIBUTING.md
+    about: Cómo contribuir al proyecto

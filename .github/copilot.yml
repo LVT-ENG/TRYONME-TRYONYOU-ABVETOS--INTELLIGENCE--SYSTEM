@@ -1,0 +1,44 @@
+# GitHub Copilot Workspace Configuration
+
+# Project-specific instructions for GitHub Copilot
+instructions: |
+  This is the TryOnMe / TryOnYou - AVBETOS Intelligence System, a proprietary fashion recommendation platform.
+  
+  Key considerations:
+  - Maintain Spanish/English bilingual support in documentation
+  - Follow Google Apps Script best practices for the recommendation engine
+  - Ensure GDPR compliance for all user data handling
+  - Maintain the premium, professional aesthetic
+  - Use conventional commits for all code changes
+  - Test all changes thoroughly before committing
+
+# Languages and frameworks used in this project
+languages:
+  - javascript
+  - php
+  - html
+  - css
+  - google-apps-script
+
+# Coding standards to follow
+standards:
+  - ESLint for JavaScript
+  - PSR-12 for PHP
+  - Semantic HTML5
+  - CSS Grid/Flexbox for layouts
+  - Google Apps Script API guidelines
+
+# Security requirements
+security:
+  - Never commit API keys or secrets
+  - Use environment variables for configuration
+  - Validate all user inputs
+  - Follow OWASP security guidelines
+  - Maintain GDPR compliance
+
+# Testing requirements
+testing:
+  - Unit tests for Google Apps Script functions
+  - Integration tests for email functionality
+  - Cross-browser testing for web interface
+  - Mobile responsiveness testing
