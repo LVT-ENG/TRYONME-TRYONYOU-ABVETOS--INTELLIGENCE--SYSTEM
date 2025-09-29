@@ -40,7 +40,7 @@
       color: #F5EFE6;
     }
     .cta-btn {
-      margin-top: 20px;
+      margin: 10px;
       padding: 12px 28px;
       border: none;
       background: #0E6B6B; /* verde pavo real */
@@ -48,6 +48,56 @@
       font-size: 1rem;
       cursor: pointer;
       border-radius: 6px;
+    }
+    .cta-btn:hover {
+      background: #106B6B;
+    }
+    .info-panel {
+      display: none;
+      position: fixed;
+      top: 10%;
+      left: 10%;
+      right: 10%;
+      bottom: 10%;
+      background: rgba(20, 22, 25, 0.95);
+      border: 2px solid #D3B26A;
+      border-radius: 10px;
+      padding: 20px;
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .info-panel.show {
+      display: block;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: none;
+      border: none;
+      color: #D3B26A;
+      font-size: 24px;
+      cursor: pointer;
+    }
+    .info-content {
+      margin-top: 30px;
+    }
+    .info-section {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid rgba(211, 178, 106, 0.3);
+      border-radius: 5px;
+    }
+    .info-section h3 {
+      color: #D3B26A;
+      margin-top: 0;
+    }
+    pre {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+      font-size: 0.9rem;
     }
   </style>
 </head>
@@ -57,8 +107,209 @@
     <div class="hero-text">
       <h1>TRYONYOU</h1>
       <p>“Lo importante no es solo cómo te ves, sino cómo te sientes.”</p>
-      <button class="cta-btn">Entrar</button>
+      <button class="cta-btn" onclick="enterApp()">Entrar</button>
+      <button class="cta-btn" onclick="getAllImportantInfo()">Get All Important Info</button>
     </div>
   </section>
+
+  <div id="info-panel" class="info-panel">
+    <button class="close-btn" onclick="closeInfoPanel()">&times;</button>
+    <h2 style="color: #D3B26A;">TRYONYOU System Information</h2>
+    <div id="info-content" class="info-content">
+      Loading system information...
+    </div>
+  </div>
+
+  <script type="module">
+    // Import our modules (simulated since we're in a static context)
+    
+    // Simulate the InfoAggregator functionality for demonstration
+    class MockInfoAggregator {
+      constructor() {
+        this.modules = this.initializeMockModules();
+      }
+
+      initializeMockModules() {
+        return {
+          avatar3D: {
+            name: 'Avatar3D',
+            type: '3D Avatar Generation',
+            status: 'active',
+            currentAvatar: { id: 12345, realism: 0.95 },
+            measurementCount: 8,
+            capabilities: ['3D modeling', 'measurement integration', 'real-time rendering']
+          },
+          comparadorTextil: {
+            name: 'ComparadorTextil', 
+            type: 'Fabric Comparison Engine',
+            status: 'active',
+            activeComparisons: 15,
+            supportedFabrics: 47,
+            capabilities: ['fabric simulation', 'fit analysis', 'material properties']
+          },
+          recomendadorPAU: {
+            name: 'RecomendadorPAU',
+            type: 'Emotional Recommendation Engine (Pau le Paon)',
+            status: 'active',
+            totalRecommendations: 1247,
+            emotionalProfiles: 23,
+            trendDataSources: 5,
+            capabilities: ['mood analysis', 'emotional styling', 'trend integration']
+          },
+          pagoAVBET: {
+            name: 'PagoAVBET',
+            type: 'AVBET Biometric Payment System',
+            status: 'active',
+            biometricMethods: ['iris recognition', 'voice verification'],
+            securityLevel: 'maximum',
+            transactionCount: 892,
+            capabilities: ['biometric auth', 'secure payments', 'fraud detection']
+          },
+          autoDonate: {
+            name: 'AutoDonate',
+            type: 'Solidarity Wardrobe (AutoDonate)',
+            status: 'active',
+            activeDonations: 156,
+            matchedUsers: 89,
+            sustainabilityScore: 94.7,
+            capabilities: ['donation matching', 'logistics optimization', 'impact tracking']
+          },
+          botsInternos: {
+            name: 'BotsInternos',
+            type: '50 Intelligent Agents System',
+            status: 'active',
+            totalAgents: 50,
+            activeAgents: 48,
+            averagePerformance: 0.952,
+            tasksCompleted: 15847,
+            blocks: {
+              deployment: 13,
+              style: 6, 
+              business: 6,
+              automation: 5,
+              video: 4,
+              liveit: 11,
+              private: 5
+            },
+            capabilities: ['automation', 'task execution', 'performance monitoring']
+          }
+        };
+      }
+
+      getAllImportantInfo() {
+        const timestamp = new Date().toISOString();
+        
+        const systemStatus = {
+          status: 'operational',
+          version: '1.0.0',
+          uptime: 2847392, // seconds
+          environment: 'production',
+          region: 'global'
+        };
+
+        const summary = {
+          totalModules: Object.keys(this.modules).length,
+          activeModules: Object.values(this.modules).filter(m => m.status === 'active').length,
+          healthScore: 96,
+          keyMetrics: {
+            totalAgents: this.modules.botsInternos.totalAgents,
+            agentPerformance: this.modules.botsInternos.averagePerformance,
+            totalRecommendations: this.modules.recomendadorPAU.totalRecommendations,
+            sustainabilityScore: this.modules.autoDonate.sustainabilityScore
+          },
+          recommendations: ['All systems operating optimally', 'Consider expanding agent capacity']
+        };
+
+        const performance = {
+          uptime: '99.8%',
+          responseTime: 'optimal (< 200ms)',
+          memoryUsage: 'normal (68%)',
+          apiConnections: 'stable (5/5 connected)',
+          errorRate: '0.2%',
+          lastCalculated: timestamp
+        };
+
+        return {
+          timestamp,
+          systemStatus,
+          moduleInfo: this.modules,
+          summary,
+          performance,
+          alerts: []
+        };
+      }
+    }
+
+    // Global functions for the UI
+    window.mockAggregator = new MockInfoAggregator();
+    
+    window.getAllImportantInfo = function() {
+      const info = window.mockAggregator.getAllImportantInfo();
+      displaySystemInfo(info);
+      document.getElementById('info-panel').classList.add('show');
+    }
+
+    window.enterApp = function() {
+      // For now, just show the info panel as demonstration
+      getAllImportantInfo();
+    }
+
+    window.closeInfoPanel = function() {
+      document.getElementById('info-panel').classList.remove('show');
+    }
+
+    function displaySystemInfo(info) {
+      const content = document.getElementById('info-content');
+      
+      let html = `
+        <div class="info-section">
+          <h3>📊 System Overview</h3>
+          <p><strong>Status:</strong> ${info.systemStatus.status}</p>
+          <p><strong>Version:</strong> ${info.systemStatus.version}</p>
+          <p><strong>Health Score:</strong> ${info.summary.healthScore}%</p>
+          <p><strong>Active Modules:</strong> ${info.summary.activeModules}/${info.summary.totalModules}</p>
+        </div>
+
+        <div class="info-section">
+          <h3>🎯 Key Metrics</h3>
+          <p><strong>Total Agents:</strong> ${info.summary.keyMetrics.totalAgents}</p>
+          <p><strong>Agent Performance:</strong> ${(info.summary.keyMetrics.agentPerformance * 100).toFixed(1)}%</p>
+          <p><strong>Total Recommendations:</strong> ${info.summary.keyMetrics.totalRecommendations.toLocaleString()}</p>
+          <p><strong>Sustainability Score:</strong> ${info.summary.keyMetrics.sustainabilityScore}%</p>
+        </div>
+
+        <div class="info-section">
+          <h3>🚀 Performance Metrics</h3>
+          <p><strong>Uptime:</strong> ${info.performance.uptime}</p>
+          <p><strong>Response Time:</strong> ${info.performance.responseTime}</p>
+          <p><strong>API Connections:</strong> ${info.performance.apiConnections}</p>
+          <p><strong>Error Rate:</strong> ${info.performance.errorRate}</p>
+        </div>
+
+        <div class="info-section">
+          <h3>🔧 Module Details</h3>
+      `;
+
+      Object.values(info.moduleInfo).forEach(module => {
+        html += `
+          <div style="margin: 10px 0; padding: 10px; border-left: 3px solid #D3B26A;">
+            <strong>${module.name}</strong> - ${module.type}<br>
+            <small>Status: ${module.status} | Capabilities: ${module.capabilities.join(', ')}</small>
+          </div>
+        `;
+      });
+
+      html += `
+        </div>
+        
+        <div class="info-section">
+          <h3>📋 Complete Data (JSON)</h3>
+          <pre>${JSON.stringify(info, null, 2)}</pre>
+        </div>
+      `;
+
+      content.innerHTML = html;
+    }
+  </script>
 </body>
 </html>
