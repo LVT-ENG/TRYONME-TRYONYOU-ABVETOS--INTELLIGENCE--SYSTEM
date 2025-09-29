@@ -1,0 +1,1 @@
+// Script Virtually adaptado
