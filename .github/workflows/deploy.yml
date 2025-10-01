@@ -1,0 +1,117 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+  issues:
+    types: [opened, labeled]
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build project
+        run: npm run build
+        
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+        
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        
+      - name: Deploy Project Artifacts to Vercel
+        id: deploy
+        run: |
+          DEPLOYMENT_URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+          echo "Deployed to: $DEPLOYMENT_URL"
+          
+      - name: Get commit info
+        id: commit
+        run: |
+          echo "message=$(git log -1 --pretty=%B)" >> $GITHUB_OUTPUT
+          echo "author=$(git log -1 --pretty=%an)" >> $GITHUB_OUTPUT
+          echo "sha=$(git log -1 --pretty=%h)" >> $GITHUB_OUTPUT
+          
+      - name: Send Telegram notification
+        if: always()
+        run: |
+          STATUS="${{ job.status }}"
+          if [ "$STATUS" == "success" ]; then
+            EMOJI="✅"
+            STATUS_TEXT="Deployment Successful"
+          else
+            EMOJI="❌"
+            STATUS_TEXT="Deployment Failed"
+          fi
+          
+          MESSAGE="$EMOJI *TRYONYOU Deployment*
+          
+          *Status:* $STATUS_TEXT
+          *Branch:* \`${{ github.ref_name }}\`
+          *Commit:* \`${{ steps.commit.outputs.sha }}\`
+          *Author:* ${{ steps.commit.outputs.author }}
+          *Message:* ${{ steps.commit.outputs.message }}
+          
+          *URL:* ${{ steps.deploy.outputs.deployment_url }}
+          
+          *Triggered by:* ${{ github.event_name }}
+          *Repository:* ${{ github.repository }}"
+          
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="$MESSAGE" \
+            -d parse_mode="Markdown"
+            
+      - name: Capture screenshot (optional)
+        if: success()
+        continue-on-error: true
+        run: |
+          # This would require additional setup with a screenshot service
+          # For now, it's a placeholder for future implementation
+          echo "Screenshot capture would happen here"
+          
+  notify-issue:
+    if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'deploy')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Trigger deployment from issue
+        run: |
+          MESSAGE="🚀 *Deployment Triggered from Issue*
+          
+          *Issue:* #${{ github.event.issue.number }}
+          *Title:* ${{ github.event.issue.title }}
+          *Author:* ${{ github.event.issue.user.login }}
+          
+          Deployment workflow has been initiated."
+          
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="$MESSAGE" \
+            -d parse_mode="Markdown"
