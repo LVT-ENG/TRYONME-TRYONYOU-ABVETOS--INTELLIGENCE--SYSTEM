@@ -1,64 +1,63 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function Patents() {
-  const patents = [
+  const [showTooltip, setShowTooltip] = useState(false)
+
+  const superClaims = [
     {
-      id: 'context-layer',
+      id: 1,
       title: 'Context Engineering Layer',
-      type: 'Patent Application',
-      status: 'EPCT Pending',
       description: 'Revolutionary system architecture that dynamically adapts fashion recommendations based on multi-dimensional user context including biometric measurements, environmental factors, and real-time trend analysis.',
-      claims: [
-        'Context-aware recommendation engine',
-        'Multi-factor personalization system',
-        'Adaptive learning algorithms',
-        'Real-time context integration'
-      ]
+      icon: '🧠'
     },
     {
-      id: 'avatar-generation',
+      id: 2,
       title: 'Adaptive Avatar Generation',
-      type: 'Patent Application',
-      status: 'EPCT Pending',
       description: 'Method for creating photorealistic 3D avatars with precise body measurements using multi-angle photography and AI-powered measurement extraction.',
-      claims: [
-        '3D body scanning technology',
-        'Photorealistic rendering engine',
-        'Fabric simulation system',
-        'Real-time fitting visualization'
-      ]
+      icon: '👤'
     },
     {
-      id: 'abvet-payment',
-      title: 'ABVET Biometric Payment',
-      type: 'Patent Application',
-      status: 'EPCT Pending',
+      id: 3,
+      title: 'Fabric Fit Comparator',
+      description: 'Advanced textile simulation engine that predicts garment fit and drape on individual body types with unprecedented accuracy.',
+      icon: '📏'
+    },
+    {
+      id: 4,
+      title: 'ABVET Dual-Biometric Payment',
       description: 'Secure payment system combining iris recognition and voice biometric authentication with multi-factor verification and encrypted transaction processing.',
-      claims: [
-        'Iris recognition technology',
-        'Voice biometric authentication',
-        'Multi-factor verification',
-        'Encrypted transaction processing'
-      ]
+      icon: '👁️'
     },
     {
-      id: 'jit-orchestration',
-      title: 'JIT Fashion Orchestration',
-      type: 'Patent Application',
-      status: 'EPCT Pending',
-      description: 'Intelligent supply chain management system that coordinates on-demand production, optimizes factory resources, and enables mass customization at scale.',
-      claims: [
-        'Just-in-time production coordination',
-        'AI-driven resource allocation',
-        'Predictive waste minimization',
-        'Mass customization engine'
-      ]
+      id: 5,
+      title: 'Smart & Solidarity Wardrobes',
+      description: 'Intelligent wardrobe management system that digitalizes existing clothing and facilitates circular fashion through automated donation and exchange.',
+      icon: '👔'
+    },
+    {
+      id: 6,
+      title: 'Fashion Trend Tracker (FTT)',
+      description: 'Real-time trend analysis system that aggregates data from social media, runways, and sales to predict and identify emerging fashion trends.',
+      icon: '📊'
+    },
+    {
+      id: 7,
+      title: 'Creative Auto-Production (CAP)',
+      description: 'Automated design-to-production pipeline that enables mass customization and on-demand manufacturing at scale.',
+      icon: '⚙️'
+    },
+    {
+      id: 8,
+      title: 'LiveIt Factory Orchestration',
+      description: 'Intelligent supply chain management system that coordinates just-in-time production, optimizes factory resources, and minimizes waste.',
+      icon: '🏭'
     }
   ]
 
   const trademarks = [
     { name: 'TRYONYOU®', category: 'Core Brand' },
-    { name: 'ABVET®', category: 'Payment System' },
+    { name: 'ABVETOS®', category: 'Biometric System' },
+    { name: 'ULTRA-PLUS-ULTIMATUM®', category: 'Complete Platform' },
     { name: 'LiveIt Factory®', category: 'Production Platform' },
     { name: 'PAU®', category: 'Avatar System' },
     { name: 'CAP®', category: 'Auto-Production' },
@@ -68,33 +67,42 @@ function Patents() {
   return (
     <section className="patents" id="patents">
       <div className="patents-container">
-        <h2 className="section-title">Patents & Intellectual Property</h2>
+        <div className="patent-badge-container">
+          <span 
+            className="patent-badge"
+            onMouseEnter={() => setShowTooltip(true)}
+            onMouseLeave={() => setShowTooltip(false)}
+          >
+            EPCT Pending
+            <span className="info-icon">ℹ️</span>
+          </span>
+          {showTooltip && (
+            <div className="patent-tooltip">
+              <strong>EPCT (European Patent Convention Treaty) Pending</strong>
+              <p>
+                Our patent applications are currently under review by the European Patent Office. 
+                This status provides provisional protection across all EPO member states while the 
+                examination process is ongoing. Full patent grants are expected within 18-36 months.
+              </p>
+            </div>
+          )}
+        </div>
+
+        <h2 className="section-title">Protected Innovation Portfolio</h2>
         <p className="patents-intro">
-          Our technology is protected by a comprehensive IP portfolio valued at over €20M, 
-          providing a 5-7 year competitive advantage in the fashion-tech market.
+          Our technology is protected by a comprehensive IP portfolio valued at over <strong>€20M</strong>, 
+          providing a <strong>5-7 year competitive advantage</strong> in the fashion-tech market.
         </p>
 
         <div className="ip-section">
-          <h3 className="subsection-title">Patent Applications</h3>
-          <div className="patents-grid">
-            {patents.map((patent) => (
-              <div key={patent.id} className="patent-card">
-                <div className="patent-header">
-                  <span className="patent-type">{patent.type}</span>
-                  <span className={`patent-status ${patent.status.toLowerCase().replace(' ', '-')}`}>
-                    {patent.status}
-                  </span>
-                </div>
-                <h4 className="patent-title">{patent.title}</h4>
-                <p className="patent-description">{patent.description}</p>
-                <div className="patent-claims">
-                  <strong>Key Claims:</strong>
-                  <ul>
-                    {patent.claims.map((claim, index) => (
-                      <li key={index}>{claim}</li>
-                    ))}
-                  </ul>
-                </div>
+          <h3 className="subsection-title">8 Super-Claims Patent Applications</h3>
+          <div className="claims-grid">
+            {superClaims.map((claim) => (
+              <div key={claim.id} className="claim-card">
+                <div className="claim-number">{claim.id}</div>
+                <div className="claim-icon">{claim.icon}</div>
+                <h3>{claim.title}</h3>
+                <p>{claim.description}</p>
               </div>
             ))}
           </div>

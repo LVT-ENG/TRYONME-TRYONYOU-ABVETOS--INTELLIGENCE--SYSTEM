@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 function Modules() {
-  const [selectedModule, setSelectedModule] = useState(null)
+  const [selectedModule, setSelectedModule] = useState(0)
+  const [isAutoPlay, setIsAutoPlay] = useState(true)
 
   const modules = [
     {
@@ -9,7 +10,7 @@ function Modules() {
       name: 'Avatar 3D (PAU)',
       title: 'Personal Avatar Universe',
       description: 'Generate photorealistic 3D avatars with precise body measurements for a perfect fit every time.',
-      image: '/avatar-module.png',
+      icon: '👤',
       features: [
         'Millimeter-precise body scanning',
         'Photorealistic 3D rendering',
@@ -18,50 +19,24 @@ function Modules() {
       ]
     },
     {
-      id: 'pau',
-      name: 'PAU Recommender',
-      title: 'AI-Powered Style Intelligence',
-      description: 'Your personal fashion AI that learns your style and recommends items that perfectly match your taste and body.',
-      image: '/avatar-module.png',
+      id: 'comparator',
+      name: 'Fabric Fit Comparator',
+      title: 'Intelligent Fit Analysis',
+      description: 'Advanced textile simulation that predicts how garments will fit your unique body shape.',
+      icon: '📏',
       features: [
-        'Style DNA profiling',
-        'Context-aware recommendations',
-        'Trend integration',
-        'Personalized lookbooks'
+        'Fabric physics simulation',
+        'Fit percentage analysis',
+        'Size recommendation',
+        'Material behavior prediction'
       ]
     },
     {
-      id: 'cap',
-      name: 'CAP System',
-      title: 'Creative Auto-Production',
-      description: 'Transform designs into reality with automated, on-demand production that minimizes waste and maximizes creativity.',
-      image: '/wardrobe-module.png',
-      features: [
-        'Design-to-production automation',
-        'Mass customization at scale',
-        'Quality control AI',
-        'Sustainable manufacturing'
-      ]
-    },
-    {
-      id: 'abvet',
-      name: 'ABVET Payment',
-      title: 'Biometric Authentication',
-      description: 'Secure, frictionless payments using advanced iris and voice recognition technology.',
-      image: '/payment-module.png',
-      features: [
-        'Iris recognition',
-        'Voice biometrics',
-        'Multi-factor authentication',
-        'Sub-second checkout'
-      ]
-    },
-    {
-      id: 'wardrobes',
-      name: 'Smart Wardrobes',
+      id: 'smart-wardrobe',
+      name: 'Smart Wardrobe',
       title: 'Digital Closet Management',
-      description: 'Digitize your entire wardrobe and get AI-powered outfit recommendations based on weather, occasion, and trends.',
-      image: '/wardrobe-module.png',
+      description: 'Digitize your entire wardrobe and get AI-powered outfit recommendations.',
+      icon: '👔',
       features: [
         'Wardrobe digitization',
         'Outfit generation',
@@ -70,11 +45,37 @@ function Modules() {
       ]
     },
     {
+      id: 'solidarity',
+      name: 'Solidarity Wardrobe',
+      title: 'Sustainable Fashion Ecosystem',
+      description: 'Participate in circular fashion through donation, exchange, and recycling.',
+      icon: '♻️',
+      features: [
+        'Donation platform',
+        'Clothing exchange',
+        'Recycling programs',
+        'Impact tracking'
+      ]
+    },
+    {
+      id: 'abvet',
+      name: 'ABVET Payment',
+      title: 'Dual-Biometric Authentication',
+      description: 'Secure, frictionless payments using iris and voice recognition technology.',
+      icon: '👁️',
+      features: [
+        'Iris recognition',
+        'Voice biometrics',
+        'Multi-factor authentication',
+        'Sub-second checkout'
+      ]
+    },
+    {
       id: 'ftt',
       name: 'Fashion Trend Tracker',
       title: 'Real-Time Trend Analysis',
-      description: 'Stay ahead of the curve with AI-powered trend forecasting and real-time fashion intelligence.',
-      image: '/wardrobe-module.png',
+      description: 'Stay ahead with AI-powered trend forecasting and fashion intelligence.',
+      icon: '📊',
       features: [
         'Trend prediction AI',
         'Social media analysis',
@@ -83,32 +84,59 @@ function Modules() {
       ]
     },
     {
+      id: 'cap',
+      name: 'CAP System',
+      title: 'Creative Auto-Production',
+      description: 'Transform designs into reality with automated, on-demand production.',
+      icon: '⚙️',
+      features: [
+        'Design-to-production automation',
+        'Mass customization at scale',
+        'Quality control AI',
+        'Sustainable manufacturing'
+      ]
+    },
+    {
       id: 'liveit',
       name: 'LiveIt Factory',
-      title: 'Intelligent Production Orchestration',
-      description: 'Optimize your supply chain with AI-driven factory management and just-in-time manufacturing.',
-      image: '/avatar-module.png',
+      title: 'Intelligent Orchestration',
+      description: 'Optimize supply chain with AI-driven factory management and JIT manufacturing.',
+      icon: '🏭',
       features: [
         'JIT orchestration',
         'Resource optimization',
         'Quality assurance',
         'Logistics integration'
       ]
-    },
-    {
-      id: 'solidarity',
-      name: 'Solidarity Wardrobe',
-      title: 'Sustainable Fashion Ecosystem',
-      description: 'Participate in a circular fashion economy by donating, exchanging, and recycling clothing sustainably.',
-      image: '/wardrobe-module.png',
-      features: [
-        'Donation platform',
-        'Clothing exchange',
-        'Recycling programs',
-        'Impact tracking'
-      ]
     }
   ]
+
+  useEffect(() => {
+    if (!isAutoPlay) return
+
+    const interval = setInterval(() => {
+      setSelectedModule((prev) => (prev + 1) % modules.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isAutoPlay, modules.length])
+
+  const handleModuleSelect = (index) => {
+    setSelectedModule(index)
+    setIsAutoPlay(false)
+  }
+
+  const handlePrevious = () => {
+    setSelectedModule((prev) => (prev - 1 + modules.length) % modules.length)
+    setIsAutoPlay(false)
+  }
+
+  const handleNext = () => {
+    setSelectedModule((prev) => (prev + 1) % modules.length)
+    setIsAutoPlay(false)
+  }
+
+  const currentModule = modules[selectedModule]
 
   return (
     <section className="modules" id="modules">
@@ -118,31 +146,66 @@ function Modules() {
           Eight intelligent modules working in perfect harmony to revolutionize the fashion industry
         </p>
 
+        {/* Carousel Display */}
+        <div className="module-carousel">
+          <button className="carousel-nav carousel-prev" onClick={handlePrevious}>
+            ‹
+          </button>
+
+          <div className="carousel-content">
+            <div className="carousel-icon">{currentModule.icon}</div>
+            <h3 className="carousel-name">{currentModule.name}</h3>
+            <h4 className="carousel-title">{currentModule.title}</h4>
+            <p className="carousel-description">{currentModule.description}</p>
+            
+            <ul className="carousel-features">
+              {currentModule.features.map((feature, index) => (
+                <li key={index}>
+                  <span className="feature-bullet">✓</span>
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <button className="carousel-nav carousel-next" onClick={handleNext}>
+            ›
+          </button>
+        </div>
+
+        {/* Carousel Indicators */}
+        <div className="carousel-indicators">
+          {modules.map((module, index) => (
+            <button
+              key={module.id}
+              className={`indicator ${index === selectedModule ? 'active' : ''}`}
+              onClick={() => handleModuleSelect(index)}
+              title={module.name}
+            >
+              <span className="indicator-icon">{module.icon}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Grid View */}
         <div className="modules-grid">
-          {modules.map((module) => (
+          {modules.map((module, index) => (
             <div 
               key={module.id}
-              className={`module-card ${selectedModule === module.id ? 'active' : ''}`}
-              onClick={() => setSelectedModule(selectedModule === module.id ? null : module.id)}
+              className={`module-card ${index === selectedModule ? 'active' : ''}`}
+              onClick={() => handleModuleSelect(index)}
             >
-              <div className="module-image">
-                <img src={module.image} alt={module.name} />
-              </div>
-              <div className="module-content">
-                <h3 className="module-name">{module.name}</h3>
-                <h4 className="module-title">{module.title}</h4>
-                <p className="module-description">{module.description}</p>
-                
-                {selectedModule === module.id && (
-                  <ul className="module-features">
-                    {module.features.map((feature, index) => (
-                      <li key={index}>{feature}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <div className="module-icon">{module.icon}</div>
+              <h3>{module.name}</h3>
+              <p>{module.title}</p>
             </div>
           ))}
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="modules-cta">
+          <button className="btn-primary btn-glow-gold">Book a Demo</button>
+          <button className="btn-secondary">Experience the Future</button>
         </div>
       </div>
     </section>
