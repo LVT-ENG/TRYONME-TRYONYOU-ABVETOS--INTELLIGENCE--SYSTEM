@@ -104,10 +104,8 @@ if ($error_log_path && is_readable($error_log_path)) {
         }
     }
 }
-// Estimate error rate as errors per 100 requests (if request count is available, use it; else, just report error count)
-// For now, just report error count in last 10 minutes as "error_rate_percent"
-$metrics['error_rate_percent'] = $error_count; // Number of errors in last 10 minutes
-
+// Report error count in last 10 minutes as "recent_error_count"
+$metrics['recent_error_count'] = $error_count; // Number of errors in last 10 minutes
 // P95 response time simulation (in real app, this would be calculated from historical data)
 $p95_response_time_ms = $response_time_ms + rand(50, 200); // Mock P95
 $metrics['p95_response_time_ms'] = $p95_response_time_ms;
