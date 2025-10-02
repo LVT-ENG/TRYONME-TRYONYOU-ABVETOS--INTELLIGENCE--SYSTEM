@@ -128,7 +128,7 @@ Este roadmap define la planificación clara para el desarrollo de las tecnologí
 
 ### Frontend
 - **React 18+ con TypeScript** - UI moderna y robusta
-- **React Router v6** - Navegación SPA
+- **React Router v7** - Navegación SPA
 - **Tailwind CSS** - Diseño responsive
 - **Framer Motion** - Animaciones fluidas
 - **React Query** - State management y caching
