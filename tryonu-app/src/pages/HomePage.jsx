@@ -74,8 +74,10 @@ export default function HomePage() {
           <button
             className="px-8 py-3 text-white font-semibold rounded-lg transition-colors"
             style={{ backgroundColor: PEACOCK }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = "#0d4f57"}
-            onMouseLeave={(e) => e.target.style.backgroundColor = PEACOCK}
+            // Removed direct DOM style mutation; use Tailwind hover utility below
+            // onMouseEnter and onMouseLeave removed
+            // Use Tailwind's arbitrary value for hover background
+            className="px-8 py-3 text-white font-semibold rounded-lg transition-colors hover:bg-[#0d4f57]"
           >
             Get Started
           </button>
