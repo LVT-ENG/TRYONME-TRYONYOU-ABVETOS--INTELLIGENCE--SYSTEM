@@ -142,6 +142,31 @@ npm install -g vercel
 vercel --prod
 ```
 
+### Generate Deployment ZIP Package
+
+To create a complete deployment package as a ZIP file:
+
+```bash
+# Generate deployment ZIP
+node generate-deploy-zip.cjs
+```
+
+This creates a `tryonyou-deploy.zip` file containing:
+- Complete project structure
+- All configuration files
+- GitHub Actions workflow
+- Ready-to-deploy application files
+
+The script automatically generates:
+- `index.html` - Main HTML entry point
+- `theme.css` - Premium color scheme and styles
+- `sparkles.js` - Canvas animation effects
+- `src/App.tsx` - React application component
+- `src/i18n.ts` - Internationalization setup
+- `vite.config.js` - Vite build configuration
+- `package.json` - Dependencies and scripts
+- `.github/workflows/deploy.yml` - CI/CD pipeline
+
 ---
 
 ## 🤖 CI/CD Pipeline
