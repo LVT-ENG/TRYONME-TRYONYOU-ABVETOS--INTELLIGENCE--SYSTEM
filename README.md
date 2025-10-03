@@ -174,6 +174,7 @@ Comprehensive documentation is available in the `/docs` directory:
 - **Use Cases**: Real-world application scenarios
 - **Agents Documentation**: 50 intelligent agents powering the platform
 - **Roadmap**: Product development timeline (2025-2028)
+- **Legal Documentation**: Official patent filings, IP portfolio, and investor materials ([`/docs/legal/`](/docs/legal/))
 
 ---
 
@@ -181,21 +182,28 @@ Comprehensive documentation is available in the `/docs` directory:
 
 TRYONYOU is protected by a comprehensive IP portfolio:
 
-### Patents (EPCT Pending)
+### Patents (EPCT Pending - PCT/EP2025/067317)
 - Context Engineering Layer
 - Adaptive Avatar Generation
 - ABVET Biometric Payment System
 - Just-In-Time Fashion Orchestration
+- Smart & Solidarity Wardrobes
+- Fashion Trend Tracker (FTT)
+- Creative Auto-Production (CAP)
+- LiveIt Factory Orchestration
 
 ### Registered Trademarks
 - TRYONYOU®
-- ABVET®
+- ABVETOS®
+- ULTRA-PLUS-ULTIMATUM®
 - LiveIt Factory®
 - PAU® (Personal Avatar Universe)
 - CAP® (Creative Auto-Production)
 - FTT® (Fashion Trend Tracker)
 
 **Estimated IP Value**: €17-26M
+
+📋 **For complete legal documentation, patent summaries, and investor materials, see [`/docs/legal/`](/docs/legal/)**
 
 ---
 
