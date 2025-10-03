@@ -6,6 +6,10 @@
   "framework": "vite",
   "rewrites": [
     {
+      "source": "/docs/legal/(.*)",
+      "destination": "/docs/legal/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
@@ -60,6 +64,19 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/docs/legal/(.*\\.(pdf|zip|md))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
         }
       ]
     }
