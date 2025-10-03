@@ -1,0 +1,51 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🏗️ Build project
+        run: npm run build
+
+      - name: 🚀 Deploy to Vercel
+        id: deploy
+        run: |
+          npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --confirm > deployment-url.txt
+          echo "vercel_url=$(cat deployment-url.txt | tail -n 1)" >> $GITHUB_OUTPUT
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: 📢 Notify Telegram
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            STATUS="✅ TRYONYOU desplegado con éxito 🚀"
+          else
+            STATUS="❌ Error en el despliegue de TRYONYOU"
+          fi
+          
+          MESSAGE="${STATUS}%0ARepo: ${GITHUB_REPOSITORY}%0ABranch: ${GITHUB_REF_NAME}%0AAutor: ${GITHUB_ACTOR}%0A🔗 Enlace: ${{ steps.deploy.outputs.vercel_url }}"
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+          -d text="${MESSAGE}" \
+          -d parse_mode="Markdown"
