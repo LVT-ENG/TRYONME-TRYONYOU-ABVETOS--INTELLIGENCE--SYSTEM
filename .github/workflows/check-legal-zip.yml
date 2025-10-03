@@ -1,0 +1,43 @@
+name: Check Legal ZIP Availability
+
+on:
+  push:
+    paths:
+      - 'docs/legal/**'
+
+jobs:
+  verify-zip:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Check ZIP file exists locally
+        run: |
+          if [ ! -f docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip ]; then
+            echo "❌ ZIP not found in repo."
+            exit 1
+          fi
+          echo "✅ ZIP found in repo."
+
+      - name: Verify ZIP is accessible on GitHub
+        run: |
+          URL="https://raw.githubusercontent.com/${{ github.repository }}/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip"
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" $URL)
+          if [ "$STATUS" != "200" ]; then
+            echo "❌ ZIP not accessible (status $STATUS)."
+            exit 1
+          fi
+          echo "✅ ZIP accessible at $URL"
+
+  open-issue-if-fail:
+    needs: verify-zip
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create issue
+        uses: peter-evans/create-issue-from-file@v4
+        with:
+          title: "[docs/legal] ZIP not accessible after deploy"
+          content-filepath: .github/ISSUE_TEMPLATE/legal-zip-missing.md
+          labels: bug, docs, urgent
