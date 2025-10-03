@@ -175,6 +175,17 @@ Comprehensive documentation is available in the `/docs` directory:
 - **Agents Documentation**: 50 intelligent agents powering the platform
 - **Roadmap**: Product development timeline (2025-2028)
 
+### 📋 Legal & Investor Documentation
+
+Patent-protected technology and investor materials are available in `/docs/legal/`:
+
+- **[README_EXTENDED.md](docs/legal/README_EXTENDED.md)**: Complete business and technical documentation
+- **Patent Summary**: 30→8 claims + EBTT methodology (EPCT Pending)
+- **Incubator Kit**: OnePager, Investor Dossier, Cover Letters
+- **[Upload Instructions](docs/legal/UPLOAD_INSTRUCTIONS.md)**: Guide for adding legal documents
+
+🔗 **Direct Access**: `https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/tree/main/docs/legal`
+
 ---
 
 ## 🔐 Intellectual Property
