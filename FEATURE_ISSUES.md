@@ -7,7 +7,7 @@ Based on the comprehensive roadmap, here are the individual GitHub issues that s
 ### Infrastructure & Foundation
 
 1. **feat(core): implement react router navigation system**
-   - Set up React Router v6 with proper routing structure
+   - Set up React Router v7 with proper routing structure
    - Create navigation components and page layouts
    - Implement responsive navigation for mobile/desktop
    - Add route guards and error boundaries
