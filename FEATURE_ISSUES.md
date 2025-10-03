@@ -210,7 +210,7 @@ Based on the comprehensive roadmap, here are the individual GitHub issues that s
 - `area/security` - Security related
 
 ### Estimation Guidelines
-- Small: 1-3 days (13 story points)
+- Small: 1-3 days (1-3 story points)
 - Medium: 1-2 weeks (5-8 story points)
 - Large: 2-4 weeks (13-21 story points)
 - Epic: 1+ months (break into smaller issues)
