@@ -15,16 +15,41 @@ export const LanguageProvider = ({ children }) => {
   const [language, setLanguage] = useState('en')
 
   useEffect(() => {
-    // Try to get language from localStorage
+    // Try to get language from localStorage first
     const savedLanguage = localStorage.getItem('tryonyou-language')
     if (savedLanguage && translations[savedLanguage]) {
       setLanguage(savedLanguage)
-    } else {
-      // Detect browser language
-      const browserLang = navigator.language.split('-')[0]
-      if (translations[browserLang]) {
-        setLanguage(browserLang)
+      return
+    }
+
+    // Auto-detect browser language (ES, FR, EN)
+    const browserLang = navigator.language || navigator.userLanguage
+    let detectedLang = 'en' // default fallback
+
+    // Check for Spanish
+    if (browserLang.startsWith('es')) {
+      detectedLang = 'es'
+    }
+    // Check for French
+    else if (browserLang.startsWith('fr')) {
+      detectedLang = 'fr'
+    }
+    // Check for English
+    else if (browserLang.startsWith('en')) {
+      detectedLang = 'en'
+    }
+    // Try to match the first part of the language code
+    else {
+      const langCode = browserLang.split('-')[0].toLowerCase()
+      if (translations[langCode]) {
+        detectedLang = langCode
       }
+    }
+
+    // Set detected language
+    if (translations[detectedLang]) {
+      setLanguage(detectedLang)
+      localStorage.setItem('tryonyou-language', detectedLang)
     }
   }, [])
 

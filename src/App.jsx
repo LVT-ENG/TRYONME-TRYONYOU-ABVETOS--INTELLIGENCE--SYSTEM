@@ -10,16 +10,19 @@ import Partners from './components/Partners'
 import CTA from './components/CTA'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import Sparkles from './components/Sparkles'
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
+    // No validator, direct load
     setIsLoaded(true)
   }, [])
 
   return (
     <div className={`app ${isLoaded ? 'loaded' : ''}`}>
+      <Sparkles intensity={30} />
       <Header />
       <Hero />
       <PersonalShopper />
