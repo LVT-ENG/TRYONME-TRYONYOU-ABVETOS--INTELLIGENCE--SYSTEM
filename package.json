@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directs --max-warnings 0",
+    "generate-deploy-zip": "node scripts/generate-deploy-zip-accumulative.cjs"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
+    "archiver": "^7.0.1",
     "vite": "^7.1.2"
   }
 }
