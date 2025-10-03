@@ -1,0 +1,52 @@
+---
+name: Clean & Merge Repos
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  clean-merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install archiver
+
+      - name: Run clean merge script
+        run: node scripts/clean-merge-repos.js
+
+      - name: Upload clean project as artifact
+        id: upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: tryonyou-clean
+          path: tryonyou-clean.zip
+
+      - name: Notify Telegram with artifact link
+        if: always()
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          REPO="${{ github.repository }}"
+          RUN_ID="${{ github.run_id }}"
+          ARTIFACT_URL="https://github.com/${REPO}/actions/runs/${RUN_ID}"
+          BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}"
+          CHAT_ID="${{ secrets.TELEGRAM_CHAT_ID }}"
+          TEXT="🧹 *Clean & Merge completado en TRYONYOU* 🧹\n\n"
+          TEXT+="📝 Commit: $COMMIT_MSG\n"
+          TEXT+="📦 <a href=\"$ARTIFACT_URL\">Descargar ZIP limpio</a>"
+
+          curl -s -X POST \
+            "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${CHAT_ID}" \
+            -d "text=${TEXT}" \
+            -d "parse_mode=HTML"
