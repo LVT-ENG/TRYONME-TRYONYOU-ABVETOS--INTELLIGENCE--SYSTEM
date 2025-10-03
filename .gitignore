@@ -37,3 +37,7 @@ lerna-debug.log*
 
 # Vercel
 .vercel
+
+# Deployment ZIP generation
+tryonyou-deploy/
+tryonyou-deploy.zip
