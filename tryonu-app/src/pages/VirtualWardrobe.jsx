@@ -124,7 +124,7 @@ export default function VirtualWardrobe() {
               { title: "Trending Combinations", desc: "Red dress + brown leather bag", confidence: "87%" },
               { title: "Occasion Match", desc: "Formal meeting outfit ready", confidence: "92%" }
             ].map((rec, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-4">
+              <div key={rec.title} className="border border-gray-200 rounded-lg p-4">
                 <h3 className="font-semibold mb-2">{rec.title}</h3>
                 <p className="text-gray-600 mb-2">{rec.desc}</p>
                 <div className="flex justify-between items-center">
