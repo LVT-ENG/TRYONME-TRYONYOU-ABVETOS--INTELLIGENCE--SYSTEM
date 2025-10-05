@@ -87,19 +87,21 @@ $total_lines = 0;
 $window_seconds = 600; // 10 minutes
 $now = time();
 if ($error_log_path && is_readable($error_log_path)) {
-    $lines = @file($error_log_path);
-    if ($lines !== false) {
-        $total_lines = count($lines);
-        foreach (array_reverse($lines) as $line) {
-            // Try to extract timestamp from error log line (format: [date time] ...)
-            if (preg_match('/\[(\d{2}-[A-Za-z]{3}-\d{4} \d{2}:\d{2}:\d{2})\]/', $line, $matches)) {
-                $log_time = strtotime($matches[1]);
-                if ($log_time !== false && ($now - $log_time) <= $window_seconds) {
-                    $error_count++;
-                } elseif ($log_time !== false && ($now - $log_time) > $window_seconds) {
-                    // Stop if log entry is older than window
-                    break;
-                }
+    // Efficiently read the error log from the end, line by line, to count recent errors
+    $file = new SplFileObject($error_log_path, 'r');
+    $file->seek(PHP_INT_MAX); // Seek to the last line
+    $total_lines = $file->key() + 1;
+    for ($i = $total_lines - 1; $i >= 0; $i--) {
+        $file->seek($i);
+        $line = $file->current();
+        // Try to extract timestamp from error log line (format: [date time] ...)
+        if (preg_match('/\[(\d{2}-[A-Za-z]{3}-\d{4} \d{2}:\d{2}:\d{2})\]/', $line, $matches)) {
+            $log_time = strtotime($matches[1]);
+            if ($log_time !== false && ($now - $log_time) <= $window_seconds) {
+                $error_count++;
+            } elseif ($log_time !== false && ($now - $log_time) > $window_seconds) {
+                // Stop if log entry is older than window
+                break;
             }
         }
     }
