@@ -13,7 +13,7 @@ The legal documentation ZIP file `TRYONYOU_Incubator_Kit_FINAL.zip` is not acces
 ### Details
 
 - **File Path**: `docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip`
-- **Expected URL**: `https://raw.githubusercontent.com/${{ github.repository }}/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip`
+- **Expected URL**: `https://raw.githubusercontent.com/<owner>/<repo>/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip`
 
 ### Issue
 
