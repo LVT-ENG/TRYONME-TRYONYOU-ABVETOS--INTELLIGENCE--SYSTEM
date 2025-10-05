@@ -139,6 +139,6 @@ For licensing inquiries regarding patents, trademarks, or technology transfer, p
 
 ---
 
-**Last Updated:** 2025  
+**Last Updated:** 2025-06-02  
 **Document Status:** Official and Definitive  
 **Authority:** Rubén Espinar, Inventor and Applicant
