@@ -22,7 +22,7 @@ jobs:
 
       - name: Verify ZIP is accessible on GitHub
         run: |
-          URL="https://raw.githubusercontent.com/${{ github.repository }}/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip"
+          URL="https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip"
           STATUS=$(curl -s -o /dev/null -w "%{http_code}" $URL)
           if [ "$STATUS" != "200" ]; then
             echo "❌ ZIP not accessible (status $STATUS)."
