@@ -29,7 +29,7 @@ If the verification fails, an issue will be automatically created with troublesh
 
 The legal documentation ZIP file can be accessed at:
 ```
-https://raw.githubusercontent.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip
+https://raw.githubusercontent.com/<owner>/<repo>/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip
 ```
 
 ---
