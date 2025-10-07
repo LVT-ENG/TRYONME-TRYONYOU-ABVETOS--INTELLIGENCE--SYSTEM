@@ -71,7 +71,7 @@ git push
 ### To verify accessibility:
 ```bash
 # The file should be accessible at:
-curl -I https://raw.githubusercontent.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip
+curl -I https://raw.githubusercontent.com/<owner>/<repo>/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip
 ```
 
 ## Troubleshooting
