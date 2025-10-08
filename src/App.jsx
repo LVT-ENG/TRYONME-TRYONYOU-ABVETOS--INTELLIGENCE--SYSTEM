@@ -11,18 +11,34 @@ import CTA from './components/CTA'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Sparkles from './components/Sparkles'
+import PauOverlay from './components/PauOverlay'
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false)
+  const [pauVisible, setPauVisible] = useState(true)
 
   useEffect(() => {
     // No validator, direct load
     setIsLoaded(true)
+    
+    // Check if Pau overlay should be enabled
+    const enablePau = import.meta.env.VITE_ENABLE_PAU_OVERLAY !== 'false'
+    setPauVisible(enablePau)
   }, [])
+
+  const handlePauInteraction = (state) => {
+    console.log('Pau interaction:', state)
+    // Future: Add analytics or custom behavior
+  }
 
   return (
     <div className={`app ${isLoaded ? 'loaded' : ''}`}>
       <Sparkles intensity={30} />
+      <PauOverlay 
+        visible={pauVisible} 
+        animationState="idle"
+        onInteraction={handlePauInteraction}
+      />
       <Header />
       <Hero />
       <PersonalShopper />
