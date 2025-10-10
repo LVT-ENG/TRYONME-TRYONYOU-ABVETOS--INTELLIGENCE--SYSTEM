@@ -1,34 +1,27 @@
 {
-  "//": "✅ Configuración oficial de TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM (Vercel 2025 compliant)",
   "version": 2,
-  "builds": [
-    {
-      "src": "apps/web/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "apps/web/dist" }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/apps/web/dist/$1"
-    }
-  ],
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install",
+  "devCommand": "npm run dev",
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/apps/web/dist/index.html"
+      "destination": "/index.html"
     }
   ],
   "headers": [
     {
-      "source": "/.*\\.(?:js|css|png|jpg|jpeg|gif|svg|webp|woff|woff2)",
+      "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     }
   ],
-  "ignore": ["!docs/**"],
   "env": {
     "NODE_ENV": "production",
     "VITE_ENV": "production"
