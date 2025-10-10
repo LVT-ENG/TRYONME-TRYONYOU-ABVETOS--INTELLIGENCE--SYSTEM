@@ -14,7 +14,6 @@ const LEGACY_REPOS = [
 ];
 
 // Carpetas clave en la estructura definitiva
-const STRUCTURE = ["apps/web", "apps/api", "packages/shared", "docs", ".github/workflows"];
 
 // Ignorar basura / duplicados
 const IGNORE_PATTERNS = [
