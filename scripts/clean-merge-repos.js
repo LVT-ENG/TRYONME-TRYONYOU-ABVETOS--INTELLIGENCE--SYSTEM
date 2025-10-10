@@ -36,7 +36,7 @@ function copyIfUseful(src, dest) {
     // Si ya existe, compara tamaño y fecha
     const srcStat = fs.statSync(src);
     const destStat = fs.statSync(dest);
-    if (srcStat.size > destStat.size) {
+    if (srcStat.size > destStat.size || srcStat.mtime > destStat.mtime) {
       fs.copyFileSync(src, dest);
       console.log("🔄 Reemplazado con versión mejorada:", dest);
     }
