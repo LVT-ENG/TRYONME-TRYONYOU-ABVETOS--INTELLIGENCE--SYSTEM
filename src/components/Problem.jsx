@@ -39,6 +39,13 @@ function Problem() {
   return (
     <section className="problem" ref={sectionRef}>
       <div className="problem-container">
+        <div className="problem-visual">
+          <img 
+            src="/illustrations/problem-returns.svg" 
+            alt="Returns visualization" 
+            className="problem-illustration"
+          />
+        </div>
         <div className="problem-content">
           <h2 className="section-title">The $550 Billion Problem</h2>
           <div className="stat-display">

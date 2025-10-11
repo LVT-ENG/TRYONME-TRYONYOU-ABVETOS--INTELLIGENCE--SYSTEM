@@ -491,10 +491,32 @@ body {
 }
 
 .problem-container {
-  max-width: 1200px;
+  max-width: 1400px;
   width: 100%;
   position: relative;
   z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.problem-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.problem-illustration {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  filter: drop-shadow(0 0 30px rgba(211, 178, 106, 0.2));
+  animation: float 6s ease-in-out infinite;
+}
+
+.problem-content {
+  flex: 1;
 }
 
 .section-title {
@@ -589,6 +611,27 @@ body {
   background: var(--peacock-deep);
   padding: 6rem 2rem;
   position: relative;
+  overflow: hidden;
+}
+
+.solution-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.solution-visual-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0;
+}
+
+.solution-illustration {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  filter: drop-shadow(0 0 30px rgba(0, 255, 255, 0.2));
+  animation: float 8s ease-in-out infinite;
 }
 
 .solution-container {
@@ -596,6 +639,104 @@ body {
   width: 100%;
   position: relative;
   z-index: 1;
+}
+
+.solution-intro {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.8;
+  color: var(--text-primary);
+  max-width: 900px;
+  margin: 0 auto 3rem;
+}
+
+.solution-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.feature-card {
+  background: rgba(20, 22, 25, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(211, 178, 106, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  transition: var(--transition-smooth);
+  text-align: center;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-gold-glow);
+  border-color: var(--luxury-gold);
+  background: rgba(20, 22, 25, 0.95);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  filter: drop-shadow(0 0 10px rgba(211, 178, 106, 0.3));
+}
+
+.feature-card h3 {
+  font-size: 1.5rem;
+  color: var(--luxury-gold);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.feature-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.solution-impact {
+  margin-top: 4rem;
+  text-align: center;
+}
+
+.solution-impact h3 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--luxury-gold);
+  margin-bottom: 2rem;
+}
+
+.impact-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.impact-item {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  transition: var(--transition-smooth);
+}
+
+.impact-item:hover {
+  transform: translateY(-5px);
+  border-color: var(--peacock-deep);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.impact-value {
+  display: block;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: #00FFFF;
+  margin-bottom: 0.5rem;
+}
+
+.impact-label {
+  display: block;
+  font-size: 1rem;
+  color: var(--text-secondary);
 }
 
 .solution-grid {
@@ -1869,16 +2010,44 @@ body {
 
 .carousel-content {
   flex: 1;
-  text-align: center;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
   padding: 0 3rem;
   animation: fadeInScale 0.5s ease-out;
 }
 
+.carousel-visual {
+  flex: 0 0 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.module-visual-image {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  filter: drop-shadow(0 0 20px rgba(211, 178, 106, 0.3));
+  transition: all 0.3s ease;
+}
+
+.module-visual-image:hover {
+  filter: drop-shadow(0 0 30px rgba(211, 178, 106, 0.6));
+  transform: scale(1.05);
+}
+
+.carousel-text {
+  flex: 1;
+  text-align: left;
+}
+
 .carousel-icon {
-  font-size: 5rem;
-  margin-bottom: 1.5rem;
+  font-size: 3rem;
+  margin-bottom: 1rem;
   filter: drop-shadow(0 0 20px rgba(211, 178, 106, 0.4));
   animation: float 3s ease-in-out infinite;
+  display: inline-block;
 }
 
 .carousel-name {
