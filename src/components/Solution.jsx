@@ -4,12 +4,22 @@ function Solution() {
   return (
     <section className="solution">
       <div className="solution-container">
-        <h2 className="section-title">The TRYONYOU Solution</h2>
-        <p className="solution-intro">
-          We've created an intelligent, end-to-end fashion technology platform that eliminates the guesswork 
-          from online shopping. Our system combines cutting-edge AI, 3D visualization, and biometric security 
-          to deliver a shopping experience that's more accurate than trying on clothes in a physical store.
-        </p>
+        <div className="solution-header">
+          <h2 className="section-title">The TRYONYOU Solution</h2>
+          <p className="solution-intro">
+            We've created an intelligent, end-to-end fashion technology platform that eliminates the guesswork 
+            from online shopping. Our system combines cutting-edge AI, 3D visualization, and biometric security 
+            to deliver a shopping experience that's more accurate than trying on clothes in a physical store.
+          </p>
+        </div>
+
+        <div className="solution-visual-wrapper">
+          <img 
+            src="/illustrations/solution-tech.svg" 
+            alt="Technology solution visualization" 
+            className="solution-illustration"
+          />
+        </div>
 
         <div className="solution-features">
           <div className="feature-card">
