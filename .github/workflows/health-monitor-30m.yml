@@ -102,15 +102,33 @@ jobs:
             "${{ secrets.SLACK_WEBHOOK_URL }}"
             
           # Send email alert if configured
-          if [ -n "${{ secrets.EMAIL_WEBHOOK_URL }}" ]; then
-            EMAIL_DATA="{\"to\":\"${{ secrets.ALERT_EMAIL }}\",\"subject\":\"TRYONU Alert: $ALERT_TYPE\",\"body\":\"$MSG\"}"
-            curl -X POST \
-              -H 'Content-type: application/json' \
-              --data "$EMAIL_DATA" \
-              "${{ secrets.EMAIL_WEBHOOK_URL }}"
-          fi
+          # Email alert logic moved to a separate step with a step-level conditional
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Send email alert
+        if: ${{ secrets.EMAIL_WEBHOOK_URL != '' }}
+        run: |
+          ALERT_TYPE="${{ steps.h.outputs.code != '200' && '🚨 CRITICAL: Health Endpoint Down' || (steps.h.outputs.error_rate_exceeded == '1' && '⚠️ HIGH ERROR RATE ALERT') || (steps.h.outputs.p95_exceeded == '1' && '⚠️ PERFORMANCE DEGRADATION ALERT') || '⚠️ SYSTEM DEGRADED' }}"
+          MSG=""
+          if [ "${{ steps.h.outputs.code }}" != "200" ]; then
+            MSG="$ALERT_TYPE (HTTP ${{ steps.h.outputs.code }})\n\nThe health endpoint is not responding correctly.\n\nAction Required: Immediate investigation needed.\n\nCommit: ${GITHUB_SHA:0:7}"
+          elif [ "${{ steps.h.outputs.error_rate_exceeded }}" = "1" ]; then
+            MSG="$ALERT_TYPE\n\nError Rate: ${{ steps.h.outputs.error_rate }}% (Threshold: 1.0%)\nP95 Response Time: ${{ steps.h.outputs.p95_time }} ms\nSystem Status: ${{ steps.h.outputs.status }}\n\nAction Required: Investigate error causes immediately.\n\nCommit: ${GITHUB_SHA:0:7}"
+          elif [ "${{ steps.h.outputs.p95_exceeded }}" = "1" ]; then
+            MSG="$ALERT_TYPE\n\nP95 Response Time: ${{ steps.h.outputs.p95_time }} ms (Threshold: 300ms)\nError Rate: ${{ steps.h.outputs.error_rate }}%\nSystem Status: ${{ steps.h.outputs.status }}\n\nAction Required: Check system performance and scaling.\n\nCommit: ${GITHUB_SHA:0:7}"
+          else
+            MSG="$ALERT_TYPE\n\nSystem Status: ${{ steps.h.outputs.status }}\nError Rate: ${{ steps.h.outputs.error_rate }}%\nP95 Response Time: ${{ steps.h.outputs.p95_time }} ms\n\nAction Required: System health check required.\n\nCommit: ${GITHUB_SHA:0:7}"
+          fi
+          EMAIL_DATA="{\"to\":\"${{ secrets.ALERT_EMAIL }}\",\"subject\":\"TRYONU Alert: $ALERT_TYPE\",\"body\":\"$MSG\"}"
+          curl -X POST \
+            -H 'Content-type: application/json' \
+            --data "$EMAIL_DATA" \
+            "${{ secrets.EMAIL_WEBHOOK_URL }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ALERT_EMAIL: ${{ secrets.ALERT_EMAIL }}
+          EMAIL_WEBHOOK_URL: ${{ secrets.EMAIL_WEBHOOK_URL }}
 
       - name: Success notification
         if: success()
