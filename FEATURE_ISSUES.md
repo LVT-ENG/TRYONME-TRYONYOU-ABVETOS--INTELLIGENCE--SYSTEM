@@ -7,7 +7,7 @@ Based on the comprehensive roadmap, here are the individual GitHub issues that s
 ### Infrastructure & Foundation
 
 1. **feat(core): implement react router navigation system**
-   - Set up React Router v6 with proper routing structure
+   - Set up React Router v7 with proper routing structure
    - Create navigation components and page layouts
    - Implement responsive navigation for mobile/desktop
    - Add route guards and error boundaries
@@ -210,7 +210,7 @@ Based on the comprehensive roadmap, here are the individual GitHub issues that s
 - `area/security` - Security related
 
 ### Estimation Guidelines
-- Small: 1-3 days (13 story points)
+- Small: 1-3 days (1-3 story points)
 - Medium: 1-2 weeks (5-8 story points)
 - Large: 2-4 weeks (13-21 story points)
 - Epic: 1+ months (break into smaller issues)

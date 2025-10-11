@@ -19,10 +19,10 @@ Este roadmap define la planificación clara para el desarrollo de las tecnologí
 #### 1.1 Infraestructura y Navegación
 - [x] Configuración base del proyecto
 - [x] Sistema de conventional commits establecido
-- [ ] **Implementar React Router** - Navegación entre componentes
+- [x] **Implementar React Router** - Navegación entre componentes
 - [ ] **Estructura de carpetas modular** - Organización por features
 - [ ] **Sistema de temas y estilos** - Design system consistente
-- [ ] **Error boundaries y manejo de errores** - Robustez del sistema
+- [x] **Error boundaries y manejo de errores** - Robustez del sistema
 
 #### 1.2 Motor de Recomendaciones (Google Apps Script)
 - [x] Prototipo funcional en Google Sheets
@@ -128,7 +128,7 @@ Este roadmap define la planificación clara para el desarrollo de las tecnologí
 
 ### Frontend
 - **React 18+ con TypeScript** - UI moderna y robusta
-- **React Router v6** - Navegación SPA
+- **React Router v7** - Navegación SPA
 - **Tailwind CSS** - Diseño responsive
 - **Framer Motion** - Animaciones fluidas
 - **React Query** - State management y caching

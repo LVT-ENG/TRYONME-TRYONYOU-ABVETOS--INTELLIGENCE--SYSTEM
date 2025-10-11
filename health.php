@@ -80,25 +80,70 @@ $metrics['external_services'] = [
 $response_time_ms = round((microtime(true) - $response_start) * 1000, 2);
 $metrics['response_time_ms'] = $response_time_ms;
 
-// Mock error rate calculation (in real app, this would query logs/database)
-$error_rate_percent = rand(0, 50) / 100; // Mock: 0-0.5% error rate
-$metrics['error_rate_percent'] = $error_rate_percent;
-
+// Error rate calculation based on PHP error log (last 10 minutes)
+$error_log_path = ini_get('error_log');
+$error_count = 0;
+$total_lines = 0;
+$window_seconds = 600; // 10 minutes
+$now = time();
+if ($error_log_path && is_readable($error_log_path)) {
+    // Use 'tail' to efficiently read only the last 500 lines of the error log
+    $tail_lines = 500;
+    $log_content = shell_exec('tail -n ' . escapeshellarg($tail_lines) . ' ' . escapeshellarg($error_log_path));
+    if ($log_content !== null) {
+        $lines = explode("\n", $log_content);
+        foreach (array_reverse($lines) as $line) {
+            // Try to extract timestamp from error log line (format: [date time] ...)
+            if (preg_match('/\[(\d{2}-[A-Za-z]{3}-\d{4} \d{2}:\d{2}:\d{2})\]/', $line, $matches)) {
+                $log_time = strtotime($matches[1]);
+                if ($log_time !== false && ($now - $log_time) <= $window_seconds) {
+                    $error_count++;
+                } elseif ($log_time !== false && ($now - $log_time) > $window_seconds) {
+                    // Stop if log entry is older than window
+                    break;
+                }
+            }
+        }
+    }
+}
+// Report error count in last 10 minutes as "recent_error_count"
+$metrics['recent_error_count'] = $error_count; // Number of errors in last 10 minutes
 // P95 response time simulation (in real app, this would be calculated from historical data)
 $p95_response_time_ms = $response_time_ms + rand(50, 200); // Mock P95
 $metrics['p95_response_time_ms'] = $p95_response_time_ms;
 
-// Active users (mock data)
+// Simulate active users and fashion metrics based on time of day
+$hour = (int)date('G'); // 0-23
+// Simulate higher activity during 18:00-22:00, lower at night
+if ($hour >= 18 && $hour <= 22) {
+    $active_current = rand(80, 120);
+    $peak_24h = rand(150, 200);
+    $total_sessions_24h = rand(800, 1200);
+    $products_viewed_24h = rand(1800, 2200);
+    $try_on_sessions_24h = rand(600, 900);
+} elseif ($hour >= 8 && $hour < 18) {
+    $active_current = rand(40, 80);
+    $peak_24h = rand(120, 180);
+    $total_sessions_24h = rand(500, 900);
+    $products_viewed_24h = rand(1200, 1800);
+    $try_on_sessions_24h = rand(300, 600);
+} else {
+    $active_current = rand(10, 30);
+    $peak_24h = rand(80, 120);
+    $total_sessions_24h = rand(200, 500);
+    $products_viewed_24h = rand(500, 1200);
+    $try_on_sessions_24h = rand(100, 300);
+}
 $metrics['active_users'] = [
-    'current' => rand(10, 100),
-    'peak_24h' => rand(150, 500),
-    'total_sessions_24h' => rand(200, 1000)
+    'current' => $active_current,
+    'peak_24h' => $peak_24h,
+    'total_sessions_24h' => $total_sessions_24h
 ];
 
-// Fashion-specific metrics
+// Fashion-specific metrics (simulate conversion rate and session duration as before)
 $metrics['fashion_metrics'] = [
-    'products_viewed_24h' => rand(500, 2000),
-    'try_on_sessions_24h' => rand(100, 800),
+    'products_viewed_24h' => $products_viewed_24h,
+    'try_on_sessions_24h' => $try_on_sessions_24h,
     'conversion_rate_percent' => round(rand(200, 800) / 100, 2), // 2-8%
     'avg_session_duration_min' => round(rand(300, 1200) / 60, 2) // 5-20 min
 ];

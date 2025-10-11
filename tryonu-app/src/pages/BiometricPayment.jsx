@@ -60,7 +60,7 @@ export default function BiometricPayment() {
         onClick={() => setStep('iris')}
         className="px-8 py-3 text-white font-semibold rounded-lg transition-colors"
         style={{ backgroundColor: PEACOCK }}
-        disabled={!paymentData.item || !paymentData.amount}
+        disabled={!paymentData.item || Number(paymentData.amount) <= 0}
       >
         Start Biometric Payment
       </button>
