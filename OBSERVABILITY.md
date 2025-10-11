@@ -8,7 +8,7 @@ This document outlines the complete observability implementation for the TRYONME
 
 ### 1. Sentry Integration (Frontend)
 
-**Location**: `tryonu-app/src/sentry.js`
+**Location**: _(File not present in this changeset; example location: `tryonu-app/src/sentry.js`)_
 
 - **Error Tracking**: Automatic capture of JavaScript errors and unhandled exceptions
 - **Performance Monitoring**: Real-time tracking of page load times, user interactions
