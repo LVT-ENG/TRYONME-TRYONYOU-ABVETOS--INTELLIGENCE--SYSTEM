@@ -43,6 +43,26 @@ TRYONYOU is an intelligent, end-to-end fashion technology platform that eliminat
 - **Deployment**: Vercel
 - **CI/CD**: GitHub Actions
 - **Notifications**: Telegram Bot Integration
+- **Automation**: 8 Intelligent Agents (24/7 active)
+
+---
+
+## 🤖 Intelligent Agents System (24/7)
+
+TRYONYOU operates with 8 intelligent agents providing continuous monitoring, deployment, and quality assurance:
+
+| Agent | Function | Schedule |
+|-------|----------|----------|
+| **Agent 70** | Orquestador General | Hourly + Daily 09:00 UTC |
+| **Agent 22** | Deploy Operator | On push to main |
+| **Agent 20** | GitHub Commit Agent | Daily 08:00 UTC |
+| **Agent 12** | Brand Guardian | Daily 10:00 UTC |
+| **Agent 46** | Document Locker | Daily 11:00 UTC |
+| **Agent 31** | Video Curator | Pending |
+| **Agent 2** | Content Pro | Pending |
+| **Agent 25** | Image Curator | Pending |
+
+📚 **Learn more:** [Agents Documentation](docs/agents/README.md) | [Setup Guide](docs/agents/SETUP_GUIDE.md) | [Agent Status](docs/agents/status.md)
 
 ---
 

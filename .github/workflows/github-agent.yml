@@ -1,0 +1,212 @@
+name: Agent 20 - GitHub Commit Agent
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+      - 'hotfix/**'
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+  issues:
+    types: [opened, edited, labeled]
+  schedule:
+    # Run daily at 08:00 UTC to check for stale branches and issues
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  monitor-repository:
+    name: Repository Monitor
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🧩 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 📊 Analyze Repository Status
+        id: analyze
+        run: |
+          echo "## 🔍 Repository Analysis" > /tmp/repo-status.md
+          echo "" >> /tmp/repo-status.md
+          echo "**Date:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> /tmp/repo-status.md
+          echo "" >> /tmp/repo-status.md
+          
+          # Count branches
+          BRANCH_COUNT=$(git branch -r | grep -v HEAD | wc -l)
+          echo "### Branches: $BRANCH_COUNT" >> /tmp/repo-status.md
+          
+          # Recent commits
+          echo "" >> /tmp/repo-status.md
+          echo "### Recent Commits (Last 5):" >> /tmp/repo-status.md
+          git log --oneline -5 --pretty=format:"- %h %s (%an)" >> /tmp/repo-status.md
+          echo "" >> /tmp/repo-status.md
+          
+          # Check for uncommitted changes
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "" >> /tmp/repo-status.md
+            echo "⚠️ **Warning:** Uncommitted changes detected" >> /tmp/repo-status.md
+          fi
+          
+          cat /tmp/repo-status.md
+      
+      - name: 🏷️ Check Code Quality
+        run: |
+          echo "## 📝 Code Quality Check" > /tmp/quality-report.md
+          echo "" >> /tmp/quality-report.md
+          
+          # Count files by type
+          echo "### File Statistics:" >> /tmp/quality-report.md
+          echo "- JavaScript/JSX: $(find src -name '*.jsx' -o -name '*.js' | wc -l) files" >> /tmp/quality-report.md
+          echo "- CSS/Styles: $(find src -name '*.css' | wc -l) files" >> /tmp/quality-report.md
+          echo "- Documentation: $(find docs -name '*.md' | wc -l) files" >> /tmp/quality-report.md
+          echo "- Workflows: $(find .github/workflows -name '*.yml' | wc -l) files" >> /tmp/quality-report.md
+          
+          # Check for TODO/FIXME comments
+          echo "" >> /tmp/quality-report.md
+          echo "### Code Markers:" >> /tmp/quality-report.md
+          TODO_COUNT=$(grep -r "TODO" src --include="*.js" --include="*.jsx" 2>/dev/null | wc -l || echo "0")
+          FIXME_COUNT=$(grep -r "FIXME" src --include="*.js" --include="*.jsx" 2>/dev/null | wc -l || echo "0")
+          echo "- TODO comments: $TODO_COUNT" >> /tmp/quality-report.md
+          echo "- FIXME comments: $FIXME_COUNT" >> /tmp/quality-report.md
+          
+          cat /tmp/quality-report.md
+      
+      - name: 📚 Verify Documentation Structure
+        run: |
+          echo "## 📚 Documentation Verification" > /tmp/docs-check.md
+          echo "" >> /tmp/docs-check.md
+          
+          # Check required documentation
+          REQUIRED_DOCS=("README.md" "docs/agentes.md" "docs/arquitectura.md" "docs/casos_uso.md")
+          
+          echo "### Required Documentation:" >> /tmp/docs-check.md
+          for doc in "${REQUIRED_DOCS[@]}"; do
+            if [ -f "$doc" ]; then
+              echo "- ✅ $doc" >> /tmp/docs-check.md
+            else
+              echo "- ❌ $doc (missing)" >> /tmp/docs-check.md
+            fi
+          done
+          
+          # Check docs/legal directory
+          echo "" >> /tmp/docs-check.md
+          echo "### Legal Documentation:" >> /tmp/docs-check.md
+          if [ -d "docs/legal" ]; then
+            LEGAL_COUNT=$(find docs/legal -type f | wc -l)
+            echo "- ✅ Legal directory exists ($LEGAL_COUNT files)" >> /tmp/docs-check.md
+          else
+            echo "- ⚠️ Legal directory not found" >> /tmp/docs-check.md
+          fi
+          
+          cat /tmp/docs-check.md
+      
+      - name: 🎨 Verify Assets Structure
+        run: |
+          echo "## 🎨 Assets Verification" > /tmp/assets-check.md
+          echo "" >> /tmp/assets-check.md
+          
+          # Check public/assets directory
+          if [ -d "public/assets" ]; then
+            ASSET_COUNT=$(find public/assets -type f | wc -l)
+            echo "### Assets Directory:" >> /tmp/assets-check.md
+            echo "- ✅ Total assets: $ASSET_COUNT files" >> /tmp/assets-check.md
+            
+            # Breakdown by type
+            echo "" >> /tmp/assets-check.md
+            echo "### Asset Types:" >> /tmp/assets-check.md
+            echo "- Images (PNG): $(find public/assets -name '*.png' | wc -l)" >> /tmp/assets-check.md
+            echo "- Images (JPG): $(find public/assets -name '*.jpg' -o -name '*.jpeg' | wc -l)" >> /tmp/assets-check.md
+            echo "- Images (SVG): $(find public/assets -name '*.svg' | wc -l)" >> /tmp/assets-check.md
+            echo "- Videos: $(find public/assets -name '*.mp4' -o -name '*.webm' | wc -l)" >> /tmp/assets-check.md
+          else
+            echo "- ⚠️ Assets directory not found" >> /tmp/assets-check.md
+          fi
+          
+          cat /tmp/assets-check.md
+      
+      - name: 🔐 Security Check
+        run: |
+          echo "## 🔐 Security Scan" > /tmp/security-check.md
+          echo "" >> /tmp/security-check.md
+          
+          # Check for sensitive files
+          echo "### Sensitive Files Check:" >> /tmp/security-check.md
+          
+          SENSITIVE_PATTERNS=(".env" "*.key" "*.pem" "credentials.json" "secrets.json")
+          FOUND_SENSITIVE=false
+          
+          for pattern in "${SENSITIVE_PATTERNS[@]}"; do
+            if find . -name "$pattern" -not -path "./.git/*" | grep -q .; then
+              echo "- ⚠️ Found: $pattern" >> /tmp/security-check.md
+              FOUND_SENSITIVE=true
+            fi
+          done
+          
+          if [ "$FOUND_SENSITIVE" = false ]; then
+            echo "- ✅ No sensitive files found in repository" >> /tmp/security-check.md
+          fi
+          
+          # Check .gitignore
+          echo "" >> /tmp/security-check.md
+          echo "### GitIgnore Status:" >> /tmp/security-check.md
+          if [ -f ".gitignore" ]; then
+            echo "- ✅ .gitignore present" >> /tmp/security-check.md
+          else
+            echo "- ❌ .gitignore missing" >> /tmp/security-check.md
+          fi
+          
+          cat /tmp/security-check.md
+      
+      - name: 📝 Generate Comprehensive Report
+        run: |
+          echo "# 🤖 Agent 20: GitHub Commit Agent Report" > /tmp/full-report.md
+          echo "" >> /tmp/full-report.md
+          echo "**Generated:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> /tmp/full-report.md
+          echo "**Trigger:** ${{ github.event_name }}" >> /tmp/full-report.md
+          echo "" >> /tmp/full-report.md
+          
+          cat /tmp/repo-status.md >> /tmp/full-report.md
+          echo "" >> /tmp/full-report.md
+          cat /tmp/quality-report.md >> /tmp/full-report.md
+          echo "" >> /tmp/full-report.md
+          cat /tmp/docs-check.md >> /tmp/full-report.md
+          echo "" >> /tmp/full-report.md
+          cat /tmp/assets-check.md >> /tmp/full-report.md
+          echo "" >> /tmp/full-report.md
+          cat /tmp/security-check.md >> /tmp/full-report.md
+          
+          cat /tmp/full-report.md
+      
+      - name: 💾 Save Report
+        run: |
+          mkdir -p docs/agents/reports
+          cp /tmp/full-report.md docs/agents/reports/github-agent-$(date -u '+%Y%m%d-%H%M%S').md
+          
+          # Keep only last 10 reports
+          cd docs/agents/reports
+          ls -t github-agent-*.md | tail -n +11 | xargs -r rm
+      
+      - name: 📱 Send Report to Telegram
+        if: github.event.schedule == '0 8 * * *'
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            REPORT=$(head -n 30 /tmp/full-report.md)
+            
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$REPORT" || echo "⚠️ Telegram notification failed"
+            
+            echo "✅ Report sent to Telegram"
+          fi
