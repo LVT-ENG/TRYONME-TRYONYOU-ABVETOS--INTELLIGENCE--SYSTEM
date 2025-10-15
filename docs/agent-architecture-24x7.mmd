@@ -1,0 +1,155 @@
+graph TB
+    subgraph "🌐 User Interactions"
+        User[Developer/Team]
+        GitPush[Git Push to Main]
+        IssueCreate[Create Issue P0/P1]
+        ManualTrigger[Manual Workflow Trigger]
+    end
+
+    subgraph "🤖 Agent 70 - Orquestador General"
+        Orchestrator[Orchestrator<br/>Daily Report Agent]
+        Schedule[Cron: 09:00 UTC]
+        
+        Schedule --> Orchestrator
+        Orchestrator --> FetchIssues[Fetch P0/P1 Issues]
+        Orchestrator --> FetchDeploys[Fetch Recent Deploys]
+        Orchestrator --> GenerateMetrics[Generate Metrics]
+        Orchestrator --> GenerateGuides[Generate Quick Guides]
+        Orchestrator --> SendTelegram[Send to Telegram]
+    end
+
+    subgraph "🚀 Agent 22 - Deploy Operator"
+        DeployAgent[Deploy Operator<br/>CI/CD Agent]
+        
+        GitPush --> DeployAgent
+        DeployAgent --> Build[npm run build]
+        Build --> BrandCheck[Brand Guardian<br/>Validation]
+        BrandCheck --> VercelDeploy[Deploy to Vercel]
+        VercelDeploy --> Screenshots[Capture Screenshots<br/>Desktop + Mobile]
+        Screenshots --> TelegramNotif[Telegram Notification]
+    end
+
+    subgraph "🎨 Agent 12 - Brand Guardian"
+        BrandGuardian[Brand Guardian<br/>Visual Validator]
+        
+        BrandGuardian --> ValidateColors[Validate Colors<br/>#D3B26A, #0E6B6B, #141619, #F5EFE6]
+        BrandGuardian --> ValidateFonts[Validate Fonts<br/>Playfair, Inter, Fira Code]
+        BrandGuardian --> ValidateAssets[Validate Assets<br/>Structure & Optimization]
+        ValidateColors --> GenerateReport[Generate Report<br/>Score 0-100%]
+        ValidateFonts --> GenerateReport
+        ValidateAssets --> GenerateReport
+    end
+
+    subgraph "🔐 Agent 46 - Document Locker"
+        DocLocker[Document Locker<br/>Legal & Patents]
+        
+        DocLocker --> GitLFS[Git LFS Storage]
+        DocLocker --> Encryption[AES-256 Encryption]
+        DocLocker --> AccessControl[Access Control]
+        DocLocker --> AuditLog[Audit Logging]
+    end
+
+    subgraph "📹 Agent 31 - Video Curator"
+        VideoCurator[Video Curator<br/>LaSeñu Hero Videos]
+        
+        VideoCurator --> HeroVideos[Manage Hero Videos]
+        VideoCurator --> PauOverlay[Pau le Paon Overlay]
+        VideoCurator --> VideoOptimization[Optimize for Web]
+        VideoCurator --> ABTesting[A/B Testing]
+    end
+
+    subgraph "📝 Agent 2 - Content Pro"
+        ContentPro[Content Pro<br/>Copywriter]
+        
+        ContentPro --> InvestorDeck[Investor Deck]
+        ContentPro --> MarketingCopy[Marketing Copy]
+        ContentPro --> SEO[SEO Optimization]
+        ContentPro --> Translation[Multi-language<br/>ES/EN/FR]
+    end
+
+    subgraph "🖼️ Agent 25 - Image Curator"
+        ImageCurator[Image Curator<br/>Mockups & Assets]
+        
+        ImageCurator --> Mockups[Product Mockups]
+        ImageCurator --> ImageOptim[Image Optimization]
+        ImageCurator --> QualityCheck[Premium Quality Check]
+        ImageCurator --> ResponsiveVariants[Responsive Variants]
+    end
+
+    subgraph "🔄 Agent 20 - GitHub Commit Agent"
+        GitHubAgent[GitHub Commit Agent<br/>Repo Manager]
+        
+        GitHubAgent --> AutoCommits[Automated Commits]
+        GitHubAgent --> IssueManagement[Issue Management]
+        GitHubAgent --> BranchManagement[Branch Management]
+        GitHubAgent --> Changelog[Changelog Generation]
+    end
+
+    subgraph "📊 External Services"
+        GitHub[(GitHub<br/>Repository)]
+        Vercel[(Vercel<br/>Hosting)]
+        Telegram[(Telegram<br/>Bot API)]
+        GitLFSStorage[(Git LFS<br/>Large Files)]
+    end
+
+    subgraph "💾 Synchronized Directories"
+        DocsDir[/docs/<br/>Documentation & Legal]
+        SrcDir[/src/<br/>Source Code]
+        PublicDir[/public/<br/>Assets & Media]
+        ScriptsDir[/scripts/<br/>Agent Scripts]
+    end
+
+    %% Main connections
+    User --> GitPush
+    User --> IssueCreate
+    User --> ManualTrigger
+    
+    IssueCreate --> Orchestrator
+    ManualTrigger --> Orchestrator
+    ManualTrigger --> DeployAgent
+    
+    BrandCheck --> BrandGuardian
+    
+    %% External service connections
+    Orchestrator --> GitHub
+    Orchestrator --> Telegram
+    DeployAgent --> Vercel
+    DeployAgent --> Telegram
+    TelegramNotif --> Telegram
+    SendTelegram --> Telegram
+    GitHubAgent --> GitHub
+    DocLocker --> GitLFSStorage
+    
+    %% Directory synchronization
+    DeployAgent --> DocsDir
+    DeployAgent --> SrcDir
+    DeployAgent --> PublicDir
+    BrandGuardian --> DocsDir
+    BrandGuardian --> SrcDir
+    BrandGuardian --> PublicDir
+    DocLocker --> DocsDir
+    VideoCurator --> PublicDir
+    ImageCurator --> PublicDir
+    ContentPro --> DocsDir
+    GitHubAgent --> ScriptsDir
+    
+    %% Styling
+    classDef orchestratorClass fill:#9C27B0,stroke:#4A148C,stroke-width:3px,color:#fff
+    classDef deployClass fill:#2196F3,stroke:#0D47A1,stroke-width:3px,color:#fff
+    classDef brandClass fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff
+    classDef docClass fill:#4CAF50,stroke:#1B5E20,stroke-width:3px,color:#fff
+    classDef mediaClass fill:#E91E63,stroke:#880E4F,stroke-width:3px,color:#fff
+    classDef contentClass fill:#00BCD4,stroke:#006064,stroke-width:3px,color:#fff
+    classDef gitClass fill:#607D8B,stroke:#263238,stroke-width:3px,color:#fff
+    classDef serviceClass fill:#FFD700,stroke:#FF8F00,stroke-width:2px
+    classDef dirClass fill:#D3B26A,stroke:#8B7355,stroke-width:2px
+    
+    class Orchestrator,Schedule,FetchIssues,FetchDeploys,GenerateMetrics,GenerateGuides,SendTelegram orchestratorClass
+    class DeployAgent,Build,VercelDeploy,Screenshots,TelegramNotif deployClass
+    class BrandGuardian,ValidateColors,ValidateFonts,ValidateAssets,GenerateReport brandClass
+    class DocLocker,GitLFS,Encryption,AccessControl,AuditLog docClass
+    class VideoCurator,HeroVideos,PauOverlay,VideoOptimization,ABTesting,ImageCurator,Mockups,ImageOptim,QualityCheck,ResponsiveVariants mediaClass
+    class ContentPro,InvestorDeck,MarketingCopy,SEO,Translation contentClass
+    class GitHubAgent,AutoCommits,IssueManagement,BranchManagement,Changelog gitClass
+    class GitHub,Vercel,Telegram,GitLFSStorage serviceClass
+    class DocsDir,SrcDir,PublicDir,ScriptsDir dirClass

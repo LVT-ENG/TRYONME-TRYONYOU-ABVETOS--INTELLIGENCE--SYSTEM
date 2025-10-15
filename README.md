@@ -144,24 +144,44 @@ vercel --prod
 
 ---
 
-## 🤖 CI/CD Pipeline
+## 🤖 Agentes Activos 24×7
 
-The project includes a comprehensive GitHub Actions workflow that:
+TRYONYOU cuenta con un sistema de **8 agentes inteligentes operando continuamente** para garantizar excelencia operacional:
 
-- ✅ Builds and tests the project on every push
-- 🚀 Deploys to Vercel automatically
-- 📱 Sends Telegram notifications with deployment status
-- 🔄 Supports deployment from Issues and Pull Requests
-- 📸 (Optional) Captures screenshots of deployed site
+### Agentes Principales
 
-### Telegram Notifications
+| Agente | Función | Estado |
+|--------|---------|--------|
+| 70 - Orquestador General | Control total y coordinación | 🟢 Activo |
+| 22 - Deploy Operator | CI/CD + Vercel + Telegram | 🟢 Activo |
+| 20 - GitHub Commit Agent | Commits, Issues, Branch | 🟢 Activo |
+| 31 - Video Curator | Hero videos, overlays Pau | 🟢 Activo |
+| 12 - Brand Guardian | Visual, coherencia, tipografía | 🟢 Activo |
+| 46 - Document Locker | Patentes + Legal | 🟢 Activo |
+| 2 - Content Pro | Investor deck + copy | 🟢 Activo |
+| 25 - Image Curator | Mockups premium | 🟢 Activo |
 
-Deployment notifications include:
-- Deployment status (success/failure)
-- Branch and commit information
-- Author and commit message
-- Deployment URL
-- Trigger event type
+### Características del Sistema de Agentes
+
+- ✅ **Reporte Diario 09:00 UTC**: Lista P0/P1 + guías rápidas vía Telegram
+- 🚀 **Deploy 24×7**: Build, Vercel push, capturas automáticas
+- 🎨 **Validación Visual**: Moda premium, coherencia Vogue-tech
+- 📁 **Sincronización**: Código en /docs/, /src/, /public/assets/
+- 📸 **Screenshots Automáticos**: Desktop + Mobile post-deploy
+- 📱 **Notificaciones Telegram**: Estado en tiempo real
+
+### CI/CD Pipeline
+
+El proyecto incluye workflows de GitHub Actions que ejecutan:
+
+- ✅ Build y tests automáticos
+- 🚀 Deploy a Vercel en cada push a main
+- 🎨 Validación de Brand Guardian (colores, tipografía)
+- 📸 Captura de screenshots (desktop + mobile)
+- 📱 Notificaciones Telegram instantáneas
+- 📊 Reporte diario de métricas y prioridades
+
+**Documentación completa:** Ver [docs/agent-deployment-guide.md](docs/agent-deployment-guide.md)
 
 ---
 
