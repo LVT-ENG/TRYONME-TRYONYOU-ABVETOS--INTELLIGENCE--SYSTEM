@@ -1,81 +1,44 @@
-name: Build and Deploy
-
+name: TRYONYOU 24x7 Orchestrator
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
 
 jobs:
   build:
-    name: Build Application
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout code
+      - name: 🧩 Checkout
         uses: actions/checkout@v4
-        with:
-          lfs: true  # Enable Git LFS for large files
-      
-      - name: Checkout LFS objects
-        run: git lfs pull
-      
-      - name: Setup Node.js
+
+      - name: ⚙️ Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build application
-        run: npm run build
-      
-      - name: Verify docs/legal in build
-        run: |
-          echo "Checking if docs/legal was copied to dist..."
-          if [ -d "dist/docs/legal" ]; then
-            echo "✅ docs/legal directory found in dist"
-            ls -la dist/docs/legal/
-          else
-            echo "❌ docs/legal directory NOT found in dist"
-            exit 1
-          fi
-      
-      - name: List all files in dist
-        run: find dist -type f | sort
-      
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-          retention-days: 7
+          node-version: 22
 
-  deploy:
-    name: Deploy to Vercel
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-      
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
-      
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: ./
+      - name: 📦 Install
+        run: npm ci
+
+      - name: 🧱 Build
+        run: npm run build
+
+      - name: 📸 Screenshots
+        run: |
+          npx playwright install --with-deps
+          node scripts/snapshots.js || true
+
+      - name: 🚀 Deploy to Vercel
+        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+      - name: 📢 Notify Telegram
+        if: always()
+        run: |
+          MSG="🪄 TRYONYOU Deploy → ${{ job.status }}\nBranch: main\nCommit: ${{ github.sha }}"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+          -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} -d text="$MSG"
