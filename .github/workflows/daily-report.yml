@@ -1,0 +1,43 @@
+name: Daily Agent Report
+
+on:
+  schedule:
+    # Ejecutar todos los días a las 09:00 UTC
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Permitir ejecución manual
+
+jobs:
+  daily-report:
+    name: Generate Daily Report
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: |
+          npm install @octokit/rest
+      
+      - name: Generate and send daily report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          node scripts/agents/orchestrator-daily-report.js
+      
+      - name: Log completion
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo "✅ Reporte diario generado y enviado exitosamente"
+          else
+            echo "❌ Error generando reporte diario"
+          fi

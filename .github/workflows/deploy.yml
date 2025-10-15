@@ -72,6 +72,7 @@ jobs:
           path: dist/
       
       - name: Deploy to Vercel
+        id: vercel-deploy
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
@@ -79,3 +80,118 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
           working-directory: ./
+      
+      - name: Setup Node for screenshots
+        if: success()
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      
+      - name: Install Puppeteer
+        if: success()
+        run: |
+          npm install puppeteer
+      
+      - name: Wait for deployment
+        if: success()
+        run: sleep 10
+      
+      - name: Capture screenshots
+        if: success()
+        id: screenshots
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+          const fs = require('fs');
+          
+          (async () => {
+            const url = '${{ steps.vercel-deploy.outputs.preview-url }}' || 'https://tryonyou.app';
+            console.log('📸 Capturando screenshots de:', url);
+            
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            
+            try {
+              // Desktop screenshot
+              const pageDesktop = await browser.newPage();
+              await pageDesktop.setViewport({ width: 1920, height: 1080 });
+              await pageDesktop.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+              await pageDesktop.screenshot({ path: 'screenshot-desktop.png', fullPage: false });
+              console.log('✅ Screenshot desktop capturado');
+              await pageDesktop.close();
+              
+              // Mobile screenshot
+              const pageMobile = await browser.newPage();
+              await pageMobile.setViewport({ width: 375, height: 667 });
+              await pageMobile.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+              await pageMobile.screenshot({ path: 'screenshot-mobile.png', fullPage: false });
+              console.log('✅ Screenshot mobile capturado');
+              await pageMobile.close();
+              
+              console.log('✅ Screenshots capturados exitosamente');
+            } catch (error) {
+              console.error('❌ Error capturando screenshots:', error);
+              process.exit(1);
+            } finally {
+              await browser.close();
+            }
+          })();
+          "
+      
+      - name: Upload screenshots
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            screenshot-desktop.png
+            screenshot-mobile.png
+          retention-days: 7
+      
+      - name: Send Telegram notification
+        if: always()
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -z "$TELEGRAM_BOT_TOKEN" ] || [ -z "$TELEGRAM_CHAT_ID" ]; then
+            echo "⚠️ Telegram no configurado - saltando notificación"
+            exit 0
+          fi
+          
+          # Determinar estado
+          if [ "${{ job.status }}" == "success" ]; then
+            STATUS_EMOJI="✅"
+            STATUS_TEXT="Exitoso"
+          else
+            STATUS_EMOJI="❌"
+            STATUS_TEXT="Fallido"
+          fi
+          
+          # Preparar mensaje
+          MESSAGE="$STATUS_EMOJI *Deploy ${STATUS_TEXT}*
+          
+          🚀 *Agente 22: Deploy Operator*
+          ━━━━━━━━━━━━━━━━━━━━━━
+          
+          📦 Commit: \`${{ github.sha }}\`
+          👤 Autor: ${{ github.actor }}
+          🌿 Branch: ${{ github.ref_name }}
+          💬 Mensaje: ${{ github.event.head_commit.message }}
+          
+          🌐 URL: ${{ steps.vercel-deploy.outputs.preview-url }}
+          
+          ⏰ Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          
+          🤖 Deploy automático 24×7 activo"
+          
+          # Enviar mensaje
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="${MESSAGE}" \
+            -d parse_mode="Markdown" \
+            -d disable_web_page_preview=true
+          
+          echo "✅ Notificación Telegram enviada"
