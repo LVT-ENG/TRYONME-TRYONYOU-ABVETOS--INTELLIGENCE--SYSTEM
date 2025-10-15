@@ -186,6 +186,17 @@ Patent-protected technology and investor materials are available in `/docs/legal
 
 🔗 **Direct Access**: `https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/tree/main/docs/legal`
 
+### 🏷️ Trademark Portfolio
+
+Official trademark documentation and PDF generation tools in `/docs/trademarks/`:
+
+- **[Trademark Portfolio (FR)](docs/trademarks/TRYONYOU_Portefeuille_de_Marques_2025_FR.md)**: Complete trademark registry (French)
+- **[Implementation Summary](docs/trademarks/IMPLEMENTATION_SUMMARY.md)**: Technical documentation and usage guide
+- **PDF Generation**: Automated tools for creating official trademark documents
+- **Reference**: EPCT/IB/2025/XXXXXX (INPI & WIPO)
+
+🔗 **Direct Access**: `https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/tree/main/docs/trademarks`
+
 ---
 
 ## 🔐 Intellectual Property
@@ -199,14 +210,24 @@ TRYONYOU is protected by a comprehensive IP portfolio:
 - Just-In-Time Fashion Orchestration
 
 ### Registered Trademarks
-- TRYONYOU®
-- ABVET®
-- LiveIt Factory®
-- PAU® (Personal Avatar Universe)
-- CAP® (Creative Auto-Production)
-- FTT® (Fashion Trend Tracker)
+- TRYONYOU® - Virtual try-on and emotional purchasing system
+- ABVET® - Dual biometric payment system
+- ABVETOS® - Automation and deployment framework
+- CAP® (Clothing Auto-Production) - Avatar to garment conversion
+- PAU® (Personal Avatar User) - Emotional personal assistant
+- FTT® (Fashion Trend Tracker) - AI predictive trends
+- VVL® (Virtual Vision Lens) - Holographic visualization
+- LIVEIT® - Smart production orchestration
+- ARMOIRE SOLIDAIRE™ - Circular ethical platform
+- ADBET® / ADBETOS™ - Financial system and blockchain
+- ARMOIRE INTELLIGENTE™ - Connected digital wardrobe
 
+**Trademark Reference**: EPCT/IB/2025/XXXXXX (INPI & WIPO)  
+**Nice Classifications**: 7, 9, 25, 35, 36, 40, 42, 44  
+**Protected Territories**: EU, CH, AE, US, JP, KR, FR  
 **Estimated IP Value**: €17-26M
+
+📖 **[Complete Trademark Portfolio](docs/trademarks/)** available with automated PDF generation tools.
 
 ---
 
