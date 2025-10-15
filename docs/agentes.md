@@ -2,6 +2,25 @@
 
 The TRYONYOU platform is powered by a sophisticated ecosystem of 50 intelligent agents that automate, optimize, and enhance every aspect of the fashion technology experience. These agents work in perfect harmony to deliver unprecedented functionality across deployment, production, styling, business operations, and user experience.
 
+## 🟢 Active 24×7 Agents
+
+**8 agents currently operating continuously** to ensure operational excellence:
+
+| Agent | Status | Primary Function |
+|-------|--------|------------------|
+| 70 - Orquestador General | 🟢 Active | Control total, daily reports 09:00 UTC |
+| 22 - Deploy Operator | 🟢 Active | CI/CD + Vercel + Telegram notifications |
+| 20 - GitHub Commit Agent | 🟢 Active | Commits, Issues, Branch management |
+| 31 - Video Curator | 🟢 Active | Hero videos, Pau overlay |
+| 12 - Brand Guardian | 🟢 Active | Visual consistency, typography validation |
+| 46 - Document Locker | 🟢 Active | Patents + Legal document security |
+| 2 - Content Pro | 🟢 Active | Investor deck + copywriting |
+| 25 - Image Curator | 🟢 Active | Premium mockups optimization |
+
+**📚 Complete documentation:** See [agents-active-24x7.md](./agents-active-24x7.md) and [agent-deployment-guide.md](./agent-deployment-guide.md)
+
+---
+
 ## Agent Architecture Overview
 
 Our intelligent agent system is organized into five specialized blocks, each containing agents with complementary capabilities that work together to achieve specific objectives within the TRYONYOU ecosystem.
