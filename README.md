@@ -186,6 +186,20 @@ Patent-protected technology and investor materials are available in `/docs/legal
 
 🔗 **Direct Access**: `https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/tree/main/docs/legal`
 
+### 📊 Investor Materials
+
+Investor presentations and financial documentation are available in `/docs/investors/`:
+
+- **[Investor Clean Edition Q4 2025](docs/investors/TRYONYOU_Investor_Clean_Edition_Q4_2025.pdf)**: Latest investor presentation
+- Accessible at: `https://tryonyou.app/docs/investors/`
+
+### 📦 Logistics Documentation
+
+Shipping and logistics documentation is available in `/docs/logistics/`:
+
+- **Paris → Corbera (SEUR)**: Shipping data and confirmations
+- Accessible at: `https://tryonyou.app/docs/logistics/`
+
 ---
 
 ## 🔐 Intellectual Property
