@@ -4,6 +4,9 @@ on:
     - cron: "0 */12 * * *"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   report:
     runs-on: ubuntu-latest
@@ -25,7 +28,7 @@ jobs:
           git config --global user.name "Agent 70"
           git config --global user.email "deploy@tryonyou.app"
           git add src/dashboard/apiStatus.json
-          git commit -m "🧩 Update EPIC Monitor status"
+          git diff --staged --quiet || git commit -m "🧩 Update EPIC Monitor status"
           git push
           
       - name: 📩 Telegram Notify
