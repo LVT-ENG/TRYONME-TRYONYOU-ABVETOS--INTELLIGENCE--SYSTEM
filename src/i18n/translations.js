@@ -16,8 +16,19 @@ export const translations = {
     // Hero
     hero: {
       title: 'TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM',
+      titleLine1: 'Dress according to',
+      titleLine2: 'how you feel',
       subtitle: 'The Future of Fashion Intelligence',
+      subtitleEmotional: 'Your style, your rhythm, your energy. A fashion experience that understands who you are and how you want to look.',
       description: '3D Avatars · AI Recommendations · Biometric Payments · On-Demand Production',
+      feature1: 'Realistic 3D Avatar',
+      feature2: 'Personal AI',
+      feature3: 'Biometric Payment',
+      feature4: 'JIT Production',
+      ctaPrimary: 'Experience the Future',
+      ctaSecondary: 'View Modules',
+      scrollText: 'Discover more',
+      emotional: '"You don\'t just dress your body, you dress your moment"',
       cta: 'Experience the Future'
     },
     
@@ -140,8 +151,19 @@ export const translations = {
     // Hero
     hero: {
       title: 'TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM',
+      titleLine1: 'Vístete según',
+      titleLine2: 'cómo te sientes',
       subtitle: 'El Futuro de la Inteligencia en Moda',
+      subtitleEmotional: 'Tu estilo, tu ritmo, tu energía. Una experiencia de moda que entiende quién eres y cómo quieres verte.',
       description: 'Avatares 3D · Recomendaciones IA · Pagos Biométricos · Producción Bajo Demanda',
+      feature1: 'Avatar 3D Realista',
+      feature2: 'IA Personal',
+      feature3: 'Pago Biométrico',
+      feature4: 'Producción JIT',
+      ctaPrimary: 'Experimenta el Futuro',
+      ctaSecondary: 'Ver Módulos',
+      scrollText: 'Descubre más',
+      emotional: '"No solo vistes tu cuerpo, vistes tu momento"',
       cta: 'Experimenta el Futuro'
     },
     

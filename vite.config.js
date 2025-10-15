@@ -20,16 +20,39 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'esbuild',
+    // Optimización de chunks para mejor rendimiento
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom']
-        }
+          // Vendor principal: React y React DOM
+          'vendor-react': ['react', 'react-dom'],
+          // Router separado para lazy loading
+          'vendor-router': ['react-router-dom'],
+        },
+        // Nombres de archivos con hash para cache busting
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]'
       }
-    }
+    },
+    // Optimización de tamaño
+    chunkSizeWarningLimit: 1000,
+    // Compresión y optimización
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096, // 4kb - inline small assets
   },
   server: {
     port: 3000,
     open: true
+  },
+  // Optimización de dependencias
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom'],
+    exclude: []
+  },
+  // Preload de fuentes e imágenes críticas
+  preview: {
+    port: 3000
   }
 })
+
