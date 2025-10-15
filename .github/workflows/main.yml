@@ -1,1 +1,68 @@
+name: Deploy to Vercel - TRYONYOU
 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy to Vercel
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: true  # Enable Git LFS for large files
+      
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: Verify build output
+        run: |
+          echo "✅ Build completed successfully"
+          echo "📦 Build contents:"
+          ls -la dist/
+          echo "📊 Build size:"
+          du -sh dist/
+      
+      - name: Deploy to Vercel Production
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_TEAM_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
+      
+      - name: Deploy to Vercel Preview
+        if: github.event_name == 'pull_request'
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_TEAM_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          working-directory: ./
+      
+      - name: Deployment Summary
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: |
+          echo "🚀 Deployment completed successfully!"
+          echo "🌐 Production URL: https://tryonyou.app"
+          echo "📦 Commit: ${{ github.sha }}"
+          echo "👤 Author: ${{ github.actor }}"
