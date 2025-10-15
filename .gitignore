@@ -41,3 +41,9 @@ lerna-debug.log*
 # Clean merge artifacts
 tryonyou-clean.zip
 tryonyou-clean/
+
+# Build artifacts from build_package_full.sh
+out_*/
+CLEAN_BUILD_TRYONYOU–ABVETOS–ULTIMATUM_*.zip
+desktop.png
+mobile.png
