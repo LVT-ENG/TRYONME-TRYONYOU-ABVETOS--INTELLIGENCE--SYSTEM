@@ -41,3 +41,11 @@ lerna-debug.log*
 # Clean merge artifacts
 tryonyou-clean.zip
 tryonyou-clean/
+
+# Temporary directories cleaned by SuperCommit MAX
+legacy_old/
+temp_old/
+apps/web-old/
+tests-old/
+legacy/
+integrations/duplicados/
