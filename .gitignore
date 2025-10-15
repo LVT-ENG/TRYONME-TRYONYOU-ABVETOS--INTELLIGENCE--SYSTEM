@@ -41,3 +41,6 @@ lerna-debug.log*
 # Clean merge artifacts
 tryonyou-clean.zip
 tryonyou-clean/
+
+# Patent deployment artifacts
+tryonyou_patente_deploy/

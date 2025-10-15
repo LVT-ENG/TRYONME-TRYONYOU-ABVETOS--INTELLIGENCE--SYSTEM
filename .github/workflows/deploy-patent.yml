@@ -1,0 +1,65 @@
+---
+name: 📦 Deploy Patente TRYONYOU
+
+"on":
+  push:
+    paths:
+      - 'public/ZIP_MAESTRO_TRYONYOU*.zip'
+    branches:
+      - main
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  deploy:
+    name: Desplegar Dossier de Patente
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verificar existencia del ZIP maestro
+        run: |
+          echo "🔍 Verificando archivos ZIP maestros en /public..."
+          ls -lh public/ZIP_MAESTRO_TRYONYOU*.zip || \
+            echo "⚠️ No se encontraron archivos ZIP"
+
+      - name: Desplegar dossier de patente
+        run: |
+          echo "🚀 Ejecutando DEPLOY_EXPRESS.sh..."
+          chmod +x ./DEPLOY_EXPRESS.sh
+          ./DEPLOY_EXPRESS.sh \
+            public/ZIP_MAESTRO_TRYONYOU_ABVET_ULTRA_PLUS_COMPLETO_DEPLOY_EXPRESS.zip
+
+      - name: Verificar despliegue
+        run: |
+          echo "✅ Verificando contenido desplegado..."
+          if [ -d "./tryonyou_patente_deploy" ]; then
+            echo "📋 Archivos desplegados:"
+            ls -lh ./tryonyou_patente_deploy/
+            echo ""
+            echo "📊 Total de archivos:"
+            find ./tryonyou_patente_deploy -type f | wc -l
+          else
+            echo "❌ Error: directorio de despliegue no encontrado"
+            exit 1
+          fi
+
+      - name: Upload deployment artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tryonyou-patente-desplegada
+          path: tryonyou_patente_deploy/
+          retention-days: 30
+
+      - name: Resumen de despliegue
+        run: |
+          echo "🎉 =================================="
+          echo "   DESPLIEGUE COMPLETADO"
+          echo "=================================="
+          echo ""
+          echo "📦 Dossier: TRYONYOU-ABVETOS-ULTRA-PLUS"
+          echo "📁 Ubicación: ./tryonyou_patente_deploy/"
+          echo "🔗 Artefactos disponibles en GitHub Actions"
+          echo ""
+          echo "✅ El dossier de patente ha sido desplegado exitosamente"
