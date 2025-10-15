@@ -78,6 +78,11 @@ tryonyou-clean/
 │   ├── App.jsx                 # Main app component
 │   └── main.jsx                # Entry point
 ├── docs/                       # Documentation
+├── TRYONYOU_DEPLOY_EXPRESS_INBOX/  # Deployment files inbox
+│   ├── fabric-tests/          # Fabric test datasets (DIVINEO)
+│   ├── production-briefs/     # Production documentation
+│   ├── deployment-packages/   # Deployment packages
+│   └── releases/              # Official releases
 ├── index.html                  # HTML entry point
 ├── package.json                # Dependencies
 ├── vite.config.js              # Vite configuration
@@ -141,6 +146,20 @@ npm install -g vercel
 # Deploy to production
 vercel --prod
 ```
+
+### Deploy Express Inbox
+
+For managing deployment files, fabric tests, and production materials, use the **TRYONYOU_DEPLOY_EXPRESS_INBOX** directory:
+
+```bash
+# Move fabric tests from Downloads
+mv ~/Downloads/TRYONYOU_FabricTests_DIVINEO.zip TRYONYOU_DEPLOY_EXPRESS_INBOX/fabric-tests/
+
+# Move production briefs
+mv ~/Downloads/TRYONYOU_Brief_Produccion.pdf TRYONYOU_DEPLOY_EXPRESS_INBOX/production-briefs/
+```
+
+See [Deploy Express Inbox README](TRYONYOU_DEPLOY_EXPRESS_INBOX/README.md) for complete documentation.
 
 ---
 

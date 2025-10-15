@@ -6,6 +6,7 @@
 
 # PDF files (large documentation, dossiers)
 docs/legal/*.pdf filter=lfs diff=lfs merge=lfs -text
+TRYONYOU_DEPLOY_EXPRESS_INBOX/**/*.pdf filter=lfs diff=lfs merge=lfs -text
 
 # Video files (if any large marketing materials)
 *.mp4 filter=lfs diff=lfs merge=lfs -text
