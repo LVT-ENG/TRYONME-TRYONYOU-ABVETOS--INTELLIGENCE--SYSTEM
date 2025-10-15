@@ -54,6 +54,13 @@ tryonyou-clean/
 │   └── workflows/
 │       └── deploy.yml          # CI/CD pipeline
 ├── public/
+│   ├── assets/
+│   │   └── brand/              # Official brand assets
+│   │       ├── logo_master_symbol_only_final.png
+│   │       ├── logo_master_symbol_only_final.svg
+│   │       ├── logo_master_symbol_only_final_hires.jpg
+│   │       ├── favicon.ico
+│   │       └── manifest.json   # PWA manifest
 │   ├── hero-video.mp4          # Hero background video
 │   ├── logo.png                # TRYONYOU logo
 │   ├── avatar-module.png       # Module images
@@ -78,6 +85,8 @@ tryonyou-clean/
 │   ├── App.jsx                 # Main app component
 │   └── main.jsx                # Entry point
 ├── docs/                       # Documentation
+│   └── brand/                  # Brand guidelines
+│       └── README_LOGO_MASTER.md  # Logo usage guide
 ├── index.html                  # HTML entry point
 ├── package.json                # Dependencies
 ├── vite.config.js              # Vite configuration
@@ -174,6 +183,18 @@ Comprehensive documentation is available in the `/docs` directory:
 - **Use Cases**: Real-world application scenarios
 - **Agents Documentation**: 50 intelligent agents powering the platform
 - **Roadmap**: Product development timeline (2025-2028)
+
+### 🦚 Brand Assets & Guidelines
+
+Official brand assets and usage guidelines are available in `/docs/brand/`:
+
+- **[README_LOGO_MASTER.md](docs/brand/README_LOGO_MASTER.md)**: Complete brand identity and logo usage guide
+- **Logo Files**: PNG (web), SVG (print), JPG (investor edition), ICO (favicon)
+- **Color Palette**: Luxury Gold (#D3B26A) and supporting colors
+- **Symbolism**: The Golden Peacock representing elegance, vision, and transformation
+- **Manifest**: PWA configuration for app installation
+
+🔗 **Brand Assets**: `/public/assets/brand/`
 
 ### 📋 Legal & Investor Documentation
 
