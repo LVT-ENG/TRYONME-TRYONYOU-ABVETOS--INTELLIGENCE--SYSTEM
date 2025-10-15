@@ -4,6 +4,8 @@
 
 This directory contains the system orchestration monitoring dashboard for TRYONYOU. The dashboard tracks the health and status of various system components.
 
+Located in `public/dashboard/`, these files are automatically deployed with the application and accessible at `/dashboard/` on the live site.
+
 ## Files
 
 ### `apiStatus.json`

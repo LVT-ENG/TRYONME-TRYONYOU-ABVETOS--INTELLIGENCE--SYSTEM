@@ -21,13 +21,13 @@ jobs:
             "Infra": "✅ Stable (Vercel + GitHub OK)",
             "CI_CD": "✅ Build OK ('$(git rev-parse --short HEAD)')",
             "Visual": "✅ Hero + Pau Live"
-          }' > src/dashboard/apiStatus.json
+          }' > public/dashboard/apiStatus.json
 
       - name: 🟢 Commit & Push Status
         run: |
           git config --global user.name "Agent 70"
           git config --global user.email "deploy@tryonyou.app"
-          git add src/dashboard/apiStatus.json
+          git add public/dashboard/apiStatus.json
           git diff --staged --quiet || git commit -m "🧩 Update EPIC Monitor status"
           git push
           
