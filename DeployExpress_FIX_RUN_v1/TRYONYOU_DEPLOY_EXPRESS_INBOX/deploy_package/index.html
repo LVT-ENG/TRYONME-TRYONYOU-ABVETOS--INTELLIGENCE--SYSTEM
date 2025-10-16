@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRYONYOU - Deploy Express by ABVET</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .logo {
+            max-width: 200px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        .status {
+            background: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .status-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-label {
+            font-weight: bold;
+            color: #555;
+        }
+        .status-value {
+            color: #667eea;
+        }
+        .success {
+            color: #4caf50;
+        }
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            background: #667eea;
+            color: white;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="assets/logo_pavo_real.png" alt="TRYONYOU Logo" class="logo">
+        <h1>🚀 TRYONYOU</h1>
+        <p class="subtitle">Deploy Express by ABVET</p>
+        
+        <div class="status">
+            <div class="status-item">
+                <span class="status-label">Estado:</span>
+                <span class="status-value success">✅ Desplegado</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Versión:</span>
+                <span class="status-value">v1.0.0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Framework:</span>
+                <span class="status-value">Vite 7.1.2</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Dominio:</span>
+                <span class="status-value">tryonyou.app</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Build:</span>
+                <span class="status-value">Node.js 22.x</span>
+            </div>
+        </div>
+        
+        <div class="badge">DeployExpress_FIX_RUN_v1</div>
+    </div>
+</body>
+</html>
