@@ -1,51 +1,40 @@
-# Dependencies
-node_modules
-/.pnp
-.pnp.js
+# ============================================
+# TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM
+# Auto-protected by Agente 70 (Manus config)
+# ============================================
 
-# Testing
-/coverage
+# Build & Deploy artifacts
+dist/
+node_modules/
+*.zip
+*.tar
+*.gz
 
-# Production
-/dist
-/build
+# Local scripts
+deploy.sh
+deploy_express_total_for_manus.sh
+*.sh
 
-# Misc
-.DS_Store
-.env
+# Temporary backups
+*_BACKUP/
+Desktop/
+logs/
+tmp/
+*.log
+
+# Documents and media
+*.doc
+*.docx
+*.pdf
+*.md
+*.mov
+*.mp4
+*.png
+*.jpg
+*.jpeg
+
+# Lock & cache
+package-lock.json
+vite.config.js
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-
-# Vercel
-.vercel
-
-# Clean merge artifacts
-tryonyou-clean.zip
-tryonyou-clean/
-
-# Temporary directories cleaned by SuperCommit MAX
-legacy_old/
-temp_old/
-apps/web-old/
-tests-old/
-legacy/
-integrations/duplicados/
+.env.*
