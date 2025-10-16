@@ -1,5 +1,8 @@
 import React from 'react'
 import { useLanguage } from '../i18n/LanguageContext'
+import Lottie from 'lottie-react'
+import { useState, useEffect } from 'react'
+import pauIntroAnimation from '../../public/hero/pau_intro.json'
 
 function Hero() {
   const { t } = useLanguage()
