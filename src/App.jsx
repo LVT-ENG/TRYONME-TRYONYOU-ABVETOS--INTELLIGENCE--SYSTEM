@@ -1,17 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, lazy, Suspense } from 'react'
 import './styles/App.css'
 import Hero from './components/Hero'
-import Problem from './components/Problem'
-import Solution from './components/Solution'
-import Modules from './components/Modules'
-import PersonalShopper from './components/PersonalShopper'
-import Patents from './components/Patents'
-import Partners from './components/Partners'
-import CTA from './components/CTA'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Sparkles from './components/Sparkles'
-import PauOverlay from './components/PauOverlay'
+
+// Lazy load components below the fold for better initial load performance
+const Problem = lazy(() => import('./components/Problem'))
+const Solution = lazy(() => import('./components/Solution'))
+const Modules = lazy(() => import('./components/Modules'))
+const PersonalShopper = lazy(() => import('./components/PersonalShopper'))
+const Patents = lazy(() => import('./components/Patents'))
+const Partners = lazy(() => import('./components/Partners'))
+const CTA = lazy(() => import('./components/CTA'))
+const PauOverlay = lazy(() => import('./components/PauOverlay'))
+
+// Loading fallback component
+const LoadingFallback = () => (
+  <div style={{ 
+    minHeight: '200px', 
+    display: 'flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',
+    opacity: 0.5
+  }}>
+    <div className="loading-spinner"></div>
+  </div>
+)
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -34,23 +49,40 @@ function App() {
   return (
     <div className={`app ${isLoaded ? 'loaded' : ''}`}>
       <Sparkles intensity={30} />
-      <PauOverlay 
-        visible={pauVisible} 
-        animationState="idle"
-        onInteraction={handlePauInteraction}
-      />
+      <Suspense fallback={null}>
+        <PauOverlay 
+          visible={pauVisible} 
+          animationState="idle"
+          onInteraction={handlePauInteraction}
+        />
+      </Suspense>
       <Header />
       <Hero />
-      <PersonalShopper />
-      <Problem />
-      <Solution />
-      <Modules />
-      <Patents />
-      <Partners />
-      <CTA />
+      <Suspense fallback={<LoadingFallback />}>
+        <PersonalShopper />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Problem />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Solution />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Modules />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Patents />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <Partners />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <CTA />
+      </Suspense>
       <Footer />
     </div>
   )
 }
 
 export default App
+
