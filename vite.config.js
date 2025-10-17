@@ -1,6 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
+import { visualizer } from 'rollup-plugin-visualizer'
+import viteImagemin from 'vite-plugin-imagemin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,8 +15,43 @@ export default defineConfig({
           dest: ''
         }
       ]
-    })
-  ],
+    }),
+    // Image optimization
+    viteImagemin({
+      gifsicle: {
+        optimizationLevel: 7,
+        interlaced: false,
+      },
+      optipng: {
+        optimizationLevel: 7,
+      },
+      mozjpeg: {
+        quality: 80,
+      },
+      pngquant: {
+        quality: [0.8, 0.9],
+        speed: 4,
+      },
+      svgo: {
+        plugins: [
+          {
+            name: 'removeViewBox',
+          },
+          {
+            name: 'removeEmptyAttrs',
+            active: false,
+          },
+        ],
+      },
+    }),
+    // Bundle analyzer (only in analyze mode)
+    process.env.ANALYZE && visualizer({
+      open: true,
+      filename: 'dist/stats.html',
+      gzipSize: true,
+      brotliSize: true,
+    }),
+  ].filter(Boolean),
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
@@ -83,6 +120,8 @@ export default defineConfig({
     // Compresión y optimización
     cssCodeSplit: true,
     assetsInlineLimit: 4096, // 4kb - inline small assets
+    // Enable Brotli compression
+    reportCompressedSize: true,
     // Mejora de tree-shaking
     target: 'es2015',
     // Optimización de módulos

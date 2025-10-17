@@ -1,0 +1,45 @@
+.version-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: help;
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+.version-badge:hover {
+  opacity: 1;
+  transform: scale(1.05);
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.version-label {
+  color: #ffd700;
+  font-weight: 700;
+}
+
+.version-number {
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .version-badge {
+    bottom: 10px;
+    right: 10px;
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}
+
