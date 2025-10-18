@@ -21,9 +21,7 @@ jobs:
       - name: Verificar existencia del ZIP maestro
         run: |
           echo "🔍 Verificando archivos ZIP maestros en /public..."
-          ls -lh public/ZIP_MAESTRO_TRYONYOU*.zip || \
-            echo "⚠️ No se encontraron archivos ZIP"
-
+          ls -lh public/ZIP_MAESTRO_TRYONYOU*.zip || (echo "❌ Error: No se encontraron archivos ZIP" && exit 1)
       - name: Desplegar dossier de patente
         run: |
           echo "🚀 Ejecutando DEPLOY_EXPRESS.sh..."
