@@ -53,6 +53,12 @@ tryonyou-clean/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # CI/CD pipeline
+├── automation/
+│   └── google-apps-script/
+│       ├── dailyPlanner.gs     # Daily task planner script
+│       ├── README.md           # Setup documentation
+│       ├── QUICK_START.md      # Quick start guide
+│       └── SHEET_TEMPLATE.md   # Google Sheet template
 ├── public/
 │   ├── assets/
 │   │   └── brand/              # Official brand assets
@@ -171,6 +177,32 @@ Deployment notifications include:
 - Author and commit message
 - Deployment URL
 - Trigger event type
+
+---
+
+## 🤖 Automation & Task Management
+
+### Daily Task Planner (Google Apps Script)
+
+The project includes an automated daily task planner that sends Telegram notifications at 09:00 CEST:
+
+**Features:**
+- 📊 Reads tasks from Google Sheets Dashboard
+- 🎯 Filters by priority (P0 and P1)
+- 🤖 Provides AI-agent-based execution guidance
+- 📱 Sends formatted reports to Telegram
+- ⏰ Runs automatically every day
+
+**Quick Setup:**
+1. See [automation/google-apps-script/QUICK_START.md](./automation/google-apps-script/QUICK_START.md)
+2. Configure Telegram bot credentials
+3. Set up Google Sheets with task data
+4. Run the setup script
+
+**Documentation:**
+- [Complete Setup Guide](./automation/google-apps-script/README.md)
+- [Sheet Template](./automation/google-apps-script/SHEET_TEMPLATE.md)
+- [Script Source](./automation/google-apps-script/dailyPlanner.gs)
 
 ---
 
