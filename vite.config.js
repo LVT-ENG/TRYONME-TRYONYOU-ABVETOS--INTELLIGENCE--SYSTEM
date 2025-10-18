@@ -57,6 +57,20 @@ export default defineConfig({
     assetsDir: 'assets',
     sourcemap: false,
     minify: 'esbuild',
+    // Prefetch and preload optimization
+    modulePreload: {
+      polyfill: true,
+      resolveDependencies: (filename, deps, { hostId, hostType }) => {
+        // Preload critical chunks
+        return deps.filter(dep => {
+          // Always preload vendor chunks
+          if (dep.includes('vendor-react')) return true
+          // Preload components that are likely to be needed soon
+          if (dep.includes('component-problem') || dep.includes('component-solution')) return true
+          return false
+        })
+      }
+    },
     // Optimización de chunks para mejor rendimiento
     rollupOptions: {
       output: {
@@ -116,7 +130,7 @@ export default defineConfig({
       }
     },
     // Optimización de tamaño
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
     // Compresión y optimización
     cssCodeSplit: true,
     assetsInlineLimit: 4096, // 4kb - inline small assets

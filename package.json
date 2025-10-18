@@ -12,7 +12,10 @@
     "release:minor": "standard-version --release-as minor",
     "release:major": "standard-version --release-as major",
     "release:patch": "standard-version --release-as patch",
-    "analyze": "ANALYZE=true vite build"
+    "analyze": "ANALYZE=true vite build",
+    "version:auto": "node scripts/auto-version.js",
+    "version:check": "node -p \"require('./package.json').version\"",
+    "prebuild": "node scripts/auto-version.js"
   },
   "dependencies": {
     "archiver": "^7.0.1",

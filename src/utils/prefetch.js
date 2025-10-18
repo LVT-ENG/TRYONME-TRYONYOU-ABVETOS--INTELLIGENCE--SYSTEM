@@ -9,6 +9,9 @@ export const prefetchCriticalResources = () => {
     '/logo.png',
     '/hero-bg.png',
     '/avatar-module.png',
+    '/personal-shopper.png',
+    '/payment-module.png',
+    '/wardrobe-module.png',
   ]
 
   criticalImages.forEach(src => {
@@ -16,6 +19,22 @@ export const prefetchCriticalResources = () => {
     link.rel = 'prefetch'
     link.as = 'image'
     link.href = src
+    document.head.appendChild(link)
+  })
+}
+
+export const prefetchNextPageChunks = () => {
+  // Prefetch likely-to-be-needed chunks
+  // This will be populated by Vite's build process
+  const chunks = [
+    // Component chunks will be auto-prefetched by modulePreload config
+  ]
+  
+  chunks.forEach(chunk => {
+    const link = document.createElement('link')
+    link.rel = 'prefetch'
+    link.as = 'script'
+    link.href = chunk
     document.head.appendChild(link)
   })
 }
@@ -60,13 +79,34 @@ export const initPerformanceOptimizations = () => {
       
       // Prefetch non-critical resources after page load
       window.addEventListener('load', () => {
-        setTimeout(prefetchCriticalResources, 1000)
+        // Use requestIdleCallback for better performance
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(() => {
+            prefetchCriticalResources()
+            prefetchNextPageChunks()
+          }, { timeout: 2000 })
+        } else {
+          setTimeout(() => {
+            prefetchCriticalResources()
+            prefetchNextPageChunks()
+          }, 1000)
+        }
       })
     })
   } else {
     addDNSPrefetch()
     preloadFonts()
-    setTimeout(prefetchCriticalResources, 1000)
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        prefetchCriticalResources()
+        prefetchNextPageChunks()
+      }, { timeout: 2000 })
+    } else {
+      setTimeout(() => {
+        prefetchCriticalResources()
+        prefetchNextPageChunks()
+      }, 1000)
+    }
   }
 }
 
