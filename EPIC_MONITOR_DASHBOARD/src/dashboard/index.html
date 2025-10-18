@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="EPIC Monitor Dashboard - Real-time monitoring of TRYONYOU Intelligence System APIs and Agents">
+  <meta name="author" content="TRYONYOU Development Team">
+  
+  <title>EPIC Monitor Dashboard | TRYONYOU Intelligence System</title>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  
+  <!-- Main Dashboard Container -->
+  <div class="dashboard">
+    <div class="dashboard-container">
+      
+      <!-- Dashboard Header -->
+      <header class="dashboard-header">
+        <h1 class="dashboard-title">EPIC Monitor Dashboard</h1>
+        <p class="dashboard-subtitle">
+          Real-time System Orchestration & API Status Monitoring
+        </p>
+        <p class="last-update" id="lastUpdate">
+          Loading...
+        </p>
+      </header>
+      
+      <!-- Metrics Overview Section -->
+      <section class="metrics-overview" id="metricsOverview">
+        <!-- Dynamically populated by JavaScript -->
+        <div class="loading">
+          <div class="spinner"></div>
+        </div>
+      </section>
+      
+      <!-- Filter Controls -->
+      <div class="filter-controls">
+        <label class="filter-label">
+          Category:
+          <select id="categoryFilter" class="filter-select">
+            <option value="all">All Categories</option>
+            <option value="Core Services">Core Services</option>
+            <option value="Payment Services">Payment Services</option>
+            <option value="Community Services">Community Services</option>
+            <option value="External Integrations">External Integrations</option>
+            <option value="Legal & Compliance">Legal & Compliance</option>
+            <option value="AI Services">AI Services</option>
+            <option value="Agent Management">Agent Management</option>
+          </select>
+        </label>
+        
+        <label class="filter-label">
+          Status:
+          <select id="statusFilter" class="filter-select">
+            <option value="all">All Status</option>
+            <option value="operational">Operational</option>
+            <option value="degraded">Degraded</option>
+            <option value="outage">Outage</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </label>
+      </div>
+      
+      <!-- API Grid Section -->
+      <section class="api-grid" id="apiGrid">
+        <!-- Dynamically populated by JavaScript -->
+        <div class="loading">
+          <div class="spinner"></div>
+        </div>
+      </section>
+      
+      <!-- Agent Statistics Section -->
+      <section class="agent-stats-section">
+        <h2 class="section-title">50 Intelligent Agents Performance</h2>
+        <div class="agent-stats-grid" id="agentStatsGrid">
+          <!-- Dynamically populated by JavaScript -->
+          <div class="loading">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Dashboard Footer -->
+      <footer class="dashboard-footer">
+        <p>&copy; 2025 TRYONYOU Intelligence System. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM" 
+             class="footer-link" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            GitHub Repository
+          </a>
+          <a href="https://tryonyou.app" 
+             class="footer-link" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            Main Website
+          </a>
+          <a href="https://abvetos.com" 
+             class="footer-link" 
+             target="_blank" 
+             rel="noopener noreferrer">
+            ABVETOS
+          </a>
+        </div>
+      </footer>
+      
+    </div>
+  </div>
+  
+  <!-- JavaScript -->
+  <script src="dashboard.js"></script>
+  
+</body>
+</html>
