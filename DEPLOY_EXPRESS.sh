@@ -30,16 +30,11 @@ mkdir -p "$DEPLOY_DIR"
 echo "📦 Extrayendo contenido del ZIP maestro..."
 unzip -o "$ZIP_PATH" -d "$DEPLOY_DIR"
 
-# Verificar extracción exitosa
-if [ $? -eq 0 ]; then
-  echo "✅ Despliegue completado exitosamente en $DEPLOY_DIR"
-  echo ""
-  echo "📋 Contenido desplegado:"
-  ls -lh "$DEPLOY_DIR"
-else
-  echo "❌ Error durante la extracción del ZIP"
-  exit 1
-fi
+# Verificar extracción exitosa (innecesario con set -e; asumimos éxito si llegamos aquí)
+echo "✅ Despliegue completado exitosamente en $DEPLOY_DIR"
+echo ""
+echo "📋 Contenido desplegado:"
+ls -lh "$DEPLOY_DIR"
 
 echo ""
 echo "🎉 Dossier de patente TRYONYOU-ABVETOS-ULTRA-PLUS desplegado correctamente"
