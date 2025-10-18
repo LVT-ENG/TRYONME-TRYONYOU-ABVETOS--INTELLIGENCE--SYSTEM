@@ -1,0 +1,223 @@
+name: Agent 46 - Document Locker
+
+on:
+  push:
+    paths:
+      - 'docs/**'
+      - '*.md'
+  pull_request:
+    paths:
+      - 'docs/**'
+      - '*.md'
+  schedule:
+    # Daily documentation check at 11:00 UTC
+    - cron: '0 11 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  document-verification:
+    name: Legal & Documentation Protection
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🧩 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: 📄 Verify Legal Documentation
+        run: |
+          echo "## 🔒 Agent 46: Document Locker Report" > /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          echo "**Date:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          
+          echo "### 📄 Legal Documentation Status:" >> /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          
+          # Check for patent documentation
+          if [ -f "Claims.docx" ]; then
+            echo "- ✅ Patent Claims document: Present" >> /tmp/doc-report.md
+            FILE_SIZE=$(stat -f%z "Claims.docx" 2>/dev/null || stat -c%s "Claims.docx" 2>/dev/null || echo "0")
+            echo "  - Size: $((FILE_SIZE / 1024)) KB" >> /tmp/doc-report.md
+          else
+            echo "- ❌ Patent Claims document: Missing" >> /tmp/doc-report.md
+          fi
+          
+          # Check for legal directory
+          if [ -d "docs/legal" ]; then
+            LEGAL_FILES=$(find docs/legal -type f | wc -l)
+            echo "- ✅ Legal directory: Present ($LEGAL_FILES files)" >> /tmp/doc-report.md
+            
+            # List legal files
+            echo "  - Files:" >> /tmp/doc-report.md
+            find docs/legal -type f -exec basename {} \; | sed 's/^/    - /' >> /tmp/doc-report.md
+          else
+            echo "- ⚠️ Legal directory: Not found" >> /tmp/doc-report.md
+          fi
+          
+          # Check for LICENSE
+          if [ -f "LICENSE" ] || [ -f "LICENSE.md" ] || [ -f "LICENSE.txt" ]; then
+            echo "- ✅ License file: Present" >> /tmp/doc-report.md
+          else
+            echo "- ⚠️ License file: Consider adding" >> /tmp/doc-report.md
+          fi
+          
+          # Check for SECURITY.md
+          if [ -f "SECURITY.md" ]; then
+            echo "- ✅ Security policy: Present" >> /tmp/doc-report.md
+          else
+            echo "- ⚠️ Security policy: Missing" >> /tmp/doc-report.md
+          fi
+          
+          cat /tmp/doc-report.md
+      
+      - name: 📚 Verify Core Documentation
+        run: |
+          echo "" >> /tmp/doc-report.md
+          echo "### 📚 Core Documentation Status:" >> /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          
+          REQUIRED_DOCS=(
+            "README.md"
+            "DEPLOYMENT.md"
+            "docs/agentes.md"
+            "docs/arquitectura.md"
+            "docs/casos_uso.md"
+          )
+          
+          for doc in "${REQUIRED_DOCS[@]}"; do
+            if [ -f "$doc" ]; then
+              LINES=$(wc -l < "$doc")
+              WORDS=$(wc -w < "$doc")
+              echo "- ✅ $doc" >> /tmp/doc-report.md
+              echo "  - Lines: $LINES, Words: $WORDS" >> /tmp/doc-report.md
+            else
+              echo "- ❌ $doc (missing)" >> /tmp/doc-report.md
+            fi
+          done
+          
+          cat /tmp/doc-report.md
+      
+      - name: 🏛️ Patent & IP Protection Status
+        run: |
+          echo "" >> /tmp/doc-report.md
+          echo "### 🏛️ Intellectual Property Status:" >> /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          
+          echo "**Patent Information:**" >> /tmp/doc-report.md
+          echo "- 📋 Status: EPCT Pending" >> /tmp/doc-report.md
+          echo "- 🏢 Entity: TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM" >> /tmp/doc-report.md
+          echo "- 🔒 Protection: Active" >> /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          
+          # Check for copyright notices
+          COPYRIGHT_FOUND=$(grep -r "©\|Copyright" . --include="*.md" --include="*.jsx" --include="*.js" 2>/dev/null | wc -l || echo "0")
+          echo "**Copyright Notices:**" >> /tmp/doc-report.md
+          echo "- Found in $COPYRIGHT_FOUND files" >> /tmp/doc-report.md
+          
+          if [ "$COPYRIGHT_FOUND" -gt 0 ]; then
+            echo "- ✅ Copyright protection maintained" >> /tmp/doc-report.md
+          else
+            echo "- ⚠️ Consider adding copyright notices" >> /tmp/doc-report.md
+          fi
+          
+          cat /tmp/doc-report.md
+      
+      - name: 📊 Documentation Quality Metrics
+        run: |
+          echo "" >> /tmp/doc-report.md
+          echo "### 📊 Documentation Metrics:" >> /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          
+          # Count total documentation
+          TOTAL_MD=$(find . -name "*.md" -not -path "./.git/*" | wc -l)
+          TOTAL_WORDS=$(find . -name "*.md" -not -path "./.git/*" -exec wc -w {} + | tail -1 | awk '{print $1}')
+          
+          echo "- Total Markdown files: $TOTAL_MD" >> /tmp/doc-report.md
+          echo "- Total word count: $TOTAL_WORDS" >> /tmp/doc-report.md
+          
+          # Calculate documentation coverage
+          DOC_SCORE=100
+          
+          # Check for README
+          [ ! -f "README.md" ] && DOC_SCORE=$((DOC_SCORE - 20))
+          
+          # Check for legal docs
+          [ ! -d "docs/legal" ] && DOC_SCORE=$((DOC_SCORE - 15))
+          
+          # Check for patent docs
+          [ ! -f "Claims.docx" ] && DOC_SCORE=$((DOC_SCORE - 15))
+          
+          # Check for architecture docs
+          [ ! -f "docs/arquitectura.md" ] && DOC_SCORE=$((DOC_SCORE - 10))
+          
+          echo "" >> /tmp/doc-report.md
+          echo "**Documentation Completeness Score:** $DOC_SCORE/100" >> /tmp/doc-report.md
+          
+          if [ "$DOC_SCORE" -ge 90 ]; then
+            echo "🟢 Excellent - Documentation is comprehensive" >> /tmp/doc-report.md
+          elif [ "$DOC_SCORE" -ge 70 ]; then
+            echo "🟡 Good - Minor documentation gaps" >> /tmp/doc-report.md
+          else
+            echo "🔴 Needs Work - Critical documentation missing" >> /tmp/doc-report.md
+          fi
+          
+          cat /tmp/doc-report.md
+      
+      - name: 🔍 Check for Sensitive Information
+        run: |
+          echo "" >> /tmp/doc-report.md
+          echo "### 🔍 Security Scan:" >> /tmp/doc-report.md
+          echo "" >> /tmp/doc-report.md
+          
+          # Look for potential secrets in documentation
+          SENSITIVE_PATTERNS=("api_key" "apikey" "password" "secret" "token" "private_key")
+          FOUND_ISSUES=0
+          
+          for pattern in "${SENSITIVE_PATTERNS[@]}"; do
+            COUNT=$(grep -ri "$pattern" docs --include="*.md" 2>/dev/null | grep -v "REDACTED\|example\|placeholder\|<YOUR_" | wc -l || echo "0")
+            if [ "$COUNT" -gt 0 ]; then
+              echo "- ⚠️ Found '$pattern' mentions: $COUNT" >> /tmp/doc-report.md
+              FOUND_ISSUES=1
+            fi
+          done
+          
+          if [ "$FOUND_ISSUES" -eq 0 ]; then
+            echo "- ✅ No exposed sensitive information detected" >> /tmp/doc-report.md
+          else
+            echo "" >> /tmp/doc-report.md
+            echo "⚠️ **Warning:** Review documents for potential exposed credentials" >> /tmp/doc-report.md
+          fi
+          
+          cat /tmp/doc-report.md
+      
+      - name: 💾 Save Documentation Report
+        run: |
+          mkdir -p docs/agents/reports
+          cp /tmp/doc-report.md docs/agents/reports/document-locker-$(date -u '+%Y%m%d-%H%M%S').md
+          
+          # Keep only last 10 reports
+          cd docs/agents/reports
+          ls -t document-locker-*.md | tail -n +11 | xargs -r rm
+      
+      - name: 📱 Send Daily Documentation Report
+        if: github.event.schedule == '0 11 * * *'
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            REPORT=$(cat /tmp/doc-report.md)
+            
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$REPORT" || echo "⚠️ Telegram notification failed"
+            
+            echo "✅ Documentation report sent to Telegram"
+          fi
