@@ -8,6 +8,18 @@
 
   "rewrites": [
     {
+      "source": "/docs/investors/(.*)",
+      "destination": "/docs/investors/$1"
+    },
+    {
+      "source": "/docs/logistics/(.*)",
+      "destination": "/docs/logistics/$1"
+    },
+    {
+      "source": "/docs/legal/(.*)",
+      "destination": "/docs/legal/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
@@ -19,6 +31,19 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/docs/(.*\\.(pdf|csv|md))",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        },
+        {
+          "key": "Content-Disposition",
+          "value": "inline"
         }
       ]
     }
