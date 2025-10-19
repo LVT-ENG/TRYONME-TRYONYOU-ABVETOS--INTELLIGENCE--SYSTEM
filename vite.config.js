@@ -13,6 +13,10 @@ export default defineConfig({
         {
           src: 'docs',
           dest: ''
+        },
+        {
+          src: 'src/dashboard',
+          dest: ''
         }
       ]
     }),
