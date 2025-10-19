@@ -12,6 +12,7 @@ const Modules = lazy(() => import('./components/Modules'))
 const PersonalShopper = lazy(() => import('./components/PersonalShopper'))
 const Patents = lazy(() => import('./components/Patents'))
 const ClaimsCarousel = lazy(() => import('./components/ClaimsCarousel'))
+const ProjectsGallery = lazy(() => import('./components/ProjectsGallery'))
 const Partners = lazy(() => import('./components/Partners'))
 const CTA = lazy(() => import('./components/CTA'))
 const PauOverlay = lazy(() => import('./components/PauOverlay'))
@@ -76,6 +77,9 @@ function App() {
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <Patents />
+      </Suspense>
+      <Suspense fallback={<LoadingFallback />}>
+        <ProjectsGallery />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <Partners />
