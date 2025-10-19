@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="TRYONYOU launches the world's first Emotional Fashion Intelligence System™ - merging emotional AI, virtual fitting, and smart wardrobe automation.">
+    <meta name="keywords" content="TRYONYOU, Fashion AI, Emotional Intelligence, Virtual Fitting, Investment, Fashion Technology">
+    <meta property="og:title" content="TRYONYOU Launches Emotional Fashion Intelligence System™">
+    <meta property="og:description" content="Official investor launch announcement - Where emotion meets design.">
+    <meta property="og:image" content="https://tryonyou.app/press/images/hero-futuristic-fitting.jpg">
+    <meta property="og:url" content="https://tryonyou.app/press/investor-launch">
+    <title>TRYONYOU Investor Launch | Emotional Fashion Intelligence System™</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --beige-light: #F9FAFB;
+            --beige-mid: #E5D6B6;
+            --gold: #D4AF37;
+            --gold-dark: #B8941F;
+            --text-dark: #1a1a1a;
+            --text-mid: #4a4a4a;
+            --text-light: #6a6a6a;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--beige-light) 0%, var(--beige-mid) 50%, #f5e6d3 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(249, 250, 251, 0.95) 0%, rgba(229, 214, 182, 0.95) 100%);
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .tagline {
+            font-size: 28px;
+            font-weight: 300;
+            color: var(--gold-dark);
+            font-style: italic;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 900px;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+            margin: 40px auto;
+            display: block;
+        }
+
+        /* Press Release Content */
+        .press-content {
+            background: white;
+            max-width: 900px;
+            margin: -50px auto 60px;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .press-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .press-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .press-date {
+            font-size: 14px;
+            color: var(--text-mid);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .lead-paragraph {
+            font-size: 22px;
+            line-height: 1.6;
+            color: var(--text-mid);
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(249, 250, 251, 0.05) 100%);
+            border-left: 4px solid var(--gold);
+            border-radius: 8px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--gold-dark);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--gold);
+            color: white;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .section-content {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-dark);
+            margin-left: 55px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .section-content ul li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .section-content ul li:before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-size: 20px;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(249, 250, 251, 0.1) 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 50px 0;
+            border-left: 5px solid var(--gold);
+        }
+
+        .quote-text {
+            font-size: 24px;
+            font-style: italic;
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gold-dark);
+            text-align: right;
+        }
+
+        .quote-title {
+            font-size: 16px;
+            color: var(--text-mid);
+            text-align: right;
+            font-weight: 400;
+        }
+
+        /* Tech Images Grid */
+        .tech-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .tech-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tech-image:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+            padding: 50px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 50px 0;
+            color: white;
+        }
+
+        .cta-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: var(--gold-dark);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            background: var(--beige-light);
+        }
+
+        .contact-info {
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Spanish Version */
+        .spanish-version {
+            margin-top: 80px;
+            padding-top: 60px;
+            border-top: 3px solid var(--gold);
+        }
+
+        .language-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(26, 26, 26, 0.05);
+            color: var(--text-mid);
+            font-size: 14px;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: var(--gold-dark);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 20px;
+            }
+
+            .logo {
+                font-size: 60px;
+            }
+
+            .tagline {
+                font-size: 20px;
+            }
+
+            .hero-image {
+                height: 250px;
+            }
+
+            .press-content {
+                padding: 30px 20px;
+                margin: -30px 20px 40px;
+            }
+
+            .press-title {
+                font-size: 28px;
+            }
+
+            .lead-paragraph {
+                font-size: 18px;
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            .section-content {
+                font-size: 16px;
+                margin-left: 0;
+            }
+
+            .quote-text {
+                font-size: 20px;
+            }
+
+            .cta-section {
+                padding: 30px 20px;
+            }
+
+            .cta-title {
+                font-size: 24px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="logo">🦚</div>
+        <div class="tagline">Where emotion meets design.</div>
+        <img src="/press/images/hero-futuristic-fitting.jpg" alt="TRYONYOU Futuristic Fashion Technology" class="hero-image">
+    </div>
+
+    <!-- Press Release Content -->
+    <div class="container">
+        <article class="press-content">
+            <!-- English Version -->
+            <header class="press-header">
+                <h1 class="press-title">TRYONYOU Launches the World's First Emotional Fashion Intelligence System™</h1>
+                <p class="press-date">Dubai & Zurich | October 19, 2025</p>
+            </header>
+
+            <div class="lead-paragraph">
+                <strong>TRYONYOU</strong>, the patented <strong>Fashion Intelligence System™</strong>, announces its official investor launch — merging emotional AI, virtual fitting, and smart wardrobe automation to revolutionize how people experience fashion.
+            </div>
+
+            <!-- Section 1: Vision -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">1</span>
+                    Vision: Built to End Returns Forever
+                </h2>
+                <div class="section-content">
+                    <p>The fashion industry loses <strong>€550 billion annually</strong> due to returns, sizing errors, and unsustainable production. TRYONYOU was created to solve this crisis by understanding not just your body, but your emotions.</p>
+                    <p>Our mission: <strong>Make people smile in the mirror again.</strong></p>
+                </div>
+            </section>
+
+            <!-- Section 2: Technology -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">2</span>
+                    Technology: The Intelligence Behind the System
+                </h2>
+                <div class="section-content">
+                    <p>TRYONYOU integrates four revolutionary modules:</p>
+                    <ul>
+                        <li><strong>3D Avatar System:</strong> Hyper-realistic digital twin with millimeter precision</li>
+                        <li><strong>PAU® Emotional AI:</strong> Detects your mood and suggests outfits that match how you feel</li>
+                        <li><strong>CAP® Creative Auto-Production:</strong> Generates garments on-demand with zero waste</li>
+                        <li><strong>ABVET® Biometric Payment:</strong> Dual facial + voice recognition for secure, seamless checkout</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Tech Images Grid -->
+            <div class="tech-images">
+                <img src="/press/images/hologram-retail.jpg" alt="Holographic Fashion Retail" class="tech-image">
+                <img src="/press/images/ai-fashion-tech.jpg" alt="AI Fashion Technology" class="tech-image">
+                <img src="/press/images/future-fashion-ai.jpg" alt="Future of Fashion AI" class="tech-image">
+            </div>
+
+            <!-- Section 3: Patent -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">3</span>
+                    Patent: Nine Super-Claims, Claim 9 Connected
+                </h2>
+                <div class="section-content">
+                    <p>TRYONYOU holds an <strong>EPCT 2025 patent</strong> covering the complete emotional fashion intelligence ecosystem:</p>
+                    <ul>
+                        <li>Emotional state detection and fashion recommendation</li>
+                        <li>Biometric dual-factor authentication for payments</li>
+                        <li>Real-time garment creation and production</li>
+                        <li>Smart wardrobe automation and lifecycle management</li>
+                    </ul>
+                    <p><strong>Claim 9</strong> connects all modules into a unified, self-learning system — the first of its kind globally.</p>
+                </div>
+            </section>
+
+            <!-- Section 4: Market -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">4</span>
+                    Market: €550B Fashion E-Commerce Opportunity
+                </h2>
+                <div class="section-content">
+                    <p>The global fashion e-commerce market is projected to reach <strong>€550 billion by 2027</strong>, with sustainable personalization as the key growth driver.</p>
+                    <p>TRYONYOU targets three core segments:</p>
+                    <ul>
+                        <li><strong>Luxury Brands:</strong> Offering exclusive, emotion-driven experiences</li>
+                        <li><strong>Fast Fashion:</strong> Reducing returns through perfect virtual fitting</li>
+                        <li><strong>Sustainable Fashion:</strong> Enabling on-demand production with zero waste</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 5: Founder's Statement -->
+            <div class="quote-section">
+                <p class="quote-text">"Fashion should understand how you feel before you even try. TRYONYOU was born to make people smile in the mirror again."</p>
+                <p class="quote-author">— Rubén Espinar</p>
+                <p class="quote-title">Founder & CEO, TRYONYOU Systems</p>
+            </div>
+
+            <!-- Section 6: Dubai & Zurich Advantage -->
+            <section class="section">
+                <h2 class="section-title">
+                    <span class="section-number">6</span>
+                    Dubai & Zurich: Hubs for AI, IP, and Luxury Innovation
+                </h2>
+                <div class="section-content">
+                    <p>TRYONYOU operates from two strategic locations:</p>
+                    <ul>
+                        <li><strong>Dubai:</strong> Gateway to Middle East luxury markets and AI innovation</li>
+                        <li><strong>Zurich:</strong> European IP protection and financial infrastructure</li>
+                    </ul>
+                    <p>This dual-hub strategy positions TRYONYOU at the intersection of technology, luxury, and global scalability.</p>
+                </div>
+            </section>
+
+            <!-- Section 7: Call to Investors -->
+            <div class="cta-section">
+                <h2 class="cta-title">🚀 Access the Full Investor Deck and Dossier</h2>
+                <div class="cta-buttons">
+                    <a href="/assets/TRYONYOU_Investor_Deck.pptx" class="cta-button" download>📊 Download Deck (PPTX)</a>
+                    <a href="/assets/TRYONYOU_Investor_Dossier.pdf" class="cta-button" download>📄 View Dossier (PDF)</a>
+                </div>
+                <div class="contact-info">
+                    <p><strong>Contact:</strong> <a href="mailto:info@tryonyou.app">info@tryonyou.app</a> | <a href="https://t.me/abvet_deploy_bot" target="_blank">@abvet_deploy_bot</a></p>
+                </div>
+            </div>
+
+            <!-- Spanish Version -->
+            <div class="spanish-version">
+                <span class="language-badge">🇪🇸 Versión en Español</span>
+                
+                <header class="press-header">
+                    <h1 class="press-title">TRYONYOU Lanza el Primer Sistema de Inteligencia Emocional de Moda del Mundo™</h1>
+                    <p class="press-date">Dubái y Zúrich | 19 de Octubre, 2025</p>
+                </header>
+
+                <div class="lead-paragraph">
+                    <strong>TRYONYOU</strong>, el <strong>Sistema de Inteligencia de Moda™</strong> patentado, anuncia su lanzamiento oficial para inversores — fusionando IA emocional, prueba virtual y automatización de guardarropa inteligente para revolucionar cómo las personas experimentan la moda.
+                </div>
+
+                <!-- Sección 1: Visión -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">1</span>
+                        Visión: Construido para Acabar con las Devoluciones para Siempre
+                    </h2>
+                    <div class="section-content">
+                        <p>La industria de la moda pierde <strong>€550 mil millones anuales</strong> debido a devoluciones, errores de talla y producción insostenible. TRYONYOU fue creado para resolver esta crisis entendiendo no solo tu cuerpo, sino tus emociones.</p>
+                        <p>Nuestra misión: <strong>Hacer que las personas vuelvan a sonreír frente al espejo.</strong></p>
+                    </div>
+                </section>
+
+                <!-- Sección 2: Tecnología -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">2</span>
+                        Tecnología: La Inteligencia Detrás del Sistema
+                    </h2>
+                    <div class="section-content">
+                        <p>TRYONYOU integra cuatro módulos revolucionarios:</p>
+                        <ul>
+                            <li><strong>Sistema de Avatar 3D:</strong> Gemelo digital hiperrealista con precisión milimétrica</li>
+                            <li><strong>PAU® IA Emocional:</strong> Detecta tu estado de ánimo y sugiere outfits que coinciden con cómo te sientes</li>
+                            <li><strong>CAP® Auto-Producción Creativa:</strong> Genera prendas bajo demanda con cero desperdicio</li>
+                            <li><strong>ABVET® Pago Biométrico:</strong> Reconocimiento dual facial + voz para checkout seguro y fluido</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Sección 3: Patente -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">3</span>
+                        Patente: Nueve Super-Reivindicaciones, Reivindicación 9 Conectada
+                    </h2>
+                    <div class="section-content">
+                        <p>TRYONYOU posee una <strong>patente EPCT 2025</strong> que cubre el ecosistema completo de inteligencia emocional de moda:</p>
+                        <ul>
+                            <li>Detección de estado emocional y recomendación de moda</li>
+                            <li>Autenticación biométrica de doble factor para pagos</li>
+                            <li>Creación y producción de prendas en tiempo real</li>
+                            <li>Automatización de guardarropa inteligente y gestión del ciclo de vida</li>
+                        </ul>
+                        <p><strong>La Reivindicación 9</strong> conecta todos los módulos en un sistema unificado y auto-aprendiente — el primero de su tipo a nivel global.</p>
+                    </div>
+                </section>
+
+                <!-- Sección 4: Mercado -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">4</span>
+                        Mercado: Oportunidad de €550B en E-Commerce de Moda
+                    </h2>
+                    <div class="section-content">
+                        <p>El mercado global de e-commerce de moda se proyecta alcanzar <strong>€550 mil millones para 2027</strong>, con la personalización sostenible como motor clave de crecimiento.</p>
+                        <p>TRYONYOU apunta a tres segmentos principales:</p>
+                        <ul>
+                            <li><strong>Marcas de Lujo:</strong> Ofreciendo experiencias exclusivas impulsadas por emociones</li>
+                            <li><strong>Fast Fashion:</strong> Reduciendo devoluciones mediante prueba virtual perfecta</li>
+                            <li><strong>Moda Sostenible:</strong> Habilitando producción bajo demanda con cero desperdicio</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Declaración del Fundador -->
+                <div class="quote-section">
+                    <p class="quote-text">"La moda debería entender cómo te sientes antes de que siquiera te pruebes algo. TRYONYOU nació para hacer que las personas vuelvan a sonreír frente al espejo."</p>
+                    <p class="quote-author">— Rubén Espinar</p>
+                    <p class="quote-title">Fundador y CEO, TRYONYOU Systems</p>
+                </div>
+
+                <!-- Sección 6: Ventaja Dubái & Zúrich -->
+                <section class="section">
+                    <h2 class="section-title">
+                        <span class="section-number">6</span>
+                        Dubái y Zúrich: Centros de IA, PI e Innovación de Lujo
+                    </h2>
+                    <div class="section-content">
+                        <p>TRYONYOU opera desde dos ubicaciones estratégicas:</p>
+                        <ul>
+                            <li><strong>Dubái:</strong> Puerta de entrada a los mercados de lujo de Medio Oriente e innovación en IA</li>
+                            <li><strong>Zúrich:</strong> Protección de propiedad intelectual europea e infraestructura financiera</li>
+                        </ul>
+                        <p>Esta estrategia de doble hub posiciona a TRYONYOU en la intersección de tecnología, lujo y escalabilidad global.</p>
+                    </div>
+                </section>
+
+                <!-- Llamado a Inversores -->
+                <div class="cta-section">
+                    <h2 class="cta-title">🚀 Accede al Deck Completo para Inversores y Dossier</h2>
+                    <div class="cta-buttons">
+                        <a href="/assets/TRYONYOU_Investor_Deck.pptx" class="cta-button" download>📊 Descargar Deck (PPTX)</a>
+                        <a href="/assets/TRYONYOU_Investor_Dossier.pdf" class="cta-button" download>📄 Ver Dossier (PDF)</a>
+                    </div>
+                    <div class="contact-info">
+                        <p><strong>Contacto:</strong> <a href="mailto:info@tryonyou.app">info@tryonyou.app</a> | <a href="https://t.me/abvet_deploy_bot" target="_blank">@abvet_deploy_bot</a></p>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2025 TRYONYOU Systems — Powered by ABVETOS® — Deployed via Deploy Express Module</p>
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/modules">Modules</a>
+            <a href="/patents">Patents & IP</a>
+            <a href="/press">Press</a>
+            <a href="mailto:info@tryonyou.app">Contact</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 12px; color: #999;">
+            TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM<br>
+            "No solo vistes tu cuerpo, vistes tu momento"
+        </p>
+    </footer>
+</body>
+</html>
+

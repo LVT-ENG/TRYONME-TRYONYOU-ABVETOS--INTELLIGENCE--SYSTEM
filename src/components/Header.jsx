@@ -42,6 +42,9 @@ function Header() {
           <button onClick={() => scrollToSection('partners')} className="nav-link">
             Partners
           </button>
+          <a href="/press/investor-launch.html" className="nav-link" target="_blank">
+            Investors
+          </a>
           <button onClick={() => scrollToSection('cta')} className="nav-link cta-button">
             Request Demo
           </button>
