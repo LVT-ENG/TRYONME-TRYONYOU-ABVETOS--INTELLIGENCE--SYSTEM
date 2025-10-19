@@ -75,13 +75,21 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
-          // Vendor principal: React y React DOM
+          // Vendor principal: React y React DOM (crítico, siempre cargado)
           if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
             return 'vendor-react'
           }
           // Router separado para lazy loading
           if (id.includes('node_modules/react-router-dom')) {
             return 'vendor-router'
+          }
+          // Lottie animations (si se usa)
+          if (id.includes('node_modules/lottie-react')) {
+            return 'vendor-lottie'
+          }
+          // Otros vendors en un chunk común
+          if (id.includes('node_modules')) {
+            return 'vendor-libs'
           }
           // Componentes lazy-loaded en chunks separados
           if (id.includes('src/components/Problem')) {
@@ -138,10 +146,7 @@ export default defineConfig({
     reportCompressedSize: true,
     // Mejora de tree-shaking
     target: 'es2015',
-    // Optimización de módulos
-    modulePreload: {
-      polyfill: true
-    }
+
   },
   server: {
     port: 3000,

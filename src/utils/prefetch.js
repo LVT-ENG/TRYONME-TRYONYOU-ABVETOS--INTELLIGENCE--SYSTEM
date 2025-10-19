@@ -24,18 +24,19 @@ export const prefetchCriticalResources = () => {
 }
 
 export const prefetchNextPageChunks = () => {
-  // Prefetch likely-to-be-needed chunks
-  // This will be populated by Vite's build process
-  const chunks = [
-    // Component chunks will be auto-prefetched by modulePreload config
-  ]
+  // Auto-detect and prefetch component chunks from link tags
+  // Vite generates modulepreload links that we can convert to prefetch
+  const modulePreloadLinks = document.querySelectorAll('link[rel="modulepreload"]')
   
-  chunks.forEach(chunk => {
-    const link = document.createElement('link')
-    link.rel = 'prefetch'
-    link.as = 'script'
-    link.href = chunk
-    document.head.appendChild(link)
+  modulePreloadLinks.forEach(link => {
+    // Create prefetch for non-critical chunks
+    if (link.href && !link.href.includes('vendor-react')) {
+      const prefetchLink = document.createElement('link')
+      prefetchLink.rel = 'prefetch'
+      prefetchLink.as = 'script'
+      prefetchLink.href = link.href
+      document.head.appendChild(prefetchLink)
+    }
   })
 }
 
