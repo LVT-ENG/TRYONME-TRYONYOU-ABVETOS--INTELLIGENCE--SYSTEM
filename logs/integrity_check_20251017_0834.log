@@ -1,0 +1,23 @@
+[0;34mℹ️  Test 1: Verificando estructura de directorios...[0m
+[0;32m✅ Directorio encontrado: src[0m
+[0;32m✅ Directorio encontrado: src/components[0m
+[0;32m✅ Directorio encontrado: src/styles[0m
+[0;32m✅ Directorio encontrado: src/i18n[0m
+[0;32m✅ Directorio encontrado: public[0m
+[0;32m✅ Directorio encontrado: scripts[0m
+[0;34mℹ️  Test 2: Verificando archivos críticos...[0m
+[0;32m✅ Archivo encontrado: package.json[0m
+[0;32m✅ Archivo encontrado: vite.config.js[0m
+[0;32m✅ Archivo encontrado: index.html[0m
+[0;32m✅ Archivo encontrado: src/App.jsx[0m
+[0;32m✅ Archivo encontrado: src/main.jsx[0m
+[0;34mℹ️  Test 3: Verificando sintaxis de package.json...[0m
+[0;32m✅ package.json es válido[0m
+[0;34mℹ️  Test 4: Verificando dependencias instaladas...[0m
+[0;32m✅ node_modules encontrado[0m
+[0;32m✅ Dependencia instalada: react[0m
+[0;32m✅ Dependencia instalada: react-dom[0m
+[0;32m✅ Dependencia instalada: react-router-dom[0m
+[0;32m✅ Dependencia instalada: vite[0m
+[0;34mℹ️  Test 5: Verificando referencias en componentes JSX...[0m
+[1;33m⚠️  WARNING: Se encontraron referencias relativas que podrían ser problemáticas[0m

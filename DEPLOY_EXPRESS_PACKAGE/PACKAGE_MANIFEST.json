@@ -1,0 +1,46 @@
+{
+  "package": "TRYONYOU Deploy Express",
+  "version": "1.0.0",
+  "timestamp": "2025-10-17T12:35:50Z",
+  "build_id": "20251017_0835",
+  "contents": {
+    "main_build": {
+      "path": "main-build/",
+      "size": "20M",
+      "description": "Production-ready web application"
+    },
+    "modules": {
+      "PAU": {
+        "path": "modules/PAU/",
+        "version": "1.0.0",
+        "description": "Emotional Avatar System"
+      },
+      "CAP": {
+        "path": "modules/CAP/",
+        "version": "1.0.0",
+        "description": "Creation & Production System"
+      },
+      "FTT": {
+        "path": "modules/FTT/",
+        "version": "0.1.0",
+        "description": "Fashion Try-On Technology (placeholder)"
+      }
+    },
+    "documentation": {
+      "path": "docs/",
+      "files": 4
+    },
+    "scripts": {
+      "path": "scripts/",
+      "files": 5
+    }
+  },
+  "deployment": {
+    "recommended_platform": "Vercel",
+    "alternatives": ["Netlify", "AWS S3 + CloudFront", "Azure Static Web Apps"],
+    "requirements": {
+      "node": ">=18.0.0",
+      "npm": ">=9.0.0"
+    }
+  }
+}

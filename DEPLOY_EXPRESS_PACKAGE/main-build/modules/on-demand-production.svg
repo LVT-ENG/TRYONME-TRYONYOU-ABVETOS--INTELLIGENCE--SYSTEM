@@ -1,0 +1,73 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="productionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0E6B6B;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#D3B26A;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Factory building -->
+  <rect x="100" y="150" width="200" height="150" fill="none" stroke="url(#productionGradient)" stroke-width="3"/>
+  <polygon points="100,150 200,80 300,150" fill="none" stroke="url(#productionGradient)" stroke-width="3"/>
+  
+  <!-- Windows with lights -->
+  <rect x="130" y="180" width="30" height="40" fill="#D3B26A" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="185" y="180" width="30" height="40" fill="#00FFFF" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="240" y="180" width="30" height="40" fill="#D3B26A" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </rect>
+  
+  <!-- Production line conveyor -->
+  <line x1="80" y1="250" x2="320" y2="250" stroke="#0E6B6B" stroke-width="4"/>
+  <circle cx="100" cy="250" r="8" fill="#D3B26A"/>
+  <circle cx="150" cy="250" r="8" fill="#D3B26A"/>
+  <circle cx="200" cy="250" r="8" fill="#D3B26A"/>
+  <circle cx="250" cy="250" r="8" fill="#D3B26A"/>
+  <circle cx="300" cy="250" r="8" fill="#D3B26A"/>
+  
+  <!-- Product on conveyor -->
+  <g transform="translate(150, 230)">
+    <rect x="0" y="0" width="30" height="15" fill="#00FFFF" stroke="#D3B26A" stroke-width="2">
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="0,0; 100,0; 0,0"
+        dur="4s"
+        repeatCount="indefinite"
+      />
+    </rect>
+  </g>
+  
+  <!-- Robotic arms -->
+  <g transform="translate(120, 200)">
+    <line x1="0" y1="0" x2="20" y2="-20" stroke="#D3B26A" stroke-width="3" stroke-linecap="round">
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="0 0 0; 20 0 0; 0 0 0"
+        dur="3s"
+        repeatCount="indefinite"
+      />
+    </line>
+  </g>
+  
+  <g transform="translate(280, 200)">
+    <line x1="0" y1="0" x2="-20" y2="-20" stroke="#00FFFF" stroke-width="3" stroke-linecap="round">
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        values="0 0 0; -20 0 0; 0 0 0"
+        dur="3s"
+        begin="1.5s"
+        repeatCount="indefinite"
+      />
+    </line>
+  </g>
+  
+  <!-- JIT label -->
+  <text x="200" y="330" text-anchor="middle" fill="#F5EFE6" font-size="16" font-weight="bold">Just-In-Time Production</text>
+</svg>

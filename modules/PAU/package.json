@@ -1,0 +1,15 @@
+{
+  "name": "@tryonyou/pau",
+  "version": "1.0.0",
+  "description": "PAU - Emotional Avatar System for TRYONYOU",
+  "main": "dist-pau/pau.umd.js",
+  "module": "dist-pau/pau.es.js",
+  "type": "module",
+  "scripts": {
+    "build": "vite build --config vite.config.pau.js",
+    "dev": "vite --config vite.config.pau.js"
+  },
+  "keywords": ["avatar", "emotion", "AI", "fashion", "3D"],
+  "author": "TRYONYOU – ABVETOS",
+  "license": "PROPRIETARY"
+}

@@ -1,0 +1,31 @@
+[1;33m📂 Package Directory: /home/ubuntu/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/DEPLOY_EXPRESS_PACKAGE[0m
+[1;33m🧹 Cleaning package directory...[0m
+[0;32m✅ Cleaned[0m
+[1;33m📋 Copying main production build...[0m
+[0;32m✅ Main build copied[0m
+[1;33m🧠 Copying PAU module...[0m
+[0;32m✅ PAU module copied[0m
+[1;33m⚙️  Copying CAP module...[0m
+[0;32m✅ CAP module copied[0m
+[1;33m🔄 Creating FTT module placeholder...[0m
+[0;32m✅ FTT placeholder created[0m
+[1;33m📚 Copying documentation...[0m
+[0;32m  ✓ README.md[0m
+[0;32m  ✓ IMPLEMENTATION_SUMMARY.md[0m
+[0;32m  ✓ BLOQUES_2_3_IMPLEMENTATION.md[0m
+[0;32m  ✓ CHANGELOG_PREMIUM_DESIGN.md[0m
+[1;33m🔧 Copying deployment scripts...[0m
+[0;32m  ✓ prebuild_pau.sh[0m
+[0;32m  ✓ build_cap_local.sh[0m
+[0;32m  ✓ build_production_cinematic.sh[0m
+[0;32m  ✓ integrity_check.sh[0m
+[0;32m  ✓ auto-version-deploy.sh[0m
+[1;33m📝 Creating deployment guide...[0m
+[0;32m✅ Deployment guide created[0m
+[1;33m📋 Creating package manifest...[0m
+[0;32m✅ Package manifest created[0m
+[1;33m📦 Creating ZIP archive...[0m
+[0;32m✅ ZIP created: TRYONYOU_DEPLOY_EXPRESS_20251017_0835.zip (19M)[0m
+[1;33m📊 Calculating package statistics...[0m
+[0;34m   Total files: 101[0m
+[0;34m   Total size: 20M[0m
