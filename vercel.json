@@ -6,6 +6,8 @@
   "installCommand": "npm install",
   "devCommand": "npm run dev",
 
+  "regions": ["iad1", "sfo1"],
+
   "rewrites": [
     {
       "source": "/docs/investors/(.*)",
@@ -20,8 +22,32 @@
       "destination": "/docs/legal/$1"
     },
     {
+      "source": "/docs/patent/(.*)",
+      "destination": "/docs/patent/$1"
+    },
+    {
+      "source": "/docs/dashboard/(.*)",
+      "destination": "/docs/dashboard/$1"
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/dashboard/index.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/deploy",
+      "destination": "/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/abvetos",
+      "destination": "/dashboard",
+      "permanent": false
     }
   ],
   "headers": [
@@ -31,11 +57,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
         }
       ]
     },
     {
-      "source": "/docs/(.*\\.(pdf|csv|md))",
+      "source": "/docs/(.*\\.(pdf|csv|md|svg))",
       "headers": [
         {
           "key": "Cache-Control",
@@ -44,6 +74,27 @@
         {
           "key": "Content-Disposition",
           "value": "inline"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
         }
       ]
     }
