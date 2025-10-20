@@ -28,6 +28,7 @@ tmp/
 *.docx
 *.pdf
 *.md
+!ABVETOS_CI_CD_ORCHESTRATION.md
 *.mov
 *.mp4
 *.png
