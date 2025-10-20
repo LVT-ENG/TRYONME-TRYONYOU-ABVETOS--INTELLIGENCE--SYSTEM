@@ -3,38 +3,28 @@
 # Auto-protected by Agente 70 (Manus config)
 # ============================================
 
-# Build & Deploy artifacts
+# Build artifacts
 dist/
 node_modules/
-*.zip
-*.tar
-*.gz
 
-# Local scripts
-deploy.sh
-deploy_express_total_for_manus.sh
-*.sh
+# Deployment packages (generated)
+TRYONYOU_ABVETOS_MASTER_DEPLOY.zip
+TRYONYOU_DEPLOY_EXPRESS_*.zip
+*.tar
+*.tar.gz
 
 # Temporary backups
 *_BACKUP/
 Desktop/
-logs/
 tmp/
-*.log
 
-# Documents and media
-*.doc
-*.docx
-*.pdf
-*.md
-*.mov
-*.mp4
-*.png
-*.jpg
-*.jpeg
+# Logs
+logs/*.log
 
-# Lock & cache
-package-lock.json
-vite.config.js
+# Environment
 .env.local
-.env.*
+.env.production
+.env.development
+
+# Lock files (npm ci uses package-lock.json)
+# package-lock.json is tracked for reproducible builds
