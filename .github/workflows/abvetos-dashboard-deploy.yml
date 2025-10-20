@@ -9,6 +9,10 @@ on:
       - '.github/workflows/abvetos-dashboard-deploy.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   build-and-deploy:
     name: Build & Deploy ABVETOS Dashboard
