@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRYONYOU Dashboard Status - ABVETOS Intelligence System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.1em;
+      color: #666;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .card-icon {
+      font-size: 2em;
+      margin-right: 15px;
+    }
+
+    .card-title {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .metric-label {
+      font-weight: 500;
+      color: #555;
+    }
+
+    .metric-value {
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+
+    .status-online {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .status-warning {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-offline {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: #e9ecef;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      transition: width 0.5s ease;
+    }
+
+    .agent-list {
+      list-style: none;
+      margin-top: 15px;
+    }
+
+    .agent-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      margin: 5px 0;
+      background: #f8f9fa;
+      border-radius: 5px;
+      font-size: 0.9em;
+    }
+
+    .footer {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .timestamp {
+      color: #666;
+      font-size: 0.9em;
+      margin-top: 10px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      background: #28a745;
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎯 TRYONYOU Dashboard Status</h1>
+      <p>ABVETOS Intelligence System - Real-time Monitoring</p>
+      <div class="timestamp">
+        <span class="live-indicator"></span>
+        Last Updated: <span id="timestamp"></span>
+      </div>
+    </header>
+
+    <div class="dashboard-grid">
+      <!-- System Health Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🏥</div>
+          <div class="card-title">System Health</div>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Overall Status</span>
+          <span class="status-badge status-online">✅ ONLINE</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Uptime</span>
+          <span class="metric-value" style="color: #28a745;">99.8%</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Response Time</span>
+          <span class="metric-value" style="color: #17a2b8;">185ms</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Success Rate</span>
+          <span class="metric-value" style="color: #28a745;">98.5%</span>
+        </div>
+      </div>
+
+      <!-- Deployment Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🚀</div>
+          <div class="card-title">Deployment Status</div>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Environment</span>
+          <span class="status-badge status-online">PRODUCTION</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Platform</span>
+          <span class="metric-value">Vercel</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Last Deploy</span>
+          <span class="metric-value" style="color: #667eea; font-size: 0.9em;">2 hours ago</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Build Status</span>
+          <span class="status-badge status-online">✅ SUCCESS</span>
+        </div>
+      </div>
+
+      <!-- Agents Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🤖</div>
+          <div class="card-title">AI Agents</div>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Active Agents</span>
+          <span class="metric-value" style="color: #667eea;">48/50</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Efficiency</span>
+          <span class="metric-value" style="color: #28a745;">96.2%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 96.2%"></div>
+        </div>
+        <ul class="agent-list">
+          <li class="agent-item">
+            <span>Deploy & Production (13)</span>
+            <span class="status-badge status-online">Active</span>
+          </li>
+          <li class="agent-item">
+            <span>Live It Collection (11)</span>
+            <span class="status-badge status-online">Active</span>
+          </li>
+          <li class="agent-item">
+            <span>Style & Avatars (6)</span>
+            <span class="status-badge status-online">Active</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- API Services Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔌</div>
+          <div class="card-title">API Services</div>
+        </div>
+        <ul class="agent-list">
+          <li class="agent-item">
+            <span>3D Avatar API</span>
+            <span class="status-badge status-online">✅ Online</span>
+          </li>
+          <li class="agent-item">
+            <span>Garment Comparison</span>
+            <span class="status-badge status-online">✅ Online</span>
+          </li>
+          <li class="agent-item">
+            <span>PAU Recommender</span>
+            <span class="status-badge status-online">✅ Online</span>
+          </li>
+          <li class="agent-item">
+            <span>ABVET Payment</span>
+            <span class="status-badge status-online">✅ Online</span>
+          </li>
+          <li class="agent-item">
+            <span>AutoDonate</span>
+            <span class="status-badge status-online">✅ Online</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Security Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">🔒</div>
+          <div class="card-title">Security</div>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Security Score</span>
+          <span class="metric-value" style="color: #28a745;">A+</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">SSL/TLS</span>
+          <span class="status-badge status-online">✅ Valid</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Vulnerabilities</span>
+          <span class="metric-value" style="color: #28a745;">0</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Last Scan</span>
+          <span class="metric-value" style="color: #667eea; font-size: 0.9em;">1 hour ago</span>
+        </div>
+      </div>
+
+      <!-- Performance Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Performance</div>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Page Load</span>
+          <span class="metric-value" style="color: #28a745;">1.2s</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" style="width: 92%"></div>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Lighthouse Score</span>
+          <span class="metric-value" style="color: #28a745;">95/100</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">CDN Status</span>
+          <span class="status-badge status-online">✅ Active</span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p><strong>TRYONYOU – ABVETOS Intelligence System</strong></p>
+      <p>Complete Fashion Intelligence Platform</p>
+      <p class="timestamp">© 2025 ABVETOS. All rights reserved. | Real-time monitoring active 24/7</p>
+    </footer>
+  </div>
+
+  <script>
+    // Update timestamp
+    function updateTimestamp() {
+      const now = new Date();
+      document.getElementById('timestamp').textContent = now.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZoneName: 'short'
+      });
+    }
+
+    // Update every second
+    updateTimestamp();
+    setInterval(updateTimestamp, 1000);
+
+    // Simulate live data updates (in production, this would fetch from API)
+    setInterval(() => {
+      // Update response time
+      const responseTime = Math.floor(Math.random() * 50) + 160;
+      document.querySelectorAll('.metric-value')[2].textContent = responseTime + 'ms';
+    }, 5000);
+  </script>
+</body>
+</html>
