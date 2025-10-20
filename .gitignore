@@ -6,35 +6,37 @@
 # Build & Deploy artifacts
 dist/
 node_modules/
-*.zip
+
+# Compressed archives (keep deployment packages out)
 *.tar
 *.gz
 
-# Local scripts
-deploy.sh
+# Local scripts (keep local versions, not deploy scripts)
 deploy_express_total_for_manus.sh
-*.sh
 
 # Temporary backups
 *_BACKUP/
 Desktop/
-logs/
 tmp/
-*.log
 
-# Documents and media
-*.doc
-*.docx
-*.pdf
-*.md
-*.mov
-*.mp4
-*.png
-*.jpg
-*.jpeg
+# Logs (keep logs out of repo)
+logs/
+*.log
 
 # Lock & cache
 package-lock.json
-vite.config.js
 .env.local
-.env.*
+.env.production
+.env.development
+
+# Large media files (exclude from version control)
+# Note: Keep specific documentation images and SVGs
+*.mov
+*.mp4
+public/**/*.png
+public/**/*.jpg
+public/**/*.jpeg
+!docs/**/*.png
+!docs/**/*.jpg
+!docs/**/*.jpeg
+!docs/**/*.svg
