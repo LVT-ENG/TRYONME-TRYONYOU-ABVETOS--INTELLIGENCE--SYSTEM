@@ -1,0 +1,25 @@
+{
+  "trigger": "abvetos_full_fusion",
+  "version": "1.0.0",
+  "enabled": true,
+  "description": "Automated trigger configuration for ABVETOS Full Fusion deployment",
+  "script": "automation/abvetos_full_fusion.mjs",
+  "schedule": {
+    "manual": true,
+    "automated": false
+  },
+  "notifications": {
+    "onSuccess": true,
+    "onFailure": true
+  },
+  "config": {
+    "repos": [
+      "https://github.com/LVT-ENG/ABVETOS.git",
+      "https://github.com/LVT-ENG/NOTS.git",
+      "https://github.com/LVT-ENG/ABVEY.git"
+    ],
+    "targetDomain": "https://tryonyou.app",
+    "viteVersion": "7.1.2",
+    "nodeVersion": "20"
+  }
+}
