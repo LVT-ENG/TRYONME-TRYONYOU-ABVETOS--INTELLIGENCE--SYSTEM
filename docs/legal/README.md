@@ -69,7 +69,7 @@ https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/releas
 
 | Document | Status | Access Link |
 |----------|--------|-------------|
-| TRYONYOU_Incubator_Kit_FINAL.zip | ⏳ Pending Upload | See upload instructions above |
+| TRYONYOU_Incubator_Kit_FINAL.zip | ✅ Available | [Download](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/raw/main/docs/legal/TRYONYOU_Incubator_Kit_FINAL.zip) |
 | Patent_Summary.pdf | ⏳ Pending Upload | See upload instructions above |
 | OnePager.pdf | ⏳ Pending Upload | See upload instructions above |
 | Investor_Dossier.pdf | ⏳ Pending Upload | See upload instructions above |
