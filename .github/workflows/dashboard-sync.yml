@@ -9,6 +9,9 @@ on:
       - '.github/workflows/dashboard-sync.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build-and-deploy:
     name: Build & Deploy ABVETOS Dashboard
