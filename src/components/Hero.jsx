@@ -27,37 +27,24 @@ function Hero() {
         <div className="hero-pattern"></div>
       </div>
 
-      {/* Hero Image Gallery */}
-      <div className="hero-image-gallery">
-        <div className="hero-image-item hero-image-1">
-          <img 
-            src="/images/people/diverse-models-flowers.jpg" 
-            alt="Diverse fashion models"
-            loading="eager"
-            onLoad={() => setImageLoaded(true)}
-          />
-        </div>
-        <div className="hero-image-item hero-image-2">
-          <img 
-            src="/images/people/fashion-diversity-group.jpg" 
-            alt="Fashion diversity"
-            loading="eager"
-          />
-        </div>
-        <div className="hero-image-item hero-image-3">
-          <img 
-            src="/images/people/beauty-emotion-portrait.jpg" 
-            alt="Beauty and emotion"
-            loading="eager"
-          />
-        </div>
+      {/* Holographic Avatar Hero Image */}
+      <div className="hero-holographic-avatar">
+        <div className="holographic-glow"></div>
+        <img 
+          src="/press/images/hero-futuristic-fitting.jpg" 
+          alt="Holographic Digital Avatar - TRYONYOU"
+          className="hero-avatar-image"
+          loading="eager"
+          onLoad={() => setImageLoaded(true)}
+        />
+        <div className="holographic-particles"></div>
       </div>
       
       <div className="hero-content hero-content-modern">
         {/* Badge */}
         <div className="hero-badge-modern">
           <span className="badge-icon">✨</span>
-          <span className="badge-text">TRYONYOU – Fashion Intelligence Platform</span>
+          <span className="badge-text">TRYONYOU – ABVETOS – ULTRA-PLUS-ULTIMATUM</span>
         </div>
         
         {/* Main Title */}
@@ -116,11 +103,11 @@ function Hero() {
         {/* CTA Buttons */}
         <div className="hero-cta-group-modern">
           <button 
-            className="hero-cta-primary-modern"
+            className="hero-cta-primary-modern hero-cta-holographic"
             onClick={scrollToDemo}
-            aria-label="Experience the Future - Request Demo"
+            aria-label="Experience Your Digital Style"
           >
-            <span>{t('hero.ctaPrimary', 'Experience the Future')}</span>
+            <span className="cta-holographic-text">EXPERIENCE YOUR DIGITAL STYLE™</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4.16669 10H15.8334M15.8334 10L10 4.16669M15.8334 10L10 15.8334" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>

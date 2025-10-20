@@ -6,9 +6,13 @@ import Footer from './components/Footer'
 import Sparkles from './components/Sparkles'
 
 // Lazy load components below the fold for better initial load performance
+const UserJourney = lazy(() => import('./components/UserJourney'))
+const Modules = lazy(() => import('./components/Modules'))
+const SmartCloset = lazy(() => import('./components/SmartCloset'))
+const ABVETSection = lazy(() => import('./components/ABVETSection'))
+const InvestorPitch = lazy(() => import('./components/InvestorPitch'))
 const Problem = lazy(() => import('./components/Problem'))
 const Solution = lazy(() => import('./components/Solution'))
-const Modules = lazy(() => import('./components/Modules'))
 const PersonalShopper = lazy(() => import('./components/PersonalShopper'))
 const Patents = lazy(() => import('./components/Patents'))
 const ClaimsCarousel = lazy(() => import('./components/ClaimsCarousel'))
@@ -60,9 +64,34 @@ function App() {
       </Suspense>
       <Header />
       <Hero />
+      {/* 1. Hero principal con avatar holográfico ✓ */}
+      
+      {/* 2. Ciclo de usuario visual */}
       <Suspense fallback={<LoadingFallback />}>
-        <PersonalShopper />
+        <UserJourney />
       </Suspense>
+      
+      {/* 3. Core modules - cuadrícula de 9 módulos */}
+      <Suspense fallback={<LoadingFallback />}>
+        <Modules />
+      </Suspense>
+      
+      {/* 4. Smart Closet - armario holográfico */}
+      <Suspense fallback={<LoadingFallback />}>
+        <SmartCloset />
+      </Suspense>
+      
+      {/* 5. ABVET + PAU - biométrico y emocional */}
+      <Suspense fallback={<LoadingFallback />}>
+        <ABVETSection />
+      </Suspense>
+      
+      {/* 6. Investor Pitch & Claims Grid */}
+      <Suspense fallback={<LoadingFallback />}>
+        <InvestorPitch />
+      </Suspense>
+      
+      {/* Additional sections */}
       <Suspense fallback={<LoadingFallback />}>
         <Problem />
       </Suspense>
@@ -70,7 +99,7 @@ function App() {
         <Solution />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
-        <Modules />
+        <PersonalShopper />
       </Suspense>
       <Suspense fallback={<LoadingFallback />}>
         <ClaimsCarousel />
