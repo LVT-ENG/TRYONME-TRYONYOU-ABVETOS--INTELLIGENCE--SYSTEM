@@ -15,7 +15,8 @@
     "analyze": "ANALYZE=true vite build",
     "version:auto": "node scripts/auto-version.js",
     "version:check": "node -p \"require('./package.json').version\"",
-    "prebuild": "node scripts/auto-version.js"
+    "prebuild": "node scripts/auto-version.js",
+    "deploy:report": "bash scripts/generate_deploy_report.sh"
   },
   "dependencies": {
     "archiver": "^7.0.1",

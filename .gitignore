@@ -10,10 +10,20 @@ node_modules/
 *.tar
 *.gz
 
+# Allow deployment reports
+!docs/reports/**/*.zip
+!docs/reports/**/*.pdf
+!docs/reports/**/*.log
+!docs/reports/**/*.json
+!docs/reports/**/*.md
+
 # Local scripts
 deploy.sh
 deploy_express_total_for_manus.sh
 *.sh
+
+# Allow scripts directory
+!scripts/*.sh
 
 # Temporary backups
 *_BACKUP/
@@ -21,6 +31,9 @@ Desktop/
 logs/
 tmp/
 *.log
+
+# Allow deploy logs
+!logs/deploy_*.log
 
 # Documents and media
 *.doc
@@ -32,6 +45,11 @@ tmp/
 *.png
 *.jpg
 *.jpeg
+
+# Allow specific documentation
+!README*.md
+!docs/**/*.md
+!docs/**/*.pdf
 
 # Lock & cache
 package-lock.json

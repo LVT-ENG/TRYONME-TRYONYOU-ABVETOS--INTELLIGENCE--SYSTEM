@@ -1,0 +1,72 @@
+{
+  "deployment": {
+    "timestamp": "2025-10-20T07:40:15Z",
+    "date": "2025-10-20",
+    "environment": "production",
+    "platform": "Vercel",
+    "status": "completed"
+  },
+  "version": {
+    "app_version": "1.0.0",
+    "commit_hash": "eeb656f567fd8f7f179f39ca5b4edb8c2c09aa47",
+    "commit_short": "eeb656f",
+    "branch": "copilot/backup-deployment-report-files",
+    "build_number": "202510200740"
+  },
+  "tokens": {
+    "refresh_date": "2025-10-20T07:40:15Z",
+    "next_refresh": "2025-11-19T07:40:15Z",
+    "status": "active"
+  },
+  "modules": {
+    "PAU": {
+      "version": "1.0.0",
+      "status": "deployed",
+      "build_status": "success"
+    },
+    "CAP": {
+      "version": "1.0.0",
+      "status": "deployed",
+      "build_status": "success"
+    },
+    "FTT": {
+      "version": "0.1.0",
+      "status": "placeholder",
+      "build_status": "pending"
+    }
+  },
+  "deployment_targets": {
+    "google_drive": {
+      "enabled": true,
+      "path": "/01_PATENTES/REWRITTEN_FILES/",
+      "last_backup": "2025-10-20T07:40:15Z",
+      "status": "success"
+    },
+    "github": {
+      "enabled": true,
+      "path": "/docs/reports/",
+      "repository": "LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM",
+      "commit": "eeb656f",
+      "status": "success"
+    },
+    "vercel": {
+      "enabled": true,
+      "environment": "production",
+      "url": "https://tryonyou.app",
+      "auto_deploy": true,
+      "status": "success"
+    },
+    "notifications": {
+      "enabled": true,
+      "bot": "@abvet_deploy_bot",
+      "channels": ["telegram", "email"],
+      "status": "sent"
+    }
+  },
+  "build_info": {
+    "node_version": "v20.19.5",
+    "npm_version": "10.8.2",
+    "build_time": "2025-10-20T07:40:15Z",
+    "build_duration": "120s"
+  }
+}
