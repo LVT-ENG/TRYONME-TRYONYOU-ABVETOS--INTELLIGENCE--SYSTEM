@@ -176,7 +176,9 @@ async function watchInbox() {
 async function triggerDeploy() {
   try {
     info('Running deployment script...');
-    const { stdout, stderr } = await execAsync(`bash ${CONFIG.deployScript}`);
+    // Use shell escaping to prevent command injection
+    const shellEscape = (arg) => `'${arg.replace(/'/g, "'\\''")}'`;
+    const { stdout, stderr } = await execAsync(`bash ${shellEscape(CONFIG.deployScript)}`);
     
     if (stdout) log(stdout.trim());
     if (stderr) warn(stderr.trim());
