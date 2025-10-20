@@ -1,0 +1,19 @@
+# Environment variables with sensitive tokens
+.env
+
+# Log files
+*.log
+
+# Node modules
+node_modules/
+
+# Build artifacts
+dist/
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS files
+.DS_Store
+Thumbs.db
