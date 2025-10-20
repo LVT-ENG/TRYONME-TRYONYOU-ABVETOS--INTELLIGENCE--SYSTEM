@@ -1,0 +1,176 @@
+name: ABVETOS Dashboard Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'apps/web/src/dashboard/abvetos-dashboard/**'
+      - 'dashboard/abvetos-dashboard/**'
+      - '.github/workflows/abvetos-dashboard-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy ABVETOS Dashboard
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+      
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10.4.1
+      
+      - name: Install dependencies
+        working-directory: ./dashboard/abvetos-dashboard
+        run: pnpm install --frozen-lockfile
+      
+      - name: Build dashboard
+        working-directory: ./dashboard/abvetos-dashboard
+        run: pnpm run build
+      
+      - name: Copy build to public directory
+        run: |
+          mkdir -p public/dashboard/abvetos-dashboard
+          cp -r dashboard/abvetos-dashboard/dist/* public/dashboard/abvetos-dashboard/
+          echo "✅ Dashboard build copied to public/dashboard/abvetos-dashboard/"
+      
+      - name: Deploy to Vercel
+        id: deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
+      
+      - name: Get deployment URL
+        id: deployment_url
+        run: |
+          echo "DASHBOARD_URL=https://tryonyou.app/dashboard/abvetos-dashboard/" >> $GITHUB_OUTPUT
+          echo "DEPLOYMENT_URL=${{ steps.deploy.outputs.preview-url }}" >> $GITHUB_OUTPUT
+      
+      - name: Setup Puppeteer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+      
+      - name: Install Puppeteer
+        run: npm install puppeteer
+      
+      - name: Capture Screenshots
+        env:
+          DASHBOARD_URL: ${{ steps.deployment_url.outputs.DASHBOARD_URL }}
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+          
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              executablePath: '/usr/bin/chromium-browser',
+              args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+            });
+            
+            const page = await browser.newPage();
+            
+            // Desktop screenshot
+            await page.setViewport({ width: 1920, height: 1080 });
+            await page.goto(process.env.DASHBOARD_URL, { waitUntil: 'networkidle0', timeout: 60000 });
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for animations
+            await page.screenshot({ path: '/tmp/dashboard-desktop.png', fullPage: false });
+            console.log('✅ Desktop screenshot captured');
+            
+            // Mobile screenshot
+            await page.setViewport({ width: 375, height: 812 });
+            await page.goto(process.env.DASHBOARD_URL, { waitUntil: 'networkidle0', timeout: 60000 });
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Wait for animations
+            await page.screenshot({ path: '/tmp/dashboard-mobile.png', fullPage: false });
+            console.log('✅ Mobile screenshot captured');
+            
+            await browser.close();
+          })();
+          "
+      
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-screenshots
+          path: /tmp/dashboard-*.png
+          retention-days: 30
+      
+      - name: Send Telegram Notification
+        if: success()
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            # Prepare commit info
+            COMMIT_SHORT="${GITHUB_SHA:0:7}"
+            COMMIT_MSG="${{ github.event.head_commit.message }}"
+            BRANCH="${{ github.ref_name }}"
+            AUTHOR="${{ github.actor }}"
+            TIMESTAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            
+            # Create message
+            MESSAGE="🚀 *ABVETOS Dashboard Deployed*
+          
+          ✅ *Status:* Deployment Successful
+          🌐 *Dashboard URL:* https://tryonyou.app/dashboard/abvetos-dashboard/
+          📦 *Commit:* \`${COMMIT_SHORT}\`
+          💬 *Message:* ${COMMIT_MSG}
+          🌿 *Branch:* ${BRANCH}
+          👤 *Author:* ${AUTHOR}
+          ⏰ *Time:* ${TIMESTAMP}
+          
+          🤖 Deployed via @abvet_deploy_bot"
+            
+            # Send text message
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            # Send desktop screenshot
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto" \
+              -F chat_id="${TELEGRAM_CHAT_ID}" \
+              -F photo=@/tmp/dashboard-desktop.png \
+              -F caption="🖥️ Desktop View (1920x1080) - Commit: ${COMMIT_SHORT}"
+            
+            # Send mobile screenshot
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto" \
+              -F chat_id="${TELEGRAM_CHAT_ID}" \
+              -F photo=@/tmp/dashboard-mobile.png \
+              -F caption="📱 Mobile View (375x812) - Commit: ${COMMIT_SHORT}"
+            
+            echo "✅ Telegram notifications sent to @abvet_deploy_bot"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi
+      
+      - name: Deployment Summary
+        if: always()
+        run: |
+          echo "## 📊 Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Dashboard URL:** https://tryonyou.app/dashboard/abvetos-dashboard/" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** \`${GITHUB_SHA:0:7}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Author:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
