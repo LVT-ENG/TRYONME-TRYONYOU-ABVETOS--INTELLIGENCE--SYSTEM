@@ -1,10 +1,15 @@
-name: Build and Deploy
+name: ABVETOS Auto-Deploy Express CI/CD
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
 
 jobs:
   build:
@@ -12,27 +17,27 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout code
+      - name: 🧩 Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true  # Enable Git LFS for large files
       
-      - name: Checkout LFS objects
+      - name: 📥 Checkout LFS objects
         run: git lfs pull
       
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
       
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: npm ci
       
-      - name: Build application
+      - name: 🧱 Build application
         run: npm run build
       
-      - name: Verify docs/legal in build
+      - name: ✅ Verify docs/legal in build
         run: |
           echo "Checking if docs/legal was copied to dist..."
           if [ -d "dist/docs/legal" ]; then
@@ -43,10 +48,10 @@ jobs:
             exit 1
           fi
       
-      - name: List all files in dist
+      - name: 📋 List all files in dist
         run: find dist -type f | sort
       
-      - name: Upload build artifacts
+      - name: 📤 Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -54,24 +59,24 @@ jobs:
           retention-days: 7
 
   deploy:
-    name: Deploy to Vercel (Agent 22)
+    name: 🚀 Deploy to Vercel (ABVETOS Auto-Deploy Express)
     runs-on: ubuntu-latest
     needs: build
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
-      - name: Checkout code
+      - name: 🧩 Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true
       
-      - name: Download build artifacts
+      - name: 📥 Download build artifacts
         uses: actions/download-artifact@v4
         with:
           name: dist
           path: dist/
       
-      - name: Deploy to Vercel
+      - name: 🚀 Deploy to Vercel
         id: deploy
         uses: amondnet/vercel-action@v25
         with:
@@ -81,15 +86,15 @@ jobs:
           vercel-args: '--prod'
           working-directory: ./
       
-      - name: Setup Node.js for screenshots
+      - name: ⚙️ Setup Node.js for screenshots
         uses: actions/setup-node@v4
         with:
           node-version: '22'
       
-      - name: Install Puppeteer
+      - name: 📦 Install Puppeteer
         run: npm install puppeteer
       
-      - name: Capture Screenshots
+      - name: 📸 Capture Screenshots
         run: |
           node -e "
           const puppeteer = require('puppeteer');
@@ -117,14 +122,55 @@ jobs:
           })();
           "
       
-      - name: Upload Screenshots
+      - name: 📤 Upload Screenshots
         uses: actions/upload-artifact@v4
         with:
           name: deployment-screenshots
           path: /tmp/screenshot-*.png
           retention-days: 7
       
-      - name: Send Telegram Notification with Screenshots
+      - name: 💾 Create Backup Package
+        run: |
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          BACKUP_NAME="TRYONYOU_BACKUP_${TIMESTAMP}"
+          
+          # Create backup directory
+          mkdir -p /tmp/backup
+          
+          # Copy built files
+          cp -r dist /tmp/backup/
+          
+          # Copy configuration files
+          cp package.json package-lock.json vercel.json /tmp/backup/ 2>/dev/null || true
+          
+          # Create deployment info file
+          cat > /tmp/backup/DEPLOY_INFO.txt << EOF
+          TRYONYOU Deployment Backup
+          ==========================
+          Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          Commit: ${{ github.sha }}
+          Branch: ${{ github.ref_name }}
+          Author: ${{ github.actor }}
+          Message: ${{ github.event.head_commit.message }}
+          
+          This backup was created automatically by ABVETOS Auto-Deploy Express
+          EOF
+          
+          # Create zip archive
+          cd /tmp/backup
+          zip -r /tmp/${BACKUP_NAME}.zip . -x "*.DS_Store" "*.git*"
+          
+          echo "✅ Backup created: ${BACKUP_NAME}.zip"
+          ls -lh /tmp/${BACKUP_NAME}.zip
+      
+      - name: 📤 Upload Backup to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-backup-${{ github.run_number }}
+          path: /tmp/TRYONYOU_BACKUP_*.zip
+          retention-days: 30
+      
+      - name: 📢 Send Telegram Notification with Screenshots
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -132,7 +178,7 @@ jobs:
           if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
             # Create message
             cat > /tmp/telegram-message.txt << 'EOFMSG'
-          🚀 *Agent 22: Deploy Operator*
+          🚀 *ABVETOS Auto-Deploy Express*
           
           ✅ *Status:* Deployment Successful
           🌐 *URL:* https://tryonyou.app
@@ -141,8 +187,9 @@ jobs:
           🌿 *Branch:* ${BRANCH}
           👤 *Author:* ${AUTHOR}
           ⏰ *Time:* ${TIMESTAMP}
+          💾 *Backup:* Created and stored
           
-          🤖 All agents operational 24/7
+          🤖 All systems operational 24/7
           EOFMSG
             
             # Replace variables

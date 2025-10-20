@@ -14,6 +14,7 @@ node_modules/
 deploy.sh
 deploy_express_total_for_manus.sh
 *.sh
+!refresh_tokens.sh
 
 # Temporary backups
 *_BACKUP/
@@ -27,6 +28,7 @@ tmp/
 *.docx
 *.pdf
 *.md
+!ABVETOS_CI_CD_ORCHESTRATION.md
 *.mov
 *.mp4
 *.png
