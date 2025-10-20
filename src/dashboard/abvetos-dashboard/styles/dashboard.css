@@ -1,0 +1,381 @@
+/* ABVETOS Dashboard Styles */
+
+:root {
+  --primary-color: #D3B26A;
+  --secondary-color: #1a1a1a;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --error-color: #ef4444;
+  --background: #0a0a0a;
+  --card-background: #1a1a1a;
+  --border-color: #2a2a2a;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+}
+
+.abvetos-dashboard {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+.dashboard-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+}
+
+.login-container {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 48px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.login-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 28px;
+  text-align: center;
+}
+
+.login-header p {
+  margin: 0 0 32px 0;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.login-input {
+  width: 100%;
+  padding: 16px;
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+}
+
+.login-button {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(211, 178, 106, 0.3);
+}
+
+.dashboard-header {
+  background: var(--card-background);
+  border-bottom: 1px solid var(--border-color);
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.header-left .subtitle {
+  margin: 4px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.current-time {
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-family: 'Courier New', monospace;
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  border-color: var(--error-color);
+  color: var(--error-color);
+}
+
+.dashboard-grid {
+  padding: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+.dashboard-section {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.dashboard-section.full-width {
+  grid-column: 1 / -1;
+}
+
+.dashboard-section h2 {
+  margin: 0 0 24px 0;
+  font-size: 20px;
+  color: var(--text-primary);
+}
+
+/* Metrics */
+.metrics-container h2 {
+  margin-bottom: 24px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s ease;
+}
+
+.metric-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.metric-icon {
+  font-size: 32px;
+}
+
+.metric-label {
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-top: 4px;
+}
+
+/* Deploy List */
+.deploy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.deploy-item {
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.deploy-status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.status-icon {
+  font-size: 24px;
+}
+
+.status-text {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.deploy-info {
+  flex: 1;
+}
+
+.deploy-commit {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.deploy-commit code {
+  background: var(--card-background);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  color: var(--primary-color);
+}
+
+.deploy-message {
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.deploy-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.deploy-link {
+  padding: 8px 16px;
+  background: var(--primary-color);
+  color: var(--secondary-color);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.deploy-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(211, 178, 106, 0.3);
+}
+
+/* GitHub Actions */
+.workflows-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workflow-item {
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.workflow-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.workflow-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.workflow-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--success-color);
+}
+
+.status-pending {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--warning-color);
+}
+
+.status-failed {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--error-color);
+}
+
+.workflow-details {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.github-actions-footer {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.github-link {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.github-link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-footer {
+  background: var(--card-background);
+  border-top: 1px solid var(--border-color);
+  padding: 24px 32px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.dashboard-footer p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
