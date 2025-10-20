@@ -10,6 +10,9 @@ jobs:
   refresh-token:
     name: Refresh Vercel Token
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     
     steps:
       - name: Checkout code
