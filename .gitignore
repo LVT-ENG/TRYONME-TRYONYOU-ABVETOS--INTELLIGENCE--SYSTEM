@@ -9,6 +9,7 @@ node_modules/
 *.zip
 *.tar
 *.gz
+TRYONYOU_DEPLOY_EXPRESS_BUNDLE_FULL/
 
 # Local scripts
 deploy.sh
