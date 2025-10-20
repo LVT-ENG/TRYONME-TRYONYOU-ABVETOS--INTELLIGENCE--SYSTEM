@@ -1,0 +1,195 @@
+name: System Orchestration Report
+
+on:
+  schedule:
+    # Run every 12 hours at 00:00 and 12:00 UTC
+    - cron: '0 0,12 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  system-report:
+    name: Generate System Report
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🧩 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      
+      - name: 📊 Generate System Status Report
+        id: system-report
+        run: |
+          echo "🤖 TRYONYOU System Orchestration Report" > /tmp/report.txt
+          echo "═══════════════════════════════════════" >> /tmp/report.txt
+          echo "" >> /tmp/report.txt
+          echo "⏰ Generated: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> /tmp/report.txt
+          echo "" >> /tmp/report.txt
+          
+          # System Health Check
+          echo "🏥 System Health Status" >> /tmp/report.txt
+          echo "─────────────────────" >> /tmp/report.txt
+          
+          # Check if critical files exist
+          if [ -f "package.json" ]; then
+            echo "✅ package.json - Present" >> /tmp/report.txt
+          else
+            echo "❌ package.json - Missing" >> /tmp/report.txt
+          fi
+          
+          if [ -f "vercel.json" ]; then
+            echo "✅ vercel.json - Present" >> /tmp/report.txt
+          else
+            echo "❌ vercel.json - Missing" >> /tmp/report.txt
+          fi
+          
+          if [ -f "index.html" ]; then
+            echo "✅ index.html - Present" >> /tmp/report.txt
+          else
+            echo "❌ index.html - Missing" >> /tmp/report.txt
+          fi
+          
+          echo "" >> /tmp/report.txt
+          
+          # Modules Check
+          echo "📦 Modules Status" >> /tmp/report.txt
+          echo "────────────────" >> /tmp/report.txt
+          
+          modules=("avatar3D.js" "pagoABVET.js" "recomendadorPAU.js" "autoDonate.js" "abvetBot.js")
+          for module in "${modules[@]}"; do
+            if [ -f "src/modules/$module" ]; then
+              echo "✅ $module" >> /tmp/report.txt
+            else
+              echo "❌ $module - Missing" >> /tmp/report.txt
+            fi
+          done
+          
+          echo "" >> /tmp/report.txt
+          
+          # Frontend Check
+          echo "🎨 Frontend Status" >> /tmp/report.txt
+          echo "─────────────────" >> /tmp/report.txt
+          
+          frontend_files=("app.js" "cuestionario.js" "tienda.js")
+          for file in "${frontend_files[@]}"; do
+            if [ -f "src/frontend/$file" ]; then
+              echo "✅ $file" >> /tmp/report.txt
+            else
+              echo "❌ $file - Missing" >> /tmp/report.txt
+            fi
+          done
+          
+          echo "" >> /tmp/report.txt
+          
+          # Dashboard Check
+          echo "📊 Dashboard Status" >> /tmp/report.txt
+          echo "──────────────────" >> /tmp/report.txt
+          
+          if [ -f "dashboard/index.html" ]; then
+            echo "✅ Dashboard HTML" >> /tmp/report.txt
+          else
+            echo "❌ Dashboard HTML - Missing" >> /tmp/report.txt
+          fi
+          
+          if [ -f "dashboard/dashboard.js" ]; then
+            echo "✅ Dashboard JS" >> /tmp/report.txt
+          else
+            echo "❌ Dashboard JS - Missing" >> /tmp/report.txt
+          fi
+          
+          if [ -f "dashboard/styles.css" ]; then
+            echo "✅ Dashboard CSS" >> /tmp/report.txt
+          else
+            echo "❌ Dashboard CSS - Missing" >> /tmp/report.txt
+          fi
+          
+          echo "" >> /tmp/report.txt
+          
+          # Workflows Check
+          echo "⚙️ CI/CD Workflows" >> /tmp/report.txt
+          echo "─────────────────" >> /tmp/report.txt
+          
+          if [ -f ".github/workflows/deploy.yml" ]; then
+            echo "✅ Deploy Workflow" >> /tmp/report.txt
+          else
+            echo "❌ Deploy Workflow - Missing" >> /tmp/report.txt
+          fi
+          
+          if [ -f ".github/workflows/system-orchestration.yml" ]; then
+            echo "✅ System Orchestration Workflow" >> /tmp/report.txt
+          else
+            echo "❌ System Orchestration Workflow - Missing" >> /tmp/report.txt
+          fi
+          
+          echo "" >> /tmp/report.txt
+          
+          # Repository Stats
+          echo "📈 Repository Statistics" >> /tmp/report.txt
+          echo "──────────────────────" >> /tmp/report.txt
+          echo "Total Commits: $(git rev-list --count HEAD)" >> /tmp/report.txt
+          echo "Last Commit: $(git log -1 --pretty=format:'%h - %s (%cr)')" >> /tmp/report.txt
+          echo "Branch: $(git branch --show-current)" >> /tmp/report.txt
+          
+          echo "" >> /tmp/report.txt
+          
+          # Quick Links
+          echo "🔗 Quick Links" >> /tmp/report.txt
+          echo "─────────────" >> /tmp/report.txt
+          echo "Production: https://tryonyou.app" >> /tmp/report.txt
+          echo "Repository: https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM" >> /tmp/report.txt
+          echo "Dashboard: https://tryonyou.app/dashboard" >> /tmp/report.txt
+          
+          echo "" >> /tmp/report.txt
+          echo "═══════════════════════════════════════" >> /tmp/report.txt
+          echo "🤖 Report generated by Agent 70 - Orquestador General" >> /tmp/report.txt
+          
+          cat /tmp/report.txt
+      
+      - name: 📱 Send Report to Telegram (@abvet_deploy_bot)
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            # Format message for Telegram
+            REPORT=$(cat /tmp/report.txt)
+            
+            # Send message to Telegram
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="HTML" \
+              -d text="<pre>$REPORT</pre>" || echo "⚠️ Telegram notification failed (non-critical)"
+            
+            echo "✅ System report sent to @abvet_deploy_bot"
+          else
+            echo "⚠️ Telegram credentials not configured"
+            echo "ℹ️ Report generated but not sent"
+          fi
+      
+      - name: 📝 Save Report as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: system-report-${{ github.run_number }}
+          path: /tmp/report.txt
+          retention-days: 30
+      
+      - name: 🏁 Summary
+        run: |
+          echo "### 📊 System Orchestration Report Generated" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Report has been:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Generated successfully" >> $GITHUB_STEP_SUMMARY
+          echo "- 📱 Sent to @abvet_deploy_bot (if configured)" >> $GITHUB_STEP_SUMMARY
+          echo "- 💾 Saved as artifact" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Next report scheduled in 12 hours." >> $GITHUB_STEP_SUMMARY
