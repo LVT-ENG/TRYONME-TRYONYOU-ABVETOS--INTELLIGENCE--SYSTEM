@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <style>
+      .layer { fill: #f0f0f0; stroke: #333; stroke-width: 2; }
+      .layer-input { fill: #e3f2fd; }
+      .layer-processing { fill: #fff3e0; }
+      .layer-context { fill: #e8f5e9; }
+      .layer-output { fill: #fce4ec; }
+      .layer-feedback { fill: #f3e5f5; }
+      .arrow { fill: none; stroke: #666; stroke-width: 2; marker-end: url(#arrowhead); }
+      .text-title { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; }
+      .text-label { font-family: Arial, sans-serif; font-size: 14px; }
+      .text-desc { font-family: Arial, sans-serif; font-size: 12px; fill: #666; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#666" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="30" text-anchor="middle" class="text-title">FIG 6b: ABVETOS Context Engineering Architecture</text>
+  
+  <!-- Input Layer -->
+  <rect x="50" y="80" width="700" height="80" class="layer layer-input" rx="5"/>
+  <text x="400" y="105" text-anchor="middle" class="text-label">INPUT LAYER</text>
+  <text x="100" y="130" class="text-desc">User Behavior</text>
+  <text x="300" y="130" class="text-desc">Preferences</text>
+  <text x="500" y="130" class="text-desc">Environmental Data</text>
+  <text x="100" y="145" class="text-desc">• Browsing history</text>
+  <text x="300" y="145" class="text-desc">• Style preferences</text>
+  <text x="500" y="145" class="text-desc">• Location context</text>
+  
+  <!-- Arrow 1 -->
+  <path d="M 400 160 L 400 190" class="arrow"/>
+  
+  <!-- Processing Layer -->
+  <rect x="50" y="190" width="700" height="80" class="layer layer-processing" rx="5"/>
+  <text x="400" y="215" text-anchor="middle" class="text-label">PROCESSING LAYER (AI/ML)</text>
+  <text x="100" y="240" class="text-desc">Pattern Recognition</text>
+  <text x="350" y="240" class="text-desc">Neural Networks</text>
+  <text x="600" y="240" class="text-desc">Predictive Models</text>
+  <text x="100" y="255" class="text-desc">• Style clustering</text>
+  <text x="350" y="255" class="text-desc">• Deep learning</text>
+  <text x="600" y="255" class="text-desc">• Trend forecasting</text>
+  
+  <!-- Arrow 2 -->
+  <path d="M 400 270 L 400 300" class="arrow"/>
+  
+  <!-- Context Layer -->
+  <rect x="50" y="300" width="700" height="80" class="layer layer-context" rx="5"/>
+  <text x="400" y="325" text-anchor="middle" class="text-label">CONTEXT ENGINEERING LAYER</text>
+  <text x="100" y="350" class="text-desc">Real-time Adaptation</text>
+  <text x="350" y="350" class="text-desc">Context Synthesis</text>
+  <text x="600" y="350" class="text-desc">Privacy Control</text>
+  <text x="100" y="365" class="text-desc">• Dynamic adjustment</text>
+  <text x="350" y="365" class="text-desc">• Multi-factor fusion</text>
+  <text x="600" y="365" class="text-desc">• User consent mgmt</text>
+  
+  <!-- Arrow 3 -->
+  <path d="M 400 380 L 400 410" class="arrow"/>
+  
+  <!-- Output Layer -->
+  <rect x="50" y="410" width="700" height="80" class="layer layer-output" rx="5"/>
+  <text x="400" y="435" text-anchor="middle" class="text-label">OUTPUT LAYER</text>
+  <text x="100" y="460" class="text-desc">Recommendations</text>
+  <text x="350" y="460" class="text-desc">Actions</text>
+  <text x="600" y="460" class="text-desc">Insights</text>
+  <text x="100" y="475" class="text-desc">• Personalized items</text>
+  <text x="350" y="475" class="text-desc">• Purchase guidance</text>
+  <text x="600" y="475" class="text-desc">• Style analytics</text>
+  
+  <!-- Feedback Arrow -->
+  <path d="M 750 450 Q 770 300 750 150 L 400 150" class="arrow" stroke-dasharray="5,5"/>
+  <text x="760" y="300" class="text-desc">Feedback Loop</text>
+  
+  <!-- Legend -->
+  <rect x="50" y="520" width="700" height="60" fill="#fff" stroke="#ccc" stroke-width="1" rx="5"/>
+  <text x="60" y="540" class="text-label">Key Innovation:</text>
+  <text x="60" y="560" class="text-desc">Multi-layer context engineering with continuous learning optimization</text>
+  <text x="60" y="575" class="text-desc">Patent-protected methodology for privacy-preserving fashion intelligence</text>
+</svg>
