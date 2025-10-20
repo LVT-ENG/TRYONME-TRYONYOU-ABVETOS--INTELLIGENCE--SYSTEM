@@ -1,0 +1,172 @@
+name: Vercel Token Refresh
+
+on:
+  schedule:
+    # Run daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  refresh-token:
+    name: Refresh Vercel Token
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Check token expiration
+        id: check-token
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "🔍 Checking Vercel token status..."
+          
+          # Get current date
+          CURRENT_DATE=$(date -u +%s)
+          
+          # Check if token is set
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "status=missing" >> $GITHUB_OUTPUT
+            echo "⚠️ Vercel token is not configured"
+            exit 0
+          fi
+          
+          # Try to validate token with Vercel API
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            https://api.vercel.com/v2/user)
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n 1)
+          BODY=$(echo "$RESPONSE" | head -n -1)
+          
+          if [ "$HTTP_CODE" -eq 200 ]; then
+            echo "status=valid" >> $GITHUB_OUTPUT
+            echo "✅ Vercel token is valid"
+            
+            # Extract user info
+            USERNAME=$(echo "$BODY" | jq -r '.user.username // "unknown"')
+            echo "username=$USERNAME" >> $GITHUB_OUTPUT
+            echo "   Username: $USERNAME"
+          else
+            echo "status=invalid" >> $GITHUB_OUTPUT
+            echo "❌ Vercel token is invalid or expired (HTTP $HTTP_CODE)"
+          fi
+      
+      - name: Send Telegram notification if token invalid
+        if: steps.check-token.outputs.status == 'invalid' || steps.check-token.outputs.status == 'missing'
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            STATUS="${{ steps.check-token.outputs.status }}"
+            
+            if [ "$STATUS" = "missing" ]; then
+              MESSAGE="⚠️ *Vercel Token Missing*
+          
+          The Vercel token is not configured in GitHub Secrets.
+          
+          📝 *Action Required:*
+          1. Generate a new token at https://vercel.com/account/tokens
+          2. Add it to GitHub Secrets as VERCEL_TOKEN
+          
+          🔧 Repository: ${{ github.repository }}
+          ⏰ Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          
+          🤖 TRYONYOU.APP - Sistema de Inteligencia"
+            else
+              MESSAGE="🔴 *Vercel Token Expired*
+          
+          The Vercel token has expired or is invalid.
+          
+          📝 *Action Required:*
+          1. Generate a new token at https://vercel.com/account/tokens
+          2. Update GitHub Secret VERCEL_TOKEN
+          
+          🔧 Repository: ${{ github.repository }}
+          ⏰ Time: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          
+          🤖 TRYONYOU.APP - Sistema de Inteligencia"
+            fi
+            
+            # Send Telegram message
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            echo "✅ Telegram notification sent"
+          fi
+      
+      - name: Send success notification if token valid
+        if: steps.check-token.outputs.status == 'valid'
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            MESSAGE="✅ *Vercel Token Valid*
+          
+          Daily token check completed successfully.
+          
+          👤 *User:* ${{ steps.check-token.outputs.username }}
+          🔧 *Repository:* ${{ github.repository }}
+          ⏰ *Time:* $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          
+          🤖 TRYONYOU.APP - Sistema de Inteligencia Operativo 24/7"
+            
+            # Send Telegram message
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+          fi
+      
+      - name: Create issue if token invalid
+        if: steps.check-token.outputs.status == 'invalid' || steps.check-token.outputs.status == 'missing'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const status = '${{ steps.check-token.outputs.status }}';
+            const title = status === 'missing' 
+              ? '⚠️ Vercel Token Missing' 
+              : '🔴 Vercel Token Expired';
+            
+            const body = `## Vercel Token ${status === 'missing' ? 'Missing' : 'Expired'}
+            
+            The daily token check has detected that the Vercel token is ${status}.
+            
+            ### Action Required:
+            1. Go to https://vercel.com/account/tokens
+            2. Generate a new token
+            3. Update the GitHub Secret \`VERCEL_TOKEN\`
+            
+            ### Details:
+            - **Status**: ${status}
+            - **Check Time**: ${new Date().toISOString()}
+            - **Workflow**: ${context.workflow}
+            
+            This issue was created automatically by the Vercel Token Refresh workflow.
+            `;
+            
+            // Check if similar issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['vercel-token', 'automation']
+            });
+            
+            if (issues.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['vercel-token', 'automation', 'urgent']
+              });
+              console.log('✅ Issue created');
+            } else {
+              console.log('⚠️ Similar issue already exists');
+            }

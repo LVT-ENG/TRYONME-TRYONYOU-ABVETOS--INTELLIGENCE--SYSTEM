@@ -1,0 +1,102 @@
+name: ABVETOS Dashboard Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/dashboard/**'
+      - 'TRYONYOU_ABVETOS_DASHBOARD_SYNC/**'
+      - '.github/workflows/abvetos-dashboard-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy-dashboard:
+    name: Deploy ABVETOS Dashboard
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build application
+        run: npm run build
+      
+      - name: Deploy to Vercel
+        id: deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
+      
+      - name: Get deployment info
+        id: deploy-info
+        run: |
+          echo "commit_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "timestamp=$(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_OUTPUT
+          echo "deploy_url=https://tryonyou.app" >> $GITHUB_OUTPUT
+      
+      - name: Save deployment record
+        run: |
+          mkdir -p logs
+          cat > logs/deploy_record_${{ steps.deploy-info.outputs.commit_short }}.json << EOF
+          {
+            "timestamp": "${{ steps.deploy-info.outputs.timestamp }}",
+            "commit": "${{ steps.deploy-info.outputs.commit_short }}",
+            "commit_full": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "author": "${{ github.actor }}",
+            "message": "${{ github.event.head_commit.message }}",
+            "url": "${{ steps.deploy-info.outputs.deploy_url }}",
+            "status": "success"
+          }
+          EOF
+      
+      - name: Send Telegram Notification
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            MESSAGE="🚀 *Dashboard ABVETOS actualizado correctamente en producción*
+          
+          ✅ *Status:* Deployment Successful
+          🌐 *URL:* ${{ steps.deploy-info.outputs.deploy_url }}
+          📦 *Commit:* ${{ steps.deploy-info.outputs.commit_short }}
+          💬 *Message:* ${{ github.event.head_commit.message }}
+          🌿 *Branch:* ${{ github.ref_name }}
+          👤 *Author:* ${{ github.actor }}
+          ⏰ *Time:* ${{ steps.deploy-info.outputs.timestamp }}
+          
+          🤖 TRYONYOU.APP - Sistema de Inteligencia Operativo 24/7"
+            
+            # Send Telegram message
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            echo "✅ Telegram notification sent"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi
+      
+      - name: Upload deployment artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-record-${{ steps.deploy-info.outputs.commit_short }}
+          path: logs/deploy_record_*.json
+          retention-days: 30
