@@ -58,25 +58,60 @@ clean_duplicates() {
     
     cd "$INBOX_DIR" || exit 1
     
-    # Find and remove duplicates, keeping the newest
-    for base_name in $(ls *.zip 2>/dev/null | sed 's/_[0-9]*\.zip$//' | sort -u); do
-        # Find all files matching this base pattern
-        matching_files=$(ls ${base_name}*.zip 2>/dev/null | sort -r)
+    # Check if there are any ZIP files
+    shopt -s nullglob
+    zip_files=(*.zip)
+    shopt -u nullglob
+    
+    if [[ ${#zip_files[@]} -eq 0 ]]; then
+        warn "No ZIP files found to clean"
+        cd "$PROJECT_ROOT" || exit 1
+        return
+    fi
+    
+    # Find and remove duplicates, keeping the newest based on modification time
+    declare -A newest_files
+    
+    # First pass: identify the newest file for each base name
+    for file in "${zip_files[@]}"; do
+        [[ ! -f "$file" ]] && continue
         
-        if [[ $(echo "$matching_files" | wc -l) -gt 1 ]]; then
-            # Keep the first (newest) and remove others
-            newest=$(echo "$matching_files" | head -n 1)
-            to_remove=$(echo "$matching_files" | tail -n +2)
-            
-            log "Keeping: $newest"
-            echo "$to_remove" | while read -r old_file; do
-                if [[ -n "$old_file" ]]; then
-                    rm -f "$old_file"
-                    log "Removed duplicate: $old_file"
-                    log_message "Removed duplicate: $old_file"
-                fi
-            done
+        # Extract base name (remove common timestamp patterns)
+        base_name=$(echo "$file" | sed -E 's/_[0-9]{8}_[0-9]{4,6}\.zip$/.zip/' | sed 's/\.zip$//')
+        
+        # Get modification time
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            mod_time=$(stat -f %m "$file")
+        else
+            mod_time=$(stat -c %Y "$file")
         fi
+        
+        # Check if this is newer than what we have
+        if [[ -z "${newest_files[$base_name]}" ]]; then
+            newest_files[$base_name]="$file:$mod_time"
+        else
+            current_newest="${newest_files[$base_name]%%:*}"
+            current_time="${newest_files[$base_name]##*:}"
+            
+            if [[ $mod_time -gt $current_time ]]; then
+                # This file is newer, mark old one for removal
+                rm -f "$current_newest"
+                log "Removed older duplicate: $current_newest"
+                log_message "Removed duplicate: $current_newest"
+                newest_files[$base_name]="$file:$mod_time"
+            else
+                # Current stored file is newer
+                rm -f "$file"
+                log "Removed older duplicate: $file"
+                log_message "Removed duplicate: $file"
+            fi
+        fi
+    done
+    
+    # Log the files we're keeping
+    for base_name in "${!newest_files[@]}"; do
+        file="${newest_files[$base_name]%%:*}"
+        log "Keeping: $file (base: $base_name)"
     done
     
     cd "$PROJECT_ROOT" || exit 1
