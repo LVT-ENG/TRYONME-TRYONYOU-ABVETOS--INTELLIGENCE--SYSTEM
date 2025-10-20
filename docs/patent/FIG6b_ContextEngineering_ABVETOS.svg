@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <defs>
+    <style>
+      .title { font: bold 24px sans-serif; fill: #333; }
+      .label { font: 14px sans-serif; fill: #555; }
+      .box { fill: #f0f8ff; stroke: #4682b4; stroke-width: 2; }
+      .arrow { stroke: #4682b4; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .highlight { fill: #ffd700; stroke: #ff8c00; stroke-width: 2; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#4682b4" />
+    </marker>
+  </defs>
+  
+  <!-- Title -->
+  <text x="400" y="40" text-anchor="middle" class="title">FIG 6b - Context Engineering Architecture (ABVETOS)</text>
+  
+  <!-- User Input Layer -->
+  <rect x="50" y="80" width="700" height="80" class="box" rx="5"/>
+  <text x="400" y="110" text-anchor="middle" class="label">User Input Layer</text>
+  <text x="400" y="135" text-anchor="middle" class="label">Emotion Detection • Preferences • Context Analysis</text>
+  
+  <!-- Context Engineering Core -->
+  <rect x="250" y="200" width="300" height="100" class="highlight" rx="5"/>
+  <text x="400" y="230" text-anchor="middle" class="label" font-weight="bold">ABVETOS Context Engineering</text>
+  <text x="400" y="255" text-anchor="middle" class="label">Adaptive Behavior Vector Engine</text>
+  <text x="400" y="280" text-anchor="middle" class="label">Multi-dimensional Context Mapping</text>
+  
+  <!-- Processing Modules -->
+  <g>
+    <!-- PAU Module -->
+    <rect x="50" y="340" width="150" height="100" class="box" rx="5"/>
+    <text x="125" y="370" text-anchor="middle" class="label" font-weight="bold">PAU</text>
+    <text x="125" y="395" text-anchor="middle" class="label" font-size="12">Avatar Generation</text>
+    <text x="125" y="415" text-anchor="middle" class="label" font-size="12">Emotion Mapping</text>
+    
+    <!-- CAP Module -->
+    <rect x="225" y="340" width="150" height="100" class="box" rx="5"/>
+    <text x="300" y="370" text-anchor="middle" class="label" font-weight="bold">CAP</text>
+    <text x="300" y="395" text-anchor="middle" class="label" font-size="12">Pattern Design</text>
+    <text x="300" y="415" text-anchor="middle" class="label" font-size="12">Production Queue</text>
+    
+    <!-- ABVET Module -->
+    <rect x="400" y="340" width="150" height="100" class="box" rx="5"/>
+    <text x="475" y="370" text-anchor="middle" class="label" font-weight="bold">ABVET</text>
+    <text x="475" y="395" text-anchor="middle" class="label" font-size="12">Payment Gateway</text>
+    <text x="475" y="415" text-anchor="middle" class="label" font-size="12">Verification</text>
+    
+    <!-- AutoDonate Module -->
+    <rect x="575" y="340" width="150" height="100" class="box" rx="5"/>
+    <text x="650" y="370" text-anchor="middle" class="label" font-weight="bold">AutoDonate</text>
+    <text x="650" y="395" text-anchor="middle" class="label" font-size="12">Social Impact</text>
+    <text x="650" y="415" text-anchor="middle" class="label" font-size="12">Distribution</text>
+  </g>
+  
+  <!-- Output Layer -->
+  <rect x="50" y="480" width="700" height="80" class="box" rx="5"/>
+  <text x="400" y="510" text-anchor="middle" class="label">Integrated Output</text>
+  <text x="400" y="535" text-anchor="middle" class="label">Personalized Experience • Automated Production • Secure Transactions</text>
+  
+  <!-- Arrows -->
+  <path d="M 400 160 L 400 200" class="arrow"/>
+  <path d="M 125 300 L 125 340" class="arrow"/>
+  <path d="M 300 300 L 300 340" class="arrow"/>
+  <path d="M 475 300 L 475 340" class="arrow"/>
+  <path d="M 650 300 L 650 340" class="arrow"/>
+  <path d="M 125 440 L 400 480" class="arrow"/>
+  <path d="M 300 440 L 400 480" class="arrow"/>
+  <path d="M 475 440 L 400 480" class="arrow"/>
+  <path d="M 650 440 L 400 480" class="arrow"/>
+  
+  <!-- Patent Notice -->
+  <text x="400" y="580" text-anchor="middle" class="label" font-size="10">Patent Pending - TRYONYOU Context Engineering System</text>
+</svg>
