@@ -1,0 +1,33 @@
+name: System Orchestration Report
+on:
+  schedule:
+    - cron: "0 */12 * * *" # cada 12h
+  workflow_dispatch:
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install GitHub CLI
+        run: sudo apt-get install -y gh jq
+      - name: Generate Epic Report
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+          EPIC_TITLE: System Orchestration v1.0
+        run: |
+          EPIC_NUMBER=$(gh api -X GET search/issues \
+            -f q="repo:${REPO} is:issue in:title '${EPIC_TITLE}'" \
+            --jq '.items[0].number')
+          BODY=$(gh issue view "$EPIC_NUMBER" -R "$REPO" --json body --jq .body)
+          echo "$BODY" | awk '/^- \[ \] /{open++} /^- \[x\] /{done++} END{printf("✅ System Orchestration v1.0: %d done / %d open\n",done,open)}' > report.txt
+      - name: Notify Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          MSG=$(cat report.txt)
+          curl -s --data-urlencode "text=$MSG" \
+            "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}"
