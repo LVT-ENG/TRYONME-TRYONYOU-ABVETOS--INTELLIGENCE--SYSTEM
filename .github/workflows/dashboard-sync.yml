@@ -1,0 +1,135 @@
+name: Dashboard Sync (ABVETOS)
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'src/dashboard/abvetos-dashboard/**'
+      - 'scripts/deploy_abvetos_dashboard.sh'
+      - '.github/workflows/dashboard-sync.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy ABVETOS Dashboard
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Build dashboard
+        run: npm run build
+        env:
+          VITE_DASHBOARD_PASSWORD: ${{ secrets.VITE_DASHBOARD_PASSWORD }}
+      
+      - name: Verify dashboard build
+        run: |
+          echo "Checking if dashboard was built..."
+          if [ -d "dist/dashboard" ]; then
+            echo "✅ Dashboard directory found in dist"
+            ls -la dist/dashboard/
+          else
+            echo "❌ Dashboard directory NOT found in dist"
+            exit 1
+          fi
+      
+      - name: Deploy to Vercel
+        id: deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
+      
+      - name: Send Telegram Notification (Desktop)
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            # Create message
+            cat > /tmp/telegram-message.txt << 'EOFMSG'
+          🤖 *ABVETOS Dashboard Sync*
+          
+          ✅ *Status:* Deployment Successful
+          🌐 *URL:* https://tryonyou.app/dashboard/abvetos-dashboard/
+          📦 *Commit:* ${COMMIT_SHORT}
+          💬 *Message:* ${COMMIT_MSG}
+          🌿 *Branch:* ${BRANCH}
+          👤 *Author:* ${AUTHOR}
+          ⏰ *Time:* ${TIMESTAMP}
+          
+          📊 Dashboard synced with TRYONYOU_MASTER
+          🔔 Notification sent to @abvet_deploy_bot
+          EOFMSG
+            
+            # Replace variables
+            export COMMIT_SHORT="${GITHUB_SHA:0:7}"
+            export COMMIT_MSG="${{ github.event.head_commit.message }}"
+            export BRANCH="${{ github.ref_name }}"
+            export AUTHOR="${{ github.actor }}"
+            export TIMESTAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            
+            MESSAGE=$(envsubst < /tmp/telegram-message.txt)
+            
+            # Send text message
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            echo "✅ Telegram notification sent to desktop"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi
+      
+      - name: Send Telegram Notification (Mobile)
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            # Send mobile notification with inline button
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "chat_id": "'"${TELEGRAM_CHAT_ID}"'",
+                "text": "📱 ABVETOS Dashboard deployed!\n\n🔗 View Dashboard →",
+                "reply_markup": {
+                  "inline_keyboard": [[
+                    {
+                      "text": "🚀 Open Dashboard",
+                      "url": "https://tryonyou.app/dashboard/abvetos-dashboard/"
+                    }
+                  ]]
+                }
+              }'
+            
+            echo "✅ Telegram notification sent to mobile"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi
+      
+      - name: Deployment Summary
+        run: |
+          echo "## 🎉 ABVETOS Dashboard Deployed Successfully" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL**: https://tryonyou.app/dashboard/abvetos-dashboard/" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Author**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Timestamp**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Desktop & Mobile notifications sent via Telegram" >> $GITHUB_STEP_SUMMARY
