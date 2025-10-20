@@ -1,0 +1,122 @@
+name: Vercel Token Refresh
+
+on:
+  schedule:
+    # Run daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  refresh-token:
+    name: Refresh Vercel Token
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Check Vercel Token
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "🔐 Checking Vercel token validity..."
+          
+          # Test the token by making an API call
+          response=$(curl -s -w "\n%{http_code}" -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+            "https://api.vercel.com/v2/user")
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n-1)
+          
+          if [ "$http_code" = "200" ]; then
+            echo "✅ Vercel token is valid"
+            echo "User info: $body"
+            echo "TOKEN_VALID=true" >> $GITHUB_ENV
+          else
+            echo "❌ Vercel token is invalid or expired"
+            echo "HTTP Code: $http_code"
+            echo "Response: $body"
+            echo "TOKEN_VALID=false" >> $GITHUB_ENV
+          fi
+      
+      - name: Token Status Summary
+        run: |
+          echo "## 🔐 Vercel Token Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Check Date:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ env.TOKEN_VALID }}" = "true" ]; then
+            echo "- **Status:** ✅ Valid" >> $GITHUB_STEP_SUMMARY
+            echo "- **Action Required:** None" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **Status:** ❌ Invalid or Expired" >> $GITHUB_STEP_SUMMARY
+            echo "- **Action Required:** Update VERCEL_TOKEN in GitHub Secrets" >> $GITHUB_STEP_SUMMARY
+          fi
+      
+      - name: Send Notification on Token Expiry
+        if: env.TOKEN_VALID == 'false'
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            MESSAGE="⚠️ *Vercel Token Expired*
+          
+          ❌ The Vercel token has expired and needs to be refreshed.
+          
+          📋 *Action Required:*
+          1. Generate a new Vercel token at https://vercel.com/account/tokens
+          2. Update the VERCEL_TOKEN secret in GitHub repository settings
+          3. Verify the token by running the workflow again
+          
+          🕐 *Checked:* $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          
+          🤖 @abvet_deploy_bot"
+            
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            echo "✅ Notification sent to Telegram"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi
+      
+      - name: Check Team and Project IDs
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "🔍 Verifying Vercel configuration..."
+          
+          # Check if all required secrets are set
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "❌ VERCEL_TOKEN is not set"
+            exit 1
+          fi
+          
+          if [ -z "$VERCEL_ORG_ID" ]; then
+            echo "❌ VERCEL_ORG_ID is not set"
+            exit 1
+          fi
+          
+          if [ -z "$VERCEL_PROJECT_ID" ]; then
+            echo "❌ VERCEL_PROJECT_ID is not set"
+            exit 1
+          fi
+          
+          echo "✅ All Vercel secrets are configured"
+          
+          # Verify project access
+          response=$(curl -s -w "\n%{http_code}" -H "Authorization: Bearer ${VERCEL_TOKEN}" \
+            "https://api.vercel.com/v9/projects/${VERCEL_PROJECT_ID}?teamId=${VERCEL_ORG_ID}")
+          
+          http_code=$(echo "$response" | tail -n1)
+          
+          if [ "$http_code" = "200" ]; then
+            echo "✅ Project access verified"
+          else
+            echo "❌ Cannot access project (HTTP $http_code)"
+          fi
