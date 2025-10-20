@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABVETOS Dashboard - System Monitor</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <header class="dashboard-header">
+      <h1>🤖 ABVETOS System Dashboard</h1>
+      <p class="subtitle">Real-time monitoring and orchestration</p>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Deploy Status</h3>
+        <div class="stat-value" id="deploy-status">✅ Active</div>
+        <p class="stat-label">Last deploy: <span id="last-deploy">--</span></p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Active Agents</h3>
+        <div class="stat-value" id="agent-count">8</div>
+        <p class="stat-label">24/7 Operational</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>System Health</h3>
+        <div class="stat-value" id="health-status">🟢 Healthy</div>
+        <p class="stat-label">All systems operational</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Production</h3>
+        <div class="stat-value">
+          <a href="https://tryonyou.app" target="_blank" id="prod-link">tryonyou.app</a>
+        </div>
+        <p class="stat-label">Live site</p>
+      </div>
+    </div>
+
+    <div class="agents-section">
+      <h2>Active Agents</h2>
+      <div class="agents-list" id="agents-list">
+        <!-- Populated by dashboard.js -->
+      </div>
+    </div>
+
+    <div class="logs-section">
+      <h2>Recent Activity</h2>
+      <div class="logs-container" id="logs-container">
+        <!-- Populated by dashboard.js -->
+      </div>
+    </div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
