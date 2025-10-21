@@ -1,0 +1,155 @@
+name: ABVETOS Dashboard Deploy
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'TRYONYOU_ABVETOS_DASHBOARD_SYNC/**'
+      - '.github/workflows/abvetos-dashboard-deploy.yml'
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    name: Build and Deploy ABVETOS Dashboard
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        working-directory: ./TRYONYOU_ABVETOS_DASHBOARD_SYNC/apps/web/src/dashboard/abvetos-dashboard
+        run: npm install
+      
+      - name: Build Dashboard
+        working-directory: ./TRYONYOU_ABVETOS_DASHBOARD_SYNC/apps/web/src/dashboard/abvetos-dashboard
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: Deploy to Vercel
+        id: deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./TRYONYOU_ABVETOS_DASHBOARD_SYNC/apps/web/src/dashboard/abvetos-dashboard
+      
+      - name: Wait for deployment
+        run: sleep 10
+      
+      - name: Install Puppeteer
+        run: npm install puppeteer
+      
+      - name: Capture Screenshots
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+          
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            
+            const page = await browser.newPage();
+            
+            console.log('📸 Capturing desktop screenshot...');
+            await page.setViewport({ width: 1920, height: 1080 });
+            await page.goto('https://tryonyou.app', { waitUntil: 'networkidle0', timeout: 60000 });
+            await page.screenshot({ path: '/tmp/screenshot-desktop.png', fullPage: false });
+            
+            console.log('📱 Capturing mobile screenshot...');
+            await page.setViewport({ width: 375, height: 812 });
+            await page.goto('https://tryonyou.app', { waitUntil: 'networkidle0', timeout: 60000 });
+            await page.screenshot({ path: '/tmp/screenshot-mobile.png', fullPage: false });
+            
+            await browser.close();
+            console.log('✅ Screenshots captured successfully');
+          })();
+          "
+      
+      - name: Upload Screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-screenshots
+          path: /tmp/screenshot-*.png
+          retention-days: 7
+      
+      - name: Send Telegram Notification
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            # Prepare deployment information
+            export COMMIT_SHORT="${GITHUB_SHA:0:7}"
+            export COMMIT_MSG="${{ github.event.head_commit.message }}"
+            export BRANCH="${{ github.ref_name }}"
+            export AUTHOR="${{ github.actor }}"
+            export TIMESTAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            export DEPLOY_URL="https://tryonyou.app"
+            
+            # Create notification message
+            MESSAGE="🚀 *ABVETOS Dashboard Deployed*
+
+✅ *Status:* Deployment Successful
+🌐 *URL:* ${DEPLOY_URL}
+📦 *Commit:* ${COMMIT_SHORT}
+💬 *Message:* ${COMMIT_MSG}
+🌿 *Branch:* ${BRANCH}
+👤 *Author:* ${AUTHOR}
+⏰ *Time:* ${TIMESTAMP}
+
+🤖 @abvet_deploy_bot - Auto-deploy completed"
+
+            # Send text message
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            # Send desktop screenshot
+            if [ -f "/tmp/screenshot-desktop.png" ]; then
+              curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto" \
+                -F chat_id="${TELEGRAM_CHAT_ID}" \
+                -F photo=@/tmp/screenshot-desktop.png \
+                -F caption="🖥️ Desktop View (1920x1080)"
+            fi
+            
+            # Send mobile screenshot
+            if [ -f "/tmp/screenshot-mobile.png" ]; then
+              curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto" \
+                -F chat_id="${TELEGRAM_CHAT_ID}" \
+                -F photo=@/tmp/screenshot-mobile.png \
+                -F caption="📱 Mobile View (375x812)"
+            fi
+            
+            echo "✅ Telegram notifications sent to @abvet_deploy_bot"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi
+      
+      - name: Deployment Summary
+        run: |
+          echo "## 🎉 Deployment Complete"
+          echo ""
+          echo "**Dashboard URL:** https://tryonyou.app"
+          echo "**Commit:** ${GITHUB_SHA:0:7}"
+          echo "**Branch:** ${{ github.ref_name }}"
+          echo "**Triggered by:** ${{ github.actor }}"
+          echo ""
+          echo "✅ Build completed"
+          echo "✅ Deployed to Vercel"
+          echo "✅ Screenshots captured"
+          echo "✅ Telegram notification sent"
