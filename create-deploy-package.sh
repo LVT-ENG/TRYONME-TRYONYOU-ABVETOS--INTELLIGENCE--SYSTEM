@@ -190,7 +190,7 @@ echo "════════════════════════�
 echo ""
 echo "📦 Package: $PACKAGE_NAME"
 echo "📊 Size: $PACKAGE_SIZE"
-echo "📍 Location: $(pwd)/$PACKAGE_NAME"
+echo "📍 Location: $CURRENT_DIR/$PACKAGE_NAME"
 echo ""
 echo "🎯 Next Steps:"
 echo "   1. Extract the package"
