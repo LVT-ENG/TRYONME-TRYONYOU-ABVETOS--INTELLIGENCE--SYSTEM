@@ -69,8 +69,22 @@ if git commit -m "$MSG"; then
     
     log "✅ Changes pushed to repository"
     log "🌍 Site: https://tryonyou.app"
-    log "📊 GitHub: https://github.com/${GITHUB_REPOSITORY:-LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM}"
-    
+    # Determine repository path (owner/repo)
+    if [ -n "${GITHUB_REPOSITORY}" ]; then
+        REPO_PATH="${GITHUB_REPOSITORY}"
+    else
+        # Extract owner/repo from git remote URL
+        REMOTE_URL=$(git config --get remote.origin.url)
+        # Remove .git suffix if present
+        REMOTE_URL="${REMOTE_URL%.git}"
+        # Extract owner/repo from URL
+        if [[ "${REMOTE_URL}" =~ github\.com[:/]+([^/]+/[^/]+)$ ]]; then
+            REPO_PATH="${BASH_REMATCH[1]}"
+        else
+            REPO_PATH="unknown/unknown"
+        fi
+    fi
+    log "📊 GitHub: https://github.com/${REPO_PATH}"
     # Enviar notificación a Telegram
     TELEGRAM_MSG="🚀 *TRYONYOU Deploy Success*
 
