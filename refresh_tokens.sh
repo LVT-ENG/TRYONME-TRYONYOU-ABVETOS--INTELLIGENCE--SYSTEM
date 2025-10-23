@@ -61,7 +61,11 @@ fi
 # Validate Vercel token from environment
 if [ -n "$VERCEL_TOKEN" ]; then
   info "Validating VERCEL_TOKEN from environment..."
-  if curl -s -H "Authorization: Bearer $VERCEL_TOKEN" https://api.vercel.com/v2/user | grep -q '"user"'; then
+  RESPONSE=$(curl -sf -H "Authorization: Bearer $VERCEL_TOKEN" https://api.vercel.com/v2/user 2>/dev/null)
+  CURL_STATUS=$?
+  if [ $CURL_STATUS -ne 0 ]; then
+    warn "Network error or HTTP error occurred while validating VERCEL_TOKEN"
+  elif echo "$RESPONSE" | grep -q '"user"'; then
     log "VERCEL_TOKEN is valid"
   else
     warn "VERCEL_TOKEN appears to be invalid or expired"
