@@ -121,7 +121,6 @@ crontab -e
 
 Add this line:
 
-```
 0 0 * * 0 cd /path/to/repo && ./refresh_tokens.sh
 ```
 
