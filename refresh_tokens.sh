@@ -170,7 +170,12 @@ fi
 if [ -n "$GOOGLE_DRIVE_CREDENTIALS_JSON" ] && [ -f "$GOOGLE_DRIVE_CREDENTIALS_JSON" ]; then
   log "Google: Service account credentials file found"
   info "Activating service account..."
-  gcloud auth activate-service-account --key-file="$GOOGLE_DRIVE_CREDENTIALS_JSON" 2>/dev/null || true
+  GCLOUD_ACTIVATE_OUTPUT=$(gcloud auth activate-service-account --key-file="$GOOGLE_DRIVE_CREDENTIALS_JSON" 2>&1)
+  if [ $? -eq 0 ]; then
+    log "Google: Service account activated successfully"
+  else
+    warn "Google: Failed to activate service account: $GCLOUD_ACTIVATE_OUTPUT"
+  fi
 else
   warn "GOOGLE_DRIVE_CREDENTIALS_JSON not configured"
 fi
