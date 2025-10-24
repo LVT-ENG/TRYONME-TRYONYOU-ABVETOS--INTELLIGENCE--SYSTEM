@@ -1,0 +1,84 @@
+name: TRYONYOU Domain Sync & Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  sync-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Link to project
+        run: vercel link --project tryonyou-master --yes --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+
+      - name: Add domain tryonyou.app
+        run: |
+          vercel domains add tryonyou.app --token=${{ secrets.VERCEL_TOKEN }} || true
+          vercel domains assign tryonyou.app --project tryonyou-master --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Add subdomain www.tryonyou.app
+        run: |
+          vercel domains add www.tryonyou.app --token=${{ secrets.VERCEL_TOKEN }} || true
+          vercel domains assign www.tryonyou.app --project tryonyou-master --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Redirect abvetos.com to tryonyou.app
+        run: vercel redirect add abvetos.com/* https://tryonyou.app/\$1 --status 308 --token=${{ secrets.VERCEL_TOKEN }} || true
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to production
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }} --yes --confirm --force
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+
+      - name: Notify deployment status
+        if: always()
+        run: |
+          STATUS="${{ job.status }}"
+          if [ "$STATUS" = "success" ]; then
+            EMOJI="✅"
+          else
+            EMOJI="❌"
+          fi
+          MESSAGE="${EMOJI} *TRYONYOU Domain Sync & Deploy*
+          
+          Status: ${STATUS}
+          Branch: ${{ github.ref_name }}
+          Commit: ${{ github.sha }}
+          Author: ${{ github.actor }}
+          
+          Domain: https://tryonyou.app
+          www: https://www.tryonyou.app"
+          
+          echo "Deployment ${STATUS}"
+          echo "Domain: https://tryonyou.app"
