@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "builds": [{ "src": "deploy_package/index.html", "use": "@vercel/static" }],
+  "routes": [{ "src": "/(.*)", "dest": "/deploy_package/index.html" }],
+  "domain": "tryonyou.app"
+}
