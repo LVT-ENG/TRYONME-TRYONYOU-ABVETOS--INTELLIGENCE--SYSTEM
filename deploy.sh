@@ -73,14 +73,9 @@ if git commit -m "$MSG"; then
     if [ -n "${GITHUB_REPOSITORY}" ]; then
         REPO_PATH="${GITHUB_REPOSITORY}"
     else
-        # Extract owner/repo from git remote URL
-        REMOTE_URL=$(git config --get remote.origin.url)
-        # Remove .git suffix if present
-        REMOTE_URL="${REMOTE_URL%.git}"
-        # Extract owner/repo from URL
-        if [[ "${REMOTE_URL}" =~ github\.com[:/]+([^/]+/[^/]+)$ ]]; then
-            REPO_PATH="${BASH_REMATCH[1]}"
-        else
+        # Extract owner/repo from git remote URL using git and sed
+        REPO_PATH=$(git remote get-url origin | sed -E 's#(git@|https://)github.com[:/]+([^/]+/[^/.]+)(\.git)?#\2#')
+        if [ -z "${REPO_PATH}" ]; then
             REPO_PATH="unknown/unknown"
         fi
     fi
