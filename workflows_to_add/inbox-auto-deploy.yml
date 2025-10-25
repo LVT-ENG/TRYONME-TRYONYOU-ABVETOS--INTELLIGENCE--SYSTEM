@@ -1,0 +1,133 @@
+name: INBOX Auto Deploy
+
+on:
+  schedule:
+    # Verificar INBOX cada 15 minutos
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    inputs:
+      force_check:
+        description: 'Force INBOX check'
+        required: false
+        default: 'true'
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  check-inbox:
+    name: Check INBOX and Deploy
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🔁 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: 🔍 Check for new files in INBOX
+        id: check
+        run: |
+          cd TRYONYOU_DEPLOY_EXPRESS_INBOX
+          
+          # Contar archivos (excluir .gitkeep, README.md y ocultos)
+          FILE_COUNT=$(find . -maxdepth 1 -type f ! -name '.*' ! -name 'README.md' | wc -l)
+          
+          echo "files_found=$FILE_COUNT" >> $GITHUB_OUTPUT
+          
+          if [ "$FILE_COUNT" -gt 0 ]; then
+            echo "📂 Found $FILE_COUNT file(s) in INBOX"
+            echo "has_files=true" >> $GITHUB_OUTPUT
+          else
+            echo "ℹ️  No new files in INBOX"
+            echo "has_files=false" >> $GITHUB_OUTPUT
+          fi
+          
+      - name: 📋 List INBOX files
+        if: steps.check.outputs.has_files == 'true'
+        run: |
+          echo "### 📂 Files in INBOX" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          ls -lh TRYONYOU_DEPLOY_EXPRESS_INBOX/ | grep -v total | grep -v '^\.' | grep -v README.md >> $GITHUB_STEP_SUMMARY || echo "No files" >> $GITHUB_STEP_SUMMARY
+          
+      - name: ⚙️ Setup Node.js
+        if: steps.check.outputs.has_files == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        if: steps.check.outputs.has_files == 'true'
+        run: npm ci
+        
+      - name: 🧱 Build project with Vite
+        if: steps.check.outputs.has_files == 'true'
+        run: npm run build
+        env:
+          NODE_ENV: production
+          VITE_ENV: production
+        
+      - name: 📤 Upload build artifacts
+        if: steps.check.outputs.has_files == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: inbox-build-${{ github.run_number }}
+          path: dist/
+          retention-days: 7
+          
+      - name: 🚀 Deploy to Vercel
+        if: steps.check.outputs.has_files == 'true'
+        id: deploy
+        run: |
+          npm install -g vercel@latest
+          
+          DEPLOYMENT_URL=$(vercel deploy --prod \
+            --token=${{ secrets.VERCEL_TOKEN }} \
+            --yes \
+            --scope=${{ secrets.VERCEL_ORG_ID }} \
+            2>&1 | grep -oP 'https://[^\s]+' | head -1)
+          
+          echo "url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+          echo "deployment-id=${{ github.run_number }}" >> $GITHUB_OUTPUT
+          
+      - name: 📸 Send Telegram notification
+        if: steps.check.outputs.has_files == 'true'
+        run: |
+          FILE_LIST=$(ls -1 TRYONYOU_DEPLOY_EXPRESS_INBOX/ | grep -v '^\.' | grep -v README.md | head -5)
+          
+          MESSAGE="🤖 *INBOX Auto Deploy*%0A%0A"
+          MESSAGE+="*Files processed:* ${{ steps.check.outputs.files_found }}%0A"
+          MESSAGE+="*Build:* Success ✅%0A"
+          MESSAGE+="*Deploy:* ${{ steps.deploy.outputs.url }}%0A%0A"
+          MESSAGE+="*Files:*%0A\`\`\`%0A$FILE_LIST%0A\`\`\`"
+          
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
+            -d text="$MESSAGE" \
+            -d parse_mode=Markdown
+            
+      - name: 📁 Move processed files
+        if: steps.check.outputs.has_files == 'true'
+        run: |
+          mkdir -p TRYONYOU_DEPLOY_EXPRESS_INBOX/.processed
+          
+          cd TRYONYOU_DEPLOY_EXPRESS_INBOX
+          for file in *; do
+            if [ -f "$file" ] && [ "$file" != "README.md" ] && [[ "$file" != .* ]]; then
+              mv "$file" .processed/
+              echo "Moved: $file"
+            fi
+          done
+          
+      - name: 💾 Commit processed files
+        if: steps.check.outputs.has_files == 'true'
+        run: |
+          git config user.name "INBOX Auto Deploy Bot"
+          git config user.email "deploy@tryonyou.app"
+          
+          git add TRYONYOU_DEPLOY_EXPRESS_INBOX/.processed/
+          git commit -m "chore: Process INBOX files - Auto deploy #${{ github.run_number }}" || echo "No changes to commit"
+          git push origin main || echo "Nothing to push"
+
