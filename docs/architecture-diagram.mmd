@@ -1,0 +1,15 @@
+graph TD
+    A[GitHub Push] --> B(GitHub Actions);
+    C[Email/Telegram] --> D{AI Communication Layer};
+    E[AVBET API] --> F{AI Payment Reconciliation};
+    B -- "Deploy" --> G(Deploy Express);
+    G -- "Post-deploy Hook" --> H{Smart QA Agent};
+    H -- "Results" --> I[D1: QA Results];
+    H -- "Notifies" --> J((Telegram));
+    F -- "Daily Cron" --> K(Fetch Payments & Orders);
+    K --> L[D1: Payments DB];
+    F -- "Processes" --> L;
+    F -- "Discrepancies" --> J;
+    D -- "Classifies & Responds" --> M[D1: Messages DB];
+    D -- "Uses Templates" --> N[KV: Response Templates];
+    D -- "Notifies" --> J;

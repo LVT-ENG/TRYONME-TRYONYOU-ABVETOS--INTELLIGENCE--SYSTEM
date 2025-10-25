@@ -1,0 +1,29 @@
+name = "tryonyou-smart-qa-agent"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Variables de entorno
+[vars]
+ENVIRONMENT = "production"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "QA_DB"
+database_name = "tryonyou_qa_results"
+database_id = "YOUR_D1_DATABASE_ID"
+
+# KV Namespace binding
+[[kv_namespaces]]
+binding = "QA_CONFIG"
+id = "YOUR_KV_NAMESPACE_ID"
+
+# Secrets (configurar con: wrangler secret put <NAME>)
+# QA_AUTH_TOKEN
+# TELEGRAM_BOT_TOKEN
+# TELEGRAM_CHAT_ID
+
+# Routes
+[routes]
+pattern = "tryonyou.app/api/qa/*"
+zone_name = "tryonyou.app"
+
