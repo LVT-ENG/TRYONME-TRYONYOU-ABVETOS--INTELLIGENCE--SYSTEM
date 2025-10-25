@@ -1,0 +1,32 @@
+name = "tryonyou-communication-layer"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Variables de entorno
+[vars]
+ENVIRONMENT = "production"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "MESSAGES_DB"
+database_name = "tryonyou_messages"
+database_id = "YOUR_D1_DATABASE_ID"
+
+# KV Namespace binding para plantillas
+[[kv_namespaces]]
+binding = "TEMPLATES_KV"
+id = "YOUR_KV_NAMESPACE_ID"
+
+# Secrets (configurar con: wrangler secret put <NAME>)
+# COMM_AUTH_TOKEN
+# OPENAI_API_KEY
+# TELEGRAM_BOT_TOKEN
+# TELEGRAM_CHAT_ID
+# EMAIL_API_KEY
+
+# Routes
+[[routes]]
+pattern = "tryonyou.app/api/comm/*"
+zone_name = "tryonyou.app"
+

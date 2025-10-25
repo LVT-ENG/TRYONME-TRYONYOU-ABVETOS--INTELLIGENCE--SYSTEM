@@ -1,0 +1,32 @@
+name = "tryonyou-payment-reconciliation"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Variables de entorno
+[vars]
+ENVIRONMENT = "production"
+
+# D1 Database binding
+[[d1_databases]]
+binding = "PAYMENTS_DB"
+database_name = "tryonyou_payments"
+database_id = "YOUR_D1_DATABASE_ID"
+
+# Secrets (configurar con: wrangler secret put <NAME>)
+# RECONCILIATION_AUTH_TOKEN
+# OPENAI_API_KEY
+# TELEGRAM_BOT_TOKEN
+# TELEGRAM_CHAT_ID
+# AVBET_API_KEY
+# AVBET_API_URL
+
+# Cron trigger - Ejecutar diariamente a las 3 AM
+[triggers]
+crons = ["0 3 * * *"]
+
+# Routes
+[[routes]]
+pattern = "tryonyou.app/api/reconciliation/*"
+zone_name = "tryonyou.app"
+
