@@ -30,7 +30,7 @@ mkdir -p "$DEPLOY_DIR"
 echo "📦 Extrayendo contenido del ZIP maestro..."
 unzip -o "$ZIP_PATH" -d "$DEPLOY_DIR"
 
-# Verificar extracción exitosa (innecesario con set -e; asumimos éxito si llegamos aquí)
+# Nota: set -e detiene el script si unzip falla, pero unzip puede tener éxito parcial; no se valida extracción completa aquí.
 echo "✅ Despliegue completado exitosamente en $DEPLOY_DIR"
 echo ""
 echo "📋 Contenido desplegado:"
