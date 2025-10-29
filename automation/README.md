@@ -4,6 +4,24 @@ This directory contains automation scripts and integrations for the TRYONYOU pla
 
 ## 📁 Contents
 
+### 🔹 [abvetos_full_fusion.mjs](./abvetos_full_fusion.mjs)
+
+**ABVETOS Full-Merge Protocol**
+
+Automated deployment script that integrates ABVETOS + NOTS + ABVEY repositories into a unified TRYONYOU deployment.
+
+**Key Features:**
+- 🔄 Automatic repository cloning
+- 🔀 Code and module merging
+- ⚙️ Configuration normalization (Vite 7.1.2 / Node 20)
+- 🚀 Build and production deployment
+- 📊 Automated fusion reports
+
+**Quick Links:**
+- [Usage Guide](../docs/README_DEPLOY_EXPRESS.md)
+- [Deployment Trigger Config](../deploy/deploy_trigger.json)
+- [Script Source](./abvetos_full_fusion.mjs)
+
 ### 🔹 [google-apps-script/](./google-apps-script/)
 
 **Daily Task Planner & Telegram Notifier**
@@ -32,13 +50,16 @@ Automated daily reports sent to Telegram at 09:00 CEST with:
 
 ## 🚀 Getting Started
 
-1. **Daily Planner Setup**: See [google-apps-script/QUICK_START.md](./google-apps-script/QUICK_START.md)
-2. Configure your Telegram bot credentials
-3. Set up Google Sheets with the expected format
-4. Run the setup script and test
+1. **ABVETOS Full Fusion**: Run `node automation/abvetos_full_fusion.mjs` for complete deployment
+2. **Daily Planner Setup**: See [google-apps-script/QUICK_START.md](./google-apps-script/QUICK_START.md)
+3. Configure your Telegram bot credentials
+4. Set up Google Sheets with the expected format
+5. Run the setup script and test
 
 ## 🔗 Related Documentation
 
+- [ABVETOS Deploy Express Guide](../docs/README_DEPLOY_EXPRESS.md) - Full fusion deployment
+- [Deploy Trigger Configuration](../deploy/deploy_trigger.json) - Automation settings
 - [GitHub Actions Workflows](../.github/workflows/) - CI/CD automation
 - [Deploy Instructions](../DEPLOY_INSTRUCTIONS.md) - Deployment workflows
 - [GitHub Secrets Setup](../GITHUB_SECRETS_SETUP_COMPLETE.md) - Secret configuration
@@ -64,4 +85,4 @@ When adding new automation scripts:
 ---
 
 **Maintained by**: TRYONYOU Team  
-**Last Updated**: 2025-01-15
+**Last Updated**: 2025-10-20
