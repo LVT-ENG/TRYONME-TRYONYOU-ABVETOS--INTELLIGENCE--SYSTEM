@@ -35,8 +35,10 @@ cd "$WORKDIR" || exit
 # Deploy to Vercel and capture the result
 if vercel --prod --confirm --token="$VERCEL_TOKEN" >> "$LOGFILE" 2>&1; then
   DEPLOY_STATUS="success"
-  DEPLOY_URL=$(vercel ls --token="$VERCEL_TOKEN" 2>/dev/null | grep -E "https://" | head -1 | awk '{print $2}')
+  # Try to get URL from vercel ls output, with fallback
+  DEPLOY_URL=$(vercel ls --token="$VERCEL_TOKEN" 2>/dev/null | grep -oE "https://[a-zA-Z0-9.-]+" | head -1)
   if [ -z "$DEPLOY_URL" ]; then
+    # Fallback to default domain if URL extraction fails
     DEPLOY_URL="https://tryonyou.app"
   fi
   echo "🌐 URL final: $DEPLOY_URL" | tee -a "$LOGFILE"
