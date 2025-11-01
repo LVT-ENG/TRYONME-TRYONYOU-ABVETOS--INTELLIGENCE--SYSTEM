@@ -1,0 +1,486 @@
+{
+  "meta": {
+    "version": "2025-Q4",
+    "total_agents": 81,
+    "active_count": 15,
+    "backstage_count": 60,
+    "watchdog_count": 3,
+    "core_count": 3,
+    "generated_by": "Agent 70 – ABVETOS Core",
+    "date": "2025-11-01"
+  },
+  "core": [
+    {
+      "id": "CORE-01",
+      "name": "ABVETOS Core",
+      "role": "Sistema orquestador global y núcleo de automatización",
+      "mode": "core"
+    },
+    {
+      "id": "CORE-02",
+      "name": "Agent 70",
+      "role": "Custodio de decisiones, coordinación de agentes y supervisión estratégica",
+      "mode": "core"
+    },
+    {
+      "id": "CORE-03",
+      "name": "ABVET",
+      "role": "Bot orquestador conectado a Telegram y Deploy Express",
+      "mode": "core"
+    }
+  ],
+  "active": [
+    {
+      "id": "A-01",
+      "name": "PMV – Project Manager Virtual",
+      "role": "Gestor de tareas, calendario y progreso",
+      "mode": "active"
+    },
+    {
+      "id": "A-02",
+      "name": "Deploy Operator",
+      "role": "CI/CD y despliegue automático a Vercel",
+      "mode": "active"
+    },
+    {
+      "id": "A-03",
+      "name": "GitHub Commit Agent",
+      "role": "Control y validación de commits",
+      "mode": "active"
+    },
+    {
+      "id": "A-04",
+      "name": "Checkout UX Master",
+      "role": "Experiencia de compra y conversión sin fricción",
+      "mode": "active"
+    },
+    {
+      "id": "A-05",
+      "name": "Brand Guardian",
+      "role": "Coherencia visual, logo y branding global",
+      "mode": "active"
+    },
+    {
+      "id": "A-06",
+      "name": "Factory Master",
+      "role": "Gestión de armario inteligente y flujos solidarios",
+      "mode": "active"
+    },
+    {
+      "id": "A-07",
+      "name": "Bot Integrador EPCT/WIPO",
+      "role": "Sincronización legal y patente EPCT",
+      "mode": "active"
+    },
+    {
+      "id": "A-08",
+      "name": "Content Pro",
+      "role": "Redacción web, fichas técnicas y documentación",
+      "mode": "active"
+    },
+    {
+      "id": "A-09",
+      "name": "Avatar Generator 3D",
+      "role": "Generación de avatares paramétricos",
+      "mode": "active"
+    },
+    {
+      "id": "A-10",
+      "name": "Fit-AI Assistant",
+      "role": "Comparador de medidas y recomendación de talla",
+      "mode": "active"
+    },
+    {
+      "id": "A-11",
+      "name": "Tester UX Web",
+      "role": "Validación de experiencia y QA post-venta",
+      "mode": "active"
+    },
+    {
+      "id": "A-12",
+      "name": "HR Supervisor",
+      "role": "Asignación de roles y rendimiento",
+      "mode": "active"
+    },
+    {
+      "id": "A-13",
+      "name": "Look Curator",
+      "role": "Curación estética y coherencia comercial",
+      "mode": "active"
+    },
+    {
+      "id": "A-14",
+      "name": "Video Curator",
+      "role": "Edición y curación audiovisual para moda",
+      "mode": "active"
+    },
+    {
+      "id": "A-15",
+      "name": "Security & Token Guardian",
+      "role": "Protección de claves, .env y cifrado del sistema",
+      "mode": "watchdog"
+    }
+  ],
+  "backstage": [
+    {
+      "id": "B-01",
+      "name": "Ficha Técnica Master",
+      "role": "Gestión de especificaciones técnicas de productos",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-02",
+      "name": "Proveedor Tracker",
+      "role": "Seguimiento y gestión de proveedores",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-03",
+      "name": "RRSS Automator",
+      "role": "Automatización de redes sociales",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-04",
+      "name": "Mockup Artist",
+      "role": "Creación de mockups visuales",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-05",
+      "name": "Layout Architect",
+      "role": "Diseño de layouts y estructuras",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-06",
+      "name": "Product Loader",
+      "role": "Carga de productos al sistema",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-07",
+      "name": "Image Curator",
+      "role": "Curación y gestión de imágenes",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-08",
+      "name": "Shopify Connector",
+      "role": "Integración con plataforma Shopify",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-09",
+      "name": "AutoDonate Syncer",
+      "role": "Sincronización automática de donaciones",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-10",
+      "name": "Rechazo Visual Automático",
+      "role": "Detección y rechazo automático de contenido visual",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-11",
+      "name": "Pau le Paon",
+      "role": "Agente especializado en avatares",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-12",
+      "name": "Recomendador Cubista",
+      "role": "Sistema de recomendación visual estilo cubista",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-13",
+      "name": "Sustituidor de Imágenes por Catálogo",
+      "role": "Reemplazo automático de imágenes según catálogo",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-14",
+      "name": "Instagram Publisher",
+      "role": "Publicación automática en Instagram",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-15",
+      "name": "Facebook Syncer",
+      "role": "Sincronización con Facebook",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-16",
+      "name": "Notion Sync Agent",
+      "role": "Sincronización con Notion",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-17",
+      "name": "Google Drive Organizer",
+      "role": "Organización de archivos en Google Drive",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-18",
+      "name": "Make Scenario Executor",
+      "role": "Ejecución de escenarios en Make",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-19",
+      "name": "Pasarela Generator",
+      "role": "Generación de pasarelas de pago",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-20",
+      "name": "SlowMotion FX Agent",
+      "role": "Efectos de cámara lenta",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-21",
+      "name": "Final Cut Branding Agent",
+      "role": "Branding en edición final",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-22",
+      "name": "Collection Builder",
+      "role": "Construcción de colecciones",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-23",
+      "name": "Prompt Generator for Chaquetas",
+      "role": "Generación de prompts para chaquetas",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-24",
+      "name": "Fit Adjuster",
+      "role": "Ajuste de tallas y medidas",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-25",
+      "name": "Visual Positioning",
+      "role": "Posicionamiento visual de productos",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-26",
+      "name": "Color Curator",
+      "role": "Curación de paletas de colores",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-27",
+      "name": "Modelo Selector con historia",
+      "role": "Selección de modelos con historial",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-28",
+      "name": "Desfile Visual Generator",
+      "role": "Generación de desfiles visuales",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-29",
+      "name": "Slogan Writer",
+      "role": "Creación de slogans",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-30",
+      "name": "Moodboard Integrator",
+      "role": "Integración de moodboards",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-31",
+      "name": "Cubismo Visual Synthesizer",
+      "role": "Síntesis visual estilo cubista",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-32",
+      "name": "Fábrica Negotiator",
+      "role": "Negociación con fábricas",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-33",
+      "name": "Document Locker",
+      "role": "Bloqueo y seguridad de documentos",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-34",
+      "name": "Invoice Generator",
+      "role": "Generación de facturas",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-35",
+      "name": "OF Packager",
+      "role": "Empaquetado de órdenes de fabricación",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-36",
+      "name": "Impuestos Notifier",
+      "role": "Notificaciones fiscales",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-37",
+      "name": "Pipeline Tracker",
+      "role": "Seguimiento de pipelines",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-38",
+      "name": "Product Status Kanban",
+      "role": "Gestión Kanban de estados de productos",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-39",
+      "name": "Checklist LanzaWeb",
+      "role": "Checklist de lanzamiento web",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-40",
+      "name": "Analytics Setup",
+      "role": "Configuración de analytics",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-41",
+      "name": "Feedback Collector",
+      "role": "Recolección de feedback",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-42",
+      "name": "Colaborador Automático",
+      "role": "Automatización de colaboraciones",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-43",
+      "name": "Email Automatizado a Fábricas",
+      "role": "Emails automáticos a fábricas",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-44",
+      "name": "Cliente Inteligente UX Tester",
+      "role": "Testing UX con clientes inteligentes",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-45",
+      "name": "Agente Multiplataforma Web",
+      "role": "Gestión multiplataforma web",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-46",
+      "name": "Sistema de Recomendación por forma corporal",
+      "role": "Recomendación basada en forma corporal",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-47",
+      "name": "Traductor Técnico Multilingüe",
+      "role": "Traducción técnica en múltiples idiomas",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-48",
+      "name": "Instagram Caption Writer",
+      "role": "Escritura de captions para Instagram",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-49",
+      "name": "Filtro SEO Visual",
+      "role": "Filtrado SEO visual",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-50",
+      "name": "Pricing Strategy AI",
+      "role": "Estrategia de precios con IA",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-51",
+      "name": "Live Support Assistant",
+      "role": "Asistencia de soporte en vivo",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-52",
+      "name": "Investor Liaison Agent",
+      "role": "Enlace con inversores",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-53",
+      "name": "Patents & IP Monitor",
+      "role": "Monitoreo de patentes y propiedad intelectual",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-54",
+      "name": "User Sentiment Analyzer",
+      "role": "Análisis de sentimiento de usuarios",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-55",
+      "name": "Live Data & Telemetry Agent",
+      "role": "Datos en vivo y telemetría",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-56",
+      "name": "Sustainability & Impact Tracker",
+      "role": "Seguimiento de sostenibilidad e impacto",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-57",
+      "name": "Compliance Auditor",
+      "role": "Auditoría de cumplimiento",
+      "mode": "watchdog"
+    },
+    {
+      "id": "B-58",
+      "name": "AI Ethics & Transparency Officer",
+      "role": "Ética de IA y transparencia",
+      "mode": "watchdog"
+    },
+    {
+      "id": "B-59",
+      "name": "Investor Deck Builder",
+      "role": "Construcción de presentaciones para inversores",
+      "mode": "backstage"
+    },
+    {
+      "id": "B-60",
+      "name": "Memory Syncer",
+      "role": "Sincronización de memoria del sistema",
+      "mode": "backstage"
+    }
+  ]
+}
