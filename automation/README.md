@@ -24,16 +24,26 @@ Automated deployment script that integrates ABVETOS + NOTS + ABVEY repositories 
 
 ### 🔹 [google-apps-script/](./google-apps-script/)
 
-**Daily Task Planner & Telegram Notifier**
+**Daily Task Planner & PMV + ABVETOS Core Integration**
 
-Automated daily reports sent to Telegram at 09:00 CEST with:
-- Critical tasks (P0 and P1 priorities)
+Comprehensive automation suite for TRYONYOU project management:
+
+**1. Daily Task Planner & Telegram Notifier**
+- Critical tasks reporting (P0 and P1 priorities)
 - AI-agent-based execution guidance
-- Integration with Google Sheets Dashboard
+- Daily Telegram notifications at 09:00 CEST
+
+**2. PMV + ABVETOS Integration (NEW!)**
+- Synchronizes 15 active agents from registry to Dashboard
+- Automatic agent status tracking and updates
+- Archives backstage agents
+- Daily automation at 09:00
 
 **Files:**
-- `dailyPlanner.gs` - Main script for Google Apps Script
+- `dailyPlanner.gs` - Main script for task planning
+- `pmv_abvetos_integration.gs` - Agent synchronization script
 - `README.md` - Complete setup and configuration guide
+- `PMV_ABVETOS_INTEGRATION_README.md` - Agent integration guide
 - `QUICK_START.md` - 5-minute quick start guide
 
 **Key Features:**
@@ -41,12 +51,14 @@ Automated daily reports sent to Telegram at 09:00 CEST with:
 - 📊 Reads tasks from Google Sheets Dashboard
 - 🤖 Telegram bot integration for notifications
 - 🎯 AI-agent guidance for task execution
+- 👥 Automatic agent registry synchronization
 - 🔧 Configurable priorities and workflows
 
 **Quick Links:**
 - [Quick Start Guide](./google-apps-script/QUICK_START.md)
-- [Full Documentation](./google-apps-script/README.md)
-- [Script Source](./google-apps-script/dailyPlanner.gs)
+- [Daily Planner Documentation](./google-apps-script/README.md)
+- [PMV + ABVETOS Integration Guide](./google-apps-script/PMV_ABVETOS_INTEGRATION_README.md)
+- [Script Sources](./google-apps-script/)
 
 ## 🚀 Getting Started
 
