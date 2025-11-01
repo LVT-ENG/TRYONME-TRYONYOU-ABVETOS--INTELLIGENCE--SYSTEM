@@ -26,6 +26,7 @@ deploy_express_total_for_manus.sh
 
 # Allow scripts directory
 !scripts/*.sh
+!TRYONYOU_DEPLOY_EXPRESS_INBOX/*.sh
 
 # Temporary backups
 *_BACKUP/
