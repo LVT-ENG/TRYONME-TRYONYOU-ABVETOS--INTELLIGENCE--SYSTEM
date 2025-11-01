@@ -1,0 +1,28 @@
+name: 🔁 ABVETOS Flow 345 CI/CD
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  flow345:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🧠 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 🚀 Run Flow 345
+        run: |
+          chmod +x system/deploy/ABVETOS_FLOW_345.sh
+          chmod +x system/deploy/ABVETOS_ORCHESTRATION.sh
+          ./system/deploy/ABVETOS_ORCHESTRATION.sh
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

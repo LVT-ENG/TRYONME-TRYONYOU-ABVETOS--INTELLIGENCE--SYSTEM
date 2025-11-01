@@ -27,6 +27,9 @@ deploy_express_total_for_manus.sh
 # Allow scripts directory
 !scripts/*.sh
 
+# Allow system/deploy scripts
+!system/deploy/*.sh
+
 # Temporary backups
 *_BACKUP/
 Desktop/
