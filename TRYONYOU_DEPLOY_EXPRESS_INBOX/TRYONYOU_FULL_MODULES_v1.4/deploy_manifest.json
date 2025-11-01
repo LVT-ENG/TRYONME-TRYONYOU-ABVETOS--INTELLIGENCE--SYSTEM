@@ -1,0 +1,147 @@
+{
+  "project": "TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM",
+  "version": "v1.4",
+  "ecosystem": [
+    "FTT_CAP",
+    "PAU",
+    "ADBET",
+    "STORE",
+    "QUESTIONNAIRE"
+  ],
+  "commit_source": "Agent 70",
+  "timestamp": "auto",
+  "deploy_targets": [
+    "GitHub",
+    "Vercel",
+    "Telegram"
+  ],
+  "telegram_bot": "@abvet_deploy_bot",
+  "modules": {
+    "FTT_CAP": {
+      "name": "Fast-Track Try-on & Creation Sync",
+      "version": "1.4",
+      "file": "FTT_CAP/TRYONYOU_FTT_CAP_SYNC_v1.4.js",
+      "description": "Sistema de sincronización rápida entre prueba virtual y producción",
+      "dependencies": [],
+      "status": "active"
+    },
+    "PAU": {
+      "name": "Personal Avatar Unit Recommender",
+      "version": "1.4",
+      "file": "PAU/TRYONYOU_PAU_RECOMMENDER_v1.4.js",
+      "description": "Sistema de recomendación basado en avatar emocional",
+      "dependencies": [],
+      "status": "active"
+    },
+    "ADBET": {
+      "name": "ABVETOS Payment System",
+      "version": "1.4",
+      "file": "ADBET/TRYONYOU_ABVET_PAYMENT_v1.4.js",
+      "description": "Sistema de pagos integrado con blockchain y métodos tradicionales",
+      "dependencies": [],
+      "status": "active"
+    },
+    "STORE": {
+      "name": "E-Commerce & Inventory Management",
+      "version": "1.4",
+      "file": "STORE/TRYONYOU_STORE_v1.4.js",
+      "description": "Sistema de tienda online integrado con gestión de inventario",
+      "dependencies": [],
+      "status": "active"
+    },
+    "QUESTIONNAIRE": {
+      "name": "User Profile & Preferences",
+      "version": "1.4",
+      "file": "QUESTIONNAIRE/TRYONYOU_QUESTIONNAIRE_v1.4.js",
+      "description": "Sistema de cuestionarios para capturar preferencias de usuario",
+      "dependencies": [],
+      "status": "active"
+    }
+  },
+  "deployment": {
+    "github": {
+      "repository": "LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM",
+      "branch": "main",
+      "auto_deploy": true
+    },
+    "vercel": {
+      "project_name": "tryonyou-abvetos-ultra-plus-ultimatum",
+      "framework": "vite",
+      "node_version": "18.x",
+      "build_command": "npm run build",
+      "output_directory": "dist",
+      "install_command": "npm install",
+      "regions": ["iad1"]
+    },
+    "telegram": {
+      "bot": "@abvet_deploy_bot",
+      "notifications": true,
+      "deploy_updates": true,
+      "alert_on_errors": true
+    }
+  },
+  "build": {
+    "vite_version": "7.1.2",
+    "node_version": "18.x",
+    "npm_version": "9.x",
+    "build_timeout": 600,
+    "cache_enabled": true,
+    "optimization": {
+      "minify": true,
+      "treeshake": true,
+      "code_splitting": true,
+      "lazy_loading": true
+    }
+  },
+  "features": {
+    "fast_track_tryon": true,
+    "emotional_avatar": true,
+    "payment_processing": true,
+    "e_commerce": true,
+    "user_profiling": true,
+    "blockchain_integration": true,
+    "real_time_sync": true,
+    "https_enabled": true,
+    "cache_optimization": true,
+    "cdn_enabled": true
+  },
+  "environment": {
+    "production": {
+      "NODE_ENV": "production",
+      "VITE_ENV": "production",
+      "VITE_VERSION": "1.4",
+      "VITE_APP_NAME": "TRYONYOU"
+    },
+    "staging": {
+      "NODE_ENV": "staging",
+      "VITE_ENV": "staging",
+      "VITE_VERSION": "1.4-staging",
+      "VITE_APP_NAME": "TRYONYOU-STAGING"
+    }
+  },
+  "security": {
+    "https_only": true,
+    "ssl_enabled": true,
+    "csp_enabled": true,
+    "cors_enabled": true,
+    "rate_limiting": true
+  },
+  "monitoring": {
+    "analytics": true,
+    "error_tracking": true,
+    "performance_monitoring": true,
+    "uptime_monitoring": true
+  },
+  "contact": {
+    "support_email": "soporte@tryonyou.app",
+    "technical_lead": "Agent 70",
+    "repository_url": "https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM"
+  },
+  "metadata": {
+    "created_at": "2025-11-01",
+    "last_updated": "2025-11-01",
+    "authors": ["Agent 70", "LVT-ENG"],
+    "license": "Proprietary",
+    "documentation": "README.md"
+  }
+}
