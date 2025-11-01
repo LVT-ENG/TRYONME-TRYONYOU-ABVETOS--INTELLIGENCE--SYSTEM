@@ -174,12 +174,14 @@ send_orchestration_notification() {
 🎯 Flow 345 Orchestration
 🤖 ABVETOS Intelligence System"
         
-        curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+        if curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
             -d parse_mode="Markdown" \
-            -d text="$MESSAGE" > /dev/null 2>&1
-        
-        print_success "Orchestration notification sent"
+            -d text="$MESSAGE" > /dev/null 2>&1; then
+            print_success "Orchestration notification sent"
+        else
+            print_warning "Failed to send Telegram notification"
+        fi
     fi
 }
 
