@@ -78,18 +78,20 @@ export class RecommenderPAU {
 
       console.log(`✅ Generated ${recommendations.items?.length || 0} recommendations`);
 
-      window.dispatchEvent(
-        new CustomEvent('ABVETOS_SYNC_EVENT', {
-          detail: { module: 'PAU-Recommender', success: true, items: recommendations.items?.length }
-        })
-      );
+      if (typeof window !== 'undefined' && window.dispatchEvent) {
+        window.dispatchEvent(
+          new CustomEvent('ABVETOS_SYNC_EVENT', {
+            detail: { module: 'PAU-Recommender', success: true, items: recommendations.items?.length }
+          })
+        );
+      }
 
       return recommendations;
     } catch (error) {
       console.error('❌ Error getting recommendations:', error);
 
       if (TELEGRAM_ALERT_URL) {
-        fetch(TELEGRAM_ALERT_URL, {
+        fetchWithTimeout(TELEGRAM_ALERT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -98,7 +100,7 @@ export class RecommenderPAU {
             error: error.message,
             timestamp: new Date().toISOString()
           })
-        }).catch(() => {});
+        }, 5000).catch(() => {});
       }
 
       return this.getFallbackRecommendations();
@@ -150,18 +152,27 @@ export class RecommenderPAU {
     console.log('📏 Calculating size recommendation…');
     const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
     let size = 'M';
+    let confidence = 0.5; // Default low confidence when no measurements
 
     if (measurements.chest && measurements.waist) {
-      const avg = (measurements.chest + measurements.waist) / 2;
-      if (avg < 80) size = 'XS';
-      else if (avg < 88) size = 'S';
-      else if (avg < 96) size = 'M';
-      else if (avg < 104) size = 'L';
-      else if (avg < 112) size = 'XL';
-      else size = 'XXL';
+      const chest = parseFloat(measurements.chest);
+      const waist = parseFloat(measurements.waist);
+      
+      // Validate measurements are numeric
+      if (!isNaN(chest) && !isNaN(waist) && chest > 0 && waist > 0) {
+        const avg = (chest + waist) / 2;
+        if (avg < 80) size = 'XS';
+        else if (avg < 88) size = 'S';
+        else if (avg < 96) size = 'M';
+        else if (avg < 104) size = 'L';
+        else if (avg < 112) size = 'XL';
+        else size = 'XXL';
+        
+        confidence = 0.9; // High confidence with valid measurements
+      }
     }
 
-    return { size, confidence: 0.9, alternatives: sizes.filter(s => s !== size) };
+    return { size, confidence, alternatives: sizes.filter(s => s !== size) };
   }
 }
 
