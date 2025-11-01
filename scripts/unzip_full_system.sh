@@ -103,7 +103,7 @@ main() {
         
         # List extracted files
         log INFO "Extracted contents:"
-        ls -lh "$INCOMING_DIR/" | tail -n +2 | while read -r line; do
+        find "$INCOMING_DIR/" -maxdepth 1 -type f -exec ls -lh {} \; | while read -r line; do
             log INFO "  $line"
         done
         
@@ -131,4 +131,4 @@ EOF
 }
 
 # Run main function
-main "$@"
+main
