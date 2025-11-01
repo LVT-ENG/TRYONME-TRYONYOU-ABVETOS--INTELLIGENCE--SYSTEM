@@ -1,39 +1,48 @@
-name: Deploy Express CI/CD
+name: 🚀 ABVETOS Deploy Express CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
+  schedule:
+    - cron: "0 9 * * *" # Orquestación diaria (09:00 UTC)
 
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 🔁 Checkout repository
+      - name: 🧠 Checkout repository
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: 🔧 Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 20
 
-      - name: 📦 Install dependencies
-        run: npm install
+      - name: 🧩 Install dependencies
+        run: |
+          npm ci --silent || npm install --silent
 
-      - name: 🧱 Build project (Vite 7.1.2)
-        run: npm run build
+      - name: 🏗️ Build project
+        run: |
+          npm run build --silent
 
       - name: 🚀 Deploy to Vercel
-        run: npx vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
-
-      - name: 📸 Send Telegram notification
         run: |
-          COMMIT_HASH=$(git rev-parse --short HEAD)
-          MESSAGE="✅ TRYONYOU – ABVETOS – ULTRA-PLUS-ULTIMATUM deployed successfully.\
-          %0ACommit: $COMMIT_HASH \
-          %0ABuild: Success 🚀 \
-          %0ALink: https://tryonyou.app"
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes > deploy.log 2>&1
+          cat deploy.log | tail -n 15
+
+      - name: 📡 Notify Telegram
+        run: |
+          MESSAGE="✅ TRYONYOU – Deploy completado correctamente a las $(date '+%Y-%m-%d %H:%M:%S')"
           curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
-            -d text="$MESSAGE"
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="$MESSAGE" > /dev/null
+
+      - name: 💾 Upload logs to artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: deploy-log
+          path: deploy.log
