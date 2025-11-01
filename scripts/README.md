@@ -2,6 +2,54 @@
 
 This directory contains automation scripts for the TRYONYOU project.
 
+## deploy_flujo_345.sh
+
+Automates the deployment of Flujo 345 by moving the package to the Deploy Express Inbox for processing.
+
+### Purpose
+
+This script implements the Flujo 345 deployment workflow:
+1. Locates the `TRYONYOU_FLOW_345.zip` file
+2. Moves it to `TRYONYOU_DEPLOY_EXPRESS_INBOX/`
+3. Verifies the file is correctly placed
+4. Sends a Telegram notification to the orchestrator
+
+### Usage
+
+```bash
+# Basic usage (searches common locations)
+bash scripts/deploy_flujo_345.sh
+
+# Specify custom path
+bash scripts/deploy_flujo_345.sh /path/to/TRYONYOU_FLOW_345.zip
+```
+
+### Features
+
+- ✅ **Auto-discovery**: Automatically searches for the ZIP file in:
+  - Project root directory
+  - `$HOME/Desktop/`
+  - `$HOME/Downloads/`
+- ✅ **Backup**: Creates backup if file already exists in inbox
+- ✅ **Verification**: Confirms file was moved successfully
+- ✅ **Telegram notification**: Alerts orchestrator when ready
+- ✅ **Detailed logging**: Creates timestamped logs in `logs/`
+
+### Output
+
+The script creates:
+- Detailed console output with color-coded status
+- Log file: `logs/flujo_345_deploy_TIMESTAMP.log`
+- File in inbox: `TRYONYOU_DEPLOY_EXPRESS_INBOX/TRYONYOU_FLOW_345.zip`
+
+### Environment Variables
+
+Optional Telegram configuration:
+```bash
+export TELEGRAM_BOT_TOKEN="your_bot_token"
+export TELEGRAM_CHAT_ID="your_chat_id"
+```
+
 ## clean-merge-repos.js
 
 Creates a clean, distributable version of the TRYONYOU project by:
