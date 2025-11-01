@@ -14,11 +14,22 @@ echo "────────────────────────�
 [[ -z "$TELEGRAM_BOT_TOKEN" ]] && echo "❌ Falta TELEGRAM_BOT_TOKEN" && exit 1
 [[ -z "$TELEGRAM_CHAT_ID" ]] && echo "❌ Falta TELEGRAM_CHAT_ID" && exit 1
 
+# Check if ABVETOS_FLOW_345.sh exists and is executable
+[[ ! -f "./ABVETOS_FLOW_345.sh" ]] && echo "❌ No se encuentra ABVETOS_FLOW_345.sh" && exit 1
+[[ ! -x "./ABVETOS_FLOW_345.sh" ]] && echo "❌ ABVETOS_FLOW_345.sh no es ejecutable" && exit 1
+
 ./ABVETOS_FLOW_345.sh
 
 echo "💾 Guardando logs..."
 mkdir -p ./system/logs
-cp deploy.log ./system/logs/$(date '+%Y%m%d_%H%M')_flow345.log
+
+# Check if deploy.log exists before copying
+if [[ -f "deploy.log" ]]; then
+    cp deploy.log ./system/logs/$(date '+%Y%m%d_%H%M')_flow345.log
+    echo "✅ Log guardado en system/logs/"
+else
+    echo "⚠️ No se encontró deploy.log para archivar"
+fi
 
 curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
   -d chat_id="${TELEGRAM_CHAT_ID}" \

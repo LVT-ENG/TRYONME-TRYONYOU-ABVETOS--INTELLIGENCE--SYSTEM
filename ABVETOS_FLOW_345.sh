@@ -22,10 +22,14 @@ echo "" >> "$LOG_FILE"
 # Step 1: Repository sync
 echo "📦 Paso 1/5: Sincronizando repositorio..."
 echo "[1/5] Repository sync" >> "$LOG_FILE"
-if git fetch origin main 2>&1 | tee -a "$LOG_FILE"; then
-    echo "✅ Repositorio sincronizado" | tee -a "$LOG_FILE"
+if git remote get-url origin >/dev/null 2>&1; then
+    if git fetch origin main 2>&1 | tee -a "$LOG_FILE"; then
+        echo "✅ Repositorio sincronizado" | tee -a "$LOG_FILE"
+    else
+        echo "⚠️ No se pudo sincronizar (puede ser normal en local)" | tee -a "$LOG_FILE"
+    fi
 else
-    echo "⚠️ No se pudo sincronizar (puede ser normal en local)" | tee -a "$LOG_FILE"
+    echo "ℹ️ Remote 'origin' no configurado, saltando sync" | tee -a "$LOG_FILE"
 fi
 echo "" >> "$LOG_FILE"
 
