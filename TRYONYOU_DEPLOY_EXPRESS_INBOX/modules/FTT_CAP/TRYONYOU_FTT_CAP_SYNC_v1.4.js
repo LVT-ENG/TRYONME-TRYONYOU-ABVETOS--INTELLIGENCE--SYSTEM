@@ -163,18 +163,19 @@ export async function syncFTTtoCAP(notifyOnSuccess = false) {
     // Add to history
     syncHistory.unshift(syncResult);
     if (syncHistory.length > MAX_HISTORY_SIZE) {
-      syncHistory = syncHistory.slice(0, MAX_HISTORY_SIZE);
+      syncHistory.splice(MAX_HISTORY_SIZE);
     }
     
     console.log(`✅ FTT > CAP Sync ${VERSION} OK (${latency}ms)`);
     
     // Send Telegram notification if requested
     if (notifyOnSuccess) {
+      const trendSize = new TextEncoder().encode(JSON.stringify(trendData)).length;
       await sendTelegramNotification(
         `<b>✅ FTT-CAP Sync ${VERSION} Success</b>\n\n` +
         `⏱ Latency: ${latency}ms\n` +
         `🕐 Timestamp: ${lastSyncTimestamp}\n` +
-        `📊 Trends: ${JSON.stringify(trendData).length} bytes\n` +
+        `📊 Trends: ${trendSize} bytes\n` +
         `🚀 Deployed by: ${DEPLOYED_BY}`
       );
     }
@@ -198,7 +199,7 @@ export async function syncFTTtoCAP(notifyOnSuccess = false) {
     // Add to history
     syncHistory.unshift(syncResult);
     if (syncHistory.length > MAX_HISTORY_SIZE) {
-      syncHistory = syncHistory.slice(0, MAX_HISTORY_SIZE);
+      syncHistory.splice(MAX_HISTORY_SIZE);
     }
     
     // Send Telegram notification on error
