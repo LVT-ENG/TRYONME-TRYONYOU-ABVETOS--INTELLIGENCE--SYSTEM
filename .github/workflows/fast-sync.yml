@@ -1,0 +1,74 @@
+name: FastSync - Express Auto-Deploy
+
+on:
+  schedule:
+    # Run every 10 minutes for fast synchronization
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  fast-sync:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: 📦 Install dependencies
+        run: npm ci || npm install
+      
+      - name: 🏗️ Build project
+        run: npm run build
+        env:
+          NODE_ENV: production
+      
+      - name: 🚀 Deploy to Vercel
+        id: vercel-deploy
+        run: |
+          npm install -g vercel
+          vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      
+      - name: 📊 Get deployment info
+        id: deploy-info
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          DEPLOY_TIME=$(date '+%Y-%m-%d %H:%M:%S')
+          echo "commit_hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+          echo "deploy_time=$DEPLOY_TIME" >> $GITHUB_OUTPUT
+      
+      - name: 📱 Send Telegram notification
+        if: success()
+        run: |
+          MESSAGE="🦚 <b>FastSync - Express Deployment</b>%0A%0A✅ Auto-deployment completed successfully%0A%0A🔹 <b>Commit:</b> ${{ steps.deploy-info.outputs.commit_hash }}%0A⏰ <b>Time:</b> ${{ steps.deploy-info.outputs.deploy_time }}%0A🌐 <b>URL:</b> https://tryonyou.app%0A⚡ <b>Sync:</b> Every 10 minutes%0A%0A<i>Powered by GitHub Actions FastSync</i>"
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode=HTML \
+            -d text="$MESSAGE"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      
+      - name: ❌ Notify on failure
+        if: failure()
+        run: |
+          MESSAGE="⚠️ <b>FastSync - Deployment Failed</b>%0A%0A❌ Scheduled deployment encountered an error%0A%0A⏰ <b>Time:</b> ${{ steps.deploy-info.outputs.deploy_time }}%0A%0APlease check GitHub Actions logs for details."
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode=HTML \
+            -d text="$MESSAGE"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
