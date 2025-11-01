@@ -286,9 +286,66 @@ _Italic text_
 - Rich cards
 - Images/attachments
 
+## 📅 Calendar Sync Flow (Manual Trigger)
+
+### Architecture
+```
+┌──────────────────┐          ┌──────────────────┐          ┌──────────────────┐
+│  Google Sheets   │          │  Google Apps     │          │  Google Calendar │
+│    Dashboard     │          │     Script       │          │                  │
+│                  │  Read    │                  │  Create  │                  │
+│  ┌────────────┐  │  ───►    │  ┌────────────┐  │  ───►    │  ┌────────────┐  │
+│  │ Tasks with │  │          │  │ Calendar   │  │          │  │ All-day    │  │
+│  │ "Pendiente"│  │          │  │ Sync       │  │          │  │ Events     │  │
+│  │ Status     │  │          │  │ Function   │  │          │  │ ⚠️ Task    │  │
+│  │            │  │          │  │            │  │          │  │ (Owner)    │  │
+│  └────────────┘  │          │  └────────────┘  │          │  └────────────┘  │
+└──────────────────┘          └──────────────────┘          └──────────────────┘
+        │                              ▲
+        │                              │
+        └──────────Manual Trigger──────┘
+```
+
+### Data Flow
+```
+Step 1: Manual Execution
+    ↓
+syncCalendar() function invoked
+    ↓
+Step 2: Read Dashboard Sheet
+    ↓
+Get all task rows
+    ↓
+Step 3: Filter Tasks
+    ├─ Status = "Pendiente"
+    └─ Has valid due date
+    ↓
+Step 4: Create Calendar Events
+    ↓
+For each filtered task:
+    ├─ Title: ⚠️ [Task] (Owner)
+    ├─ Date: Task due date
+    ├─ Type: All-day event
+    └─ Calendar: Default calendar
+```
+
+### Example
+```javascript
+// Input: Task row in sheet
+Task: "Deploy producción a Vercel"
+Owner: "Rubén"
+Due Date: 2025-01-15
+Status: "Pendiente"
+
+// Output: Calendar event
+Title: "⚠️ Deploy producción a Vercel (Rubén)"
+Date: January 15, 2025 (all day)
+Calendar: Default Google Calendar
+```
+
 ---
 
-**System Version**: 1.0  
+**System Version**: 1.1 (with Calendar Sync)  
 **Architecture**: Serverless (Google Apps Script)  
 **Cost**: Free (within Google quotas)  
 **Maintenance**: Minimal (self-executing)
