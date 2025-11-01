@@ -59,6 +59,7 @@ system/logs/*.log
 !README*.md
 !docs/**/*.md
 !docs/**/*.pdf
+!ABVETOS*README.md
 
 # Lock & cache
 package-lock.json
