@@ -136,9 +136,11 @@ function deleteAllTriggers() {
  * Synchronizes pending tasks from the sheet to Google Calendar
  * Creates all-day calendar events for tasks with "Pendiente" status
  * This helps team members see their tasks directly in Google Calendar
+ * 
+ * Expected sheet columns: [A]=ID, [B]=Priority, [C]=Category, [D]=Task, [E]=Owner, [F]=Due Date, [G]=Status
  */
 function syncCalendar() {
-  const sheet = SpreadsheetApp.getActiveSheet();
+  const sheet = SpreadsheetApp.getActive().getSheetByName(CFG.SHEET);
   const data = sheet.getDataRange().getValues();
   const calendar = CalendarApp.getDefaultCalendar();
   
@@ -146,9 +148,13 @@ function syncCalendar() {
   let errors = [];
   
   // Skip header row and process each task
+  // Column mapping: [0]=ID, [1]=Priority, [2]=Category, [3]=Task, [4]=Owner, [5]=Due Date, [6]=Status
   data.slice(1).forEach((row, index) => {
     try {
-      const [task, responsible, priority, date, status] = row;
+      const task = row[3];
+      const responsible = row[4];
+      const date = row[5];
+      const status = row[6];
       
       // Only sync tasks with "Pendiente" status
       if (status === "Pendiente" && task && date) {
@@ -200,7 +206,7 @@ function testSyncCalendar() {
 }
 
 /**
- * Deletes all events from the calendar that match the TRYONYOU pattern
+ * Deletes all events from the default calendar that start with ⚠️ emoji
  * Use this to clean up test events or reset the calendar
  * WARNING: This will delete events created by syncCalendar
  */
