@@ -91,14 +91,16 @@ hook_capture_screenshots() {
         log_info "Executing screenshot script..."
         
         # Run screenshot capture and capture output
-        local screenshot_output
-        screenshot_output=$(bash "$capture_script" "$DOMAIN_URL" "$SCREENSHOTS_DIR" 2>&1) || {
+        local screenshot_output=""
+        if screenshot_output=$(bash "$capture_script" "$DOMAIN_URL" "$SCREENSHOTS_DIR" 2>&1); then
+            log_success "Screenshots captured successfully"
+        else
             log_warning "Screenshot capture completed with warnings"
-            log_info "Output: $screenshot_output"
+            if [ -n "$screenshot_output" ]; then
+                log_info "Output: $screenshot_output"
+            fi
             return 0
-        }
-        
-        log_success "Screenshots captured successfully"
+        fi
         
         # Count screenshots
         local screenshot_count=$(find "$SCREENSHOTS_DIR" -name "*.png" -type f | wc -l)

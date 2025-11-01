@@ -297,13 +297,21 @@ main() {
     # Run post-deployment hooks if available
     if [ -f "$SCRIPT_DIR/ABVETOS_DEPLOY_EXPRESS_HOOKS.sh" ]; then
         log_step "Running post-deployment hooks..."
-        bash "$SCRIPT_DIR/ABVETOS_DEPLOY_EXPRESS_HOOKS.sh"
+        if bash "$SCRIPT_DIR/ABVETOS_DEPLOY_EXPRESS_HOOKS.sh"; then
+            log_success "Post-deployment hooks completed"
+        else
+            log_warning "Post-deployment hooks completed with warnings"
+        fi
     fi
     
     # Run logger if available
     if [ -f "$SCRIPT_DIR/ABVETOS_DEPLOY_EXPRESS_LOGGER.sh" ]; then
         log_step "Running deployment logger..."
-        bash "$SCRIPT_DIR/ABVETOS_DEPLOY_EXPRESS_LOGGER.sh" "$TIMESTAMP"
+        if bash "$SCRIPT_DIR/ABVETOS_DEPLOY_EXPRESS_LOGGER.sh" "$TIMESTAMP"; then
+            log_success "Deployment logging completed"
+        else
+            log_warning "Deployment logging completed with warnings"
+        fi
     fi
     
     create_deployment_report
