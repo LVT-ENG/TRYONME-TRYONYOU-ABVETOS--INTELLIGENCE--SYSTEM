@@ -1,0 +1,143 @@
+{
+  "version": "1.0.0",
+  "lastUpdate": "2025-11-01T00:00:00Z",
+  "active": [
+    {
+      "id": "agent-70",
+      "name": "Agent 70",
+      "role": "Orquestador General - Central orchestrator that coordinates all agents, monitors system health, and generates comprehensive status reports",
+      "status": "active",
+      "schedule": "Every hour + Daily report at 09:00 UTC",
+      "workflow": ".github/workflows/orchestrator-agent.yml"
+    },
+    {
+      "id": "agent-22",
+      "name": "Agent 22",
+      "role": "Deploy Operator - Manages CI/CD pipeline with Vercel integration and automated screenshot capture",
+      "status": "active",
+      "schedule": "On push to main + Manual trigger",
+      "workflow": ".github/workflows/deploy.yml"
+    },
+    {
+      "id": "agent-20",
+      "name": "Agent 20",
+      "role": "GitHub Commit Agent - Repository health monitoring, code quality checks, and commit analysis",
+      "status": "active",
+      "schedule": "On push/PR + Daily at 08:00 UTC",
+      "workflow": ".github/workflows/github-agent.yml"
+    },
+    {
+      "id": "agent-12",
+      "name": "Agent 12",
+      "role": "Brand Guardian - Ensures brand consistency across visual elements, colors, and typography",
+      "status": "active",
+      "schedule": "On code/asset changes + Daily at 10:00 UTC",
+      "workflow": ".github/workflows/brand-guardian.yml"
+    },
+    {
+      "id": "agent-46",
+      "name": "Agent 46",
+      "role": "Document Locker - Protects and monitors legal documentation, patents, and intellectual property",
+      "status": "active",
+      "schedule": "On doc changes + Daily at 11:00 UTC",
+      "workflow": ".github/workflows/document-locker.yml"
+    },
+    {
+      "id": "agent-31",
+      "name": "Agent 31",
+      "role": "Video Curator - Manages hero videos, LaSeñu content, and Pau overlay integration",
+      "status": "backstage",
+      "schedule": "Pending implementation",
+      "workflow": "TBD"
+    },
+    {
+      "id": "agent-2",
+      "name": "Agent 2",
+      "role": "Content Pro - Manages investor decks, marketing copy, and brand content",
+      "status": "backstage",
+      "schedule": "Pending implementation",
+      "workflow": "TBD"
+    },
+    {
+      "id": "agent-25",
+      "name": "Agent 25",
+      "role": "Image Curator - Manages product mockups, fashion images, and visual assets",
+      "status": "backstage",
+      "schedule": "Pending implementation",
+      "workflow": "TBD"
+    },
+    {
+      "id": "agent-15",
+      "name": "Agent 15",
+      "role": "Performance Monitor - Tracks application performance, load times, and optimization metrics",
+      "status": "active",
+      "schedule": "Continuous monitoring",
+      "workflow": ".github/workflows/performance-monitor.yml"
+    },
+    {
+      "id": "agent-8",
+      "name": "Agent 8",
+      "role": "Security Scanner - Monitors security vulnerabilities, dependency updates, and threat detection",
+      "status": "active",
+      "schedule": "Daily at 06:00 UTC + On dependency changes",
+      "workflow": ".github/workflows/security-scanner.yml"
+    },
+    {
+      "id": "agent-33",
+      "name": "Agent 33",
+      "role": "Translation Coordinator - Manages multi-language content and localization processes",
+      "status": "active",
+      "schedule": "On content changes",
+      "workflow": ".github/workflows/translation-coordinator.yml"
+    },
+    {
+      "id": "agent-40",
+      "name": "Agent 40",
+      "role": "Database Backup - Ensures data integrity and manages automated backup schedules",
+      "status": "active",
+      "schedule": "Daily at 02:00 UTC",
+      "workflow": ".github/workflows/database-backup.yml"
+    },
+    {
+      "id": "agent-55",
+      "name": "Agent 55",
+      "role": "Analytics Reporter - Generates insights from user data and platform metrics",
+      "status": "active",
+      "schedule": "Weekly on Monday at 07:00 UTC",
+      "workflow": ".github/workflows/analytics-reporter.yml"
+    },
+    {
+      "id": "agent-18",
+      "name": "Agent 18",
+      "role": "API Gateway - Manages API endpoints, rate limiting, and integration health",
+      "status": "active",
+      "schedule": "Continuous monitoring",
+      "workflow": ".github/workflows/api-gateway.yml"
+    },
+    {
+      "id": "agent-7",
+      "name": "Agent 7",
+      "role": "Email Dispatcher - Handles automated email campaigns and notifications",
+      "status": "active",
+      "schedule": "On-demand + Daily digest at 17:00 UTC",
+      "workflow": ".github/workflows/email-dispatcher.yml"
+    }
+  ],
+  "backstage": [
+    {
+      "id": "agent-31",
+      "name": "Agent 31",
+      "role": "Video Curator"
+    },
+    {
+      "id": "agent-2",
+      "name": "Agent 2",
+      "role": "Content Pro"
+    },
+    {
+      "id": "agent-25",
+      "name": "Agent 25",
+      "role": "Image Curator"
+    }
+  ]
+}
