@@ -32,7 +32,7 @@ Your Google Sheet must have a sheet named **"Dashboard"** with the following str
 
 ## 📋 Script Behavior
 
-### Tasks Included in Daily Report
+### Tasks Included in Daily Report (dailyPlanner)
 
 The script will **ONLY** include tasks that meet **ALL** these criteria:
 
@@ -40,6 +40,16 @@ The script will **ONLY** include tasks that meet **ALL** these criteria:
 ✅ **Due Date**: Today or earlier (overdue)  
 ✅ **Status**: NOT "Completado"  
 ✅ **Has Due Date**: Column F is not empty
+
+### Tasks Included in Calendar Sync (syncCalendar)
+
+The calendar sync will **ONLY** sync tasks that meet these criteria:
+
+✅ **Status**: "Pendiente"  
+✅ **Has Task Name**: Column D is not empty  
+✅ **Has Due Date**: Column F is not empty
+
+**Note**: Calendar sync includes ALL priorities, not just P0/P1.
 
 ### Tasks Excluded from Report
 
@@ -85,6 +95,36 @@ For the included tasks, the Telegram message would be:
 • Content Pro + Image Curator → completar slides del deck y exportar PDF.
 • Guardar en `/docs/investors/TRYONYOU_Deck.pdf`.
 ```
+
+## 📅 Calendar Sync Behavior
+
+### How syncCalendar() Works
+
+When you run `syncCalendar()`, it creates calendar events for:
+- **Status** = "Pendiente" (exactly, case-sensitive)
+- Tasks with valid task names (Column D)
+- Tasks with valid dates (Column F)
+
+### Calendar Event Format
+
+Events are created as:
+```
+⚠️ [Task Name] ([Owner Name])
+```
+
+Examples from sample data:
+- `⚠️ Revisar claims patent EPCT (Legal)` on 2025-01-16
+
+### Status Values for Calendar Sync
+
+| Status | Synced to Calendar? |
+|--------|-------------------|
+| Pendiente | ✅ Yes |
+| En Progreso | ❌ No |
+| Completado | ❌ No |
+| Bloqueado | ❌ No |
+
+**Tip**: Set tasks to "Pendiente" status when you want them to appear in your calendar.
 
 ## 🔧 Customization
 
