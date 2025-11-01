@@ -23,6 +23,7 @@ deploy.sh
 deploy_express_total_for_manus.sh
 *.sh
 !refresh_tokens.sh
+!abvetos_auto_integrate.sh
 
 # Allow scripts directory
 !scripts/*.sh
