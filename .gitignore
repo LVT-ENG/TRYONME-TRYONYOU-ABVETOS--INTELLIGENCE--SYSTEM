@@ -23,6 +23,7 @@ deploy.sh
 deploy_express_total_for_manus.sh
 *.sh
 !refresh_tokens.sh
+!ABVETOS_*.sh
 
 # Allow scripts directory
 !scripts/*.sh
@@ -36,6 +37,12 @@ tmp/
 
 # Allow deploy logs
 !logs/deploy_*.log
+
+# Allow system directory structure but not log files
+!system/
+!system/logs/
+!system/logs/README.md
+system/logs/*.log
 
 # Documents and media
 *.doc
