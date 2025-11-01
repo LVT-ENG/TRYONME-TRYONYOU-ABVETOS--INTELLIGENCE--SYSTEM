@@ -63,6 +63,16 @@ Your "Dashboard" sheet needs these columns:
 | Trigger not running | Verify trigger exists in Apps Script → Triggers ⏰ |
 | Permission error | Re-run and allow all permissions |
 
+## 📅 Bonus: Calendar Sync
+
+Want to sync your pending tasks to Google Calendar?
+
+1. Select `testSyncCalendar` → **Run** ▶️
+2. Check your Google Calendar for new events ✅
+3. To sync regularly, call `syncCalendar()` manually or add it to your workflow
+
+Events appear as: `⚠️ [Task Name] ([Responsible])`
+
 ## 📚 Full Documentation
 
 See [README.md](./README.md) for complete documentation, customization options, and advanced features.

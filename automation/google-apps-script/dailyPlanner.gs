@@ -131,3 +131,104 @@ function deleteAllTriggers() {
   });
   Logger.log(`Deleted ${triggers.length} trigger(s)`);
 }
+
+/**
+ * Synchronizes pending tasks from the sheet to Google Calendar
+ * Creates all-day calendar events for tasks with "Pendiente" status
+ * This helps team members see their tasks directly in Google Calendar
+ * 
+ * Expected sheet columns: [A]=ID, [B]=Priority, [C]=Category, [D]=Task, [E]=Owner, [F]=Due Date, [G]=Status
+ */
+function syncCalendar() {
+  const sheet = SpreadsheetApp.getActive().getSheetByName(CFG.SHEET);
+  const data = sheet.getDataRange().getValues();
+  const calendar = CalendarApp.getDefaultCalendar();
+  
+  let eventsCreated = 0;
+  let errors = [];
+  
+  // Skip header row and process each task
+  // Column mapping: [0]=ID, [1]=Priority, [2]=Category, [3]=Task, [4]=Owner, [5]=Due Date, [6]=Status
+  data.slice(1).forEach((row, index) => {
+    try {
+      const task = row[3];
+      const responsible = row[4];
+      const date = row[5];
+      const status = row[6];
+      
+      // Only sync tasks with "Pendiente" status
+      if (status === "Pendiente" && task && date) {
+        // Ensure responsible person is defined, use "Sin asignar" if empty
+        const responsiblePerson = responsible || "Sin asignar";
+        const eventTitle = `⚠️ ${task} (${responsiblePerson})`;
+        const eventDate = new Date(date);
+        
+        // Validate date is valid
+        if (!isNaN(eventDate.getTime())) {
+          calendar.createAllDayEvent(eventTitle, eventDate);
+          eventsCreated++;
+          Logger.log(`Created event: ${eventTitle} on ${eventDate.toDateString()}`);
+        } else {
+          errors.push(`Row ${index + 2}: Invalid date format`);
+        }
+      }
+    } catch (e) {
+      errors.push(`Row ${index + 2}: ${e.message}`);
+      Logger.log(`Error processing row ${index + 2}: ${e.message}`);
+    }
+  });
+  
+  // Log summary
+  Logger.log(`Sync completed: ${eventsCreated} events created`);
+  if (errors.length > 0) {
+    Logger.log(`Errors encountered: ${errors.length}`);
+    errors.forEach(err => Logger.log(err));
+  }
+  
+  return {
+    success: true,
+    eventsCreated: eventsCreated,
+    errors: errors
+  };
+}
+
+/**
+ * Test function to manually sync calendar
+ * Use this to test the calendar sync before automating it
+ */
+function testSyncCalendar() {
+  Logger.log('Testing calendar sync...');
+  const result = syncCalendar();
+  Logger.log(`Test completed! Created ${result.eventsCreated} events`);
+  if (result.errors.length > 0) {
+    Logger.log(`Warnings: ${result.errors.length} errors occurred`);
+  }
+}
+
+/**
+ * Deletes all events from the default calendar that start with ⚠️ emoji
+ * Use this to clean up test events or reset the calendar
+ * WARNING: This will delete events created by syncCalendar
+ */
+function cleanupCalendarEvents() {
+  const calendar = CalendarApp.getDefaultCalendar();
+  const now = new Date();
+  // Limit to 3 months ahead to improve performance
+  const futureDate = new Date(now.getFullYear(), now.getMonth() + 3, now.getDate());
+  
+  // Get all events with the warning emoji prefix
+  const events = calendar.getEvents(now, futureDate);
+  let deletedCount = 0;
+  
+  events.forEach(event => {
+    const title = event.getTitle();
+    if (title.startsWith('⚠️')) {
+      event.deleteEvent();
+      deletedCount++;
+      Logger.log(`Deleted event: ${title}`);
+    }
+  });
+  
+  Logger.log(`Cleanup completed: ${deletedCount} events deleted`);
+  return deletedCount;
+}
