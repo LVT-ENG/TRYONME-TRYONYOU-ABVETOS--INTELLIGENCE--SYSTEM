@@ -147,18 +147,18 @@ function deleteAllTriggers() {
  * Column G (6): Status
  */
 function syncCalendar() {
-  const sheet = SpreadsheetApp.getActiveSheet();
+  const sheet = SpreadsheetApp.getActive().getSheetByName(CFG.SHEET);
   const data = sheet.getDataRange().getValues();
   const calendar = CalendarApp.getDefaultCalendar();
   
   data.slice(1).forEach(row => {
     const task = row[3];        // Column D: Task
     const responsible = row[4]; // Column E: Owner
-    const priority = row[1];    // Column B: Priority
     const date = row[5];        // Column F: Due Date
     const status = row[6];      // Column G: Status
     
-    if (status === "Pendiente") {
+    // Validate data and check status before creating event
+    if (status === "Pendiente" && task && responsible && date) {
       calendar.createAllDayEvent(`⚠️ ${task} (${responsible})`, new Date(date));
     }
   });
