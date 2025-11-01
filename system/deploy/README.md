@@ -33,6 +33,11 @@ bash system/deploy/ABVETOS_DEPLOY_EXPRESS_CORE.sh
 VERCEL_TOKEN=your_vercel_token
 TELEGRAM_BOT_TOKEN=your_telegram_bot_token
 TELEGRAM_CHAT_ID=your_telegram_chat_id
+
+# Optional: Log retention periods (default values shown)
+LOG_RETENTION_DAYS=30           # Keep logs for 30 days
+SCREENSHOT_RETENTION_DAYS=14    # Keep screenshots for 14 days
+VERSION_RETENTION_DAYS=90       # Keep version info for 90 days
 ```
 
 ---

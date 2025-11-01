@@ -260,22 +260,27 @@ EOF
 cleanup_old_logs() {
     log_info "Cleaning up old logs..."
     
-    # Keep logs for last 30 days only
+    # Configurable retention periods (days)
+    local LOG_RETENTION_DAYS="${LOG_RETENTION_DAYS:-30}"
+    local SCREENSHOT_RETENTION_DAYS="${SCREENSHOT_RETENTION_DAYS:-14}"
+    local VERSION_RETENTION_DAYS="${VERSION_RETENTION_DAYS:-90}"
+    
+    # Keep logs for specified days
     if [ -d "$LOG_DIR" ]; then
-        find "$LOG_DIR" -name "deploy_*.log" -mtime +30 -delete 2>/dev/null || true
-        log_success "Old logs cleaned up (kept last 30 days)"
+        find "$LOG_DIR" -name "deploy_*.log" -mtime +${LOG_RETENTION_DAYS} -delete 2>/dev/null || true
+        log_success "Old logs cleaned up (kept last ${LOG_RETENTION_DAYS} days)"
     fi
     
-    # Keep screenshots for last 14 days
+    # Keep screenshots for specified days
     if [ -d "$SCREENSHOTS_DIR" ]; then
-        find "$SCREENSHOTS_DIR" -name "*.png" -mtime +14 -delete 2>/dev/null || true
-        log_success "Old screenshots cleaned up (kept last 14 days)"
+        find "$SCREENSHOTS_DIR" -name "*.png" -mtime +${SCREENSHOT_RETENTION_DAYS} -delete 2>/dev/null || true
+        log_success "Old screenshots cleaned up (kept last ${SCREENSHOT_RETENTION_DAYS} days)"
     fi
     
-    # Keep version info for last 90 days
+    # Keep version info for specified days
     if [ -d "$VERSIONS_DIR" ]; then
-        find "$VERSIONS_DIR" -name "version_*.json" -mtime +90 -delete 2>/dev/null || true
-        log_success "Old version info cleaned up (kept last 90 days)"
+        find "$VERSIONS_DIR" -name "version_*.json" -mtime +${VERSION_RETENTION_DAYS} -delete 2>/dev/null || true
+        log_success "Old version info cleaned up (kept last ${VERSION_RETENTION_DAYS} days)"
     fi
 }
 

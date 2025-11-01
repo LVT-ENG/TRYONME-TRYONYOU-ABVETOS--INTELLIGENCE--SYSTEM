@@ -135,18 +135,23 @@ build_project() {
     
     cd "$PROJECT_ROOT"
     
-    # Check if build script exists
-    if npm run build --if-present &> /dev/null; then
-        log_success "Project built successfully"
-        
-        # Verify build output
-        if [ -d "$BUILD_DIR" ]; then
-            local build_size=$(du -sh "$BUILD_DIR" | cut -f1)
-            log_info "Build size: $build_size"
+    # Check if build script exists in package.json
+    if [ -f "package.json" ] && grep -q '"build"' package.json; then
+        # Build script exists, run it
+        if npm run build; then
+            log_success "Project built successfully"
+            
+            # Verify build output
+            if [ -d "$BUILD_DIR" ]; then
+                local build_size=$(du -sh "$BUILD_DIR" | cut -f1)
+                log_info "Build size: $build_size"
+            fi
+        else
+            log_error "Build failed"
+            return 1
         fi
     else
-        log_warning "No build script found or build failed"
-        return 1
+        log_warning "No build script found in package.json, skipping build"
     fi
 }
 
@@ -155,11 +160,16 @@ run_tests() {
     
     cd "$PROJECT_ROOT"
     
-    # Check if test script exists
-    if npm run test --if-present &> /dev/null; then
-        log_success "Tests passed"
+    # Check if test script exists in package.json
+    if [ -f "package.json" ] && grep -q '"test"' package.json; then
+        # Test script exists, run it
+        if npm run test; then
+            log_success "Tests passed"
+        else
+            log_warning "Tests failed, but continuing deployment"
+        fi
     else
-        log_warning "No test script found, skipping tests"
+        log_warning "No test script found in package.json, skipping tests"
     fi
 }
 

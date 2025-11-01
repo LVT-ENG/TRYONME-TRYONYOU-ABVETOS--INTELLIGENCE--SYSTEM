@@ -90,19 +90,22 @@ hook_capture_screenshots() {
     if [ -f "$capture_script" ]; then
         log_info "Executing screenshot script..."
         
-        # Run screenshot capture
-        if bash "$capture_script" "$DOMAIN_URL" "$SCREENSHOTS_DIR" 2>&1; then
-            log_success "Screenshots captured successfully"
-            
-            # Count screenshots
-            local screenshot_count=$(find "$SCREENSHOTS_DIR" -name "*.png" -type f | wc -l)
-            log_info "Total screenshots: $screenshot_count"
-            
-            # Notify about screenshots
-            notify_telegram "📸 <b>Screenshots Captured</b>%0A%0AProject: $PROJECT_NAME%0ACount: $screenshot_count%0ATime: $(date +'%H:%M:%S')"
-        else
+        # Run screenshot capture and capture output
+        local screenshot_output
+        screenshot_output=$(bash "$capture_script" "$DOMAIN_URL" "$SCREENSHOTS_DIR" 2>&1) || {
             log_warning "Screenshot capture completed with warnings"
-        fi
+            log_info "Output: $screenshot_output"
+            return 0
+        }
+        
+        log_success "Screenshots captured successfully"
+        
+        # Count screenshots
+        local screenshot_count=$(find "$SCREENSHOTS_DIR" -name "*.png" -type f | wc -l)
+        log_info "Total screenshots: $screenshot_count"
+        
+        # Notify about screenshots
+        notify_telegram "📸 <b>Screenshots Captured</b>%0A%0AProject: $PROJECT_NAME%0ACount: $screenshot_count%0ATime: $(date +'%H:%M:%S')"
     else
         log_warning "Screenshot script not found, skipping"
     fi
