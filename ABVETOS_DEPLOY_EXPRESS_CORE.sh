@@ -1,6 +1,6 @@
 #!/bin/bash
 # ======================================================
-# TRYONYOU – ABVETOS – ULTRA-PLUS – ULTIMATUM
+# TRYONYOU – ABVETOS – ULTRA–PLUS – ULTIMATUM
 # ABVETOS_DEPLOY_EXPRESS_CORE.sh
 # v1.0.1 — Core deploy orchestrator by ABVETOS
 # ======================================================
