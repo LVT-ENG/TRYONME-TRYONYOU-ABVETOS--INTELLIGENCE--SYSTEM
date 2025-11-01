@@ -27,12 +27,16 @@ deploy_express_total_for_manus.sh
 # Allow scripts directory
 !scripts/*.sh
 
+# Allow system/deploy scripts
+!system/deploy/*.sh
+
 # Temporary backups
 *_BACKUP/
 Desktop/
 logs/
 tmp/
 *.log
+backups/
 
 # Allow deploy logs
 !logs/deploy_*.log
