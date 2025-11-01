@@ -6,7 +6,7 @@
 
 🌐 **Live Site**: [https://tryonyou.app](https://tryonyou.app)
 
-> 🎉 **Latest:** Full System Integration completed on October 31, 2025 - [View Integration Report](INTEGRATION_2025-10-31.md)
+> 🎉 **Latest:** Full System Integration completed on October 31, 2025 - [View Integration Report](docs/reports/INTEGRATION_TRYONYOU_FULL_SYSTEM_2025-10-31.md)
 
 ---
 
