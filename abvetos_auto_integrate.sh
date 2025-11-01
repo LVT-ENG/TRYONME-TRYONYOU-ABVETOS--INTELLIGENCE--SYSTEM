@@ -40,15 +40,16 @@ send_telegram() {
         return 0
     fi
     
-    curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+    local RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
         -d chat_id="$TELEGRAM_CHAT_ID" \
         -d parse_mode=HTML \
-        -d text="${message}" > /dev/null
+        -d text="${message}")
     
-    if [ $? -eq 0 ]; then
+    if echo "$RESPONSE" | grep -q '"ok":true'; then
         log "${GREEN}✅ Telegram notification sent${NC}"
     else
         log "${RED}❌ Failed to send Telegram notification${NC}"
+        log "Response: $RESPONSE"
     fi
 }
 
@@ -78,9 +79,13 @@ process_zip() {
     log "${YELLOW}🔄 Integrando con repositorio maestro...${NC}"
     
     # Clonar o actualizar el repositorio en WORKDIR si no existe
+    # Nota: Requiere credenciales Git configuradas (ssh-agent, git credential helper, o GitHub token)
     if [ ! -d "$WORKDIR/.git" ]; then
         log "${YELLOW}📥 Clonando repositorio...${NC}"
-        git clone "https://github.com/$REPO.git" "$WORKDIR" >> "$LOGFILE" 2>&1
+        if ! git clone "https://github.com/$REPO.git" "$WORKDIR" >> "$LOGFILE" 2>&1; then
+            log "${RED}❌ Error al clonar repositorio. Verifica las credenciales Git.${NC}"
+            return 1
+        fi
         cd "$WORKDIR"
         git checkout "$BRANCH" >> "$LOGFILE" 2>&1
     else
@@ -104,7 +109,9 @@ process_zip() {
     if git diff --staged --quiet; then
         log "${YELLOW}⚠️  No hay cambios para commitear${NC}"
     else
-        git commit -m "🤖 ABVETOS Auto-Integration: $FILENAME $(date +'%Y-%m-%d %H:%M')" >> "$LOGFILE" 2>&1
+        # Sanitize filename for commit message
+        local SAFE_FILENAME=$(echo "$FILENAME" | tr -d '\n\r' | tr -s ' ' '_')
+        git commit -m "🤖 ABVETOS Auto-Integration: $SAFE_FILENAME $(date +'%Y-%m-%d %H:%M')" >> "$LOGFILE" 2>&1
         log "${GREEN}✅ Commit realizado${NC}"
         
         # Push a GitHub
@@ -126,15 +133,19 @@ process_zip() {
     
     if command -v vercel &> /dev/null || command -v npx &> /dev/null; then
         if [ -n "$VERCEL_TOKEN" ]; then
-            npx vercel --token "$VERCEL_TOKEN" --prod --yes >> "$LOGFILE" 2>&1
+            if npx vercel --token "$VERCEL_TOKEN" --prod --yes >> "$LOGFILE" 2>&1; then
+                log "${GREEN}✅ Deploy a Vercel exitoso${NC}"
+            else
+                log "${RED}❌ Error en deploy a Vercel${NC}"
+                log "${YELLOW}⚠️  Continuando con el proceso...${NC}"
+            fi
         else
-            npx vercel --prod --yes >> "$LOGFILE" 2>&1
-        fi
-        
-        if [ $? -eq 0 ]; then
-            log "${GREEN}✅ Deploy a Vercel exitoso${NC}"
-        else
-            log "${RED}❌ Error en deploy a Vercel${NC}"
+            if npx vercel --prod --yes >> "$LOGFILE" 2>&1; then
+                log "${GREEN}✅ Deploy a Vercel exitoso${NC}"
+            else
+                log "${RED}❌ Error en deploy a Vercel${NC}"
+                log "${YELLOW}⚠️  Continuando con el proceso...${NC}"
+            fi
         fi
     else
         log "${YELLOW}⚠️  Vercel CLI no disponible - saltando deployment${NC}"
@@ -173,6 +184,8 @@ log "${GREEN}✅ Sistema listo - Esperando archivos...${NC}"
 echo ""
 
 # Bucle continuo de vigilancia
+# Nota: Procesa un ZIP a la vez para garantizar integridad.
+# Si hay múltiples ZIPs, se procesarán secuencialmente con 30s de espera entre cada uno.
 while true; do
     ZIPFILE=$(find "$INBOX" -maxdepth 1 -name "*.zip" -type f | head -n 1)
     
