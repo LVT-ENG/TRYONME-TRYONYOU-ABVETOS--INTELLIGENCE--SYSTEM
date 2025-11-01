@@ -10,6 +10,8 @@ set -e
 # Configuración de directorios
 INBOX="$HOME/TRYONYOU_DEPLOY_EXPRESS_INBOX"
 WORKDIR="$HOME/TRYONYOU_DEPLOY_WORKSPACE"
+# Create INBOX first to ensure LOGFILE path is valid
+mkdir -p "$INBOX"
 LOGFILE="$INBOX/deploy_express_$(date +'%Y%m%d_%H%M').log"
 
 # Configuración de tokens y rutas
@@ -82,25 +84,35 @@ process_zip() {
     # Nota: Requiere credenciales Git configuradas (ssh-agent, git credential helper, o GitHub token)
     if [ ! -d "$WORKDIR/.git" ]; then
         log "${YELLOW}📥 Clonando repositorio...${NC}"
+        # If WORKDIR exists but is not a git repo, remove it first
+        if [ -d "$WORKDIR" ]; then
+            log "${YELLOW}⚠️  Removiendo directorio existente no-git...${NC}"
+            rm -rf "$WORKDIR"
+        fi
         if ! git clone "https://github.com/$REPO.git" "$WORKDIR" >> "$LOGFILE" 2>&1; then
             log "${RED}❌ Error al clonar repositorio. Verifica las credenciales Git.${NC}"
             return 1
         fi
-        cd "$WORKDIR"
+        cd "$WORKDIR" || { log "${RED}❌ Error al cambiar a directorio de trabajo${NC}"; return 1; }
         git checkout "$BRANCH" >> "$LOGFILE" 2>&1
     else
-        cd "$WORKDIR"
+        cd "$WORKDIR" || { log "${RED}❌ Error al cambiar a directorio de trabajo${NC}"; return 1; }
         git fetch origin "$BRANCH" >> "$LOGFILE" 2>&1
         git checkout "$BRANCH" >> "$LOGFILE" 2>&1
         git pull origin "$BRANCH" >> "$LOGFILE" 2>&1
     fi
     
     # Copiar archivos extraídos al repositorio
+    # rsync with trailing slashes: source/ copies contents, not directory itself
     log "${YELLOW}📋 Copiando archivos al repositorio...${NC}"
-    rsync -av --exclude='.git' "$EXTRACT_DIR/" "$WORKDIR/" >> "$LOGFILE" 2>&1
+    rsync -av --checksum --exclude='.git' "$EXTRACT_DIR/" "$WORKDIR/" >> "$LOGFILE" 2>&1
     
-    # Limpiar directorio temporal
-    rm -rf "$EXTRACT_DIR"
+    # Limpiar directorio temporal (verify it's within expected bounds)
+    if [ -n "$EXTRACT_DIR" ] && [ -d "$EXTRACT_DIR" ] && [[ "$EXTRACT_DIR" == "$WORKDIR/_incoming" ]]; then
+        rm -rf "$EXTRACT_DIR"
+    else
+        log "${YELLOW}⚠️  No se eliminó directorio temporal por seguridad: $EXTRACT_DIR${NC}"
+    fi
     
     # Git operations
     log "${YELLOW}💾 Realizando commit...${NC}"
@@ -131,16 +143,24 @@ process_zip() {
         log "${YELLOW}⚠️  VERCEL_TOKEN no configurado - usando Vercel CLI sin token${NC}"
     fi
     
-    if command -v vercel &> /dev/null || command -v npx &> /dev/null; then
+    # Determine which command to use for Vercel deployment
+    local VERCEL_CMD=""
+    if command -v vercel &> /dev/null; then
+        VERCEL_CMD="vercel"
+    elif command -v npx &> /dev/null; then
+        VERCEL_CMD="npx vercel"
+    fi
+    
+    if [ -n "$VERCEL_CMD" ]; then
         if [ -n "$VERCEL_TOKEN" ]; then
-            if npx vercel --token "$VERCEL_TOKEN" --prod --yes >> "$LOGFILE" 2>&1; then
+            if $VERCEL_CMD --token "$VERCEL_TOKEN" --prod --yes >> "$LOGFILE" 2>&1; then
                 log "${GREEN}✅ Deploy a Vercel exitoso${NC}"
             else
                 log "${RED}❌ Error en deploy a Vercel${NC}"
                 log "${YELLOW}⚠️  Continuando con el proceso...${NC}"
             fi
         else
-            if npx vercel --prod --yes >> "$LOGFILE" 2>&1; then
+            if $VERCEL_CMD --prod --yes >> "$LOGFILE" 2>&1; then
                 log "${GREEN}✅ Deploy a Vercel exitoso${NC}"
             else
                 log "${RED}❌ Error en deploy a Vercel${NC}"
@@ -170,8 +190,7 @@ process_zip() {
     echo ""
 }
 
-# Crear directorios necesarios
-mkdir -p "$INBOX"
+# Crear directorio de trabajo (INBOX ya creado arriba para LOGFILE)
 mkdir -p "$WORKDIR"
 
 log "${BLUE}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -187,7 +206,8 @@ echo ""
 # Nota: Procesa un ZIP a la vez para garantizar integridad.
 # Si hay múltiples ZIPs, se procesarán secuencialmente con 30s de espera entre cada uno.
 while true; do
-    ZIPFILE=$(find "$INBOX" -maxdepth 1 -name "*.zip" -type f | head -n 1)
+    # Find ZIP files that haven't been modified in the last 10 seconds (fully written)
+    ZIPFILE=$(find "$INBOX" -maxdepth 1 -name "*.zip" -type f -mmin +0.17 2>/dev/null | head -n 1)
     
     if [ -n "$ZIPFILE" ]; then
         process_zip "$ZIPFILE"
