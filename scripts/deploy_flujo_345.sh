@@ -45,7 +45,12 @@ log ""
 log "${YELLOW}🔍 Buscando archivo $ZIP_FILE...${NC}"
 
 ZIP_PATH=""
-if [ -f "$PROJECT_ROOT/$ZIP_FILE" ]; then
+
+# Si se pasó una ruta como argumento, usarla primero
+if [ -n "$1" ] && [ -f "$1" ]; then
+    ZIP_PATH="$1"
+    log "${BLUE}📂 Usando archivo especificado: $ZIP_PATH${NC}"
+elif [ -f "$PROJECT_ROOT/$ZIP_FILE" ]; then
     ZIP_PATH="$PROJECT_ROOT/$ZIP_FILE"
     log "${GREEN}✅ Archivo encontrado en: $ZIP_PATH${NC}"
 elif [ -f "$HOME/Desktop/$ZIP_FILE" ]; then
@@ -66,13 +71,6 @@ else
     exit 1
 fi
 log ""
-
-# Si se pasó una ruta como argumento, usarla
-if [ -n "$1" ] && [ -f "$1" ]; then
-    ZIP_PATH="$1"
-    log "${BLUE}📂 Usando archivo especificado: $ZIP_PATH${NC}"
-    log ""
-fi
 
 # Verificar que el inbox existe
 if [ ! -d "$INBOX_DIR" ]; then
@@ -96,6 +94,7 @@ log ""
 
 # 3️⃣ Verificar que esté en la carpeta
 log "${YELLOW}🔍 Verificando presencia del archivo en el inbox...${NC}"
+FILE_SIZE=""
 if [ -f "$INBOX_DIR/$ZIP_FILE" ]; then
     log "${GREEN}✅ Verificación exitosa: $ZIP_FILE está en el inbox${NC}"
     
@@ -133,6 +132,7 @@ elif [ -n "$TELEGRAM_BOT_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
     # Intentar enviar directamente
     RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
       -d chat_id="${TELEGRAM_CHAT_ID}" \
+      -d parse_mode=HTML \
       -d text="$MESSAGE")
     
     if echo "$RESPONSE" | grep -q '"ok":true'; then
