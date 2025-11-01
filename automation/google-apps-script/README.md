@@ -169,6 +169,45 @@ deleteAllTriggers()
 ```
 Removes all triggers (useful for resetting).
 
+## 📅 Calendar Sync Feature
+
+### Sync Tasks to Google Calendar
+
+The `syncCalendar()` function automatically creates calendar events for pending tasks:
+
+```javascript
+syncCalendar()
+```
+
+**How it works:**
+- Reads all tasks from the Dashboard sheet
+- Filters tasks with status "Pendiente" (Pending)
+- Creates all-day calendar events with format: `⚠️ [Task Name] ([Responsible Person])`
+- Automatically logs success and error messages
+
+**Usage:**
+1. Ensure your tasks have proper status values ("Pendiente" for pending tasks)
+2. Run `testSyncCalendar()` to test the sync manually
+3. Run `syncCalendar()` to perform the actual sync
+4. Check your Google Calendar for the new events
+
+### Test Calendar Sync
+```javascript
+testSyncCalendar()
+```
+Tests the calendar sync and logs the results without requiring manual verification.
+
+### Clean Up Calendar Events
+```javascript
+cleanupCalendarEvents()
+```
+Deletes all calendar events created by the sync function (events starting with ⚠️). Useful for:
+- Cleaning up test events
+- Resetting the calendar before a fresh sync
+- Removing outdated events
+
+**Warning:** This will delete ALL events in your calendar that start with the ⚠️ emoji.
+
 ## 🔧 Troubleshooting
 
 ### No Message Received
