@@ -1,8 +1,11 @@
 /**
- * TRYONYOU – Daily Planner (9:00) + Telegram Notifier
+ * TRYONYOU – PMV + ABVETOS Core Integration
+ * Daily Planner (9:00) + Telegram Notifier + Agent Sync
  * 
- * This script sends a daily report at 09:00 CEST with the most important tasks (P0 and P1)
- * and provides AI-agent-based guidance on how to complete them.
+ * This script combines:
+ * - Daily task reports at 09:00 CEST with P0/P1 priorities
+ * - AI-agent-based guidance for task execution
+ * - Automatic sync of active ABVETOS agents to Dashboard
  * 
  * Setup Instructions:
  * 1. Open your Google Sheet Dashboard
@@ -10,14 +13,16 @@
  * 3. Copy this entire script
  * 4. Update the CFG object with your Telegram bot token
  * 5. Run createDailyTrigger() once to set up the daily trigger at 09:00
- * 6. Authorize the permissions when prompted
+ * 6. Run pmv_syncAgents() manually or set up daily sync trigger
+ * 7. Authorize the permissions when prompted
  */
 
 const CFG = {
   SHEET: 'Dashboard',
   TELEGRAM_BOT: 'PASTE_TELEGRAM_BOT_TOKEN',
   TELEGRAM_CHAT_MAIN: '7868120279',  // Rubén
-  TZ: 'Europe/Madrid'
+  TZ: 'Europe/Madrid',
+  REGISTRY_URL: 'https://tryonyou.app/data/agents_registry.json'  // Agents registry endpoint
 };
 
 const HOWTO = {
@@ -130,4 +135,167 @@ function deleteAllTriggers() {
     ScriptApp.deleteTrigger(trigger);
   });
   Logger.log(`Deleted ${triggers.length} trigger(s)`);
+}
+
+// ============================================================================
+// PMV + ABVETOS CORE INTEGRATION
+// ============================================================================
+
+/**
+ * Imports active agents from the ABVETOS registry to the PMV Dashboard
+ * This function synchronizes the agent list with the Google Sheets Dashboard
+ * 
+ * Features:
+ * - Fetches agents from the registry URL
+ * - Filters only active agents
+ * - Creates dashboard entries with proper formatting
+ * - Updates existing entries or creates new ones
+ * - Sets proper priorities, dates, and statuses
+ */
+function pmv_syncAgents() {
+  const sh = SpreadsheetApp.getActive().getSheetByName(CFG.SHEET);
+  
+  // Fetch the agents registry
+  try {
+    const resp = UrlFetchApp.fetch(CFG.REGISTRY_URL);
+    const registry = JSON.parse(resp.getContentText());
+    const activeAgents = (registry.active || []).filter(agent => agent.status === 'active');
+    
+    // Get header row to find column indices
+    const header = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    const idx = Object.fromEntries(header.map((h, i) => [h, i + 1]));
+    
+    // Validate required columns exist
+    const requiredCols = ['ID', 'Tarea', 'Responsable', 'Prioridad', 'Fecha de entrega', 'Estado', 'Etiquetas', 'Nota', 'Última actualización'];
+    const missingCols = requiredCols.filter(col => !idx[col]);
+    if (missingCols.length > 0) {
+      throw new Error(`Missing required columns: ${missingCols.join(', ')}`);
+    }
+    
+    const now = Utilities.formatDate(new Date(), CFG.TZ, 'yyyy-MM-dd');
+    const lastRow = sh.getLastRow();
+    
+    // Check for existing agent entries
+    const existingData = sh.getRange(2, idx['ID'], Math.max(lastRow - 1, 1), 1).getValues();
+    const existingIds = existingData.map(row => row[0]);
+    
+    // Sync each active agent
+    activeAgents.forEach(agent => {
+      const existingIndex = existingIds.indexOf(agent.id);
+      let row;
+      
+      if (existingIndex !== -1) {
+        // Update existing row
+        row = existingIndex + 2; // +2 because array is 0-indexed and starts at row 2
+      } else {
+        // Add new row
+        row = lastRow + 1 + (activeAgents.indexOf(agent) - existingIds.filter(id => id).length);
+      }
+      
+      // Set values for all columns
+      sh.getRange(row, idx['ID']).setValue(agent.id);
+      sh.getRange(row, idx['Tarea']).setValue(`${agent.name} – Sincronizado`);
+      sh.getRange(row, idx['Responsable']).setValue(agent.name);
+      sh.getRange(row, idx['Prioridad']).setValue('P1');
+      sh.getRange(row, idx['Fecha de entrega']).setValue(now);
+      sh.getRange(row, idx['Estado']).setValue('Por hacer');
+      sh.getRange(row, idx['Etiquetas']).setValue('agent-sync');
+      sh.getRange(row, idx['Nota']).setValue(agent.role);
+      sh.getRange(row, idx['Última actualización']).setValue(now);
+    });
+    
+    Logger.log(`Successfully synced ${activeAgents.length} active agents to Dashboard`);
+    
+    // Send notification to Telegram
+    const msg = `✅ *PMV Agent Sync*\n\nSincronizados ${activeAgents.length} agentes activos al Dashboard.\n_${now}_`;
+    sendTG(msg);
+    
+  } catch (error) {
+    Logger.log(`Error syncing agents: ${error.message}`);
+    const errorMsg = `❌ *PMV Agent Sync Error*\n\n${error.message}`;
+    sendTG(errorMsg);
+  }
+}
+
+/**
+ * Archives backstage agents by updating their status
+ * This function finds agents marked as 'backstage' and archives them in the dashboard
+ */
+function pmv_archiveBackstageAgents() {
+  const sh = SpreadsheetApp.getActive().getSheetByName(CFG.SHEET);
+  
+  try {
+    const resp = UrlFetchApp.fetch(CFG.REGISTRY_URL);
+    const registry = JSON.parse(resp.getContentText());
+    const backstageAgents = registry.backstage || [];
+    
+    if (backstageAgents.length === 0) {
+      Logger.log('No backstage agents to archive');
+      return;
+    }
+    
+    const header = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
+    const idx = Object.fromEntries(header.map((h, i) => [h, i + 1]));
+    
+    const lastRow = sh.getLastRow();
+    const data = sh.getRange(2, 1, lastRow - 1, sh.getLastColumn()).getValues();
+    
+    const now = Utilities.formatDate(new Date(), CFG.TZ, 'yyyy-MM-dd');
+    let archivedCount = 0;
+    
+    backstageAgents.forEach(agent => {
+      // Find the agent in the sheet
+      for (let i = 0; i < data.length; i++) {
+        if (data[i][idx['ID'] - 1] === agent.id) {
+          const row = i + 2;
+          sh.getRange(row, idx['Estado']).setValue('Archivado');
+          sh.getRange(row, idx['Etiquetas']).setValue('backstage');
+          sh.getRange(row, idx['Última actualización']).setValue(now);
+          archivedCount++;
+          break;
+        }
+      }
+    });
+    
+    Logger.log(`Archived ${archivedCount} backstage agents`);
+    
+  } catch (error) {
+    Logger.log(`Error archiving backstage agents: ${error.message}`);
+  }
+}
+
+/**
+ * Daily sync function that combines agent sync with task planning
+ * This function should be triggered daily at 09:00
+ */
+function pmv_dailySync() {
+  // First sync agents
+  pmv_syncAgents();
+  
+  // Then run the daily planner
+  dailyPlanner();
+}
+
+/**
+ * Creates menu items for PMV + ABVETOS integration
+ * This function is automatically called when the spreadsheet opens
+ */
+function onOpen() {
+  SpreadsheetApp.getUi()
+    .createMenu('PMV')
+    .addItem('Sincronizar agentes activos', 'pmv_syncAgents')
+    .addItem('Archivar agentes backstage', 'pmv_archiveBackstageAgents')
+    .addSeparator()
+    .addItem('Enviar resumen diario ahora', 'dailyPlanner')
+    .addItem('Sincronización completa (agentes + tareas)', 'pmv_dailySync')
+    .addToUi();
+}
+
+/**
+ * Creates a daily trigger for the combined PMV sync function
+ * Run this function ONCE to set up daily agent sync + task planning
+ */
+function createDailySyncTrigger() {
+  ScriptApp.newTrigger('pmv_dailySync').timeBased().atHour(9).everyDays(1).create();
+  Logger.log('Daily sync trigger created for 09:00');
 }
