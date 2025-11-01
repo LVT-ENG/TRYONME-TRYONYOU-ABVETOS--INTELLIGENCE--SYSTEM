@@ -16,6 +16,7 @@
 const FTT_API_ENDPOINT = process.env.VITE_FTT_API_ENDPOINT || '/api/trends';
 const CAP_API_ENDPOINT = process.env.VITE_CAP_API_ENDPOINT || '/api/production';
 const FTT_API_KEY = process.env.VITE_FTT_API_KEY || '';
+const CAP_API_KEY = process.env.VITE_CAP_API_KEY || process.env.VITE_FTT_API_KEY || ''; // Fallback to FTT key for backward compatibility
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '';
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || '';
 const SYNC_INTERVAL = 60000; // 60 seconds
@@ -100,7 +101,7 @@ async function updateCAP(trendData) {
     const response = await fetch(CAP_API_ENDPOINT, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${FTT_API_KEY}`,
+        'Authorization': `Bearer ${CAP_API_KEY}`,
         'Content-Type': 'application/json',
         'X-Module-Version': VERSION,
         'X-Deployed-By': DEPLOYED_BY

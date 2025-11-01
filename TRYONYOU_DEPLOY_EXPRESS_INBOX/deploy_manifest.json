@@ -43,6 +43,7 @@
       "VITE_FTT_API_KEY"
     ],
     "optional": [
+      "VITE_CAP_API_KEY",
       "TELEGRAM_BOT_TOKEN",
       "TELEGRAM_CHAT_ID"
     ]
@@ -63,7 +64,7 @@
     }
   },
   "metadata": {
-    "created_at": "2025-11-01T00:32:00Z",
+    "created_at": "auto",
     "agent": "Agent 70",
     "ecosystem_tier": "ULTRA–PLUS–ULTIMATUM",
     "status": "active"
