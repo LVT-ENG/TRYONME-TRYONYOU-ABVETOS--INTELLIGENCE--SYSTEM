@@ -131,3 +131,35 @@ function deleteAllTriggers() {
   });
   Logger.log(`Deleted ${triggers.length} trigger(s)`);
 }
+
+/**
+ * Synchronizes pending tasks with Google Calendar
+ * Creates all-day calendar events for tasks with "Pendiente" status
+ * Each event is labeled with ⚠️ emoji and includes task name and responsible person
+ * 
+ * Expected sheet structure:
+ * Column A (0): ID
+ * Column B (1): Priority
+ * Column C (2): Category
+ * Column D (3): Task
+ * Column E (4): Owner/Responsible
+ * Column F (5): Due Date
+ * Column G (6): Status
+ */
+function syncCalendar() {
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const data = sheet.getDataRange().getValues();
+  const calendar = CalendarApp.getDefaultCalendar();
+  
+  data.slice(1).forEach(row => {
+    const task = row[3];        // Column D: Task
+    const responsible = row[4]; // Column E: Owner
+    const priority = row[1];    // Column B: Priority
+    const date = row[5];        // Column F: Due Date
+    const status = row[6];      // Column G: Status
+    
+    if (status === "Pendiente") {
+      calendar.createAllDayEvent(`⚠️ ${task} (${responsible})`, new Date(date));
+    }
+  });
+}

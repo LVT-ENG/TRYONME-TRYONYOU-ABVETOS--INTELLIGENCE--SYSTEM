@@ -142,11 +142,47 @@ To exclude different statuses:
 3. **Status Values**
    - Common: "En Progreso", "Completado", "Bloqueado", "Pendiente"
    - Be consistent with spelling and capitalization
+   - Use "Pendiente" for tasks you want to sync with Google Calendar
 
 4. **Task Descriptions**
    - Include keywords for AI-agent guidance: deploy, hero, investor, epct
    - Be specific and actionable
    - Keep under 100 characters for readability
+
+## 📅 Calendar Synchronization
+
+The script includes a `syncCalendar()` function that integrates tasks with Google Calendar:
+
+### How It Works
+
+- **Reads** all tasks from the Dashboard sheet
+- **Filters** tasks with status = "Pendiente"
+- **Creates** all-day calendar events with:
+  - ⚠️ Warning emoji for visibility
+  - Task description
+  - Responsible person in parentheses
+  - Event date = task due date
+
+### Usage
+
+Run manually from Apps Script editor:
+```javascript
+syncCalendar()
+```
+
+### Example Calendar Event
+
+For a task:
+- Task: "Deploy producción a Vercel"
+- Owner: "Rubén"
+- Due Date: 2025-01-15
+- Status: "Pendiente"
+
+Creates calendar event:
+```
+⚠️ Deploy producción a Vercel (Rubén)
+Date: January 15, 2025 (all day)
+```
 
 ## 🔗 Quick Start
 

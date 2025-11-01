@@ -169,6 +169,18 @@ deleteAllTriggers()
 ```
 Removes all triggers (useful for resetting).
 
+### Sync Tasks with Calendar
+```javascript
+syncCalendar()
+```
+Synchronizes tasks with Google Calendar by creating all-day events for tasks with "Pendiente" status. Each calendar event includes:
+- ⚠️ Warning emoji for visibility
+- Task description
+- Responsible person in parentheses
+- Scheduled on the task's due date
+
+**Note**: This function reads from the active sheet and creates calendar events in your default Google Calendar. Run manually when you want to sync pending tasks to your calendar.
+
 ## 🔧 Troubleshooting
 
 ### No Message Received
