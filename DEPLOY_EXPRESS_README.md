@@ -2,25 +2,23 @@
 
 ## Descripción
 
-**Deploy Express** es un script automatizado para importar, versionar y desplegar archivos desde iCloud Drive directamente al repositorio TRYONYOU y opcionalmente a Vercel.
+**Deploy Express** es un script automatizado y simplificado para desplegar cambios del directorio `TRYONYOU_DEPLOY_EXPRESS_INBOX` directamente a GitHub y Vercel con notificaciones a Telegram.
 
 ## 🚀 Características
 
-- ✅ Monitorea carpeta de iCloud Drive para archivos nuevos
-- ✅ Copia automáticamente archivos a `docs/legacy_rewrite/`
-- ✅ Crea commits y push automático a GitHub
-- ✅ Integración con Telegram para notificaciones
-- ✅ Deploy automático a Vercel (opcional)
-- ✅ Archiva archivos procesados para evitar duplicados
-- ✅ Genera logs detallados de cada importación
+- ✅ Commit y push automático a GitHub desde `~/TRYONYOU_DEPLOY_EXPRESS_INBOX`
+- ✅ Build automático con `npm run build`
+- ✅ Deploy automático a Vercel en producción
+- ✅ Notificaciones a Telegram al completar el deploy
 
 ## 📋 Requisitos
 
-- macOS (por el uso de iCloud Drive)
-- zsh (instalado por defecto en macOS)
+- Bash shell (disponible en Linux, macOS, WSL)
 - Git configurado con credenciales
-- (Opcional) Vercel CLI para deploys automáticos: `npm install -g vercel`
-- (Opcional) Bot de Telegram para notificaciones
+- Node.js y npm instalados
+- Vercel CLI instalado globalmente: `npm install -g vercel`
+- Bot de Telegram configurado (opcional para notificaciones)
+- Directorio `~/TRYONYOU_DEPLOY_EXPRESS_INBOX` debe ser un repositorio Git válido
 
 ## ⚙️ Configuración
 
@@ -29,45 +27,48 @@
 Configura las siguientes variables de entorno antes de ejecutar el script:
 
 ```bash
-export VERCEL_TOKEN="tu_token_de_vercel"           # Opcional
-export TELEGRAM_BOT_TOKEN="tu_token_del_bot"       # Opcional
-export TELEGRAM_CHAT_ID="tu_id_telegram"           # Opcional
-export VERCEL_ORG_ID="tu_org_id"                   # Opcional
-export VERCEL_PROJECT_ID="tu_project_id"           # Opcional
+export TELEGRAM_BOT_TOKEN="tu_token_del_bot"       # Para notificaciones
+export TELEGRAM_CHAT_ID="tu_id_telegram"           # Para notificaciones
 ```
 
-### 2. Configuración Interna del Script
+### 2. Preparar el Directorio
 
-El script está preconfigurado con las siguientes rutas (puedes modificarlas según necesites):
-
-```bash
-DEPLOY_INBOX="$HOME/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX"
-REPO_PATH="$HOME/Projects/TRYONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM"
-DEST_FOLDER="docs/legacy_rewrite"
-```
-
-### 3. Estructura de Carpetas
-
-Asegúrate de que existan las siguientes carpetas:
+Asegúrate de que el directorio existe y es un repositorio Git:
 
 ```bash
-# Carpeta de entrada (iCloud Drive)
-mkdir -p "$HOME/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX"
+# Crear directorio si no existe
+mkdir -p ~/TRYONYOU_DEPLOY_EXPRESS_INBOX
 
-# Repositorio local
-# (Debe ser un clone del repositorio TRYONYOU)
+# Inicializar como repositorio Git (si es necesario)
+cd ~/TRYONYOU_DEPLOY_EXPRESS_INBOX
+git init
+git remote add origin <tu-repositorio-url>
 ```
 
 ## 🎯 Uso
 
 ### Ejecución Básica
 
+El script debe ejecutarse desde cualquier ubicación (automáticamente cambia al directorio correcto):
+
 ```bash
 chmod +x deploy_express.sh
 ./deploy_express.sh
 ```
 
-### Automatización con Cron (macOS)
+### Funcionamiento
+
+El script realiza las siguientes acciones en secuencia:
+
+1. Cambia al directorio `~/TRYONYOU_DEPLOY_EXPRESS_INBOX`
+2. Agrega todos los cambios con `git add .`
+3. Crea un commit con timestamp: `🤖 ABVETOS Auto-Sync YYYY-MM-DD HH:MM:SS`
+4. Sube los cambios a GitHub: `git push origin main`
+5. Ejecuta el build: `npm run build`
+6. Despliega a Vercel en producción: `npx vercel --prod --yes`
+7. Envía notificación a Telegram con el estado del deploy
+
+### Automatización con Cron
 
 Para ejecutar el script automáticamente cada hora:
 
@@ -76,61 +77,16 @@ Para ejecutar el script automáticamente cada hora:
 crontab -e
 
 # Agregar la siguiente línea:
-0 * * * * cd /ruta/a/tu/repo && ./deploy_express.sh >> ~/deploy_express.log 2>&1
+0 * * * * /ruta/completa/a/deploy_express.sh >> ~/deploy_express.log 2>&1
 ```
-
-### Automatización con LaunchAgent (macOS - Recomendado)
-
-Crear un archivo `~/Library/LaunchAgents/com.tryonyou.deployexpress.plist`:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-    <key>Label</key>
-    <string>com.tryonyou.deployexpress</string>
-    <key>ProgramArguments</key>
-    <array>
-        <string>/bin/zsh</string>
-        <string>/ruta/completa/a/deploy_express.sh</string>
-    </array>
-    <key>StartInterval</key>
-    <integer>3600</integer>
-    <key>StandardOutPath</key>
-    <string>/tmp/deploy_express.log</string>
-    <key>StandardErrorPath</key>
-    <string>/tmp/deploy_express_error.log</string>
-</dict>
-</plist>
-```
-
-Cargar el agente:
-
-```bash
-launchctl load ~/Library/LaunchAgents/com.tryonyou.deployexpress.plist
-```
-
-## 📦 Tipos de Archivos Soportados
-
-El script busca automáticamente los siguientes tipos de archivo:
-
-- `.zip` - Paquetes comprimidos
-- `.js` - Archivos JavaScript
-- `.mp4` - Videos
-- `.json` - Archivos de configuración
-- `.html` - Páginas HTML
-- `.css` - Hojas de estilo
 
 ## 📊 Flujo de Trabajo
 
-1. **Detección**: El script busca archivos nuevos del día actual en la carpeta `DEPLOY_INBOX`
-2. **Importación**: Copia los archivos a `docs/legacy_rewrite/import_TIMESTAMP/`
-3. **Log**: Genera un archivo `IMPORT_LOG.txt` con los detalles de la importación
-4. **Git**: Crea un commit y hace push a GitHub
-5. **Notificación**: Envía mensaje a Telegram (si está configurado)
-6. **Deploy**: Despliega a Vercel (si está configurado)
-7. **Archivo**: Mueve los archivos procesados a `_processed_TIMESTAMP/`
+1. **Git Sync**: Agrega todos los cambios y crea commit con timestamp
+2. **Push**: Sube los cambios a GitHub (rama main)
+3. **Build**: Ejecuta `npm run build` para compilar el proyecto
+4. **Deploy**: Despliega automáticamente a Vercel en producción
+5. **Notificación**: Envía confirmación a Telegram con la hora del deploy
 
 ## 🔔 Notificaciones Telegram
 
@@ -148,32 +104,28 @@ export TELEGRAM_CHAT_ID="123456789"
 
 ## 🌐 Deploy a Vercel
 
-Para habilitar el deploy automático a Vercel:
+El script usa `npx vercel --prod --yes` para deployar automáticamente:
 
 1. Instalar Vercel CLI: `npm install -g vercel`
-2. Obtener tu token de Vercel desde https://vercel.com/account/tokens
-3. Configurar las variables de entorno:
+2. Autenticarse con Vercel: `vercel login`
+3. El script ejecutará el deploy en producción automáticamente
+4. La primera vez, Vercel CLI solicitará configuración del proyecto
 
-```bash
-export VERCEL_TOKEN="tu_token_aquí"
-export VERCEL_ORG_ID="tu_org_id"       # Opcional
-export VERCEL_PROJECT_ID="tu_project_id"  # Opcional
-```
-
-## 📝 Logs
-
-Cada ejecución genera:
-
-- **Log de importación**: `docs/legacy_rewrite/import_TIMESTAMP/IMPORT_LOG.txt`
-- Contiene: timestamp, cantidad de archivos, listado de archivos importados
+**Nota**: El flag `--yes` acepta automáticamente la configuración predeterminada.
 
 ## ⚠️ Solución de Problemas
 
-### El script no encuentra archivos
+### El directorio no existe
 
-- Verifica que la carpeta `DEPLOY_INBOX` existe
-- Comprueba que los archivos son del día actual
-- Revisa los tipos de archivo soportados
+```bash
+# Crear el directorio
+mkdir -p ~/TRYONYOU_DEPLOY_EXPRESS_INBOX
+cd ~/TRYONYOU_DEPLOY_EXPRESS_INBOX
+
+# Inicializar como repositorio Git
+git init
+git remote add origin <url-del-repositorio>
+```
 
 ### Error de autenticación Git
 
@@ -192,8 +144,19 @@ ssh-add ~/.ssh/id_rsa
 # Login manual en Vercel
 vercel login
 
-# Verificar que el token es válido
-vercel whoami --token $VERCEL_TOKEN
+# Verificar autenticación
+vercel whoami
+```
+
+### npm run build falla
+
+```bash
+# Asegúrate de que package.json existe y tiene el script "build"
+cd ~/TRYONYOU_DEPLOY_EXPRESS_INBOX
+npm install
+
+# Verificar que el script build está definido
+cat package.json | grep -A 1 '"build"'
 ```
 
 ## 🔒 Seguridad
