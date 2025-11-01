@@ -4,18 +4,18 @@
 # ABVETOS_FLOW_345.sh · Orquestación total
 # ======================================================
 
-set -e
+set -euo pipefail
 
 echo "🧠 [ABVETOS] Iniciando Flujo 345 (Build → Deploy → Notify)"
 
-# ─── [3] BUILD ───────────────────────────────────────────────
-echo "🏗️ [3/5] Build del proyecto..."
+# ─── [1] BUILD ───────────────────────────────────────────────
+echo "🏗️ [1/3] Build del proyecto..."
 npm ci --silent || npm install --silent
 npm run build --silent
 echo "✅ Build completado."
 
-# ─── [4] DEPLOY ──────────────────────────────────────────────
-echo "🚀 [4/5] Desplegando en Vercel..."
+# ─── [2] DEPLOY ──────────────────────────────────────────────
+echo "🚀 [2/3] Desplegando en Vercel..."
 npx vercel --token "$VERCEL_TOKEN" --prod --yes > deploy.log 2>&1
 if grep -q "https" deploy.log; then
   DEPLOY_URL=$(grep -Eo 'https://[a-zA-Z0-9./?=_-]*' deploy.log | tail -1)
@@ -25,11 +25,19 @@ else
   exit 1
 fi
 
-# ─── [5] NOTIFY + VERIFY ─────────────────────────────────────
-echo "📡 [5/5] Enviando notificación a Telegram..."
+# ─── [3] NOTIFY + VERIFY ─────────────────────────────────────
+echo "📡 [3/3] Enviando notificación a Telegram..."
 MESSAGE="✅ TRYONYOU – Flujo 345 completado con éxito en $(date '+%Y-%m-%d %H:%M:%S')%0A🌐 URL: $DEPLOY_URL"
-curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
   -d chat_id="${TELEGRAM_CHAT_ID}" \
-  -d text="$MESSAGE" > /dev/null
+  -d parse_mode=HTML \
+  -d text="$MESSAGE")
+
+# Check if Telegram notification was successful
+if echo "$RESPONSE" | grep -q '"ok":true'; then
+  echo "✅ Notificación enviada exitosamente."
+else
+  echo "⚠️ Advertencia: No se pudo enviar la notificación a Telegram."
+fi
 
 echo "🦚 [ABVETOS] Flujo 345 completado correctamente."
