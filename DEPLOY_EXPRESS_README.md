@@ -2,24 +2,24 @@
 
 ## Descripción
 
-**Deploy Express** es un script automatizado para importar, versionar y desplegar archivos desde iCloud Drive directamente al repositorio TRYONYOU y opcionalmente a Vercel.
+**Deploy Express** es un script automatizado que sincroniza cambios desde el directorio `~/TRYONYOU_DEPLOY_EXPRESS_INBOX`, ejecuta el build del proyecto y despliega automáticamente a Vercel con notificaciones a Telegram.
 
 ## 🚀 Características
 
-- ✅ Monitorea carpeta de iCloud Drive para archivos nuevos
-- ✅ Copia automáticamente archivos a `docs/legacy_rewrite/`
-- ✅ Crea commits y push automático a GitHub
-- ✅ Integración con Telegram para notificaciones
-- ✅ Deploy automático a Vercel (opcional)
-- ✅ Archiva archivos procesados para evitar duplicados
-- ✅ Genera logs detallados de cada importación
+- ✅ Cambio automático al directorio `~/TRYONYOU_DEPLOY_EXPRESS_INBOX`
+- ✅ Crea commits automáticos con timestamp
+- ✅ Push automático a GitHub (rama main)
+- ✅ Ejecuta `npm run build` con validación
+- ✅ Deploy automático a Vercel en producción
+- ✅ Notificaciones a Telegram al completar
+- ✅ Manejo robusto de errores
 
 ## 📋 Requisitos
 
-- macOS (por el uso de iCloud Drive)
-- zsh (instalado por defecto en macOS)
+- Bash (disponible en Linux, macOS, Windows/WSL)
 - Git configurado con credenciales
-- (Opcional) Vercel CLI para deploys automáticos: `npm install -g vercel`
+- Node.js y npm instalados
+- Vercel CLI instalado: `npm install -g vercel`
 - (Opcional) Bot de Telegram para notificaciones
 
 ## ⚙️ Configuración
@@ -29,24 +29,19 @@
 Configura las siguientes variables de entorno antes de ejecutar el script:
 
 ```bash
-export VERCEL_TOKEN="tu_token_de_vercel"           # Opcional
-export TELEGRAM_BOT_TOKEN="tu_token_del_bot"       # Opcional
-export TELEGRAM_CHAT_ID="tu_id_telegram"           # Opcional
-export VERCEL_ORG_ID="tu_org_id"                   # Opcional
-export VERCEL_PROJECT_ID="tu_project_id"           # Opcional
+export TELEGRAM_BOT_TOKEN="tu_token_del_bot"       # Opcional para notificaciones
+export TELEGRAM_CHAT_ID="tu_id_telegram"           # Opcional para notificaciones
 ```
 
-### 2. Configuración Interna del Script
+### 2. Requisitos del Directorio
 
-El script está preconfigurado con las siguientes rutas (puedes modificarlas según necesites):
+El script espera que `~/TRYONYOU_DEPLOY_EXPRESS_INBOX` sea un repositorio git válido con:
+- Repositorio git inicializado
+- Remote origin configurado
+- package.json con script "build" definido
+- Vercel configurado para el proyecto
 
-```bash
-DEPLOY_INBOX="$HOME/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX"
-REPO_PATH="$HOME/Projects/TRYONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM"
-DEST_FOLDER="docs/legacy_rewrite"
-```
-
-### 3. Estructura de Carpetas
+### 3. Configuración de Vercel
 
 Asegúrate de que existan las siguientes carpetas:
 
