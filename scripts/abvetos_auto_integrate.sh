@@ -79,16 +79,36 @@ process_zip() {
         log "${YELLOW}🔄 Inicializando repositorio git...${NC}"
         cd "$WORKDIR" || exit 1
         git init
-        git remote add origin "https://github.com/$REPO.git" || true
-        git fetch origin "$BRANCH" || log "${YELLOW}⚠️  No se pudo hacer fetch${NC}"
-        git checkout "$BRANCH" || git checkout -b "$BRANCH"
+        
+        # Check if remote already exists before adding
+        if ! git remote get-url origin > /dev/null 2>&1; then
+            git remote add origin "https://github.com/$REPO.git"
+            log "${GREEN}✅ Remote origin añadido${NC}"
+        fi
+        
+        # Fetch from remote
+        if git fetch origin "$BRANCH"; then
+            log "${GREEN}✅ Fetch exitoso${NC}"
+            git checkout "$BRANCH" || {
+                log "${YELLOW}⚠️  Branch $BRANCH no existe localmente, creando...${NC}"
+                git checkout -b "$BRANCH" origin/"$BRANCH"
+            }
+        else
+            log "${YELLOW}⚠️  No se pudo hacer fetch, creando branch local${NC}"
+            git checkout -b "$BRANCH"
+        fi
     fi
     
     # Copiar archivos al workspace
     log "${YELLOW}🔄 Integrando archivos al repositorio...${NC}"
     if [ -d "$EXTRACT_DIR" ] && [ "$(ls -A $EXTRACT_DIR)" ]; then
-        cp -r "$EXTRACT_DIR/"* "$WORKDIR/" 2>/dev/null || true
-        log "${GREEN}✅ Archivos integrados${NC}"
+        if cp -r "$EXTRACT_DIR/"* "$WORKDIR/" 2>/dev/null; then
+            log "${GREEN}✅ Archivos integrados${NC}"
+        else
+            log "${YELLOW}⚠️  Algunos archivos no pudieron copiarse${NC}"
+        fi
+    else
+        log "${YELLOW}⚠️  No hay archivos para integrar${NC}"
     fi
     
     # Limpiar carpeta temporal
@@ -193,10 +213,19 @@ main() {
     
     # Bucle continuo de vigilancia
     while true; do
-        ZIPFILE=$(find "$INBOX" -maxdepth 1 -name "*.zip" -type f | head -n 1)
+        # Find ZIP files and sort by modification time (oldest first)
+        # This ensures deterministic processing order
+        ZIPFILE=$(find "$INBOX" -maxdepth 1 -name "*.zip" -type f -printf '%T@ %p\n' | sort -n | head -n 1 | cut -d' ' -f2-)
         
         if [ -n "$ZIPFILE" ]; then
-            process_zip "$ZIPFILE"
+            # Create a lock file to prevent race conditions
+            LOCKFILE="$INBOX/.processing.lock"
+            if mkdir "$LOCKFILE" 2>/dev/null; then
+                process_zip "$ZIPFILE"
+                rmdir "$LOCKFILE" 2>/dev/null || true
+            else
+                log "${YELLOW}⚠️  Otro proceso está procesando archivos, esperando...${NC}"
+            fi
         fi
         
         # Esperar 30 segundos antes de la próxima verificación
