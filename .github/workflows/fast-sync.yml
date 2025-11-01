@@ -34,8 +34,7 @@ jobs:
       - name: 🚀 Deploy to Vercel
         id: vercel-deploy
         run: |
-          npm install -g vercel
-          vercel --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
+          npx vercel@latest --prod --yes --token ${{ secrets.VERCEL_TOKEN }}
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -56,9 +55,6 @@ jobs:
             -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
             -d parse_mode=HTML \
             -d text="$MESSAGE"
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       
       - name: ❌ Notify on failure
         if: failure()
@@ -69,6 +65,3 @@ jobs:
             -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
             -d parse_mode=HTML \
             -d text="$MESSAGE"
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
