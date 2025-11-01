@@ -1,10 +1,38 @@
-# Google Apps Script - Daily Planner & Telegram Notifier
+# Google Apps Script - Daily Planner & PMV + ABVETOS Integration
 
 ## 📋 Overview
 
-This automation script sends a daily report at **09:00 CEST** to Telegram with:
+This automation suite provides two powerful integrations for the TRYONYOU platform:
+
+### 1. Daily Planner & Telegram Notifier
+Sends a daily report at **09:00 CEST** to Telegram with:
 - 1️⃣ The most important tasks of the day (P0 and P1 priorities)
 - 2️⃣ AI-agent-based guidance on how to complete them
+
+### 2. PMV + ABVETOS Core Integration (NEW!)
+Synchronizes the ABVETOS agent registry with your Dashboard:
+- 🤖 Imports 15 active agents from the registry
+- 📊 Updates agent status automatically
+- 🗂️ Archives backstage agents
+- 📅 Daily automation at 09:00
+
+**📚 [View PMV + ABVETOS Integration Guide](./PMV_ABVETOS_INTEGRATION_README.md)**
+
+---
+
+## 📁 Files in This Directory
+
+- `dailyPlanner.gs` - Daily task planner with Telegram notifications
+- `pmv_abvetos_integration.gs` - Agent registry synchronization (NEW!)
+- `README.md` - This file (Daily Planner documentation)
+- `PMV_ABVETOS_INTEGRATION_README.md` - Complete guide for agent integration
+- `QUICK_START.md` - 5-minute quick start for Daily Planner
+- `SHEET_TEMPLATE.md` - Google Sheet template structure
+- `SYSTEM_FLOW.md` - System architecture and flow
+
+---
+
+## Daily Planner Setup
 
 ## 🚀 Setup Instructions
 
