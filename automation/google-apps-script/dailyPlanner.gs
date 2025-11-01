@@ -152,7 +152,9 @@ function syncCalendar() {
       
       // Only sync tasks with "Pendiente" status
       if (status === "Pendiente" && task && date) {
-        const eventTitle = `⚠️ ${task} (${responsible})`;
+        // Ensure responsible person is defined, use "Sin asignar" if empty
+        const responsiblePerson = responsible || "Sin asignar";
+        const eventTitle = `⚠️ ${task} (${responsiblePerson})`;
         const eventDate = new Date(date);
         
         // Validate date is valid
@@ -205,7 +207,8 @@ function testSyncCalendar() {
 function cleanupCalendarEvents() {
   const calendar = CalendarApp.getDefaultCalendar();
   const now = new Date();
-  const futureDate = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+  // Limit to 3 months ahead to improve performance
+  const futureDate = new Date(now.getFullYear(), now.getMonth() + 3, now.getDate());
   
   // Get all events with the warning emoji prefix
   const events = calendar.getEvents(now, futureDate);
