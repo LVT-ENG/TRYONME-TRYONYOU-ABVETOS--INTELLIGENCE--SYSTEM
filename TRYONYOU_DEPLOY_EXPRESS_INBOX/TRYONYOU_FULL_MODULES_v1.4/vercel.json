@@ -7,7 +7,6 @@
   "installCommand": "npm install",
   "devCommand": "npm run dev",
   "public": true,
-
   "rewrites": [
     {
       "source": "/api/(.*)",
