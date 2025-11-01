@@ -53,6 +53,8 @@ Always-active monitoring and security agents:
 
 These watchdog agents operate in "silent mode" and are always enabled.
 
+**Note**: The Security & Token Guardian (W-01) also appears in the active agents list as A-15, reflecting its dual role as both an active operational agent and a watchdog security monitor. The `watchdog_ref` field links the active instance to its watchdog counterpart.
+
 ## Usage
 
 ### Loading the Registry

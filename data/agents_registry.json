@@ -118,7 +118,8 @@
       "id": "A-15",
       "name": "Security & Token Guardian",
       "role": "Protección de claves, .env y cifrado del sistema",
-      "mode": "watchdog"
+      "mode": "active",
+      "watchdog_ref": "W-01"
     }
   ],
   "backstage": [
