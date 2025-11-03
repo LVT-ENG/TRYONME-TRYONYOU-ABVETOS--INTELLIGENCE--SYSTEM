@@ -1,0 +1,37 @@
+name: 🔁 TRYONYOU — FastSync Deploy
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */3 * * *" # cada 3h
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: 🔧 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧱 Build project
+        run: npm run build
+
+      - name: 🚀 Deploy to Vercel
+        run: npx vercel --prod --yes --token \$VERCEL_TOKEN
+
+      - name: 📲 Notify Telegram
+        if: always()
+        run: |
+          MESSAGE="✅ TRYONYOU FastSync ejecutado con éxito 🚀%0ARepo: \$GITHUB_REPOSITORY%0ACommit: \$GITHUB_SHA%0A⏰ \$(date '+%Y-%m-%d %H:%M:%S')"
+          curl -s -X POST https://api.telegram.org/bot\$TELEGRAM_BOT_TOKEN/sendMessage \
+          -d chat_id=\$TELEGRAM_CHAT_ID \
+          -d text="\$MESSAGE"
