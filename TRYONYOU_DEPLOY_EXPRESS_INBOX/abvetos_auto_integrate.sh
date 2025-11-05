@@ -90,7 +90,7 @@ sync_abvetos_components() {
         # Sync scripts if they exist
         if [ -d "$ABVETOS_SYNC_DIR/scripts" ]; then
             mkdir -p "$SCRIPTS_DIR"
-            cp -r "$ABVETOS_SYNC_DIR/scripts/"* "$SCRIPTS_DIR/" 2>/dev/null || true
+            cp -r "$ABVETOS_SYNC_DIR/scripts/." "$SCRIPTS_DIR/" 2>/dev/null || true
             
             # Make scripts executable
             chmod +x "$SCRIPTS_DIR"/*.sh 2>/dev/null || true
