@@ -83,7 +83,7 @@ sync_abvetos_components() {
         # Sync dashboard components if they exist
         if [ -d "$ABVETOS_SYNC_DIR/apps/web/src/dashboard/abvetos-dashboard" ]; then
             mkdir -p "$DASHBOARD_DIR"
-            cp -r "$ABVETOS_SYNC_DIR/apps/web/src/dashboard/abvetos-dashboard/"* "$DASHBOARD_DIR/" 2>/dev/null || true
+            cp -r "$ABVETOS_SYNC_DIR/apps/web/src/dashboard/abvetos-dashboard/." "$DASHBOARD_DIR/" 2>/dev/null || true
             print_success "Dashboard components synced"
         fi
         
