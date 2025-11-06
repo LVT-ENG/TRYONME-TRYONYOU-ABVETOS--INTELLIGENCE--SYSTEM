@@ -65,7 +65,7 @@
       "role": "Translation Coordinator - Manages multi-language content and localization processes",
       "status": "active",
       "schedule": "On content changes",
-      "workflow": ".github/workflows/translation-coordinator.yml"
+      "workflow": "TBD"
     },
     {
       "id": "agent-40",
