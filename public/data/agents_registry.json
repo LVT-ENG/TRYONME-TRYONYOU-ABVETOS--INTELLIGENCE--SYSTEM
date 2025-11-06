@@ -81,7 +81,7 @@
       "role": "Analytics Reporter - Generates insights from user data and platform metrics",
       "status": "active",
       "schedule": "Weekly on Monday at 07:00 UTC",
-      "workflow": ".github/workflows/analytics-reporter.yml"
+      "workflow": "TBD"
     },
     {
       "id": "agent-18",
