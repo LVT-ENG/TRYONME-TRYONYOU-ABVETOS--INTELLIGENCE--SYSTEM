@@ -89,7 +89,7 @@
       "role": "API Gateway - Manages API endpoints, rate limiting, and integration health",
       "status": "active",
       "schedule": "Continuous monitoring",
-      "workflow": ".github/workflows/api-gateway.yml"
+      "workflow": "TBD"
     },
     {
       "id": "agent-7",
