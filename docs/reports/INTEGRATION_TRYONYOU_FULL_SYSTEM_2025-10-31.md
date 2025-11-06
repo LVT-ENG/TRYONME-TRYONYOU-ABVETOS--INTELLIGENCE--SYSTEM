@@ -98,7 +98,7 @@ Successfully integrated **TRYONYOU_FULL_SYSTEM_2025-10-31.zip** into the product
 
 ### Frontend
 - **Framework:** React 18.3.1
-- **Build Tool:** Vite 7.1.7
+- **Build Tool:** Vite 7.1.2
 - **Routing:** React Router DOM 6.26.0
 - **Animations:** Lottie React 2.4.1
 - **Styling:** Custom CSS with CSS Variables
