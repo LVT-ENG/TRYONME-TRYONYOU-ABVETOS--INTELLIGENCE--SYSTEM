@@ -73,7 +73,7 @@
       "role": "Database Backup - Ensures data integrity and manages automated backup schedules",
       "status": "active",
       "schedule": "Daily at 02:00 UTC",
-      "workflow": ".github/workflows/database-backup.yml"
+      "workflow": "TBD"
     },
     {
       "id": "agent-55",
