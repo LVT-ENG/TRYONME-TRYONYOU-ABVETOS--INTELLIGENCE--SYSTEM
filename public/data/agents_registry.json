@@ -43,29 +43,6 @@
       "workflow": ".github/workflows/document-locker.yml"
     },
     {
-      "id": "agent-31",
-      "name": "Agent 31",
-      "role": "Video Curator - Manages hero videos, LaSeñu content, and Pau overlay integration",
-      "status": "backstage",
-      "schedule": "Pending implementation",
-      "workflow": "TBD"
-    },
-    {
-      "id": "agent-2",
-      "name": "Agent 2",
-      "role": "Content Pro - Manages investor decks, marketing copy, and brand content",
-      "status": "backstage",
-      "schedule": "Pending implementation",
-      "workflow": "TBD"
-    },
-    {
-      "id": "agent-25",
-      "name": "Agent 25",
-      "role": "Image Curator - Manages product mockups, fashion images, and visual assets",
-      "status": "backstage",
-      "schedule": "Pending implementation",
-      "workflow": "TBD"
-    },
     {
       "id": "agent-15",
       "name": "Agent 15",
