@@ -49,7 +49,7 @@
       "role": "Performance Monitor - Tracks application performance, load times, and optimization metrics",
       "status": "active",
       "schedule": "Continuous monitoring",
-      "workflow": ".github/workflows/performance-monitor.yml"
+      "workflow": "TBD"
     },
     {
       "id": "agent-8",
