@@ -1,4 +1,4 @@
-# Changelog - TRYONYOU Premium Update
+# Changelog - TRYONYOU Premium Update [2.1.0]
 
 ## [2.1.0] - 2025-10-31
 
