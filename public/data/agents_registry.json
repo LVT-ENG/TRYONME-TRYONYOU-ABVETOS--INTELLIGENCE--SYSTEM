@@ -57,7 +57,7 @@
       "role": "Security Scanner - Monitors security vulnerabilities, dependency updates, and threat detection",
       "status": "active",
       "schedule": "Daily at 06:00 UTC + On dependency changes",
-      "workflow": ".github/workflows/security-scanner.yml"
+      "workflow": "TBD"
     },
     {
       "id": "agent-33",
