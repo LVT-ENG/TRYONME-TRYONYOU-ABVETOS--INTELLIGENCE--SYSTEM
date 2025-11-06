@@ -97,7 +97,7 @@
       "role": "Email Dispatcher - Handles automated email campaigns and notifications",
       "status": "active",
       "schedule": "On-demand + Daily digest at 17:00 UTC",
-      "workflow": ".github/workflows/email-dispatcher.yml"
+      "workflow": ".github/workflows/orchestrator-agent.yml"
     }
   ],
   "backstage": [
