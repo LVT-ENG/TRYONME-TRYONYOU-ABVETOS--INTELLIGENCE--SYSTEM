@@ -178,9 +178,27 @@ print_summary() {
     echo "║                   Integration Summary                       ║"
     echo "╠══════════════════════════════════════════════════════════════╣"
     echo "║ Status:     ✓ Integration Complete                         ║"
-    echo "║ Dashboard:  $DASHBOARD_DIR"
-    echo "║ Scripts:    $SCRIPTS_DIR"
-    echo "║ Public:     $PUBLIC_DIR"
+    # Truncate paths to fit within box (max 48 chars for value)
+    local box_width=62
+    local label_pad_dashboard="Dashboard:  "
+    local label_pad_scripts="Scripts:    "
+    local label_pad_public="Public:     "
+    local value_width=$((box_width - ${#label_pad_dashboard} - 3)) # 3 for box chars and space
+    local dashboard_display="$DASHBOARD_DIR"
+    local scripts_display="$SCRIPTS_DIR"
+    local public_display="$PUBLIC_DIR"
+    if [ ${#dashboard_display} -gt $value_width ]; then
+        dashboard_display="${dashboard_display:0:$((value_width-3))}..."
+    fi
+    if [ ${#scripts_display} -gt $value_width ]; then
+        scripts_display="${scripts_display:0:$((value_width-3))}..."
+    fi
+    if [ ${#public_display} -gt $value_width ]; then
+        public_display="${public_display:0:$((value_width-3))}..."
+    fi
+    printf "║ %s%-*s║\n" "$label_pad_dashboard" $value_width "$dashboard_display"
+    printf "║ %s%-*s║\n" "$label_pad_scripts" $value_width "$scripts_display"
+    printf "║ %s%-*s║\n" "$label_pad_public" $value_width "$public_display"
     echo "╚══════════════════════════════════════════════════════════════╝"
     echo -e "${NC}"
     
