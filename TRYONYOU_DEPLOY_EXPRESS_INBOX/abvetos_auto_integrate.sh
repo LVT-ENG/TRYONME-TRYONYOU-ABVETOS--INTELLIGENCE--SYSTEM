@@ -93,8 +93,18 @@ sync_abvetos_components() {
             cp -r "$ABVETOS_SYNC_DIR/scripts/." "$SCRIPTS_DIR/" 2>/dev/null || true
             
             # Make scripts executable
-            chmod +x "$SCRIPTS_DIR"/*.sh 2>/dev/null || true
-            print_success "Scripts synced and made executable"
+            found_sh=0
+            for file in "$SCRIPTS_DIR"/*.sh; do
+                if [ -f "$file" ]; then
+                    chmod +x "$file"
+                    found_sh=1
+                fi
+            done
+            if [ "$found_sh" -eq 1 ]; then
+                print_success "Scripts synced and made executable"
+            else
+                print_info "No .sh scripts found to make executable"
+            fi
         fi
     else
         print_warning "ABVETOS sync directory not found, skipping component sync"
