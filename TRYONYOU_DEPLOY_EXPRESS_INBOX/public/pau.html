@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>PAU — El pavo real de TRYONYOU</title>
+  <meta name="description" content="PAU te guía a tu mejor versión: estilo, fit y momentos."/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+  <header>
+    <div class="logo"><div class="peacock"></div><strong>TRYONYOU</strong></div>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/adbetos/">ABVETOS</a>
+    </nav>
+  </header>
+
+  <section class="panel" style="margin:28px">
+    <h1>PAU</h1>
+    <p>Tu compañero elegante. Responde a tu estado, ocasión y preferencias para componer el look perfecto.</p>
+    <div class="pau-avatar"><div id="pau-canvas" aria-label="Pau"></div></div>
+    <div class="cta"><a class="btn primary" href="/">Volver</a></div>
+  </section>
+
+  <script type="module">
+    import { initPau } from '/js/pauAnimations.js';
+    initPau('pau-canvas');
+  </script>
+</body>
+</html>

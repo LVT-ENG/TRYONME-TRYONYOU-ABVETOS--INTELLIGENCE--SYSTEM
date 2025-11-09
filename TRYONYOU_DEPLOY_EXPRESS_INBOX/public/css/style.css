@@ -1,0 +1,23 @@
+:root { --bg:#0c0f14; --fg:#e8e8e8; --gold:#c9a227; --peacock:#0bb; --muted:#9aa0a6; }
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;background:var(--bg);color:var(--fg)}
+a{color:var(--gold);text-decoration:none}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 28px;border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{display:flex;gap:12px;align-items:center}
+.logo .peacock{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#39d,transparent 60%), radial-gradient(circle at 70% 70%,#0ff,transparent 60%),linear-gradient(135deg,#111,#222)}
+nav a{margin:0 12px;opacity:.9}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:center;padding:48px 28px}
+h1{font-size:48px;line-height:1.05;margin:0 0 12px}
+.tag{display:inline-block;padding:6px 10px;border:1px solid rgba(255,255,255,.15);border-radius:999px;font-size:12px;letter-spacing:.4px;opacity:.9}
+.cta{display:flex;gap:12px;margin-top:18px}
+button,.btn{padding:12px 18px;border:1px solid rgba(255,255,255,.15);background:#111;color:var(--fg);border-radius:10px;cursor:pointer}
+.btn.primary{background:linear-gradient(135deg,#222,#111);border-color:rgba(255,255,255,.25)}
+.panel{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.00));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+footer{padding:28px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.08)}
+.video{width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden}
+.pau-avatar{height:280px;display:flex;align-items:center;justify-content:center;background:radial-gradient(1200px 300px at 20% 10%,rgba(0,255,255,.12),transparent), linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.0));border:1px solid rgba(255,255,255,.08);border-radius:16px}
+.wardrobe{height:280px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.slot{border:1px dashed rgba(255,255,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center;opacity:.9}
+.form-card{display:grid;gap:12px}
+input,select,textarea{background:#101317;color:var(--fg);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:12px;width:100%}
+label{font-size:12px;color:var(--muted)}

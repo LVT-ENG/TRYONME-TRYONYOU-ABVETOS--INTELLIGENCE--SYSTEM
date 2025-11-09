@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "name": "tryonyou-abvetos-system",
+  "builds": [{ "src": "index.html", "use": "@vercel/static" }],
+  "outputDirectory": "dist",
+  "framework": "vite"
+}

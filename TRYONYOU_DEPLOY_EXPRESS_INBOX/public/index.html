@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>TRYONYOU — Revolución del fitting</title>
+  <meta name="description" content="TRYONYOU: armario virtual, avatar PAU y compra sin devoluciones."/>
+  <meta property="og:title" content="TRYONYOU — Revolución del fitting"/>
+  <meta property="og:description" content="Pruébatelo todo sin errores. Armario virtual + PAU + pago seguro."/>
+  <meta property="og:type" content="website"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+  <header>
+    <div class="logo"><div class="peacock"></div><strong>TRYONYOU</strong></div>
+    <nav>
+      <a href="/pau.html">PAU</a>
+      <a href="#wardrobe-section">Armario</a>
+      <a href="/adbetos/">ABVETOS</a>
+      <a href="#forms">Contacto</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="tag">ULTRA–PLUS–ULTIMATUM</span>
+      <h1>Compra que <em>siempre</em> te queda bien.</h1>
+      <p>Armario virtual, avatar inteligente y pago dual-biometría. Sin tallas fallidas, sin devoluciones.</p>
+      <div class="cta">
+        <a class="btn primary" href="/pau.html">Conoce a PAU</a>
+        <a class="btn" href="/adbetos/">ABVETOS embebible</a>
+      </div>
+      <div class="panel" style="margin-top:18px">
+        <div class="grid-2">
+          <div class="pau-avatar"><div id="pau-canvas" aria-label="Pau"></div></div>
+          <div class="video">
+            <video src="/videos/intro.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>¿Cómo funciona?</h3>
+      <ol>
+        <li>PAU te guía y entiende tu estilo.</li>
+        <li>El Armario Virtual compone outfits perfectos.</li>
+        <li>Pagas con ABVET: seguro y sin fricción.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="wardrobe-section" class="panel" style="margin:0 28px 28px">
+    <h2>Armario virtual</h2>
+    <div id="wardrobe" class="wardrobe" aria-live="polite"></div>
+  </section>
+
+  <section id="forms" class="panel" style="margin:0 28px 28px">
+    <h2>Contacto / Acceso anticipado</h2>
+    <form class="form-card" method="post" action="/forms/submit">
+      <label>Nombre<input required name="name" placeholder="Tu nombre"/></label>
+      <label>Email<input required type="email" name="email" placeholder="tu@email"/></label>
+      <label>Mensaje<textarea name="msg" rows="4" placeholder="Cuéntanos qué buscas"></textarea></label>
+      <button class="btn primary" type="submit">Enviar</button>
+    </form>
+  </section>
+
+  <footer>© TRYONYOU — ABVETOS — ULTRA–PLUS–ULTIMATUM</footer>
+
+  <script type="module">
+    import { initPau } from '/js/pauAnimations.js';
+    import { initWardrobe } from '/js/smartWardrobe.js';
+    initPau('pau-canvas'); initWardrobe('wardrobe');
+  </script>
+</body>
+</html>
