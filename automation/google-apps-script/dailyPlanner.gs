@@ -190,7 +190,7 @@ function pmv_syncAgents() {
         row = existingIndex + 2; // +2 because array is 0-indexed and starts at row 2
       } else {
         // Add new row
-        row = lastRow + 1 + (activeAgents.indexOf(agent) - existingIds.filter(id => id).length);
+        row = sh.getLastRow() + 1;
       }
       
       // Set values for all columns
