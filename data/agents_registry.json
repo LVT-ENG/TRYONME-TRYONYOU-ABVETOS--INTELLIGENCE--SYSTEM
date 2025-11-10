@@ -30,10 +30,12 @@
     { "id": "A-11", "name": "Tester UX Web", "role": "Validación de experiencia y QA post-venta", "mode": "active" },
     { "id": "A-12", "name": "HR Supervisor", "role": "Asignación de roles y rendimiento", "mode": "active" },
     { "id": "A-13", "name": "Look Curator", "role": "Curación estética y coherencia comercial", "mode": "active" },
-    { "id": "A-14", "name": "Video Curator", "role": "Edición y curación audiovisual para moda", "mode": "active" },
-    { "id": "A-15", "name": "Security & Token Guardian", "role": "Protección de claves, .env y cifrado del sistema", "mode": "watchdog" }
+    { "id": "A-14", "name": "Video Curator", "role": "Edición y curación audiovisual para moda", "mode": "active" }
   ],
 
+  "watchdog": [
+    { "id": "A-15", "name": "Security & Token Guardian", "role": "Protección de claves, .env y cifrado del sistema", "mode": "watchdog" }
+  ],
   "backstage": [
     "Ficha Técnica Master",
     "Proveedor Tracker",
