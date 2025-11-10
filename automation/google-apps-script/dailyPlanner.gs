@@ -159,8 +159,8 @@ function pmv_syncAgents() {
   try {
     const resp = UrlFetchApp.fetch(CFG.REGISTRY_URL);
     const registry = JSON.parse(resp.getContentText());
-    // Filter only agents whose status is 'active', since registry.active may include agents with other statuses (e.g., 'backstage')
-    const activeAgents = (registry.active || []).filter(agent => agent.status === 'active');
+    // All agents in registry.active already have status 'active'; no filtering needed
+    const activeAgents = registry.active || [];
     
     // Get header row to find column indices
     const header = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0];
