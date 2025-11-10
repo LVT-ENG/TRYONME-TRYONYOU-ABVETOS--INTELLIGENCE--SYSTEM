@@ -43,7 +43,6 @@
       "workflow": ".github/workflows/document-locker.yml"
     },
     {
-    {
       "id": "agent-15",
       "name": "Agent 15",
       "role": "Performance Monitor - Tracks application performance, load times, and optimization metrics",
