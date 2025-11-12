@@ -1,0 +1,14 @@
+# Allow retrodeploy system files
+!deploy.sh
+!watcher.js
+!Makefile
+!vercel.json
+!.env.template
+!README.txt
+
+# But ignore actual .env with credentials
+.env
+
+# Ignore logs
+retrodeploy.log
+*.log

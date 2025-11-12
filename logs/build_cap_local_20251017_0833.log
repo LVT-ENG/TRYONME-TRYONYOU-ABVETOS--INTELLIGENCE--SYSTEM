@@ -1,0 +1,18 @@
+[1;33m📂 CAP Module Directory: /home/ubuntu/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/modules/CAP[0m
+[1;33m📁 Creating CAP source structure...[0m
+[0;32m✅ CAP source structure created[0m
+[1;33m🔨 Building CAP module (minimal compression)...[0m
+
+> @tryonyou/cap@1.0.0 build:local
+> vite build --config vite.config.cap.js --mode development
+
+vite v7.1.7 building for development...
+transforming...
+✓ 16 modules transformed.
+rendering chunks...
+computing gzip size...
+dist-cap/index.js  51.38 kB │ gzip: 14.53 kB │ map: 86.71 kB
+dist-cap/index.js  54.75 kB │ gzip: 14.82 kB │ map: 86.75 kB
+✓ built in 264ms
+[0;32m✅ CAP module built successfully[0m
+[0;34m📦 Build size: 148K (uncompressed)[0m

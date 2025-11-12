@@ -1,0 +1,167 @@
+name: Vercel Token Refresh
+
+on:
+  schedule:
+    # Run daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  refresh-token:
+    name: Refresh Vercel Token
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      
+      - name: Check Vercel Token
+        id: check_token
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "Checking Vercel token validity..."
+          
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "❌ VERCEL_TOKEN not configured"
+            echo "token_valid=false" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          
+          # Test token by fetching user info
+          RESPONSE=$(curl -s -w "\n%{http_code}" -H "Authorization: Bearer $VERCEL_TOKEN" \
+            https://api.vercel.com/v2/user)
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -n1)
+          
+          if [ "$HTTP_CODE" = "200" ]; then
+            echo "✅ Vercel token is valid"
+            echo "token_valid=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Vercel token is invalid or expired"
+            echo "token_valid=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Get Token Expiry Info
+        if: steps.check_token.outputs.token_valid == 'true'
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          echo "Fetching token information..."
+          
+          # Get current user and team info
+          USER_INFO=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" \
+            https://api.vercel.com/v2/user)
+          
+          echo "User Info:"
+          echo "$USER_INFO" | jq '.'
+          
+          # Get teams
+          TEAMS=$(curl -s -H "Authorization: Bearer $VERCEL_TOKEN" \
+            https://api.vercel.com/v2/teams)
+          
+          echo "Teams:"
+          echo "$TEAMS" | jq '.'
+      
+      - name: Send Telegram Notification
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TOKEN_VALID: ${{ steps.check_token.outputs.token_valid }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            TIMESTAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            
+            if [ "$TOKEN_VALID" = "true" ]; then
+              STATUS="✅"
+              STATUS_TEXT="Valid"
+              EMOJI="🔐"
+            else
+              STATUS="❌"
+              STATUS_TEXT="Invalid/Expired"
+              EMOJI="⚠️"
+            fi
+            
+            MESSAGE="${EMOJI} *Vercel Token Status Check*
+
+${STATUS} *Status:* ${STATUS_TEXT}
+⏰ *Checked:* ${TIMESTAMP}
+🔄 *Next Check:* Daily at 00:00 UTC
+
+$(if [ "$TOKEN_VALID" = "false" ]; then echo "⚠️ *Action Required:* Update VERCEL_TOKEN secret"; fi)
+
+🤖 Automated token validation"
+
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            echo "✅ Telegram notification sent"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi
+      
+      - name: Create Issue if Token Invalid
+        if: steps.check_token.outputs.token_valid == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = '⚠️ Vercel Token Invalid or Expired';
+            const body = `## Vercel Token Issue
+            
+            The automated token check has detected that the Vercel token is invalid or expired.
+            
+            ### Action Required
+            
+            1. Generate a new Vercel token at https://vercel.com/account/tokens
+            2. Update the \`VERCEL_TOKEN\` secret in repository settings
+            3. Ensure the token has the necessary permissions
+            
+            ### Details
+            
+            - **Checked:** ${new Date().toISOString()}
+            - **Status:** Invalid/Expired
+            - **Workflow:** Vercel Token Refresh
+            
+            This issue was automatically created by the token refresh workflow.`;
+            
+            // Check if issue already exists
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'vercel-token'
+            });
+            
+            if (issues.data.length === 0) {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: title,
+                body: body,
+                labels: ['vercel-token', 'urgent']
+              });
+              console.log('✅ Issue created');
+            } else {
+              console.log('ℹ️ Issue already exists');
+            }
+      
+      - name: Summary
+        run: |
+          echo "## Vercel Token Check Summary"
+          echo ""
+          echo "**Token Status:** ${{ steps.check_token.outputs.token_valid == 'true' && '✅ Valid' || '❌ Invalid/Expired' }}"
+          echo "**Checked:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+          echo "**Next Check:** Daily at 00:00 UTC"
+          echo ""
+          if [ "${{ steps.check_token.outputs.token_valid }}" = "false" ]; then
+            echo "⚠️ **Action Required:** Update VERCEL_TOKEN secret"
+          else
+            echo "✅ No action required"
+          fi

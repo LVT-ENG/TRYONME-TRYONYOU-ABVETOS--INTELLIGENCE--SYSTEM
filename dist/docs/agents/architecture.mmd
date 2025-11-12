@@ -1,0 +1,81 @@
+graph TB
+    subgraph "🤖 TRYONYOU Intelligent Agents System"
+        subgraph "Central Orchestration"
+            A70[Agent 70<br/>Orquestador General<br/>🎯]
+        end
+        
+        subgraph "Deployment & CI/CD"
+            A22[Agent 22<br/>Deploy Operator<br/>🚀]
+        end
+        
+        subgraph "Monitoring & Analysis"
+            A20[Agent 20<br/>GitHub Commit Agent<br/>📊]
+            A12[Agent 12<br/>Brand Guardian<br/>🎨]
+            A46[Agent 46<br/>Document Locker<br/>🔒]
+        end
+        
+        subgraph "Content & Assets (Pending)"
+            A31[Agent 31<br/>Video Curator<br/>🎬]
+            A2[Agent 2<br/>Content Pro<br/>✍️]
+            A25[Agent 25<br/>Image Curator<br/>🖼️]
+        end
+        
+        subgraph "External Services"
+            GH[GitHub<br/>Repository]
+            VC[Vercel<br/>Production]
+            TG[Telegram<br/>Notifications]
+        end
+        
+        subgraph "Outputs"
+            REPO[docs/agents/<br/>reports/]
+            STATUS[docs/agents/<br/>status.md]
+            SCREEN[Screenshots<br/>Desktop + Mobile]
+        end
+    end
+    
+    %% Central Orchestration Connections
+    A70 -->|Monitors| A22
+    A70 -->|Monitors| A20
+    A70 -->|Monitors| A12
+    A70 -->|Monitors| A46
+    A70 -->|Coordinates| A31
+    A70 -->|Coordinates| A2
+    A70 -->|Coordinates| A25
+    
+    %% Agent to GitHub Connections
+    A20 -->|Analyzes| GH
+    A22 -->|Deploys from| GH
+    A12 -->|Verifies| GH
+    A46 -->|Protects| GH
+    
+    %% Agent to Vercel Connections
+    A22 -->|Deploys to| VC
+    A22 -->|Captures| SCREEN
+    
+    %% Agent to Telegram Connections
+    A70 -->|Daily Report 09:00| TG
+    A22 -->|Deploy Status| TG
+    A20 -->|Repo Analysis| TG
+    A12 -->|Brand Report| TG
+    A46 -->|Doc Status| TG
+    
+    %% Agent to Output Connections
+    A70 -->|Updates| STATUS
+    A20 -->|Generates| REPO
+    A12 -->|Generates| REPO
+    A46 -->|Generates| REPO
+    
+    %% Styling
+    classDef orchestrator fill:#FFD700,stroke:#B8860B,stroke-width:3px,color:#000
+    classDef deploy fill:#FF6B6B,stroke:#C92A2A,stroke-width:2px,color:#fff
+    classDef monitor fill:#4ECDC4,stroke:#2A9D8F,stroke-width:2px,color:#fff
+    classDef pending fill:#95A5A6,stroke:#7F8C8D,stroke-width:2px,color:#fff
+    classDef external fill:#A8DADC,stroke:#457B9D,stroke-width:2px,color:#000
+    classDef output fill:#F1FAEE,stroke:#1D3557,stroke-width:2px,color:#000
+    
+    class A70 orchestrator
+    class A22 deploy
+    class A20,A12,A46 monitor
+    class A31,A2,A25 pending
+    class GH,VC,TG external
+    class REPO,STATUS,SCREEN output

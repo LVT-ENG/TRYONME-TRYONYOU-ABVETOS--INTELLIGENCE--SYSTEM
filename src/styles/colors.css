@@ -1,0 +1,34 @@
+:root {
+  /* === TRYONYOU OFFICIAL LUXURY PALETTE === */
+  --primary-peacock: #006D77;
+  --primary-gold: #C5A46D;
+  --neutral-anthracite: #141619;
+  --neutral-bone: #F5EFE6;
+
+  /* === Cinematic accents === */
+  --primary-purple: #8B5CF6;
+  --primary-pink: #EC4899;
+  --primary-cyan: #06B6D4;
+
+  --neutral-black: #000000;
+  --neutral-dark-gray: #444444;
+  --neutral-charcoal: #222222;
+  --neutral-gray: #777777;
+
+  /* === Visual effects === */
+  --gradient-primary: linear-gradient(135deg,
+    var(--primary-purple) 0%,
+    var(--primary-pink) 50%,
+    var(--primary-cyan) 100%);
+  --glass-bg: rgba(255,255,255,0.2);
+  --glass-border: rgba(255,255,255,0.4);
+  --shadow-glow-purple: 0 0 20px rgba(139,92,246,0.4);
+  --shadow-glow-cyan: 0 0 20px rgba(6,182,212,0.4);
+  --shadow-glow-pink: 0 0 20px rgba(236,72,153,0.4);
+  --shadow-xl: 0 10px 25px rgba(0,0,0,0.2);
+  --radius-full: 9999px;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --transition-base: 0.3s ease;
+  --font-display: "Poppins", sans-serif;
+}

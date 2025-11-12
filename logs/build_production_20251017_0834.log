@@ -1,0 +1,85 @@
+[1;33m📂 Project Root: /home/ubuntu/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM[0m
+[1;33m🧹 Cleaning previous build...[0m
+[0;32m✅ Cleaned[0m
+[1;33m🎬 Verifying Hero Cinematic assets...[0m
+[0;32m  ✓ images/people/diverse-models-flowers.jpg[0m
+[0;32m  ✓ images/people/fashion-diversity-group.jpg[0m
+[0;32m  ✓ images/people/backstage-diversity.jpg[0m
+[0;32m  ✓ images/people/beauty-emotion-portrait.jpg[0m
+[0;32m  ✓ hero/pau_intro.json[0m
+[0;32m✅ All Hero Cinematic assets verified[0m
+[1;33m📦 Checking dependencies...[0m
+[0;32m✅ Dependencies ready[0m
+[1;33m🔍 Running integrity check...[0m
+[0;34m╔════════════════════════════════════════════════════════╗[0m
+[0;34m║   🛠️  INTEGRITY CHECK — TEST AUTOMÁTICO              ║[0m
+[0;34m║   TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM          ║[0m
+[0;34m╚════════════════════════════════════════════════════════╝[0m
+
+[0;34mℹ️  Test 1: Verificando estructura de directorios...[0m
+[0;32m✅ Directorio encontrado: src[0m
+[0;32m✅ Directorio encontrado: src/components[0m
+[0;32m✅ Directorio encontrado: src/styles[0m
+[0;32m✅ Directorio encontrado: src/i18n[0m
+[0;32m✅ Directorio encontrado: public[0m
+[0;32m✅ Directorio encontrado: scripts[0m
+
+[0;34mℹ️  Test 2: Verificando archivos críticos...[0m
+[0;32m✅ Archivo encontrado: package.json[0m
+[0;32m✅ Archivo encontrado: vite.config.js[0m
+[0;32m✅ Archivo encontrado: index.html[0m
+[0;32m✅ Archivo encontrado: src/App.jsx[0m
+[0;32m✅ Archivo encontrado: src/main.jsx[0m
+
+[0;34mℹ️  Test 3: Verificando sintaxis de package.json...[0m
+[0;32m✅ package.json es válido[0m
+
+[0;34mℹ️  Test 4: Verificando dependencias instaladas...[0m
+[0;32m✅ node_modules encontrado[0m
+[0;32m✅ Dependencia instalada: react[0m
+[0;32m✅ Dependencia instalada: react-dom[0m
+[0;32m✅ Dependencia instalada: react-router-dom[0m
+[0;32m✅ Dependencia instalada: vite[0m
+
+[0;34mℹ️  Test 5: Verificando referencias en componentes JSX...[0m
+[1;33m⚠️  WARNING: Se encontraron referencias relativas que podrían ser problemáticas[0m
+[0;32m✅ Integrity check completed[0m
+[1;33m🔨 Building production bundle...[0m
+
+> tryonyou-app@1.0.0 build
+> vite build
+
+vite v7.1.7 building for production...
+transforming...
+✓ 45 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                          5.63 kB │ gzip:  1.78 kB
+dist/assets/css/component-pau-overlay-BZTVGUue.css       1.74 kB │ gzip:  0.78 kB
+dist/assets/css/index-Dlq_ts12.css                      33.22 kB │ gzip:  6.49 kB
+dist/assets/js/component-pau-overlay-DCgTa9B3.js         1.08 kB │ gzip:  0.61 kB
+dist/assets/js/component-partners-sBl331ha.js            1.75 kB │ gzip:  0.72 kB
+dist/assets/js/component-personal-shopper-RYUV1aQB.js    1.79 kB │ gzip:  0.82 kB
+dist/assets/js/component-problem-DYbljY5x.js             1.99 kB │ gzip:  0.80 kB
+dist/assets/js/component-solution-BmLKaylP.js            3.11 kB │ gzip:  1.07 kB
+dist/assets/js/component-cta-CGg_tHhg.js                 3.50 kB │ gzip:  1.16 kB
+dist/assets/js/component-patents-Bd-W6apG.js             4.82 kB │ gzip:  1.87 kB
+dist/assets/js/component-modules-DeMF-PNM.js             4.86 kB │ gzip:  1.87 kB
+dist/assets/js/index-YH8cEAMY.js                        29.15 kB │ gzip:  9.88 kB
+dist/assets/js/vendor-react-WaWdzvzX.js                142.92 kB │ gzip: 45.78 kB
+[vite-plugin-static-copy] Copied 1 items.
+✓ built in 2.89s
+[0;32m✅ Build completed in 3s[0m
+[1;33m📊 Analyzing build...[0m
+[0;34m   Total size: 20M[0m
+[0;34m   JavaScript files: 10[0m
+[0;34m   CSS files: 2[0m
+[0;34m   Image files: 29[0m
+[0;34m   Largest files:[0m
+[0;34m     - wardrobe-module.png (2.3M)[0m
+[0;34m     - hero-bg.png (2.3M)[0m
+[0;34m     - avatar-module.png (2.2M)[0m
+[0;34m     - payment-module.png (1.9M)[0m
+[0;34m     - personal-shopper.png (1.6M)[0m
+[1;33m📝 Creating build manifest...[0m
+[0;32m✅ Build manifest created[0m

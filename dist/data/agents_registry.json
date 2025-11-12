@@ -1,0 +1,143 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-01",
+  "totalAgents": 50,
+  "active": [
+    {
+      "id": "agent-001",
+      "name": "PMV",
+      "role": "Project Manager Virtual - Central orchestrator for all project activities",
+      "status": "active",
+      "block": "Deployment & Production",
+      "capabilities": ["Project Lifecycle Management", "Resource Allocation", "Risk Assessment"]
+    },
+    {
+      "id": "agent-002",
+      "name": "Content Pro",
+      "role": "Redactor Web & Marca - Content generation and brand consistency",
+      "status": "active",
+      "block": "Deployment & Production",
+      "capabilities": ["Brand Voice Consistency", "SEO Optimization", "Multilingual Support"]
+    },
+    {
+      "id": "agent-003",
+      "name": "Ficha Técnica Master",
+      "role": "Producción & CMS - Technical specifications management",
+      "status": "active",
+      "block": "Deployment & Production",
+      "capabilities": ["Technical Specification Management", "CMS Integration", "Quality Assurance"]
+    },
+    {
+      "id": "agent-020",
+      "name": "GitHub Commit Agent",
+      "role": "Code repository management and version control optimization",
+      "status": "active",
+      "block": "Business & Strategy",
+      "capabilities": ["Automated Commits", "Branch Management", "Code Quality Assurance"]
+    },
+    {
+      "id": "agent-022",
+      "name": "Deploy Operator",
+      "role": "Deployment processes and feature releases oversight",
+      "status": "active",
+      "block": "Business & Strategy",
+      "capabilities": ["Deployment Automation", "Rollback Management", "Performance Monitoring"]
+    },
+    {
+      "id": "agent-014",
+      "name": "Avatar Generator 3D",
+      "role": "Photorealistic 3D avatars for virtual try-on experiences",
+      "status": "active",
+      "block": "Style, Avatars & Modulation",
+      "capabilities": ["Photorealistic Rendering", "Measurement Integration", "Facial Recognition"]
+    },
+    {
+      "id": "agent-015",
+      "name": "Pau le Paon",
+      "role": "Asistente emocional - Emotionally intelligent fashion recommendations",
+      "status": "active",
+      "block": "Style, Avatars & Modulation",
+      "capabilities": ["Emotional Analysis", "Mood-Based Styling", "Trend Integration"]
+    },
+    {
+      "id": "agent-026",
+      "name": "Instagram Publisher",
+      "role": "Content publishing and engagement on Instagram",
+      "status": "active",
+      "block": "External Automation",
+      "capabilities": ["Content Scheduling", "Hashtag Optimization", "Engagement Management"]
+    },
+    {
+      "id": "agent-027",
+      "name": "Facebook Syncer",
+      "role": "Content synchronization between TRYONYOU and Facebook ecosystem",
+      "status": "active",
+      "block": "External Automation",
+      "capabilities": ["Product Catalog Sync", "Cross-Platform Posting", "Shopping Integration"]
+    },
+    {
+      "id": "agent-035",
+      "name": "Collection Builder",
+      "role": "Builds and curates themed fashion collections",
+      "status": "active",
+      "block": "Live It – Style & Collection",
+      "capabilities": ["Theme Development", "Style Categorization", "Trend Integration"]
+    },
+    {
+      "id": "agent-039",
+      "name": "Color Curator",
+      "role": "Color palettes curation for fashion collections",
+      "status": "active",
+      "block": "Live It – Style & Collection",
+      "capabilities": ["Color Trend Analysis", "Palette Development", "Seasonal Coordination"]
+    },
+    {
+      "id": "agent-046",
+      "name": "Document Locker",
+      "role": "Secure storage for confidential project documents",
+      "status": "active",
+      "block": "Private Management",
+      "capabilities": ["Secure Storage", "Access Control", "Audit Trails"]
+    },
+    {
+      "id": "agent-050",
+      "name": "Pipeline Tracker",
+      "role": "Tracks progress of all projects in development pipeline",
+      "status": "active",
+      "block": "Private Management",
+      "capabilities": ["Project Monitoring", "Progress Tracking", "Resource Allocation"]
+    },
+    {
+      "id": "agent-012",
+      "name": "Brand Guardian",
+      "role": "Guardián del estilo y coherencia - Brand guidelines enforcement",
+      "status": "active",
+      "block": "Deployment & Production",
+      "capabilities": ["Brand Compliance Monitoring", "Visual Consistency", "Message Alignment"]
+    },
+    {
+      "id": "agent-031",
+      "name": "Video Curator",
+      "role": "LaSeñu - Video content curation and optimization",
+      "status": "active",
+      "block": "Video & Visual",
+      "capabilities": ["Content Curation", "Video Editing", "Platform Optimization"]
+    }
+  ],
+  "backstage": [
+    {
+      "id": "agent-004",
+      "name": "Proveedor Tracker",
+      "role": "Control de fábricas y presupuestos",
+      "status": "backstage",
+      "block": "Deployment & Production"
+    },
+    {
+      "id": "agent-005",
+      "name": "RRSS Automator",
+      "role": "Redes Sociales Inteligentes",
+      "status": "backstage",
+      "block": "Deployment & Production"
+    }
+  ]
+}

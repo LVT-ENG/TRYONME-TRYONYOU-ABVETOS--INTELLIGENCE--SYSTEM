@@ -1,0 +1,16 @@
+{
+  "name": "@tryonyou/cap",
+  "version": "1.0.0",
+  "description": "CAP - Creation & Production System for TRYONYOU",
+  "main": "dist-cap/cap.umd.js",
+  "module": "dist-cap/cap.es.js",
+  "type": "module",
+  "scripts": {
+    "build": "vite build --config vite.config.cap.js",
+    "build:local": "vite build --config vite.config.cap.js --mode development",
+    "dev": "vite --config vite.config.cap.js"
+  },
+  "keywords": ["pattern", "production", "JIT", "fashion", "manufacturing"],
+  "author": "TRYONYOU – ABVETOS",
+  "license": "PROPRIETARY"
+}

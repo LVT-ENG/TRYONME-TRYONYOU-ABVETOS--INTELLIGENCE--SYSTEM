@@ -1,0 +1,43 @@
+{
+  "name": "tryonyou-app",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch",
+    "analyze": "ANALYZE=true vite build",
+    "version:auto": "node scripts/auto-version.js",
+    "version:check": "node -p \"require('./package.json').version\"",
+    "prebuild": "node scripts/auto-version.js",
+    "deploy:report": "bash scripts/generate_deploy_report.sh"
+  },
+  "dependencies": {
+    "@types/three": "^0.181.0",
+    "archiver": "^7.0.1",
+    "esbuild-linux-64": "^0.14.54",
+    "lottie-react": "^2.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0",
+    "three": "^0.181.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.17",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.22",
+    "postcss": "^8.5.6",
+    "rollup-plugin-visualizer": "^5.14.0",
+    "standard-version": "^9.5.0",
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.1.2",
+    "vite-plugin-imagemin": "^0.6.1",
+    "vite-plugin-static-copy": "^3.1.3"
+  }
+}

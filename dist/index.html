@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>TRYONYOU – The Emotional Fashion Intelligence System™</title>
+  <meta name="title" content="TRYONYOU – The Emotional Fashion Intelligence System™" />
+  <meta name="description" content="Revolutionary fashion technology platform combining emotional AI, 3D avatars, biometric payments, and on-demand production. Reducing fashion returns by 85% through intelligent fitting and personalization." />
+  <meta name="keywords" content="fashion AI, emotional intelligence, virtual fitting, 3D avatar, biometric payment, ABVET, sustainable fashion, on-demand production, fashion technology, TRYONYOU" />
+  <meta name="author" content="TRYONYOU Systems" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://tryonyou.app" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tryonyou.app/" />
+  <meta property="og:title" content="TRYONYOU – The Emotional Fashion Intelligence System™" />
+  <meta property="og:description" content="Where emotion meets design. Revolutionary fashion AI that understands not just your body, but your feelings. Patent-pending technology valued at €20M+." />
+  <meta property="og:image" content="https://tryonyou.app/press/images/hero-futuristic-fitting.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="TRYONYOU" />
+  <meta property="og:locale" content="en_US" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://tryonyou.app/" />
+  <meta property="twitter:title" content="TRYONYOU – The Emotional Fashion Intelligence System™" />
+  <meta property="twitter:description" content="Where emotion meets design. Revolutionary fashion AI that understands not just your body, but your feelings." />
+  <meta property="twitter:image" content="https://tryonyou.app/press/images/hero-futuristic-fitting.jpg" />
+  
+  <!-- Structured Data / Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "TRYONYOU",
+    "alternateName": "TRYONYOU – ABVETOS – ULTRA-PLUS-ULTIMATUM",
+    "url": "https://tryonyou.app",
+    "logo": "https://tryonyou.app/logo.svg",
+    "description": "The Emotional Fashion Intelligence System™ - Revolutionary fashion technology combining emotional AI, virtual fitting, and smart wardrobe automation.",
+    "foundingDate": "2025",
+    "founders": [
+      {
+        "@type": "Person",
+        "name": "Rubén Espinar Rodríguez"
+      }
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Dubai",
+      "addressCountry": "UAE"
+    },
+    "sameAs": [
+      "https://t.me/abvet_deploy_bot"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "info@tryonyou.app",
+      "contactType": "Customer Service"
+    }
+  }
+  </script>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "TRYONYOU",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "ratingCount": "1250"
+    },
+    "description": "Emotional Fashion Intelligence System with 3D avatars, AI recommendations, and biometric payments."
+  }
+  </script>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" />
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #F9FAFB;
+      color: #222326;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+    }
+    
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(249, 250, 251, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .logo {
+      height: 40px;
+    }
+    
+    .nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+    
+    .nav a {
+      text-decoration: none;
+      color: #222326;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .nav a:hover {
+      color: #D4AF37;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+      color: #222326;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: none;
+      cursor: pointer;
+      display: inline-block;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: #222326;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      border: 2px solid #222326;
+      transition: all 0.3s;
+      cursor: pointer;
+      display: inline-block;
+    }
+    
+    .btn-secondary:hover {
+      background: #222326;
+      color: #F9FAFB;
+    }
+    
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+      z-index: 1;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      color: white;
+    }
+    
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      margin-bottom: 2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    
+    .hero-title-gradient {
+      background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+    }
+    
+    .hero-features {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    
+    .hero-feature {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 500;
+    }
+    
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .hero-emotional {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #F4D03F;
+    }
+    
+    /* Section Styles */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.25rem;
+      color: #666;
+      margin-bottom: 4rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    /* People Section */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    
+    .people-card {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    
+    .people-card:hover {
+      transform: translateY(-10px);
+    }
+    
+    .people-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    
+    .people-card-content {
+      padding: 2rem;
+      background: white;
+    }
+    
+    .people-card h3 {
+      margin-bottom: 1rem;
+      color: #222326;
+    }
+    
+    .people-card p {
+      color: #666;
+    }
+    
+    /* Stats Section */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    
+    .stat-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #D4AF37;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: 1.1rem;
+      color: #666;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      border-radius: 30px;
+      padding: 4rem 2rem;
+    }
+    
+    .cta-section h2 {
+      margin-bottom: 2rem;
+    }
+    
+    .cta-section p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #222326;
+      color: white;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    
+    .footer p {
+      opacity: 0.7;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .nav {
+        display: none;
+      }
+    }
+    
+    /* Smooth Scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <img src="/logo.png" alt="TRYONYOU Logo" class="logo" />
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#people">Our Community</a>
+      <a href="#impact">Impact</a>
+      <a href="#cta" class="btn-primary">Request Demo</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        ✨ TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM
+      </div>
+      
+      <h1>
+        Dress according to<br />
+        <span class="hero-title-gradient">how you feel</span>
+      </h1>
+      
+      <p>
+        Your style, your rhythm, your energy. A fashion experience that understands who you are and how you want to look.
+      </p>
+      
+      <div class="hero-features">
+        <div class="hero-feature">👤 Realistic 3D Avatar</div>
+        <div class="hero-feature">🎨 Personal AI</div>
+        <div class="hero-feature">👁️ Biometric Payment</div>
+        <div class="hero-feature">⚡ JIT Production</div>
+      </div>
+      
+      <div class="hero-cta">
+        <a href="#cta" class="btn-primary">Experience the Future →</a>
+        <a href="#about" class="btn-secondary">Learn More</a>
+      </div>
+      
+      <p class="hero-emotional">
+        "You don't just dress your body, you dress your moment"
+      </p>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">The Future of Fashion Intelligence</h2>
+    <p class="section-subtitle">
+      We've created an intelligent, end-to-end fashion technology platform that eliminates the guesswork from online shopping. Our system combines cutting-edge AI, 3D visualization, and biometric security.
+    </p>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">-85%</div>
+        <div class="stat-label">Return Rate Reduction</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+40%</div>
+        <div class="stat-label">Customer Satisfaction</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">-60%</div>
+        <div class="stat-label">Inventory Waste</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">+25%</div>
+        <div class="stat-label">Conversion Rate</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- People Section -->
+  <section id="people">
+    <h2 class="section-title">Real People, Real Style</h2>
+    <p class="section-subtitle">
+      Join thousands of fashion-forward individuals who are transforming the way they shop online
+    </p>
+    
+    <div class="people-grid">
+      <div class="people-card">
+        <img src="/people/happy-group.jpg" alt="Happy fashion community" />
+        <div class="people-card-content">
+          <h3>Join Our Community</h3>
+          <p>Connect with fashion enthusiasts who share your passion for style and innovation</p>
+        </div>
+      </div>
+      
+      <div class="people-card">
+        <img src="/people/fashion-girl.jpg" alt="Fashion-forward shopper" />
+        <div class="people-card-content">
+          <h3>Express Yourself</h3>
+          <p>Discover your unique style with AI-powered recommendations tailored just for you</p>
+        </div>
+      </div>
+      
+      <div class="people-card">
+        <img src="/people/ai-models.jpg" alt="AI-powered virtual try-on" />
+        <div class="people-card-content">
+          <h3>Try Before You Buy</h3>
+          <p>See how clothes look on your 3D avatar before making a purchase</p>
+        </div>
+      </div>
+      
+      <div class="people-card">
+        <img src="/people/online-shopping.jpg" alt="Happy online shopper" />
+        <div class="people-card-content">
+          <h3>Shop with Confidence</h3>
+          <p>Experience the perfect fit every time with our advanced technology</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section -->
+  <section id="impact">
+    <h2 class="section-title">Measurable Impact</h2>
+    <p class="section-subtitle">
+      Our technology is transforming the fashion industry with proven results
+    </p>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number">€20M+</div>
+        <div class="stat-label">IP Portfolio Value</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">8</div>
+        <div class="stat-label">Patent Applications</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5-7</div>
+        <div class="stat-label">Years Competitive Advantage</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">$550B</div>
+        <div class="stat-label">Problem We're Solving</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="cta" class="cta-section">
+    <h2>Ready to Transform Your Fashion Experience?</h2>
+    <p>
+      Request a personalized demo and discover how TRYONYOU can revolutionize your shopping experience
+    </p>
+    <a href="mailto:demo@tryonyou.app" class="btn-primary" style="background: white; color: #667eea;">Request Demo</a>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 TRYONYOU. All rights reserved.</p>
+    <p>TRYONYOU® | ABVETOS® | ULTRA-PLUS-ULTIMATUM®</p>
+  </footer>
+
+  <script>
+    // Smooth scroll for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
