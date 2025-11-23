@@ -8,8 +8,56 @@ import '../../styles/SmartWardrobeIntegration.css'
  */
 
 const SmartWardrobe = () => {
+      const [watchStatus, setWatchStatus] = useState('Disconnected');
   const [activeTab, setActiveTab] = useState('inventory')
   const [showPau, setShowPau] = useState(false)
+
+      // SmartWatch 2 Logic (V2.0)
+      const handleConnectWatch = () => {
+        setWatchStatus('Connecting...');
+        // Simulación de conexión BLE/Bluetooth
+        setTimeout(() => {
+          setWatchStatus('Connected');
+          console.log('SmartWatch 2 Connected');
+        }, 1500);
+      };
+
+      const simulateCoreModules = () => {
+        console.log('--- Core Modules Simulation Started ---');
+        // 1. SolidaryWardrobe: Lógica para sugerir prendas tras la sincronización
+        console.log('SolidaryWardrobe Agent: Suggesting garments for donation based on SmartWatch 2 data...');
+        // Simulación: 2 prendas sugeridas para donación
+        const newDonationItems = [
+          { id: 201, name: 'Running Shoes', brand: 'TRYONYOU Sport', reason: 'High wear detected (SmartWatch 2)', donationValue: '€30' },
+          { id: 202, name: 'Wool Sweater', brand: 'TRYONYOU Winter', reason: 'Unused for 3 seasons (SmartWatch 2)', donationValue: '€50' }
+        ];
+        // En un entorno real, esto actualizaría el estado global o llamaría a una API.
+        // Aquí, solo lo registramos en la consola.
+        console.log(`SolidaryWardrobe Agent: ${newDonationItems.length} new items suggested for donation.`);
+
+        // 2. Rechazo Visual Automático: Lógica para filtrar prendas por desgaste simulado
+        console.log('Automatic Visual Rejection: Filtering garments for auto-donation due to simulated wear...');
+        // Simulación: 1 prenda marcada para auto-donación
+        const autoRejectedItem = { id: 301, name: 'Casual Jacket', brand: 'TRYONYOU Daily', reason: 'Simulated wear level 9/10', action: 'Auto-Donation' };
+        console.log(`Automatic Visual Rejection: Item '${autoRejectedItem.name}' marked for ${autoRejectedItem.action}.`);
+        
+        console.log('--- Core Modules Simulation Finished ---');
+      };
+
+      const handleSyncData = () => {
+        if (watchStatus !== 'Connected') {
+          console.log('Cannot sync: SmartWatch 2 is not connected.');
+          return;
+        }
+        setWatchStatus('Syncing Data...');
+        // Simulación de sincronización de datos
+        setTimeout(() => {
+          setWatchStatus('Connected - Synced');
+          console.log('Data Synced from SmartWatch 2');
+          // Llamada simulada a SolidaryWardrobe y Rechazo Visual Automático (Paso 3)
+          simulateCoreModules(); 
+        }, 2500);
+      };
 
   // Smart wardrobe data
   const wardrobeData = {
@@ -125,9 +173,29 @@ const SmartWardrobe = () => {
         {/* Header */}
         <div className="wardrobe-header">
           <div className="header-content">
+            <div className="smartwatch-status">
+              <span className={`status-indicator ${watchStatus.includes('Connected') ? 'connected' : 'disconnected'}`}></span>
+              <p>SmartWatch 2 Status: <strong>{watchStatus}</strong></p>
+            </div>
             <h2>👗 My Smart Wardrobe TRYONYOU</h2>
             <p>Intelligent management, perfect organization, and personalized AI recommendations</p>
           </div>
+          <button 
+            className="pau-button"
+            onClick={handleConnectWatch}
+            title="Connect SmartWatch 2"
+            disabled={watchStatus === 'Connecting...' || watchStatus === 'Connected' || watchStatus === 'Connected - Synced'}
+          >
+            ⌚ Connect Watch
+          </button>
+          <button 
+            className="pau-button"
+            onClick={handleSyncData}
+            title="Sync Data from SmartWatch 2"
+            disabled={watchStatus !== 'Connected'}
+          >
+            🔄 Sync Data
+          </button>
           <button 
             className="pau-button"
             onClick={() => setShowPau(!showPau)}
