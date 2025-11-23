@@ -1,4 +1,19 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
+import AutoFit from './CoreComponents/AutoFit'
+import IntelligentClassification from './CoreComponents/IntelligentClassification'
+import CompatibilitySystem from './CoreComponents/CompatibilitySystem'
+import Avatar3DProjection from './CoreComponents/Avatar3DProjection'
+import GarmentProblemDetection from './CoreComponents/GarmentProblemDetection'
+import CompleteLookRecommendation from './CoreComponents/CompleteLookRecommendation'
+import AutoDonateSolidaryWardrobe from './CoreComponents/AutoDonateSolidaryWardrobe'
+import IntelligentPurchasePlan from './CoreComponents/IntelligentPurchasePlan'
+import OnDemandProduction from './CoreComponents/OnDemandProduction'
+import ABVETConnection from './CoreComponents/ABVETConnection'
+import DynamicTrendManagement from './CoreComponents/DynamicTrendManagement'
+import EventForecasting from './CoreComponents/EventForecasting'
+import MoodSynchronization from './CoreComponents/MoodSynchronization'
+import DuplicateGarmentDetection from './CoreComponents/DuplicateGarmentDetection'
+import StyleHistoryEvolution from './CoreComponents/StyleHistoryEvolution'
 import '../../styles/SmartWardrobeIntegration.css'
 
 /**
@@ -263,6 +278,12 @@ const SmartWardrobe = () => {
           >
             📈 Analytics
           </button>
+          <button
+            className={`tab-btn ${activeTab === 'core' ? 'active' : ''}`}
+            onClick={() => setActiveTab('core')}
+          >
+            ⚙️ Core Modules
+          </button>
         </div>
 
         {/* Content */}
@@ -312,7 +333,34 @@ const SmartWardrobe = () => {
                 ))}
               </div>
             </div>
-          )}
+	          )}
+	
+	          {/* TAB: CORE MODULES */}
+	          {activeTab === 'core' && (
+	            <div className="tab-content core-modules-tab">
+	              <h3>⚙️ SmartWardrobe Core Modules (V2.0)</h3>
+	              <p className="tab-description">
+	                Activación y simulación de los 15 agentes de lógica de negocio.
+	              </p>
+	              <div className="core-modules-grid">
+	                <AutoFit />
+	                <IntelligentClassification />
+	                <CompatibilitySystem />
+	                <Avatar3DProjection />
+	                <GarmentProblemDetection />
+	                <CompleteLookRecommendation />
+	                <AutoDonateSolidaryWardrobe />
+	                <IntelligentPurchasePlan />
+	                <OnDemandProduction />
+	                <ABVETConnection />
+	                <DynamicTrendManagement />
+	                <EventForecasting />
+	                <MoodSynchronization />
+	                <DuplicateGarmentDetection />
+	                <StyleHistoryEvolution />
+	              </div>
+	            </div>
+	          )}
 
           {/* TAB: OUTFITS */}
           {activeTab === 'outfits' && (
