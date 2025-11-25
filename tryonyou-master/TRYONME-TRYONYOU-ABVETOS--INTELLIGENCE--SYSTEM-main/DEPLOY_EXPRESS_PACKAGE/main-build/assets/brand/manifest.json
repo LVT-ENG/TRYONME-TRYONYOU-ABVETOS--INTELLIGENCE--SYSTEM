@@ -1,0 +1,38 @@
+{
+  "name": "TRYONYOU - Fashion Intelligence Platform",
+  "short_name": "TRYONYOU",
+  "description": "The Future of Fashion Intelligence - Revolutionary platform combining 3D avatars, AI recommendations, ABVET biometric payments, and on-demand production.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#141619",
+  "theme_color": "#D3B26A",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/brand/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/assets/brand/logo_master_symbol_only_final.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/assets/brand/logo_master_symbol_only_final.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "categories": [
+    "fashion",
+    "shopping",
+    "lifestyle",
+    "entertainment"
+  ],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/",
+  "prefer_related_applications": false
+}

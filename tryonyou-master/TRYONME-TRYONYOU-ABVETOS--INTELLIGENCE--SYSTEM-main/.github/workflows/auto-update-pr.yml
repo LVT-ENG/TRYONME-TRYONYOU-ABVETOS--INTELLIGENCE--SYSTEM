@@ -1,0 +1,44 @@
+name: Auto Update Pull Request
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  autoprep:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0   # necesario para poder hacer push/fetch completo
+
+      - name: ⚙️ Setup git credentials
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: 🔄 Fetch latest changes
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          echo "Base branch: ${{ github.base_ref }}"
+          echo "Head branch: ${{ github.head_ref }}"
+
+      - name: 📊 Check PR status
+        run: |
+          echo "Pull Request #${{ github.event.pull_request.number }}"
+          echo "Title: ${{ github.event.pull_request.title }}"
+          echo "Author: ${{ github.event.pull_request.user.login }}"
+          echo "Base: ${{ github.base_ref }}"
+          echo "Head: ${{ github.head_ref }}"
+
+      - name: ✅ PR auto-prep complete
+        run: |
+          echo "✅ Pull request has been automatically prepared and updated"
+          echo "All git credentials are configured for future automated updates"

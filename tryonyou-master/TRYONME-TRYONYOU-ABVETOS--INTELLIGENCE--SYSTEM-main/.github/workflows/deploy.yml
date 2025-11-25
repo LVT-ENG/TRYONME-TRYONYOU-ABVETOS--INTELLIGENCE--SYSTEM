@@ -1,0 +1,225 @@
+name: ABVETOS Auto-Deploy Express CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  build:
+    name: Build Application
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 🧩 Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: true  # Enable Git LFS for large files
+      
+      - name: 📥 Checkout LFS objects
+        run: git lfs pull
+      
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      
+      - name: 📦 Install dependencies
+        run: npm ci
+      
+      - name: 🧱 Build application
+        run: npm run build
+      
+      - name: ✅ Verify docs/legal in build
+        run: |
+          echo "Checking if docs/legal was copied to dist..."
+          if [ -d "dist/docs/legal" ]; then
+            echo "✅ docs/legal directory found in dist"
+            ls -la dist/docs/legal/
+          else
+            echo "❌ docs/legal directory NOT found in dist"
+            exit 1
+          fi
+      
+      - name: 📋 List all files in dist
+        run: find dist -type f | sort
+      
+      - name: 📤 Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  deploy:
+    name: 🚀 Deploy to Vercel (ABVETOS Auto-Deploy Express)
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+      - name: 🧩 Checkout code
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      
+      - name: 📥 Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      
+      - name: 🚀 Deploy to Vercel
+        id: deploy
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./
+      
+      - name: ⚙️ Setup Node.js for screenshots
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      
+      - name: 📦 Install Puppeteer
+        run: npm install puppeteer
+      
+      - name: 📸 Capture Screenshots
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+          
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            
+            const page = await browser.newPage();
+            
+            // Desktop screenshot
+            await page.setViewport({ width: 1920, height: 1080 });
+            await page.goto('https://tryonyou.app', { waitUntil: 'networkidle0', timeout: 60000 });
+            await page.screenshot({ path: '/tmp/screenshot-desktop.png', fullPage: false });
+            
+            // Mobile screenshot
+            await page.setViewport({ width: 375, height: 812 });
+            await page.goto('https://tryonyou.app', { waitUntil: 'networkidle0', timeout: 60000 });
+            await page.screenshot({ path: '/tmp/screenshot-mobile.png', fullPage: false });
+            
+            await browser.close();
+            console.log('✅ Screenshots captured successfully');
+          })();
+          "
+      
+      - name: 📤 Upload Screenshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-screenshots
+          path: /tmp/screenshot-*.png
+          retention-days: 7
+      
+      - name: 💾 Create Backup Package
+        run: |
+          TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+          BACKUP_NAME="TRYONYOU_BACKUP_${TIMESTAMP}"
+          
+          # Create backup directory
+          mkdir -p /tmp/backup
+          
+          # Copy built files
+          cp -r dist /tmp/backup/
+          
+          # Copy configuration files
+          cp package.json package-lock.json vercel.json /tmp/backup/ 2>/dev/null || true
+          
+          # Create deployment info file
+          cat > /tmp/backup/DEPLOY_INFO.txt << EOF
+          TRYONYOU Deployment Backup
+          ==========================
+          Timestamp: $(date -u '+%Y-%m-%d %H:%M:%S UTC')
+          Commit: ${{ github.sha }}
+          Branch: ${{ github.ref_name }}
+          Author: ${{ github.actor }}
+          Message: ${{ github.event.head_commit.message }}
+          
+          This backup was created automatically by ABVETOS Auto-Deploy Express
+          EOF
+          
+          # Create zip archive
+          cd /tmp/backup
+          zip -r /tmp/${BACKUP_NAME}.zip . -x "*.DS_Store" "*.git*"
+          
+          echo "✅ Backup created: ${BACKUP_NAME}.zip"
+          ls -lh /tmp/${BACKUP_NAME}.zip
+      
+      - name: 📤 Upload Backup to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-backup-${{ github.run_number }}
+          path: /tmp/TRYONYOU_BACKUP_*.zip
+          retention-days: 30
+      
+      - name: 📢 Send Telegram Notification with Screenshots
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "$TELEGRAM_TOKEN" ] && [ -n "$TELEGRAM_CHAT_ID" ]; then
+            # Create message
+            cat > /tmp/telegram-message.txt << 'EOFMSG'
+          🚀 *ABVETOS Auto-Deploy Express*
+          
+          ✅ *Status:* Deployment Successful
+          🌐 *URL:* https://tryonyou.app
+          📦 *Commit:* ${COMMIT_SHORT}
+          💬 *Message:* ${COMMIT_MSG}
+          🌿 *Branch:* ${BRANCH}
+          👤 *Author:* ${AUTHOR}
+          ⏰ *Time:* ${TIMESTAMP}
+          💾 *Backup:* Created and stored
+          
+          🤖 All systems operational 24/7
+          EOFMSG
+            
+            # Replace variables
+            export COMMIT_SHORT="${GITHUB_SHA:0:7}"
+            export COMMIT_MSG="${{ github.event.head_commit.message }}"
+            export BRANCH="${{ github.ref_name }}"
+            export AUTHOR="${{ github.actor }}"
+            export TIMESTAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+            
+            MESSAGE=$(envsubst < /tmp/telegram-message.txt)
+            
+            # Send text message
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+              -d chat_id="${TELEGRAM_CHAT_ID}" \
+              -d parse_mode="Markdown" \
+              -d text="$MESSAGE"
+            
+            # Send desktop screenshot
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto" \
+              -F chat_id="${TELEGRAM_CHAT_ID}" \
+              -F photo=@/tmp/screenshot-desktop.png \
+              -F caption="🖥️ Desktop View (1920x1080)"
+            
+            # Send mobile screenshot
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendPhoto" \
+              -F chat_id="${TELEGRAM_CHAT_ID}" \
+              -F photo=@/tmp/screenshot-mobile.png \
+              -F caption="📱 Mobile View (375x812)"
+            
+            echo "✅ Telegram notifications sent"
+          else
+            echo "⚠️ Telegram credentials not configured"
+          fi

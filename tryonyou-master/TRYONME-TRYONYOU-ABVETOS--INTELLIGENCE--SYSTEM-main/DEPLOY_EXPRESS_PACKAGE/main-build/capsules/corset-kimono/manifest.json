@@ -1,0 +1,48 @@
+{
+  "id": "corset-kimono",
+  "name": "Corset Kimono Capsule",
+  "description": "A fusion of Eastern elegance and Western structure. This exclusive capsule combines the fluidity of traditional kimono silhouettes with the structured sophistication of modern corsetry.",
+  "season": "Spring/Summer 2025",
+  "category": "Capsule Collection",
+  "heroImage": "/capsules/corset-kimono/hero.jpg",
+  "looks": [
+    {
+      "id": "look-01",
+      "name": "Evening Elegance",
+      "image": "/capsules/corset-kimono/look-01.jpg",
+      "description": "A dramatic evening ensemble featuring a structured corset bodice with flowing kimono sleeves",
+      "tags": ["evening", "formal", "elegant"]
+    },
+    {
+      "id": "look-02",
+      "name": "Midnight Bloom",
+      "image": "/capsules/corset-kimono/look-02.jpg",
+      "description": "Deep teal tones meet delicate floral embroidery in this statement piece",
+      "tags": ["cocktail", "romantic", "artistic"]
+    },
+    {
+      "id": "look-03",
+      "name": "Golden Hour",
+      "image": "/capsules/corset-kimono/look-03.jpg",
+      "description": "Luxurious gold accents paired with minimalist black creates timeless sophistication",
+      "tags": ["luxury", "daytime", "versatile"]
+    },
+    {
+      "id": "look-04",
+      "name": "Urban Chic",
+      "image": "/capsules/corset-kimono/look-04.jpg",
+      "description": "Contemporary street style meets traditional craftsmanship for the modern fashionista",
+      "tags": ["casual", "streetwear", "modern"]
+    },
+    {
+      "id": "look-05",
+      "name": "Sunset Romance",
+      "image": "/capsules/corset-kimono/look-05.jpg",
+      "description": "Warm earth tones and soft silhouettes create an effortlessly romantic aesthetic",
+      "tags": ["romantic", "bohemian", "soft"]
+    }
+  ],
+  "availableFrom": "2025-03-01",
+  "limitedEdition": true,
+  "pieces": 5
+}
