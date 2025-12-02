@@ -43,7 +43,7 @@ body {
 .hero-content h1 {
   font-size: 4rem;
   font-weight: 700;
-  letter-spacing: 0.5em;
+  letter-spacing: 0.15em;
 }
 
 .hero-content p {

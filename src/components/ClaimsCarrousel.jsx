@@ -12,8 +12,8 @@ export default function ClaimsCarrousel() {
   
   return (
     <div className='claims-carousel'>
-      {claims.map((claim, index) => (
-        <div key={index} className='claim-item'>{claim}</div>
+      {claims.map((claim) => (
+        <div key={claim} className='claim-item'>{claim}</div>
       ))}
     </div>
   );
