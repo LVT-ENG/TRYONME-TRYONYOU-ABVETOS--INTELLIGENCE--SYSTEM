@@ -11,11 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup SSH
-        run: |
-          echo "SSH setup placeholder"
-
       - name: Execute auto_manus_sync.sh
+        env:
+          MANUS_BASE: ${{ github.workspace }}/manus_output
         run: |
           chmod +x auto_manus_sync.sh
           ./auto_manus_sync.sh
