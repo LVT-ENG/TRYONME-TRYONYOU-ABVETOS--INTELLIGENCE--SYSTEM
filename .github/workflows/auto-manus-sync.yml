@@ -1,0 +1,37 @@
+name: Auto-Manus Sync
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Runs every hour
+  workflow_dispatch:     # Allows manual execution
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup environment
+        run: |
+          echo "[auto-manus] Setting up environment..."
+          mkdir -p ./deploy
+
+      - name: Run auto_manus_sync.sh
+        run: |
+          chmod +x auto_manus_sync.sh
+          ./auto_manus_sync.sh
+        env:
+          MANUS_URL: ${{ secrets.MANUS_URL }}
+          BASE: ./deploy
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: manus-sync-output
+          path: ./deploy/
+          retention-days: 7
+          if-no-files-found: ignore
