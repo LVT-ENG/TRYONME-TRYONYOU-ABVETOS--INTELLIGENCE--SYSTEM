@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function ClaimsCarrousel() {
+export default function ClaimsCarousel() {
   const claims = [
     'Emotional AI',
     'Auto‑Production',
