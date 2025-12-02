@@ -1,0 +1,21 @@
+name: Auto-Manus Sync
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # runs every hour
+  workflow_dispatch:     # also allows manual execution
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          echo "SSH setup placeholder"
+
+      - name: Execute auto_manus_sync.sh
+        run: |
+          chmod +x auto_manus_sync.sh
+          ./auto_manus_sync.sh
