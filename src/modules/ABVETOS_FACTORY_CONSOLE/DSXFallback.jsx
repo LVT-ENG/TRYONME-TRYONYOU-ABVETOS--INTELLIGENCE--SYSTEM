@@ -51,7 +51,7 @@ export default function DSXFallback() {
         disabled={isTriggered}
         style={{
           padding: '1rem 2rem',
-          background: isTriggered ? '#666' : 'purple',
+          background: isTriggered ? 'var(--color-gray)' : 'var(--color-purple)',
           color: 'white',
           border: 'none',
           borderRadius: '8px',

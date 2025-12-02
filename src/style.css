@@ -7,6 +7,8 @@
   --color-neon-cyan: #00ffff;
   --color-peacock-teal: #008080;
   --color-deep-black: #1a1a1a;
+  --color-purple: #800080;
+  --color-gray: #666666;
   --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --transition-smooth: all 0.3s ease;
 }
@@ -454,7 +456,7 @@ body {
 
 .core-dock .layer.fallback {
   background: rgba(128, 0, 128, 0.2);
-  border: 1px solid purple;
+  border: 1px solid var(--color-purple);
 }
 
 /* Responsive */
