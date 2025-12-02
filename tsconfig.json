@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist/modules",
+    "outDir": "./dist/cjs",
     "rootDir": "./modules"
   },
   "ts-node": {
