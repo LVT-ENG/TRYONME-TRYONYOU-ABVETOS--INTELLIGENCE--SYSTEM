@@ -1,1 +1,25 @@
-{"name":"tryonyou-ultra-plus","version":"1.0.0","scripts":{"dev":"vite","build":"vite build","preview":"vite preview"},"dependencies":{"react":"^18.2.0","react-dom":"^18.2.0","react-router-dom":"^6.22.1"},"devDependencies":{"@vitejs/plugin-react":"^5.1.1","vite":"^7.1.2"}}
+{
+  "name": "tryonyou-ultra-plus",
+  "version": "1.0.0",
+  "description": "TRYONYOU-ABVETOS-ULTRA-PLUS-ULTIMATUM - Hyper-Real Fashion Experience Platform",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "pipeline": "bash scripts/orchestration-pipeline.sh",
+    "package": "npm run build && cd dist && zip -r ../TRYONYOU_MASTER_FINAL.zip .",
+    "notify": "bash scripts/telegram-notify.sh"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "vite": "^7.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
