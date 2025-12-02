@@ -39,10 +39,10 @@ import { analyzeBeauty } from "./clients/beautyClient";
 import { analyzeDignity } from "./clients/dignityClient";
 
 export async function runPauCheck(input: PauCheckInput): Promise<PauCheckResult> {
-  const avatarImage = await normalizeImage(input.avatarImage);
+  const normalizedImage = await normalizeImage(input.avatarImage);
 
   const distance = await computeIdentityDistance(
-    avatarImage,
+    normalizedImage,
     input.baoIdentityData
   );
 
@@ -55,7 +55,7 @@ export async function runPauCheck(input: PauCheckInput): Promise<PauCheckResult>
     };
   }
 
-  const beauty = await analyzeBeauty(avatarImage);
+  const beauty = await analyzeBeauty(normalizedImage);
   if (!beauty.passed) {
     return {
       decision: "rejected",
@@ -65,7 +65,7 @@ export async function runPauCheck(input: PauCheckInput): Promise<PauCheckResult>
     };
   }
 
-  const dignity = await analyzeDignity(avatarImage, input.styleData || {});
+  const dignity = await analyzeDignity(normalizedImage, input.styleData || {});
   if (!dignity.passed) {
     return {
       decision: "rejected",
