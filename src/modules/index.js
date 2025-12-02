@@ -14,11 +14,13 @@ export const moduleVersions = {
   agent70: '1.0.0'
 };
 
-// Initialize all modules
-export function initializeModules(options = {}) {
-  const { QAPI } = require('./qapi.js');
-  const { ABVETCoreDock } = require('./abvet-core-dock.js');
-  const { Agent70 } = require('./agent70.js');
+// Initialize all modules using dynamic imports
+export async function initializeModules(options = {}) {
+  const [{ QAPI }, { ABVETCoreDock }, { Agent70 }] = await Promise.all([
+    import('./qapi.js'),
+    import('./abvet-core-dock.js'),
+    import('./agent70.js')
+  ]);
 
   // Initialize ABVET Core Dock
   ABVETCoreDock.init(options.abvet || {});

@@ -15,6 +15,10 @@ on:
     branches:
       - main
 
+# Restrict permissions to minimum required
+permissions:
+  contents: read
+
 env:
   NODE_VERSION: '20'
   PACKAGE_NAME: 'TRYONYOU_MASTER_FINAL'
@@ -24,6 +28,8 @@ jobs:
   build:
     name: Build & Compile Modules
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       build_status: ${{ steps.build.outcome }}
     steps:
@@ -55,6 +61,8 @@ jobs:
     name: Integrate Modules
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -87,6 +95,8 @@ jobs:
     name: Apply Branding & Visual Identity
     runs-on: ubuntu-latest
     needs: integrate
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -116,6 +126,8 @@ jobs:
     name: Agent70 Approval & Monitoring
     runs-on: ubuntu-latest
     needs: branding
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -142,6 +154,8 @@ jobs:
     name: Package TRYONYOU_MASTER_FINAL
     runs-on: ubuntu-latest
     needs: agent70-approval
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -172,6 +186,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: package
     if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    permissions:
+      contents: read
     environment:
       name: production
       url: ${{ steps.deploy.outputs.url }}
@@ -199,6 +215,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: deploy
     if: ${{ !inputs.skip_tests }}
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -228,6 +246,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [deploy, qa-smoke-tests]
     if: always()
+    permissions: {}
     steps:
       - name: Prepare notification
         id: prepare

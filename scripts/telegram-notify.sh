@@ -63,16 +63,24 @@ send_telegram_notification() {
         return 0
     fi
 
+    # Validate token format (basic check)
+    if [[ ! "$TELEGRAM_BOT_TOKEN" =~ ^[0-9]+:[a-zA-Z0-9_-]+$ ]]; then
+        echo "❌ Invalid Telegram bot token format"
+        return 1
+    fi
+
     echo "📡 Sending Telegram notification..."
     
-    curl -s -X POST \
+    # Use POST data to avoid token in URL logs
+    RESPONSE=$(curl -s -X POST \
         "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-        -d "chat_id=${TELEGRAM_CHAT_ID}" \
-        -d "text=${MESSAGE}" \
-        -d "parse_mode=Markdown" \
-        -d "disable_web_page_preview=true" > /dev/null
+        -H "Content-Type: application/x-www-form-urlencoded" \
+        --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+        --data-urlencode "text=${MESSAGE}" \
+        --data-urlencode "parse_mode=Markdown" \
+        --data-urlencode "disable_web_page_preview=true" 2>&1)
 
-    if [ $? -eq 0 ]; then
+    if echo "$RESPONSE" | grep -q '"ok":true'; then
         echo "✅ Telegram notification sent successfully"
     else
         echo "❌ Failed to send Telegram notification"

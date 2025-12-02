@@ -87,11 +87,12 @@ export const Agent70 = {
       metadata: request.metadata || {}
     };
 
-    // Auto-approve if enabled and meets criteria
+    // Auto-approve if enabled and meets strict criteria
     if (this.config?.autoApprove && this.meetsAutoApprovalCriteria(request)) {
       approval.state = ApprovalState.APPROVED;
       approval.approvedAt = new Date().toISOString();
       approval.approvedBy = 'Agent70-AutoApproval';
+      approval.autoApprovalReason = 'Met strict auto-approval criteria';
     }
 
     state.approvals.push(approval);
@@ -102,22 +103,44 @@ export const Agent70 = {
 
   /**
    * Check if request meets auto-approval criteria
+   * Implements strict validation for security
    * @param {Object} request - Approval request
    * @returns {boolean} Meets criteria
    */
   meetsAutoApprovalCriteria(request) {
-    // Basic criteria check
-    if (!request.type || !request.description) {
+    // Validate required fields
+    if (!request.type || !request.description || !request.requestedBy) {
       return false;
     }
 
-    // Check if it's a low-risk action
-    const lowRiskTypes = ['READ', 'VIEW', 'QUERY'];
-    if (lowRiskTypes.includes(request.type)) {
-      return true;
+    // Check for whitelisted sources (if configured)
+    const whitelistedSources = this.config?.whitelistedSources || [];
+    if (whitelistedSources.length > 0 && !whitelistedSources.includes(request.requestedBy)) {
+      return false;
     }
 
-    return false;
+    // Only allow specific low-risk read-only operations
+    const lowRiskTypes = ['READ', 'VIEW', 'QUERY'];
+    if (!lowRiskTypes.includes(request.type)) {
+      return false;
+    }
+
+    // Rate limiting check: max 100 auto-approvals per hour
+    const oneHourAgo = new Date(Date.now() - 3600000).toISOString();
+    const recentAutoApprovals = state.approvals.filter(
+      a => a.approvedBy === 'Agent70-AutoApproval' && a.approvedAt > oneHourAgo
+    );
+    if (recentAutoApprovals.length >= 100) {
+      console.warn('[Agent70] Auto-approval rate limit reached');
+      return false;
+    }
+
+    // Description must be at least 10 characters for audit trail
+    if (request.description.length < 10) {
+      return false;
+    }
+
+    return true;
   },
 
   /**
