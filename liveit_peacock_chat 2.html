@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE ‘IT – Ask the Peacock</title>
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    header {
+      background-color: #111;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1rem;
+    }
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 1rem;
+    }
+    .message {
+      background: white;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      max-width: 70%;
+    }
+    .from-peacock {
+      align-self: flex-start;
+      background-color: #fff0f8;
+      color: #333;
+    }
+    .from-user {
+      align-self: flex-end;
+      background-color: #111;
+      color: white;
+    }
+    .input-area {
+      display: flex;
+      gap: 0.5rem;
+    }
+    input {
+      flex: 1;
+      padding: 0.8rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 0.8rem 1.5rem;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    Ask the Peacock – Your Style Oracle
+  </header>
+  <div class="chat-container">
+    <div class="messages" id="messages">
+      <div class="message from-peacock">“Tell me where you're going… and I’ll tell you what to wear.”</div>
+    </div>
+    <div class="input-area">
+      <input type="text" id="userInput" placeholder="Write your question..." />
+      <button onclick="sendMessage()">Ask</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const messages = document.getElementById("messages");
+      if (input.value.trim() !== "") {
+        const userMsg = document.createElement("div");
+        userMsg.className = "message from-user";
+        userMsg.textContent = input.value;
+        messages.appendChild(userMsg);
+
+        const reply = document.createElement("div");
+        reply.className = "message from-peacock";
+        reply.textContent = "“Mmm… for that, I see silk, structure, and just a whisper of rebellion.”";
+        messages.appendChild(reply);
+
+        input.value = "";
+        messages.scrollTop = messages.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE ‘IT – Your Avatar</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: 'Helvetica Neue', sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .avatar-container {
+      margin: 2rem auto;
+      width: 300px;
+      height: 300px;
+      background-color: #f0f0f0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: #555;
+    }
+    button {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Avatar</h1>
+  <div class="avatar-container">
+    3D Avatar Placeholder<br>(360º View Coming Soon)
+  </div>
+  <button onclick="goToWardrobe()">Continue to Wardrobe</button>
+
+  <script>
+    function goToWardrobe() {
+      alert("Continuing to virtual wardrobe...");
+      // Aquí podrías redirigir a la siguiente pantalla del vestidor
+    }
+  </script>
+</body>
+</html>
