@@ -1,1 +1,18 @@
-{"name":"tryonyou-ultra-plus","version":"1.0.0","scripts":{"dev":"vite","build":"vite build","preview":"vite preview"},"dependencies":{"react":"^18.2.0","react-dom":"^18.2.0","react-router-dom":"^6.22.1"},"devDependencies":{"@vitejs/plugin-react":"^5.1.1","vite":"^7.1.2"}}
+{
+  "name": "tryonyou-abvetos-ultra-plus-ultimatum",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "vite": "7.1.2",
+    "@vitejs/plugin-react": "^4.2.1"
+  }
+}
