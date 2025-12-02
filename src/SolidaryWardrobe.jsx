@@ -1,1 +1,0 @@
-export default ()=> 'Solidarity Wardrobe Ready';
