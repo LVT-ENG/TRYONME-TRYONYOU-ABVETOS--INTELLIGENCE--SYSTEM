@@ -1,1 +1,21 @@
-{"name":"tryonyou-ultra-plus","version":"1.0.0","scripts":{"dev":"vite","build":"vite build","preview":"vite preview"},"dependencies":{"react":"^18.2.0","react-dom":"^18.2.0","react-router-dom":"^6.22.1"},"devDependencies":{"@vitejs/plugin-react":"^5.1.1","vite":"^7.1.2"}}
+{
+  "name": "tryonyou-ultra-plus",
+  "version": "1.0.0",
+  "description": "TRYONYOU - ABVETOS Intelligence System",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "./scripts/build-deploy.sh",
+    "status": "./scripts/status-check.sh"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "vite": "^7.1.2"
+  }
+}
