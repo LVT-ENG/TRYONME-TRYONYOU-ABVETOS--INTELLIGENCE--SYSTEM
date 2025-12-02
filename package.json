@@ -1,1 +1,23 @@
-{"name":"tryonyou-ultra-plus","version":"1.0.0","scripts":{"dev":"vite","build":"vite build","preview":"vite preview"},"dependencies":{"react":"^18.2.0","react-dom":"^18.2.0","react-router-dom":"^6.22.1"},"devDependencies":{"@vitejs/plugin-react":"^5.1.1","vite":"^7.1.2"}}
+{
+  "name": "tryonyou-ultra-plus",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:modules": "tsc -p tsconfig.modules.json",
+    "test:pau-check": "ts-node modules/pau-check/__tests__/pauCheck.test.ts"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "typescript": "^5.3.3",
+    "ts-node": "^10.9.2",
+    "@types/node": "^20.10.5",
+    "vite": "^7.1.2"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "module_name": "PAU-CHECK",
+  "version": "4.0",
+  "role": "Final Avatar Approval Director",
+  "description": "El sistema PAU-CHECK replica el rol del Director de Avatar Real: Pau. Garantiza que cada avatar mantiene la identidad del usuario, presenta embellecimiento profesional realista, conserva dignidad, elegancia y verdad.",
+  "requires": [
+    "bao_identity_core",
+    "tendency_style_director",
+    "royal_hair_unit",
+    "royal_makeup_unit",
+    "nano_render_output"
+  ],
+  "pipeline": [
+    {
+      "step": 1,
+      "name": "input",
+      "description": "Avatar renderizado por Nano Render"
+    },
+    {
+      "step": 2,
+      "name": "identity_check",
+      "description": "Validación de identidad con Bao"
+    },
+    {
+      "step": 3,
+      "name": "beauty_check",
+      "description": "Análisis de belleza natural"
+    },
+    {
+      "step": 4,
+      "name": "dignity_check",
+      "description": "Evaluación de dignidad y estilo"
+    },
+    {
+      "step": 5,
+      "name": "decision",
+      "description": "Decisión final de Pau"
+    }
+  ],
+  "thresholds": {
+    "identityMaxDistance": 0.03,
+    "maxSkinSmoothingLevel": 0.7,
+    "maxMakeupIntensity": 0.8,
+    "minDignityScore": 0.7,
+    "minNaturalLightScore": 0.6
+  },
+  "output": {
+    "decision": "approved | rejected",
+    "notes": "Explicación del resultado",
+    "signature": "Aprobado por Pau — Versión Realista y Digna",
+    "diagnostics": "Detalles técnicos del análisis"
+  }
+}
