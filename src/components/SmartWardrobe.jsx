@@ -1,1 +1,3 @@
-export default ()=> 'Smart Wardrobe Ready';
+export default function SmartWardrobe() {
+  return 'Smart Wardrobe Ready';
+}

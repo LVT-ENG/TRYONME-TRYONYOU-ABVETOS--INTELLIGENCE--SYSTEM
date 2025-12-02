@@ -1,1 +1,3 @@
-export default ()=> 'Solidarity Wardrobe Ready';
+export default function SolidaryWardrobe() {
+  return 'Solidarity Wardrobe Ready';
+}
