@@ -16,6 +16,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
+    copyPublicDir: true, // Ensure public folder is copied to dist
     rollupOptions: {
       output: {
         manualChunks: {
@@ -25,5 +26,6 @@ export default defineConfig({
         }
       }
     }
-  }
+  },
+  publicDir: 'public' // Explicitly set public directory
 })

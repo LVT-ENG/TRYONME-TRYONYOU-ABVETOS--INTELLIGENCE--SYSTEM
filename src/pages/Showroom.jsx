@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane } from 'lucide-react'
+import { getImageWithFallback } from '../utils/assets'
 
 const Showroom = () => {
   const [activeOccasion, setActiveOccasion] = useState('all')
@@ -36,6 +37,7 @@ const Showroom = () => {
       rating: 4.9,
       views: 2340,
       match: 96,
+      image: 'showroom-power-meeting.jpg',
     },
     {
       id: 2,
@@ -47,17 +49,19 @@ const Showroom = () => {
       rating: 4.8,
       views: 3120,
       match: 94,
+      image: 'showroom-weekend-vibes.jpg',
     },
     {
       id: 3,
       name: 'Date Night',
       occasion: 'night',
       mood: 'romantic',
-      items: ['Vestido slip dress', 'Blazer satinado', 'Tacones strappy'],
+      items: ['Slip dress', 'Satin blazer', 'Strappy heels'],
       colors: ['#8B5A7D', '#2C2C2C', '#C9A86C'],
       rating: 4.9,
       views: 4560,
       match: 92,
+      image: 'showroom-date-night.jpg',
     },
     {
       id: 4,
@@ -69,6 +73,7 @@ const Showroom = () => {
       rating: 4.7,
       views: 2890,
       match: 88,
+      image: 'showroom-festival.jpg',
     },
     {
       id: 5,
@@ -80,6 +85,7 @@ const Showroom = () => {
       rating: 4.8,
       views: 1980,
       match: 91,
+      image: 'showroom-city-explorer.jpg',
     },
     {
       id: 6,
@@ -91,6 +97,7 @@ const Showroom = () => {
       rating: 4.9,
       views: 3450,
       match: 95,
+      image: 'showroom-clean-slate.jpg',
     },
     {
       id: 7,
@@ -102,6 +109,7 @@ const Showroom = () => {
       rating: 4.8,
       views: 5230,
       match: 89,
+      image: 'showroom-summer-sunset.jpg',
     },
     {
       id: 8,
@@ -113,6 +121,7 @@ const Showroom = () => {
       rating: 4.7,
       views: 4120,
       match: 93,
+      image: 'showroom-street-cred.jpg',
     },
   ]
 
@@ -250,19 +259,33 @@ const Showroom = () => {
                   className="group"
                 >
                   <div className="card h-full hover:scale-[1.02] transition-all duration-300 flex flex-col">
-                    {/* Color Preview */}
+                    {/* Image Preview */}
                     <div className="relative mb-4">
-                      <div className="flex h-40 rounded-xl overflow-hidden">
-                        {look.colors.map((color, i) => (
-                          <div
-                            key={i}
-                            className="flex-1 transition-all group-hover:flex-[1.2]"
-                            style={{ 
-                              backgroundColor: color,
-                              transitionDelay: `${i * 50}ms`
+                      <div className="h-64 rounded-xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 relative">
+                        {look.image ? (
+                          <img 
+                            src={getImageWithFallback(look.image, 'wardrobe')} 
+                            alt={look.name}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              e.target.style.display = 'none'
+                              e.target.nextSibling.style.display = 'flex'
                             }}
                           />
-                        ))}
+                        ) : null}
+                        {/* Fallback: Color Swatches */}
+                        <div className="absolute inset-0 flex" style={{ display: look.image ? 'none' : 'flex' }}>
+                          {look.colors.map((color, i) => (
+                            <div
+                              key={i}
+                              className="flex-1 transition-all group-hover:flex-[1.2]"
+                              style={{ 
+                                backgroundColor: color,
+                                transitionDelay: `${i * 50}ms`
+                              }}
+                            />
+                          ))}
+                        </div>
                       </div>
                       
                       {/* Match Badge */}

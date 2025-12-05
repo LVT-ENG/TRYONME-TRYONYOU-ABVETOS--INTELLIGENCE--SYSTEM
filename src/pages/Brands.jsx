@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, Star, Filter, Search, Heart, TrendingUp, ArrowRight, Sparkles } from 'lucide-react'
+import { getImageWithFallback, getLogoPath } from '../utils/assets'
 
 const Brands = () => {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -16,18 +17,18 @@ const Brands = () => {
   ]
 
   const brands = [
-    { id: 1, name: 'ZARA', category: 'streetwear', logo: 'Z', rating: 4.8, items: 1250, color: '#000000', featured: true },
-    { id: 2, name: 'Massimo Dutti', category: 'luxury', logo: 'MD', rating: 4.7, items: 890, color: '#1a1a1a', featured: true },
-    { id: 3, name: 'Mango', category: 'streetwear', logo: 'M', rating: 4.6, items: 1100, color: '#D4AF37', featured: false },
-    { id: 4, name: 'COS', category: 'sustainable', logo: 'C', rating: 4.9, items: 450, color: '#2d3436', featured: true },
-    { id: 5, name: 'Nike', category: 'sportswear', logo: 'N', rating: 4.9, items: 2300, color: '#ff6b35', featured: true },
-    { id: 6, name: 'Adidas', category: 'sportswear', logo: 'A', rating: 4.8, items: 2100, color: '#0a0a0a', featured: false },
-    { id: 7, name: 'Reformation', category: 'sustainable', logo: 'R', rating: 4.7, items: 380, color: '#4a6741', featured: true },
-    { id: 8, name: 'Gucci', category: 'luxury', logo: 'G', rating: 4.9, items: 560, color: '#1b5e20', featured: true },
-    { id: 9, name: 'Balenciaga', category: 'luxury', logo: 'B', rating: 4.8, items: 340, color: '#000000', featured: false },
-    { id: 10, name: 'Patagonia', category: 'sustainable', logo: 'P', rating: 4.9, items: 280, color: '#1976d2', featured: true },
-    { id: 11, name: 'Stüssy', category: 'streetwear', logo: 'S', rating: 4.7, items: 420, color: '#212121', featured: false },
-    { id: 12, name: 'Loewe', category: 'luxury', logo: 'L', rating: 4.9, items: 290, color: '#8b4513', featured: true },
+    { id: 1, name: 'ZARA', category: 'streetwear', logo: 'Z', logoImage: 'zara-logo.png', rating: 4.8, items: 1250, color: '#000000', featured: true },
+    { id: 2, name: 'Massimo Dutti', category: 'luxury', logo: 'MD', logoImage: 'massimo-dutti-logo.png', rating: 4.7, items: 890, color: '#1a1a1a', featured: true },
+    { id: 3, name: 'Mango', category: 'streetwear', logo: 'M', logoImage: 'mango-logo.png', rating: 4.6, items: 1100, color: '#D4AF37', featured: false },
+    { id: 4, name: 'COS', category: 'sustainable', logo: 'C', logoImage: 'cos-logo.png', rating: 4.9, items: 450, color: '#2d3436', featured: true },
+    { id: 5, name: 'Nike', category: 'sportswear', logo: 'N', logoImage: 'nike-logo.png', rating: 4.9, items: 2300, color: '#ff6b35', featured: true },
+    { id: 6, name: 'Adidas', category: 'sportswear', logo: 'A', logoImage: 'adidas-logo.png', rating: 4.8, items: 2100, color: '#0a0a0a', featured: false },
+    { id: 7, name: 'Reformation', category: 'sustainable', logo: 'R', logoImage: 'reformation-logo.png', rating: 4.7, items: 380, color: '#4a6741', featured: true },
+    { id: 8, name: 'Gucci', category: 'luxury', logo: 'G', logoImage: 'gucci-logo.png', rating: 4.9, items: 560, color: '#1b5e20', featured: true },
+    { id: 9, name: 'Balenciaga', category: 'luxury', logo: 'B', logoImage: 'balenciaga-logo.png', rating: 4.8, items: 340, color: '#000000', featured: false },
+    { id: 10, name: 'Patagonia', category: 'sustainable', logo: 'P', logoImage: 'patagonia-logo.png', rating: 4.9, items: 280, color: '#1976d2', featured: true },
+    { id: 11, name: 'Stüssy', category: 'streetwear', logo: 'S', logoImage: 'stussy-logo.png', rating: 4.7, items: 420, color: '#212121', featured: false },
+    { id: 12, name: 'Loewe', category: 'luxury', logo: 'L', logoImage: 'loewe-logo.png', rating: 4.9, items: 290, color: '#8b4513', featured: true },
   ]
 
   const filteredBrands = brands.filter(brand => {
@@ -104,10 +105,23 @@ const Brands = () => {
                   </div>
                   
                   <div 
-                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 text-3xl font-bold text-white shadow-xl"
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 shadow-xl relative overflow-hidden"
                     style={{ backgroundColor: brand.color }}
                   >
-                    {brand.logo}
+                    {brand.logoImage ? (
+                      <img 
+                        src={getLogoPath(brand.logoImage)} 
+                        alt={brand.name}
+                        className="w-full h-full object-contain p-2"
+                        onError={(e) => {
+                          e.target.style.display = 'none'
+                          e.target.nextSibling.style.display = 'flex'
+                        }}
+                      />
+                    ) : null}
+                    <div className="absolute inset-0 flex items-center justify-center text-3xl font-bold text-white" style={{ display: brand.logoImage ? 'none' : 'flex' }}>
+                      {brand.logo}
+                    </div>
                   </div>
                   
                   <h3 className="text-xl font-bold mb-2 group-hover:text-tryonyou-blue transition-colors">
@@ -188,10 +202,23 @@ const Brands = () => {
                   <div className="card h-full hover:scale-[1.02] transition-all duration-300">
                     <div className="flex items-start justify-between mb-4">
                       <div 
-                        className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold text-white shadow-lg"
+                        className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold text-white shadow-lg relative overflow-hidden"
                         style={{ backgroundColor: brand.color }}
                       >
-                        {brand.logo}
+                        {brand.logoImage ? (
+                          <img 
+                            src={getLogoPath(brand.logoImage)} 
+                            alt={brand.name}
+                            className="w-full h-full object-contain p-2"
+                            onError={(e) => {
+                              e.target.style.display = 'none'
+                              e.target.nextSibling.style.display = 'flex'
+                            }}
+                          />
+                        ) : null}
+                        <div className="absolute inset-0 flex items-center justify-center" style={{ display: brand.logoImage ? 'none' : 'flex' }}>
+                          {brand.logo}
+                        </div>
                       </div>
                       <div className="flex items-center gap-1 text-yellow-400">
                         <Star size={14} className="fill-yellow-400" />

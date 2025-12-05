@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Wand2, Sparkles, Crown, Camera, Star, ArrowRight, Check, Play, Palette, Scissors, Heart, Zap, TrendingUp } from 'lucide-react'
+import { getImageWithFallback } from '../utils/assets'
 
 const GlowUp = () => {
   const [activeSection, setActiveSection] = useState('analyze')
@@ -24,6 +25,8 @@ const GlowUp = () => {
       timeframe: '2 weeks',
       steps: 12,
       rating: 4.9,
+      beforeImage: 'glowup-before-1.jpg',
+      afterImage: 'glowup-after-1.jpg',
     },
     {
       id: 2,
@@ -33,6 +36,8 @@ const GlowUp = () => {
       timeframe: '1 week',
       steps: 8,
       rating: 4.8,
+      beforeImage: 'glowup-before-2.jpg',
+      afterImage: 'glowup-after-2.jpg',
     },
     {
       id: 3,
@@ -42,6 +47,8 @@ const GlowUp = () => {
       timeframe: '3 weeks',
       steps: 15,
       rating: 4.9,
+      beforeImage: 'glowup-before-3.jpg',
+      afterImage: 'glowup-after-3.jpg',
     },
   ]
 
@@ -292,18 +299,49 @@ const GlowUp = () => {
                     className="card group cursor-pointer hover:scale-[1.02] transition-all"
                   >
                     {/* Before/After Visual */}
-                    <div className="relative h-40 rounded-xl overflow-hidden mb-4 bg-gradient-to-r from-gray-600 to-fuchsia-500">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="text-center">
-                          <Zap size={32} className="mx-auto mb-2 text-white" />
-                          <span className="text-white font-bold">{t.improvement}</span>
+                    <div className="relative h-64 rounded-xl overflow-hidden mb-4 bg-gradient-to-r from-gray-600 to-fuchsia-500">
+                      {/* Before/After Split View */}
+                      <div className="absolute inset-0 flex">
+                        <div className="w-1/2 relative overflow-hidden">
+                          {t.beforeImage ? (
+                            <img 
+                              src={getImageWithFallback(t.beforeImage, 'before')} 
+                              alt="Before"
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.style.display = 'none'
+                              }}
+                            />
+                          ) : null}
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <div className="text-center">
+                              <Zap size={24} className="mx-auto mb-1 text-white/80" />
+                              <span className="text-white/90 text-xs font-semibold">Before</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="w-1/2 relative overflow-hidden border-l-2 border-fuchsia-500">
+                          {t.afterImage ? (
+                            <img 
+                              src={getImageWithFallback(t.afterImage, 'after')} 
+                              alt="After"
+                              className="w-full h-full object-cover"
+                              onError={(e) => {
+                                e.target.style.display = 'none'
+                              }}
+                            />
+                          ) : null}
+                          <div className="absolute inset-0 bg-fuchsia-500/20 flex items-center justify-center">
+                            <div className="text-center">
+                              <Sparkles size={24} className="mx-auto mb-1 text-white" />
+                              <span className="text-white text-xs font-semibold">After</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-white/60">Before</span>
-                          <span className="text-fuchsia-400">After</span>
-                        </div>
+                      {/* Improvement Badge */}
+                      <div className="absolute top-4 right-4 bg-gradient-to-r from-fuchsia-500 to-pink-500 px-3 py-1 rounded-full">
+                        <span className="text-white font-bold text-sm">{t.improvement}</span>
                       </div>
                     </div>
                     

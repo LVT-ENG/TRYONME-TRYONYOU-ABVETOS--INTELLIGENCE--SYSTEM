@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Camera, Ruler, Palette, Sparkles, Check, ArrowRight, ChevronRight, Scan, Wand2 } from 'lucide-react'
+import Avatar3D from '../components/Avatar3D'
 
 const MyAvatar = () => {
   const [currentStep, setCurrentStep] = useState(0)
@@ -310,30 +311,16 @@ const MyAvatar = () => {
                   Preview
                 </h3>
                 
-                <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-violet-500/10 to-purple-500/10 flex items-center justify-center relative overflow-hidden">
-                  <motion.div
-                    animate={{ 
-                      y: [0, -10, 0],
+                <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-violet-500/10 to-purple-500/10 relative overflow-hidden">
+                  <Avatar3D 
+                    customizations={{
+                      skin: avatarData.skinTone ? skinTones.find(s => s.id === avatarData.skinTone)?.color : '#f5d0c5',
+                      outfit: avatarData.style ? { top: '#1a1a1a', bottom: '#2d2d2d', shoes: '#0a0a0a' } : null,
                     }}
-                    transition={{ 
-                      duration: 3,
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                    className="text-center"
-                  >
-                    <div className="w-32 h-32 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
-                      <User size={64} className="text-white/80" />
-                    </div>
-                    <p className="text-white/60 text-sm">Your avatar will appear here</p>
-                  </motion.div>
-                  
-                  {/* Decorative elements */}
-                  <div className="absolute inset-0 pointer-events-none">
-                    <div className="absolute top-4 left-4 w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-                    <div className="absolute top-8 right-8 w-1 h-1 rounded-full bg-purple-400 animate-pulse" style={{ animationDelay: '1s' }} />
-                    <div className="absolute bottom-12 left-8 w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.5s' }} />
-                  </div>
+                    modelPath="/models/avatar.glb"
+                    showControls={true}
+                    height="100%"
+                  />
                 </div>
                 
                 <div className="mt-4 space-y-2">

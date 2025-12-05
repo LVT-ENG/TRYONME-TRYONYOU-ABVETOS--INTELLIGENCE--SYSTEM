@@ -49,7 +49,12 @@ src/
 └── main.jsx          # Entry point
 
 public/
-├── models/           # 3D models for avatar
+├── assets/           # All static assets
+│   ├── images/       # Clothing, showroom, glow-up images
+│   ├── videos/       # Video files
+│   ├── animation/    # Animation files
+│   └── logo/         # Brand logos
+├── models/           # 3D models for avatar (GLB/GLTF)
 └── favicon.svg       # Site favicon
 ```
 
@@ -104,16 +109,52 @@ public/
 - Tablet: 640px - 1024px  
 - Desktop: > 1024px
 
+## 📦 Adding Your Assets
+
+**IMPORTANT:** Before deploying, add your real assets to `/public/`:
+
+1. **Images**: Place in `/public/assets/images/`
+   - Wardrobe items (clothing images)
+   - Showroom looks
+   - Glow-up before/after photos
+   - Brand logos in `/public/assets/logo/`
+
+2. **3D Models**: Place in `/public/models/`
+   - Avatar model: `avatar.glb` or `avatar.gltf`
+
+3. **Videos**: Place in `/public/assets/videos/`
+
+See `ASSETS_GUIDE.md` for detailed asset requirements and naming conventions.
+
 ## 🚀 Deployment
 
-Build the project and deploy the `dist` folder:
-
+### Build Command
 ```bash
 npm run build
-# Deploy dist/ to your hosting
 ```
 
-Compatible with: Vercel, Netlify, Railway, AWS, etc.
+### Output Directory
+```
+dist/
+├── assets/          # All public assets (automatically copied)
+├── models/          # 3D models (automatically copied)
+└── index.html       # Entry point
+```
+
+### Deployment Platforms
+- **Vercel**: Framework preset: Vite, Build command: `npm run build`, Output: `dist`
+- **Netlify**: Build command: `npm run build`, Publish directory: `dist`
+- **Railway**: Build command: `npm run build`, Output: `dist`
+- **AWS S3/CloudFront**: Upload `dist/` folder
+
+### Pre-Deployment Checklist
+- ✅ All assets added to `/public/`
+- ✅ Build completes without errors (`npm run build`)
+- ✅ Assets appear in `/dist/assets/` and `/dist/models/`
+- ✅ Test navigation on all pages
+- ✅ Verify 3D avatar loads (or uses procedural fallback)
+- ✅ Check all images load correctly
+- ✅ Test on mobile devices
 
 ## 📄 License
 

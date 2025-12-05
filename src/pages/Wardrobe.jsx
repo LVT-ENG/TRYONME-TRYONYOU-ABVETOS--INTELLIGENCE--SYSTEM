@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Shirt, ShoppingBag, Heart, Filter, Search, Grid, List, Plus, X, Sparkles, Eye, ArrowRight } from 'lucide-react'
+import { getImageWithFallback } from '../utils/assets'
+import Avatar3D from '../components/Avatar3D'
 
 const Wardrobe = () => {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -20,18 +22,18 @@ const Wardrobe = () => {
   ]
 
   const clothes = [
-    { id: 1, name: 'Silk Blouse', category: 'tops', price: 89, color: '#F5DEB3', brand: 'ZARA', size: 'M', match: 96 },
-    { id: 2, name: 'High-Waist Jeans', category: 'bottoms', price: 69, color: '#4682B4', brand: 'Levi\'s', size: '28', match: 94 },
-    { id: 3, name: 'Midi Dress', category: 'dresses', price: 129, color: '#8B5A7D', brand: 'Mango', size: 'S', match: 92 },
-    { id: 4, name: 'Wool Blazer', category: 'outerwear', price: 199, color: '#2C2C2C', brand: 'COS', size: 'M', match: 98 },
-    { id: 5, name: 'Cashmere Sweater', category: 'tops', price: 149, color: '#D4A574', brand: 'Massimo Dutti', size: 'M', match: 95 },
-    { id: 6, name: 'Leather Belt', category: 'accessories', price: 45, color: '#8B4513', brand: 'Gucci', size: 'One Size', match: 100 },
-    { id: 7, name: 'Pleated Skirt', category: 'bottoms', price: 79, color: '#1a1a1a', brand: 'H&M', size: 'S', match: 91 },
-    { id: 8, name: 'Cotton T-Shirt', category: 'tops', price: 29, color: '#FFFFFF', brand: 'Uniqlo', size: 'M', match: 97 },
-    { id: 9, name: 'Trench Coat', category: 'outerwear', price: 249, color: '#C4A77D', brand: 'Burberry', size: 'M', match: 93 },
-    { id: 10, name: 'Evening Dress', category: 'dresses', price: 299, color: '#800020', brand: 'Reformation', size: 'S', match: 89 },
-    { id: 11, name: 'Wide Leg Pants', category: 'bottoms', price: 89, color: '#BDC3C7', brand: 'Arket', size: '38', match: 94 },
-    { id: 12, name: 'Gold Necklace', category: 'accessories', price: 159, color: '#D4AF37', brand: 'Mejuri', size: 'One Size', match: 100 },
+    { id: 1, name: 'Silk Blouse', category: 'tops', price: 89, color: '#F5DEB3', brand: 'ZARA', size: 'M', match: 96, image: 'silk-blouse.jpg' },
+    { id: 2, name: 'High-Waist Jeans', category: 'bottoms', price: 69, color: '#4682B4', brand: 'Levi\'s', size: '28', match: 94, image: 'jeans.jpg' },
+    { id: 3, name: 'Midi Dress', category: 'dresses', price: 129, color: '#8B5A7D', brand: 'Mango', size: 'S', match: 92, image: 'midi-dress.jpg' },
+    { id: 4, name: 'Wool Blazer', category: 'outerwear', price: 199, color: '#2C2C2C', brand: 'COS', size: 'M', match: 98, image: 'blazer.jpg' },
+    { id: 5, name: 'Cashmere Sweater', category: 'tops', price: 149, color: '#D4A574', brand: 'Massimo Dutti', size: 'M', match: 95, image: 'sweater.jpg' },
+    { id: 6, name: 'Leather Belt', category: 'accessories', price: 45, color: '#8B4513', brand: 'Gucci', size: 'One Size', match: 100, image: 'belt.jpg' },
+    { id: 7, name: 'Pleated Skirt', category: 'bottoms', price: 79, color: '#1a1a1a', brand: 'H&M', size: 'S', match: 91, image: 'skirt.jpg' },
+    { id: 8, name: 'Cotton T-Shirt', category: 'tops', price: 29, color: '#FFFFFF', brand: 'Uniqlo', size: 'M', match: 97, image: 'tshirt.jpg' },
+    { id: 9, name: 'Trench Coat', category: 'outerwear', price: 249, color: '#C4A77D', brand: 'Burberry', size: 'M', match: 93, image: 'trench.jpg' },
+    { id: 10, name: 'Evening Dress', category: 'dresses', price: 299, color: '#800020', brand: 'Reformation', size: 'S', match: 89, image: 'dress.jpg' },
+    { id: 11, name: 'Wide Leg Pants', category: 'bottoms', price: 89, color: '#BDC3C7', brand: 'Arket', size: '38', match: 94, image: 'pants.jpg' },
+    { id: 12, name: 'Gold Necklace', category: 'accessories', price: 159, color: '#D4AF37', brand: 'Mejuri', size: 'One Size', match: 100, image: 'necklace.jpg' },
   ]
 
   const filteredClothes = clothes.filter(item => {
@@ -176,10 +178,23 @@ const Wardrobe = () => {
                   {/* Image/Color Preview */}
                   <div className={`relative ${viewMode === 'list' ? 'w-40 flex-shrink-0' : 'mb-4'}`}>
                     <div 
-                      className={`rounded-xl flex items-center justify-center ${viewMode === 'list' ? 'h-full' : 'h-48'}`}
+                      className={`rounded-xl overflow-hidden flex items-center justify-center ${viewMode === 'list' ? 'h-full' : 'h-48'}`}
                       style={{ backgroundColor: item.color }}
                     >
-                      <Shirt size={48} className="text-white/30" />
+                      {item.image ? (
+                        <img 
+                          src={getImageWithFallback(item.image, 'wardrobe')} 
+                          alt={item.name}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none'
+                            e.target.nextSibling.style.display = 'flex'
+                          }}
+                        />
+                      ) : null}
+                      <div className="absolute inset-0 flex items-center justify-center" style={{ display: item.image ? 'none' : 'flex' }}>
+                        <Shirt size={48} className="text-white/30" />
+                      </div>
                     </div>
                     
                     {/* Match Badge */}
@@ -324,11 +339,43 @@ const Wardrobe = () => {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div 
-                  className="aspect-square rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: selectedItem.color }}
-                >
-                  <Shirt size={96} className="text-white/30" />
+                {/* 3D Avatar Try-On View */}
+                <div className="space-y-4">
+                  <div className="aspect-square rounded-xl overflow-hidden relative bg-gradient-to-br from-gray-800 to-gray-900">
+                    <Avatar3D 
+                      customizations={{
+                        outfit: {
+                          top: selectedItem.category === 'tops' || selectedItem.category === 'dresses' ? selectedItem.color : '#1a1a1a',
+                          bottom: selectedItem.category === 'bottoms' || selectedItem.category === 'dresses' ? selectedItem.color : '#2d2d2d',
+                          shoes: selectedItem.category === 'accessories' ? selectedItem.color : '#0a0a0a',
+                        }
+                      }}
+                      modelPath="/models/avatar.glb"
+                      showControls={true}
+                      height="100%"
+                    />
+                  </div>
+                  
+                  {/* Item Image */}
+                  <div 
+                    className="aspect-square rounded-xl overflow-hidden relative"
+                    style={{ backgroundColor: selectedItem.color }}
+                  >
+                    {selectedItem.image ? (
+                      <img 
+                        src={getImageWithFallback(selectedItem.image, 'wardrobe')} 
+                        alt={selectedItem.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.style.display = 'none'
+                          e.target.nextSibling.style.display = 'flex'
+                        }}
+                      />
+                    ) : null}
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ display: selectedItem.image ? 'none' : 'flex' }}>
+                      <Shirt size={64} className="text-white/30" />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
