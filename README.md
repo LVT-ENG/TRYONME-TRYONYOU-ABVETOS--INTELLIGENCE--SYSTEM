@@ -1,104 +1,105 @@
-```md
+# LIVE 'IT - TRYONYOU
 
-TRYONYOU – ABVETOS – ULTRA–PLUS–ULTIMATUM
+A hyper-real fashion experience platform built with React, Vite, and Three.js.
 
-Full Virtual Fitting System + Smart Wardrobe + ABVETOS Intelligence Layer
+## 🌟 Features
 
-TRYONYOU is an end-to-end ecosystem for virtual fitting, emotional style recommendation, intelligent wardrobe management, and advanced biometric payment.
-The system is fully embeddable into any website, boutique platform, or marketplace.
+- **7 Interactive Pages**: Home, Brands, Avatar3D, Wardrobe, Showroom, Recommendation, AI System
+- **3D Avatar System**: Customizable 3D avatar with Three.js + React Three Fiber
+- **AI Style Oracle**: The Peacock - your personal style advisor
+- **Virtual Wardrobe**: Mix and match outfits in real-time
+- **Glow-Up Recommendations**: AI-powered style suggestions
 
-⸻
+## 🚀 Quick Start
 
-🚀 Core Features
-
-1. Virtual Try-On Engine
-
-Ultra-precise virtual fitting engine with millimetric garment alignment.
-Supports male, female, and customized avatars.
-
-2. 3D / Photorealistic Avatar
-
-Users can generate an avatar based on their real body or choose an idealized version.
-Includes front, side, and 360° garment comparison.
-
-3. Pau — Emotional Recommender
-
-AI assistant that recommends outfits based on:
-	•	emotional state
-	•	personal style
-	•	daily context
-	•	TRYONYOU elegance rules
-
-4. ABVET — Biometric Payment
-
-Dual-biometric checkout:
-	•	Iris ID
-	•	Voice ID
-No cards. No phone. No friction.
-
-5. Smart Wardrobe
-
-Intelligent wardrobe system that:
-	•	registers all owned garments
-	•	measures and analyzes real sizes
-	•	combines existing items with new suggestions
-	•	remembers exact location of each garment
-	•	alerts when something no longer fits
-
-6. Solidarity Wardrobe
-
-Connected to the Smart Wardrobe to enable:
-	•	donate
-	•	resell
-	•	recycle
-	•	swap with users of compatible sizes
-
-Includes full logistics automation (AutoDonate).
-
-7. DSX + ABVETOS Orchestration
-
-Automation layer coordinating:
-	•	Deploy Express
-	•	repository synchronization
-	•	Vercel deployments
-	•	API integrations
-	•	self-healing modules
-
-⸻
-
-🧩 Technical Architecture
-	•	Frontend: React + Vite 7.1.2
-	•	Orchestration: ABVETOS + DSX
-	•	Deployment: Vercel (auto-build from main)
-	•	Patent layer: EPCT system with Rule 26 / Rule 92bis compliance
-	•	Core modules: Smart Wardrobe + Solidarity Wardrobe
-	•	Security: Dual-biometric ABVET
-	•	Embeddable widgets: plug-and-play boutique integration
-
-⸻
-
-🔄 Garment Lifecycle
-	1.	User purchases or imports a garment.
-	2.	Smart Wardrobe registers and analyzes it.
-	3.	Pau suggests combinations and new purchases.
-	4.	If the garment no longer fits → moves to Solidarity Wardrobe.
-	5.	AutoDonate manages shipping and tracks social impact.
-
-⸻
-
-📦 Project Structure
-
-This repository contains the final consolidated base of the system:
-	•	/src — main application
-	•	index.html — DRS-TRYONYOU template
-	•	vite.config.js
-	•	package.json
-	•	TRYONYOU_FINAL.zip (source structure)
-
-Production deployments:
-https://tryonyou.app
-🛠 Local Installation
+```bash
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
-Production build:
+
+# Build for production
 npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/       # Reusable UI components
+│   ├── Layout.jsx
+│   ├── Navbar.jsx
+│   └── Avatar3DCanvas.jsx
+├── pages/           # Route pages
+│   ├── Home.jsx
+│   ├── Brands.jsx
+│   ├── Avatar3D.jsx
+│   ├── Wardrobe.jsx
+│   ├── Showroom.jsx
+│   ├── Recommendation.jsx
+│   └── IntelligentSystem.jsx
+├── context/         # React Context providers
+│   └── AppContext.jsx
+├── utils/           # Utility functions & constants
+│   ├── constants.js
+│   └── helpers.js
+├── styles/          # Global styles
+│   └── global.css
+├── assets/          # Static assets (images, fonts)
+├── App.jsx          # Main app with routing
+└── main.jsx         # Entry point
+```
+
+## 🛠 Tech Stack
+
+- **React 18** - UI library
+- **Vite 5** - Build tool
+- **React Router 7** - Client-side routing
+- **Three.js + @react-three/fiber** - 3D graphics
+- **Framer Motion** - Animations
+- **CSS Custom Properties** - Theming
+
+## 🎨 Pages Overview
+
+| Page | Route | Description |
+|------|-------|-------------|
+| Home | `/` | Welcome & body shape selection |
+| Brands | `/brands` | Choose your preferred brand |
+| Avatar | `/avatar` | Customize your 3D avatar |
+| Wardrobe | `/wardrobe` | Virtual wardrobe with categories |
+| Showroom | `/showroom` | Browse curated collections |
+| Glow-Up | `/recommendation` | AI style recommendations |
+| Ask Peacock | `/ai-system` | Chat with The Peacock AI |
+
+## 🦚 The Peacock
+
+Your personal style oracle - an AI assistant that provides context-aware fashion advice based on:
+- Your body shape
+- Selected brands
+- Personal preferences
+- Event/occasion context
+
+## 📱 Responsive Design
+
+Fully responsive across all device sizes with:
+- Mobile-first approach
+- Adaptive navigation
+- Touch-friendly interactions
+
+## 🔧 Development
+
+```bash
+# Run linter
+npm run lint
+
+# Type checking (if TypeScript added)
+npm run type-check
+```
+
+## 📄 License
+
+Private - TRYONYOU © 2024

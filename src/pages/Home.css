@@ -1,0 +1,232 @@
+/* Home Page Styles */
+.home-page {
+  overflow-x: hidden;
+}
+
+/* Hero Section */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fefefe 0%, #f8f4f0 50%, #fef9f5 100%);
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 10;
+  padding: var(--space-lg);
+}
+
+.hero-title {
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 700;
+  letter-spacing: 8px;
+  background: linear-gradient(135deg, var(--color-obsidian), var(--color-graphite), var(--color-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: var(--space-md);
+  line-height: 1;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-style: italic;
+  color: var(--color-graphite);
+  margin-bottom: var(--space-xl);
+  letter-spacing: 1px;
+}
+
+.hero-visual {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: float 8s ease-in-out infinite;
+}
+
+.hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--color-gold);
+  top: 10%;
+  right: 10%;
+  animation-delay: 0s;
+}
+
+.hero-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: var(--color-rose);
+  bottom: 20%;
+  left: 5%;
+  animation-delay: -2s;
+}
+
+.hero-orb-3 {
+  width: 250px;
+  height: 250px;
+  background: var(--color-peacock);
+  top: 50%;
+  left: 40%;
+  animation-delay: -4s;
+}
+
+/* Features Section */
+.features-section {
+  padding: var(--space-2xl) 0;
+  background: var(--color-ivory);
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-lg);
+}
+
+.feature-card {
+  text-align: center;
+  padding: var(--space-xl);
+  border-radius: var(--radius-xl);
+  background: white;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: var(--space-md);
+}
+
+.feature-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--color-obsidian);
+}
+
+.feature-desc {
+  font-size: 0.9rem;
+  color: var(--color-graphite);
+}
+
+/* Shape Selection Section */
+.shape-section {
+  padding: var(--space-2xl) 0;
+  background: linear-gradient(180deg, var(--color-ivory) 0%, #f8f5f2 100%);
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.section-header h2 {
+  margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-graphite);
+}
+
+.shapes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-md);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.shape-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg);
+  border: 1px solid #eee;
+  border-radius: var(--radius-xl);
+  background: white;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+}
+
+.shape-card:hover {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.15);
+}
+
+.shape-emoji {
+  font-size: 2.5rem;
+}
+
+.shape-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-obsidian);
+}
+
+/* Quote Section */
+.quote-section {
+  padding: var(--space-2xl) var(--space-lg);
+  background: var(--color-obsidian);
+}
+
+.peacock-quote {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--color-ivory);
+}
+
+.quote-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: var(--space-lg);
+}
+
+.peacock-quote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.peacock-quote cite {
+  font-style: normal;
+  font-size: 1rem;
+  color: var(--color-gold);
+  letter-spacing: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-title {
+    letter-spacing: 4px;
+  }
+
+  .shapes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature-card {
+    padding: var(--space-lg);
+  }
+}
+

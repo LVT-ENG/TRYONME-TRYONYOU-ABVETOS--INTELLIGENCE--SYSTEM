@@ -1,0 +1,201 @@
+/* Avatar3D Page Styles */
+.avatar-page {
+  min-height: calc(100vh - 80px);
+  background: linear-gradient(135deg, #fefefe 0%, #f0f0f0 100%);
+}
+
+.avatar-layout {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  min-height: calc(100vh - 80px);
+}
+
+/* Canvas Section */
+.avatar-canvas-section {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #fafafa 0%, #f0f0f0 100%);
+}
+
+.avatar-preview {
+  flex: 1;
+  min-height: 500px;
+}
+
+.avatar-canvas-container {
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-info {
+  text-align: center;
+  padding: var(--space-md);
+  background: rgba(0, 0, 0, 0.03);
+  font-size: 0.85rem;
+  color: var(--color-graphite);
+}
+
+/* Controls Panel */
+.avatar-controls {
+  padding: var(--space-xl);
+  background: white;
+  border-left: 1px solid #eee;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.controls-header {
+  margin-bottom: var(--space-md);
+}
+
+.controls-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: var(--space-xs);
+}
+
+.controls-header p {
+  color: var(--color-graphite);
+  font-size: 0.95rem;
+}
+
+.energy-badge {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  background: var(--color-pearl);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* Control Groups */
+.control-group {
+  border-top: 1px solid #eee;
+  padding-top: var(--space-lg);
+}
+
+.control-group h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: var(--space-md);
+  color: var(--color-charcoal);
+}
+
+/* Color Options */
+.color-options {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.color-swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
+}
+
+.color-swatch:hover {
+  transform: scale(1.1);
+}
+
+.color-swatch.active {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.3);
+}
+
+/* Outfit Options */
+.outfit-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-sm);
+}
+
+.outfit-btn {
+  padding: var(--space-md);
+  background: var(--color-pearl);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.outfit-btn:hover {
+  background: var(--color-ivory);
+  border-color: var(--color-graphite);
+}
+
+.outfit-btn.active {
+  border-color: var(--color-gold);
+  background: white;
+}
+
+.outfit-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: var(--space-xs);
+}
+
+.outfit-preview span {
+  height: 12px;
+  border-radius: 2px;
+}
+
+.outfit-preview span:first-child {
+  height: 20px;
+  border-radius: 4px 4px 2px 2px;
+}
+
+.outfit-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-charcoal);
+}
+
+/* Action Buttons */
+.avatar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: auto;
+  padding-top: var(--space-lg);
+}
+
+.peacock-whisper {
+  text-align: center;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-graphite);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .avatar-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50vh auto;
+  }
+
+  .avatar-controls {
+    border-left: none;
+    border-top: 1px solid #eee;
+  }
+
+  .outfit-options {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .outfit-options {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
