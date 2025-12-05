@@ -16,7 +16,7 @@ export default function IntelligentSystem() {
     {
       id: 1,
       from: 'peacock',
-      text: "Welcome, darling. I am The Peacock — your personal style oracle. Tell me where you're going, and I'll tell you what to wear.",
+      text: "Welcome to TRYONYOU, darling. I am The Peacock — your personal style oracle. Tell me where you're going, and I'll tell you what to wear. LIVE 'IT!",
       timestamp: new Date(),
     },
   ])

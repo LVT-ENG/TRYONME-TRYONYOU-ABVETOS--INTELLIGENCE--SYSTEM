@@ -11,8 +11,8 @@ export default function Layout() {
       </main>
       <footer className="footer">
         <div className="footer-content">
-          <p className="footer-brand">LIVE 'IT</p>
-          <p className="footer-tagline">Where beauty lives in movement</p>
+          <p className="footer-brand">TRYONYOU</p>
+          <p className="footer-tagline">LIVE 'IT – Where beauty lives in movement</p>
           <p className="footer-copy">© {new Date().getFullYear()} TRYONYOU. All rights reserved.</p>
         </div>
       </footer>

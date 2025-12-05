@@ -29,7 +29,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
           >
-            LIVE 'IT
+            TRYONYOU
           </motion.h1>
           <motion.p 
             className="hero-subtitle"
@@ -37,7 +37,7 @@ export default function Home() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
           >
-            Where beauty lives in movement
+            LIVE 'IT – Where beauty lives in movement
           </motion.p>
           <motion.div
             className="hero-cta"
@@ -152,7 +152,7 @@ export default function Home() {
           transition={{ duration: 0.8 }}
         >
           <span className="quote-icon">🦚</span>
-          <p>"Fashion fades, style is eternal. Let's build something timeless."</p>
+          <p>"Fashion fades, style is eternal. TRYONYOU – let's build something timeless."</p>
           <cite>— The Peacock</cite>
         </motion.blockquote>
       </section>

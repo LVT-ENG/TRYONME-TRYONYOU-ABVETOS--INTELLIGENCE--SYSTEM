@@ -213,7 +213,7 @@ export default function Recommendation() {
 
             <div className="peacock-advice">
               <span>🦚</span>
-              <p>"Now that you feel it… LIVE 'IT."</p>
+              <p>"Now that you feel it… LIVE 'IT. Welcome to TRYONYOU."</p>
             </div>
           </motion.div>
         </div>

@@ -1,4 +1,6 @@
-# LIVE 'IT - TRYONYOU
+# TRYONYOU
+
+**LIVE 'IT – Where beauty lives in movement**
 
 A hyper-real fashion experience platform built with React, Vite, and Three.js.
 

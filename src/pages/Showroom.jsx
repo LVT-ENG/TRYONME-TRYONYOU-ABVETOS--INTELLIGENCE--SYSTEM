@@ -13,13 +13,13 @@ const COLLECTIONS = [
 
 // Generate showroom items
 const SHOWROOM_ITEMS = [
-  { id: 'sr1', name: 'Cubist Flow Collection', brand: 'liveit', collection: 'spring24', price: 1299, featured: true },
+  { id: 'sr1', name: 'Cubist Flow Collection', brand: 'tryonyou', collection: 'spring24', price: 1299, featured: true },
   { id: 'sr2', name: 'Urban Edge Series', brand: 'northstudio', collection: 'spring24', price: 899 },
   { id: 'sr3', name: 'Heritage Classic Set', brand: 'heritage', collection: 'limited', price: 2499, featured: true },
   { id: 'sr4', name: 'Summer Breeze Ensemble', brand: 'everline', collection: 'summer24', price: 749 },
   { id: 'sr5', name: 'NeoForm Tech Wear', brand: 'neoform', collection: 'fall24', price: 1099 },
   { id: 'sr6', name: 'Velvet Dreams Collection', brand: 'velvet', collection: 'limited', price: 1899 },
-  { id: 'sr7', name: 'Golden Hour Set', brand: 'liveit', collection: 'summer24', price: 999, featured: true },
+  { id: 'sr7', name: 'Golden Hour Set', brand: 'tryonyou', collection: 'summer24', price: 999, featured: true },
   { id: 'sr8', name: 'Minimalist Core', brand: 'northstudio', collection: 'fall24', price: 649 },
 ]
 
@@ -126,7 +126,7 @@ export default function Showroom() {
         >
           <div className="featured-content">
             <span className="featured-label">✨ Featured Collection</span>
-            <h2>LIVE 'IT × The Peacock</h2>
+            <h2>TRYONYOU × The Peacock</h2>
             <p>A collaboration that redefines modern elegance with AI-driven design</p>
             <button className="btn btn-gold">Explore Collection</button>
           </div>

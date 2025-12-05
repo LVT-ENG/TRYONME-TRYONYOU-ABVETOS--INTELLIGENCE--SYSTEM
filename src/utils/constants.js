@@ -15,11 +15,11 @@ export const BODY_SHAPES = [
 // Brand catalog
 export const BRANDS = [
   { 
-    id: 'liveit', 
-    name: "LIVE 'IT", 
+    id: 'tryonyou', 
+    name: "TRYONYOU", 
     emoji: '🌟', 
     featured: true, 
-    tagline: 'Where beauty lives in movement',
+    tagline: "LIVE 'IT – Where beauty lives in movement",
     color: '#d4af37'
   },
   { 
@@ -76,21 +76,21 @@ export const WARDROBE_CATEGORIES = [
 // Sample wardrobe items
 export const WARDROBE_ITEMS = {
   clothes: [
-    { id: 'c1', name: 'Cubist Flow Jacket', brand: 'liveit', price: 299, image: null },
-    { id: 'c2', name: 'High-Rise Texture Pants', brand: 'liveit', price: 189, image: null },
+    { id: 'c1', name: 'Cubist Flow Jacket', brand: 'tryonyou', price: 299, image: null },
+    { id: 'c2', name: 'High-Rise Texture Pants', brand: 'tryonyou', price: 189, image: null },
     { id: 'c3', name: 'Silk Geometric Blouse', brand: 'everline', price: 159, image: null },
     { id: 'c4', name: 'Urban Structured Coat', brand: 'northstudio', price: 449, image: null },
   ],
   shoes: [
-    { id: 's1', name: 'Urban Sway Sneaker', brand: 'liveit', price: 220, image: null },
+    { id: 's1', name: 'Urban Sway Sneaker', brand: 'tryonyou', price: 220, image: null },
     { id: 's2', name: 'Classic Leather Boot', brand: 'heritage', price: 380, image: null },
   ],
   accessories: [
-    { id: 'a1', name: 'Geometric Gold Hoops', brand: 'liveit', price: 89, image: null },
+    { id: 'a1', name: 'Geometric Gold Hoops', brand: 'tryonyou', price: 89, image: null },
     { id: 'a2', name: 'Minimalist Watch', brand: 'northstudio', price: 250, image: null },
   ],
   makeup: [
-    { id: 'm1', name: 'Editorial Bold Red', brand: 'liveit', price: 45, image: null },
+    { id: 'm1', name: 'Editorial Bold Red', brand: 'tryonyou', price: 45, image: null },
     { id: 'm2', name: 'Nude Glow Palette', brand: 'velvet', price: 65, image: null },
   ],
   hair: [
@@ -103,7 +103,7 @@ export const WARDROBE_ITEMS = {
 export const PEACOCK_RESPONSES = [
   "Mmm… for that, I see silk, structure, and just a whisper of rebellion.",
   "Style is a whisper, not a shout. Let's find your voice.",
-  "Now that you feel it… LIVE 'IT.",
+  "Now that you feel it… LIVE 'IT. That's the TRYONYOU way.",
   "Elegance is not about being noticed, it's about being remembered.",
   "Your energy speaks before your outfit does. Let's make them harmonize.",
   "I sense something bold in you today. Shall we explore it?",

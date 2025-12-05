@@ -11,7 +11,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <NavLink to="/" className="navbar-brand">
-          <span className="brand-text">LIVE 'IT</span>
+          <span className="brand-text">TRYONYOU</span>
         </NavLink>
 
         <div className="navbar-links desktop-only">
