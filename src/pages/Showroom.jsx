@@ -1,205 +1,388 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { BRANDS, WARDROBE_ITEMS } from '../utils/constants'
-import { formatPrice } from '../utils/helpers'
-import './Showroom.css'
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane } from 'lucide-react'
 
-const COLLECTIONS = [
-  { id: 'spring24', name: 'Spring 2024', season: '🌸' },
-  { id: 'summer24', name: 'Summer 2024', season: '☀️' },
-  { id: 'fall24', name: 'Fall 2024', season: '🍂' },
-  { id: 'limited', name: 'Limited Edition', season: '💎' },
-]
+const Showroom = () => {
+  const [activeOccasion, setActiveOccasion] = useState('all')
+  const [activeMood, setActiveMood] = useState('all')
+  const [likedLooks, setLikedLooks] = useState([])
 
-// Generate showroom items
-const SHOWROOM_ITEMS = [
-  { id: 'sr1', name: 'Cubist Flow Collection', brand: 'tryonyou', collection: 'spring24', price: 1299, featured: true },
-  { id: 'sr2', name: 'Urban Edge Series', brand: 'northstudio', collection: 'spring24', price: 899 },
-  { id: 'sr3', name: 'Heritage Classic Set', brand: 'heritage', collection: 'limited', price: 2499, featured: true },
-  { id: 'sr4', name: 'Summer Breeze Ensemble', brand: 'everline', collection: 'summer24', price: 749 },
-  { id: 'sr5', name: 'NeoForm Tech Wear', brand: 'neoform', collection: 'fall24', price: 1099 },
-  { id: 'sr6', name: 'Velvet Dreams Collection', brand: 'velvet', collection: 'limited', price: 1899 },
-  { id: 'sr7', name: 'Golden Hour Set', brand: 'tryonyou', collection: 'summer24', price: 999, featured: true },
-  { id: 'sr8', name: 'Minimalist Core', brand: 'northstudio', collection: 'fall24', price: 649 },
-]
+  const occasions = [
+    { id: 'all', name: 'Todos', icon: Sparkles },
+    { id: 'work', name: 'Trabajo', icon: Briefcase },
+    { id: 'casual', name: 'Casual', icon: Sun },
+    { id: 'night', name: 'Noche', icon: Moon },
+    { id: 'party', name: 'Fiesta', icon: PartyPopper },
+    { id: 'travel', name: 'Viaje', icon: Plane },
+  ]
 
-export default function Showroom() {
-  const [activeCollection, setActiveCollection] = useState('all')
-  const [activeBrand, setActiveBrand] = useState('all')
-  const [viewMode, setViewMode] = useState('grid')
+  const moods = [
+    { id: 'all', name: 'Todos', emoji: '✨' },
+    { id: 'confident', name: 'Seguro/a', emoji: '💪' },
+    { id: 'relaxed', name: 'Relajado/a', emoji: '😌' },
+    { id: 'romantic', name: 'Romántico/a', emoji: '💕' },
+    { id: 'bold', name: 'Atrevido/a', emoji: '🔥' },
+    { id: 'minimal', name: 'Minimalista', emoji: '⬜' },
+  ]
 
-  const filteredItems = SHOWROOM_ITEMS.filter((item) => {
-    const matchesCollection = activeCollection === 'all' || item.collection === activeCollection
-    const matchesBrand = activeBrand === 'all' || item.brand === activeBrand
-    return matchesCollection && matchesBrand
+  const looks = [
+    {
+      id: 1,
+      name: 'Power Meeting',
+      occasion: 'work',
+      mood: 'confident',
+      items: ['Blazer negro estructurado', 'Camisa blanca satinada', 'Pantalón de vestir'],
+      colors: ['#1a1a1a', '#ffffff', '#2d3436'],
+      rating: 4.9,
+      views: 2340,
+      match: 96,
+    },
+    {
+      id: 2,
+      name: 'Weekend Vibes',
+      occasion: 'casual',
+      mood: 'relaxed',
+      items: ['Suéter oversize camel', 'Jeans boyfriend', 'Sneakers blancos'],
+      colors: ['#D4A574', '#6B8E9F', '#F5F5F5'],
+      rating: 4.8,
+      views: 3120,
+      match: 94,
+    },
+    {
+      id: 3,
+      name: 'Date Night',
+      occasion: 'night',
+      mood: 'romantic',
+      items: ['Vestido slip dress', 'Blazer satinado', 'Tacones strappy'],
+      colors: ['#8B5A7D', '#2C2C2C', '#C9A86C'],
+      rating: 4.9,
+      views: 4560,
+      match: 92,
+    },
+    {
+      id: 4,
+      name: 'Festival Ready',
+      occasion: 'party',
+      mood: 'bold',
+      items: ['Top lentejuelas', 'Pantalón cargo', 'Botas platform'],
+      colors: ['#FFD700', '#2F4F4F', '#1C1C1C'],
+      rating: 4.7,
+      views: 2890,
+      match: 88,
+    },
+    {
+      id: 5,
+      name: 'City Explorer',
+      occasion: 'travel',
+      mood: 'relaxed',
+      items: ['Trench coat', 'Jersey cuello alto', 'Pantalón wide leg'],
+      colors: ['#C4A77D', '#2C3E50', '#BDC3C7'],
+      rating: 4.8,
+      views: 1980,
+      match: 91,
+    },
+    {
+      id: 6,
+      name: 'Clean Slate',
+      occasion: 'work',
+      mood: 'minimal',
+      items: ['Camisa popelín', 'Pantalón recto', 'Mocasines'],
+      colors: ['#FFFFFF', '#1a1a1a', '#8B7355'],
+      rating: 4.9,
+      views: 3450,
+      match: 95,
+    },
+    {
+      id: 7,
+      name: 'Summer Sunset',
+      occasion: 'casual',
+      mood: 'romantic',
+      items: ['Vestido midi floral', 'Sandalias trenzadas', 'Bolso rafia'],
+      colors: ['#FFB6C1', '#F5DEB3', '#DEB887'],
+      rating: 4.8,
+      views: 5230,
+      match: 89,
+    },
+    {
+      id: 8,
+      name: 'Street Cred',
+      occasion: 'casual',
+      mood: 'bold',
+      items: ['Hoodie oversized', 'Joggers cargo', 'Air Force 1'],
+      colors: ['#2C2C2C', '#4A5568', '#FFFFFF'],
+      rating: 4.7,
+      views: 4120,
+      match: 93,
+    },
+  ]
+
+  const filteredLooks = looks.filter(look => {
+    const matchesOccasion = activeOccasion === 'all' || look.occasion === activeOccasion
+    const matchesMood = activeMood === 'all' || look.mood === activeMood
+    return matchesOccasion && matchesMood
   })
 
-  const getBrandInfo = (brandId) => BRANDS.find((b) => b.id === brandId)
-  const getCollectionInfo = (collectionId) => COLLECTIONS.find((c) => c.id === collectionId)
+  const toggleLike = (id) => {
+    setLikedLooks(prev => 
+      prev.includes(id) ? prev.filter(l => l !== id) : [...prev, id]
+    )
+  }
 
   return (
-    <div className="showroom-page">
-      <div className="container">
-        {/* Header */}
-        <motion.div
-          className="showroom-header"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <h1>The Showroom</h1>
-          <p className="showroom-subtitle">
-            Explore curated collections from the world's most innovative brands
-          </p>
-        </motion.div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-amber-950 via-orange-900/50 to-tryonyou-black">
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-amber-500/20 rounded-full blur-[120px] animate-float" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-orange-500/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
+        </div>
 
-        {/* Filters */}
-        <motion.div
-          className="showroom-filters"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <div className="filter-group">
-            <label>Collection</label>
-            <div className="filter-options">
-              <button
-                className={`filter-btn ${activeCollection === 'all' ? 'active' : ''}`}
-                onClick={() => setActiveCollection('all')}
-              >
-                All
-              </button>
-              {COLLECTIONS.map((col) => (
-                <button
-                  key={col.id}
-                  className={`filter-btn ${activeCollection === col.id ? 'active' : ''}`}
-                  onClick={() => setActiveCollection(col.id)}
-                >
-                  {col.season} {col.name}
-                </button>
-              ))}
+        <div className="relative z-10 section-container text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+              <Sparkles size={18} className="text-amber-400" />
+              <span className="text-amber-300 font-semibold">Escaparate Inteligente</span>
+            </div>
+            
+            <h1 className="heading-xl mb-6 gradient-text">
+              Showroom
+            </h1>
+            
+            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+              Looks listos para usar, seleccionados por nuestra IA según estilo, ocasión y estado de ánimo.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Filters */}
+      <section className="py-8 bg-tryonyou-smoke/30 sticky top-20 z-30">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex flex-col gap-4">
+            {/* Occasion Filter */}
+            <div>
+              <div className="text-sm text-white/60 mb-2 flex items-center gap-2">
+                <Filter size={14} />
+                Ocasión
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {occasions.map((occ) => (
+                  <button
+                    key={occ.id}
+                    onClick={() => setActiveOccasion(occ.id)}
+                    className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
+                      activeOccasion === occ.id
+                        ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
+                        : 'glass text-white/70 hover:text-white'
+                    }`}
+                  >
+                    <occ.icon size={16} />
+                    {occ.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Mood Filter */}
+            <div>
+              <div className="text-sm text-white/60 mb-2">Estado de ánimo</div>
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {moods.map((mood) => (
+                  <button
+                    key={mood.id}
+                    onClick={() => setActiveMood(mood.id)}
+                    className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
+                      activeMood === mood.id
+                        ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
+                        : 'glass text-white/70 hover:text-white'
+                    }`}
+                  >
+                    <span>{mood.emoji}</span>
+                    {mood.name}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="filter-group">
-            <label>Brand</label>
-            <div className="filter-options">
-              <button
-                className={`filter-btn ${activeBrand === 'all' ? 'active' : ''}`}
-                onClick={() => setActiveBrand('all')}
-              >
-                All Brands
-              </button>
-              {BRANDS.slice(0, 4).map((brand) => (
-                <button
-                  key={brand.id}
-                  className={`filter-btn ${activeBrand === brand.id ? 'active' : ''}`}
-                  onClick={() => setActiveBrand(brand.id)}
-                >
-                  {brand.emoji} {brand.name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="view-toggle">
-            <button
-              className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-              onClick={() => setViewMode('grid')}
-            >
-              ▦
-            </button>
-            <button
-              className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-              onClick={() => setViewMode('list')}
-            >
-              ☰
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Featured Banner */}
+      {/* Looks Grid */}
+      <section className="section-container">
         <motion.div
-          className="featured-banner"
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3 }}
-        >
-          <div className="featured-content">
-            <span className="featured-label">✨ Featured Collection</span>
-            <h2>TRYONYOU × The Peacock</h2>
-            <p>A collaboration that redefines modern elegance with AI-driven design</p>
-            <button className="btn btn-gold">Explore Collection</button>
-          </div>
-          <div className="featured-visual">
-            <div className="featured-orb"></div>
-          </div>
-        </motion.div>
-
-        {/* Items Grid */}
-        <motion.div
-          className={`showroom-grid ${viewMode}`}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            visible: { transition: { staggerChildren: 0.05 } }
-          }}
-        >
-          {filteredItems.map((item) => {
-            const brand = getBrandInfo(item.brand)
-            const collection = getCollectionInfo(item.collection)
-            return (
-              <motion.div
-                key={item.id}
-                className={`showroom-item ${item.featured ? 'featured' : ''}`}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
-                }}
-                whileHover={{ y: -8 }}
-              >
-                {item.featured && <span className="item-badge">Featured</span>}
-                <div 
-                  className="item-visual"
-                  style={{ '--brand-color': brand?.color || '#333' }}
-                >
-                  <span className="brand-emoji">{brand?.emoji}</span>
-                </div>
-                <div className="item-details">
-                  <span className="item-collection">
-                    {collection?.season} {collection?.name}
-                  </span>
-                  <h3 className="item-name">{item.name}</h3>
-                  <p className="item-brand">{brand?.name}</p>
-                  <div className="item-footer">
-                    <span className="item-price">{formatPrice(item.price)}</span>
-                    <button className="quick-view-btn">View</button>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
-        </motion.div>
-
-        {filteredItems.length === 0 && (
-          <div className="empty-state">
-            <p>No items match your filters. Try adjusting your selection.</p>
-          </div>
-        )}
-
-        {/* Peacock Quote */}
-        <motion.div
-          className="showroom-quote"
           initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
         >
-          <blockquote>
-            <span>🦚</span>
-            <p>"Fashion is the armor to survive the reality of everyday life."</p>
-          </blockquote>
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-2xl font-bold">
+                {filteredLooks.length} looks encontrados
+              </h2>
+              <p className="text-white/60">Personalizados para ti</p>
+            </div>
+            
+            {likedLooks.length > 0 && (
+              <div className="flex items-center gap-2 glass px-4 py-2 rounded-full">
+                <Heart size={18} className="text-rose-500 fill-rose-500" />
+                <span className="font-semibold">{likedLooks.length} favoritos</span>
+              </div>
+            )}
+          </div>
+
+          <AnimatePresence mode="popLayout">
+            <motion.div 
+              layout
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              {filteredLooks.map((look, index) => (
+                <motion.div
+                  key={look.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ delay: index * 0.05 }}
+                  className="group"
+                >
+                  <div className="card h-full hover:scale-[1.02] transition-all duration-300 flex flex-col">
+                    {/* Color Preview */}
+                    <div className="relative mb-4">
+                      <div className="flex h-40 rounded-xl overflow-hidden">
+                        {look.colors.map((color, i) => (
+                          <div
+                            key={i}
+                            className="flex-1 transition-all group-hover:flex-[1.2]"
+                            style={{ 
+                              backgroundColor: color,
+                              transitionDelay: `${i * 50}ms`
+                            }}
+                          />
+                        ))}
+                      </div>
+                      
+                      {/* Match Badge */}
+                      <div className="absolute top-3 left-3 flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm">
+                        <Zap size={12} className="text-amber-400" />
+                        <span className="text-amber-400 text-xs font-bold">{look.match}% match</span>
+                      </div>
+                      
+                      {/* Actions */}
+                      <div className="absolute top-3 right-3 flex gap-2">
+                        <button
+                          onClick={() => toggleLike(look.id)}
+                          className={`p-2 rounded-full backdrop-blur-sm transition-all ${
+                            likedLooks.includes(look.id)
+                              ? 'bg-rose-500/80 text-white'
+                              : 'bg-black/40 text-white/80 hover:bg-black/60'
+                          }`}
+                        >
+                          <Heart size={16} className={likedLooks.includes(look.id) ? 'fill-white' : ''} />
+                        </button>
+                      </div>
+                      
+                      {/* View Overlay */}
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
+                        <button className="btn-primary text-sm">
+                          <Eye size={16} className="mr-2" />
+                          Ver look
+                        </button>
+                      </div>
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex items-start justify-between mb-2">
+                        <h3 className="text-lg font-bold group-hover:text-amber-400 transition-colors">
+                          {look.name}
+                        </h3>
+                        <div className="flex items-center gap-1 text-yellow-400">
+                          <Star size={14} className="fill-yellow-400" />
+                          <span className="text-sm">{look.rating}</span>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-1 mb-4 flex-1">
+                        {look.items.map((item, i) => (
+                          <div key={i} className="flex items-center text-sm text-white/60">
+                            <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mr-2" />
+                            {item}
+                          </div>
+                        ))}
+                      </div>
+                      
+                      <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                        <div className="flex items-center gap-4 text-xs text-white/50">
+                          <span className="flex items-center gap-1">
+                            <Eye size={12} />
+                            {look.views.toLocaleString()}
+                          </span>
+                          <span className="capitalize">{occasions.find(o => o.id === look.occasion)?.name}</span>
+                        </div>
+                        <button className="text-amber-400 hover:text-amber-300 transition-colors">
+                          <ShoppingBag size={18} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+          
+          {filteredLooks.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-16"
+            >
+              <Sparkles size={64} className="text-white/20 mx-auto mb-4" />
+              <h3 className="text-xl font-bold mb-2">No hay looks para esta combinación</h3>
+              <p className="text-white/60 mb-6">Prueba cambiando los filtros</p>
+              <button 
+                onClick={() => { setActiveOccasion('all'); setActiveMood('all'); }}
+                className="btn-metallic"
+              >
+                Ver todos los looks
+              </button>
+            </motion.div>
+          )}
         </motion.div>
-      </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="section-container bg-gradient-to-br from-amber-900/30 to-orange-900/20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <h2 className="heading-lg mb-6 gradient-text">
+            ¿Quieres looks personalizados?
+          </h2>
+          <p className="text-lg text-white/80 mb-8">
+            Crea tu avatar y recibe recomendaciones perfectas para tu estilo
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <a href="/my-avatar" className="btn-primary text-lg px-8 py-4">
+              Crear mi Avatar
+              <ArrowRight className="inline ml-2" size={20} />
+            </a>
+            <a href="/wardrobe" className="btn-metallic text-lg px-8 py-4">
+              Ver mi Armario
+            </a>
+          </div>
+        </motion.div>
+      </section>
     </div>
   )
 }
+
+export default Showroom
 
