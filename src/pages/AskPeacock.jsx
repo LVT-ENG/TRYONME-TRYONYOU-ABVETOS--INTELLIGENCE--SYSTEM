@@ -7,7 +7,7 @@ const AskPeacock = () => {
     {
       id: 1,
       type: 'peacock',
-      content: '¡Hola! Soy Peacock, tu asistente de moda personal. 🦚 Vengo del mundo para ayudarte a descubrir tu estilo perfecto. ¿En qué puedo ayudarte hoy?',
+      content: 'Hello! I\'m Peacock, your personal fashion assistant. 🦚 I come from around the world to help you discover your perfect style. How can I help you today?',
       timestamp: new Date(),
     },
   ])
@@ -16,32 +16,32 @@ const AskPeacock = () => {
   const messagesEndRef = useRef(null)
 
   const suggestedQuestions = [
-    { icon: '👗', text: '¿Qué me pongo para una cita?' },
-    { icon: '🎨', text: '¿Qué colores me favorecen?' },
-    { icon: '👔', text: 'Ayúdame con mi look de oficina' },
-    { icon: '✨', text: '¿Cómo puedo renovar mi estilo?' },
+    { icon: '👗', text: 'What should I wear for a date?' },
+    { icon: '🎨', text: 'What colors suit me?' },
+    { icon: '👔', text: 'Help me with my office look' },
+    { icon: '✨', text: 'How can I refresh my style?' },
   ]
 
   const peacockResponses = [
     {
-      triggers: ['cita', 'date', 'romántico', 'romántica'],
-      response: '💕 ¡Una cita! Qué emocionante. Te recomiendo algo que te haga sentir confianza pero cómoda. Un vestido midi en tono cálido o unos jeans bien cortados con una blusa de seda serían perfectos. Lo más importante es que te sientas tú misma. ¿Me cuentas más sobre el lugar de la cita?',
+      triggers: ['date', 'romantic', 'dinner', 'evening'],
+      response: '💕 A date! How exciting. I recommend something that makes you feel confident but comfortable. A midi dress in a warm tone or well-fitted jeans with a silk blouse would be perfect. The most important thing is that you feel like yourself. Can you tell me more about the location?',
     },
     {
-      triggers: ['color', 'colores', 'paleta', 'tono'],
-      response: '🎨 ¡Los colores son mi especialidad! Para encontrar tu paleta perfecta, necesito conocerte mejor. Generalmente, si tu piel tiene subtono cálido, los tonos tierra, dorados y naranjas te favorecerán. Si es frío, prueba con azules, grises y platas. ¿Sabes cuál es tu subtono?',
+      triggers: ['color', 'colors', 'palette', 'tone'],
+      response: '🎨 Colors are my specialty! To find your perfect palette, I need to know you better. Generally, if your skin has a warm undertone, earth tones, golds, and oranges will flatter you. If it\'s cool, try blues, grays, and silvers. Do you know your undertone?',
     },
     {
-      triggers: ['oficina', 'trabajo', 'formal', 'profesional'],
-      response: '👔 El estilo de oficina puede ser muy elegante sin ser aburrido. Te sugiero invertir en piezas atemporales: un buen blazer, pantalones de corte recto y camisas de calidad. Añade personalidad con accesorios. ¿Cuál es el código de vestimenta de tu trabajo?',
+      triggers: ['office', 'work', 'formal', 'professional'],
+      response: '👔 Office style can be very elegant without being boring. I suggest investing in timeless pieces: a good blazer, straight-cut pants, and quality shirts. Add personality with accessories. What\'s your workplace dress code?',
     },
     {
-      triggers: ['renovar', 'cambio', 'nuevo', 'estilo'],
-      response: '✨ ¡Me encanta cuando alguien quiere renovarse! El primer paso es identificar qué no te funciona y por qué. Luego, exploramos nuevas siluetas, colores y texturas. ¿Hay algo específico de tu estilo actual que quieras cambiar?',
+      triggers: ['refresh', 'change', 'new', 'style', 'upgrade'],
+      response: '✨ I love when someone wants to refresh their style! The first step is identifying what doesn\'t work for you and why. Then, we explore new silhouettes, colors, and textures. Is there something specific about your current style you\'d like to change?',
     },
     {
-      triggers: ['hola', 'hey', 'buenos', 'buenas'],
-      response: '🦚 ¡Hola! Es un placer conocerte. Estoy aquí para ayudarte con todo lo relacionado con tu estilo personal. Desde elegir un outfit hasta rediseñar tu armario completo. ¿Qué te gustaría explorar hoy?',
+      triggers: ['hello', 'hey', 'hi', 'greetings'],
+      response: '🦚 Hello! It\'s a pleasure to meet you. I\'m here to help you with everything related to your personal style. From choosing an outfit to redesigning your entire wardrobe. What would you like to explore today?',
     },
   ]
 
@@ -62,7 +62,7 @@ const AskPeacock = () => {
       }
     }
     
-    return '🦚 Interesante pregunta. En mi experiencia viajando por el mundo de la moda, he aprendido que cada persona tiene un estilo único que espera ser descubierto. Cuéntame más sobre ti y lo que buscas, y te ayudaré a encontrar las mejores opciones para ti.'
+    return '🦚 Interesting question. In my experience traveling the world of fashion, I\'ve learned that each person has a unique style waiting to be discovered. Tell me more about yourself and what you\'re looking for, and I\'ll help you find the best options for you.'
   }
 
   const handleSendMessage = (text = inputValue) => {
@@ -133,7 +133,7 @@ const AskPeacock = () => {
               <h1 className="text-2xl md:text-3xl font-bold gradient-text">Ask Peacock</h1>
               <p className="text-white/60 text-sm flex items-center gap-2">
                 <Globe size={14} />
-                "Vengo del mundo para ayudarte"
+                "I come from around the world to help you"
               </p>
             </div>
           </motion.div>
@@ -226,7 +226,7 @@ const AskPeacock = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-4"
           >
-            <div className="text-sm text-white/60 mb-2">Preguntas sugeridas:</div>
+            <div className="text-sm text-white/60 mb-2">Suggested questions:</div>
             <div className="flex flex-wrap gap-2">
               {suggestedQuestions.map((q, i) => (
                 <motion.button
@@ -261,7 +261,7 @@ const AskPeacock = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Escribe tu pregunta..."
+              placeholder="Write your question..."
               rows={1}
               className="flex-1 bg-transparent resize-none focus:outline-none text-white placeholder-white/40 py-2"
             />
@@ -286,10 +286,10 @@ const AskPeacock = () => {
         <div className="max-w-4xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: Globe, label: 'Conocimiento global', color: 'text-cyan-400' },
-              { icon: Sparkles, label: 'IA avanzada', color: 'text-purple-400' },
-              { icon: Heart, label: 'Personalizado', color: 'text-rose-400' },
-              { icon: Zap, label: 'Respuestas instantáneas', color: 'text-amber-400' },
+              { icon: Globe, label: 'Global Knowledge', color: 'text-cyan-400' },
+              { icon: Sparkles, label: 'Advanced AI', color: 'text-purple-400' },
+              { icon: Heart, label: 'Personalized', color: 'text-rose-400' },
+              { icon: Zap, label: 'Instant Responses', color: 'text-amber-400' },
             ].map((feature, i) => (
               <motion.div
                 key={feature.label}
@@ -327,21 +327,21 @@ const AskPeacock = () => {
               </motion.div>
               
               <div className="text-center md:text-left">
-                <h3 className="text-2xl font-bold mb-2">Sobre Peacock</h3>
+                <h3 className="text-2xl font-bold mb-2">About Peacock</h3>
                 <p className="text-white/70 leading-relaxed">
-                  Peacock es tu asistente de moda con inteligencia artificial que combina conocimientos 
-                  de tendencias globales con un enfoque personalizado para tu estilo. Ha "viajado" por 
-                  todas las capitales de la moda del mundo para traerte lo mejor de cada cultura y estilo.
+                  Peacock is your AI fashion assistant that combines knowledge of global trends with a 
+                  personalized approach to your style. He has "traveled" to all the fashion capitals of 
+                  the world to bring you the best of each culture and style.
                 </p>
               </div>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6 pt-6 border-t border-white/10">
               {[
-                { label: 'Estilos conocidos', value: '50+' },
-                { label: 'Satisfacción', value: '98%' },
-                { label: 'Consultas diarias', value: '10K+' },
-                { label: 'Idiomas', value: '12' },
+                { label: 'Styles Known', value: '50+' },
+                { label: 'Satisfaction', value: '98%' },
+                { label: 'Daily Queries', value: '10K+' },
+                { label: 'Languages', value: '12' },
               ].map((stat) => (
                 <div key={stat.label} className="text-center">
                   <div className="text-2xl font-bold gradient-text">{stat.value}</div>

@@ -8,21 +8,21 @@ const Showroom = () => {
   const [likedLooks, setLikedLooks] = useState([])
 
   const occasions = [
-    { id: 'all', name: 'Todos', icon: Sparkles },
-    { id: 'work', name: 'Trabajo', icon: Briefcase },
+    { id: 'all', name: 'All', icon: Sparkles },
+    { id: 'work', name: 'Work', icon: Briefcase },
     { id: 'casual', name: 'Casual', icon: Sun },
-    { id: 'night', name: 'Noche', icon: Moon },
-    { id: 'party', name: 'Fiesta', icon: PartyPopper },
-    { id: 'travel', name: 'Viaje', icon: Plane },
+    { id: 'night', name: 'Night', icon: Moon },
+    { id: 'party', name: 'Party', icon: PartyPopper },
+    { id: 'travel', name: 'Travel', icon: Plane },
   ]
 
   const moods = [
-    { id: 'all', name: 'Todos', emoji: '✨' },
-    { id: 'confident', name: 'Seguro/a', emoji: '💪' },
-    { id: 'relaxed', name: 'Relajado/a', emoji: '😌' },
-    { id: 'romantic', name: 'Romántico/a', emoji: '💕' },
-    { id: 'bold', name: 'Atrevido/a', emoji: '🔥' },
-    { id: 'minimal', name: 'Minimalista', emoji: '⬜' },
+    { id: 'all', name: 'All', emoji: '✨' },
+    { id: 'confident', name: 'Confident', emoji: '💪' },
+    { id: 'relaxed', name: 'Relaxed', emoji: '😌' },
+    { id: 'romantic', name: 'Romantic', emoji: '💕' },
+    { id: 'bold', name: 'Bold', emoji: '🔥' },
+    { id: 'minimal', name: 'Minimalist', emoji: '⬜' },
   ]
 
   const looks = [
@@ -31,7 +31,7 @@ const Showroom = () => {
       name: 'Power Meeting',
       occasion: 'work',
       mood: 'confident',
-      items: ['Blazer negro estructurado', 'Camisa blanca satinada', 'Pantalón de vestir'],
+      items: ['Structured black blazer', 'Satin white shirt', 'Dress pants'],
       colors: ['#1a1a1a', '#ffffff', '#2d3436'],
       rating: 4.9,
       views: 2340,
@@ -42,7 +42,7 @@ const Showroom = () => {
       name: 'Weekend Vibes',
       occasion: 'casual',
       mood: 'relaxed',
-      items: ['Suéter oversize camel', 'Jeans boyfriend', 'Sneakers blancos'],
+      items: ['Oversize camel sweater', 'Boyfriend jeans', 'White sneakers'],
       colors: ['#D4A574', '#6B8E9F', '#F5F5F5'],
       rating: 4.8,
       views: 3120,
@@ -64,7 +64,7 @@ const Showroom = () => {
       name: 'Festival Ready',
       occasion: 'party',
       mood: 'bold',
-      items: ['Top lentejuelas', 'Pantalón cargo', 'Botas platform'],
+      items: ['Sequins top', 'Cargo pants', 'Platform boots'],
       colors: ['#FFD700', '#2F4F4F', '#1C1C1C'],
       rating: 4.7,
       views: 2890,
@@ -75,7 +75,7 @@ const Showroom = () => {
       name: 'City Explorer',
       occasion: 'travel',
       mood: 'relaxed',
-      items: ['Trench coat', 'Jersey cuello alto', 'Pantalón wide leg'],
+      items: ['Trench coat', 'Turtleneck sweater', 'Wide leg pants'],
       colors: ['#C4A77D', '#2C3E50', '#BDC3C7'],
       rating: 4.8,
       views: 1980,
@@ -86,7 +86,7 @@ const Showroom = () => {
       name: 'Clean Slate',
       occasion: 'work',
       mood: 'minimal',
-      items: ['Camisa popelín', 'Pantalón recto', 'Mocasines'],
+      items: ['Poplin shirt', 'Straight pants', 'Loafers'],
       colors: ['#FFFFFF', '#1a1a1a', '#8B7355'],
       rating: 4.9,
       views: 3450,
@@ -97,7 +97,7 @@ const Showroom = () => {
       name: 'Summer Sunset',
       occasion: 'casual',
       mood: 'romantic',
-      items: ['Vestido midi floral', 'Sandalias trenzadas', 'Bolso rafia'],
+      items: ['Floral midi dress', 'Braided sandals', 'Raffia bag'],
       colors: ['#FFB6C1', '#F5DEB3', '#DEB887'],
       rating: 4.8,
       views: 5230,
@@ -145,7 +145,7 @@ const Showroom = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
               <Sparkles size={18} className="text-amber-400" />
-              <span className="text-amber-300 font-semibold">Escaparate Inteligente</span>
+              <span className="text-amber-300 font-semibold">Smart Showroom</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
@@ -153,7 +153,7 @@ const Showroom = () => {
             </h1>
             
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Looks listos para usar, seleccionados por nuestra IA según estilo, ocasión y estado de ánimo.
+              Ready-to-wear looks, selected by our AI based on style, occasion, and mood.
             </p>
           </motion.div>
         </div>
@@ -167,7 +167,7 @@ const Showroom = () => {
             <div>
               <div className="text-sm text-white/60 mb-2 flex items-center gap-2">
                 <Filter size={14} />
-                Ocasión
+                Occasion
               </div>
               <div className="flex gap-2 overflow-x-auto pb-2">
                 {occasions.map((occ) => (
@@ -189,7 +189,7 @@ const Showroom = () => {
 
             {/* Mood Filter */}
             <div>
-              <div className="text-sm text-white/60 mb-2">Estado de ánimo</div>
+              <div className="text-sm text-white/60 mb-2">Mood</div>
               <div className="flex gap-2 overflow-x-auto pb-2">
                 {moods.map((mood) => (
                   <button
@@ -221,15 +221,15 @@ const Showroom = () => {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="text-2xl font-bold">
-                {filteredLooks.length} looks encontrados
+                {filteredLooks.length} looks found
               </h2>
-              <p className="text-white/60">Personalizados para ti</p>
+              <p className="text-white/60">Personalized for you</p>
             </div>
             
             {likedLooks.length > 0 && (
               <div className="flex items-center gap-2 glass px-4 py-2 rounded-full">
                 <Heart size={18} className="text-rose-500 fill-rose-500" />
-                <span className="font-semibold">{likedLooks.length} favoritos</span>
+                <span className="font-semibold">{likedLooks.length} favorites</span>
               </div>
             )}
           </div>
@@ -289,7 +289,7 @@ const Showroom = () => {
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
                         <button className="btn-primary text-sm">
                           <Eye size={16} className="mr-2" />
-                          Ver look
+                          View Look
                         </button>
                       </div>
                     </div>
@@ -341,13 +341,13 @@ const Showroom = () => {
               className="text-center py-16"
             >
               <Sparkles size={64} className="text-white/20 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">No hay looks para esta combinación</h3>
-              <p className="text-white/60 mb-6">Prueba cambiando los filtros</p>
+              <h3 className="text-xl font-bold mb-2">No looks found for this combination</h3>
+              <p className="text-white/60 mb-6">Try changing the filters</p>
               <button 
                 onClick={() => { setActiveOccasion('all'); setActiveMood('all'); }}
                 className="btn-metallic"
               >
-                Ver todos los looks
+                View All Looks
               </button>
             </motion.div>
           )}
@@ -364,18 +364,18 @@ const Showroom = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <h2 className="heading-lg mb-6 gradient-text">
-            ¿Quieres looks personalizados?
+            Want personalized looks?
           </h2>
           <p className="text-lg text-white/80 mb-8">
-            Crea tu avatar y recibe recomendaciones perfectas para tu estilo
+            Create your avatar and receive perfect recommendations for your style
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="/my-avatar" className="btn-primary text-lg px-8 py-4">
-              Crear mi Avatar
+              Create My Avatar
               <ArrowRight className="inline ml-2" size={20} />
             </a>
             <a href="/wardrobe" className="btn-metallic text-lg px-8 py-4">
-              Ver mi Armario
+              View My Wardrobe
             </a>
           </div>
         </motion.div>

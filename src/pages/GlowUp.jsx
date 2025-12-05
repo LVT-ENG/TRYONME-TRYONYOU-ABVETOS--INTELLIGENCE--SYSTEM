@@ -7,39 +7,39 @@ const GlowUp = () => {
   const [selectedGoal, setSelectedGoal] = useState(null)
 
   const goals = [
-    { id: 'style-upgrade', name: 'Renovar estilo', icon: Sparkles, color: 'from-fuchsia-500 to-pink-500' },
-    { id: 'color-harmony', name: 'Armonía de color', icon: Palette, color: 'from-violet-500 to-purple-500' },
-    { id: 'body-confidence', name: 'Resaltar figura', icon: Crown, color: 'from-amber-500 to-orange-500' },
-    { id: 'hair-advice', name: 'Consejo capilar', icon: Scissors, color: 'from-rose-500 to-pink-500' },
-    { id: 'signature-look', name: 'Look distintivo', icon: Star, color: 'from-cyan-500 to-blue-500' },
-    { id: 'seasonal-update', name: 'Actualización temporal', icon: TrendingUp, color: 'from-emerald-500 to-teal-500' },
+    { id: 'style-upgrade', name: 'Style Upgrade', icon: Sparkles, color: 'from-fuchsia-500 to-pink-500' },
+    { id: 'color-harmony', name: 'Color Harmony', icon: Palette, color: 'from-violet-500 to-purple-500' },
+    { id: 'body-confidence', name: 'Highlight Figure', icon: Crown, color: 'from-amber-500 to-orange-500' },
+    { id: 'hair-advice', name: 'Hair Advice', icon: Scissors, color: 'from-rose-500 to-pink-500' },
+    { id: 'signature-look', name: 'Signature Look', icon: Star, color: 'from-cyan-500 to-blue-500' },
+    { id: 'seasonal-update', name: 'Seasonal Update', icon: TrendingUp, color: 'from-emerald-500 to-teal-500' },
   ]
 
   const transformations = [
     {
       id: 1,
-      before: 'Estilo indefinido',
-      after: 'Look sofisticado minimalista',
+      before: 'Undefined style',
+      after: 'Sophisticated minimalist look',
       improvement: '+85%',
-      timeframe: '2 semanas',
+      timeframe: '2 weeks',
       steps: 12,
       rating: 4.9,
     },
     {
       id: 2,
-      before: 'Paleta de colores limitada',
-      after: 'Colores que resaltan tu piel',
+      before: 'Limited color palette',
+      after: 'Colors that highlight your skin',
       improvement: '+72%',
-      timeframe: '1 semana',
+      timeframe: '1 week',
       steps: 8,
       rating: 4.8,
     },
     {
       id: 3,
-      before: 'Combinaciones básicas',
-      after: 'Outfits creativos y únicos',
+      before: 'Basic combinations',
+      after: 'Creative and unique outfits',
       improvement: '+90%',
-      timeframe: '3 semanas',
+      timeframe: '3 weeks',
       steps: 15,
       rating: 4.9,
     },
@@ -48,28 +48,28 @@ const GlowUp = () => {
   const tips = [
     {
       category: 'Color',
-      title: 'Tu paleta perfecta',
-      description: 'Basado en tu tono de piel y cabello, los colores tierra cálidos resaltan tu belleza natural.',
+      title: 'Your Perfect Palette',
+      description: 'Based on your skin tone and hair, warm earth colors highlight your natural beauty.',
       colors: ['#C4A77D', '#8B7355', '#D4AF37', '#5C4033'],
     },
     {
-      category: 'Estilo',
-      title: 'Siluetas favorecedoras',
-      description: 'Las líneas limpias y cortes estructurados equilibran tus proporciones perfectamente.',
+      category: 'Style',
+      title: 'Flattering Silhouettes',
+      description: 'Clean lines and structured cuts balance your proportions perfectly.',
       icon: '📐',
     },
     {
-      category: 'Accesorios',
-      title: 'Toques finales',
-      description: 'Joyas minimalistas en tonos dorados complementan tu estilo elegante.',
+      category: 'Accessories',
+      title: 'Finishing Touches',
+      description: 'Minimalist jewelry in gold tones complements your elegant style.',
       icon: '✨',
     },
   ]
 
   const sections = [
-    { id: 'analyze', name: 'Analizar', icon: Camera },
-    { id: 'discover', name: 'Descubrir', icon: Sparkles },
-    { id: 'transform', name: 'Transformar', icon: Wand2 },
+    { id: 'analyze', name: 'Analyze', icon: Camera },
+    { id: 'discover', name: 'Discover', icon: Sparkles },
+    { id: 'transform', name: 'Transform', icon: Wand2 },
   ]
 
   return (
@@ -100,7 +100,7 @@ const GlowUp = () => {
 
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
               <Sparkles size={18} className="text-fuchsia-400" />
-              <span className="text-fuchsia-300 font-semibold">Transformación Total</span>
+              <span className="text-fuchsia-300 font-semibold">Total Transformation</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
@@ -108,18 +108,18 @@ const GlowUp = () => {
             </h1>
             
             <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-              Descubre tu mejor versión con análisis de estilo personalizado y recomendaciones de IA para transformar tu imagen.
+              Discover your best version with personalized style analysis and AI recommendations to transform your image.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
               <button className="btn-primary text-lg px-8 py-4 group">
                 <Camera size={20} className="mr-2" />
-                Empezar análisis
+                Start Analysis
                 <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </button>
               <button className="btn-metallic text-lg px-8 py-4">
                 <Play size={20} className="mr-2" />
-                Ver ejemplos
+                View Examples
               </button>
             </div>
           </motion.div>
@@ -168,8 +168,8 @@ const GlowUp = () => {
               className="max-w-6xl mx-auto"
             >
               <div className="text-center mb-12">
-                <h2 className="heading-lg mb-4 gradient-text">¿Cuál es tu objetivo?</h2>
-                <p className="text-white/60">Selecciona lo que más te interesa mejorar</p>
+                <h2 className="heading-lg mb-4 gradient-text">What's your goal?</h2>
+                <p className="text-white/60">Select what interests you most to improve</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -212,10 +212,10 @@ const GlowUp = () => {
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-pink-500/20 flex items-center justify-center mx-auto mb-6">
                     <Camera size={40} className="text-fuchsia-400" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Sube una foto</h3>
-                  <p className="text-white/60 mb-6">Nuestro IA analizará tu estilo actual y te dará recomendaciones personalizadas</p>
+                  <h3 className="text-xl font-bold mb-2">Upload a Photo</h3>
+                  <p className="text-white/60 mb-6">Our AI will analyze your current style and give you personalized recommendations</p>
                   <button className="btn-primary">
-                    Seleccionar imagen
+                    Select Image
                   </button>
                 </div>
               </div>
@@ -231,8 +231,8 @@ const GlowUp = () => {
               className="max-w-6xl mx-auto"
             >
               <div className="text-center mb-12">
-                <h2 className="heading-lg mb-4 gradient-text">Tu análisis personalizado</h2>
-                <p className="text-white/60">Basado en tus características únicas</p>
+                <h2 className="heading-lg mb-4 gradient-text">Your Personalized Analysis</h2>
+                <p className="text-white/60">Based on your unique characteristics</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -278,8 +278,8 @@ const GlowUp = () => {
               className="max-w-6xl mx-auto"
             >
               <div className="text-center mb-12">
-                <h2 className="heading-lg mb-4 gradient-text">Transformaciones reales</h2>
-                <p className="text-white/60">Inspírate con los resultados de nuestra comunidad</p>
+                <h2 className="heading-lg mb-4 gradient-text">Real Transformations</h2>
+                <p className="text-white/60">Get inspired by our community results</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -301,8 +301,8 @@ const GlowUp = () => {
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
                         <div className="flex justify-between text-xs">
-                          <span className="text-white/60">Antes</span>
-                          <span className="text-fuchsia-400">Después</span>
+                          <span className="text-white/60">Before</span>
+                          <span className="text-fuchsia-400">After</span>
                         </div>
                       </div>
                     </div>
@@ -327,9 +327,9 @@ const GlowUp = () => {
                     </div>
                     
                     <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                      <span className="text-xs text-white/50">{t.steps} pasos</span>
+                      <span className="text-xs text-white/50">{t.steps} steps</span>
                       <button className="text-fuchsia-400 text-sm font-semibold group-hover:text-fuchsia-300">
-                        Ver programa →
+                        View Program →
                       </button>
                     </div>
                   </motion.div>
@@ -351,18 +351,18 @@ const GlowUp = () => {
         >
           <Crown size={48} className="text-fuchsia-400 mx-auto mb-6" />
           <h2 className="heading-lg mb-6 gradient-text">
-            Tu mejor versión te espera
+            Your Best Version Awaits
           </h2>
           <p className="text-lg text-white/80 mb-8">
-            Comienza tu transformación hoy con recomendaciones personalizadas de IA
+            Start your transformation today with personalized AI recommendations
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <button className="btn-primary text-lg px-8 py-4">
               <Wand2 size={20} className="mr-2" />
-              Empezar Glow-Up
+              Start Glow-Up
             </button>
             <a href="/ask-peacock" className="btn-metallic text-lg px-8 py-4">
-              Consultar con Peacock
+              Consult with Peacock
             </a>
           </div>
         </motion.div>

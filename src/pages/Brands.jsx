@@ -7,11 +7,11 @@ const Brands = () => {
   const [searchQuery, setSearchQuery] = useState('')
 
   const categories = [
-    { id: 'all', name: 'Todas', count: 48 },
-    { id: 'luxury', name: 'Lujo', count: 12 },
+    { id: 'all', name: 'All', count: 48 },
+    { id: 'luxury', name: 'Luxury', count: 12 },
     { id: 'streetwear', name: 'Streetwear', count: 15 },
-    { id: 'sustainable', name: 'Sostenible', count: 8 },
-    { id: 'sportswear', name: 'Deportivo', count: 10 },
+    { id: 'sustainable', name: 'Sustainable', count: 8 },
+    { id: 'sportswear', name: 'Sportswear', count: 10 },
     { id: 'vintage', name: 'Vintage', count: 3 },
   ]
 
@@ -55,15 +55,15 @@ const Brands = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
               <ShoppingBag size={18} className="text-rose-400" />
-              <span className="text-rose-300 font-semibold">Marcas Verificadas</span>
+              <span className="text-rose-300 font-semibold">Verified Brands</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Marcas
+              Brands
             </h1>
             
             <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-              TryOnYou se conecta con catálogos, colecciones y datos de talla para reducir devoluciones y aumentar la conversión.
+              TRYONYOU connects with catalogs, collections, and sizing data to reduce returns and increase conversion.
             </p>
           </motion.div>
         </div>
@@ -79,8 +79,8 @@ const Brands = () => {
         >
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="heading-md gradient-text">Marcas Destacadas</h2>
-              <p className="text-white/60 mt-2">Las más populares entre nuestros usuarios</p>
+              <h2 className="heading-md gradient-text">Featured Brands</h2>
+              <p className="text-white/60 mt-2">Most popular among our users</p>
             </div>
             <TrendingUp className="text-tryonyou-blue" size={32} />
           </div>
@@ -115,13 +115,13 @@ const Brands = () => {
                   </h3>
                   
                   <div className="flex items-center justify-between text-sm text-white/60">
-                    <span>{brand.items} productos</span>
+                    <span>{brand.items} products</span>
                     <span className="capitalize px-2 py-1 rounded-full bg-white/5">{brand.category}</span>
                   </div>
                   
                   <button className="w-full mt-4 py-2 rounded-lg glass text-sm font-semibold hover:bg-tryonyou-blue/20 transition-colors flex items-center justify-center gap-2">
                     <Heart size={16} />
-                    Ver colección
+                    View Collection
                   </button>
                 </div>
               </motion.div>
@@ -144,7 +144,7 @@ const Brands = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={20} />
               <input
                 type="text"
-                placeholder="Buscar marcas..."
+                placeholder="Search brands..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent"
@@ -203,7 +203,7 @@ const Brands = () => {
                       {brand.name}
                     </h3>
                     
-                    <p className="text-sm text-white/60 mb-4">{brand.items} productos disponibles</p>
+                    <p className="text-sm text-white/60 mb-4">{brand.items} products available</p>
                     
                     <div className="flex items-center justify-between">
                       <span className="text-xs px-3 py-1 rounded-full bg-white/5 text-white/60 capitalize">
@@ -220,7 +220,7 @@ const Brands = () => {
           {filteredBrands.length === 0 && (
             <div className="text-center py-16">
               <Sparkles size={48} className="text-white/20 mx-auto mb-4" />
-              <p className="text-white/60">No se encontraron marcas</p>
+              <p className="text-white/60">No brands found</p>
             </div>
           )}
         </motion.div>
@@ -236,18 +236,18 @@ const Brands = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <h2 className="heading-lg mb-6 gradient-text">
-            ¿Quieres integrar tu marca?
+            Want to integrate your brand?
           </h2>
           <p className="text-lg text-white/80 mb-8">
-            Conecta tu catálogo con TryOnYou y reduce las devoluciones hasta un 75%
+            Connect your catalog with TRYONYOU and reduce returns by up to 75%
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="mailto:hello@tryonyou.app" className="btn-primary text-lg px-8 py-4">
-              Solicita la demo
+              Request Demo
               <ArrowRight className="inline ml-2" size={20} />
             </a>
             <button className="btn-metallic text-lg px-8 py-4">
-              Ver documentación
+              View Documentation
             </button>
           </div>
         </motion.div>
