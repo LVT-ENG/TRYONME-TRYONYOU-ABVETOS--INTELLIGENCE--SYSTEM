@@ -13,45 +13,45 @@ const MyAvatar = () => {
   })
 
   const steps = [
-    { id: 0, title: 'Tipo de cuerpo', icon: User },
-    { id: 1, title: 'Medidas', icon: Ruler },
-    { id: 2, title: 'Apariencia', icon: Palette },
-    { id: 3, title: 'Estilo', icon: Sparkles },
+    { id: 0, title: 'Body Type', icon: User },
+    { id: 1, title: 'Measurements', icon: Ruler },
+    { id: 2, title: 'Appearance', icon: Palette },
+    { id: 3, title: 'Style', icon: Sparkles },
   ]
 
   const bodyTypes = [
-    { id: 'athletic', name: 'Atlético', icon: '🏃', description: 'Hombros anchos, cintura definida' },
-    { id: 'slim', name: 'Delgado', icon: '🧍', description: 'Figura esbelta y alargada' },
-    { id: 'curvy', name: 'Curvilíneo', icon: '💃', description: 'Curvas pronunciadas' },
-    { id: 'regular', name: 'Regular', icon: '👤', description: 'Proporciones equilibradas' },
-    { id: 'plus', name: 'Plus Size', icon: '🌟', description: 'Figura completa y armoniosa' },
+    { id: 'athletic', name: 'Athletic', icon: '🏃', description: 'Broad shoulders, defined waist' },
+    { id: 'slim', name: 'Slim', icon: '🧍', description: 'Slender and elongated figure' },
+    { id: 'curvy', name: 'Curvy', icon: '💃', description: 'Pronounced curves' },
+    { id: 'regular', name: 'Regular', icon: '👤', description: 'Balanced proportions' },
+    { id: 'plus', name: 'Plus Size', icon: '🌟', description: 'Full and harmonious figure' },
   ]
 
   const skinTones = [
-    { id: 'fair', name: 'Claro', color: '#FDEBD0' },
-    { id: 'light', name: 'Medio claro', color: '#F5CBA7' },
-    { id: 'medium', name: 'Medio', color: '#D7BDE2' },
-    { id: 'olive', name: 'Oliva', color: '#ABEBC6' },
-    { id: 'tan', name: 'Moreno', color: '#A04000' },
-    { id: 'dark', name: 'Oscuro', color: '#6E2C00' },
+    { id: 'fair', name: 'Fair', color: '#FDEBD0' },
+    { id: 'light', name: 'Light', color: '#F5CBA7' },
+    { id: 'medium', name: 'Medium', color: '#D7BDE2' },
+    { id: 'olive', name: 'Olive', color: '#ABEBC6' },
+    { id: 'tan', name: 'Tan', color: '#A04000' },
+    { id: 'dark', name: 'Dark', color: '#6E2C00' },
   ]
 
   const hairColors = [
-    { id: 'black', name: 'Negro', color: '#1a1a1a' },
-    { id: 'brown', name: 'Castaño', color: '#8B4513' },
-    { id: 'blonde', name: 'Rubio', color: '#FFD700' },
-    { id: 'red', name: 'Pelirrojo', color: '#B22222' },
-    { id: 'gray', name: 'Gris', color: '#808080' },
-    { id: 'colored', name: 'Fantasía', color: 'linear-gradient(90deg, #ff6b6b, #4ecdc4, #a55eea)' },
+    { id: 'black', name: 'Black', color: '#1a1a1a' },
+    { id: 'brown', name: 'Brown', color: '#8B4513' },
+    { id: 'blonde', name: 'Blonde', color: '#FFD700' },
+    { id: 'red', name: 'Red', color: '#B22222' },
+    { id: 'gray', name: 'Gray', color: '#808080' },
+    { id: 'colored', name: 'Fantasy', color: 'linear-gradient(90deg, #ff6b6b, #4ecdc4, #a55eea)' },
   ]
 
   const styles = [
-    { id: 'casual', name: 'Casual', icon: '👕', description: 'Relajado y cómodo' },
-    { id: 'formal', name: 'Formal', icon: '👔', description: 'Elegante y profesional' },
-    { id: 'streetwear', name: 'Streetwear', icon: '🧢', description: 'Urbano y moderno' },
-    { id: 'minimalist', name: 'Minimalista', icon: '⬜', description: 'Simple y sofisticado' },
-    { id: 'bohemian', name: 'Bohemio', icon: '🌸', description: 'Libre y artístico' },
-    { id: 'sporty', name: 'Deportivo', icon: '⚡', description: 'Activo y dinámico' },
+    { id: 'casual', name: 'Casual', icon: '👕', description: 'Relaxed and comfortable' },
+    { id: 'formal', name: 'Formal', icon: '👔', description: 'Elegant and professional' },
+    { id: 'streetwear', name: 'Streetwear', icon: '🧢', description: 'Urban and modern' },
+    { id: 'minimalist', name: 'Minimalist', icon: '⬜', description: 'Simple and sophisticated' },
+    { id: 'bohemian', name: 'Bohemian', icon: '🌸', description: 'Free and artistic' },
+    { id: 'sporty', name: 'Sporty', icon: '⚡', description: 'Active and dynamic' },
   ]
 
   const renderStepContent = () => {
@@ -60,8 +60,8 @@ const MyAvatar = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">¿Cuál es tu tipo de cuerpo?</h3>
-              <p className="text-white/60">Selecciona el que más se acerque a tu figura</p>
+              <h3 className="text-2xl font-bold mb-2">What's your body type?</h3>
+              <p className="text-white/60">Select the one that best matches your figure</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {bodyTypes.map((type) => (
@@ -89,13 +89,13 @@ const MyAvatar = () => {
         return (
           <div className="space-y-8 max-w-xl mx-auto">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">Tus medidas</h3>
-              <p className="text-white/60">Esto nos ayuda a encontrar la talla perfecta</p>
+              <h3 className="text-2xl font-bold mb-2">Your Measurements</h3>
+              <p className="text-white/60">This helps us find your perfect size</p>
             </div>
             
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Altura (cm)</label>
+                <label className="block text-sm font-medium mb-2">Height (cm)</label>
                 <input
                   type="number"
                   placeholder="170"
@@ -111,13 +111,13 @@ const MyAvatar = () => {
                     <Scan size={24} />
                   </div>
                   <div>
-                    <h4 className="font-bold">Escaneo 3D</h4>
-                    <p className="text-sm text-white/60">Medidas precisas con tu cámara</p>
+                    <h4 className="font-bold">3D Scan</h4>
+                    <p className="text-sm text-white/60">Precise measurements with your camera</p>
                   </div>
                 </div>
                 <button className="w-full py-3 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
                   <Camera size={20} />
-                  Iniciar escaneo
+                  Start Scan
                 </button>
               </div>
             </div>
@@ -128,15 +128,15 @@ const MyAvatar = () => {
         return (
           <div className="space-y-8">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">Tu apariencia</h3>
-              <p className="text-white/60">Personaliza los detalles de tu avatar</p>
+              <h3 className="text-2xl font-bold mb-2">Your Appearance</h3>
+              <p className="text-white/60">Customize your avatar details</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
                 <h4 className="font-semibold mb-4 flex items-center gap-2">
                   <Palette size={18} />
-                  Tono de piel
+                  Skin Tone
                 </h4>
                 <div className="grid grid-cols-3 gap-3">
                   {skinTones.map((tone) => (
@@ -162,7 +162,7 @@ const MyAvatar = () => {
               <div>
                 <h4 className="font-semibold mb-4 flex items-center gap-2">
                   <Sparkles size={18} />
-                  Color de cabello
+                  Hair Color
                 </h4>
                 <div className="grid grid-cols-3 gap-3">
                   {hairColors.map((hair) => (
@@ -192,8 +192,8 @@ const MyAvatar = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">Tu estilo personal</h3>
-              <p className="text-white/60">Esto nos ayuda a recomendarte outfits perfectos</p>
+              <h3 className="text-2xl font-bold mb-2">Your Personal Style</h3>
+              <p className="text-white/60">This helps us recommend perfect outfits for you</p>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
@@ -240,15 +240,15 @@ const MyAvatar = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
               <User size={18} className="text-violet-400" />
-              <span className="text-violet-300 font-semibold">Tu Gemelo Digital</span>
+              <span className="text-violet-300 font-semibold">Your Digital Twin</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Mi Avatar
+              My Avatar
             </h1>
             
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Crea tu avatar personalizado para probar ropa virtualmente con precisión perfecta
+              Create your personalized avatar to try on clothes virtually with perfect precision
             </p>
           </motion.div>
         </div>
@@ -307,7 +307,7 @@ const MyAvatar = () => {
               <div className="card sticky top-24">
                 <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
                   <Wand2 size={20} className="text-tryonyou-blue" />
-                  Vista previa
+                  Preview
                 </h3>
                 
                 <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-violet-500/10 to-purple-500/10 flex items-center justify-center relative overflow-hidden">
@@ -325,7 +325,7 @@ const MyAvatar = () => {
                     <div className="w-32 h-32 rounded-full bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center mx-auto mb-4">
                       <User size={64} className="text-white/80" />
                     </div>
-                    <p className="text-white/60 text-sm">Tu avatar aparecerá aquí</p>
+                    <p className="text-white/60 text-sm">Your avatar will appear here</p>
                   </motion.div>
                   
                   {/* Decorative elements */}
@@ -339,19 +339,19 @@ const MyAvatar = () => {
                 <div className="mt-4 space-y-2">
                   {avatarData.bodyType && (
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Cuerpo:</span>
+                      <span className="text-white/60">Body:</span>
                       <span className="capitalize">{bodyTypes.find(b => b.id === avatarData.bodyType)?.name}</span>
                     </div>
                   )}
                   {avatarData.height && (
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Altura:</span>
+                      <span className="text-white/60">Height:</span>
                       <span>{avatarData.height} cm</span>
                     </div>
                   )}
                   {avatarData.style && (
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Estilo:</span>
+                      <span className="text-white/60">Style:</span>
                       <span className="capitalize">{styles.find(s => s.id === avatarData.style)?.name}</span>
                     </div>
                   )}
@@ -389,7 +389,7 @@ const MyAvatar = () => {
                   }`}
                 >
                   <ChevronRight size={20} className="rotate-180" />
-                  Anterior
+                  Previous
                 </button>
                 
                 {currentStep < steps.length - 1 ? (
@@ -397,13 +397,13 @@ const MyAvatar = () => {
                     onClick={() => setCurrentStep(currentStep + 1)}
                     className="btn-primary flex items-center gap-2"
                   >
-                    Siguiente
+                    Next
                     <ChevronRight size={20} />
                   </button>
                 ) : (
                   <button className="btn-primary flex items-center gap-2">
                     <Sparkles size={20} />
-                    Crear Avatar
+                    Create Avatar
                   </button>
                 )}
               </div>
