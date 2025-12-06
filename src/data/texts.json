@@ -1,0 +1,222 @@
+{
+  "hero": {
+    "title": "TRYONYOU",
+    "subtitle": "Full Virtual Fitting System + Smart Wardrobe + ABVETOS Intelligence Layer",
+    "description": "An end-to-end ecosystem for virtual fitting, emotional style recommendation, intelligent wardrobe management, and advanced biometric payment.",
+    "cta": "View demo now",
+    "hero_image": "/hero/hero_main.jpeg",
+    "tagline": "Experience Hyper‑Real Fashion."
+  },
+  "home": {
+    "features": {
+      "virtual_tryon": {
+        "title": "🎯 Virtual Try-On",
+        "description": "Ultra-precise virtual fitting engine with millimetric garment alignment.",
+        "link_text": "Explore Demo"
+      },
+      "avatar_3d": {
+        "title": "👤 3D Avatar",
+        "description": "Generate an avatar based on your real body or choose an idealized version.",
+        "link_text": "Create Avatar"
+      },
+      "intelligent_system": {
+        "title": "🧠 Intelligent System",
+        "description": "AI assistant that recommends outfits based on emotional state and personal style.",
+        "link_text": "Meet Pau"
+      },
+      "smart_wardrobe": {
+        "title": "👗 Smart Wardrobe",
+        "description": "Intelligent wardrobe system that registers, measures, and combines your garments.",
+        "link_text": "Open Wardrobe"
+      },
+      "brand_selection": {
+        "title": "🏬 Brand Selection",
+        "description": "Discover and shop from premium brands integrated with our virtual fitting system.",
+        "link_text": "Browse Brands"
+      },
+      "showroom": {
+        "title": "✨ Showroom",
+        "description": "View your final looks in a photorealistic showroom environment.",
+        "link_text": "Enter Showroom"
+      }
+    },
+    "lafayette_demo": {
+      "title": "Special Demos",
+      "link_text": "Lafayette Exclusive Demo →"
+    }
+  },
+  "brands": {
+    "title": "Brand Selection",
+    "subtitle": "Choose from our curated selection of premium brands integrated with virtual fitting",
+    "filters": {
+      "all": "All Brands",
+      "luxury": "Luxury",
+      "fast_fashion": "Fast Fashion",
+      "casual": "Casual"
+    },
+    "selected_text": "Selected:",
+    "continue_text": "Continue to Wardrobe",
+    "try_button": "Try Virtual Fitting",
+    "integrate_title": "Want to integrate your brand?",
+    "integrate_description": "TRYONYOU connects with catalogs, collections and sizing data to reduce returns and increase conversion.",
+    "request_demo": "Request Demo",
+    "view_docs": "View Documentation"
+  },
+  "showroom": {
+    "title": "Showroom",
+    "subtitle": "View your final looks in a photorealistic environment",
+    "looks": {
+      "casual_elegance": {
+        "name": "Casual Elegance",
+        "items": ["White Shirt", "Blue Jeans", "Sneakers"]
+      },
+      "business_professional": {
+        "name": "Business Professional",
+        "items": ["Navy Suit", "White Shirt", "Oxford Shoes"]
+      },
+      "evening_glamour": {
+        "name": "Evening Glamour",
+        "items": ["Black Dress", "Heels", "Clutch Bag"]
+      }
+    },
+    "views": {
+      "front": "Front View",
+      "side": "Side View",
+      "360": "360° View"
+    },
+    "actions": {
+      "save": "Save Look",
+      "share": "Share",
+      "buy": "Buy Outfit"
+    },
+    "promo": {
+      "section_title": "Smart Showroom",
+      "description": "Ready-to-wear looks, selected by our AI according to style, occasion and mood."
+    }
+  },
+  "wardrobe": {
+    "title": "Virtual Wardrobe",
+    "categories": {
+      "clothes": "👕 Clothes",
+      "shoes": "👟 Shoes",
+      "accessories": "💍 Accessories",
+      "makeup": "💄 Makeup",
+      "hair": "💇 Hair"
+    },
+    "style_me": "🎯 Style me (AI)",
+    "peacock_text": "Styled by The Peacock",
+    "peacock_image": "https://upload.wikimedia.org/wikipedia/commons/5/59/Peacock_displaying_tail.jpg"
+  },
+  "glowup": {
+    "title": "Your Glow-Up",
+    "before": "Before Glow (Soft base skin)",
+    "after": "After Glow (Radiant look)",
+    "apply_button": "Apply Glow ✨",
+    "peacock_quote": "\"Now that you feel it… LIVE 'IT.\" – The Peacock"
+  },
+  "peacock": {
+    "title": "Ask the Peacock – Your Style Oracle",
+    "subtitle": "I come from around the world to help you",
+    "welcome": "\"Tell me where you're going… and I'll tell you what to wear.\"",
+    "placeholder": "Write your question...",
+    "ask_button": "Ask",
+    "response_example": "\"Mmm… for that, I see silk, structure, and just a whisper of rebellion.\"",
+    "quote": "Ask the Peacock"
+  },
+  "avatar": {
+    "title": "Your Avatar",
+    "placeholder": "3D Avatar Placeholder (360º View Coming Soon)",
+    "continue_button": "Continue to Wardrobe"
+  },
+  "final_look": {
+    "title": "Your Final Look",
+    "look_details": "Look Details:",
+    "items": {
+      "jacket": "🧥 Jacket: Cubist Flow LIVE 'IT",
+      "pants": "👖 Pants: High-Rise Texture Fit",
+      "shoes": "👟 Shoes: Urban Sway Sneaker",
+      "accessory": "💍 Accessory: Geometric Gold Hoops",
+      "makeup": "💄 Makeup: Editorial Bold Red"
+    },
+    "actions": {
+      "save": "Save",
+      "share": "Share",
+      "view_sheet": "View Look Sheet"
+    },
+    "peacock_quote": "\"Style complete. Now let the world orbit around you.\" – The Peacock"
+  },
+  "welcome": {
+    "title": "LIVE 'IT",
+    "subtitle": "Where beauty lives in movement.",
+    "start_button": "Start your look",
+    "shape_selection": {
+      "title": "Choose Your Body Shape",
+      "subtitle": "We style based on your energy, not your size.",
+      "shapes": [
+        {"emoji": "🫐", "name": "Blueberry"},
+        {"emoji": "🍋", "name": "Lemon"},
+        {"emoji": "🍑", "name": "Peach"},
+        {"emoji": "🍈", "name": "Melon"},
+        {"emoji": "🍉", "name": "Watermelon"},
+        {"emoji": "🦊", "name": "Fox"},
+        {"emoji": "🐆", "name": "Panther"},
+        {"emoji": "🐅", "name": "Tiger"},
+        {"emoji": "🐂", "name": "Bull"},
+        {"emoji": "🐘", "name": "Elephant"}
+      ]
+    }
+  },
+  "color_profile": {
+    "title": "Your Color Profile",
+    "skin_tone": "Skin Tone",
+    "hair_color": "Hair Color",
+    "eye_color": "Eye Color",
+    "upload_selfie": "Upload Selfie (optional)",
+    "continue_button": "Continue"
+  },
+  "look_sheet": {
+    "title": "Look Sheet: Cubist Flow Edition",
+    "garment_composition": "Garment Composition",
+    "recommended_for": "Recommended For",
+    "emotional_tags": "Emotional Tags"
+  },
+  "promo": {
+    "section_title": "Smart Showroom",
+    "description": "Ready-to-wear looks, selected by our AI according to style, occasion and mood."
+  },
+  "clients": {
+    "section_title": "Made for brands, stores and real people",
+    "description": "TryOnYou connects with catalogs, collections and sizing data to reduce returns and increase conversion."
+  },
+  "howitworks": {
+    "title": "How TryOnYou works",
+    "steps": [
+      "1. The user enters and answers the minimum necessary.",
+      "2. AI analyzes garments, combinations and personal style.",
+      "3. We show ready outfits in seconds.",
+      "4. Buy without useless returns."
+    ]
+  },
+  "about": {
+    "title": "Fewer returns, more happy people",
+    "paragraphs": [
+      "Every return is lost time, burned money and clothes traveling without meaning.",
+      "Our goal: everything you buy fits you perfectly the first time."
+    ]
+  },
+  "footer": {
+    "contact": "Contact: hello@tryonyou.app",
+    "rights": "© 2025 TryOnYou · All rights reserved",
+    "mini_cta": "Want to integrate TryOnYou into your brand? Request the demo."
+  },
+  "claims": {
+    "carousel": [
+      "Emotional AI",
+      "Auto‑Production",
+      "Biometric Payments",
+      "Trend Engine",
+      "Smart Wardrobe",
+      "Solidarity"
+    ]
+  }
+}

@@ -1,6 +1,42 @@
-import React from 'react';
-import HeroSection from './components/HeroSection';
-import ClaimsCarrousel from './components/ClaimsCarrousel';
-import StationTPage from './pages/StationTPage';
-import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
-export default function App(){return(<Router><Routes><Route path='/' element={<><HeroSection/><ClaimsCarrousel/></>}/><Route path='/station-t' element={<StationTPage/>}/></Routes></Router>)}
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
+
+// Pages
+import Home from './pages/Home'
+import Brands from './pages/Brands'
+import MyAvatar from './pages/MyAvatar'
+import Wardrobe from './pages/Wardrobe'
+import Showroom from './pages/Showroom'
+import GlowUp from './pages/GlowUp'
+import AskPeacock from './pages/AskPeacock'
+import LafayetteDemo from './pages/LafayetteDemo'
+import IntelligentSystem from './pages/IntelligentSystem'
+import Demo from './pages/Demo'
+
+function App() {
+  return (
+    <div className="min-h-screen bg-tryonyou-black">
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/brands" element={<Brands />} />
+          <Route path="/my-avatar" element={<MyAvatar />} />
+          <Route path="/wardrobe" element={<Wardrobe />} />
+          <Route path="/showroom" element={<Showroom />} />
+          <Route path="/glow-up" element={<GlowUp />} />
+          <Route path="/ask-peacock" element={<AskPeacock />} />
+          <Route path="/lafayette-demo" element={<LafayetteDemo />} />
+          <Route path="/intelligent-system" element={<IntelligentSystem />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/avatar" element={<MyAvatar />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  )
+}
+
+export default App
