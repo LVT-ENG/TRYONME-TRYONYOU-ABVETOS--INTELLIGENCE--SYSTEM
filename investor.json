@@ -1,0 +1,42 @@
+{
+  "problem": [
+    "35% of fashion e-commerce orders are returned.",
+    "\u20ac50B+ wasted per year in logistics, unsold stock and reconditioning.",
+    "No precise fit, no textile physics, no emotion \u2192 lost sales."
+  ],
+  "solution": [
+    "Parametric 3D Avatar calibrated to the user body.",
+    "Fabric-Aware Fit Comparator (silhouette deviation, strain/contact maps).",
+    "PAU: Emotion + Trend recommender (Google/TikTok).",
+    "CAP: Auto-generation of new garments if catalog mismatch.",
+    "ABVET: Dual-biometric payment (voice + iris, liveness).",
+    "JIT: Secure factory orchestration from file-to-delivery."
+  ],
+  "zara_case": {
+    "today": {
+      "returns": "35%",
+      "return_costs": "\u20ac3.5B",
+      "revenue": "\u20ac25B"
+    },
+    "with_tryonyou": {
+      "returns": "8%",
+      "return_costs": "\u20ac1.0B",
+      "revenue": "\u20ac29.1B"
+    },
+    "delta": {
+      "savings": "+\u20ac2.5B",
+      "uplift": "+\u20ac4.1B revenue",
+      "loyalty": "+40%"
+    }
+  },
+  "claims8": [
+    "1. System \u2014 A unified computer-implemented system combining (i) 3D parametric avatar fitting; (ii) fabric-aware comparator with physics-based fit scoring; (iii) emotion- and trend-driven ranking; (iv) creative auto\u2011production (CAP) that emits production\u2011ready assets when catalog items fail thresholds; (v) dual\u2011biometric transaction approval (iris + voice with liveness); and (vi) JIT factory orchestration with secure status callbacks.",
+    "2. Avatar \u2014 The avatar is generated from single/multi\u2011image capture using anthropometric priors and calibrated to user measurements; real-time cloth simulation renders drape and contact.",
+    "3. Fit Score \u2014 The fit score f combines normalized silhouette deviation, predicted strain/relaxation per textile elasticity, and contact/penetration penalties, indexed per garment class and tolerance.",
+    "4. Textile Index \u2014 Garment catalogs are indexed by pattern, tolerance, elasticity and style metadata; the comparator retrieves top\u2011k per class with tunable thresholds.",
+    "5. CAP \u2014 Upon no garment meeting threshold, CAP generates a new garment design with parametric pattern files, seam allowances and color\u2011managed print assets, embedding metadata for traceability.",
+    "6. ABVET \u2014 Payment approval requires dual-biometric authentication with voiceprint and iris scan including liveness checks; fused risk score gates transaction tokens.",
+    "7. Orchestration \u2014 The JIT engine transmits production assets to certified factories via a secure interface, enforces latency SLAs and captures status events: queued, cutting, sewing, QA, shipped.",
+    "8. Telemetry & Adaptation \u2014 The system logs fit outcomes, returns and user interactions, adapting models over time and updating recommendations; APIs are embeddable and version\u2011tracked (Git) across partner platforms."
+  ]
+}
