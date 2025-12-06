@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, Send, Sparkles, Globe, Mic, Camera, Heart, Zap, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react'
+import texts from '../data/texts.json'
 
 const AskPeacock = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
       type: 'peacock',
-      content: 'Hello! I\'m Peacock, your personal fashion assistant. 🦚 I come from around the world to help you discover your perfect style. How can I help you today?',
+      content: texts.peacock.welcome,
       timestamp: new Date(),
     },
   ])
@@ -21,6 +22,8 @@ const AskPeacock = () => {
     { icon: '👔', text: 'Help me with my office look' },
     { icon: '✨', text: 'How can I refresh my style?' },
   ]
+  
+  const getDefaultResponse = () => texts.peacock.response_example
 
   const peacockResponses = [
     {
@@ -62,7 +65,7 @@ const AskPeacock = () => {
       }
     }
     
-    return '🦚 Interesting question. In my experience traveling the world of fashion, I\'ve learned that each person has a unique style waiting to be discovered. Tell me more about yourself and what you\'re looking for, and I\'ll help you find the best options for you.'
+    return getDefaultResponse()
   }
 
   const handleSendMessage = (text = inputValue) => {
@@ -130,10 +133,10 @@ const AskPeacock = () => {
             </motion.div>
             
             <div className="text-left">
-              <h1 className="text-2xl md:text-3xl font-bold gradient-text">Ask Peacock</h1>
+              <h1 className="text-2xl md:text-3xl font-bold gradient-text">{texts.peacock.title}</h1>
               <p className="text-white/60 text-sm flex items-center gap-2">
                 <Globe size={14} />
-                "I come from around the world to help you"
+                {texts.peacock.subtitle}
               </p>
             </div>
           </motion.div>
@@ -261,7 +264,7 @@ const AskPeacock = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Write your question..."
+              placeholder={texts.peacock.placeholder}
               rows={1}
               className="flex-1 bg-transparent resize-none focus:outline-none text-white placeholder-white/40 py-2"
             />

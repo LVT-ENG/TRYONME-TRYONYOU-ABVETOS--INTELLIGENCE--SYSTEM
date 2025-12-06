@@ -11,6 +11,9 @@ import Wardrobe from './pages/Wardrobe'
 import Showroom from './pages/Showroom'
 import GlowUp from './pages/GlowUp'
 import AskPeacock from './pages/AskPeacock'
+import LafayetteDemo from './pages/LafayetteDemo'
+import IntelligentSystem from './pages/IntelligentSystem'
+import Demo from './pages/Demo'
 
 function App() {
   return (
@@ -25,6 +28,10 @@ function App() {
           <Route path="/showroom" element={<Showroom />} />
           <Route path="/glow-up" element={<GlowUp />} />
           <Route path="/ask-peacock" element={<AskPeacock />} />
+          <Route path="/lafayette-demo" element={<LafayetteDemo />} />
+          <Route path="/intelligent-system" element={<IntelligentSystem />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/avatar" element={<MyAvatar />} />
         </Routes>
       </main>
       <Footer />

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Shirt, ShoppingBag, Heart, Filter, Search, Grid, List, Plus, X, Sparkles, Eye, ArrowRight } from 'lucide-react'
 import { getImageWithFallback } from '../utils/assets'
 import Avatar3D from '../components/Avatar3D'
+import texts from '../data/texts.json'
 
 const Wardrobe = () => {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -14,12 +15,24 @@ const Wardrobe = () => {
 
   const categories = [
     { id: 'all', name: 'All', icon: Grid, count: 48 },
-    { id: 'tops', name: 'Tops', icon: Shirt, count: 15 },
-    { id: 'bottoms', name: 'Bottoms', icon: Shirt, count: 12 },
-    { id: 'dresses', name: 'Dresses', icon: Shirt, count: 8 },
-    { id: 'outerwear', name: 'Outerwear', icon: Shirt, count: 6 },
-    { id: 'accessories', name: 'Accessories', icon: Shirt, count: 7 },
+    { id: 'clothes', name: texts.wardrobe.categories.clothes, icon: Shirt, count: 15 },
+    { id: 'shoes', name: texts.wardrobe.categories.shoes, icon: Shirt, count: 12 },
+    { id: 'accessories', name: texts.wardrobe.categories.accessories, icon: Shirt, count: 8 },
+    { id: 'makeup', name: texts.wardrobe.categories.makeup, icon: Shirt, count: 6 },
+    { id: 'hair', name: texts.wardrobe.categories.hair, icon: Shirt, count: 7 },
   ]
+  
+  const wardrobeCategories = [
+    { icon: "👕", label: texts.wardrobe.categories.clothes.split(' ')[1] },
+    { icon: "👟", label: texts.wardrobe.categories.shoes.split(' ')[1] },
+    { icon: "💍", label: texts.wardrobe.categories.accessories.split(' ')[1] },
+    { icon: "💄", label: texts.wardrobe.categories.makeup.split(' ')[1] },
+    { icon: "💇", label: texts.wardrobe.categories.hair.split(' ')[1] },
+  ]
+  
+  const handleStyleMe = () => {
+    alert("Let The Peacock guide your style...");
+  }
 
   const clothes = [
     { id: 1, name: 'Silk Blouse', category: 'tops', price: 89, color: '#F5DEB3', brand: 'ZARA', size: 'M', match: 96, image: 'silk-blouse.jpg' },
@@ -75,11 +88,11 @@ const Wardrobe = () => {
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Wardrobe
+              {texts.wardrobe.title}
             </h1>
             
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Try on clothes virtually and find your perfect fit. Save favorites and build your dream wardrobe.
+              Your digital closet to try on clothes virtually and find your perfect fit.
             </p>
           </motion.div>
         </div>
@@ -280,6 +293,16 @@ const Wardrobe = () => {
           </div>
         )}
       </section>
+      
+      {/* Peacock Image Reference (from old_code) */}
+      <div className="fixed bottom-4 right-4 z-40 opacity-30 hover:opacity-60 transition-opacity">
+        <img
+          src={texts.wardrobe.peacock_image}
+          alt={texts.wardrobe.peacock_text}
+          title={texts.wardrobe.peacock_text}
+          className="w-20 h-20 rounded-full object-cover"
+        />
+      </div>
 
       {/* CTA Section */}
       <section className="section-container bg-gradient-to-br from-blue-900/30 to-cyan-900/20">

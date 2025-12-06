@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Wand2, Sparkles, Crown, Camera, Star, ArrowRight, Check, Play, Palette, Scissors, Heart, Zap, TrendingUp } from 'lucide-react'
 import { getImageWithFallback } from '../utils/assets'
+import texts from '../data/texts.json'
 
 const GlowUp = () => {
   const [activeSection, setActiveSection] = useState('analyze')
@@ -19,8 +20,8 @@ const GlowUp = () => {
   const transformations = [
     {
       id: 1,
-      before: 'Undefined style',
-      after: 'Sophisticated minimalist look',
+      before: texts.glowup.before,
+      after: texts.glowup.after,
       improvement: '+85%',
       timeframe: '2 weeks',
       steps: 12,
@@ -111,11 +112,11 @@ const GlowUp = () => {
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Glow-Up
+              {texts.glowup.title}
             </h1>
             
             <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-              Discover your best version with personalized style analysis and AI recommendations to transform your image.
+              Transform your look with personalized style recommendations and see the difference
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">

@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane } from 'lucide-react'
+import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane, X, FileText } from 'lucide-react'
 import { getImageWithFallback } from '../utils/assets'
+import LookSheet from '../components/demo/LookSheet'
+import texts from '../data/texts.json'
 
 const Showroom = () => {
   const [activeOccasion, setActiveOccasion] = useState('all')
   const [activeMood, setActiveMood] = useState('all')
   const [likedLooks, setLikedLooks] = useState([])
+  const [selectedLook, setSelectedLook] = useState(null)
+  const [showLookSheet, setShowLookSheet] = useState(false)
 
   const occasions = [
     { id: 'all', name: 'All', icon: Sparkles },
@@ -29,11 +33,11 @@ const Showroom = () => {
   const looks = [
     {
       id: 1,
-      name: 'Power Meeting',
-      occasion: 'work',
-      mood: 'confident',
-      items: ['Structured black blazer', 'Satin white shirt', 'Dress pants'],
-      colors: ['#1a1a1a', '#ffffff', '#2d3436'],
+      name: texts.showroom.looks.casual_elegance.name,
+      occasion: 'casual',
+      mood: 'relaxed',
+      items: texts.showroom.looks.casual_elegance.items,
+      colors: ['#ffffff', '#4682B4', '#F5F5F5'],
       rating: 4.9,
       views: 2340,
       match: 96,
@@ -41,27 +45,27 @@ const Showroom = () => {
     },
     {
       id: 2,
-      name: 'Weekend Vibes',
-      occasion: 'casual',
-      mood: 'relaxed',
-      items: ['Oversize camel sweater', 'Boyfriend jeans', 'White sneakers'],
-      colors: ['#D4A574', '#6B8E9F', '#F5F5F5'],
+      name: texts.showroom.looks.business_professional.name,
+      occasion: 'work',
+      mood: 'confident',
+      items: texts.showroom.looks.business_professional.items,
+      colors: ['#1a1a1a', '#ffffff', '#2d3436'],
       rating: 4.8,
-      views: 3120,
+      views: 1980,
       match: 94,
-      image: 'showroom-weekend-vibes.jpg',
+      image: 'showroom-business.jpg',
     },
     {
       id: 3,
-      name: 'Date Night',
+      name: texts.showroom.looks.evening_glamour.name,
       occasion: 'night',
       mood: 'romantic',
-      items: ['Slip dress', 'Satin blazer', 'Strappy heels'],
-      colors: ['#8B5A7D', '#2C2C2C', '#C9A86C'],
+      items: texts.showroom.looks.evening_glamour.items,
+      colors: ['#1a1a1a', '#C9A86C', '#8B5A7D'],
       rating: 4.9,
       views: 4560,
       match: 92,
-      image: 'showroom-date-night.jpg',
+      image: 'showroom-evening.jpg',
     },
     {
       id: 4,
@@ -158,11 +162,11 @@ const Showroom = () => {
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Showroom
+              {texts.showroom.title}
             </h1>
             
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
-            Ready-to-wear looks, selected by our AI according to style, occasion and mood.
+            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+              {texts.showroom.promo.description}
             </p>
           </motion.div>
         </div>
@@ -309,10 +313,25 @@ const Showroom = () => {
                       </div>
                       
                       {/* View Overlay */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl">
-                        <button className="btn-primary text-sm">
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl gap-2">
+                        <button 
+                          onClick={() => {
+                            setSelectedLook(look)
+                            setShowLookSheet(true)
+                          }}
+                          className="btn-primary text-sm"
+                        >
                           <Eye size={16} className="mr-2" />
                           View Look
+                        </button>
+                        <button 
+                          onClick={() => {
+                            setSelectedLook(look)
+                            setShowLookSheet(true)
+                          }}
+                          className="glass px-3 py-2 rounded-lg text-sm hover:bg-white/10"
+                        >
+                          <FileText size={16} />
                         </button>
                       </div>
                     </div>
@@ -403,6 +422,56 @@ const Showroom = () => {
           </div>
         </motion.div>
       </section>
+
+      {/* Look Sheet Modal */}
+      <AnimatePresence>
+        {showLookSheet && selectedLook && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowLookSheet(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="card max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-start mb-6">
+                <h2 className="text-2xl font-bold">{selectedLook.name}</h2>
+                <button 
+                  onClick={() => setShowLookSheet(false)}
+                  className="p-2 glass rounded-lg hover:bg-white/10"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              <LookSheet 
+                lookData={{
+                  name: selectedLook.name,
+                  garments: selectedLook.items.map((item, i) => ({
+                    name: item.split(':')[0] || item,
+                    composition: item.split(':')[1]?.trim() || 'Premium quality',
+                    tag: selectedLook.occasion === 'work' ? 'Professional' : selectedLook.occasion === 'party' ? 'Bold' : 'Comfort Fit'
+                  })),
+                  recommended: {
+                    bodyType: '🍈 Melon',
+                    skinTone: 'Medium to Dark',
+                    event: occasions.find(o => o.id === selectedLook.occasion)?.name || 'Any',
+                    season: 'All Seasons',
+                  },
+                  emotionalTags: [
+                    moods.find(m => m.id === selectedLook.mood)?.emoji + ' ' + moods.find(m => m.id === selectedLook.mood)?.name || '✨ Confident'
+                  ],
+                }}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

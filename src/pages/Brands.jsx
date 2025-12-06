@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, Star, Filter, Search, Heart, TrendingUp, ArrowRight, Sparkles } from 'lucide-react'
 import { getImageWithFallback, getLogoPath } from '../utils/assets'
+import texts from '../data/texts.json'
 
 const Brands = () => {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -60,11 +61,11 @@ const Brands = () => {
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Brands
+              {texts.brands.title}
             </h1>
             
             <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-              TRYONYOU connects with catalogs, collections, and sizing data to reduce returns and increase conversion.
+              {texts.brands.subtitle}
             </p>
           </motion.div>
         </div>
@@ -263,18 +264,18 @@ const Brands = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <h2 className="heading-lg mb-6 gradient-text">
-            Want to integrate your brand?
+            {texts.brands.integrate_title}
           </h2>
           <p className="text-lg text-white/80 mb-8">
-            Connect your catalog with TRYONYOU and reduce returns by up to 75%
+            {texts.brands.integrate_description}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a href="mailto:hello@tryonyou.app" className="btn-primary text-lg px-8 py-4">
-              Request Demo
+              {texts.brands.request_demo}
               <ArrowRight className="inline ml-2" size={20} />
             </a>
             <button className="btn-metallic text-lg px-8 py-4">
-              View Documentation
+              {texts.brands.view_docs}
             </button>
           </div>
         </motion.div>

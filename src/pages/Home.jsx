@@ -7,46 +7,46 @@ import texts from '../data/texts.json'
 const Home = () => {
   const features = [
     {
+      icon: Sparkles,
+      title: texts.home.features.virtual_tryon.title,
+      description: texts.home.features.virtual_tryon.description,
+      color: 'from-violet-500 to-purple-500',
+      link: '/demo'
+    },
+    {
       icon: User,
-      title: 'My Avatar',
-      description: 'Create your digital twin with precise measurements for perfect fits.',
+      title: texts.home.features.avatar_3d.title,
+      description: texts.home.features.avatar_3d.description,
       color: 'from-violet-500 to-purple-500',
       link: '/my-avatar'
     },
     {
+      icon: Wand2,
+      title: texts.home.features.intelligent_system.title,
+      description: texts.home.features.intelligent_system.description,
+      color: 'from-violet-500 to-purple-500',
+      link: '/intelligent-system'
+    },
+    {
       icon: Shirt,
-      title: 'Virtual Wardrobe',
-      description: 'Try on clothes virtually before you buy. No more guessing.',
-      color: 'from-blue-500 to-cyan-500',
+      title: texts.home.features.smart_wardrobe.title,
+      description: texts.home.features.smart_wardrobe.description,
+      color: 'from-violet-500 to-purple-500',
       link: '/wardrobe'
     },
     {
-      icon: Sparkles,
-      title: 'Showroom',
-      description: 'Discover curated looks matched to your style and mood.',
-      color: 'from-amber-500 to-orange-500',
-      link: '/showroom'
-    },
-    {
-      icon: Wand2,
-      title: 'Glow-Up',
-      description: 'Get AI-powered style recommendations for your transformation.',
-      color: 'from-fuchsia-500 to-pink-500',
-      link: '/glow-up'
-    },
-    {
       icon: ShoppingBag,
-      title: 'Brands',
-      description: 'Shop from top brands with confidence in your size.',
-      color: 'from-rose-500 to-pink-500',
+      title: texts.home.features.brand_selection.title,
+      description: texts.home.features.brand_selection.description,
+      color: 'from-violet-500 to-purple-500',
       link: '/brands'
     },
     {
-      icon: MessageCircle,
-      title: 'Ask Peacock',
-      description: 'Your personal AI stylist answering all fashion questions.',
-      color: 'from-cyan-500 to-blue-500',
-      link: '/ask-peacock'
+      icon: Sparkles,
+      title: texts.home.features.showroom.title,
+      description: texts.home.features.showroom.description,
+      color: 'from-violet-500 to-purple-500',
+      link: '/showroom'
     },
   ]
 
@@ -61,6 +61,17 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Hero Image Background (from old_code) */}
+        {texts.hero.hero_image && (
+          <div className="absolute inset-0 z-0">
+            <img 
+              src={texts.hero.hero_image} 
+              alt={texts.hero.tagline}
+              className="w-full h-full object-cover opacity-20"
+              onError={(e) => { e.target.style.display = 'none' }}
+            />
+          </div>
+        )}
         {/* Animated Background */}
         <div className="absolute inset-0 bg-showroom">
           <div className="absolute inset-0">
@@ -94,20 +105,25 @@ const Home = () => {
               </h1>
 
               {/* Subtitle */}
-              <p className="text-xl md:text-2xl text-white/70 mb-8 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-xl md:text-2xl text-white/70 mb-4 max-w-3xl mx-auto leading-relaxed">
                 {texts.hero.subtitle}
+              </p>
+              
+              {/* Description */}
+              <p className="text-lg text-white/60 mb-8 max-w-3xl mx-auto leading-relaxed">
+                {texts.hero.description}
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <Link to="/my-avatar" className="btn-primary text-lg px-8 py-4 group">
-                  {texts.hero.cta}
+                <Link to="/demo" className="btn-primary text-lg px-8 py-4 group">
+                  {texts.welcome.start_button || "Start your look"}
                   <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <button className="btn-metallic text-lg px-8 py-4 flex items-center gap-2">
+                <Link to="/my-avatar" className="btn-metallic text-lg px-8 py-4 flex items-center gap-2">
                   <Play size={20} />
-                  Watch Demo
-                </button>
+                  {texts.hero.cta}
+                </Link>
               </div>
 
               {/* Stats */}
@@ -159,7 +175,7 @@ const Home = () => {
             Everything You Need
           </h2>
           <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            A complete virtual fashion experience powered by cutting-edge AI
+            {texts.clients.description}
           </p>
         </motion.div>
 
@@ -180,12 +196,39 @@ const Home = () => {
                   <h3 className="text-xl font-bold mb-2 group-hover:text-tryonyou-blue transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-white/60">{feature.description}</p>
+                  <p className="text-white/60 mb-4">{feature.description}</p>
+                  <Link to={feature.link} className="text-sm text-tryonyou-blue hover:text-amparo-light transition-colors inline-flex items-center gap-1">
+                    {feature.title.includes('Try-On') ? texts.home.features.virtual_tryon.link_text : 
+                     feature.title.includes('Avatar') ? texts.home.features.avatar_3d.link_text :
+                     feature.title.includes('Intelligent') ? texts.home.features.intelligent_system.link_text :
+                     feature.title.includes('Wardrobe') ? texts.home.features.smart_wardrobe.link_text :
+                     feature.title.includes('Brand') ? texts.home.features.brand_selection.link_text :
+                     texts.home.features.showroom.link_text}
+                    <ArrowRight size={16} />
+                  </Link>
                 </div>
               </Link>
             </motion.div>
           ))}
         </div>
+      </section>
+      
+      {/* Lafayette Demo Section */}
+      <section className="section-container bg-gradient-to-br from-yellow-900/30 to-amber-900/20">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <h2 className="heading-lg mb-6 gradient-text">
+            {texts.home.lafayette_demo.title}
+          </h2>
+          <Link to="/lafayette-demo" className="btn-primary text-lg px-8 py-4">
+            {texts.home.lafayette_demo.link_text}
+          </Link>
+        </motion.div>
       </section>
 
       {/* How It Works */}
@@ -198,19 +241,23 @@ const Home = () => {
           className="text-center mb-16"
         >
           <h2 className="heading-lg mb-4 gradient-text">
-            How It Works
+            {texts.howitworks.title}
           </h2>
           <p className="text-xl text-white/60">
-            Three simple steps to your perfect outfit
+            {texts.howitworks.steps.length} simple steps to your perfect outfit
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          {[
-            { step: '1', title: 'Create Your Avatar', description: 'Build your digital twin with accurate measurements', icon: User },
-            { step: '2', title: 'Browse & Try On', description: 'Virtually try clothes from top brands', icon: Shirt },
-            { step: '3', title: 'Shop with Confidence', description: 'Buy knowing it will fit perfectly', icon: ShoppingBag },
-          ].map((item, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          {texts.howitworks.steps.map((step, index) => {
+            const stepNum = parseInt(step.split('.')[0]);
+            const stepText = step.substring(step.indexOf('.') + 2);
+            let icon = User;
+            if (stepNum === 2) icon = Sparkles;
+            else if (stepNum === 3) icon = Shirt;
+            else if (stepNum === 4) icon = ShoppingBag;
+            return { step: stepNum.toString(), title: stepText.split('.')[0] || stepText, description: stepText, icon };
+          }).map((item, index) => (
             <motion.div
               key={item.step}
               initial={{ opacity: 0, y: 30 }}
