@@ -162,7 +162,7 @@ const Showroom = () => {
             </h1>
             
             <p className="text-xl text-white/80 max-w-3xl mx-auto">
-              Ready-to-wear looks, selected by our AI based on style, occasion, and mood.
+            Ready-to-wear looks, selected by our AI according to style, occasion and mood.
             </p>
           </motion.div>
         </div>

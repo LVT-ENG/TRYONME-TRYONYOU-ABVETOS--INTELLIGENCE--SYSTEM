@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles, Shirt, User, ShoppingBag, Wand2, MessageCircle, Play, Check, Star } from 'lucide-react'
+import texts from '../data/texts.json'
 
 const Home = () => {
   const features = [
@@ -89,21 +90,18 @@ const Home = () => {
 
               {/* Title */}
               <h1 className="heading-xl mb-6">
-                <span className="gradient-text">Your Trusted</span>
-                <br />
-                <span className="text-white">Virtual Fitting Room</span>
+                <span className="gradient-text">{texts.hero.title}</span>
               </h1>
 
               {/* Subtitle */}
               <p className="text-xl md:text-2xl text-white/70 mb-8 max-w-3xl mx-auto leading-relaxed">
-                Find the perfect outfit without trying on 510 pants or making infinite returns. 
-                AI-powered styling that understands <span className="text-tryonyou-blue font-semibold">you</span>.
+                {texts.hero.subtitle}
               </p>
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap justify-center gap-4 mb-12">
                 <Link to="/my-avatar" className="btn-primary text-lg px-8 py-4 group">
-                  Get Started
+                  {texts.hero.cta}
                   <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <button className="btn-metallic text-lg px-8 py-4 flex items-center gap-2">

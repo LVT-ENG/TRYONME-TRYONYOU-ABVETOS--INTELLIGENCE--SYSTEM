@@ -1,17 +1,36 @@
 {
   "hero": {
-    "title": "Your Trusted Virtual Fitting Room",
+    "title": "Your trusted virtual fitting room.",
     "subtitle": "Find the perfect outfit without trying on 510 pants or making infinite returns.",
-    "cta": "Get Started Now"
+    "cta": "View demo now"
+  },
+  "promo": {
+    "section_title": "Smart Showroom",
+    "description": "Ready-to-wear looks, selected by our AI according to style, occasion and mood."
+  },
+  "clients": {
+    "section_title": "Made for brands, stores and real people",
+    "description": "TryOnYou connects with catalogs, collections and sizing data to reduce returns and increase conversion."
+  },
+  "howitworks": {
+    "title": "How TryOnYou works",
+    "steps": [
+      "1. The user enters and answers the minimum necessary.",
+      "2. AI analyzes garments, combinations and personal style.",
+      "3. We show ready outfits in seconds.",
+      "4. Buy without useless returns."
+    ]
+  },
+  "about": {
+    "title": "Fewer returns, more happy people",
+    "paragraphs": [
+      "Every return is lost time, burned money and clothes traveling without meaning.",
+      "Our goal: everything you buy fits you perfectly the first time."
+    ]
   },
   "footer": {
     "contact": "Contact: hello@tryonyou.app",
-    "rights": "© 2025 TRYONYOU · All rights reserved",
-    "mini_cta": "Want to integrate TryOnYou with your brand? Request the demo."
-  },
-  "about": {
-    "title": "About TRYONYOU",
-    "description": "AI-powered virtual try-on platform revolutionizing online fashion shopping."
+    "rights": "© 2025 TryOnYou · All rights reserved",
+    "mini_cta": "Want to integrate TryOnYou into your brand? Request the demo."
   }
 }
-
