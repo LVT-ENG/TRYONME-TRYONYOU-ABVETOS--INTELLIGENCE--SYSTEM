@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Wand2, Sparkles, Crown, Camera, Star, ArrowRight, Check, Play, Palette, Scissors, Heart, Zap, TrendingUp } from 'lucide-react'
-import { getImageWithFallback } from '../utils/assets'
+import { getImageWithFallback, getRandomImagePath } from '../utils/assets'
 import texts from '../data/texts.json'
 
 const GlowUp = () => {
@@ -310,7 +310,10 @@ const GlowUp = () => {
                               alt="Before"
                               className="w-full h-full object-cover"
                               onError={(e) => {
-                                e.target.style.display = 'none'
+                                e.target.src = getRandomImagePath()
+                                e.target.onerror = () => {
+                                  e.target.style.display = 'none'
+                                }
                               }}
                             />
                           ) : null}
@@ -328,7 +331,10 @@ const GlowUp = () => {
                               alt="After"
                               className="w-full h-full object-cover"
                               onError={(e) => {
-                                e.target.style.display = 'none'
+                                e.target.src = getRandomImagePath()
+                                e.target.onerror = () => {
+                                  e.target.style.display = 'none'
+                                }
                               }}
                             />
                           ) : null}

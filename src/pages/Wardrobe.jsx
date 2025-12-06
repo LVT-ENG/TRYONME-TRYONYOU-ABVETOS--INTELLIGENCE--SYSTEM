@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Shirt, ShoppingBag, Heart, Filter, Search, Grid, List, Plus, X, Sparkles, Eye, ArrowRight } from 'lucide-react'
-import { getImageWithFallback } from '../utils/assets'
+import { getImageWithFallback, getRandomImagePath } from '../utils/assets'
 import Avatar3D from '../components/Avatar3D'
 import texts from '../data/texts.json'
 
@@ -200,8 +200,14 @@ const Wardrobe = () => {
                           alt={item.name}
                           className="w-full h-full object-cover"
                           onError={(e) => {
-                            e.target.style.display = 'none'
-                            e.target.nextSibling.style.display = 'flex'
+                            // Try fallback with random image
+                            e.target.src = getRandomImagePath()
+                            e.target.onerror = () => {
+                              e.target.style.display = 'none'
+                              if (e.target.nextSibling) {
+                                e.target.nextSibling.style.display = 'flex'
+                              }
+                            }
                           }}
                         />
                       ) : null}

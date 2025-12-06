@@ -3,6 +3,8 @@
  * All assets should be in /public/assets/ or /public/models/
  */
 
+import { getMappedImage, getRandomImage, AVAILABLE_IMAGES } from './imageMapping'
+
 // Base paths
 export const ASSETS_BASE = '/assets'
 export const MODELS_BASE = '/models'
@@ -57,10 +59,39 @@ export const DEFAULT_IMAGES = {
 }
 
 /**
- * Try to load image, fallback to placeholder
+ * Try to load image, fallback to placeholder or random available image
  */
 export function getImageWithFallback(filename, fallbackType = 'avatar') {
-  if (!filename) return DEFAULT_IMAGES[fallbackType] || DEFAULT_IMAGES.avatar
-  return getImagePath(filename)
+  if (!filename) {
+    // Return a random available image as fallback
+    const randomImage = getRandomImage()
+    return getImagePath(randomImage)
+  }
+  
+  // Try to get mapped image first
+  const mappedImage = getMappedImage(filename)
+  
+  if (mappedImage) {
+    return getImagePath(mappedImage)
+  }
+  
+  // If filename is already a UUID/actual filename, use it directly
+  if (AVAILABLE_IMAGES.includes(filename)) {
+    return getImagePath(filename)
+  }
+  
+  // Try direct path
+  const directPath = getImagePath(filename)
+  
+  // Return direct path (will fallback in UI if not found)
+  return directPath
+}
+
+/**
+ * Get a random available image path
+ */
+export function getRandomImagePath() {
+  const randomImage = getRandomImage()
+  return getImagePath(randomImage)
 }
 
