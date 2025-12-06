@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE ‘IT – Virtual Wardrobe</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      height: 100vh;
+    }
+    .sidebar {
+      width: 200px;
+      background-color: #111;
+      color: white;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .sidebar h2 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .sidebar button {
+      background: transparent;
+      color: white;
+      border: 1px solid white;
+      padding: 0.5rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+    .sidebar button:hover {
+      background-color: #333;
+    }
+    .main {
+      flex: 1;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .avatar-area {
+      width: 300px;
+      height: 500px;
+      margin: 0 auto;
+      background-color: #e0e0e0;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+    }
+    .peacock {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      width: 80px;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Categories</h2>
+    <button>👕 Clothes</button>
+    <button>👟 Shoes</button>
+    <button>💍 Accessories</button>
+    <button>💄 Makeup</button>
+    <button>💇 Hair</button>
+    <button onclick="suggestLook()">🎯 Style me (AI)</button>
+  </div>
+  <div class="main">
+    <h1>Virtual Wardrobe</h1>
+    <div class="avatar-area">
+      Avatar with outfit preview
+    </div>
+    <img class="peacock" src="https://upload.wikimedia.org/wikipedia/commons/5/59/Peacock_displaying_tail.jpg" alt="The Peacock" title="Styled by The Peacock" />
+  </div>
+
+  <script>
+    function suggestLook() {
+      alert("Let The Peacock guide your style...");
+    }
+  </script>
+</body>
+</html>

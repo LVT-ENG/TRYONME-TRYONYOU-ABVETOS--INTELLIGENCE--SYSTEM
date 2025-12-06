@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>LIVE ‘IT – Color Profile</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: 'Helvetica Neue', sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    select, input[type="file"] {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 2rem;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      background-color: #111;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Your Color Profile</h1>
+  <form id="colorForm">
+    <label for="skin">Skin Tone</label>
+    <select id="skin" name="skin">
+      <option value="">Select...</option>
+      <option value="fair">Fair</option>
+      <option value="light">Light</option>
+      <option value="medium">Medium</option>
+      <option value="tan">Tan</option>
+      <option value="dark">Dark</option>
+    </select>
+
+    <label for="hair">Hair Color</label>
+    <select id="hair" name="hair">
+      <option value="">Select...</option>
+      <option value="blonde">Blonde</option>
+      <option value="brown">Brown</option>
+      <option value="black">Black</option>
+      <option value="red">Red</option>
+      <option value="grey">Grey / White</option>
+    </select>
+
+    <label for="eyes">Eye Color</label>
+    <select id="eyes" name="eyes">
+      <option value="">Select...</option>
+      <option value="blue">Blue</option>
+      <option value="green">Green</option>
+      <option value="hazel">Hazel</option>
+      <option value="brown">Brown</option>
+      <option value="black">Black</option>
+    </select>
+
+    <label for="selfie">Upload Selfie (optional)</label>
+    <input type="file" id="selfie" name="selfie" accept="image/*" />
+
+    <button type="submit">Continue</button>
+  </form>
+
+  <script>
+    document.getElementById("colorForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      alert("Color profile saved. Proceeding to next step.");
+      // Aquí se puede guardar y procesar el perfil de color
+    });
+  </script>
+</body>
+</html>

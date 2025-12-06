@@ -1,29 +1,18 @@
 {
-  "name": "tryonyou-app",
-  "version": "2.0.0",
-  "type": "module",
-  "description": "TRYONYOU - AI-Powered Virtual Try-On Platform",
+  "name": "tryonyou-abvetos-ultra-plus-ultimatum",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-router-dom": "^7.0.1",
-    "framer-motion": "^11.11.17",
-    "three": "^0.170.0",
-    "@react-three/fiber": "^8.17.10",
-    "@react-three/drei": "^9.117.3",
-    "gsap": "^3.12.5",
-    "lucide-react": "^0.460.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.3.4",
-    "vite": "^5.4.11",
-    "autoprefixer": "^10.4.20",
-    "postcss": "^8.4.49",
-    "tailwindcss": "^3.4.15"
+    "vite": "7.1.2",
+    "@vitejs/plugin-react": "^4.2.1"
   }
 }
