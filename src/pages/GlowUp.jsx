@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Wand2, Sparkles, Crown, Camera, Star, ArrowRight, Check, Play, Palette, Scissors, Heart, Zap, TrendingUp } from 'lucide-react'
 import { getImageWithFallback, getRandomImagePath } from '../utils/assets'
 import texts from '../data/texts.json'
+import { useTheme } from '../context/ThemeContext'
 
 const GlowUp = () => {
+  const { isDark } = useTheme()
   const [activeSection, setActiveSection] = useState('analyze')
   const [selectedGoal, setSelectedGoal] = useState(null)
 
@@ -81,9 +83,9 @@ const GlowUp = () => {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-bg transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-fuchsia-950 via-pink-900/50 to-tryonyou-black">
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden hero-glowup">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-fuchsia-500/20 rounded-full blur-[120px] animate-float" />
           <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-pink-500/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
@@ -115,7 +117,7 @@ const GlowUp = () => {
               {texts.glowup.title}
             </h1>
             
-            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+            <p className={`text-xl max-w-3xl mx-auto mb-8 ${isDark ? 'text-white/80' : 'text-anthracite/70'}`}>
               Transform your look with personalized style recommendations and see the difference
             </p>
 
@@ -135,7 +137,7 @@ const GlowUp = () => {
       </section>
 
       {/* Section Tabs */}
-      <section className="py-6 bg-tryonyou-smoke/50 sticky top-20 z-30">
+      <section className={`py-6 sticky top-20 z-30 ${isDark ? 'bg-tryonyou-smoke/50' : 'bg-gray-100/90 backdrop-blur-lg'}`}>
         <div className="max-w-4xl mx-auto px-4">
           <div className="flex justify-center gap-2">
             {sections.map((section, index) => (
@@ -145,7 +147,7 @@ const GlowUp = () => {
                 className={`px-6 py-3 rounded-xl font-semibold flex items-center gap-2 transition-all ${
                   activeSection === section.id
                     ? 'bg-gradient-to-r from-fuchsia-500 to-pink-500 text-white'
-                    : 'glass text-white/70 hover:text-white'
+                    : isDark ? 'glass text-white/70 hover:text-white' : 'glass text-anthracite/70 hover:text-anthracite'
                 }`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -177,7 +179,7 @@ const GlowUp = () => {
             >
               <div className="text-center mb-12">
                 <h2 className="heading-lg mb-4 gradient-text">What's your goal?</h2>
-                <p className="text-white/60">Select what interests you most to improve</p>
+                <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Select what interests you most to improve</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -197,7 +199,7 @@ const GlowUp = () => {
                     <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${goal.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                       <goal.icon size={28} className="text-white" />
                     </div>
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-fuchsia-400 transition-colors">
+                    <h3 className={`text-xl font-bold mb-2 group-hover:text-fuchsia-400 transition-colors ${isDark ? 'text-white' : 'text-anthracite'}`}>
                       {goal.name}
                     </h3>
                     
@@ -220,8 +222,8 @@ const GlowUp = () => {
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-fuchsia-500/20 to-pink-500/20 flex items-center justify-center mx-auto mb-6">
                     <Camera size={40} className="text-fuchsia-400" />
                   </div>
-                  <h3 className="text-xl font-bold mb-2">Upload a Photo</h3>
-                  <p className="text-white/60 mb-6">Our AI will analyze your current style and give you personalized recommendations</p>
+                  <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Upload a Photo</h3>
+                  <p className={`mb-6 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Our AI will analyze your current style and give you personalized recommendations</p>
                   <button className="btn-primary">
                     Select Image
                   </button>
@@ -240,7 +242,7 @@ const GlowUp = () => {
             >
               <div className="text-center mb-12">
                 <h2 className="heading-lg mb-4 gradient-text">Your Personalized Analysis</h2>
-                <p className="text-white/60">Based on your unique characteristics</p>
+                <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Based on your unique characteristics</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -253,8 +255,8 @@ const GlowUp = () => {
                     className="card h-full"
                   >
                     <div className="text-xs text-fuchsia-400 font-semibold mb-2">{tip.category}</div>
-                    <h3 className="text-xl font-bold mb-3">{tip.title}</h3>
-                    <p className="text-white/60 mb-4">{tip.description}</p>
+                    <h3 className={`text-xl font-bold mb-3 ${isDark ? 'text-white' : 'text-anthracite'}`}>{tip.title}</h3>
+                    <p className={`mb-4 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>{tip.description}</p>
                     
                     {tip.colors && (
                       <div className="flex gap-2">
@@ -287,7 +289,7 @@ const GlowUp = () => {
             >
               <div className="text-center mb-12">
                 <h2 className="heading-lg mb-4 gradient-text">Real Transformations</h2>
-                <p className="text-white/60">Get inspired by our community results</p>
+                <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Get inspired by our community results</p>
               </div>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -357,22 +359,22 @@ const GlowUp = () => {
                         <Star size={14} className="fill-yellow-400" />
                         <span className="text-sm font-medium">{t.rating}</span>
                       </div>
-                      <span className="text-xs text-white/50">{t.timeframe}</span>
+                      <span className={`text-xs ${isDark ? 'text-white/50' : 'text-anthracite/50'}`}>{t.timeframe}</span>
                     </div>
                     
                     <div className="space-y-2">
                       <div className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-gray-500 mt-2" />
-                        <span className="text-sm text-white/60">{t.before}</span>
+                        <span className={`text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>{t.before}</span>
                       </div>
                       <div className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-fuchsia-500 mt-2" />
-                        <span className="text-sm text-white">{t.after}</span>
+                        <span className={`text-sm ${isDark ? 'text-white' : 'text-anthracite'}`}>{t.after}</span>
                       </div>
                     </div>
                     
-                    <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                      <span className="text-xs text-white/50">{t.steps} steps</span>
+                    <div className={`mt-4 pt-4 border-t flex items-center justify-between ${isDark ? 'border-white/10' : 'border-gray-200'}`}>
+                      <span className={`text-xs ${isDark ? 'text-white/50' : 'text-anthracite/50'}`}>{t.steps} steps</span>
                       <button className="text-fuchsia-400 text-sm font-semibold group-hover:text-fuchsia-300">
                         View Program →
                       </button>
@@ -386,7 +388,7 @@ const GlowUp = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-container bg-gradient-to-br from-fuchsia-900/30 to-pink-900/20">
+      <section className={`section-container ${isDark ? 'bg-gradient-to-br from-fuchsia-900/30 to-pink-900/20' : 'bg-gradient-to-br from-fuchsia-100/50 to-pink-100/30'}`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -398,7 +400,7 @@ const GlowUp = () => {
           <h2 className="heading-lg mb-6 gradient-text">
             Your Best Version Awaits
           </h2>
-          <p className="text-lg text-white/80 mb-8">
+          <p className={`text-lg mb-8 ${isDark ? 'text-white/80' : 'text-anthracite/70'}`}>
             Start your transformation today with personalized AI recommendations
           </p>
           <div className="flex flex-wrap justify-center gap-4">

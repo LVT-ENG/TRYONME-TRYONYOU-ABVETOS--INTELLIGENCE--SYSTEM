@@ -7,11 +7,18 @@
     @apply border-transparent;
   }
   
+  /* Light mode as default */
   body {
-    @apply bg-tryonyou-black text-white font-sans antialiased;
+    @apply bg-[#FAFAFA] text-[#1A1A1A] font-sans antialiased;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+  }
+  
+  /* Dark mode */
+  .dark body,
+  body.dark-mode {
+    @apply text-white bg-tryonyou-black;
   }
   
   html {
@@ -20,59 +27,179 @@
 }
 
 @layer components {
-  /* Glass morphism effect */
+  /* =============================================
+     GLASS MORPHISM EFFECT
+     ============================================= */
   .glass {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(46, 52, 56, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   }
   
-  /* Metallic button */
+  .dark .glass,
+  .dark-mode .glass {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* =============================================
+     BUTTON STYLES
+     ============================================= */
+  
+  /* Gold + Anthracite button (premium style) */
+  .btn-gold {
+    @apply px-6 py-3 font-semibold text-white transition-all duration-300 transform rounded-lg shadow-md hover:scale-105 hover:shadow-lg;
+    background: linear-gradient(135deg, #D4AF37 0%, #B8860B 50%, #8B7355 100%);
+  }
+  
+  .btn-gold:hover {
+    background: linear-gradient(135deg, #FFD700 0%, #D4AF37 50%, #8B7355 100%);
+  }
+  
+  /* Metallic button - Light mode */
   .btn-metallic {
-    @apply px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-tryonyou-metallic to-tryonyou-silver hover:from-tryonyou-silver hover:to-tryonyou-gold transition-all duration-300 transform hover:scale-105;
+    @apply px-6 py-3 font-semibold transition-all duration-300 transform border rounded-lg hover:scale-105;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    color: #2E3438;
+    border-color: rgba(46, 52, 56, 0.2);
+  }
+  
+  .btn-metallic:hover {
+    background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  }
+  
+  .dark .btn-metallic,
+  .dark-mode .btn-metallic {
+    @apply text-white;
+    background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .dark .btn-metallic:hover,
+  .dark-mode .btn-metallic:hover {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
   }
   
   /* Primary button */
   .btn-primary {
-    @apply px-6 py-3 rounded-lg font-semibold text-white bg-tryonyou-blue hover:bg-amparo-light transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-tryonyou-blue/50;
+    @apply px-6 py-3 font-semibold text-white transition-all duration-300 transform rounded-lg shadow-lg hover:scale-105;
+    background: #2E3438;
+    box-shadow: 0 10px 15px -3px rgba(46, 52, 56, 0.3);
   }
   
-  /* Card component */
+  .btn-primary:hover {
+    background: #1A1F22;
+  }
+  
+  .dark .btn-primary,
+  .dark-mode .btn-primary {
+    background: linear-gradient(135deg, #00A8E8 0%, #003459 100%);
+    box-shadow: 0 10px 15px -3px rgba(0, 168, 232, 0.3);
+  }
+  
+  .dark .btn-primary:hover,
+  .dark-mode .btn-primary:hover {
+    background: linear-gradient(135deg, #00D9FF 0%, #00A8E8 100%);
+  }
+  
+  /* Peacock button (white bg with peacock image) */
+  .btn-peacock {
+    
+  }
+  
+  .dark .btn-peacock,
+  .dark-mode .btn-peacock {
+    @apply bg-white;
+  }
+  
+  /* =============================================
+     CARD COMPONENT
+     ============================================= */
   .card {
-    @apply bg-tryonyou-smoke/50 backdrop-blur-sm border border-tryonyou-metallic/30 rounded-xl p-6 transition-all duration-300 hover:border-tryonyou-blue/50 hover:shadow-lg hover:shadow-tryonyou-blue/20;
+    @apply p-6 transition-all duration-300 bg-white border border-gray-200 rounded-xl;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   }
   
-  /* Section container */
+  .card:hover {
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  }
+  
+  .dark .card,
+  .dark-mode .card {
+    @apply border-gray-700 backdrop-blur-sm;
+    background-color: rgba(18, 18, 18, 0.7);
+    border-color: rgba(192, 192, 192, 0.2);
+  }
+  
+  .dark .card:hover,
+  .dark-mode .card:hover {
+    border-color: rgba(0, 168, 232, 0.5);
+    box-shadow: 0 0 20px rgba(0, 168, 232, 0.2);
+  }
+  
+  /* =============================================
+     LAYOUT & CONTAINER STYLES
+     ============================================= */
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24;
+    @apply px-4 py-16 mx-auto max-w-7xl sm:px-6 lg:px-8 md:py-24;
   }
   
-  /* Heading styles */
+  /* =============================================
+     TYPOGRAPHY
+     ============================================= */
   .heading-xl {
-    @apply font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+    @apply text-4xl font-bold tracking-tight font-display md:text-6xl lg:text-7xl;
   }
   
   .heading-lg {
-    @apply font-display text-3xl md:text-5xl font-bold tracking-tight;
+    @apply text-3xl font-bold tracking-tight font-display md:text-5xl;
   }
   
   .heading-md {
-    @apply font-display text-2xl md:text-4xl font-bold tracking-tight;
+    @apply text-2xl font-bold tracking-tight font-display md:text-4xl;
   }
   
-  /* Gradient text */
+  /* Gradient text - Light mode (anthracite) */
   .gradient-text {
-    @apply bg-gradient-to-r from-tryonyou-blue via-amparo-light to-tryonyou-blue bg-clip-text text-transparent;
+    @apply text-transparent bg-gradient-to-r bg-clip-text;
+    background-image: linear-gradient(to right, #2E3438, #1A1F22, #2E3438);
   }
   
-  /* Glow effect */
+  .dark .gradient-text,
+  .dark-mode .gradient-text {
+    background-image: linear-gradient(to right, #00A8E8, #00D9FF, #00A8E8);
+  }
+  
+  /* Gradient text - Gold */
+  .gradient-text-gold {
+    @apply text-transparent bg-gradient-to-r bg-clip-text;
+    background-image: linear-gradient(to right, #D4AF37, #FFD700, #D4AF37);
+  }
+  
+  /* =============================================
+     EFFECT CLASSES
+     ============================================= */
   .glow-blue {
     box-shadow: 0 0 20px rgba(0, 168, 232, 0.5), 0 0 40px rgba(0, 168, 232, 0.3);
   }
   
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.3);
+  }
+  
   /* Animated gradient background */
   .animated-gradient {
-    background: linear-gradient(270deg, #00A8E8, #003459, #00D9FF, #003459);
+    background: linear-gradient(270deg, #D4AF37, #8B7355, #D4AF37, #8B7355);
     background-size: 800% 800%;
     animation: gradientShift 15s ease infinite;
+  }
+  
+  .dark .animated-gradient,
+  .dark-mode .animated-gradient {
+    background: linear-gradient(270deg, #00A8E8, #003459, #00D9FF, #003459);
   }
   
   @keyframes gradientShift {
@@ -80,29 +207,300 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+  
+  /* =============================================
+     PAGE-SPECIFIC BACKGROUND STYLES
+     ============================================= */
+  
+  /* Light mode page backgrounds */
+  .page-bg {
+    @apply bg-[#FAFAFA];
+  }
+  
+  .dark .page-bg,
+  .dark-mode .page-bg {
+    @apply bg-tryonyou-black;
+  }
+  
+  /* Hero section backgrounds - dual mode support */
+  .hero-bg {
+    @apply relative overflow-hidden;
+    background: linear-gradient(135deg, #FAFAFA 0%, #F5F5F5 50%, #EEEEEE 100%);
+  }
+  
+  .dark .hero-bg,
+  .dark-mode .hero-bg {
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 50%, #003459 100%);
+  }
+  
+  /* Themed hero sections for different pages */
+  .hero-brands {
+    background: linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 50%, #FBCFE8 100%);
+  }
+  
+  .dark .hero-brands,
+  .dark-mode .hero-brands {
+    background: linear-gradient(135deg, #500724 0%, #831843 50%, #0A0A0A 100%);
+  }
+  
+  .hero-wardrobe {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+  }
+  
+  .dark .hero-wardrobe,
+  .dark-mode .hero-wardrobe {
+    background: linear-gradient(135deg, #172554 0%, #1e3a5f 50%, #0A0A0A 100%);
+  }
+  
+  .hero-showroom {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #FDE68A 100%);
+  }
+  
+  .dark .hero-showroom,
+  .dark-mode .hero-showroom {
+    background: linear-gradient(135deg, #451a03 0%, #78350f 50%, #0A0A0A 100%);
+  }
+  
+  .hero-glowup {
+    background: linear-gradient(135deg, #FDF4FF 0%, #FAE8FF 50%, #F5D0FE 100%);
+  }
+  
+  .dark .hero-glowup,
+  .dark-mode .hero-glowup {
+    background: linear-gradient(135deg, #4a044e 0%, #701a75 50%, #0A0A0A 100%);
+  }
+  
+  .hero-chat {
+    background: linear-gradient(135deg, #ECFEFF 0%, #CFFAFE 50%, #A5F3FC 100%);
+  }
+  
+  .dark .hero-chat,
+  .dark-mode .hero-chat {
+    background: linear-gradient(135deg, #164e63 0%, #0e7490 50%, #0A0A0A 100%);
+  }
+  
+  .hero-lafayette {
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 50%, #FCD34D 100%);
+  }
+  
+  .dark .hero-lafayette,
+  .dark-mode .hero-lafayette {
+    background: linear-gradient(135deg, #451a03 0%, #78350f 50%, #0A0A0A 100%);
+  }
+  
+  .hero-intelligent {
+    background: linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 50%, #DDD6FE 100%);
+  }
+  
+  .dark .hero-intelligent,
+  .dark-mode .hero-intelligent {
+    background: linear-gradient(135deg, #2e1065 0%, #581c87 50%, #0A0A0A 100%);
+  }
+  
+  .hero-demo {
+    background: linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 50%, #BBF7D0 100%);
+  }
+  
+  .dark .hero-demo,
+  .dark-mode .hero-demo {
+    background: linear-gradient(135deg, #052e16 0%, #14532d 50%, #0A0A0A 100%);
+  }
+  
+  .hero-avatar {
+    background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+  }
+  
+  .dark .hero-avatar,
+  .dark-mode .hero-avatar {
+    background: linear-gradient(135deg, #172554 0%, #1e3a5f 50%, #0A0A0A 100%);
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Text utilities for theming */
+  .text-primary {
+    @apply text-[#1A1A1A];
+  }
+  
+  .dark .text-primary,
+  .dark-mode .text-primary {
+    @apply text-white;
+  }
+  
+  .text-secondary {
+    @apply text-[#3C3C3C];
+  }
+  
+  .dark .text-secondary,
+  .dark-mode .text-secondary {
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .text-muted {
+    @apply text-gray-600;
+  }
+  
+  .dark .text-muted,
+  .dark-mode .text-muted {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  /* Soft shadow for light mode */
+  .shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+  
+  .dark .shadow-soft,
+  .dark-mode .shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Premium border */
+  .border-premium {
+    @apply border;
+    border-color: rgba(212, 175, 55, 0.3);
+  }
+  
+  .dark .border-premium,
+  .dark-mode .border-premium {
+    border-color: rgba(0, 168, 232, 0.3);
+  }
+  
+  /* Background utilities */
+  .bg-page {
+    @apply bg-[#FAFAFA];
+  }
+  
+  .dark .bg-page,
+  .dark-mode .bg-page {
+    @apply bg-tryonyou-black;
+  }
+  
+  .bg-section {
+    @apply bg-white;
+  }
+  
+  .dark .bg-section,
+  .dark-mode .bg-section {
+    background-color: rgba(26, 26, 46, 0.5);
+  }
+  
+  .bg-section-alt {
+    @apply bg-gray-50;
+  }
+  
+  .dark .bg-section-alt,
+  .dark-mode .bg-section-alt {
+    background-color: rgba(10, 10, 10, 0.5);
+  }
 }
 
-/* Custom scrollbar */
+/* =============================================
+   SCROLLBAR STYLES
+   ============================================= */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0A;
+  background: #F8F9FA;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #00A8E8 0%, #003459 100%);
+  background: linear-gradient(180deg, #D4AF37 0%, #8B7355 100%);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #FFD700 0%, #D4AF37 100%);
+}
+
+.dark ::-webkit-scrollbar-track,
+.dark-mode ::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+.dark ::-webkit-scrollbar-thumb,
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00A8E8 0%, #003459 100%);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover,
+.dark-mode ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #00D9FF 0%, #00A8E8 100%);
 }
 
+/* =============================================
+   INPUT STYLES - DUAL MODE
+   ============================================= */
+input, select, textarea {
+  @apply transition-colors duration-200;
+}
+
+/* Light mode inputs */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  color: #1A1A1A;
+}
+
+.dark input:not([type="checkbox"]):not([type="radio"]),
+.dark select,
+.dark textarea,
+.dark-mode input:not([type="checkbox"]):not([type="radio"]),
+.dark-mode select,
+.dark-mode textarea {
+  color: #FFFFFF;
+}
+
+/* Select option styling */
+select option {
+  @apply text-gray-900 bg-white;
+}
+
+.dark select option,
+.dark-mode select option {
+  @apply text-white bg-gray-900;
+}
+
+/* =============================================
+   FORM ELEMENTS
+   ============================================= */
+.input-field {
+  @apply w-full px-4 py-3 transition-all duration-200 border rounded-xl;
+  @apply text-gray-900 bg-white border-gray-300;
+  @apply focus:outline-none focus:ring-2 focus:ring-tryonyou-gold focus:border-transparent;
+}
+
+.dark .input-field,
+.dark-mode .input-field {
+  @apply text-white bg-gray-900 border-gray-700;
+  @apply focus:ring-tryonyou-blue;
+}
+
+/* =============================================
+   THEME TOGGLE SWITCH
+   ============================================= */
+.theme-toggle {
+  @apply relative inline-flex items-center h-8 transition-colors duration-300 rounded-full w-14;
+  @apply bg-gray-200;
+}
+
+.dark .theme-toggle,
+.dark-mode .theme-toggle {
+  @apply bg-gray-700;
+}
+
+.theme-toggle-knob {
+  @apply inline-block w-6 h-6 transition-transform duration-300 transform bg-white rounded-full shadow-lg;
+  @apply translate-x-1;
+}
+
+.dark .theme-toggle-knob,
+.dark-mode .theme-toggle-knob {
+  @apply translate-x-7;
+}

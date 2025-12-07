@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, ArrowLeft, Palette, Camera } from 'lucide-react'
+import { useTheme } from '../../context/ThemeContext'
 
 const ColorProfile = ({ data, onNext, onBack, canGoBack }) => {
+  const { isDark } = useTheme()
   const [formData, setFormData] = useState({
     skinTone: data?.colorProfile?.skinTone || '',
     hairColor: data?.colorProfile?.hairColor || '',
@@ -57,23 +59,27 @@ const ColorProfile = ({ data, onNext, onBack, canGoBack }) => {
       className="card"
     >
       <h2 className="heading-md mb-2 gradient-text">Your Color Profile</h2>
-      <p className="text-white/60 mb-6">Help us understand your coloring</p>
+      <p className={`mb-6 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Help us understand your coloring</p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium mb-2 flex items-center gap-2">
-            <Palette size={16} className="text-tryonyou-blue" />
+          <label className={`text-sm font-medium mb-2 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+            <Palette size={16} className={isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'} />
             Skin Tone
           </label>
           <select
             value={formData.skinTone}
             onChange={(e) => setFormData({ ...formData, skinTone: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-white"
+            className={`w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 ${
+              isDark 
+                ? 'bg-white/5 border-white/10 text-white focus:ring-tryonyou-blue' 
+                : 'bg-white border-gray-200 text-anthracite focus:ring-tryonyou-gold'
+            }`}
             required
           >
             <option value="">Select...</option>
             {skinTones.map((tone) => (
-              <option key={tone.value} value={tone.value} className="bg-tryonyou-black">
+              <option key={tone.value} value={tone.value} className={isDark ? 'bg-tryonyou-black' : 'bg-white'}>
                 {tone.label}
               </option>
             ))}
@@ -81,16 +87,20 @@ const ColorProfile = ({ data, onNext, onBack, canGoBack }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Hair Color</label>
+          <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Hair Color</label>
           <select
             value={formData.hairColor}
             onChange={(e) => setFormData({ ...formData, hairColor: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-white"
+            className={`w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 ${
+              isDark 
+                ? 'bg-white/5 border-white/10 text-white focus:ring-tryonyou-blue' 
+                : 'bg-white border-gray-200 text-anthracite focus:ring-tryonyou-gold'
+            }`}
             required
           >
             <option value="">Select...</option>
             {hairColors.map((color) => (
-              <option key={color.value} value={color.value} className="bg-tryonyou-black">
+              <option key={color.value} value={color.value} className={isDark ? 'bg-tryonyou-black' : 'bg-white'}>
                 {color.label}
               </option>
             ))}
@@ -98,16 +108,20 @@ const ColorProfile = ({ data, onNext, onBack, canGoBack }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2">Eye Color</label>
+          <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Eye Color</label>
           <select
             value={formData.eyeColor}
             onChange={(e) => setFormData({ ...formData, eyeColor: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-white"
+            className={`w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 ${
+              isDark 
+                ? 'bg-white/5 border-white/10 text-white focus:ring-tryonyou-blue' 
+                : 'bg-white border-gray-200 text-anthracite focus:ring-tryonyou-gold'
+            }`}
             required
           >
             <option value="">Select...</option>
             {eyeColors.map((color) => (
-              <option key={color.value} value={color.value} className="bg-tryonyou-black">
+              <option key={color.value} value={color.value} className={isDark ? 'bg-tryonyou-black' : 'bg-white'}>
                 {color.label}
               </option>
             ))}
@@ -115,15 +129,23 @@ const ColorProfile = ({ data, onNext, onBack, canGoBack }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 flex items-center gap-2">
-            <Camera size={16} className="text-tryonyou-blue" />
+          <label className={`text-sm font-medium mb-2 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+            <Camera size={16} className={isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'} />
             Upload Selfie (optional)
           </label>
           <input
             type="file"
             accept="image/*"
             onChange={handleFileChange}
-            className="w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-white file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-tryonyou-blue file:text-white hover:file:bg-amparo-light"
+            className={`w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 ${
+              isDark 
+                ? 'bg-white/5 border-white/10 text-white focus:ring-tryonyou-blue' 
+                : 'bg-white border-gray-200 text-anthracite focus:ring-tryonyou-gold'
+            } file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold ${
+              isDark 
+                ? 'file:bg-tryonyou-blue file:text-white hover:file:bg-amparo-light' 
+                : 'file:bg-tryonyou-gold file:text-white hover:file:bg-gold-light'
+            }`}
           />
           {formData.selfie && (
             <p className="text-sm text-green-400 mt-2">✓ {formData.selfie.name}</p>

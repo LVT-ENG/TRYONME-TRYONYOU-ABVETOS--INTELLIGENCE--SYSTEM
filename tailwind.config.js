@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
@@ -19,7 +20,25 @@ export default {
         amparo: {
           light: '#00D9FF',
           dark: '#0077B6',
-        }
+        },
+        // Light mode premium colors
+        anthracite: {
+          DEFAULT: '#3C3C3C',
+          dark: '#2A2A2A',
+          light: '#5A5A5A',
+        },
+        gold: {
+          light: '#FFD700',
+          DEFAULT: '#D4AF37',
+          dark: '#B8860B',
+        },
+        light: {
+          bg: '#FAFAFA',
+          card: '#FFFFFF',
+          text: '#1A1A1A',
+          muted: '#6B7280',
+          border: '#E5E7EB',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],

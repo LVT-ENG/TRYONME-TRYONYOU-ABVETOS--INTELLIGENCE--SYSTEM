@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Send, Heart, Zap, Sun, Moon, Briefcase, PartyPopper } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 
 const IntelligentSystem = () => {
+  const { isDark } = useTheme()
   const [messages, setMessages] = useState([
     { id: 1, sender: 'pau', text: "Hello! I'm Pau, your emotional style recommender. How are you feeling today?" },
   ])
@@ -69,9 +71,9 @@ const IntelligentSystem = () => {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-bg transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative py-8 bg-gradient-to-br from-purple-950 via-pink-900/50 to-tryonyou-black">
+      <section className="relative py-8 hero-intelligent">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-purple-500/20 rounded-full blur-[100px] animate-float" />
           <div className="absolute bottom-1/4 left-1/4 w-[200px] h-[200px] bg-pink-500/15 rounded-full blur-[80px] animate-float" style={{ animationDelay: '2s' }} />
@@ -93,7 +95,7 @@ const IntelligentSystem = () => {
               Pau — Emotional Recommender
             </h1>
             
-            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+            <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-white/80' : 'text-anthracite/70'}`}>
               AI assistant that recommends outfits based on emotional state, personal style, and daily context
             </p>
           </motion.div>
@@ -125,7 +127,7 @@ const IntelligentSystem = () => {
                       ? 'bg-purple-500/30 rounded-2xl rounded-tr-sm'
                       : 'glass rounded-2xl rounded-tl-sm'
                   } px-4 py-3`}>
-                    <p className="text-white/90 whitespace-pre-wrap">{message.text}</p>
+                    <p className={`whitespace-pre-wrap ${isDark ? 'text-white/90' : 'text-anthracite/90'}`}>{message.text}</p>
                   </div>
                   
                   {message.sender === 'user' && (
@@ -179,7 +181,7 @@ const IntelligentSystem = () => {
               animate={{ opacity: 1, y: 0 }}
               className="mb-4"
             >
-              <div className="text-sm text-white/60 mb-2">Try saying:</div>
+              <div className={`text-sm mb-2 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Try saying:</div>
               <div className="flex flex-wrap gap-2">
                 {suggestedPrompts.map((prompt, i) => (
                   <motion.button
@@ -210,7 +212,7 @@ const IntelligentSystem = () => {
                 onKeyPress={handleKeyPress}
                 placeholder="Tell Pau how you're feeling..."
                 rows={1}
-                className="flex-1 bg-transparent resize-none focus:outline-none text-white placeholder-white/40 py-2"
+                className={`flex-1 bg-transparent resize-none focus:outline-none py-2 ${isDark ? 'text-white placeholder-white/40' : 'text-anthracite placeholder-anthracite/40'}`}
               />
               
               <button
@@ -236,17 +238,16 @@ const IntelligentSystem = () => {
           transition={{ duration: 0.8 }}
           className="card bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-purple-500/30"
         >
-          <h3 className="text-xl font-bold mb-4">Pau understands:</h3>
+          <h3 className={`text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-anthracite'}`}>Pau understands:</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { icon: '🎭', text: 'Your emotional state' },
+            {[{ icon: '🎭', text: 'Your emotional state' },
               { icon: '👗', text: 'Your personal style preferences' },
               { icon: '📅', text: 'Daily context and occasions' },
               { icon: '✨', text: 'TRYONYOU elegance rules' },
             ].map((feature, i) => (
               <div key={i} className="flex items-center gap-3">
                 <span className="text-2xl">{feature.icon}</span>
-                <span className="text-white/80">{feature.text}</span>
+                <span className={isDark ? 'text-white/80' : 'text-anthracite/80'}>{feature.text}</span>
               </div>
             ))}
           </div>

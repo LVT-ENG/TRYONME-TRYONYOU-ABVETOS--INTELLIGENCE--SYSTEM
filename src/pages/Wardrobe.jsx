@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Shirt, ShoppingBag, Heart, Filter, Search, Grid, List, Plus, X, Sparkles, Eye, ArrowRight } from 'lucide-react'
 import { getImageWithFallback, getRandomImagePath } from '../utils/assets'
+import { useTheme } from '../context/ThemeContext'
 import Avatar3D from '../components/Avatar3D'
 import texts from '../data/texts.json'
 
 const Wardrobe = () => {
+  const { isDark } = useTheme()
   const [activeCategory, setActiveCategory] = useState('all')
   const [viewMode, setViewMode] = useState('grid')
   const [searchQuery, setSearchQuery] = useState('')
@@ -68,10 +70,21 @@ const Wardrobe = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-bg">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-950 via-cyan-900/50 to-tryonyou-black">
+      <section className="hero-wardrobe relative min-h-[40vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
+          <img 
+            src={getImageWithFallback('wardrobe-bg.jpg', 'wardrobe')} 
+            alt="Wardrobe"
+            className={`object-cover w-full h-full ${isDark ? 'opacity-30' : 'opacity-20'}`}
+            onError={(e) => { e.target.style.display = 'none' }}
+          />
+          <div className={`absolute inset-0 ${
+            isDark 
+              ? 'bg-gradient-to-b from-tryonyou-black/80 via-tryonyou-black/60 to-tryonyou-black' 
+              : 'bg-gradient-to-b from-white/60 via-white/40 to-[#FAFAFA]'
+          }`}></div>
           <div className="absolute top-1/4 left-1/3 w-[400px] h-[400px] bg-blue-500/20 rounded-full blur-[100px] animate-float" />
           <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-cyan-500/15 rounded-full blur-[80px] animate-float" style={{ animationDelay: '2s' }} />
         </div>
@@ -83,15 +96,15 @@ const Wardrobe = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
-              <Shirt size={18} className="text-blue-400" />
-              <span className="text-blue-300 font-semibold">Your Digital Closet</span>
+              <Shirt size={18} className={isDark ? 'text-blue-400' : 'text-blue-500'} />
+              <span className={`font-semibold ${isDark ? 'text-blue-300' : 'text-blue-600'}`}>Your Digital Closet</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
               {texts.wardrobe.title}
             </h1>
             
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            <p className={`text-xl max-w-2xl mx-auto ${isDark ? 'text-white/80' : 'text-anthracite/80'}`}>
               Your digital closet to try on clothes virtually and find your perfect fit.
             </p>
           </motion.div>
@@ -99,18 +112,22 @@ const Wardrobe = () => {
       </section>
 
       {/* Toolbar */}
-      <section className="py-6 bg-tryonyou-smoke/50 sticky top-20 z-30">
+      <section className={`py-6 sticky top-20 z-30 transition-colors duration-300 ${
+        isDark ? 'bg-tryonyou-smoke/50' : 'bg-gray-100'
+      }`}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={20} />
+              <Search className={`absolute left-4 top-1/2 -translate-y-1/2 ${isDark ? 'text-white/40' : 'text-anthracite/40'}`} size={20} />
               <input
                 type="text"
                 placeholder="Search clothes, brands..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent"
+                className={`w-full pl-12 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent ${
+                  isDark ? 'glass' : 'bg-white border border-gray-200'
+                }`}
               />
             </div>
 
@@ -122,8 +139,8 @@ const Wardrobe = () => {
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
                     activeCategory === cat.id
-                      ? 'bg-tryonyou-blue text-white'
-                      : 'glass text-white/70 hover:text-white'
+                      ? isDark ? 'bg-tryonyou-blue text-white' : 'bg-tryonyou-gold text-white'
+                      : isDark ? 'glass text-white/70 hover:text-white' : 'bg-white text-anthracite/70 hover:text-anthracite border border-gray-200'
                   }`}
                 >
                   {cat.name}
@@ -136,13 +153,19 @@ const Wardrobe = () => {
             <div className="flex gap-2">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-3 rounded-lg ${viewMode === 'grid' ? 'bg-tryonyou-blue' : 'glass'}`}
+                className={`p-3 rounded-lg ${viewMode === 'grid' 
+                  ? isDark ? 'bg-tryonyou-blue' : 'bg-tryonyou-gold text-white' 
+                  : isDark ? 'glass' : 'bg-white border border-gray-200'
+                }`}
               >
                 <Grid size={20} />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-3 rounded-lg ${viewMode === 'list' ? 'bg-tryonyou-blue' : 'glass'}`}
+                className={`p-3 rounded-lg ${viewMode === 'list' 
+                  ? isDark ? 'bg-tryonyou-blue' : 'bg-tryonyou-gold text-white' 
+                  : isDark ? 'glass' : 'bg-white border border-gray-200'
+                }`}
               >
                 <List size={20} />
               </button>
@@ -154,10 +177,12 @@ const Wardrobe = () => {
       {/* Saved Items Count */}
       {savedItems.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 pt-6">
-          <div className="glass rounded-xl p-4 flex items-center justify-between">
+          <div className={`rounded-xl p-4 flex items-center justify-between ${
+            isDark ? 'glass' : 'bg-white border border-gray-200'
+          }`}>
             <div className="flex items-center gap-3">
               <Heart size={20} className="text-rose-500 fill-rose-500" />
-              <span>{savedItems.length} items saved to your collection</span>
+              <span className={isDark ? 'text-white' : 'text-anthracite'}>{savedItems.length} items saved to your collection</span>
             </div>
             <button className="btn-primary text-sm py-2">
               View Collection
@@ -252,15 +277,17 @@ const Wardrobe = () => {
                   <div className={viewMode === 'list' ? 'flex-1 flex flex-col justify-center' : ''}>
                     <div className="flex items-start justify-between mb-2">
                       <div>
-                        <h3 className="font-bold group-hover:text-tryonyou-blue transition-colors">
+                        <h3 className={`font-bold transition-colors ${
+                          isDark ? 'group-hover:text-tryonyou-blue' : 'group-hover:text-tryonyou-gold'
+                        }`}>
                           {item.name}
                         </h3>
-                        <p className="text-sm text-white/60">{item.brand}</p>
+                        <p className={`text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>{item.brand}</p>
                       </div>
                       <span className="text-lg font-bold text-tryonyou-gold">${item.price}</span>
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm text-white/50">
+                    <div className={`flex items-center gap-4 text-sm ${isDark ? 'text-white/50' : 'text-anthracite/50'}`}>
                       <span>Size: {item.size}</span>
                       <span className="capitalize">{categories.find(c => c.id === item.category)?.name}</span>
                     </div>
@@ -273,7 +300,9 @@ const Wardrobe = () => {
                         >
                           Try On
                         </button>
-                        <button className="glass px-4 py-2 rounded-lg text-sm hover:bg-white/10">
+                        <button className={`px-4 py-2 rounded-lg text-sm ${
+                          isDark ? 'glass hover:bg-white/10' : 'bg-gray-100 hover:bg-gray-200'
+                        }`}>
                           Add to Cart
                         </button>
                       </div>
@@ -287,9 +316,9 @@ const Wardrobe = () => {
 
         {filteredClothes.length === 0 && (
           <div className="text-center py-16">
-            <Shirt size={64} className="text-white/20 mx-auto mb-4" />
-            <h3 className="text-xl font-bold mb-2">No items found</h3>
-            <p className="text-white/60 mb-6">Try adjusting your search or filters</p>
+            <Shirt size={64} className={`mx-auto mb-4 ${isDark ? 'text-white/20' : 'text-anthracite/20'}`} />
+            <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>No items found</h3>
+            <p className={`mb-6 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Try adjusting your search or filters</p>
             <button 
               onClick={() => { setActiveCategory('all'); setSearchQuery(''); }}
               className="btn-metallic"
@@ -311,7 +340,9 @@ const Wardrobe = () => {
       </div>
 
       {/* CTA Section */}
-      <section className="section-container bg-gradient-to-br from-blue-900/30 to-cyan-900/20">
+      <section className={`section-container ${
+        isDark ? 'bg-gradient-to-br from-blue-900/30 to-cyan-900/20' : 'bg-gradient-to-br from-blue-100/50 to-cyan-100/30'
+      }`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -322,7 +353,7 @@ const Wardrobe = () => {
           <h2 className="heading-lg mb-6 gradient-text">
             Want personalized recommendations?
           </h2>
-          <p className="text-lg text-white/80 mb-8">
+          <p className={`text-lg mb-8 ${isDark ? 'text-white/80' : 'text-anthracite/80'}`}>
             Create your avatar for perfect fit predictions and style suggestions
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -356,12 +387,12 @@ const Wardrobe = () => {
             >
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold">{selectedItem.name}</h2>
-                  <p className="text-white/60">{selectedItem.brand}</p>
+                  <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-anthracite'}`}>{selectedItem.name}</h2>
+                  <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>{selectedItem.brand}</p>
                 </div>
                 <button 
                   onClick={() => setShowTryOnModal(false)}
-                  className="p-2 glass rounded-lg hover:bg-white/10"
+                  className={`p-2 rounded-lg ${isDark ? 'glass hover:bg-white/10' : 'bg-gray-100 hover:bg-gray-200'}`}
                 >
                   <X size={20} />
                 </button>
@@ -408,10 +439,10 @@ const Wardrobe = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <div className="glass rounded-xl p-4">
-                    <h4 className="font-semibold mb-2">Fit Analysis</h4>
+                  <div className={`rounded-xl p-4 ${isDark ? 'glass' : 'bg-gray-100'}`}>
+                    <h4 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Fit Analysis</h4>
                     <div className="flex items-center gap-2 mb-2">
-                      <div className="flex-1 h-2 rounded-full bg-white/10">
+                      <div className={`flex-1 h-2 rounded-full ${isDark ? 'bg-white/10' : 'bg-gray-200'}`}>
                         <div 
                           className="h-full rounded-full bg-gradient-to-r from-tryonyou-blue to-amparo-light"
                           style={{ width: `${selectedItem.match}%` }}
@@ -419,23 +450,23 @@ const Wardrobe = () => {
                       </div>
                       <span className="text-tryonyou-blue font-bold">{selectedItem.match}%</span>
                     </div>
-                    <p className="text-sm text-white/60">Perfect match for your body type!</p>
+                    <p className={`text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Perfect match for your body type!</p>
                   </div>
 
-                  <div className="glass rounded-xl p-4">
-                    <h4 className="font-semibold mb-2">Details</h4>
+                  <div className={`rounded-xl p-4 ${isDark ? 'glass' : 'bg-gray-100'}`}>
+                    <h4 className={`font-semibold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Details</h4>
                     <div className="space-y-2 text-sm">
                       <div className="flex justify-between">
-                        <span className="text-white/60">Size</span>
-                        <span>{selectedItem.size}</span>
+                        <span className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Size</span>
+                        <span className={isDark ? 'text-white' : 'text-anthracite'}>{selectedItem.size}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/60">Price</span>
+                        <span className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Price</span>
                         <span className="text-tryonyou-gold font-bold">${selectedItem.price}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-white/60">Category</span>
-                        <span className="capitalize">{selectedItem.category}</span>
+                        <span className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Category</span>
+                        <span className={`capitalize ${isDark ? 'text-white' : 'text-anthracite'}`}>{selectedItem.category}</span>
                       </div>
                     </div>
                   </div>
@@ -447,7 +478,7 @@ const Wardrobe = () => {
                     </button>
                     <button 
                       onClick={() => toggleSaved(selectedItem.id)}
-                      className={`p-3 rounded-lg ${savedItems.includes(selectedItem.id) ? 'bg-rose-500' : 'glass'}`}
+                      className={`p-3 rounded-lg ${savedItems.includes(selectedItem.id) ? 'bg-rose-500' : isDark ? 'glass' : 'bg-gray-100'}`}
                     >
                       <Heart size={20} className={savedItems.includes(selectedItem.id) ? 'fill-white' : ''} />
                     </button>

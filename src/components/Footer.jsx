@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, Linkedin, Twitter, Instagram, ArrowRight } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
+import { getLogoPath } from '../utils/assets'
 
 const Footer = () => {
+  const { isDark } = useTheme()
   const currentYear = new Date().getFullYear()
 
   const footerLinks = {
@@ -35,21 +38,33 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="bg-tryonyou-smoke/80 backdrop-blur-lg border-t border-white/10">
+    <footer className={`border-t transition-colors duration-300 ${
+      isDark 
+        ? 'bg-tryonyou-black/90 backdrop-blur-lg border-white/10' 
+        : 'bg-gray-50 border-gray-200'
+    }`}>
       {/* CTA Banner */}
-      <div className="bg-gradient-to-r from-tryonyou-blue/20 via-amparo-light/10 to-tryonyou-blue/20 border-b border-white/10">
+      <div className={`border-b transition-colors duration-300 ${
+        isDark 
+          ? 'bg-gradient-to-r from-tryonyou-blue/20 via-amparo-light/10 to-tryonyou-blue/20 border-white/10' 
+          : 'bg-gradient-to-r from-tryonyou-gold/10 via-gold-light/5 to-tryonyou-gold/10 border-gray-200'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
-              <h3 className="text-xl font-bold mb-1">Want to integrate TryOnYou with your brand?</h3>
-              <p className="text-white/60">Reduce returns by up to 75% with our technology</p>
+              <h3 className={`text-xl font-bold mb-1 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+                Want to integrate TryOnYou with your brand?
+              </h3>
+              <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>
+                Reduce returns by up to 75% with our technology
+              </p>
             </div>
             <a 
               href="mailto:hello@tryonyou.app" 
-              className="btn-primary whitespace-nowrap group"
+              className="btn-gold whitespace-nowrap group"
             >
               Request a Demo
-              <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform inline" />
             </a>
           </div>
         </div>
@@ -60,23 +75,12 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-tryonyou-blue to-tryonyou-darkblue flex items-center justify-center">
-                <svg viewBox="0 0 40 40" fill="none" className="w-6 h-6">
-                  <circle cx="20" cy="20" r="18" fill="url(#footer-logo-gradient)" />
-                  <circle cx="20" cy="20" r="6" fill="#D4AF37" />
-                  <defs>
-                    <radialGradient id="footer-logo-gradient">
-                      <stop offset="0%" stopColor="#00A8E8" />
-                      <stop offset="100%" stopColor="#003459" />
-                    </radialGradient>
-                  </defs>
-                </svg>
-              </div>
+              <img src={getLogoPath('logo.png')} alt="TRYONYOU" className="h-12 w-auto" />
               <span className="font-display text-xl font-bold gradient-text">
                 TRYONYOU
               </span>
             </div>
-            <p className="text-sm text-white/60 mb-4 max-w-xs">
+            <p className={`text-sm mb-4 max-w-xs ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>
               Your trusted virtual fitting room. Find the perfect outfit without infinite returns.
             </p>
             <div className="flex space-x-3">
@@ -86,10 +90,16 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-lg glass flex items-center justify-center hover:bg-tryonyou-blue/20 transition-colors group"
+                  className={`w-10 h-10 rounded-lg flex items-center justify-center transition-colors group ${
+                    isDark 
+                      ? 'glass hover:bg-tryonyou-blue/20' 
+                      : 'bg-gray-100 hover:bg-tryonyou-gold/20'
+                  }`}
                   aria-label={social.label}
                 >
-                  <social.icon size={18} className="group-hover:text-tryonyou-blue transition-colors" />
+                  <social.icon size={18} className={`transition-colors ${
+                    isDark ? 'group-hover:text-tryonyou-blue' : 'group-hover:text-tryonyou-gold'
+                  }`} />
                 </a>
               ))}
             </div>
@@ -97,13 +107,19 @@ const Footer = () => {
 
           {/* Product Links */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Product</h3>
+            <h3 className={`font-semibold mb-4 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+              Product
+            </h3>
             <ul className="space-y-2">
               {footerLinks.product.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-white/60 hover:text-tryonyou-blue transition-colors"
+                    className={`text-sm transition-colors ${
+                      isDark 
+                        ? 'text-white/60 hover:text-tryonyou-blue' 
+                        : 'text-anthracite/60 hover:text-tryonyou-gold'
+                    }`}
                   >
                     {link.label}
                   </Link>
@@ -114,13 +130,19 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Company</h3>
+            <h3 className={`font-semibold mb-4 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+              Company
+            </h3>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-white/60 hover:text-tryonyou-blue transition-colors"
+                    className={`text-sm transition-colors ${
+                      isDark 
+                        ? 'text-white/60 hover:text-tryonyou-blue' 
+                        : 'text-anthracite/60 hover:text-tryonyou-gold'
+                    }`}
                   >
                     {link.label}
                   </Link>
@@ -131,13 +153,19 @@ const Footer = () => {
 
           {/* Legal Links */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Legal</h3>
+            <h3 className={`font-semibold mb-4 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+              Legal
+            </h3>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.path}>
                   <Link
                     to={link.path}
-                    className="text-sm text-white/60 hover:text-tryonyou-blue transition-colors"
+                    className={`text-sm transition-colors ${
+                      isDark 
+                        ? 'text-white/60 hover:text-tryonyou-blue' 
+                        : 'text-anthracite/60 hover:text-tryonyou-gold'
+                    }`}
                   >
                     {link.label}
                   </Link>
@@ -148,15 +176,15 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10">
+        <div className={`pt-8 border-t ${isDark ? 'border-white/10' : 'border-gray-200'}`}>
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-white/60">
+            <p className={`text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>
               © {currentYear} TRYONYOU. All rights reserved.
             </p>
-            <p className="text-sm text-white/60 flex items-center gap-2">
-              Powered by <span className="text-tryonyou-blue font-semibold">Agent70</span> 
-              <span className="text-white/30">•</span>
-              <span className="text-tryonyou-blue font-semibold">DSX Engine</span>
+            <p className={`text-sm flex items-center gap-2 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>
+              Powered by <span className={`font-semibold ${isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'}`}>Agent70</span> 
+              <span className={isDark ? 'text-white/30' : 'text-anthracite/30'}>•</span>
+              <span className={`font-semibold ${isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'}`}>DSX Engine</span>
             </p>
           </div>
         </div>
@@ -166,4 +194,3 @@ const Footer = () => {
 }
 
 export default Footer
-

@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane, X, FileText } from 'lucide-react'
 import { getImageWithFallback, getRandomImagePath } from '../utils/assets'
+import { useTheme } from '../context/ThemeContext'
 import LookSheet from '../components/demo/LookSheet'
 import texts from '../data/texts.json'
 
 const Showroom = () => {
+  const { isDark } = useTheme()
   const [activeOccasion, setActiveOccasion] = useState('all')
   const [activeMood, setActiveMood] = useState('all')
   const [likedLooks, setLikedLooks] = useState([])
@@ -142,30 +144,41 @@ const Showroom = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-bg">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-amber-950 via-orange-900/50 to-tryonyou-black">
+      <section className="hero-showroom relative min-h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
+          <img 
+            src={getImageWithFallback('showroom-bg.jpg', 'wardrobe')} 
+            alt="Showroom"
+            className={`object-cover w-full h-full ${isDark ? 'opacity-30' : 'opacity-20'}`}
+            onError={(e) => { e.target.style.display = 'none' }}
+          />
+          <div className={`absolute inset-0 ${
+            isDark 
+              ? 'bg-gradient-to-b from-tryonyou-black/80 via-tryonyou-black/60 to-tryonyou-black' 
+              : 'bg-gradient-to-b from-white/60 via-white/40 to-[#FAFAFA]'
+          }`}></div>
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-amber-500/20 rounded-full blur-[120px] animate-float" />
           <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-orange-500/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
         </div>
 
-        <div className="relative z-10 section-container text-center">
+        <div className="relative z-10 text-center section-container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
-              <Sparkles size={18} className="text-amber-400" />
-              <span className="text-amber-300 font-semibold">Smart Showroom</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full glass">
+              <Sparkles size={18} className={isDark ? 'text-amber-400' : 'text-amber-500'} />
+              <span className={`font-semibold ${isDark ? 'text-amber-300' : 'text-amber-600'}`}>Smart Showroom</span>
             </div>
             
-            <h1 className="heading-xl mb-6 gradient-text">
+            <h1 className="mb-6 heading-xl gradient-text">
               {texts.showroom.title}
             </h1>
             
-            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+            <p className={`text-xl max-w-3xl mx-auto mb-8 ${isDark ? 'text-white/80' : 'text-anthracite/80'}`}>
               {texts.showroom.promo.description}
             </p>
           </motion.div>
@@ -173,24 +186,30 @@ const Showroom = () => {
       </section>
 
       {/* Filters */}
-      <section className="py-8 bg-tryonyou-smoke/30 sticky top-20 z-30">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className={`py-8 sticky top-20 z-30 transition-colors duration-300 ${
+        isDark ? 'bg-tryonyou-smoke/30' : 'bg-gray-100'
+      }`}>
+        <div className="px-4 mx-auto max-w-7xl">
           <div className="flex flex-col gap-4">
             {/* Occasion Filter */}
             <div>
-              <div className="text-sm text-white/60 mb-2 flex items-center gap-2">
+              <div className={`text-sm mb-2 flex items-center gap-2 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>
                 <Filter size={14} />
                 Occasion
               </div>
-              <div className="flex gap-2 overflow-x-auto pb-2">
+              <div className="flex gap-2 pb-2 overflow-x-auto">
                 {occasions.map((occ) => (
                   <button
                     key={occ.id}
                     onClick={() => setActiveOccasion(occ.id)}
                     className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
                       activeOccasion === occ.id
-                        ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
-                        : 'glass text-white/70 hover:text-white'
+                        ? isDark 
+                          ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50' 
+                          : 'bg-amber-500/20 text-amber-700 border border-amber-500/50'
+                        : isDark 
+                          ? 'glass text-white/70 hover:text-white' 
+                          : 'bg-white text-anthracite/70 hover:text-anthracite border border-gray-200'
                     }`}
                   >
                     <occ.icon size={16} />
@@ -202,16 +221,20 @@ const Showroom = () => {
 
             {/* Mood Filter */}
             <div>
-              <div className="text-sm text-white/60 mb-2">Mood</div>
-              <div className="flex gap-2 overflow-x-auto pb-2">
+              <div className={`text-sm mb-2 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Mood</div>
+              <div className="flex gap-2 pb-2 overflow-x-auto">
                 {moods.map((mood) => (
                   <button
                     key={mood.id}
                     onClick={() => setActiveMood(mood.id)}
                     className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
                       activeMood === mood.id
-                        ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
-                        : 'glass text-white/70 hover:text-white'
+                        ? isDark 
+                          ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50' 
+                          : 'bg-amber-500/20 text-amber-700 border border-amber-500/50'
+                        : isDark 
+                          ? 'glass text-white/70 hover:text-white' 
+                          : 'bg-white text-anthracite/70 hover:text-anthracite border border-gray-200'
                     }`}
                   >
                     <span>{mood.emoji}</span>
@@ -233,16 +256,18 @@ const Showroom = () => {
         >
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-2xl font-bold">
+              <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-anthracite'}`}>
                 {filteredLooks.length} looks found
               </h2>
-              <p className="text-white/60">Personalized for you</p>
+              <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Personalized for you</p>
             </div>
             
             {likedLooks.length > 0 && (
-              <div className="flex items-center gap-2 glass px-4 py-2 rounded-full">
+              <div className={`flex items-center gap-2 px-4 py-2 rounded-full ${
+                isDark ? 'glass' : 'bg-white border border-gray-200'
+              }`}>
                 <Heart size={18} className="text-rose-500 fill-rose-500" />
-                <span className="font-semibold">{likedLooks.length} favorites</span>
+                <span className={`font-semibold ${isDark ? 'text-white' : 'text-anthracite'}`}>{likedLooks.length} favorites</span>
               </div>
             )}
           </div>
@@ -250,7 +275,7 @@ const Showroom = () => {
           <AnimatePresence mode="popLayout">
             <motion.div 
               layout
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
             >
               {filteredLooks.map((look, index) => (
                 <motion.div
@@ -265,12 +290,12 @@ const Showroom = () => {
                   <div className="card h-full hover:scale-[1.02] transition-all duration-300 flex flex-col">
                     {/* Image Preview */}
                     <div className="relative mb-4">
-                      <div className="h-64 rounded-xl overflow-hidden bg-gradient-to-br from-gray-800 to-gray-900 relative">
+                      <div className="relative h-64 overflow-hidden rounded-xl bg-gradient-to-br from-gray-800 to-gray-900">
                         {look.image ? (
                           <img 
                             src={getImageWithFallback(look.image, 'wardrobe')} 
                             alt={look.name}
-                            className="w-full h-full object-cover"
+                            className="object-cover w-full h-full"
                             onError={(e) => {
                               // Try fallback with random image
                               e.target.src = getRandomImagePath()
@@ -299,13 +324,13 @@ const Showroom = () => {
                       </div>
                       
                       {/* Match Badge */}
-                      <div className="absolute top-3 left-3 flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur-sm">
+                      <div className="absolute flex items-center gap-1 px-2 py-1 rounded-full top-3 left-3 bg-black/60 backdrop-blur-sm">
                         <Zap size={12} className="text-amber-400" />
-                        <span className="text-amber-400 text-xs font-bold">{look.match}% match</span>
+                        <span className="text-xs font-bold text-amber-400">{look.match}% match</span>
                       </div>
                       
                       {/* Actions */}
-                      <div className="absolute top-3 right-3 flex gap-2">
+                      <div className="absolute flex gap-2 top-3 right-3">
                         <button
                           onClick={() => toggleLike(look.id)}
                           className={`p-2 rounded-full backdrop-blur-sm transition-all ${
@@ -319,13 +344,13 @@ const Showroom = () => {
                       </div>
                       
                       {/* View Overlay */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-xl gap-2">
+                      <div className="absolute inset-0 flex items-center justify-center gap-2 transition-opacity opacity-0 bg-black/60 group-hover:opacity-100 rounded-xl">
                         <button 
                           onClick={() => {
                             setSelectedLook(look)
                             setShowLookSheet(true)
                           }}
-                          className="btn-primary text-sm"
+                          className="text-sm btn-primary"
                         >
                           <Eye size={16} className="mr-2" />
                           View Look
@@ -335,7 +360,7 @@ const Showroom = () => {
                             setSelectedLook(look)
                             setShowLookSheet(true)
                           }}
-                          className="glass px-3 py-2 rounded-lg text-sm hover:bg-white/10"
+                          className="px-3 py-2 text-sm rounded-lg glass hover:bg-white/10"
                         >
                           <FileText size={16} />
                         </button>
@@ -343,9 +368,11 @@ const Showroom = () => {
                     </div>
                     
                     {/* Content */}
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex flex-col flex-1">
                       <div className="flex items-start justify-between mb-2">
-                        <h3 className="text-lg font-bold group-hover:text-amber-400 transition-colors">
+                        <h3 className={`text-lg font-bold transition-colors ${
+                          isDark ? 'group-hover:text-amber-400' : 'group-hover:text-amber-600'
+                        }`}>
                           {look.name}
                         </h3>
                         <div className="flex items-center gap-1 text-yellow-400">
@@ -354,24 +381,24 @@ const Showroom = () => {
                         </div>
                       </div>
                       
-                      <div className="space-y-1 mb-4 flex-1">
+                      <div className="flex-1 mb-4 space-y-1">
                         {look.items.map((item, i) => (
-                          <div key={i} className="flex items-center text-sm text-white/60">
-                            <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mr-2" />
+                          <div key={i} className={`flex items-center text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>
+                            <div className={`w-1.5 h-1.5 rounded-full mr-2 ${isDark ? 'bg-amber-400' : 'bg-amber-500'}`} />
                             {item}
                           </div>
                         ))}
                       </div>
                       
-                      <div className="flex items-center justify-between pt-3 border-t border-white/10">
-                        <div className="flex items-center gap-4 text-xs text-white/50">
+                      <div className={`flex items-center justify-between pt-3 border-t ${isDark ? 'border-white/10' : 'border-gray-200'}`}>
+                        <div className={`flex items-center gap-4 text-xs ${isDark ? 'text-white/50' : 'text-anthracite/50'}`}>
                           <span className="flex items-center gap-1">
                             <Eye size={12} />
                             {look.views.toLocaleString()}
                           </span>
                           <span className="capitalize">{occasions.find(o => o.id === look.occasion)?.name}</span>
                         </div>
-                        <button className="text-amber-400 hover:text-amber-300 transition-colors">
+                        <button className={`transition-colors ${isDark ? 'text-amber-400 hover:text-amber-300' : 'text-amber-500 hover:text-amber-600'}`}>
                           <ShoppingBag size={18} />
                         </button>
                       </div>
@@ -386,11 +413,11 @@ const Showroom = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center py-16"
+              className="py-16 text-center"
             >
-              <Sparkles size={64} className="text-white/20 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">No looks found for this combination</h3>
-              <p className="text-white/60 mb-6">Try changing the filters</p>
+              <Sparkles size={64} className={`mx-auto mb-4 ${isDark ? 'text-white/20' : 'text-anthracite/20'}`} />
+              <h3 className={`text-xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>No looks found for this combination</h3>
+              <p className={`mb-6 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Try changing the filters</p>
               <button 
                 onClick={() => { setActiveOccasion('all'); setActiveMood('all'); }}
                 className="btn-metallic"
@@ -403,7 +430,9 @@ const Showroom = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-container bg-gradient-to-br from-amber-900/30 to-orange-900/20">
+      <section className={`section-container ${
+        isDark ? 'bg-gradient-to-br from-amber-900/30 to-orange-900/20' : 'bg-gradient-to-br from-amber-100/50 to-orange-100/30'
+      }`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -411,18 +440,18 @@ const Showroom = () => {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <h2 className="heading-lg mb-6 gradient-text">
+          <h2 className="mb-6 heading-lg gradient-text">
             Want personalized looks?
           </h2>
-          <p className="text-lg text-white/80 mb-8">
+          <p className={`text-lg mb-8 ${isDark ? 'text-white/80' : 'text-anthracite/80'}`}>
             Create your avatar and receive perfect recommendations for your style
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="/my-avatar" className="btn-primary text-lg px-8 py-4">
+            <a href="/my-avatar" className="px-8 py-4 text-lg btn-primary">
               Create My Avatar
               <ArrowRight className="inline ml-2" size={20} />
             </a>
-            <a href="/wardrobe" className="btn-metallic text-lg px-8 py-4">
+            <a href="/wardrobe" className="px-8 py-4 text-lg btn-metallic">
               View My Wardrobe
             </a>
           </div>
@@ -436,7 +465,7 @@ const Showroom = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
             onClick={() => setShowLookSheet(false)}
           >
             <motion.div
@@ -446,11 +475,11 @@ const Showroom = () => {
               className="card max-w-3xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex justify-between items-start mb-6">
-                <h2 className="text-2xl font-bold">{selectedLook.name}</h2>
+              <div className="flex items-start justify-between mb-6">
+                <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-anthracite'}`}>{selectedLook.name}</h2>
                 <button 
                   onClick={() => setShowLookSheet(false)}
-                  className="p-2 glass rounded-lg hover:bg-white/10"
+                  className={`p-2 rounded-lg ${isDark ? 'glass hover:bg-white/10' : 'bg-gray-100 hover:bg-gray-200'}`}
                 >
                   <X size={20} />
                 </button>

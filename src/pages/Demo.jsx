@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Palette, Ruler, Sparkles, ArrowRight, Check } from 'lucide-react'
+import { useTheme } from '../context/ThemeContext'
 import UserProfile from '../components/demo/UserProfile'
 import ColorProfile from '../components/demo/ColorProfile'
 import Measurements from '../components/demo/Measurements'
 
 const Demo = () => {
+  const { isDark } = useTheme()
   const navigate = useNavigate()
   const [currentStep, setCurrentStep] = useState(0)
   const [demoData, setDemoData] = useState({
@@ -49,9 +51,11 @@ const Demo = () => {
   const CurrentComponent = steps[currentStep].component
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-bg">
       {/* Progress Bar */}
-      <section className="bg-tryonyou-smoke/50 sticky top-20 z-30">
+      <section className={`sticky top-20 z-30 transition-colors duration-300 ${
+        isDark ? 'bg-tryonyou-smoke/50' : 'bg-gray-100'
+      }`}>
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {steps.map((step, index) => (
@@ -61,7 +65,7 @@ const Demo = () => {
                     className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
                       index <= currentStep
                         ? 'bg-tryonyou-blue text-white'
-                        : 'glass text-white/40'
+                        : isDark ? 'glass text-white/40' : 'bg-gray-200 text-anthracite/40'
                     }`}
                   >
                     {index < currentStep ? (
@@ -71,14 +75,16 @@ const Demo = () => {
                     )}
                   </div>
                   <span className={`ml-2 text-sm font-medium hidden sm:block ${
-                    index <= currentStep ? 'text-white' : 'text-white/40'
+                    index <= currentStep 
+                      ? isDark ? 'text-white' : 'text-anthracite' 
+                      : isDark ? 'text-white/40' : 'text-anthracite/40'
                   }`}>
                     {step.title}
                   </span>
                 </div>
                 {index < steps.length - 1 && (
                   <div className={`flex-1 h-0.5 mx-2 ${
-                    index < currentStep ? 'bg-tryonyou-blue' : 'bg-white/10'
+                    index < currentStep ? 'bg-tryonyou-blue' : isDark ? 'bg-white/10' : 'bg-gray-300'
                   }`} />
                 )}
               </React.Fragment>
@@ -98,14 +104,16 @@ const Demo = () => {
               exit={{ opacity: 0, y: -20 }}
               className="max-w-2xl mx-auto text-center"
             >
-              <div className="card bg-gradient-to-br from-tryonyou-blue/20 to-purple-500/20 border-tryonyou-blue/30">
+              <div className={`card bg-gradient-to-br from-tryonyou-blue/20 to-purple-500/20 ${
+                isDark ? 'border-tryonyou-blue/30' : 'border-tryonyou-gold/30'
+              }`}>
                 <div className="w-20 h-20 rounded-full bg-gradient-to-br from-tryonyou-blue to-purple-500 flex items-center justify-center mx-auto mb-6">
                   <Check size={40} className="text-white" />
                 </div>
                 <h2 className="heading-lg mb-4 gradient-text">
                   Demo Profile Complete!
                 </h2>
-                <p className="text-white/70 mb-8">
+                <p className={`mb-8 ${isDark ? 'text-white/70' : 'text-anthracite/70'}`}>
                   Your profile has been created. Let's generate your 3D avatar.
                 </p>
                 <button

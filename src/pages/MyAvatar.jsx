@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Camera, Ruler, Palette, Sparkles, Check, ArrowRight, ChevronRight, Scan, Wand2 } from 'lucide-react'
 import Avatar3D from '../components/Avatar3D'
+import { useTheme } from '../context/ThemeContext'
+import { getImageWithFallback } from '../utils/assets'
 
 const MyAvatar = () => {
+  const { isDark } = useTheme()
   const [currentStep, setCurrentStep] = useState(0)
   const [avatarData, setAvatarData] = useState({
     bodyType: '',
@@ -60,11 +63,11 @@ const MyAvatar = () => {
       case 0:
         return (
           <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">What's your body type?</h3>
-              <p className="text-white/60">Select the one that best matches your figure</p>
+            <div className="mb-8 text-center">
+              <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>What's your body type?</h3>
+              <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Select the one that best matches your figure</p>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
               {bodyTypes.map((type) => (
                 <motion.button
                   key={type.id}
@@ -77,9 +80,9 @@ const MyAvatar = () => {
                       : 'glass hover:bg-white/10'
                   }`}
                 >
-                  <div className="text-5xl mb-3">{type.icon}</div>
-                  <div className="font-semibold mb-1">{type.name}</div>
-                  <div className="text-xs text-white/60">{type.description}</div>
+                  <div className="mb-3 text-5xl">{type.icon}</div>
+                  <div className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-anthracite'}`}>{type.name}</div>
+                  <div className={`text-xs ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>{type.description}</div>
                 </motion.button>
               ))}
             </div>
@@ -88,35 +91,35 @@ const MyAvatar = () => {
       
       case 1:
         return (
-          <div className="space-y-8 max-w-xl mx-auto">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">Your Measurements</h3>
-              <p className="text-white/60">This helps us find your perfect size</p>
+          <div className="max-w-xl mx-auto space-y-8">
+            <div className="mb-8 text-center">
+              <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Your Measurements</h3>
+              <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>This helps us find your perfect size</p>
             </div>
             
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Height (cm)</label>
+                <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Height (cm)</label>
                 <input
                   type="number"
                   placeholder="170"
                   value={avatarData.height}
                   onChange={(e) => setAvatarData({ ...avatarData, height: e.target.value })}
-                  className="w-full px-4 py-4 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-xl text-center"
+                  className="w-full px-4 py-4 text-xl text-center bg-transparent rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue"
                 />
               </div>
               
               <div className="card bg-gradient-to-br from-violet-500/10 to-purple-500/10">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
-                    <Scan size={24} />
+                  <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-violet-500 to-purple-500">
+                    <Scan size={24} className="text-white" />
                   </div>
                   <div>
-                    <h4 className="font-bold">3D Scan</h4>
-                    <p className="text-sm text-white/60">Precise measurements with your camera</p>
+                    <h4 className={`font-bold ${isDark ? 'text-white' : 'text-anthracite'}`}>3D Scan</h4>
+                    <p className={`text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Precise measurements with your camera</p>
                   </div>
                 </div>
-                <button className="w-full py-3 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                <button className="flex items-center justify-center w-full gap-2 py-3 font-semibold transition-opacity rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 hover:opacity-90">
                   <Camera size={20} />
                   Start Scan
                 </button>
@@ -128,14 +131,14 @@ const MyAvatar = () => {
       case 2:
         return (
           <div className="space-y-8">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">Your Appearance</h3>
-              <p className="text-white/60">Customize your avatar details</p>
+            <div className="mb-8 text-center">
+              <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Your Appearance</h3>
+              <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Customize your avatar details</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
               <div>
-                <h4 className="font-semibold mb-4 flex items-center gap-2">
+                <h4 className={`font-semibold mb-4 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
                   <Palette size={18} />
                   Skin Tone
                 </h4>
@@ -161,7 +164,7 @@ const MyAvatar = () => {
               </div>
               
               <div>
-                <h4 className="font-semibold mb-4 flex items-center gap-2">
+                <h4 className={`font-semibold mb-4 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
                   <Sparkles size={18} />
                   Hair Color
                 </h4>
@@ -192,12 +195,12 @@ const MyAvatar = () => {
       case 3:
         return (
           <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">Your Personal Style</h3>
-              <p className="text-white/60">This helps us recommend perfect outfits for you</p>
+            <div className="mb-8 text-center">
+              <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>Your Personal Style</h3>
+              <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>This helps us recommend perfect outfits for you</p>
             </div>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            <div className="grid max-w-4xl grid-cols-2 gap-4 mx-auto md:grid-cols-3">
               {styles.map((style) => (
                 <motion.button
                   key={style.id}
@@ -210,9 +213,9 @@ const MyAvatar = () => {
                       : 'glass hover:bg-white/10'
                   }`}
                 >
-                  <div className="text-4xl mb-3">{style.icon}</div>
-                  <div className="font-semibold mb-1">{style.name}</div>
-                  <div className="text-xs text-white/60">{style.description}</div>
+                  <div className="mb-3 text-4xl">{style.icon}</div>
+                  <div className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-anthracite'}`}>{style.name}</div>
+                  <div className={`text-xs ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>{style.description}</div>
                 </motion.button>
               ))}
             </div>
@@ -225,30 +228,41 @@ const MyAvatar = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen transition-colors duration-300 page-bg">
       {/* Hero Section */}
-      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-violet-950 via-purple-900/50 to-tryonyou-black">
+      <section className="relative min-h-[40vh] flex items-center justify-center overflow-hidden hero-avatar">
         <div className="absolute inset-0">
+          <img 
+            src={getImageWithFallback('my-avatar-bg.png', 'avatar')} 
+            alt="My Avatar"
+            className={`object-cover object-top w-full h-full ${isDark ? 'opacity-30' : 'opacity-20'}`}
+            onError={(e) => { e.target.style.display = 'none' }}
+          />
+          <div className={`absolute inset-0 ${
+            isDark 
+              ? 'bg-gradient-to-b from-tryonyou-black/80 via-tryonyou-black/60 to-tryonyou-black' 
+              : 'bg-gradient-to-b from-white/60 via-white/40 to-[#FAFAFA]'
+          }`}></div>
           <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-violet-500/20 rounded-full blur-[100px] animate-float" />
           <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-purple-500/15 rounded-full blur-[80px] animate-float" style={{ animationDelay: '2s' }} />
         </div>
 
-        <div className="relative z-10 section-container text-center">
+        <div className="relative z-10 text-center section-container">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full glass">
               <User size={18} className="text-violet-400" />
-              <span className="text-violet-300 font-semibold">Your Digital Twin</span>
+              <span className="font-semibold text-violet-300">Your Digital Twin</span>
             </div>
             
-            <h1 className="heading-xl mb-6 gradient-text">
+            <h1 className="mb-6 heading-xl gradient-text">
               My Avatar
             </h1>
             
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            <p className={`text-xl max-w-2xl mx-auto ${isDark ? 'text-white/80' : 'text-anthracite/70'}`}>
               Create your personalized avatar to try on clothes virtually with perfect precision
             </p>
           </motion.div>
@@ -256,8 +270,8 @@ const MyAvatar = () => {
       </section>
 
       {/* Progress Steps */}
-      <section className="py-8 bg-tryonyou-smoke/30">
-        <div className="max-w-4xl mx-auto px-4">
+      <section className={`py-8 ${isDark ? 'bg-tryonyou-smoke/30' : 'bg-gray-100'}`}>
+        <div className="max-w-4xl px-4 mx-auto">
           <div className="flex items-center justify-between">
             {steps.map((step, index) => (
               <React.Fragment key={step.id}>
@@ -281,12 +295,12 @@ const MyAvatar = () => {
                       <step.icon size={24} />
                     )}
                   </div>
-                  <span className="text-xs font-medium hidden md:block">{step.title}</span>
+                  <span className="hidden text-xs font-medium md:block">{step.title}</span>
                 </motion.button>
                 
                 {index < steps.length - 1 && (
                   <div className={`flex-1 h-1 mx-2 rounded-full transition-all ${
-                    currentStep > index ? 'bg-tryonyou-blue' : 'bg-white/10'
+                    currentStep > index ? 'bg-tryonyou-blue' : isDark ? 'bg-white/10' : 'bg-gray-300'
                   }`} />
                 )}
               </React.Fragment>
@@ -298,15 +312,15 @@ const MyAvatar = () => {
       {/* Main Content */}
       <section className="section-container">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* Avatar Preview */}
             <motion.div 
               className="lg:col-span-1"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
             >
-              <div className="card sticky top-24">
-                <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+              <div className="sticky card top-24">
+                <h3 className={`text-lg font-bold mb-4 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
                   <Wand2 size={20} className="text-tryonyou-blue" />
                   Preview
                 </h3>
@@ -326,20 +340,20 @@ const MyAvatar = () => {
                 <div className="mt-4 space-y-2">
                   {avatarData.bodyType && (
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Body:</span>
-                      <span className="capitalize">{bodyTypes.find(b => b.id === avatarData.bodyType)?.name}</span>
+                      <span className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Body:</span>
+                      <span className={`capitalize ${isDark ? 'text-white' : 'text-anthracite'}`}>{bodyTypes.find(b => b.id === avatarData.bodyType)?.name}</span>
                     </div>
                   )}
                   {avatarData.height && (
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Height:</span>
-                      <span>{avatarData.height} cm</span>
+                      <span className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Height:</span>
+                      <span className={isDark ? 'text-white' : 'text-anthracite'}>{avatarData.height} cm</span>
                     </div>
                   )}
                   {avatarData.style && (
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-white/60">Style:</span>
-                      <span className="capitalize">{styles.find(s => s.id === avatarData.style)?.name}</span>
+                      <span className={isDark ? 'text-white/60' : 'text-anthracite/60'}>Style:</span>
+                      <span className={`capitalize ${isDark ? 'text-white' : 'text-anthracite'}`}>{styles.find(s => s.id === avatarData.style)?.name}</span>
                     </div>
                   )}
                 </div>
@@ -382,13 +396,13 @@ const MyAvatar = () => {
                 {currentStep < steps.length - 1 ? (
                   <button
                     onClick={() => setCurrentStep(currentStep + 1)}
-                    className="btn-primary flex items-center gap-2"
+                    className="flex items-center gap-2 btn-primary"
                   >
                     Next
                     <ChevronRight size={20} />
                   </button>
                 ) : (
-                  <button className="btn-primary flex items-center gap-2">
+                  <button className="flex items-center gap-2 btn-primary">
                     <Sparkles size={20} />
                     Create Avatar
                   </button>

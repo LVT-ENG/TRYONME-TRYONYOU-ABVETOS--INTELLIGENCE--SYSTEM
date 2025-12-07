@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRight, ArrowLeft, Globe, Users, Calendar } from 'lucide-react'
+import { useTheme } from '../../context/ThemeContext'
 
 const UserProfile = ({ data, onNext, onBack, canGoBack }) => {
+  const { isDark } = useTheme()
   const [formData, setFormData] = useState({
     country: data?.profile?.country || '',
     ethnicity: data?.profile?.ethnicity || '',
@@ -51,23 +53,27 @@ const UserProfile = ({ data, onNext, onBack, canGoBack }) => {
       className="card"
     >
       <h2 className="heading-md mb-2 gradient-text">Your Profile</h2>
-      <p className="text-white/60 mb-6">Tell us about yourself</p>
+      <p className={`mb-6 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Tell us about yourself</p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium mb-2 flex items-center gap-2">
-            <Globe size={16} className="text-tryonyou-blue" />
+          <label className={`text-sm font-medium mb-2 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+            <Globe size={16} className={isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'} />
             Country / Region
           </label>
           <select
             value={formData.country}
             onChange={(e) => setFormData({ ...formData, country: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-white"
+            className={`w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 ${
+              isDark 
+                ? 'bg-white/5 border-white/10 text-white focus:ring-tryonyou-blue' 
+                : 'bg-white border-gray-200 text-anthracite focus:ring-tryonyou-gold'
+            }`}
             required
           >
             <option value="">Select...</option>
             {countries.map((country) => (
-              <option key={country.value} value={country.value} className="bg-tryonyou-black">
+              <option key={country.value} value={country.value} className={isDark ? 'bg-tryonyou-black' : 'bg-white'}>
                 {country.label}
               </option>
             ))}
@@ -75,19 +81,23 @@ const UserProfile = ({ data, onNext, onBack, canGoBack }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 flex items-center gap-2">
-            <Users size={16} className="text-tryonyou-blue" />
+          <label className={`text-sm font-medium mb-2 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+            <Users size={16} className={isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'} />
             Ethnic Group
           </label>
           <select
             value={formData.ethnicity}
             onChange={(e) => setFormData({ ...formData, ethnicity: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-white"
+            className={`w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 ${
+              isDark 
+                ? 'bg-white/5 border-white/10 text-white focus:ring-tryonyou-blue' 
+                : 'bg-white border-gray-200 text-anthracite focus:ring-tryonyou-gold'
+            }`}
             required
           >
             <option value="">Select...</option>
             {ethnicities.map((ethnicity) => (
-              <option key={ethnicity.value} value={ethnicity.value} className="bg-tryonyou-black">
+              <option key={ethnicity.value} value={ethnicity.value} className={isDark ? 'bg-tryonyou-black' : 'bg-white'}>
                 {ethnicity.label}
               </option>
             ))}
@@ -95,19 +105,23 @@ const UserProfile = ({ data, onNext, onBack, canGoBack }) => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-2 flex items-center gap-2">
-            <Calendar size={16} className="text-tryonyou-blue" />
+          <label className={`text-sm font-medium mb-2 flex items-center gap-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>
+            <Calendar size={16} className={isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'} />
             Age Range
           </label>
           <select
             value={formData.age}
             onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent text-white"
+            className={`w-full px-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 ${
+              isDark 
+                ? 'bg-white/5 border-white/10 text-white focus:ring-tryonyou-blue' 
+                : 'bg-white border-gray-200 text-anthracite focus:ring-tryonyou-gold'
+            }`}
             required
           >
             <option value="">Select...</option>
             {ageRanges.map((age) => (
-              <option key={age.value} value={age.value} className="bg-tryonyou-black">
+              <option key={age.value} value={age.value} className={isDark ? 'bg-tryonyou-black' : 'bg-white'}>
                 {age.label}
               </option>
             ))}

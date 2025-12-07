@@ -3,6 +3,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls, Environment, ContactShadows, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { motion } from 'framer-motion'
+import { useTheme } from '../context/ThemeContext'
 
 // 3D Model Loader Component
 function AvatarModel({ modelPath, customizations = {} }) {
@@ -130,12 +131,12 @@ function AvatarModel({ modelPath, customizations = {} }) {
 }
 
 // Platform/stage for avatar
-function Stage() {
+function Stage({ isDark }) {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -2.7, 0]} receiveShadow>
       <circleGeometry args={[2, 64]} />
       <meshStandardMaterial 
-        color="#f5f5f5" 
+        color={isDark ? "#1a1a1a" : "#f5f5f5"} 
         roughness={0.8}
         metalness={0.1}
       />
@@ -161,6 +162,7 @@ export default function Avatar3D({
   height = '100%',
 }) {
   const [isLoading, setIsLoading] = useState(true)
+  const { isDark } = useTheme()
 
   useEffect(() => {
     // Check if model exists
@@ -176,7 +178,7 @@ export default function Avatar3D({
         camera={{ position: [0, 0, 5], fov: 45 }}
         gl={{ antialias: true, alpha: true }}
       >
-        <color attach="background" args={['#fafafa']} />
+        <color attach="background" args={[isDark ? '#0a0a0a' : '#fafafa']} />
         
         {/* Lighting */}
         <ambientLight intensity={0.6} />
@@ -194,7 +196,7 @@ export default function Avatar3D({
             modelPath={modelPath} 
             customizations={customizations} 
           />
-          <Stage />
+          <Stage isDark={isDark} />
           <ContactShadows
             position={[0, -2.69, 0]}
             opacity={0.4}

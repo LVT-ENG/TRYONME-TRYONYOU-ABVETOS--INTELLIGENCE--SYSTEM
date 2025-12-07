@@ -3,8 +3,10 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Target, Sparkles, User, ShoppingBag, Shield, Zap, TrendingUp, ArrowRight, Download, Play } from 'lucide-react'
 import texts from '../data/texts.json'
+import { useTheme } from '../context/ThemeContext'
 
 const LafayetteDemo = () => {
+  const { isDark } = useTheme()
   const demoHighlights = [
     { icon: Target, text: 'Ultra-precise virtual fitting with millimetric alignment', color: 'text-amber-400' },
     { icon: User, text: 'Photorealistic 3D avatar generation', color: 'text-blue-400' },
@@ -29,9 +31,9 @@ const LafayetteDemo = () => {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-bg transition-colors duration-300">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-amber-950 via-yellow-900/50 to-tryonyou-black">
+      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden hero-lafayette">
         <div className="absolute inset-0">
           <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-amber-500/20 rounded-full blur-[120px] animate-float" />
           <div className="absolute bottom-1/4 left-1/4 w-[400px] h-[400px] bg-yellow-500/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
@@ -52,7 +54,7 @@ const LafayetteDemo = () => {
               Lafayette Exclusive Demo
             </h1>
             
-            <p className="text-xl text-white/80 max-w-3xl mx-auto">
+            <p className={`text-xl max-w-3xl mx-auto ${isDark ? 'text-white/80' : 'text-anthracite/70'}`}>
               Premium virtual fitting experience for Lafayette partners and investors
             </p>
           </motion.div>
@@ -60,7 +62,7 @@ const LafayetteDemo = () => {
       </section>
 
       {/* Demo Highlights */}
-      <section className="section-container bg-tryonyou-smoke/30">
+      <section className={`section-container ${isDark ? 'bg-tryonyou-smoke/30' : 'bg-gray-100'}`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -85,7 +87,7 @@ const LafayetteDemo = () => {
                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${highlight.color.includes('amber') ? 'from-amber-500/20 to-amber-600/20' : highlight.color.includes('blue') ? 'from-blue-500/20 to-blue-600/20' : highlight.color.includes('purple') ? 'from-purple-500/20 to-purple-600/20' : highlight.color.includes('rose') ? 'from-rose-500/20 to-rose-600/20' : highlight.color.includes('green') ? 'from-green-500/20 to-green-600/20' : 'from-yellow-500/20 to-yellow-600/20'} flex items-center justify-center flex-shrink-0`}>
                     <highlight.icon size={24} className={highlight.color} />
                   </div>
-                  <p className="text-white/80 leading-relaxed">{highlight.text}</p>
+                  <p className={`leading-relaxed ${isDark ? 'text-white/80' : 'text-anthracite/80'}`}>{highlight.text}</p>
                 </div>
               </motion.div>
             ))}
@@ -107,7 +109,7 @@ const LafayetteDemo = () => {
               🏢 For Station F & Investors
             </h2>
             
-            <p className="text-white/70 mb-6 leading-relaxed">
+            <p className={`mb-6 leading-relaxed ${isDark ? 'text-white/70' : 'text-anthracite/70'}`}>
               This demo showcases the complete TRYONYOU ecosystem, including our patent-pending 
               technologies and ABVETOS intelligence layer.
             </p>
@@ -129,9 +131,9 @@ const LafayetteDemo = () => {
                   >
                     <div className="flex items-center gap-3 mb-2">
                       <tech.icon size={20} className="text-amber-400" />
-                      <h4 className="font-bold text-white">{tech.name}</h4>
+                      <h4 className={`font-bold ${isDark ? 'text-white' : 'text-anthracite'}`}>{tech.name}</h4>
                     </div>
-                    <p className="text-sm text-white/60">{tech.description}</p>
+                    <p className={`text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>{tech.description}</p>
                   </motion.div>
                 ))}
               </div>
@@ -141,7 +143,7 @@ const LafayetteDemo = () => {
       </section>
 
       {/* Business Model */}
-      <section className="section-container bg-tryonyou-smoke/30">
+      <section className={`section-container ${isDark ? 'bg-tryonyou-smoke/30' : 'bg-gray-100'}`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -165,8 +167,8 @@ const LafayetteDemo = () => {
                 <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${model.color} flex items-center justify-center mx-auto mb-4`}>
                   <TrendingUp size={32} className="text-white" />
                 </div>
-                <h3 className="text-2xl font-bold mb-2">{model.name}</h3>
-                <p className="text-white/60">{model.description}</p>
+                <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-anthracite'}`}>{model.name}</h3>
+                <p className={isDark ? 'text-white/60' : 'text-anthracite/60'}>{model.description}</p>
               </motion.div>
             ))}
           </div>

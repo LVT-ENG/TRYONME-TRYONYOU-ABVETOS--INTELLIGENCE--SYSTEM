@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, Star, Filter, Search, Heart, TrendingUp, ArrowRight, Sparkles } from 'lucide-react'
 import { getImageWithFallback, getLogoPath } from '../utils/assets'
+import { useTheme } from '../context/ThemeContext'
 import texts from '../data/texts.json'
 
 const Brands = () => {
+  const { isDark } = useTheme()
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -41,9 +43,9 @@ const Brands = () => {
   const featuredBrands = brands.filter(b => b.featured).slice(0, 4)
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-bg">
       {/* Hero Section */}
-      <section className="relative min-h-[50vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-rose-950 via-pink-900/50 to-tryonyou-black">
+      <section className="hero-brands relative min-h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-rose-500/20 rounded-full blur-[120px] animate-float" />
           <div className="absolute bottom-1/4 left-1/3 w-[400px] h-[400px] bg-pink-500/15 rounded-full blur-[100px] animate-float" style={{ animationDelay: '3s' }} />
@@ -56,15 +58,15 @@ const Brands = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
-              <ShoppingBag size={18} className="text-rose-400" />
-              <span className="text-rose-300 font-semibold">Verified Brands</span>
+              <ShoppingBag size={18} className={isDark ? 'text-rose-400' : 'text-rose-500'} />
+              <span className={`font-semibold ${isDark ? 'text-rose-300' : 'text-rose-600'}`}>Verified Brands</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
               {texts.brands.title}
             </h1>
             
-            <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
+            <p className={`text-xl max-w-3xl mx-auto mb-8 ${isDark ? 'text-white/80' : 'text-anthracite/80'}`}>
               {texts.brands.subtitle}
             </p>
           </motion.div>
@@ -72,7 +74,7 @@ const Brands = () => {
       </section>
 
       {/* Featured Brands */}
-      <section className="section-container bg-tryonyou-smoke/30">
+      <section className={`section-container ${isDark ? 'bg-tryonyou-smoke/30' : 'bg-gray-100/50'}`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -82,9 +84,9 @@ const Brands = () => {
           <div className="flex items-center justify-between mb-8">
             <div>
               <h2 className="heading-md gradient-text">Featured Brands</h2>
-              <p className="text-white/60 mt-2">Most popular among our users</p>
+              <p className={`mt-2 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>Most popular among our users</p>
             </div>
-            <TrendingUp className="text-tryonyou-blue" size={32} />
+            <TrendingUp className={isDark ? 'text-tryonyou-blue' : 'text-tryonyou-gold'} size={32} />
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -125,16 +127,20 @@ const Brands = () => {
                     </div>
                   </div>
                   
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-tryonyou-blue transition-colors">
+                  <h3 className={`text-xl font-bold mb-2 transition-colors ${
+                    isDark ? 'group-hover:text-tryonyou-blue' : 'group-hover:text-tryonyou-gold'
+                  }`}>
                     {brand.name}
                   </h3>
                   
-                  <div className="flex items-center justify-between text-sm text-white/60">
+                  <div className={`flex items-center justify-between text-sm ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>
                     <span>{brand.items} products</span>
-                    <span className="capitalize px-2 py-1 rounded-full bg-white/5">{brand.category}</span>
+                    <span className={`capitalize px-2 py-1 rounded-full ${isDark ? 'bg-white/5' : 'bg-gray-100'}`}>{brand.category}</span>
                   </div>
                   
-                  <button className="w-full mt-4 py-2 rounded-lg glass text-sm font-semibold hover:bg-tryonyou-blue/20 transition-colors flex items-center justify-center gap-2">
+                  <button className={`w-full mt-4 py-2 rounded-lg text-sm font-semibold transition-colors flex items-center justify-center gap-2 ${
+                    isDark ? 'glass hover:bg-tryonyou-blue/20' : 'bg-gray-100 hover:bg-tryonyou-gold/20'
+                  }`}>
                     <Heart size={16} />
                     View Collection
                   </button>
@@ -156,13 +162,15 @@ const Brands = () => {
           {/* Search and Filter */}
           <div className="flex flex-col md:flex-row gap-4 mb-8">
             <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={20} />
+              <Search className={`absolute left-4 top-1/2 -translate-y-1/2 ${isDark ? 'text-white/40' : 'text-anthracite/40'}`} size={20} />
               <input
                 type="text"
                 placeholder="Search brands..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent"
+                className={`w-full pl-12 pr-4 py-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent ${
+                  isDark ? 'glass' : 'bg-gray-100 border border-gray-200'
+                }`}
               />
             </div>
             
@@ -173,8 +181,8 @@ const Brands = () => {
                   onClick={() => setActiveCategory(cat.id)}
                   className={`px-4 py-2 rounded-lg font-medium whitespace-nowrap transition-all ${
                     activeCategory === cat.id
-                      ? 'bg-tryonyou-blue text-white'
-                      : 'glass text-white/70 hover:text-white'
+                      ? isDark ? 'bg-tryonyou-blue text-white' : 'bg-tryonyou-gold text-white'
+                      : isDark ? 'glass text-white/70 hover:text-white' : 'bg-gray-100 text-anthracite/70 hover:text-anthracite'
                   }`}
                 >
                   {cat.name}
@@ -227,17 +235,25 @@ const Brands = () => {
                       </div>
                     </div>
                     
-                    <h3 className="text-lg font-bold mb-1 group-hover:text-tryonyou-blue transition-colors">
+                    <h3 className={`text-lg font-bold mb-1 transition-colors ${
+                      isDark ? 'group-hover:text-tryonyou-blue' : 'group-hover:text-tryonyou-gold'
+                    }`}>
                       {brand.name}
                     </h3>
                     
-                    <p className="text-sm text-white/60 mb-4">{brand.items} products available</p>
+                    <p className={`text-sm mb-4 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>{brand.items} products available</p>
                     
                     <div className="flex items-center justify-between">
-                      <span className="text-xs px-3 py-1 rounded-full bg-white/5 text-white/60 capitalize">
+                      <span className={`text-xs px-3 py-1 rounded-full capitalize ${
+                        isDark ? 'bg-white/5 text-white/60' : 'bg-gray-100 text-anthracite/60'
+                      }`}>
                         {categories.find(c => c.id === brand.category)?.name}
                       </span>
-                      <ArrowRight size={18} className="text-white/40 group-hover:text-tryonyou-blue group-hover:translate-x-1 transition-all" />
+                      <ArrowRight size={18} className={`transition-all ${
+                        isDark 
+                          ? 'text-white/40 group-hover:text-tryonyou-blue group-hover:translate-x-1' 
+                          : 'text-anthracite/40 group-hover:text-tryonyou-gold group-hover:translate-x-1'
+                      }`} />
                     </div>
                   </div>
                 </motion.div>
@@ -246,16 +262,17 @@ const Brands = () => {
           </AnimatePresence>
           
           {filteredBrands.length === 0 && (
-            <div className="text-center py-16">
-              <Sparkles size={48} className="text-white/20 mx-auto mb-4" />
-              <p className="text-white/60">No brands found</p>
+            <div className={`text-center py-12 ${isDark ? 'text-white/60' : 'text-anthracite/60'}`}>
+              <p className="text-lg">No brands found matching your criteria</p>
             </div>
           )}
         </motion.div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-container bg-gradient-to-br from-rose-900/30 to-pink-900/20">
+      <section className={`section-container ${
+        isDark ? 'bg-gradient-to-br from-rose-900/30 to-pink-900/20' : 'bg-gradient-to-br from-rose-100/50 to-pink-100/30'
+      }`}>
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -266,7 +283,7 @@ const Brands = () => {
           <h2 className="heading-lg mb-6 gradient-text">
             {texts.brands.integrate_title}
           </h2>
-          <p className="text-lg text-white/80 mb-8">
+          <p className={`text-lg mb-8 ${isDark ? 'text-white/80' : 'text-anthracite/80'}`}>
             {texts.brands.integrate_description}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
