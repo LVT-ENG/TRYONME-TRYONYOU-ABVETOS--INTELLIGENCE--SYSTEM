@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Shirt, User, ShoppingBag, Wand2, MessageCircle, Play, Check, Star } from 'lucide-react'
+import { ArrowRight, Sparkles, Shirt, User, ShoppingBag, Wand2, MessageCircle, Play, Check, Star, FileText } from 'lucide-react'
 import { useTheme } from '../context/ThemeContext'
 import { getImagePath } from '../utils/assets'
 import texts from '../data/texts.json'
@@ -51,6 +51,13 @@ const Home = () => {
       description: texts.home.features.showroom.description,
       color: 'from-anthracite to-anthracite-dark',
       link: '/showroom'
+    },
+    {
+      icon: FileText,
+      title: texts.home.features.look_sheet.title,
+      description: texts.home.features.look_sheet.description,
+      color: 'from-tryonyou-gold to-gold-dark',
+      link: '/look'
     },
   ]
 
@@ -215,6 +222,7 @@ const Home = () => {
                      feature.title.includes('Intelligent') ? texts.home.features.intelligent_system.link_text :
                      feature.title.includes('Wardrobe') ? texts.home.features.smart_wardrobe.link_text :
                      feature.title.includes('Brand') ? texts.home.features.brand_selection.link_text :
+                     feature.title.includes('Look Sheet') ? texts.home.features.look_sheet.link_text :
                      texts.home.features.showroom.link_text}
                     <ArrowRight size={16} />
                   </Link>

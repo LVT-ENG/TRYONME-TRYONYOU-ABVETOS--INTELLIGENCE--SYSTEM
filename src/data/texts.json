@@ -38,6 +38,11 @@
         "title": "✨ Showroom",
         "description": "View your final looks in a photorealistic showroom environment.",
         "link_text": "Enter Showroom"
+      },
+      "look_sheet": {
+        "title": "📋 Look Sheet Export",
+        "description": "Générer un récapitulatif de looks pour le client ou l'enseigne.",
+        "link_text": "Generate Look Sheet"
       }
     },
     "lafayette_demo": {

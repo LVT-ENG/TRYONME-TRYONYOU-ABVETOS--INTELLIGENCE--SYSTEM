@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, ShoppingBag, User, Shirt, Sparkles, Wand2, MessageCircle, Home, Play, Sun, Moon } from 'lucide-react'
+import { Menu, X, ShoppingBag, User, Shirt, Sparkles, Wand2, MessageCircle, Home, Play, Sun, Moon, FileText } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 import { getLogoPath } from '../utils/assets'
@@ -28,8 +28,9 @@ const Navbar = () => {
   const navLinks = [
     { path: '/', label: 'Home', icon: Home },
     { path: '/demo', label: 'Demo', icon: Play },
-    { path: '/my-avatar', label: 'My Avatar', icon: User },
+    { path: '/my-avatar', label: 'Avatar', icon: User },
     { path: '/wardrobe', label: 'Wardrobe', icon: Shirt },
+    { path: '/look', label: 'Look Sheet', icon: FileText },
     { path: '/showroom', label: 'Showroom', icon: Sparkles },
   ]
 

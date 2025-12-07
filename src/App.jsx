@@ -15,6 +15,7 @@ import AskPeacock from './pages/AskPeacock'
 import LafayetteDemo from './pages/LafayetteDemo'
 import IntelligentSystem from './pages/IntelligentSystem'
 import Demo from './pages/Demo'
+import LookSheetPage from './pages/LookSheetPage'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/intelligent-system" element={<IntelligentSystem />} />
             <Route path="/demo" element={<Demo />} />
             <Route path="/avatar" element={<MyAvatar />} />
+            <Route path="/look" element={<LookSheetPage />} />
           </Routes>
         </main>
         <Footer />
