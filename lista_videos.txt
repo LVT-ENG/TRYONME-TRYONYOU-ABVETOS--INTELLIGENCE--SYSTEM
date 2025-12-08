@@ -1,0 +1,50 @@
+/Library/Application Support/com.apple.idleassetsd/Customer/4KSDR240FPS/6D6834A4-2F0F-479A-B053-7D4DC5CB8EB7.mov
+/System/Library/Desktop Pictures/.wallpapers/Sequoia Sunrise/Sequoia Sunrise.mov
+/System/Volumes/Data/Library/Application Support/com.apple.idleassetsd/Customer/4KSDR240FPS/6D6834A4-2F0F-479A-B053-7D4DC5CB8EB7.mov
+/System/Volumes/Data/System/Library/Desktop Pictures/.wallpapers/Sequoia Sunrise/Sequoia Sunrise.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-01-21 08_32_04.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-03-28 23_08_39.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-07-21 01_50_01.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2024-12-24 21_29_43.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-07 07_14_31.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-04 23_58_28.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-04 15_22_14.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-07-21 03_18_25.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/IMG_0012.MOV
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/IMG_0013.MOV
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-08-04 10_03_03.mov
+/System/Volumes/Data/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-04 15_44_49.mov
+/System/Volumes/Data/Users/mac/Library/Containers/com.apple.BKAgentService/Data/Documents/iBooks/Books/Audiobooks/sha1-f2c29c2b19c5ef7ffea5a261badfd622b10a08c6/Yandel, Feid  - Yandel 150 (Video Oficial).mp4
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/Mi película 2/Original Media/2025-03-29 01_47_04.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/Mi película 2/Original Media/2025-03-28 23_04_56.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/Mi película 2/Original Media/2025-03-28 23_01_38.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/2025-01-15 11_40_38.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/IMG_1066.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/2025-01-19 06_31_59.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/IMG_2767.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/22-12-24/Original Media/2025-04-20 11_59_13.mov
+/System/Volumes/Data/Users/mac/Movies/‹.imovielibrary/22-12-24/Original Media/2025-03-28 21_27_50.mov
+/System/Volumes/Data/Users/mac/Movies/Biblioteca iMovie.imovielibrary/28-10-25/Original Media/2025-10-28 17_40_13.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-01-21 08_32_04.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-03-28 23_08_39.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-07-21 01_50_01.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2024-12-24 21_29_43.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-07 07_14_31.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-04 23_58_28.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-04 15_22_14.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-07-21 03_18_25.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/IMG_0012.MOV
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/IMG_0013.MOV
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-08-04 10_03_03.mov
+/Users/mac/Library/Mobile Documents/com~apple~CloudDocs/TRYONYOU_DEPLOY_EXPRESS_INBOX/Backups_Grandes/2025-04-04 15_44_49.mov
+/Users/mac/Library/Containers/com.apple.BKAgentService/Data/Documents/iBooks/Books/Audiobooks/sha1-f2c29c2b19c5ef7ffea5a261badfd622b10a08c6/Yandel, Feid  - Yandel 150 (Video Oficial).mp4
+/Users/mac/Movies/‹.imovielibrary/Mi película 2/Original Media/2025-03-29 01_47_04.mov
+/Users/mac/Movies/‹.imovielibrary/Mi película 2/Original Media/2025-03-28 23_04_56.mov
+/Users/mac/Movies/‹.imovielibrary/Mi película 2/Original Media/2025-03-28 23_01_38.mov
+/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/2025-01-15 11_40_38.mov
+/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/IMG_1066.mov
+/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/2025-01-19 06_31_59.mov
+/Users/mac/Movies/‹.imovielibrary/Mi película/Original Media/IMG_2767.mov
+/Users/mac/Movies/‹.imovielibrary/22-12-24/Original Media/2025-04-20 11_59_13.mov
+/Users/mac/Movies/‹.imovielibrary/22-12-24/Original Media/2025-03-28 21_27_50.mov
+/Users/mac/Movies/Biblioteca iMovie.imovielibrary/28-10-25/Original Media/2025-10-28 17_40_13.mov
