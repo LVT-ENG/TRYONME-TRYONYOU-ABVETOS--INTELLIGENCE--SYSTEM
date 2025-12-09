@@ -141,9 +141,11 @@ TryOnYou_70Pack/
 Este package cumple con:
 
 - ✅ **Issue #1200:** Proyecto maestro + planificación
-- ✅ **Issue #1201:** Generar imágenes nuevas (las 70)
+- 🔄 **Issue #1201:** Generar imágenes nuevas (las 70) - En proceso
 - ✅ **Issue #1202:** Editar, organizar y preparar el ZIP final ← **COMPLETADO**
-- 🔜 **Issue #1203:** Documentación + README + integración
+- 📋 **Issue #1203:** Documentación avanzada de integración - Básica incluida, avanzada pendiente
+
+**Nota:** Esta PR (#1202) entrega la estructura organizacional completa y documentación básica. La población con imágenes editadas se realizará como parte del Issue #1201.
 
 ---
 
