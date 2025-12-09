@@ -24,7 +24,7 @@
 
 **Características principales:**
 - **Estilo**: Realista, elegante, editorial
-- **Piel**: Tono rojizo/cálido
+- **Tono de piel**: Rojizo/cálido
 - **Proporción**: Cuerpo completo, proporciones naturales
 - **Calzado**: SIEMPRE visible (zapatos, zapatillas, botas)
 - **Estética**: Profesional, premium, no plástico ni muñeco
