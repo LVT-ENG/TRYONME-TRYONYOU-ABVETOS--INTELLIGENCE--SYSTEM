@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import shutil
 import zipfile
@@ -34,17 +35,24 @@ if not os.path.exists(DIST_DIR):
 # 2.3. Verificación de Assets Críticos (Advertencia si son placeholders)
 model_path = os.path.join(FUSION_MEDIA_DIR, PIAPCOC_MODEL)
 video_path = os.path.join(FUSION_MEDIA_DIR, ABVETOS_VIDEO)
-model_size = os.path.getsize(model_path)
-video_size = os.path.getsize(video_path)
 
-if model_size == 0 or video_size == 0:
-    print("⚠️ ADVERTENCIA CRÍTICA: Los assets de fusión (PIAPCOC y/o ABVETOS) están utilizando PLACEHOLDERS vacíos (0 bytes).")
-    print("⚠️ RECUERDA: Debes reemplazar manual o automáticamente los archivos vacíos de 'public/assets/fusion_media/' antes de la entrega final.")
+if not os.path.exists(model_path) or not os.path.exists(video_path):
+    print("⚠️ ADVERTENCIA CRÍTICA: Los assets de fusión (PIAPCOC y/o ABVETOS) no existen.")
+    print("⚠️ RECUERDA: Debes crear los archivos en 'public/assets/fusion_media/' antes de la entrega final.")
+    model_size = 0
+    video_size = 0
 else:
-    print("✅ Archivos de fusión (PIAPCOC & ABVETOS) encontrados y no son placeholders vacíos.")
+    model_size = os.path.getsize(model_path)
+    video_size = os.path.getsize(video_path)
+    
+    if model_size == 0 or video_size == 0:
+        print("⚠️ ADVERTENCIA CRÍTICA: Los assets de fusión (PIAPCOC y/o ABVETOS) están utilizando PLACEHOLDERS vacíos (0 bytes).")
+        print("⚠️ RECUERDA: Debes reemplazar manual o automáticamente los archivos vacíos de 'public/assets/fusion_media/' antes de la entrega final.")
+    else:
+        print("✅ Archivos de fusión (PIAPCOC & ABVETOS) encontrados y no son placeholders vacíos.")
 
 # 2.4. Crear el ZIP Final Unificado
-print(f"3. Creando el archivo ZIP final: {ZIP_OUTPUT_NAME}...")
+print(f"2.4. Creando el archivo ZIP final: {ZIP_OUTPUT_NAME}...")
 try:
     with zipfile.ZipFile(ZIP_OUTPUT_NAME, 'w', zipfile.ZIP_DEFLATED) as zipf:
         # A. Añadir la aplicación web compilada (contenido de 'dist')
@@ -68,7 +76,7 @@ try:
 
 finally:
     # 2.5. LIMPIEZA
-    print("4. Limpieza: Eliminando carpeta temporal de fotos.")
+    print("2.5. Limpieza: Eliminando carpeta temporal de fotos.")
     # El placeholder de fotos se elimina siempre
     shutil.rmtree(PHOTOS_DIR, ignore_errors=True)
     print("--- FIN DEL EMPAQUETADO PYTHON ---")

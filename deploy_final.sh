@@ -11,10 +11,10 @@ echo "================================================"
 # 1. CREACIÓN DE ESTRUCTURA DE CARPETAS Y ARCHIVOS PLACEHOLDER
 echo "1. Creando estructura de carpetas (public/assets/fusion_media) y placeholders..."
 mkdir -p public/assets/fusion_media public/assets/photos
-# Crea archivos vacíos como placeholders. El script Python emitirá una ADVERTENCIA si están vacíos, pero CONTINUARÁ.
-touch public/assets/fusion_media/PIAPCOC_Avatar_Model.glb
-touch public/assets/fusion_media/ABVETOS_3D_Fusion.mp4
-echo "✅ Placeholders PIAPCOC y ABVETOS creados."
+# Crea archivos vacíos como placeholders solo si no existen. El script Python emitirá una ADVERTENCIA si están vacíos, pero CONTINUARÁ.
+[ ! -f public/assets/fusion_media/PIAPCOC_Avatar_Model.glb ] && touch public/assets/fusion_media/PIAPCOC_Avatar_Model.glb
+[ ! -f public/assets/fusion_media/ABVETOS_3D_Fusion.mp4 ] && touch public/assets/fusion_media/ABVETOS_3D_Fusion.mp4
+echo "✅ Placeholders PIAPCOC y ABVETOS verificados/creados."
 
 # 2. VERIFICACIÓN DE DEPENDENCIAS
 echo "2. Verificando dependencias de Node..."
