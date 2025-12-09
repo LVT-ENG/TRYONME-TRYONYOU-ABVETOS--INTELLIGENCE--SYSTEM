@@ -38,6 +38,10 @@ echo "🔍 Searching for video files..."
 TOTAL_SIZE=0
 FILE_COUNT=0
 
+# Constants for size conversion
+GB_IN_BYTES=1073741824
+MB_IN_BYTES=1048576
+
 # Find and move video files
 for location in "${VIDEO_LOCATIONS[@]}"; do
   if [ -d "$location" ]; then
@@ -46,7 +50,7 @@ for location in "${VIDEO_LOCATIONS[@]}"; do
     # Find video files (mov, mp4, avi, mkv, etc.)
     while IFS= read -r video; do
       if [ -f "$video" ]; then
-        # Get file size
+        # Get file size (macOS-specific stat command)
         size=$(stat -f%z "$video" 2>/dev/null || echo 0)
         TOTAL_SIZE=$((TOTAL_SIZE + size))
         FILE_COUNT=$((FILE_COUNT + 1))
@@ -68,11 +72,11 @@ for location in "${VIDEO_LOCATIONS[@]}"; do
 done
 
 # Convert bytes to human-readable format
-if [ $TOTAL_SIZE -gt 1073741824 ]; then
-  SIZE_GB=$((TOTAL_SIZE / 1073741824))
+if [ $TOTAL_SIZE -gt $GB_IN_BYTES ]; then
+  SIZE_GB=$((TOTAL_SIZE / GB_IN_BYTES))
   SIZE_DISPLAY="${SIZE_GB} GB"
-elif [ $TOTAL_SIZE -gt 1048576 ]; then
-  SIZE_MB=$((TOTAL_SIZE / 1048576))
+elif [ $TOTAL_SIZE -gt $MB_IN_BYTES ]; then
+  SIZE_MB=$((TOTAL_SIZE / MB_IN_BYTES))
   SIZE_DISPLAY="${SIZE_MB} MB"
 else
   SIZE_DISPLAY="${TOTAL_SIZE} bytes"
