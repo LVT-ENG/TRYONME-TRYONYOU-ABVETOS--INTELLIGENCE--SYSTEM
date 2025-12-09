@@ -1,0 +1,288 @@
+📸 PROMPT DEFINITIVO – FASHION EDITORIAL HYPER-REALISTIC PORTRAIT
+Con Pau (el pavo real elegante) en su esquina
+
+🎯 Objetivo:
+Generar un retrato editorial de moda hiper-realista en formato vertical 9:16 de cuerpo completo, 
+manteniendo CONSISTENCIA TOTAL en modelo, pose, iluminación y composición. 
+Estilo premium Vogue / Harper's Bazaar con energía de alta costura parisina.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 ESPECIFICACIONES TÉCNICAS
+
+Formato:
+• Aspecto: 9:16 (vertical)
+• Encuadre: cuerpo completo
+• Ángulo de cámara: ligeramente bajo (slight low angle)
+• Composición: centrada, elegante, equilibrada
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 MODELO (CONSISTENCIA ABSOLUTA)
+
+Características:
+• MISMA modelo femenina en todas las variaciones
+• MISMA pose exacta
+• MISMA iluminación
+• MISMA composición
+• Expresión: sonrisa serena, cálida, confiada
+• Energía: madura, sofisticada, no infantil
+• Presencia: premium, energía de moda parisina
+
+Cabello:
+• Ondas editoriales pulidas
+• Estilo: sofisticado, voluminoso
+• Acabado: brillante, profesional
+• Movimiento sutil y natural
+
+Maquillaje:
+• Ojos: smoky eyes suave
+• Piel: luminosa, impecable
+• Labios: natural con brillo sutil
+• Look general: editorial high-end
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 ILUMINACIÓN
+
+Tipo: Luz de estudio cinematográfica suave de lujo
+• Calidad: soft, difusa, envolvente
+• Dirección: frontal principal con relleno lateral
+• Temperatura: cálida pero neutra (3200-4000K)
+• Sombras: suaves, no duras
+• Brillos: sutiles en piel, cabello y tela
+• Ambiente: profesional, studio quality
+• Efecto: iluminación de revista de moda premium
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 ENTORNO Y FONDO
+
+Fondo:
+• Gradiente moderno limpio
+• Colores: neutros elegantes (gris perla a blanco suave)
+• Textura: lisa, sin distracciones
+• Estilo: minimalista, editorial
+• Profundidad: sutil separación figura-fondo
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👗 VESTUARIO (3 VARIACIONES)
+
+IMPORTANTE: Usar UNA de las siguientes opciones en cada generación
+
+━━━━━━━━━━━━━━━━━━━━━━━
+VARIACIÓN 1: BRIDAL CHIFFON GOWN
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Vestido:
+• Estilo: vestido de novia de gasa/chiffon
+• Corte: fluido, etéreo, romántico
+• Color: blanco puro o marfil
+• Detalles: capas ligeras, movimiento suave
+• Largo: completo hasta el suelo
+• Silueta: elegante, A-line o columna
+• Textura: ligera, translúcida en capas
+• Acabado: delicado, sofisticado
+
+Accesorios:
+• Minimalistas, elegantes
+• Joyas: delicadas, posiblemente perlas
+• Zapatos: tacones nude o plateados (apenas visibles)
+
+━━━━━━━━━━━━━━━━━━━━━━━
+VARIACIÓN 2: BLACK WIDOW COUTURE DRESS
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Vestido:
+• Estilo: vestido de alta costura dramático
+• Corte: estructurado, arquitectónico
+• Color: negro profundo
+• Detalles: corte ajustado, escote elegante
+• Silueta: hourglass, sofisticada
+• Textura: satén, terciopelo o mezcla lujosa
+• Acabado: brillante sutil, glamuroso
+• Volumen: posible cola o drapeado dramático
+
+Accesorios:
+• Statement pero elegantes
+• Joyas: diamantes o cristales oscuros
+• Zapatos: tacones negros stiletto
+
+━━━━━━━━━━━━━━━━━━━━━━━
+VARIACIÓN 3: RED SATIN EVENING DRESS
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Vestido:
+• Estilo: vestido de noche de satén
+• Corte: elegante, fluido
+• Color: rojo intenso (ruby red)
+• Detalles: caída perfecta, brillos sutiles
+• Silueta: sirena o columna
+• Textura: satén brillante, lujoso
+• Acabado: reflectante, premium
+• Largo: completo, posible abertura lateral
+
+Accesorios:
+• Sofisticados, dorados o plateados
+• Joyas: pendientes statement, brazalete delicado
+• Zapatos: tacones nude, dorados o plateados
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🦚 PAU – EL PAVO REAL MASCOTA (ELEMENTO CRÍTICO)
+
+Posición:
+• Ubicación: esquina inferior derecha (bottom-right corner)
+• Escala: tamaño mascota (pequeño, no dominante)
+• Proporción: aproximadamente 8-12% de la altura total de la imagen
+
+Apariencia Visual:
+• Base: modelo exacto de la imagen: /mnt/data/3E671062-6D6B-4B13-A130-C08E0E5080E1.png
+• Plumas: blancas elegantes, lustrosas, glasé
+• Textura: suave, brillante, premium
+• Reflejos: dorados sutiles en las plumas
+• Calidad: hiper-realista como la modelo
+
+Comportamiento y Dirección:
+• Orientación: mirando hacia la modelo
+• Postura: elegante, aristocrática
+• Actitud: observador, protector
+• Expresión: serena, inteligente
+
+Integración en la Escena:
+• Iluminación: MISMA que la modelo (consistencia total)
+• Sombras: coherentes con la escena principal
+• Profundidad: mismo espacio 3D que la modelo
+• Presencia: claramente visible pero NO distrae
+• Balance: complementa sin competir con la modelo
+
+Detalles Técnicos:
+• Nitidez: igual nivel de detalle que el resto de la imagen
+• Color: blanco puro con toques dorados cálidos
+• Contraste: bien definido contra el fondo
+• Bordes: limpios, profesionales
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 ESTILO VISUAL GENERAL
+
+Referencia de Calidad:
+• Vogue Magazine – Editorial de moda premium
+• Harper's Bazaar – Sofisticación y elegancia
+• Alta costura parisina – Refinamiento europeo
+
+Características del Estilo:
+• Hiper-realismo fotográfico
+• Calidad: ultra high definition
+• Textura: cada detalle visible
+• Colores: saturación rica pero natural
+• Tonos: cálidos, elegantes, premium
+• Atmósfera: lujosa, aspiracional
+• Acabado: profesional de estudio
+
+Elementos a Evitar:
+• Artificialidad excesiva o look CGI
+• Iluminación dura o sombras dramáticas
+• Fondos caóticos o distractores
+• Sobre-saturación de colores
+• Efectos de moda rápida o comercial barato
+• Expresiones exageradas o poco naturales
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 INSTRUCCIONES DE USO
+
+Plataformas Recomendadas:
+• Midjourney (v6 o superior)
+• DALL-E 3
+• Stable Diffusion XL
+• Leonardo AI (preset PhotoReal)
+• Adobe Firefly
+
+Parámetros Sugeridos:
+• Resolución: mínimo 1080 x 1920 (9:16)
+• Calidad: máxima disponible
+• Estilo: fotográfico, no ilustrativo
+• Realismo: máximo
+• Coherencia: alta (especialmente para Pau)
+
+Workflow de Generación:
+1. Generar imagen base de la modelo con el outfit elegido
+2. Verificar consistencia de pose, iluminación y expresión
+3. Integrar a Pau en la esquina inferior derecha
+4. Ajustar iluminación de Pau para que coincida con la escena
+5. Verificar que Pau mira hacia la modelo
+6. Revisar balance visual general
+7. Refinar detalles finales
+
+Proceso Iterativo:
+• Mantener MISMA semilla (seed) para consistencia
+• Ajustar solo elementos específicos entre variaciones
+• Conservar pose y expresión de la modelo
+• Asegurar que Pau aparece en cada variación
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ CHECKLIST DE CALIDAD
+
+Antes de Aprobar la Imagen Final:
+
+Modelo:
+☐ Pose idéntica en todas las variaciones
+☐ Expresión serena y confiada
+☐ Cabello con ondas editoriales pulidas
+☐ Maquillaje smoky eyes suave
+☐ Piel luminosa e impecable
+
+Iluminación:
+☐ Luz suave y cinematográfica
+☐ Sombras sutiles, no duras
+☐ Consistencia en toda la imagen
+☐ Temperatura cálida neutra
+
+Vestuario:
+☐ Outfit claramente definido según variación elegida
+☐ Telas con textura realista
+☐ Caída natural del vestido
+☐ Detalles visibles y precisos
+
+Pau (Mascota):
+☐ Ubicado en esquina inferior derecha
+☐ Tamaño apropiado (8-12% de altura)
+☐ Plumas blancas elegantes con reflejos dorados
+☐ Mirando hacia la modelo
+☐ Iluminación consistente con la escena
+☐ Claramente visible pero no distrae
+☐ Sombras coherentes
+
+Composición:
+☐ Formato 9:16 vertical
+☐ Encuadre de cuerpo completo
+☐ Ángulo ligeramente bajo
+☐ Fondo gradiente limpio
+☐ Balance visual equilibrado
+
+Calidad:
+☐ Hiper-realismo fotográfico
+☐ Alta resolución y nitidez
+☐ Colores ricos pero naturales
+☐ Estilo Vogue/Harper's Bazaar
+☐ Sin artefactos o errores visibles
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 TIPS ADICIONALES
+
+Para Mejores Resultados:
+• Generar múltiples variaciones y seleccionar la mejor
+• Usar referencias visuales de Vogue/Harper's Bazaar
+• Mantener coherencia entre las 3 variaciones de outfit
+• Prestar especial atención a la integración de Pau
+• Verificar que la iluminación es cinematográfica, no de flash
+
+Ajustes Finos:
+• Si Pau es muy grande: reducir escala a 8%
+• Si Pau es muy pequeño: aumentar a 12%
+• Si Pau no mira a la modelo: regenerar con énfasis en dirección
+• Si la iluminación no coincide: ajustar temperatura de color
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 Este prompt está diseñado para generar retratos editoriales de moda de calidad profesional
+   con la mascota Pau integrada de manera elegante y coherente.
+
+📌 Prioridad: CONSISTENCIA en modelo, pose, iluminación y la presencia de Pau.
+
+– AI Fashion Editorial System
+– TRYONME-TRYONYOU-ABVETOS INTELLIGENCE SYSTEM
