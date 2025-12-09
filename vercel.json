@@ -2,12 +2,8 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "/demo",
-      "destination": "/demo/index.html"
-    },
-    {
-      "source": "/demo/(.*)",
-      "destination": "/demo/$1"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
