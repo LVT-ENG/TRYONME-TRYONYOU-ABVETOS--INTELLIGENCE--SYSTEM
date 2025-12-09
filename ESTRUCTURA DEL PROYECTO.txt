@@ -1,0 +1,115 @@
+Estructura proyecto 
+
+
+TRYONME-TRYONYOU-AVBETOS-INTELLIGENCE-SYSTEM/
+│
+├── LICENSE
+├── README.md
+├── .gitignore
+│
+├── src/                       # Código fuente
+│   ├── index.js                # Punto de entrada principal
+│   ├── modules/                # Módulos principales
+│   │   ├── avatar3D.js         # Generación de avatar 3D con medidas reales
+│   │   ├── comparadorTextil.js # Comparador inteligente de prendas
+│   │   ├── recomendadorPAU.js  # Recomendador emocional (Pau le Paon)
+│   │   ├── pagoAVBET.js        # Pago biométrico (Iris + Voz)
+│   │   ├── autoDonate.js       # Redistribución automática (Armario Solidario)
+│   │   ├── botsInternos.js     # Bots multi-función y automatización
+│   ├── utils/
+│       └── apiClient.js        # Conexión a APIs externas (EPCT/WIPO, Shopify, Amazon, etc.)
+│
+├── docs/                       # Documentación y recursos
+│   ├── arquitectura.md         # Explicación de arquitectura del sistema
+│   ├── flujo_usuario.md        # Flujo de interacción del usuario
+│   ├── casos_uso.md            # Escenarios prácticos
+│   └── arquitectura.png        # Diagrama visual
+│
+├── tests/                      # Pruebas unitarias y de integración
+│   ├── testAvatar3D.js
+│   ├── testPagoAVBET.js
+│   └── testAutoDonate.js
+│
+└── .env.example                # Variables de entorno
+
+🧠 Agentes de Plantilla y Funciones
+
+🎯 Bloque de Despliegue y Producción
+	1.	PMV – Project Manager Virtual
+	2.	Content Pro – Redactor Web & Marca
+	3.	Ficha Técnica Master – Producción & CMS
+	4.	Proveedor Tracker – Control de Fábricas y Presupuestos
+	5.	RRSS Automator – Redes Sociales Inteligentes
+	6.	Tester UX Web – Usuario Fantasma
+	7.	Factory Master – Producción, Archivos y Muestras
+	8.	Mockup Artist – Visualizador Profesional de Chaquetas
+	9.	Checkout UX Master – Conversión Sin Fricción
+	10.	Look Curator – Curador Estético + Comercial
+	11.	Fit-AI Assistant – Talla Perfecta & Comparador de Medidas
+	12.	Brand Guardian – Guardián del Estilo y la Coherencia
+	13.	HR Supervisor – Recomendador de Roles & Performance
+
+🧵 Bloque de Estilo, Avatares y Modulación
+	14.	Avatar Generator 3D
+	15.	Pau le Paon – Asistente emocional
+	16.	AutoDonate Syncer – Integración Armario Solidario
+	17.	Rechazo Visual Automático (Ropa dañada)
+	18.	Recomendador Cubista
+	19.	Sustituidor de Imágenes por Catálogo
+
+💼 Bloque de Negocio y Estrategia
+	20.	GitHub Commit Agent
+	21.	Access Inviter Engine
+	22.	Deploy Operator
+	23.	Layout Architect
+	24.	Product Loader
+	25.	Image Curator
+
+🔁 Automatización Externa
+	26.	RRSS Automator
+	27.	Instagram Publisher
+	28.	Facebook Syncer
+	29.	Notion Sync Agent
+	30.	Google Drive Organizer
+	31.	Make Scenario Executor
+
+🎬 Video & Visual
+	32.	Video Curator (LaSeñu)
+	33.	Pasarela Generator
+	34.	SlowMotion FX Agent
+	35.	Final Cut Branding Agent
+
+🎯 Live It – Estilo y Colección
+	36.	Collection Builder (Iconic, Urban, etc.)
+	37.	Prompt Generator for Chaquetas
+	38.	Fit Adjuster (Cuerpos reales)
+	39.	Visual Positioning (Diseño de chaquetas)
+	40.	Color Curator (Tonos Pastel, Fluor, Oro…)
+	41.	Modelo Selector con historia
+	42.	Desfile Visual Generator
+	43.	Slogan Writer
+	44.	Moodboard Integrator
+	45.	Cubismo Visual Synthesizer
+	46.	Fábrica Negotiator (China/Bulgaria)
+
+🔒 Bloque Privado de Gestión
+	47.	Document Locker
+	48.	Invoice Generator
+	49.	OF Packager (Organisme de Formation)
+	50.	Impuestos Notifier
+	51.	Pipeline Tracker
+	52.	Product Status Kanban
+	53.	Checklist LanzaWeb
+
+⸻
+
+🔗 Conexiones Externas
+	•	Amazon – Integración para tiendas oficiales.
+	•	Shopify – Sincronización inventario y pedidos.
+	•	Live it, TryOnYou, TryOnMe, VVL, Abvetos – Ecosistema completo.
+	•	Armario Inteligente + Armario Solidario – Gestión y redistribución de prendas.
+	•	EPCT/WIPO – Monitorización de patentes y avisos automáticos.
+
+⸻
+
+Si quieres, te lo empaqueto ahora mismo en un ZIP con el README.md actualizado y la estructura completa del repositorio lista para subir a GitHub.
