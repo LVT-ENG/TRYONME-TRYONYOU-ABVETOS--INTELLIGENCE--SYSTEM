@@ -163,58 +163,60 @@ jobs:
       # ========================================
       - name: 📢 Send Telegram notification with screenshots
         if: always()
+        env:
+          DEPLOY_URL: ${{ steps.deploy.outputs.deployment_url }}
+          JOB_STATUS: ${{ job.status }}
         run: |
           # Prepare deployment status message
-          if [ "${{ job.status }}" = "success" ]; then
+          if [ "${JOB_STATUS}" = "success" ]; then
             STATUS_EMOJI="✅"
             STATUS_TEXT="SUCCESSFUL"
           else
             STATUS_EMOJI="❌"
             STATUS_TEXT="FAILED"
           fi
-          
+
           # Get commit info
           COMMIT_MSG=$(git log -1 --pretty=%B)
           COMMIT_AUTHOR=$(git log -1 --pretty=%an)
           COMMIT_SHA=$(git rev-parse --short HEAD)
+
+          # Create message (multiline)
+          MESSAGE="🚀 TRYONYOU DEPLOYMENT ${STATUS_TEXT} ${STATUS_EMOJI}
           
-          # Create message
-          MESSAGE="🚀 *TRYONYOU DEPLOYMENT ${STATUS_TEXT}* ${STATUS_EMOJI}
-
-*Environment:* Production
-*URL:* ${{ steps.deploy.outputs.deployment_url }}
-*Branch:* main
-*Commit:* ${COMMIT_SHA}
-*Author:* ${COMMIT_AUTHOR}
-*Message:* ${COMMIT_MSG}
-
-*Build Status:* ${{ job.status }}
-*Timestamp:* $(date -u +'%Y-%m-%d %H:%M:%S UTC')
-
-_DeployExpress Pipeline by ABVET_"
+          Environment - Production
+          URL - ${DEPLOY_URL}
+          Branch - main
+          Commit - ${COMMIT_SHA}
+          Author - ${COMMIT_AUTHOR}
+          Message - ${COMMIT_MSG}
           
+          Build Status - ${JOB_STATUS}
+          Timestamp - $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+          
+          DeployExpress Pipeline by ABVET"
+
           # Send text message
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d text="${MESSAGE}" \
-            -d parse_mode="Markdown"
-          
+            -d text="${MESSAGE}"
+
           # Send desktop screenshot if deployment was successful
-          if [ "${{ job.status }}" = "success" ] && [ -f "screenshot-desktop.png" ]; then
+          if [ "${JOB_STATUS}" = "success" ] && [ -f "screenshot-desktop.png" ]; then
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
               -F chat_id="${TELEGRAM_CHAT_ID}" \
               -F photo=@screenshot-desktop.png \
-              -F caption="🖥️ Desktop View - ${{ steps.deploy.outputs.deployment_url }}"
+              -F caption="🖥️ Desktop View - ${DEPLOY_URL}"
           fi
-          
+
           # Send mobile screenshot if deployment was successful
-          if [ "${{ job.status }}" = "success" ] && [ -f "screenshot-mobile.png" ]; then
+          if [ "${JOB_STATUS}" = "success" ] && [ -f "screenshot-mobile.png" ]; then
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
               -F chat_id="${TELEGRAM_CHAT_ID}" \
               -F photo=@screenshot-mobile.png \
-              -F caption="📱 Mobile View - ${{ steps.deploy.outputs.deployment_url }}"
+              -F caption="📱 Mobile View - ${DEPLOY_URL}"
           fi
-          
+
           echo "✅ Telegram notification sent to @abvet_deploy_bot"
       
       # ========================================
