@@ -298,7 +298,7 @@ npm run check:assets
 - WEBP < 500 KB
 
 ```bash
-npm run check:filesize
+npm run check:assets
 ```
 
 ---

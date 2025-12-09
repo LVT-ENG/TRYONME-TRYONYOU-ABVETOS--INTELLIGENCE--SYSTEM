@@ -48,7 +48,7 @@ function scanDirectory(dir, basePath = dir) {
     
     if (stat.isDirectory()) {
       result.push(...scanDirectory(filepath, basePath));
-    } else if (stat.isFile() && file !== '.gitkeep') {
+    } else if (stat.isFile() && file !== '.gitkeep' && !file.match(/^README.*\.md$/i)) {
       const ext = extname(file).toLowerCase();
       const relativePath = relative(basePath, filepath);
       const webPath = `/assets/images/tryonyou/${relativePath.replace(/\\/g, '/')}`;

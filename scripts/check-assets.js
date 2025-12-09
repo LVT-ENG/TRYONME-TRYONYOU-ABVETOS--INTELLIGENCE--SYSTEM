@@ -51,7 +51,8 @@ function validateNaming(filename) {
   }
   
   // No uppercase (except extension)
-  const nameWithoutExt = filename.substring(0, filename.lastIndexOf('.'));
+  const dotIndex = filename.lastIndexOf('.');
+  const nameWithoutExt = dotIndex > -1 ? filename.substring(0, dotIndex) : filename;
   if (nameWithoutExt !== nameWithoutExt.toLowerCase()) {
     errors.push('Contains uppercase characters');
   }
@@ -121,7 +122,7 @@ function getAllFiles(dir, fileList = []) {
     
     if (stat.isDirectory()) {
       getAllFiles(filepath, fileList);
-    } else if (stat.isFile() && file !== '.gitkeep') {
+    } else if (stat.isFile() && file !== '.gitkeep' && !file.match(/^README.*\.md$/i)) {
       fileList.push(filepath);
     }
   });
