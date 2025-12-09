@@ -504,3 +504,21 @@ select option {
 .dark-mode .theme-toggle-knob {
   @apply translate-x-7;
 }
+
+/* =============================================
+   CUSTOM ANIMATIONS
+   ============================================= */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+    opacity: 1;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
