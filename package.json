@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:assets": "node scripts/check-assets.js",
+    "check:naming": "node scripts/check-assets.js --guide",
+    "import:assets": "node scripts/import-assets.js"
   },
   "dependencies": {
     "react": "^18.3.1",
