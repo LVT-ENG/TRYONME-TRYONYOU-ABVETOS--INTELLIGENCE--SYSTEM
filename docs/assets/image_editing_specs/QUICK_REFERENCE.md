@@ -115,17 +115,17 @@ Viñeta: -10 (sutil)
 
 ### Camera Raw / Lightroom
 ```
-Exposure: Ajustar
-Contrast: +15
-Highlights: -20
-Shadows: +15
-Whites: +10
-Blacks: -10
-Clarity: +12
-Vibrance: +10
-Saturation: +5
-Sharpening: 60
-Temperature: -300K
+Exposure: Ajustar según necesidad (rango: -2 a +2 stops)
+Contrast: +15 (rango: -100 a +100)
+Highlights: -20 (rango: -100 a +100)
+Shadows: +15 (rango: -100 a +100)
+Whites: +10 (rango: -100 a +100)
+Blacks: -10 (rango: -100 a +100)
+Clarity: +12 (rango: -100 a +100)
+Vibrance: +10 (rango: -100 a +100)
+Saturation: +5 (rango: -100 a +100)
+Sharpening: 60 (rango: 0 a 150)
+Temperature: -300K (más frío, rango: -5000K a +5000K)
 ```
 
 ---

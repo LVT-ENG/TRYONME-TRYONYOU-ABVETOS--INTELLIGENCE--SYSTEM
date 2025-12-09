@@ -108,11 +108,15 @@ Este documento rastrea el progreso de edición de cada imagen del proyecto.
 
 ### Resumen General
 ```
-Total de Imágenes: 25 (+ 9 por clasificar = 34 total)
+Total de Imágenes Identificadas: 27
+  - 18 imágenes clasificadas y nombradas
+  - 9 imágenes UUID pendientes de clasificar
 Completadas: 0
 En Progreso: 0
-Pendientes: 25
+Pendientes: 18
 Por Clasificar: 9
+
+Nota: El total puede aumentar tras inspección de imágenes UUID
 ```
 
 ---

@@ -38,6 +38,12 @@ TryOnYou Smoke:    #1A1A2E
 - **Texto**: Blanco puro sobre fondos oscuros
 - **PAU**: Tonos de pavo real (turquesa, verde esmeralda, azul profundo)
 
+### Accesibilidad de Contraste
+- **Blanco sobre Negro (#FFFFFF / #111111)**: Ratio 19:1 ✅ WCAG AAA
+- **Oro sobre Negro (#D4AF37 / #111111)**: Ratio 8:1 ✅ WCAG AA
+- **Azul Neón sobre Negro (#00E0FF / #111111)**: Ratio 11:1 ✅ WCAG AAA
+- **Nota**: Mantener siempre alto contraste para legibilidad
+
 ---
 
 ## 📐 Posicionamiento del Logo TryOnYou
