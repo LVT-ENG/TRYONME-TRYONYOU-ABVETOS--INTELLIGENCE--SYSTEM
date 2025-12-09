@@ -1,0 +1,28 @@
+# translations.txt - Contenido multilingüe simulado para la landing page
+
+[FR]
+hero_title: Essayez-vous virtuellement
+hero_subtitle: Le miroir magique qui transforme l'expérience d'achat.
+how_it_works_title: Comment ça marche
+case_study_title: Cas d'utilisation en magasin physique
+demo_title: Démo interactive
+pilot_plan_title: Plan pilote de 30 jours
+form_title: Demandez votre démo
+
+[EN]
+hero_title: Try Yourself On Virtually
+hero_subtitle: The magic mirror that transforms the shopping experience.
+how_it_works_title: How it works
+case_study_title: Use case in physical store
+demo_title: Interactive Demo
+pilot_plan_title: 30-Day Pilot Plan
+form_title: Request your demo
+
+[ES]
+hero_title: Pruébate Virtualmente
+hero_subtitle: El espejo mágico que transforma la experiencia de compra.
+how_it_works_title: Cómo funciona
+case_study_title: Caso de uso en tienda física
+demo_title: Demo Interactiva
+pilot_plan_title: Plan Piloto 30 Días
+form_title: Solicita tu demo

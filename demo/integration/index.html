@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Integración de Demo TryOnYou</title>
+    <style>
+        /* Estilos básicos para centrar el iframe */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #tryonyou_demo_iframe {
+            border: 1px solid #ccc;
+            width: 80vw; /* Ancho de ejemplo */
+            height: 80vh; /* Alto de ejemplo */
+            max-width: 1200px;
+            max-height: 800px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 
+        1. Iframe seguro para la demo. 
+        El atributo 'sandbox' restringe el contenido, haciéndolo más seguro.
+        El 'id' debe coincidir con el que se especificó en las instrucciones de Wix.
+    -->
+    <iframe 
+        id="tryonyou_demo_iframe" 
+        src="https://www.youtube.com/embed/placeholder_video_demo" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+        title="Placeholder de Demo Interactiva TryOnYou">
+    </iframe>
+
+    <!-- 
+        2. Script para reemplazar el iframe con la demo del informático cuando esté lista.
+        Este script se ejecutará en la página de integración.
+    -->
+    <script>
+        /**
+         * Script de Reemplazo de Iframe para la Demo de TryOnYou
+         * 
+         * Este script permite actualizar dinámicamente la URL del iframe 
+         * de la demo interactiva sin modificar el código de la landing page en Wix.
+         * 
+         * Uso: 
+         * 1. La landing de Wix debe incrustar este archivo (o su contenido) en la sección de la demo.
+         * 2. Cuando la URL de la demo final esté lista, se puede modificar la variable 
+         *    'finalDemoUrl' en este script.
+         */
+
+        // URL de la demo final del informático (Placeholder inicial)
+        const finalDemoUrl = "URL_DE_LA_DEMO_FINAL_DEL_INFORMATICO_AQUI"; 
+
+        // ID del iframe en la landing de Wix
+        const iframeId = "tryonyou_demo_iframe";
+
+        // URL del placeholder (vídeo de YouTube, por ejemplo)
+        const placeholderUrl = "https://www.youtube.com/embed/placeholder_video_demo";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const iframe = document.getElementById(iframeId);
+
+            if (iframe) {
+                if (finalDemoUrl && finalDemoUrl !== "URL_DE_LA_DEMO_FINAL_DEL_INFORMATICO_AQUI") {
+                    // Si la URL final está definida, la usamos
+                    iframe.src = finalDemoUrl;
+                    console.log(\`Iframe actualizado a la URL final: \${finalDemoUrl}\`);
+                } else {
+                    // Si no, mantenemos el placeholder
+                    iframe.src = placeholderUrl;
+                    console.log(\`Usando URL placeholder: \${placeholderUrl}\`);
+                }
+            } else {
+                console.error(\`No se encontró el iframe con ID: \${iframeId}\`);
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+# content_map.txt - Contenido comercial para el PDF dinámico
+
+[precios]
+piloto_30_dias: 499 EUR
+instalacion: 0 EUR
+soporte: Incluido
+
+[beneficios]
+beneficio_1: Aumento del 20%% en la tasa de conversión.
+beneficio_2: Reducción del 15%% en devoluciones.
+beneficio_3: Experiencia de cliente innovadora y memorable.
+
+[contacto]
+nombre: Pau Fernández
+cargo: Director Comercial
+email: pau.fernandez@tryonyou.com
+telefono: +34 600 123 456
