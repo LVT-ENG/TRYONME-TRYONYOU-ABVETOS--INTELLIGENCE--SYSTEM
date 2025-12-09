@@ -85,7 +85,13 @@ jobs:
         id: deploy
         run: |
           echo "Deploying to Vercel Production..."
-          DEPLOYMENT_URL=$(vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} 2>&1 | grep -o 'https://[^ ]*')
+          DEPLOY_OUTPUT=$(vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} 2>&1)
+          echo "$DEPLOY_OUTPUT"
+          DEPLOYMENT_URL=$(echo "$DEPLOY_OUTPUT" | grep -oE 'https://[a-zA-Z0-9.-]+\.[a-z]{2,}' | tail -n 1)
+          if [ -z "$DEPLOYMENT_URL" ]; then
+            echo "❌ Failed to extract deployment URL"
+            exit 1
+          fi
           echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
           echo "✅ Deployment successful!"
           echo "🌐 Production URL: $DEPLOYMENT_URL"
@@ -193,20 +199,27 @@ jobs:
           
           Build Status - ${JOB_STATUS}
           Timestamp - $(date -u +'%Y-%m-%d %H:%M:%S UTC')
-          
+
           DeployExpress Pipeline by ABVET"
 
-          # Send text message
-          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+          # Send text message with error handling
+          RESPONSE=$(curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
             -d chat_id="${TELEGRAM_CHAT_ID}" \
-            -d text="${MESSAGE}"
+            -d text="${MESSAGE}")
+          
+          if echo "$RESPONSE" | grep -q '"ok":true'; then
+            echo "✅ Text notification sent successfully"
+          else
+            echo "⚠️ Warning: Text notification may have failed"
+            echo "Response: $RESPONSE"
+          fi
 
           # Send desktop screenshot if deployment was successful
           if [ "${JOB_STATUS}" = "success" ] && [ -f "screenshot-desktop.png" ]; then
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
               -F chat_id="${TELEGRAM_CHAT_ID}" \
               -F photo=@screenshot-desktop.png \
-              -F caption="🖥️ Desktop View - ${DEPLOY_URL}"
+              -F caption="🖥️ Desktop View - ${DEPLOY_URL}" || echo "⚠️ Desktop screenshot upload failed"
           fi
 
           # Send mobile screenshot if deployment was successful
@@ -214,7 +227,7 @@ jobs:
             curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
               -F chat_id="${TELEGRAM_CHAT_ID}" \
               -F photo=@screenshot-mobile.png \
-              -F caption="📱 Mobile View - ${DEPLOY_URL}"
+              -F caption="📱 Mobile View - ${DEPLOY_URL}" || echo "⚠️ Mobile screenshot upload failed"
           fi
 
           echo "✅ Telegram notification sent to @abvet_deploy_bot"
