@@ -49,7 +49,6 @@ rsync -av --progress "$ORIG/" "$LIMPIO/" \
   --include="*.webp" \
   --include="*.gif" \
   --include="*.ico" \
-  --include="*.html" \
   --exclude="node_modules/" \
   --exclude=".git/" \
   --exclude="**/dist/**" \
@@ -86,7 +85,11 @@ if [ -s "$LARGE_LIST" ]; then
     mkdir -p /tmp/TRYONYOU_LARGE_FILES
     while IFS= read -r f; do
       echo "Moviendo: $f"
-      mv "$f" /tmp/TRYONYOU_LARGE_FILES/ 2>/dev/null || echo "No se pudo mover $f"
+      # Preserve directory structure to avoid filename collisions
+      RELATIVE_PATH=$(echo "$f" | sed "s|^$ORIG/||")
+      DEST_DIR=$(dirname "/tmp/TRYONYOU_LARGE_FILES/$RELATIVE_PATH")
+      mkdir -p "$DEST_DIR"
+      mv "$f" "$DEST_DIR/" 2>/dev/null || echo "No se pudo mover $f"
     done < "$LARGE_LIST"
     echo "👍 Archivos grandes movidos a /tmp/TRYONYOU_LARGE_FILES/"
   else
@@ -165,7 +168,7 @@ fi
 echo ""
 echo "=== LISTO. Copia los siguientes mensajes y pégalos en Copilot y Manus ==="
 echo ""
-REPO_HTTP=$(echo "$REPO_URL" | sed -e 's/\.git$//; s/^git@/https:\/\//; s/:/\//')
+REPO_HTTP=$(echo "$REPO_URL" | sed -e 's/\.git$//; s/^git@github\.com:/https:\/\/github.com\//')
 echo "Repositorio (branch): $REPO_URL (branch: $BRANCH)"
 echo ""
 echo "MENSAJE PARA COPILOT:"
