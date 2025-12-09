@@ -158,18 +158,18 @@ dist/
 
 ## 🎨 TRYONYOU Visual Kit v1.0
 
-### Contenido
-- **Modelos oficiales** (mujer y hombre)  
-- **Pau blanco oficial** - Asistente visual en formato peacock blanco
-- **Mockups de UI**: cuatríptico  
-- **Guía visual** con reglas de estilo, proporciones y uso de assets  
-- **Estructura organizada** para facilitar integración en frontend/backend
+### Contents
+- **Official Models** (woman and man)  
+- **Official White Pau** - Visual assistant in white peacock format
+- **UI Mockups**: Quadriptych (four-panel layout)  
+- **Visual Guide** with style rules, proportions, and asset usage guidelines  
+- **Organized Structure** to facilitate frontend/backend integration
 
-### Uso
-Este kit sirve para iniciar el desarrollo del frontend, mockups, demo visual, landing page y diseño UI coherente con la identidad de TryOnYou.
+### Usage
+This kit serves to kickstart frontend development, mockups, visual demos, landing pages, and UI design consistent with TryOnYou's brand identity.
 
-### Relación con el proyecto
-Se asocia con el Issue [#1211](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/issues/1211) del repositorio principal, y estandariza la identidad visual del producto.
+### Project Relationship
+Associated with Issue [#1211](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/issues/1211) of the main repository, standardizing the product's visual identity.
 
 ## 📄 License
 
