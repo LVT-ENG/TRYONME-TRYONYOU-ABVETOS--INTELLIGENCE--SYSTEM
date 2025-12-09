@@ -27,14 +27,18 @@ src/
 ├── components/       # Reusable UI components
 │   ├── Navbar.jsx    # Navigation with mobile menu
 │   └── Footer.jsx    # Site footer with links
-├── pages/            # Route pages (7 total)
+├── pages/            # Route pages (11 total)
 │   ├── Home.jsx      # Landing page with hero
 │   ├── Brands.jsx    # Brand selection & filtering
 │   ├── MyAvatar.jsx  # Avatar creation wizard
 │   ├── Wardrobe.jsx  # Virtual closet with try-on
 │   ├── Showroom.jsx  # Curated looks gallery
 │   ├── GlowUp.jsx    # Style transformation
-│   └── AskPeacock.jsx # AI chat assistant
+│   ├── AskPeacock.jsx # AI chat assistant
+│   ├── LafayetteDemo.jsx # Lafayette demo
+│   ├── IntelligentSystem.jsx # AI recommendations
+│   ├── Demo.jsx      # Interactive demo
+│   └── LookSheetPage.jsx # Look sheet generator
 ├── data/             # JSON data files
 │   └── texts.json    # Content & copy
 ├── hooks/            # Custom React hooks
@@ -64,11 +68,15 @@ public/
 |-------|------|-------------|
 | `/` | Home | Landing with features & CTA |
 | `/brands` | Brands | Browse & filter fashion brands |
-| `/my-avatar` | My Avatar | Create your digital twin |
+| `/my-avatar` or `/avatar` | My Avatar | Create your digital twin |
 | `/wardrobe` | Wardrobe | Virtual try-on closet |
 | `/showroom` | Showroom | Curated looks by mood/occasion |
 | `/glow-up` | Glow-Up | AI style transformation |
 | `/ask-peacock` | Ask Peacock | Chat with AI stylist 🦚 |
+| `/lafayette-demo` | Lafayette Demo | Demo for Lafayette Galeries |
+| `/intelligent-system` | Intelligent System | AI styling recommendations |
+| `/demo` | Demo | Interactive demo experience |
+| `/look` | Look Sheet | Digital look sheet generator |
 
 ## 🛠 Tech Stack
 
