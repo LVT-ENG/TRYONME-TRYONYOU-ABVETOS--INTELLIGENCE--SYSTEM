@@ -132,7 +132,8 @@ Position:
 • Proportion: approximately 8-12% of total image height
 
 Visual Appearance:
-• Base: exact model from image: /mnt/data/3E671062-6D6B-4B13-A130-C08E0E5080E1.png
+• Base: exact model from Pau white peacock reference image
+  (Note: Reference image should be available locally or describe: elegant white peacock with glossy feathers)
 • Feathers: elegant white, glossy, glazed
 • Texture: soft, shiny, premium
 • Reflections: subtle golden on feathers

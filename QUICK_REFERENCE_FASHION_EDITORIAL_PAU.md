@@ -65,7 +65,7 @@ Hyper-realistic fashion editorial portrait, 9:16 vertical format, full-body shot
 
 ## 🦚 About Pau - The Peacock Mascot
 
-**Reference Image:** `/mnt/data/3E671062-6D6B-4B13-A130-C08E0E5080E1.png`
+**Reference:** Pau is an elegant white peacock mascot. If you have a reference image of Pau, use it to maintain consistency. Otherwise, describe as "elegant white peacock with glossy feathers and golden reflections."
 
 **Key Requirements:**
 - Small scale (8-12% of image height)

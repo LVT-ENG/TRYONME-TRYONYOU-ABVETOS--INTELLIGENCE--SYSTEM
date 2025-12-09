@@ -53,7 +53,7 @@ Pau is the signature white peacock mascot that appears in all generated images:
 - **Appearance:** Elegant white glossy feathers with golden reflections
 - **Behavior:** Looking toward the model
 - **Integration:** Same lighting and shadows as main scene
-- **Reference:** Based on `/mnt/data/3E671062-6D6B-4B13-A130-C08E0E5080E1.png`
+- **Reference:** If you have a Pau reference image, use it for consistency. Otherwise, describe as "elegant white peacock with glossy feathers and golden reflections"
 
 ## 🚀 Quick Start
 
