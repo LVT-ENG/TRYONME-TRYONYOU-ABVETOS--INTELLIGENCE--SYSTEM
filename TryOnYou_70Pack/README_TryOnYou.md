@@ -112,7 +112,7 @@ Elementos de interfaz de usuario organizados por sección.
 #### `/ui/wardrobe/`
 - Interfaz del armario virtual
 - Elementos de selección de prendas
-- Visualizaciones de closet
+- Visualizaciones de armario
 
 #### `/ui/fitting/`
 - Interfaz de prueba virtual
