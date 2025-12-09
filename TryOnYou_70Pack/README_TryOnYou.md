@@ -15,11 +15,11 @@ Este paquete contiene todas las imágenes oficiales utilizadas en el entorno **T
 - ✅ Nombres estandarizados
 - ✅ Estructura de carpetas optimizada para desarrollo
 
-Se entrega como un ZIP final para el **Issue #1202**: Edición + Organización.
+Se entrega como estructura de directorios en el repositorio Git para el **Issue #1202**: Edición + Organización.
 
 ---
 
-## 🗂️ 2. Estructura del ZIP
+## 🗂️ 2. Estructura de Directorios
 
 ```
 TryOnYou_70Pack/
@@ -211,7 +211,7 @@ import wardrobeMain from '@/assets/images/tryonyou/ui/wardrobe/ui_wardrobe_main_
 
 ### Estructura de Carpetas en Proyecto
 
-Se recomienda colocar el contenido del ZIP en:
+Se recomienda integrar la estructura de TryOnYou_70Pack en:
 
 ```
 public/
@@ -285,10 +285,14 @@ Este package cumple con los requisitos especificados en:
 
 ## 🟩 10. Próximos Pasos Sugeridos por el Agente 70
 
-1. **Integrar ZIP en repositorio**
+1. **Usar estructura en tu proyecto**
    ```bash
-   # Descomprimir en la ubicación apropiada
-   unzip TryOnYou_70Pack.zip -d public/assets/images/
+   # Clonar el repositorio si aún no lo tienes
+   git clone <repository-url>
+   
+   # Copiar estructura a tu proyecto
+   cp -r TryOnYou_70Pack/* your-project/public/assets/images/tryonyou/
+   # O usar como referencia directamente desde el repositorio
    ```
 
 2. **ABVETOS → Sincronización automática**
@@ -311,7 +315,7 @@ Este package cumple con los requisitos especificados en:
 
 ### Para Desarrolladores
 
-1. **Extrae el ZIP** en tu carpeta de assets
+1. **Clona o copia la estructura** a tu proyecto
 2. **Importa las imágenes** usando las rutas especificadas
 3. **Respeta las convenciones** de nomenclatura
 4. **Usa PNG** para UI con transparencias
@@ -345,9 +349,11 @@ Para preguntas sobre este package:
 
 ## 📋 Checklist de Implementación
 
-- [ ] Descomprimir ZIP en directorio de assets
+- [ ] Clonar repositorio o copiar estructura TryOnYou_70Pack
+- [ ] Integrar en directorio de assets del proyecto
 - [ ] Verificar estructura de carpetas
 - [ ] Actualizar rutas de importación en código
+- [ ] Poblar con imágenes editadas (Issue #1201)
 - [ ] Probar carga de imágenes en desarrollo
 - [ ] Verificar optimización para producción
 - [ ] Documentar en README principal del proyecto

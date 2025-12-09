@@ -124,7 +124,7 @@ TryOnYou_70Pack/
 ### README_TryOnYou.md Contiene:
 
 1. **Introducción al package**
-2. **Estructura detallada del ZIP**
+2. **Estructura detallada de directorios**
 3. **Convenciones visuales** (logo, PAU)
 4. **Convenciones de nombres de archivo**
 5. **Guía de uso por categoría**
