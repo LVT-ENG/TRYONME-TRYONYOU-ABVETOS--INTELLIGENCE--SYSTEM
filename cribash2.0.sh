@@ -7,7 +7,7 @@ echo "=== CribaSH 2.0 — Preparando criba limpia para TRYONYOU ==="
 ORIG="${HOME}/DeployExpress"
 LIMPIO="${HOME}/TRYONYOU_DEMO_CLEAN"
 BRANCH="design/criba2.0"
-ZIP_PATH="/mnt/data/archive_20251207_161946.zip"   # (archivo que subiste)
+ZIP_PATH="/mnt/data/archive_20251207_161946.zip"   # Cambia esta ruta según tu archivo ZIP
 ASSETS_DIR="ASSETS-DEMO"
 
 # 0. Comprobaciones rápidas
@@ -87,9 +87,10 @@ if [ -s "$LARGE_LIST" ]; then
       echo "Moviendo: $f"
       # Preserve directory structure to avoid filename collisions
       RELATIVE_PATH=$(echo "$f" | sed "s|^$ORIG/||")
-      DEST_DIR=$(dirname "/tmp/TRYONYOU_LARGE_FILES/$RELATIVE_PATH")
+      DEST_PATH="/tmp/TRYONYOU_LARGE_FILES/$RELATIVE_PATH"
+      DEST_DIR=$(dirname "$DEST_PATH")
       mkdir -p "$DEST_DIR"
-      mv "$f" "$DEST_DIR/" 2>/dev/null || echo "No se pudo mover $f"
+      mv "$f" "$DEST_PATH" 2>/dev/null || echo "No se pudo mover $f"
     done < "$LARGE_LIST"
     echo "👍 Archivos grandes movidos a /tmp/TRYONYOU_LARGE_FILES/"
   else
@@ -168,7 +169,8 @@ fi
 echo ""
 echo "=== LISTO. Copia los siguientes mensajes y pégalos en Copilot y Manus ==="
 echo ""
-REPO_HTTP=$(echo "$REPO_URL" | sed -e 's/\.git$//; s/^git@github\.com:/https:\/\/github.com\//')
+# Convert SSH to HTTPS URL (supports github.com, gitlab.com, bitbucket.org)
+REPO_HTTP=$(echo "$REPO_URL" | sed -e 's/\.git$//' -e 's/^git@\([^:]*\):/https:\/\/\1\//')
 echo "Repositorio (branch): $REPO_URL (branch: $BRANCH)"
 echo ""
 echo "MENSAJE PARA COPILOT:"
