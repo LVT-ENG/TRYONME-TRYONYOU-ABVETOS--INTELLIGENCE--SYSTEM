@@ -36,6 +36,23 @@ const MAX_SIZES = {
 const VALID_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp'];
 
 // ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+/**
+ * Check if a file should be skipped during validation
+ */
+function shouldSkipFile(filename) {
+  // Skip .gitkeep files
+  if (filename === '.gitkeep') return true;
+  
+  // Skip README files (README.md, README_*.md, etc.)
+  if (/^README.*\.md$/i.test(filename)) return true;
+  
+  return false;
+}
+
+// ============================================================================
 // VALIDATION FUNCTIONS
 // ============================================================================
 
@@ -122,7 +139,7 @@ function getAllFiles(dir, fileList = []) {
     
     if (stat.isDirectory()) {
       getAllFiles(filepath, fileList);
-    } else if (stat.isFile() && file !== '.gitkeep' && !file.match(/^README.*\.md$/i)) {
+    } else if (stat.isFile() && !shouldSkipFile(file)) {
       fileList.push(filepath);
     }
   });

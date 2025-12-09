@@ -32,6 +32,19 @@ const OUTPUT_TS = join(__dirname, '..', 'src', 'constants', 'TryonAssets.generat
 // ============================================================================
 
 /**
+ * Check if a file should be skipped during import
+ */
+function shouldSkipFile(filename) {
+  // Skip .gitkeep files
+  if (filename === '.gitkeep') return true;
+  
+  // Skip README files (README.md, README_*.md, etc.)
+  if (/^README.*\.md$/i.test(filename)) return true;
+  
+  return false;
+}
+
+/**
  * Recursively get all files in directory with metadata
  */
 function scanDirectory(dir, basePath = dir) {
@@ -48,7 +61,7 @@ function scanDirectory(dir, basePath = dir) {
     
     if (stat.isDirectory()) {
       result.push(...scanDirectory(filepath, basePath));
-    } else if (stat.isFile() && file !== '.gitkeep' && !file.match(/^README.*\.md$/i)) {
+    } else if (stat.isFile() && !shouldSkipFile(file)) {
       const ext = extname(file).toLowerCase();
       const relativePath = relative(basePath, filepath);
       const webPath = `/assets/images/tryonyou/${relativePath.replace(/\\/g, '/')}`;

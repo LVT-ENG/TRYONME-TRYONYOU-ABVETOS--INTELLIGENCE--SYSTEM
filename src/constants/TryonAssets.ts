@@ -230,14 +230,15 @@ export function getAssetsByCategory(category: keyof TryonImageMap): TryonImageMa
  */
 export function getAssetByPath(path: string): TryonImage | undefined {
   const keys = path.split('.');
-  let current: any = TRYON_ASSETS;
+  let current: unknown = TRYON_ASSETS;
   
   for (const key of keys) {
-    if (current === undefined) return undefined;
-    current = current[key];
+    if (current === undefined || current === null) return undefined;
+    if (typeof current !== 'object') return undefined;
+    current = (current as Record<string, unknown>)[key];
   }
   
-  return current;
+  return typeof current === 'string' ? current : undefined;
 }
 
 /**
@@ -247,7 +248,7 @@ export function getAssetByPath(path: string): TryonImage | undefined {
 export function getAllAssetPaths(): TryonImage[] {
   const paths: TryonImage[] = [];
   
-  function traverse(obj: any) {
+  function traverse(obj: unknown): void {
     if (typeof obj === 'string') {
       paths.push(obj);
     } else if (Array.isArray(obj)) {
