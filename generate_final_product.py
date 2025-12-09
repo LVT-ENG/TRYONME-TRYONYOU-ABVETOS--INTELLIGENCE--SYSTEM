@@ -23,8 +23,8 @@ print("Simulando archivos de fotos de la demo (temporal)...")
 os.makedirs(PHOTOS_DIR, exist_ok=True)
 for i in range(1, 4):
     temp_file = os.path.join(PHOTOS_DIR, f'demo_photo_{i}.jpg')
-    with open(temp_file, 'w') as f:
-        f.write(f"Placeholder para la foto de la demo {i}")
+    # Create empty placeholder files
+    open(temp_file, 'a').close()
 
 # 2.2. Verificación de Build
 if not os.path.exists(DIST_DIR):
