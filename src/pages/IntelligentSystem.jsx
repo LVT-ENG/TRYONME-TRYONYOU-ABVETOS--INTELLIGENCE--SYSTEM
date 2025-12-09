@@ -213,7 +213,7 @@ const IntelligentSystem = () => {
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       setInput(prompt.text)
-                      setTimeout(() => handleSend(), 100)
+                      setTimeout(handleSend, 100)
                     }}
                     className="glass px-5 py-2.5 rounded-full text-sm font-medium hover:bg-gradient-to-r hover:from-purple-500/20 hover:to-pink-500/20 transition-all duration-200 flex items-center gap-2.5 border border-purple-500/20 shadow-md hover:shadow-lg"
                   >
