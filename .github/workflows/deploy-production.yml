@@ -1,0 +1,231 @@
+name: TRYONYOU Production Deploy Pipeline
+
+# Trigger: Automatic deployment on push to main branch
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger
+
+env:
+  NODE_VERSION: '20.x'
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy to Vercel Production
+    runs-on: ubuntu-latest
+    
+    steps:
+      # ========================================
+      # STEP 1: Checkout Repository
+      # ========================================
+      - name: 📦 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      # ========================================
+      # STEP 2: Setup Node.js
+      # ========================================
+      - name: 🔧 Setup Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      
+      # ========================================
+      # STEP 3: Clean Dependencies
+      # ========================================
+      - name: 🧹 Clean dependencies (remove node_modules & lock file)
+        run: |
+          echo "Cleaning old dependencies..."
+          rm -rf node_modules
+          rm -f package-lock.json
+          echo "✅ Dependencies cleaned"
+      
+      # ========================================
+      # STEP 4: Fresh Install Dependencies
+      # ========================================
+      - name: 📥 Fresh install dependencies
+        run: |
+          echo "Installing fresh dependencies..."
+          npm install
+          echo "✅ Dependencies installed successfully"
+      
+      # ========================================
+      # STEP 5: Build with Vite
+      # ========================================
+      - name: 🏗️ Build project with Vite
+        run: |
+          echo "Building project with Vite..."
+          npm run build
+          echo "✅ Build completed successfully"
+      
+      # ========================================
+      # STEP 6: Install Vercel CLI
+      # ========================================
+      - name: 📦 Install Vercel CLI
+        run: npm install -g vercel@latest
+      
+      # ========================================
+      # STEP 7: Pull Vercel Environment
+      # ========================================
+      - name: 🔗 Pull Vercel Environment Information
+        run: |
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      
+      # ========================================
+      # STEP 8: Deploy to Vercel Production
+      # ========================================
+      - name: 🚀 Deploy to Vercel Production
+        id: deploy
+        run: |
+          echo "Deploying to Vercel Production..."
+          DEPLOYMENT_URL=$(vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} 2>&1 | grep -o 'https://[^ ]*')
+          echo "deployment_url=$DEPLOYMENT_URL" >> $GITHUB_OUTPUT
+          echo "✅ Deployment successful!"
+          echo "🌐 Production URL: $DEPLOYMENT_URL"
+      
+      # ========================================
+      # STEP 9: Wait for Deployment to be Ready
+      # ========================================
+      - name: ⏳ Wait for deployment to be ready
+        run: |
+          echo "Waiting 30 seconds for deployment to stabilize..."
+          sleep 30
+      
+      # ========================================
+      # STEP 10: Install Puppeteer for Screenshots
+      # ========================================
+      - name: 🖼️ Install Puppeteer
+        run: npm install puppeteer
+      
+      # ========================================
+      # STEP 11: Capture Desktop Screenshot
+      # ========================================
+      - name: 📸 Capture Desktop Screenshot
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            await page.setViewport({ width: 1920, height: 1080 });
+            await page.goto('${{ steps.deploy.outputs.deployment_url }}', { 
+              waitUntil: 'networkidle2',
+              timeout: 60000
+            });
+            await page.screenshot({ 
+              path: 'screenshot-desktop.png',
+              fullPage: true
+            });
+            await browser.close();
+            console.log('✅ Desktop screenshot captured');
+          })();
+          "
+      
+      # ========================================
+      # STEP 12: Capture Mobile Screenshot
+      # ========================================
+      - name: 📱 Capture Mobile Screenshot
+        run: |
+          node -e "
+          const puppeteer = require('puppeteer');
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox', '--disable-setuid-sandbox']
+            });
+            const page = await browser.newPage();
+            await page.setViewport({ width: 375, height: 812 }); // iPhone X dimensions
+            await page.goto('${{ steps.deploy.outputs.deployment_url }}', { 
+              waitUntil: 'networkidle2',
+              timeout: 60000
+            });
+            await page.screenshot({ 
+              path: 'screenshot-mobile.png',
+              fullPage: true
+            });
+            await browser.close();
+            console.log('✅ Mobile screenshot captured');
+          })();
+          "
+      
+      # ========================================
+      # STEP 13: Send Telegram Notification with Screenshots
+      # ========================================
+      - name: 📢 Send Telegram notification with screenshots
+        if: always()
+        run: |
+          # Prepare deployment status message
+          if [ "${{ job.status }}" = "success" ]; then
+            STATUS_EMOJI="✅"
+            STATUS_TEXT="SUCCESSFUL"
+          else
+            STATUS_EMOJI="❌"
+            STATUS_TEXT="FAILED"
+          fi
+          
+          # Get commit info
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          COMMIT_AUTHOR=$(git log -1 --pretty=%an)
+          COMMIT_SHA=$(git rev-parse --short HEAD)
+          
+          # Create message
+          MESSAGE="🚀 *TRYONYOU DEPLOYMENT ${STATUS_TEXT}* ${STATUS_EMOJI}
+
+*Environment:* Production
+*URL:* ${{ steps.deploy.outputs.deployment_url }}
+*Branch:* main
+*Commit:* ${COMMIT_SHA}
+*Author:* ${COMMIT_AUTHOR}
+*Message:* ${COMMIT_MSG}
+
+*Build Status:* ${{ job.status }}
+*Timestamp:* $(date -u +'%Y-%m-%d %H:%M:%S UTC')
+
+_DeployExpress Pipeline by ABVET_"
+          
+          # Send text message
+          curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
+            -d chat_id="${TELEGRAM_CHAT_ID}" \
+            -d text="${MESSAGE}" \
+            -d parse_mode="Markdown"
+          
+          # Send desktop screenshot if deployment was successful
+          if [ "${{ job.status }}" = "success" ] && [ -f "screenshot-desktop.png" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
+              -F chat_id="${TELEGRAM_CHAT_ID}" \
+              -F photo=@screenshot-desktop.png \
+              -F caption="🖥️ Desktop View - ${{ steps.deploy.outputs.deployment_url }}"
+          fi
+          
+          # Send mobile screenshot if deployment was successful
+          if [ "${{ job.status }}" = "success" ] && [ -f "screenshot-mobile.png" ]; then
+            curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto" \
+              -F chat_id="${TELEGRAM_CHAT_ID}" \
+              -F photo=@screenshot-mobile.png \
+              -F caption="📱 Mobile View - ${{ steps.deploy.outputs.deployment_url }}"
+          fi
+          
+          echo "✅ Telegram notification sent to @abvet_deploy_bot"
+      
+      # ========================================
+      # STEP 14: Upload Screenshots as Artifacts
+      # ========================================
+      - name: 💾 Upload screenshots as artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployment-screenshots
+          path: |
+            screenshot-desktop.png
+            screenshot-mobile.png
+          retention-days: 30

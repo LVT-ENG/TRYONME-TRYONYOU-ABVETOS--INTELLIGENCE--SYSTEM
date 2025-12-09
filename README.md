@@ -2,6 +2,8 @@
 
 **LIVE 'IT – Where beauty lives in movement**
 
+[![Deploy Status](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/actions/workflows/deploy-production.yml/badge.svg)](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/actions/workflows/deploy-production.yml)
+
 AI-Powered Virtual Try-On Platform built with React, Vite, Tailwind CSS, Framer Motion, and Three.js.
 
 ## 🚀 Quick Start
@@ -128,6 +130,22 @@ See `ASSETS_GUIDE.md` for detailed asset requirements and naming conventions.
 
 ## 🚀 Deployment
 
+### Automatic CI/CD Pipeline (GitHub Actions)
+
+This project includes an **automated deployment pipeline** that:
+- ✅ Triggers automatically on every push to `main` branch
+- ✅ Performs clean dependency installation
+- ✅ Builds the project with Vite
+- ✅ Deploys to Vercel Production
+- ✅ Captures desktop & mobile screenshots
+- ✅ Sends Telegram notifications to @abvet_deploy_bot
+
+**Setup Instructions:** See [`.github/SECRETS_SETUP.md`](.github/SECRETS_SETUP.md) for configuring GitHub Secrets.
+
+**Workflow Details:** See [`.github/workflows/README.md`](.github/workflows/README.md) for complete pipeline documentation.
+
+### Manual Deployment
+
 ### Build Command
 ```bash
 npm run build
@@ -142,7 +160,7 @@ dist/
 ```
 
 ### Deployment Platforms
-- **Vercel**: Framework preset: Vite, Build command: `npm run build`, Output: `dist`
+- **Vercel** (Recommended): Framework preset: Vite, Build command: `npm run build`, Output: `dist`
 - **Netlify**: Build command: `npm run build`, Publish directory: `dist`
 - **Railway**: Build command: `npm run build`, Output: `dist`
 - **AWS S3/CloudFront**: Upload `dist/` folder
