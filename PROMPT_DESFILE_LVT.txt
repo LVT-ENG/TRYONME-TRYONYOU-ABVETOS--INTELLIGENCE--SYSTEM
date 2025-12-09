@@ -1,0 +1,47 @@
+🎥 PROMPT RUNWAY – VIDEO PASARELA LVT
+
+🎯 Objetivo:
+Generar un vídeo de pasarela elegante y moderno con estética editorial y visual de lujo para la marca LVT (Live it).
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📸 ESCENA
+• Fondo: negro brillante tipo espejo
+• Suelo: reflejante como cristal
+• Pantalla LED de fondo con triángulos pastel en movimiento suave (colores inspirados en el logo de Leonardo AI)
+• Modelos caminando sobre la pasarela (tanto hombres como mujeres)
+• Vestuario: chaquetas personalizadas LVT, con detalles abstractos y geometría
+• Iluminación: teatral, contraste fuerte con zonas oscuras y focos
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎬 EFECTOS
+• Giros de modelos: rápidos, casi robóticos
+• Gestos (tocar el pelo, guiñar un ojo): cámara lenta
+• Efectos de velocidad: avance y retroceso suave para estilizar
+• Cierre: modelo lanza una moneda al aire con dos caras:
+    – “Live it” y “Leave it”
+    – Al caer, se ve “Live it”
+    – La modelo sonríe sutilmente, gira y cierra pasarela
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎵 MÚSICA
+• Estilo: hipnótica, lenta, profunda
+• Objetivo: inducir deseo de compra, sensación de lujo y seguridad
+• No demasiado ruidosa ni EDM
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📐 ENCUADRE Y TOMA
+• Primeros planos de ojos, bocas, bolsos, detalles de chaquetas
+• Panorámica lenta y zoom suaves
+• Cámara se mueve al ritmo de la música
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🧠 ESTILO VISUAL
+• Editorial + arte + tecnología
+• Referencia: Dolce & Gabbana Alta Moda + futurismo suave
+• Marca: LVT (Live it), mensaje de empoderamiento silencioso
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📝 INSTRUCCIÓN
+Usar este prompt en plataformas como Runway o Sora para generar el vídeo directamente a partir de imágenes base o modelos 3D.
+
+– ChatGPT (Video Wizard)

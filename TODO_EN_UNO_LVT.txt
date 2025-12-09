@@ -1,0 +1,73 @@
+🧩 PROYECTO LVT – TODO-EN-UNO
+Fecha de preparación: 2025-06-03 14:02
+
+Hola Rubén,
+
+Este documento reúne TODO lo necesario para finalizar tu web y app de LVT de forma clara, rápida y sin perder tiempo. Aquí tienes los enlaces, archivos, agentes y acciones ordenadas para que solo tengas que revisar y aprobar.
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📂 1. ESTRUCTURA EN DRIVE
+Carpeta principal compartida:
+🔗 https://drive.google.com/drive/folders/1oBI6v957XyBCgxJtQSDT0QgWiW6VJh6Z
+
+Subcarpetas recomendadas:
+• /Vídeos
+• /Fichas técnicas
+• /Agentes GPT
+• /Publicaciones Instagram
+• /Diseños y prompts IA
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🎥 2. PRIMER VÍDEO A GENERAR
+✅ Tipo: DESFILE PASARELA – estilo LVT
+Fondo: negro brillante tipo espejo
+Modelos: usando chaquetas VVL
+Efectos: cámara lenta en gestos, giros rápidos, sonrisa final + moneda con "Live it" al final
+
+🔁 Prompt para Runway (se entregará en el siguiente archivo)
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🤖 3. AGENTES VIRTUALES LISTOS PARA ACTIVAR
+
+1. PMV – Project Manager Virtual
+   🗂 Organiza tareas, fechas y recordatorios
+
+2. Content Pro
+   ✍️ Generador de textos web y publicaciones
+
+3. Ficha Técnica Master
+   📄 Crea fichas con JSON-LD, títulos, descripciones
+
+4. RRSS Automator
+   📱 Prepara y programa publicaciones con hashtags
+
+5. Video Wizard
+   🎞️ Genera prompts para Runway / Sora listos
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🗂 4. DOCUMENTOS YA ENTREGADOS
+
+✅ CONFIRMACION_LVT.txt  
+✅ LVT_SEGUNDO_ARCHIVO.txt  
+
+Próximo: “Prompt Runway Final – Desfile Pasarela LVT”
+
+━━━━━━━━━━━━━━━━━━━━━━━
+🧠 ¿QUÉ HACER AHORA?
+
+1. Revisa el contenido de cada carpeta
+2. Aprueba o modifica los prompts que se te entregan
+3. Copia y pega directamente en Runway o compártelo con quien te gestione la web
+
+━━━━━━━━━━━━━━━━━━━━━━━
+📞 SOPORTE
+
+Si en algún momento necesitas delegar la subida final o automatizar publicaciones, basta con dar acceso a:
+📧 ruben.espinar.10@gmail.com
+
+—
+
+🎯 Esto es el centro de control de tu proyecto.
+Todo lo que se cree o automatice irá documentado aquí.
+
+– ChatGPT (agente dedicado a LVT)
