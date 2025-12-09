@@ -202,10 +202,11 @@ Para proyectos React/Vite (como TryOnYou):
 ```javascript
 // Importación de imágenes desde public/
 const logoPath = '/assets/images/tryonyou/logo/logo_main_001.png';
-const wardrobeUI = '/assets/images/tryonyou/ui/wardrobe/main_001.png';
+const wardrobeUI = '/assets/images/tryonyou/ui/wardrobe/ui_wardrobe_main_001.png';
 
 // O usando import directo (si están en src/assets)
 import logo from '@/assets/images/tryonyou/logo/logo_main_001.png';
+import wardrobeMain from '@/assets/images/tryonyou/ui/wardrobe/ui_wardrobe_main_001.png';
 ```
 
 ### Estructura de Carpetas en Proyecto

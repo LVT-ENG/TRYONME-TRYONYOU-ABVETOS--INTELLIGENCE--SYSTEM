@@ -93,9 +93,11 @@ TryOnYou_70Pack/
    ```javascript
    // React/Vite
    const logo = '/assets/images/tryonyou/logo/logo_main_001.png';
+   const wardrobeUI = '/assets/images/tryonyou/ui/wardrobe/ui_wardrobe_main_001.png';
    
    // Import directo
-   import wardrobeUI from '@/assets/images/tryonyou/ui/wardrobe/main_001.png';
+   import logo from '@/assets/images/tryonyou/logo/logo_main_001.png';
+   import wardrobeMain from '@/assets/images/tryonyou/ui/wardrobe/ui_wardrobe_main_001.png';
    ```
 
 ### Para Agregar Imágenes
