@@ -3,3 +3,7 @@
 
 node_modules
 dist
+
+# Deployment artifacts
+TRYONYOU_PRODUCTO_VENDIBLE.zip
+public/assets/photos
