@@ -75,7 +75,7 @@ function validateNaming(filename) {
   }
   
   // No accents or special characters
-  const validPattern = /^[a-z0-9_\-]+\.(png|jpg|jpeg|webp)$/;
+  const validPattern = /^[a-z0-9_-]+\.(png|jpg|jpeg|webp)$/;
   if (!validPattern.test(filename)) {
     errors.push('Contains invalid characters (use only a-z, 0-9, _, -)');
   }

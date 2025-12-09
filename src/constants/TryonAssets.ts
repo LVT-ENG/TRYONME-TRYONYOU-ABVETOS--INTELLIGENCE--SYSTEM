@@ -262,13 +262,19 @@ export function getAllAssetPaths(): TryonImage[] {
   return paths;
 }
 
+// Cached asset paths set for efficient validation
+let cachedAssetPathsSet: Set<string> | null = null;
+
 /**
  * Validate if an asset path exists in the asset map
  * @param path - Asset path to validate
  * @returns True if the path exists in the asset map
  */
 export function isValidAssetPath(path: string): boolean {
-  return getAllAssetPaths().includes(path);
+  if (!cachedAssetPathsSet) {
+    cachedAssetPathsSet = new Set(getAllAssetPaths());
+  }
+  return cachedAssetPathsSet.has(path);
 }
 
 // ============================================================================
