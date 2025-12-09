@@ -20,6 +20,10 @@ jobs:
     name: Build & Deploy to Vercel Production
     runs-on: ubuntu-latest
     
+    permissions:
+      contents: read
+      actions: read
+    
     steps:
       # ========================================
       # STEP 1: Checkout Repository
