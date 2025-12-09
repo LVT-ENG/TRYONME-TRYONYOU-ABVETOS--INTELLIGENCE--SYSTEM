@@ -1,0 +1,288 @@
+📸 DEFINITIVE PROMPT – HYPER-REALISTIC FASHION EDITORIAL PORTRAIT
+With Pau (the elegant peacock) in the corner
+
+🎯 Objective:
+Generate a hyper-realistic fashion editorial portrait in 9:16 vertical format, full-body,
+maintaining TOTAL CONSISTENCY in model, pose, lighting, and composition.
+Premium Vogue / Harper's Bazaar style with Parisian haute couture energy.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📐 TECHNICAL SPECIFICATIONS
+
+Format:
+• Aspect Ratio: 9:16 (vertical)
+• Framing: full-body
+• Camera Angle: slightly low angle
+• Composition: centered, elegant, balanced
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👤 MODEL (ABSOLUTE CONSISTENCY)
+
+Characteristics:
+• SAME female model in all variations
+• SAME exact pose
+• SAME lighting
+• SAME composition
+• Expression: serene, warm, confident smile
+• Energy: mature, sophisticated, not childish
+• Presence: premium, Parisian fashion energy
+
+Hair:
+• Polished editorial waves
+• Style: sophisticated, voluminous
+• Finish: shiny, professional
+• Movement: subtle and natural
+
+Makeup:
+• Eyes: soft smoky eyes
+• Skin: luminous, flawless
+• Lips: natural with subtle gloss
+• Overall look: high-end editorial
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 LIGHTING
+
+Type: Luxury soft cinematic studio light
+• Quality: soft, diffused, enveloping
+• Direction: main frontal with side fill
+• Temperature: warm but neutral (3200-4000K)
+• Shadows: soft, not harsh
+• Highlights: subtle on skin, hair and fabric
+• Atmosphere: professional, studio quality
+• Effect: premium fashion magazine lighting
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 ENVIRONMENT AND BACKGROUND
+
+Background:
+• Clean modern gradient
+• Colors: elegant neutrals (pearl gray to soft white)
+• Texture: smooth, no distractions
+• Style: minimalist, editorial
+• Depth: subtle figure-background separation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👗 WARDROBE (3 VARIATIONS)
+
+IMPORTANT: Use ONE of the following options in each generation
+
+━━━━━━━━━━━━━━━━━━━━━━━
+VARIATION 1: BRIDAL CHIFFON GOWN
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Dress:
+• Style: bridal chiffon gown
+• Cut: flowing, ethereal, romantic
+• Color: pure white or ivory
+• Details: light layers, soft movement
+• Length: full floor-length
+• Silhouette: elegant, A-line or column
+• Texture: light, translucent layers
+• Finish: delicate, sophisticated
+
+Accessories:
+• Minimalist, elegant
+• Jewelry: delicate, possibly pearls
+• Shoes: nude or silver heels (barely visible)
+
+━━━━━━━━━━━━━━━━━━━━━━━
+VARIATION 2: BLACK WIDOW COUTURE DRESS
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Dress:
+• Style: dramatic haute couture dress
+• Cut: structured, architectural
+• Color: deep black
+• Details: fitted cut, elegant neckline
+• Silhouette: hourglass, sophisticated
+• Texture: satin, velvet or luxury blend
+• Finish: subtle shine, glamorous
+• Volume: possible train or dramatic draping
+
+Accessories:
+• Statement but elegant
+• Jewelry: diamonds or dark crystals
+• Shoes: black stiletto heels
+
+━━━━━━━━━━━━━━━━━━━━━━━
+VARIATION 3: RED SATIN EVENING DRESS
+━━━━━━━━━━━━━━━━━━━━━━━
+
+Dress:
+• Style: satin evening dress
+• Cut: elegant, flowing
+• Color: intense red (ruby red)
+• Details: perfect drape, subtle shine
+• Silhouette: mermaid or column
+• Texture: shiny satin, luxurious
+• Finish: reflective, premium
+• Length: full, possible side slit
+
+Accessories:
+• Sophisticated, gold or silver
+• Jewelry: statement earrings, delicate bracelet
+• Shoes: nude, gold or silver heels
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🦚 PAU – THE PEACOCK MASCOT (CRITICAL ELEMENT)
+
+Position:
+• Location: bottom-right corner
+• Scale: mascot size (small, not dominant)
+• Proportion: approximately 8-12% of total image height
+
+Visual Appearance:
+• Base: exact model from image: /mnt/data/3E671062-6D6B-4B13-A130-C08E0E5080E1.png
+• Feathers: elegant white, glossy, glazed
+• Texture: soft, shiny, premium
+• Reflections: subtle golden on feathers
+• Quality: hyper-realistic like the model
+
+Behavior and Direction:
+• Orientation: looking toward the model
+• Posture: elegant, aristocratic
+• Attitude: observant, protective
+• Expression: serene, intelligent
+
+Scene Integration:
+• Lighting: SAME as the model (total consistency)
+• Shadows: coherent with main scene
+• Depth: same 3D space as the model
+• Presence: clearly visible but NOT distracting
+• Balance: complements without competing with model
+
+Technical Details:
+• Sharpness: same detail level as rest of image
+• Color: pure white with warm golden touches
+• Contrast: well defined against background
+• Edges: clean, professional
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 OVERALL VISUAL STYLE
+
+Quality Reference:
+• Vogue Magazine – Premium fashion editorial
+• Harper's Bazaar – Sophistication and elegance
+• Parisian haute couture – European refinement
+
+Style Characteristics:
+• Photographic hyper-realism
+• Quality: ultra high definition
+• Texture: every detail visible
+• Colors: rich but natural saturation
+• Tones: warm, elegant, premium
+• Atmosphere: luxurious, aspirational
+• Finish: professional studio
+
+Elements to Avoid:
+• Excessive artificiality or CGI look
+• Harsh lighting or dramatic shadows
+• Chaotic or distracting backgrounds
+• Color over-saturation
+• Fast fashion or cheap commercial effects
+• Exaggerated or unnatural expressions
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 USAGE INSTRUCTIONS
+
+Recommended Platforms:
+• Midjourney (v6 or higher)
+• DALL-E 3
+• Stable Diffusion XL
+• Leonardo AI (PhotoReal preset)
+• Adobe Firefly
+
+Suggested Parameters:
+• Resolution: minimum 1080 x 1920 (9:16)
+• Quality: maximum available
+• Style: photographic, not illustrative
+• Realism: maximum
+• Coherence: high (especially for Pau)
+
+Generation Workflow:
+1. Generate base image of model with chosen outfit
+2. Verify consistency of pose, lighting and expression
+3. Integrate Pau in bottom-right corner
+4. Adjust Pau's lighting to match the scene
+5. Verify Pau is looking toward the model
+6. Review overall visual balance
+7. Refine final details
+
+Iterative Process:
+• Maintain SAME seed for consistency
+• Adjust only specific elements between variations
+• Preserve model's pose and expression
+• Ensure Pau appears in each variation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ QUALITY CHECKLIST
+
+Before Approving Final Image:
+
+Model:
+☐ Identical pose in all variations
+☐ Serene and confident expression
+☐ Hair with polished editorial waves
+☐ Soft smoky eyes makeup
+☐ Luminous and flawless skin
+
+Lighting:
+☐ Soft and cinematic light
+☐ Subtle shadows, not harsh
+☐ Consistency throughout image
+☐ Neutral warm temperature
+
+Wardrobe:
+☐ Outfit clearly defined per chosen variation
+☐ Fabrics with realistic texture
+☐ Natural drape of dress
+☐ Visible and precise details
+
+Pau (Mascot):
+☐ Located in bottom-right corner
+☐ Appropriate size (8-12% of height)
+☐ Elegant white feathers with golden reflections
+☐ Looking toward the model
+☐ Lighting consistent with scene
+☐ Clearly visible but not distracting
+☐ Coherent shadows
+
+Composition:
+☐ 9:16 vertical format
+☐ Full-body framing
+☐ Slightly low angle
+☐ Clean gradient background
+☐ Balanced visual equilibrium
+
+Quality:
+☐ Photographic hyper-realism
+☐ High resolution and sharpness
+☐ Rich but natural colors
+☐ Vogue/Harper's Bazaar style
+☐ No visible artifacts or errors
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💡 ADDITIONAL TIPS
+
+For Best Results:
+• Generate multiple variations and select the best
+• Use visual references from Vogue/Harper's Bazaar
+• Maintain coherence between the 3 outfit variations
+• Pay special attention to Pau integration
+• Verify lighting is cinematic, not flash
+
+Fine Adjustments:
+• If Pau is too large: reduce scale to 8%
+• If Pau is too small: increase to 12%
+• If Pau doesn't look at model: regenerate with emphasis on direction
+• If lighting doesn't match: adjust color temperature
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 This prompt is designed to generate professional-quality fashion editorial portraits
+   with the Pau mascot elegantly and coherently integrated.
+
+📌 Priority: CONSISTENCY in model, pose, lighting and Pau's presence.
+
+– AI Fashion Editorial System
+– TRYONME-TRYONYOU-ABVETOS INTELLIGENCE SYSTEM
