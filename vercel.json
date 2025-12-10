@@ -1,13 +1,6 @@
 {
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/demo",
-      "destination": "/demo/index.html"
-    },
-    {
-      "source": "/demo/(.*)",
-      "destination": "/demo/$1"
-    }
-  ]
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "npm install --legacy-peer-deps"
 }
