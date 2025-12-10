@@ -41,7 +41,7 @@
       },
       "look_sheet": {
         "title": "📋 Look Sheet Export",
-        "description": "Générer un récapitulatif de looks pour le client ou l'enseigne.",
+        "description": "Generate a comprehensive summary of looks for clients or retailers.",
         "link_text": "Generate Look Sheet"
       }
     },
