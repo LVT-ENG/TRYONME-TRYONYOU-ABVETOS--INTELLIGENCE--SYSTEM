@@ -307,7 +307,7 @@ const AskPeacock = () => {
                 <feature.icon size={16} className={feature.color} />
                 {feature.label}
               </motion.div>
-            ))}}
+            ))}
           </div>
         </div>
       </section>
