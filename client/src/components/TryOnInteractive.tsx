@@ -1,8 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// Interfaces
+interface ModelAngles {
+  front: string;
+  deg30: string;
+  deg45: string;
+  [key: string]: string; // Index signature para acceso dinámico
+}
+
+interface Model {
+  id: string;
+  name: string;
+  gender: 'male' | 'female';
+  angles: ModelAngles;
+}
+
+interface Garment {
+  id: string;
+  name: string;
+  category: string;
+  image: string;
+  thumbnail: string;
+  gender: 'male' | 'female' | 'unisex';
+}
+
 // Datos de modelos
-const MODELS = [
+const MODELS: Model[] = [
   {
     id: 'male-1',
     name: 'Modelo Masculino',
@@ -26,7 +50,7 @@ const MODELS = [
 ];
 
 // Datos de prendas
-const GARMENTS = [
+const GARMENTS: Garment[] = [
   // Tops
   {
     id: 'top-white-tshirt',
@@ -137,11 +161,11 @@ const CATEGORIES = [
 ];
 
 export default function TryOnInteractive() {
-  const [selectedModel, setSelectedModel] = useState(MODELS[1]); // Femenino por defecto
-  const [currentAngle, setCurrentAngle] = useState('front');
-  const [selectedCategory, setSelectedCategory] = useState('tops');
-  const [selectedGarment, setSelectedGarment] = useState(null);
-  const [isRotating, setIsRotating] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<Model>(MODELS[1]); // Femenino por defecto
+  const [currentAngle, setCurrentAngle] = useState<string>('front');
+  const [selectedCategory, setSelectedCategory] = useState<string>('tops');
+  const [selectedGarment, setSelectedGarment] = useState<Garment | null>(null);
+  const [isRotating, setIsRotating] = useState<boolean>(false);
 
   // Filtrar prendas según modelo y categoría
   const availableGarments = GARMENTS.filter(
@@ -173,7 +197,7 @@ export default function TryOnInteractive() {
     }
   }, [selectedGarment?.id, isRotating]);
 
-  const handleGarmentSelect = (garment) => {
+  const handleGarmentSelect = (garment: Garment) => {
     setSelectedGarment(garment);
   };
 
