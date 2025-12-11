@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { TryOnEngine } from '../lib/TryOnEngine';
 
 // Interfaces
 interface ModelAngles {
   front: string;
   deg30: string;
   deg45: string;
-  [key: string]: string; // Index signature para acceso dinámico
+  [key: string]: string;
 }
 
 interface Model {
@@ -161,41 +162,73 @@ const CATEGORIES = [
 ];
 
 export default function TryOnInteractive() {
-  const [selectedModel, setSelectedModel] = useState<Model>(MODELS[1]); // Femenino por defecto
+  const [selectedModel, setSelectedModel] = useState<Model>(MODELS[1]);
   const [currentAngle, setCurrentAngle] = useState<string>('front');
   const [selectedCategory, setSelectedCategory] = useState<string>('tops');
   const [selectedGarment, setSelectedGarment] = useState<Garment | null>(null);
-  const [isRotating, setIsRotating] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [processedCanvas, setProcessedCanvas] = useState<HTMLCanvasElement | null>(null);
+  
+  const engineRef = useRef<TryOnEngine | null>(null);
+  const canvasContainerRef = useRef<HTMLDivElement>(null);
 
-  // Filtrar prendas según modelo y categoría
-  const availableGarments = GARMENTS.filter(
-    (g) =>
-      g.category === selectedCategory &&
-      (g.gender === 'unisex' || g.gender === selectedModel.gender)
-  );
-
-  // Efecto de rotación automática al cambiar prenda
+  // Inicializar Motor Try-On
   useEffect(() => {
-    if (selectedGarment && !isRotating) {
-      setIsRotating(true);
-      
-      // Secuencia de rotación: front -> 30° -> 45° -> 30° -> front
-      const angles = ['deg30', 'deg45', 'deg30', 'front'];
-      let step = 0;
+    engineRef.current = new TryOnEngine();
+  }, []);
 
-      const rotationInterval = setInterval(() => {
-        if (step < angles.length) {
-          setCurrentAngle(angles[step]);
-          step++;
-        } else {
-          clearInterval(rotationInterval);
-          setIsRotating(false);
-        }
-      }, 600);
+  // Pipeline de Procesamiento
+  useEffect(() => {
+    const processTryOn = async () => {
+      if (!selectedGarment || !engineRef.current) {
+        setProcessedCanvas(null);
+        return;
+      }
 
-      return () => clearInterval(rotationInterval);
+      setIsProcessing(true);
+      try {
+        // 1. Cargar imagen del modelo base
+        const modelImg = new Image();
+        modelImg.src = selectedModel.angles[currentAngle];
+        await new Promise((resolve) => (modelImg.onload = resolve));
+
+        // 2. Cargar imagen de la prenda
+        const garmentImg = new Image();
+        garmentImg.src = selectedGarment.image;
+        await new Promise((resolve) => (garmentImg.onload = resolve));
+
+        // 3. Ejecutar segmentación y pose detection
+        const result = await engineRef.current.processImage(modelImg);
+
+        // 4. Componer resultado final (Warping + Masking)
+        const finalCanvas = engineRef.current.compose(
+          modelImg,
+          garmentImg,
+          result.segmentation!,
+          result.landmarks!
+        );
+
+        setProcessedCanvas(finalCanvas);
+      } catch (error) {
+        console.error("Try-On Error:", error);
+      } finally {
+        setIsProcessing(false);
+      }
+    };
+
+    processTryOn();
+  }, [selectedGarment, selectedModel, currentAngle]);
+
+  // Renderizar Canvas en el DOM
+  useEffect(() => {
+    if (canvasContainerRef.current && processedCanvas) {
+      canvasContainerRef.current.innerHTML = '';
+      processedCanvas.style.width = '100%';
+      processedCanvas.style.height = '100%';
+      processedCanvas.style.objectFit = 'contain';
+      canvasContainerRef.current.appendChild(processedCanvas);
     }
-  }, [selectedGarment?.id, isRotating]);
+  }, [processedCanvas]);
 
   const handleGarmentSelect = (garment: Garment) => {
     setSelectedGarment(garment);
@@ -206,11 +239,18 @@ export default function TryOnInteractive() {
     setSelectedModel(newModel);
     setSelectedGarment(null);
     setCurrentAngle('front');
+    setProcessedCanvas(null);
   };
+
+  const availableGarments = GARMENTS.filter(
+    (g) =>
+      g.category === selectedCategory &&
+      (g.gender === 'unisex' || g.gender === selectedModel.gender)
+  );
 
   return (
     <div className="relative w-full h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-hidden">
-      {/* Logo TRYONYOU - Arriba Derecha */}
+      {/* Logo */}
       <div className="absolute top-8 right-8 z-50">
         <img
           src="/assets/tryonyou-logo.png"
@@ -219,7 +259,7 @@ export default function TryOnInteractive() {
         />
       </div>
 
-      {/* PAU Assistant - Abajo Izquierda */}
+      {/* PAU Assistant */}
       <div className="absolute bottom-8 left-8 z-50">
         <motion.img
           src="/assets/pau-assistant.png"
@@ -230,13 +270,11 @@ export default function TryOnInteractive() {
         />
       </div>
 
-      {/* Contenedor Principal */}
       <div className="flex h-full">
-        {/* Panel Izquierdo - Miniaturas de Prendas */}
-        <div className="w-64 bg-white/80 backdrop-blur-sm shadow-2xl p-6 overflow-y-auto">
+        {/* Panel Izquierdo */}
+        <div className="w-64 bg-white/80 backdrop-blur-sm shadow-2xl p-6 overflow-y-auto z-20">
           <h2 className="text-2xl font-bold text-gray-800 mb-6">Prendas</h2>
           
-          {/* Switch de Modelo */}
           <button
             onClick={handleModelSwitch}
             className="w-full mb-6 px-4 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
@@ -244,7 +282,6 @@ export default function TryOnInteractive() {
             {selectedModel.gender === 'male' ? '👨 Hombre' : '👩 Mujer'}
           </button>
 
-          {/* Miniaturas */}
           <div className="space-y-4">
             {availableGarments.map((garment) => (
               <motion.div
@@ -273,11 +310,36 @@ export default function TryOnInteractive() {
           </div>
         </div>
 
-        {/* Centro - Modelo con Prenda */}
-        <div className="flex-1 flex items-center justify-center relative">
+        {/* Centro - Canvas de Try-On */}
+        <div className="flex-1 flex items-center justify-center relative bg-gray-100">
           <div className="relative w-[500px] h-[700px]">
-            {/* Modelo Base */}
-            <AnimatePresence mode="wait">
+            
+            {/* Loading Indicator */}
+            <AnimatePresence>
+              {isProcessing && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 z-50 flex items-center justify-center bg-white/50 backdrop-blur-sm rounded-xl"
+                >
+                  <div className="flex flex-col items-center">
+                    <div className="w-12 h-12 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+                    <p className="text-purple-800 font-bold">Procesando Try-On...</p>
+                    <p className="text-xs text-gray-600 mt-1">Segmentando cuerpo & Ajustando prenda</p>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Canvas Container (Resultado Procesado) */}
+            <div 
+              ref={canvasContainerRef} 
+              className={`absolute inset-0 w-full h-full transition-opacity duration-300 ${processedCanvas ? 'opacity-100' : 'opacity-0'}`}
+            />
+
+            {/* Fallback: Imagen Original (si no hay canvas procesado) */}
+            {!processedCanvas && (
               <motion.img
                 key={`model-${selectedModel.id}-${currentAngle}`}
                 src={selectedModel.angles[currentAngle]}
@@ -285,31 +347,15 @@ export default function TryOnInteractive() {
                 className="absolute inset-0 w-full h-full object-contain"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               />
-            </AnimatePresence>
+            )}
 
-            {/* Prenda Superpuesta */}
-            <AnimatePresence mode="wait">
-              {selectedGarment && (
-                <motion.img
-                  key={`garment-${selectedGarment.id}-${currentAngle}`}
-                  src={selectedGarment.image}
-                  alt={selectedGarment.name}
-                  className="absolute inset-0 w-full h-full object-contain mix-blend-multiply"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.4, ease: 'easeOut' }}
-                />
-              )}
-            </AnimatePresence>
           </div>
         </div>
       </div>
 
-      {/* Selector de Categorías - Abajo Centro */}
+      {/* Selector de Categorías */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-40">
         <div className="flex gap-4 bg-white/90 backdrop-blur-sm rounded-full px-8 py-4 shadow-2xl">
           {CATEGORIES.map((cat) => {
