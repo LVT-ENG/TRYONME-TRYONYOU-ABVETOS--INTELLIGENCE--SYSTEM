@@ -1,13 +1,16 @@
 import React from "react";
-import TryOnInteractive from "./components/TryOnInteractive";
+import { Route, Switch } from "wouter";
+import Home from "./pages/Home";
+import Demo from "./pages/Demo";
+import NotFound from "./pages/NotFound";
 
-// Versión ultra-simplificada sin providers, sin routing, sin nada extra.
-// Si esto falla, el problema es TryOnInteractive.tsx
 function App() {
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
-      <TryOnInteractive />
-    </div>
+    <Switch>
+      <Route path="/" component={Home} />
+      <Route path="/demo" component={Demo} />
+      <Route component={NotFound} />
+    </Switch>
   );
 }
 

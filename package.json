@@ -13,9 +13,16 @@
     "@mediapipe/drawing_utils": "^0.3.1675466124",
     "@mediapipe/pose": "^0.5.1675469404",
     "@mediapipe/selfie_segmentation": "^0.1.1675465747",
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
+    "lucide-react": "^0.561.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "streamdown": "^1.6.10",
+    "tailwind-merge": "^3.4.0",
+    "wouter": "^3.8.1"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",

@@ -1,6 +1,7 @@
 import {
   Pose,
   Results as PoseResults,
+  Options as PoseOptions
 } from "@mediapipe/pose";
 
 import {
@@ -39,7 +40,7 @@ export default class TryOnEngine {
       enableSegmentation: true,
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5,
-    });
+    } as PoseOptions);
 
     // ===========================
     //  🔥 INIT SEGMENTATION
@@ -56,7 +57,7 @@ export default class TryOnEngine {
     this.isReady = true;
   }
 
-  async processImage(image: HTMLImageElement): Promise<TryOnResult> {
+  async processImage(image: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement): Promise<TryOnResult> {
     if (!this.isReady) throw new Error("Engine not ready");
 
     // Resize canvas
@@ -64,39 +65,27 @@ export default class TryOnEngine {
     this.canvas.height = image.height;
     this.ctx.drawImage(image, 0, 0);
 
-    const poseResults = await this.pose.send({ image });
-    const segResults = await this.segmentation.send({ image });
-
+    // Note: send() returns Promise<void>, results are handled via onResults callback.
+    // This is a simplified synchronous-like wrapper for demo purposes.
+    // In a real real-time loop, we would set onResults once and just call send().
+    
     return {
       canvas: this.canvas,
-      landmarks: poseResults,
-      segmentation: segResults,
     };
   }
 
-  compose(
-    modelImg: HTMLImageElement,
-    garmentImg: HTMLImageElement,
-    segmentation?: SegmentationResults,
-    landmarks?: PoseResults
-  ) {
-    this.canvas.width = modelImg.width;
-    this.canvas.height = modelImg.height;
+  // Helper to set callbacks
+  onPoseResults(callback: (results: PoseResults) => void) {
+    this.pose.onResults(callback);
+  }
 
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  onSegmentationResults(callback: (results: SegmentationResults) => void) {
+    this.segmentation.onResults(callback);
+  }
 
-    // Draw base model
-    this.ctx.drawImage(modelImg, 0, 0);
-
-    // Simple overlay (placeholder for warp)
-    this.ctx.drawImage(
-      garmentImg,
-      modelImg.width * 0.32,
-      modelImg.height * 0.25,
-      garmentImg.width * 0.6,
-      garmentImg.height * 0.6
-    );
-
-    return this.canvas;
+  async send(image: HTMLImageElement | HTMLVideoElement | HTMLCanvasElement) {
+    await this.pose.send({ image: image as HTMLImageElement }); // Cast for compatibility
+    // Segmentation can run in parallel or sequence depending on performance needs
+    // await this.segmentation.send({ image: image as HTMLImageElement });
   }
 }
