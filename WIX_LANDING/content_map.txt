@@ -1,0 +1,34 @@
+# content_map.txt
+# Describe qué texto y qué imagen usa cada sección de la landing.
+
+[HERO]
+Texto_FR: La nouvelle façon d'essayer les vêtements, sans cabine.
+Texto_EN: The new way to try clothes, no fitting room needed.
+Texto_ES: La nueva forma de probarse ropa, sin probador.
+Imagen_usada: /home/ubuntu/TRYONYOU_PROJECT/ASSETS/IMAGES/hero_magic_mirror.png
+
+[ESPEJO_MAGICO]
+Texto_FR: Notre écran géant en façade n'est pas un simple affichage. C'est un miroir intelligent qui utilise l'IA pour superposer des tenues sur vos clients en temps réel, sans qu'ils aient besoin d'entrer dans une cabine. Une expérience futuriste qui attire l'œil et engage.
+Texto_EN: Our giant facade screen is not just a display. It's a smart mirror that uses AI to overlay outfits onto your customers in real-time, without them needing to enter a fitting room. A futuristic experience that catches the eye and engages.
+Texto_ES: Nuestra pantalla gigante en la fachada no es una simple pantalla. Es un espejo inteligente que utiliza la IA para superponer conjuntos en sus clientes en tiempo real, sin que necesiten entrar en un probador. Una experiencia futurista que atrae la mirada y engancha.
+Imagen_usada: /home/ubuntu/TRYONYOU_PROJECT/ASSETS/IMAGES/magic_mirror_mockup.png
+
+[COMMENT_CA_MARCHE / CÓMO FUNCIONA]
+Paso_1: [FR] Le client se place devant l'écran. [EN] The customer stands in front of the screen. [ES] El cliente se coloca delante de la pantalla.
+Paso_2: [FR] L'IA de Pau analyse sa silhouette et propose des tenues. [EN] Pau's AI analyzes their silhouette and suggests outfits. [ES] La IA de Pau analiza su silueta y propone conjuntos.
+Paso_3: [FR] Les looks changent instantanément sur l'écran. [EN] The looks change instantly on the screen. [ES] Los looks cambian instantáneamente en la pantalla.
+Paso_4: [FR] Le client achète en magasin ou en ligne, sans avoir perdu de temps en cabine. [EN] The customer buys in-store or online, without having wasted time in a fitting room. [ES] El cliente compra en tienda o en línea, sin haber perdido tiempo en un probador.
+
+[POUR_LES_MAGASINS / PARA TIENDAS]
+Bullets_FR: Réduction des retours de 30% grâce à la visualisation réaliste. Augmentation du taux de conversion en magasin et en ligne. Expérience client premium, digne des grands magasins (LVMH, Printemps). Installation et intégration rapides avec votre catalogue existant.
+Bullets_EN: 30% reduction in returns thanks to realistic visualization. Increased conversion rate in-store and online. Premium customer experience, worthy of major department stores (LVMH, Printemps). Quick installation and integration with your existing catalog.
+Bullets_ES: Reducción del 30% en devoluciones gracias a la visualización realista. Aumento de la tasa de conversión en tienda y en línea. Experiencia de cliente premium, digna de grandes almacenes (LVMH, Printemps). Instalación e integración rápidas con su catálogo existente.
+
+[PILOTE_30_JOURS]
+Oferta_FR: Testez TryOnYou dans votre magasin pendant 30 jours. Inclut l'installation, un corner dédié et un rapport de performance détaillé. Sans engagement à long terme.
+Oferta_EN: Test TryOnYou in your store for 30 days. Includes installation, a dedicated corner, and a detailed performance report. No long-term commitment.
+Oferta_ES: Pruebe TryOnYou en su tienda durante 30 días. Incluye la instalación, un corner dedicado y un informe de rendimiento detallado. Sin compromiso a largo plazo.
+
+[CONTACT]
+Campos_formulario: Nombre, Empresa, Rol, Email, Mensaje
+Integración (Sheets/CRM): Conexión a Google Sheets o CRM (a definir por el usuario)

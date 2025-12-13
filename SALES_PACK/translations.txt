@@ -1,0 +1,17 @@
+[FR]
+hero_title=La nouvelle façon d'essayer les vêtements, sans cabine.
+hero_subtitle=TryOnYou transforme votre vitrine en un miroir magique interactif. Offrez une expérience d'achat premium et réduisez vos retours.
+cta_demo=Essayer la Démo Live
+cta_pilot=Réserver un Pilote 30 Jours
+
+[EN]
+hero_title=The new way to try clothes, no fitting room needed.
+hero_subtitle=TryOnYou transforms your storefront into an interactive magic mirror. Offer a premium shopping experience and reduce your returns.
+cta_demo=Try Live Demo
+cta_pilot=Book 30-Day Pilot
+
+[ES]
+hero_title=La nueva forma de probarse ropa, sin probador.
+hero_subtitle=TryOnYou transforma tu escaparate en un espejo mágico interactivo. Ofrece una experiencia de compra premium y reduce tus devoluciones.
+cta_demo=Probar Demo en Vivo
+cta_pilot=Reservar Piloto 30 Días

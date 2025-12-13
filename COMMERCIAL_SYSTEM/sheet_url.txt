@@ -1,0 +1,265 @@
+================================================================================
+SISTEMA CRM BÁSICO - GOOGLE SHEETS PARA TRYONYOU
+================================================================================
+
+INSTRUCCIONES PARA CREAR EL GOOGLE SHEET
+================================================================================
+
+1. CREAR UN NUEVO GOOGLE SHEET:
+   - Accede a https://sheets.google.com
+   - Haz clic en "Crear" → "Hoja de cálculo en blanco"
+   - Renombra la hoja como "TryOnYou_Leads"
+
+2. ESTRUCTURA DE COLUMNAS:
+   Crea las siguientes columnas en la primera fila:
+
+   A: Fecha
+   B: Empresa
+   C: País
+   D: Nombre Contacto
+   E: Email
+   F: Teléfono
+   G: Tipo de Interés
+   H: Tipo de Piloto
+   I: Mensaje
+   J: Estado
+   K: Fecha de Seguimiento
+   L: Notas Internas
+
+3. CONFIGURAR PERMISOS:
+   - Haz clic en "Compartir" (esquina superior derecha)
+   - Selecciona "Cualquiera con el enlace"
+   - Elige "Editor"
+   - Copia el enlace compartible
+
+4. INTEGRAR CON FORMULARIO:
+   Opción A: Usar Google Forms (RECOMENDADO)
+   
+   a) Crea un Google Form conectado al Sheet:
+      - Ve a https://forms.google.com
+      - Crea un nuevo formulario
+      - Configura los campos:
+        * Nombre de la empresa (Texto corto)
+        * País (Opción múltiple)
+        * Nombre del contacto (Texto corto)
+        * Email (Correo electrónico)
+        * Teléfono (Texto corto)
+        * Tipo de interés (Opción múltiple)
+        * Tipo de piloto (Opción múltiple)
+        * Mensaje (Párrafo)
+   
+   b) Conecta el formulario al Sheet:
+      - En el formulario, ve a "Respuestas"
+      - Haz clic en el icono de Google Sheets
+      - Selecciona "Crear una nueva hoja de cálculo"
+      - Asigna un nombre: "TryOnYou_Leads"
+   
+   c) Obtén el enlace del formulario:
+      - Haz clic en "Enviar"
+      - Copia el enlace del formulario
+      - Integra este enlace en la landing page
+
+   Opción B: Usar Zapier o Make.com (ALTERNATIVA)
+   
+   a) Crea una cuenta en Zapier (zapier.com) o Make.com
+   b) Crea un "Zap" que conecte:
+      - Trigger: Formulario de la landing (si está en Wix, usa Wix Zapier)
+      - Action: Google Sheets (Crear fila)
+   c) Mapea los campos del formulario a las columnas del Sheet
+   d) Prueba el Zap con datos de prueba
+
+================================================================================
+
+ESTRUCTURA DEL GOOGLE SHEET
+================================================================================
+
+Encabezados (Fila 1):
+┌─────────┬──────────────┬────────┬──────────────┬───────────┬───────────┐
+│ Fecha   │ Empresa      │ País   │ Contacto     │ Email     │ Teléfono  │
+├─────────┼──────────────┼────────┼──────────────┼───────────┼───────────┤
+│ Tipo    │ Tipo Piloto  │ Mensaje│ Estado       │ Seguimiento│ Notas    │
+└─────────┴──────────────┴────────┴──────────────┴───────────┴───────────┘
+
+Ejemplo de datos (Fila 2):
+┌──────────────┬──────────────────┬────────┬──────────────┬────────────────┬──────────────┐
+│ 2025-12-06   │ Galeries Lafayette│ FR     │ Marie Dupont │ marie@gal.fr   │ +33 1 23 45 67│
+├──────────────┼──────────────────┼────────┼──────────────┼────────────────┼──────────────┤
+│ Piloto       │ 30 días          │ Interesada│ Contactado  │ 2025-12-13     │ Reunión 15h  │
+└──────────────┴──────────────────┴────────┴──────────────┴────────────────┴──────────────┘
+
+================================================================================
+
+FÓRMULAS Y AUTOMATIZACIONES
+================================================================================
+
+1. COLUMNA DE FECHA AUTOMÁTICA:
+   En la celda A2, inserta:
+   =TODAY()
+   
+   Esto llenará automáticamente la fecha actual cuando se añada un nuevo registro.
+
+2. COLUMNA DE ESTADO (DROPDOWN):
+   Selecciona la columna J (Estado)
+   Ve a "Datos" → "Validación de datos"
+   Tipo: Lista de opciones
+   Opciones:
+   - Nuevo
+   - Contactado
+   - Propuesta enviada
+   - Negociación
+   - Cerrado (Ganado)
+   - Cerrado (Perdido)
+   - En espera
+
+3. COLUMNA DE TIPO DE INTERÉS (DROPDOWN):
+   Selecciona la columna G
+   Ve a "Datos" → "Validación de datos"
+   Tipo: Lista de opciones
+   Opciones:
+   - Démo Live
+   - Piloto 30 días
+   - Partenariado
+   - Información general
+
+4. COLUMNA DE TIPO DE PILOTO (DROPDOWN):
+   Selecciona la columna H
+   Ve a "Datos" → "Validación de datos"
+   Tipo: Lista de opciones
+   Opciones:
+   - 1 tienda
+   - 1 corner
+   - 3 tiendas
+   - Formato reducido
+   - Otro
+
+================================================================================
+
+FILTROS Y VISTAS
+================================================================================
+
+1. CREAR UNA VISTA FILTRADA POR ESTADO:
+   - Haz clic en "Datos" → "Crear un filtro"
+   - Filtra por Estado = "Nuevo"
+   - Guarda esta vista como "Leads Nuevos"
+
+2. CREAR UNA VISTA POR PAÍS:
+   - Crea un filtro por País = "FR"
+   - Guarda como "Leads Francia"
+   - Repite para otros países (ES, IT, DE, UK, US, etc.)
+
+3. CREAR UNA VISTA DE SEGUIMIENTO:
+   - Filtra por Fecha de Seguimiento (próximos 7 días)
+   - Guarda como "Seguimiento Próxima Semana"
+
+================================================================================
+
+GRÁFICOS Y REPORTES
+================================================================================
+
+1. GRÁFICO DE LEADS POR PAÍS:
+   - Ve a "Insertar" → "Gráfico"
+   - Tipo: Gráfico circular
+   - Eje: País
+   - Valores: Contar
+
+2. GRÁFICO DE ESTADO DE LEADS:
+   - Ve a "Insertar" → "Gráfico"
+   - Tipo: Gráfico de barras
+   - Eje: Estado
+   - Valores: Contar
+
+3. TABLA DINÁMICA DE CONVERSIÓN:
+   - Ve a "Insertar" → "Tabla dinámica"
+   - Filas: Estado
+   - Columnas: Tipo de Interés
+   - Valores: Contar
+
+================================================================================
+
+INTEGRACIÓN CON LA LANDING PAGE
+================================================================================
+
+OPCIÓN 1: USAR GOOGLE FORMS (RECOMENDADO)
+
+1. Crea el Google Form (ver instrucciones arriba)
+2. En la landing page HTML, reemplaza el formulario actual con un iframe:
+
+```html
+<section class="demo-form-section" id="demo-form">
+    <div class="demo-form-container">
+        <h2>Réserver votre Démo</h2>
+        <iframe 
+            src="https://docs.google.com/forms/d/e/[TU_FORM_ID]/viewform?embedded=true"
+            width="100%"
+            height="800"
+            frameborder="0"
+            marginheight="0"
+            marginwidth="0"
+        >Cargando…</iframe>
+    </div>
+</section>
+```
+
+Reemplaza [TU_FORM_ID] con el ID de tu formulario.
+
+OPCIÓN 2: USAR ZAPIER/MAKE.COM
+
+1. Configura el Zap (ver instrucciones arriba)
+2. Mantén el formulario HTML actual en la landing
+3. El Zap enviará los datos automáticamente al Sheet
+
+================================================================================
+
+MONITOREO Y MANTENIMIENTO
+================================================================================
+
+Tareas semanales:
+□ Revisar nuevos leads (filtro "Nuevo")
+□ Actualizar estado de leads contactados
+□ Enviar propuestas a leads interesados
+□ Programar seguimientos
+
+Tareas mensuales:
+□ Generar reporte de conversión
+□ Analizar países con más leads
+□ Revisar tasa de cierre
+□ Actualizar estrategia comercial si es necesario
+
+Métricas clave a monitorear:
+- Total de leads por mes
+- Tasa de conversión (Leads → Pilotos)
+- Tiempo promedio de cierre
+- Países con más potencial
+- Tipo de interés más frecuente
+
+================================================================================
+
+ENLACE AL GOOGLE SHEET
+================================================================================
+
+[PENDIENTE: El usuario debe crear el Google Sheet y pegar aquí el enlace compartible]
+
+URL de edición (solo para administradores):
+[PENDIENTE]
+
+URL del Google Form (para la landing):
+[PENDIENTE]
+
+================================================================================
+
+CONTACTO Y SOPORTE
+================================================================================
+
+Para cambios en la estructura del Sheet:
+1. Consulta con el equipo comercial
+2. Avisa a todos los usuarios del Sheet
+3. Documenta los cambios en esta sección
+
+Para integración técnica:
+1. Contacta al equipo de desarrollo
+2. Proporciona el ID del formulario
+3. Solicita la integración en la landing
+
+================================================================================
+FIN DE LA DOCUMENTACIÓN DEL SISTEMA CRM
+================================================================================
