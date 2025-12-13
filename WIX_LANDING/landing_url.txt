@@ -1,9 +1,0 @@
-# landing_url.txt
-# Escribe aquí:
-# - URL pública de la landing Wix
-# - URL de edición (editor de Wix)
-# - Idiomas activados (FR/EN/ES)
-
-URL_PUBLICA: [PENDIENTE: El usuario debe publicar la landing en Wix y pegar aquí la URL]
-URL_EDICION: [PENDIENTE: El usuario debe pegar aquí la URL de edición de Wix]
-IDIOMAS: Francés (FR), Inglés (EN), Español (ES)
