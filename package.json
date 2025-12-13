@@ -6,16 +6,16 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "start": "vite"
-    // NO PONER COMA DESPUÉS DE LA ÚLTIMA PROPIEDAD
-  },
+    "start": "vite" // 
+    // 
+  }, //
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
+    "react-dom": "^18.2.0" // <--- ¡No hay coma aquí! Correcto.
+  }, // <--- ¡No hay coma aquí! Correcto.
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.0"
-    // NO PONER COMA AQUÍ
-  }
+    "vite": "^5.0.0" // <--- ¡No hay coma aquí! Correcto.
+    // 
+  } // 
 }
