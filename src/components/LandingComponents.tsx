@@ -8,10 +8,7 @@ export const Header = () => {
     <header className="fixed top-0 left-0 w-full z-50 bg-[#E5E4E2]/80 backdrop-blur-md border-b border-[#D4AF37]/20">
       <div className="container mx-auto px-6 h-20 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {/* Logo Placeholder - Replace with <img src="/logo.png" /> when available */}
-          <div className="w-10 h-10 bg-[#111111] flex items-center justify-center border border-[#D4AF37]">
-            <span className="text-[#D4AF37] font-syne font-bold text-xl">T</span>
-          </div>
+          <img src="/logo.png" alt="TryOnYou Logo" className="h-12 w-auto object-contain filter brightness-110 contrast-125 drop-shadow-[0_0_5px_rgba(212,175,55,0.5)]" />
           <span className="font-syne font-bold text-xl tracking-wider text-[#111111]">TRYONYOU</span>
         </div>
         
@@ -68,13 +65,16 @@ export const Hero = () => {
         </div>
         
         <div className="relative h-[600px] hidden md:block">
-          {/* Abstract Composition */}
-          <div className="absolute top-10 right-10 w-64 h-80 border-2 border-[#D4AF37] z-20"></div>
-          <div className="absolute top-20 right-20 w-64 h-80 bg-[#111111] z-10"></div>
+          {/* Abstract Composition with Pau */}
+          <div className="absolute top-10 right-10 w-72 h-[450px] border-2 border-[#D4AF37] z-20"></div>
+          <div className="absolute top-20 right-20 w-72 h-[450px] bg-[#111111] z-10"></div>
           <div className="absolute top-0 right-0 w-full h-full flex items-center justify-center z-30">
-             {/* Placeholder for Hero Image */}
-             <div className="w-80 h-96 bg-[#E5E4E2] shadow-2xl flex items-center justify-center border border-[#D4AF37]/20 backdrop-blur-sm">
-                <span className="font-syne text-[#111111]/20 text-4xl rotate-90">TRYONYOU</span>
+             <div className="relative w-80 h-[500px] shadow-2xl border border-[#D4AF37]/20 overflow-hidden bg-[#E5E4E2]">
+                <img src="/pau.png" alt="Pau - Personal Shopper" className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700" />
+                <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-[#111111] to-transparent p-6 pt-20">
+                  <p className="text-[#D4AF37] font-syne text-lg">Pau</p>
+                  <p className="text-[#E5E4E2]/60 font-space text-xs uppercase tracking-widest">Your AI Personal Shopper</p>
+                </div>
              </div>
           </div>
         </div>
