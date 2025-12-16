@@ -17,15 +17,16 @@ echo "STEP 4: commit"
 git add .
 git commit -m "final demo stable" || true
 
-echo "STEP 5: push y deploy"
+echo "STEP 5: push (si existe origin)"
 if git remote | grep -q origin; then
   git push -u origin main
 else
-  echo "NO hay remote origin"
+  echo "NO hay remote origin."
   echo "Añádelo con:"
   echo "git remote add origin https://github.com/TU_USUARIO/TU_REPO.git"
 fi
 
+echo "STEP 6: deploy Vercel"
 npx vercel --prod
 
 echo "TODO COMPLETADO"
