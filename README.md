@@ -10,6 +10,10 @@ AI-Powered Virtual Try-On Platform built with React, Vite, Tailwind CSS, Framer 
 # Install dependencies
 npm install
 
+# Copy environment variables (optional - for Gemini AI)
+cp .env.example .env
+# Edit .env and add your Gemini API key
+
 # Start development server
 npm run dev
 
@@ -20,21 +24,36 @@ npm run build
 npm run preview
 ```
 
+### Environment Variables
+
+The Fitting Room feature uses Google's Gemini AI for biometric measurements. To enable it:
+
+1. Get a free API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Copy `.env.example` to `.env`
+3. Add your API key: `VITE_GEMINI_API_KEY=your_key_here`
+
+**Note:** The app works without the API key using mock data for development and testing.
+
 ## 📁 Project Structure
 
 ```
 src/
 ├── components/       # Reusable UI components
 │   ├── Navbar.jsx    # Navigation with mobile menu
-│   └── Footer.jsx    # Site footer with links
-├── pages/            # Route pages (7 total)
+│   ├── Footer.jsx    # Site footer with links
+│   ├── Avatar3D.jsx  # 3D avatar renderer
+│   └── RetailMirror.jsx # **NEW** Virtual mirror with measurements
+├── pages/            # Route pages (8 total)
 │   ├── Home.jsx      # Landing page with hero
 │   ├── Brands.jsx    # Brand selection & filtering
 │   ├── MyAvatar.jsx  # Avatar creation wizard
+│   ├── FittingRoom.jsx # **NEW** Biometric measurement workflow
 │   ├── Wardrobe.jsx  # Virtual closet with try-on
 │   ├── Showroom.jsx  # Curated looks gallery
 │   ├── GlowUp.jsx    # Style transformation
 │   └── AskPeacock.jsx # AI chat assistant
+├── services/         # **NEW** External service integrations
+│   └── geminiService.js # Gemini AI for measurements
 ├── data/             # JSON data files
 │   └── texts.json    # Content & copy
 ├── hooks/            # Custom React hooks
@@ -65,6 +84,7 @@ public/
 | `/` | Home | Landing with features & CTA |
 | `/brands` | Brands | Browse & filter fashion brands |
 | `/my-avatar` | My Avatar | Create your digital twin |
+| `/fitting-room` | Fitting Room | **NEW** Biometric measurement workflow with AI |
 | `/wardrobe` | Wardrobe | Virtual try-on closet |
 | `/showroom` | Showroom | Curated looks by mood/occasion |
 | `/glow-up` | Glow-Up | AI style transformation |
@@ -91,6 +111,12 @@ public/
 - 💾 **Favorites/saved items** system
 - 🦚 **AI Peacock** chat assistant
 - 🎯 **Match percentage** for fit prediction
+- 📏 **Biometric Measurement Workflow** - NEW!
+  - Hand calibration with A4 paper reference
+  - Palm verification for accuracy
+  - 3-photo body scanning (front, left, right)
+  - AI-powered measurement calculation via Gemini
+  - Virtual avatar with precise proportions
 
 ## 🎨 Color Palette
 
