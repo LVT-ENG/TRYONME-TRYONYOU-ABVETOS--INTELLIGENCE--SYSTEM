@@ -116,10 +116,10 @@ const MyAvatar = () => {
                     <p className="text-sm text-white/60">Precise measurements with your camera</p>
                   </div>
                 </div>
-                <button className="w-full py-3 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                <a href="/fitting-room" className="w-full py-3 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
                   <Camera size={20} />
                   Start Scan
-                </button>
+                </a>
               </div>
             </div>
           </div>

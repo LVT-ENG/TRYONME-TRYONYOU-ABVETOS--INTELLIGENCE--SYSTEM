@@ -11,6 +11,7 @@ import Wardrobe from './pages/Wardrobe'
 import Showroom from './pages/Showroom'
 import GlowUp from './pages/GlowUp'
 import AskPeacock from './pages/AskPeacock'
+import FittingRoom from './pages/FittingRoom'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/showroom" element={<Showroom />} />
           <Route path="/glow-up" element={<GlowUp />} />
           <Route path="/ask-peacock" element={<AskPeacock />} />
+          <Route path="/fitting-room" element={<FittingRoom />} />
         </Routes>
       </main>
       <Footer />
