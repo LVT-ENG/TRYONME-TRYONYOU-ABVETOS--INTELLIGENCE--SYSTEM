@@ -3,6 +3,9 @@ import { motion } from 'framer-motion'
 import { User, Ruler, Activity, CheckCircle } from 'lucide-react'
 import Avatar3D from './Avatar3D'
 
+// Default confidence value when not provided by measurements
+const DEFAULT_MEASUREMENT_CONFIDENCE = 0.88;
+
 /**
  * RetailMirror - Virtual avatar display with biometric measurements
  * Updates avatar proportions based on precise body measurements
@@ -155,7 +158,7 @@ const RetailMirror = ({ measurements, className = '' }) => {
                   <span className="text-green-400 font-semibold">
                     {measurements.confidence 
                       ? `${(measurements.confidence * 100).toFixed(0)}%` 
-                      : '88%'}
+                      : `${(DEFAULT_MEASUREMENT_CONFIDENCE * 100).toFixed(0)}%`}
                   </span>
                 </div>
               </div>

@@ -6,6 +6,11 @@
 const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
 
+// Warn if API key is missing in production
+if (!GEMINI_API_KEY && import.meta.env.PROD) {
+  console.warn('VITE_GEMINI_API_KEY is not set. Using mock data for measurements.');
+}
+
 /**
  * Converts image file to base64 string
  * @param {File} file - Image file to convert
@@ -190,16 +195,16 @@ export const analyzePalmVerification = async (imageFile) => {
  */
 export const analyzeBodyMeasurements = async (photos, scaleFactor = 1.0) => {
   if (!GEMINI_API_KEY) {
-    // Mock response for development
+    // Mock response for development - using fixed values for consistent testing
     return {
       success: true,
       measurements: {
-        height: 170 + Math.random() * 20, // 170-190 cm
-        chest: 85 + Math.random() * 15,   // 85-100 cm
-        waist: 70 + Math.random() * 15,   // 70-85 cm
-        hips: 90 + Math.random() * 15,    // 90-105 cm
-        shoulders: 40 + Math.random() * 5, // 40-45 cm
-        inseam: 75 + Math.random() * 10   // 75-85 cm
+        height: 175,
+        chest: 92,
+        waist: 78,
+        hips: 98,
+        shoulders: 42,
+        inseam: 80
       },
       confidence: 0.88,
       message: 'Body measurements calculated successfully'

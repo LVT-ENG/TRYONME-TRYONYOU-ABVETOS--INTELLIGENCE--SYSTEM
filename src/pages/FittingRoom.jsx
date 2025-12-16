@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useNavigate } from 'react-router-dom'
 import { 
   Camera, Hand, Scan, User, Check, AlertCircle, 
   ChevronRight, ChevronLeft, Loader, Upload, RefreshCw,
@@ -13,6 +14,7 @@ import {
 } from '../services/geminiService'
 
 const FittingRoom = () => {
+  const navigate = useNavigate()
   // Workflow state
   const [currentStep, setCurrentStep] = useState(0)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -466,7 +468,7 @@ const FittingRoom = () => {
 
               <div className="flex gap-4 mt-6">
                 <button
-                  onClick={() => window.location.href = '/wardrobe'}
+                  onClick={() => navigate('/wardrobe')}
                   className="btn-primary flex-1"
                 >
                   Try On Clothes

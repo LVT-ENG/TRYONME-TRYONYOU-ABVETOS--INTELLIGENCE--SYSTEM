@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Camera, Ruler, Palette, Sparkles, Check, ArrowRight, ChevronRight, Scan, Wand2 } from 'lucide-react'
 import Avatar3D from '../components/Avatar3D'
@@ -116,10 +117,10 @@ const MyAvatar = () => {
                     <p className="text-sm text-white/60">Precise measurements with your camera</p>
                   </div>
                 </div>
-                <a href="/fitting-room" className="w-full py-3 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+                <Link to="/fitting-room" className="w-full py-3 rounded-lg bg-gradient-to-r from-violet-500 to-purple-500 font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
                   <Camera size={20} />
                   Start Scan
-                </a>
+                </Link>
               </div>
             </div>
           </div>
