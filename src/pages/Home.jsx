@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Shirt, User, ShoppingBag, Wand2, MessageCircle, Play, Check, Star } from 'lucide-react'
+import { ArrowRight, Sparkles, Shirt, User, ShoppingBag, Wand2, Play, Star } from 'lucide-react'
 
 const Home = () => {
   const features = [
@@ -41,11 +41,11 @@ const Home = () => {
       link: '/brands'
     },
     {
-      icon: MessageCircle,
-      title: 'Ask Peacock',
-      description: 'Your personal AI stylist answering all fashion questions.',
+      icon: Play,
+      title: 'Try Demo',
+      description: 'Experience our virtual try-on technology in action.',
       color: 'from-cyan-500 to-blue-500',
-      link: '/ask-peacock'
+      link: '/demo'
     },
   ]
 
@@ -102,14 +102,14 @@ const Home = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <Link to="/my-avatar" className="btn-primary text-lg px-8 py-4 group">
-                  Get Started
+                <Link to="/demo" className="btn-primary text-lg px-8 py-4 group">
+                  Try Demo
                   <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <button className="btn-metallic text-lg px-8 py-4 flex items-center gap-2">
-                  <Play size={20} />
-                  Watch Demo
-                </button>
+                <Link to="/my-avatar" className="btn-metallic text-lg px-8 py-4 flex items-center gap-2">
+                  <User size={20} />
+                  Create Avatar
+                </Link>
               </div>
 
               {/* Stats */}
@@ -262,11 +262,11 @@ const Home = () => {
               no more guessing. TryOnYou changed how I shop online!"
             </blockquote>
             <div className="flex items-center justify-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-xl">
-                👩
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center">
+                <User size={24} className="text-white" />
               </div>
               <div className="text-left">
-                <div className="font-bold">María García</div>
+                <div className="font-bold">Maria Garcia</div>
                 <div className="text-sm text-white/60">Fashion Enthusiast</div>
               </div>
             </div>
@@ -284,13 +284,9 @@ const Home = () => {
           className="max-w-4xl mx-auto text-center"
         >
           <div className="card bg-gradient-to-br from-tryonyou-blue/20 via-purple-500/10 to-pink-500/20 border-tryonyou-blue/30 py-12 px-8">
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="text-6xl mb-6"
-            >
-              🦚
-            </motion.div>
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
+              <Sparkles size={40} className="text-white" />
+            </div>
             <h2 className="heading-lg mb-4 gradient-text">
               Ready to Transform Your Style?
             </h2>
@@ -298,12 +294,12 @@ const Home = () => {
               Join thousands of satisfied users and discover your perfect look today
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/my-avatar" className="btn-primary text-lg px-8 py-4">
-                Start Free Now
+              <Link to="/demo" className="btn-primary text-lg px-8 py-4">
+                Try Demo Now
                 <ArrowRight className="inline ml-2" size={20} />
               </Link>
-              <Link to="/ask-peacock" className="btn-metallic text-lg px-8 py-4">
-                🦚 Talk to Peacock
+              <Link to="/my-avatar" className="btn-metallic text-lg px-8 py-4">
+                Create Your Avatar
               </Link>
             </div>
           </div>

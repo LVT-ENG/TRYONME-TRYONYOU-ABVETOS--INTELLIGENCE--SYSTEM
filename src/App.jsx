@@ -10,7 +10,7 @@ import MyAvatar from './pages/MyAvatar'
 import Wardrobe from './pages/Wardrobe'
 import Showroom from './pages/Showroom'
 import GlowUp from './pages/GlowUp'
-import AskPeacock from './pages/AskPeacock'
+import Demo from './pages/Demo'
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
           <Route path="/wardrobe" element={<Wardrobe />} />
           <Route path="/showroom" element={<Showroom />} />
           <Route path="/glow-up" element={<GlowUp />} />
-          <Route path="/ask-peacock" element={<AskPeacock />} />
+          <Route path="/demo" element={<Demo />} />
         </Routes>
       </main>
       <Footer />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, ShoppingBag, User, Shirt, Sparkles, Wand2, MessageCircle, Home } from 'lucide-react'
+import { Menu, X, ShoppingBag, User, Shirt, Sparkles, Wand2, Home, Play } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const Navbar = () => {
@@ -23,6 +23,7 @@ const Navbar = () => {
 
   const navLinks = [
     { path: '/', label: 'Home', icon: Home },
+    { path: '/demo', label: 'Demo', icon: Play },
     { path: '/brands', label: 'Brands', icon: ShoppingBag },
     { path: '/my-avatar', label: 'My Avatar', icon: User },
     { path: '/wardrobe', label: 'Wardrobe', icon: Shirt },
@@ -96,8 +97,8 @@ const Navbar = () => {
 
           {/* CTA Button - Desktop */}
           <div className="hidden lg:flex items-center gap-3">
-            <Link to="/ask-peacock" className="btn-primary text-sm px-4 py-2">
-              🦚 Ask Peacock
+            <Link to="/demo" className="btn-primary text-sm px-4 py-2">
+              Try Demo
             </Link>
           </div>
 
@@ -153,8 +154,8 @@ const Navbar = () => {
                 transition={{ delay: navLinks.length * 0.05 }}
                 className="pt-4 border-t border-white/10"
               >
-                <Link to="/ask-peacock" className="btn-primary w-full text-center">
-                  🦚 Ask Peacock
+                <Link to="/demo" className="btn-primary w-full text-center">
+                  Try Demo
                 </Link>
               </motion.div>
             </div>
