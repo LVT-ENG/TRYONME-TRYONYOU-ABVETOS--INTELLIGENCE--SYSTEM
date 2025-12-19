@@ -1,20 +1,78 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TRYONYOU – The Fashion Intelligence System</title>
-<link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/styles.css"></head>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRYONYOU - The Fashion Intelligence System</title>
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/styles.css">
+</head>
 <body>
-<section class="hero">
-  <img class="bg" src="/hero-bg.svg" alt="Hero background">
-  <div class="overlay"></div>
-  <div class="hero-content">
-    <h1>TRYONYOU FASHION WEEK</h1>
-    <p>The Living Fashion Intelligence System — EPCT-connected.</p>
-    <div class="cta">
-      <a class="btn primary" href="/tienda.html">See Collection</a>
-      <a class="btn" href="/cuestionario.html">Experience the System</a>
+  <section class="hero">
+    <img class="bg" src="/hero-bg.svg" alt="Hero background">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>TRYONYOU FASHION WEEK</h1>
+      <p class="tagline">The Living Fashion Intelligence System - EPCT-connected</p>
+      <p class="subtitle">Transform your storefront into an interactive magic mirror.</p>
+      <div class="cta">
+        <a class="btn primary" href="/tienda.html">See Collection</a>
+        <a class="btn" href="/cuestionario.html">Experience the System</a>
+        <a class="btn ghost" href="#demo">Live Demo</a>
+      </div>
     </div>
-    <p class="legal-link"><a href="/docs/legal/EPCT_AMENDMENTS_2025.pdf" target="_blank">Patent Amendments (EPCT, 2025)</a></p>
-  </div>
-</section>
-<script type="module" src="/src/frontend/app.js"></script>
-</body></html>
+  </section>
+  <section class="features container">
+    <h2>Platform Modules</h2>
+    <div class="grid-4">
+      <div class="card"><h3>Avatar & Try-On</h3><p>Photo-based avatar builder connected to your mirror or e-commerce.</p><a href="/cuestionario.html">Open Module</a></div>
+      <div class="card"><h3>Smart Wardrobe</h3><p>Intelligent recommendations based on body morphology and style.</p><a href="/tienda.html">Open Wardrobe</a></div>
+      <div class="card"><h3>PAU Assistant</h3><p>AI-powered style advisor combining measurements and trends.</p><a href="#pau">Meet PAU</a></div>
+      <div class="card"><h3>Look Sheet</h3><p>Generate look summaries for clients or retail partners.</p><a href="/mockups.html">Generate</a></div>
+    </div>
+  </section>
+  <section id="demo" class="demo-section">
+    <div class="container">
+      <h2>Virtual Fitting Experience</h2>
+      <div class="demo-grid">
+        <div class="demo-step"><span class="step-number">1</span><h4>Upload Photo</h4><p>Create your avatar from a photo.</p></div>
+        <div class="demo-step"><span class="step-number">2</span><h4>Generate Avatar</h4><p>AI creates parametric body model.</p></div>
+        <div class="demo-step"><span class="step-number">3</span><h4>Try On Clothes</h4><p>See garments fit in real-time 360.</p></div>
+        <div class="demo-step"><span class="step-number">4</span><h4>Get Recommendations</h4><p>PAU suggests best looks for you.</p></div>
+      </div>
+    </div>
+  </section>
+  <section id="pau" class="pau-section">
+    <div class="container">
+      <h2>Meet PAU - Your Style AI</h2>
+      <div class="pau-features">
+        <div class="pau-feature"><h4>98% Fit Accuracy</h4><p>Precision technology meets style</p></div>
+        <div class="pau-feature"><h4>-70% Returns</h4><p>Reduce returns with virtual fitting</p></div>
+        <div class="pau-feature"><h4>3 sec Preview</h4><p>Instant visualization</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="investor-section">
+    <div class="container">
+      <h2>For Investors & Partners</h2>
+      <div class="investor-grid">
+        <a href="/investor/TRYONYOU_OnePager.pdf" class="investor-card" target="_blank"><h4>One Pager</h4></a>
+        <a href="/investor/TRYONYOU_ShortDeck.pdf" class="investor-card" target="_blank"><h4>Short Deck</h4></a>
+        <a href="/investor/TRYONYOU_ExtendedDeck.pdf" class="investor-card" target="_blank"><h4>Extended Deck</h4></a>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div><h4>For Retailers</h4><p>AI-powered virtual try-on.</p></div>
+        <div><h4>For Brands</h4><p>Reduce returns, increase satisfaction.</p></div>
+        <div><h4>Technology</h4><p>EPCT-patented system.</p></div>
+      </div>
+      <p class="legal-link"><a href="/docs/legal/EPCT_AMENDMENTS_2025.pdf" target="_blank">Patent Amendments (EPCT, 2025)</a></p>
+      <p class="copyright">TRYONYOU - ABVETOS - ULTRA-PLUS-ULTIMATUM 2025</p>
+    </div>
+  </footer>
+  <script type="module" src="/src/frontend/app.js"></script>
+</body>
+</html>

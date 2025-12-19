@@ -1,0 +1,10 @@
+{
+  "scenes": [
+    {"time": 0, "action": "spotlight_start"},
+    {"time": 1, "action": "pau_walk"},
+    {"time": 5, "action": "pau_voice_intro"},
+    {"time": 40, "action": "pau_wings"},
+    {"time": 45, "action": "spotlight_shift"},
+    {"time": 50, "action": "pau_voice_name_prompt"}
+  ]
+}
