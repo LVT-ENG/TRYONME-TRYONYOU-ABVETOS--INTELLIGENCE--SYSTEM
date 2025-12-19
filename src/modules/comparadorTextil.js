@@ -1,0 +1,1 @@
+export function fitScore(measures,fabric){const k=(fabric.elasticity||0.2)*0.6+(fabric.drape||0.3)*0.4;return Math.max(0,Math.min(1,0.7+(k-0.3)))}

@@ -1,0 +1,1 @@
+import {notify} from '../modules/abvetBot.js';export function ping(msg){return notify(msg)}

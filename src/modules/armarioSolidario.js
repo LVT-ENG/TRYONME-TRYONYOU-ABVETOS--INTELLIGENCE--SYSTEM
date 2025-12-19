@@ -1,0 +1,1 @@
+export function donate(db,id){const it=db.find(x=>x.id===id);if(it)it.donated=Date.now();return it}

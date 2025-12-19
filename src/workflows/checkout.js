@@ -1,0 +1,1 @@
+import {pay} from '../modules/pagoAVBET.js';import {generatePattern} from '../modules/capAutoProduction.js';import {sendToFactory} from '../modules/liveItFactory.js';export async function checkout({token,sku,amount}){const p=await pay(token,amount);const files=generatePattern(sku);const job=sendToFactory({sku,files});return {payment:p,production:files,job}}

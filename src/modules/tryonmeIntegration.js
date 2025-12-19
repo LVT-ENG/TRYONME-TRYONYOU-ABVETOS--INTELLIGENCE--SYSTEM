@@ -1,0 +1,1 @@
+export function syncTryOnMe(data){return {ok:true,count:data.length||0}}

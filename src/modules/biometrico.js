@@ -1,0 +1,1 @@
+export async function enrollBiometric(userId){return {userId, token:'abvet_'+Math.random().toString(36).slice(2), liveness:true}}

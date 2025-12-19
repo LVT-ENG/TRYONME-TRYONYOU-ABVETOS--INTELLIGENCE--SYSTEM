@@ -1,0 +1,1 @@
+export function curateContext({mood,size,trends}){const parts=[];if(mood)parts.push('mood:'+mood);if(size)parts.push('size:'+size);if(trends&&trends.length)parts.push('trends:'+trends.slice(0,3).join(','));return parts.join(' | ')}

@@ -1,0 +1,1 @@
+export function normalize(data){return {name:data.name||'', city:data.city||'', style:(data.style||'').toLowerCase()}}

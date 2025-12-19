@@ -1,0 +1,1 @@
+export function sendToFactory(order){return {orderId:'LF-'+Date.now(),status:'queued'}}

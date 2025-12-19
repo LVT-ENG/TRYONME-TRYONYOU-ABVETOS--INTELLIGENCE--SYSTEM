@@ -1,0 +1,1 @@
+export function saveJSON(path,data){return {path,len:JSON.stringify(data).length}}

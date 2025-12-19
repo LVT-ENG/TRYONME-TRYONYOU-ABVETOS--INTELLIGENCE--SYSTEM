@@ -1,0 +1,1 @@
+export function avatarFromMetrics({height,weight}){const bmi=(weight&&height)?(weight/((height/100)**2)):22;const size=bmi<20?'S':bmi<25?'M':'L';return {bmi:Number(bmi.toFixed(1)),suggestedSize:size}}

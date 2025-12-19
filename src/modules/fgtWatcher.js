@@ -1,0 +1,1 @@
+export function topTrends(){return ['peacock blue','gold accents','kimono corset']}

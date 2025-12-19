@@ -1,0 +1,1 @@
+import {curateContext} from '../modules/abvetosIntegration.js';export function build(ctx){return curateContext(ctx)}

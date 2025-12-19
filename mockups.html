@@ -1,0 +1,14 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TRYONYOU – Mockups</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="container"><h1>Generated Mockups</h1><div class="grid-6x" id="mockups"></div></main>
+<script type="module">
+const grid=document.getElementById('mockups');
+const items=JSON.parse(localStorage.getItem('mockups')||'[]');
+if(items.length===0){
+  const demo=[...Array(18).keys()].map(i=>`/mockups/mockup_${i+1}.svg`);
+  grid.innerHTML=demo.map(src=>`<div class="card"><img src="${src}" alt="mockup"/></div>`).join('');
+}else{
+  grid.innerHTML=items.map(src=>`<div class="card"><img src="${src}" alt="mockup"/></div>`).join('');
+}
+</script></body></html>

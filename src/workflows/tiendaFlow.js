@@ -1,0 +1,1 @@
+import {rank} from '../modules/recomendadorPAU.js';export function choose(items,mood){return rank(items,mood).slice(0,6)}

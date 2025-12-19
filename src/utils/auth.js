@@ -1,0 +1,1 @@
+export function isAuthed(token){return !!token}

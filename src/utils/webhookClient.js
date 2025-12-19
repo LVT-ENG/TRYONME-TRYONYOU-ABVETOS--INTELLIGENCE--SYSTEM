@@ -1,0 +1,1 @@
+export function send(url,payload){return {url,payload,ts:Date.now()}}

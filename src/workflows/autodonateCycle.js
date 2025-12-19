@@ -1,0 +1,1 @@
+import {donate} from '../modules/armarioSolidario.js';export function run(db,id){return donate(db,id)}

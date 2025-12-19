@@ -1,0 +1,1 @@
+export function addItem(db,item){db.push({...item,acquired:Date.now()});return db}

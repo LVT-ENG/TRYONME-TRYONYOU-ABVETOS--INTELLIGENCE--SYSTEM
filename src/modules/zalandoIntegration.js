@@ -1,0 +1,1 @@
+export function sendToZalando(order){return {ok:true,ref:'ZAL-'+Date.now()}}

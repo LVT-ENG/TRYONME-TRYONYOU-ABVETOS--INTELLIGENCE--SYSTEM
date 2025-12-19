@@ -1,0 +1,1 @@
+import {sendToAmazon} from '../modules/amazonIntegration.js';export function send(order){return sendToAmazon(order)}

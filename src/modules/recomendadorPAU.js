@@ -1,0 +1,1 @@
+export function rank(items,mood='neutral',trend=0.05){const m={happy:0.08,neutral:0.02,bold:0.1};return items.map(x=>({...x,score:(x.baseFit||0.7)+(m[mood]||0)+trend})).sort((a,b)=>b.score-a.score)}

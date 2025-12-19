@@ -1,0 +1,1 @@
+import {toLiveIt} from '../modules/liveitFashionIntegration.js';export function push(files){return toLiveIt(files)}

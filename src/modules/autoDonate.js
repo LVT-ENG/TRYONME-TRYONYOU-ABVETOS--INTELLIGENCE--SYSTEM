@@ -1,0 +1,1 @@
+export function cycle(db){return db.filter(x=>x.donated)}

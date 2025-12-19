@@ -1,0 +1,1 @@
+import {toVVLart} from '../modules/vvlartIntegration.js';export function push(assets){return toVVLart(assets)}

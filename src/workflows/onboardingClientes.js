@@ -1,0 +1,1 @@
+import {avatarFromMetrics} from '../modules/avatar3D.js';import {enrollBiometric} from '../modules/biometrico.js';export async function onboard({name,height,weight}){const avatar=avatarFromMetrics({height,weight});const bio=await enrollBiometric(name||'user');return {avatar,bio}}

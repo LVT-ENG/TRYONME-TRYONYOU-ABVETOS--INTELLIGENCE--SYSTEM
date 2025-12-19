@@ -1,0 +1,1 @@
+export async function pay(token,amount){if(!token)throw new Error('no token');return {ok:true,amount}}

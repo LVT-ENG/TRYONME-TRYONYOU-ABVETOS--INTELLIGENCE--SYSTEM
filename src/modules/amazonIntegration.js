@@ -1,0 +1,1 @@
+export function sendToAmazon(order){return {ok:true,ref:'AMZ-'+Date.now()}}

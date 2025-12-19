@@ -1,0 +1,1 @@
+import {callMake} from '../modules/makeIntegration.js';export function call(flow,payload){return callMake(flow,payload)}

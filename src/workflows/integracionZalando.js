@@ -1,0 +1,1 @@
+import {sendToZalando} from '../modules/zalandoIntegration.js';export function send(order){return sendToZalando(order)}

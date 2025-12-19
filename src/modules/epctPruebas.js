@@ -1,0 +1,1 @@
+export async function requestTrial(id){return {id,accepted:true,ts:Date.now()}}

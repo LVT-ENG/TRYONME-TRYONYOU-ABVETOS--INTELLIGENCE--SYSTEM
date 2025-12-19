@@ -1,0 +1,1 @@
+export function toVVLart(assets){return {ok:true,assets}}

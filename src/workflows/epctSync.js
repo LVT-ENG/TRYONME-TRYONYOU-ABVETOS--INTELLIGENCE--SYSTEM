@@ -1,0 +1,1 @@
+import {fetchEPCT} from '../modules/epctWatcher.js';import {requestTrial} from '../modules/epctPruebas.js';export async function syncEPCT(){const ids=fetchEPCT();const trials=[];for(const id of ids){trials.push(await requestTrial(id))}return trials}

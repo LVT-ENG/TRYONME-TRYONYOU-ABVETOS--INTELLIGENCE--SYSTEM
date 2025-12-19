@@ -1,0 +1,1 @@
+import {syncTryOnMe} from '../modules/tryonmeIntegration.js';export function push(data){return syncTryOnMe(data)}

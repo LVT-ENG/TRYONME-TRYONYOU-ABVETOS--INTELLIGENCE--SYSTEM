@@ -1,0 +1,1 @@
+export function csat(orderId,score){return {orderId,score}}

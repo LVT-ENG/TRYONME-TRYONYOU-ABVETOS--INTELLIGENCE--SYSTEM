@@ -1,0 +1,1 @@
+export function generatePattern(sku){return {sku,pattern:'PDF',print:'PNG',meta:{eco:true}}}

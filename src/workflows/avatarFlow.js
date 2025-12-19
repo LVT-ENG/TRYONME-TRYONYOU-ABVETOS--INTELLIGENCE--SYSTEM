@@ -1,0 +1,1 @@
+import {avatarFromMetrics} from '../modules/avatar3D.js';export function runAvatarFlow(m){return avatarFromMetrics(m)}

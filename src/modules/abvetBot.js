@@ -1,0 +1,1 @@
+export function notify(msg){console.log('ABVET BOT:',msg)}
