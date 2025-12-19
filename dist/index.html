@@ -1,78 +1,132 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TRYONYOU - The Fashion Intelligence System</title>
-  <link rel="icon" href="/favicon.svg">
-  <link rel="stylesheet" href="/styles.css">
-  <script type="module" crossorigin src="/assets/index-BS3eLHcg.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Primary Meta Tags -->
+  <title>TRYONYOU - AI-Powered Virtual Try-On Platform</title>
+  <meta name="title" content="TRYONYOU - AI-Powered Virtual Try-On Platform" />
+  <meta name="description" content="Experience the future of fashion with TRYONYOU's AI-powered virtual try-on technology. Transform your wardrobe with intelligent styling and seamless digital fitting." />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://tryonyou.app/" />
+  <meta property="og:title" content="TRYONYOU - AI-Powered Virtual Try-On Platform" />
+  <meta property="og:description" content="Experience the future of fashion with TRYONYOU's AI-powered virtual try-on technology." />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://tryonyou.app/" />
+  <meta property="twitter:title" content="TRYONYOU - AI-Powered Virtual Try-On Platform" />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#00A8E8" />
+  
+  <style>
+    /* Initial Loading Screen */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 50%, #003459 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease-out;
+    }
+    
+    #loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .peacock-logo {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 2rem;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .loading-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #00A8E8;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes glow {
+      0% { text-shadow: 0 0 10px #00A8E8, 0 0 20px #00A8E8; }
+      100% { text-shadow: 0 0 20px #00A8E8, 0 0 30px #00A8E8, 0 0 40px #00A8E8; }
+    }
+  </style>
+  <script type="module" crossorigin src="/assets/index-Bru7Tgy9.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/react-vendor-BDu7QTk1.js">
+  <link rel="modulepreload" crossorigin href="/assets/animation-vendor-DmbE4i3j.js">
+  <link rel="modulepreload" crossorigin href="/assets/three-vendor-3pfCx8d_.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-5s0N9t9o.css">
 </head>
 <body>
-  <section class="hero">
-    <img class="bg" src="/hero-bg.svg" alt="Hero background">
-    <div class="overlay"></div>
-    <div class="hero-content">
-      <h1>TRYONYOU FASHION WEEK</h1>
-      <p class="tagline">The Living Fashion Intelligence System - EPCT-connected</p>
-      <p class="subtitle">Transform your storefront into an interactive magic mirror.</p>
-      <div class="cta">
-        <a class="btn primary" href="/tienda.html">See Collection</a>
-        <a class="btn" href="/cuestionario.html">Experience the System</a>
-        <a class="btn ghost" href="#demo">Live Demo</a>
-      </div>
-    </div>
-  </section>
-  <section class="features container">
-    <h2>Platform Modules</h2>
-    <div class="grid-4">
-      <div class="card"><h3>Avatar & Try-On</h3><p>Photo-based avatar builder connected to your mirror or e-commerce.</p><a href="/cuestionario.html">Open Module</a></div>
-      <div class="card"><h3>Smart Wardrobe</h3><p>Intelligent recommendations based on body morphology and style.</p><a href="/tienda.html">Open Wardrobe</a></div>
-      <div class="card"><h3>PAU Assistant</h3><p>AI-powered style advisor combining measurements and trends.</p><a href="#pau">Meet PAU</a></div>
-      <div class="card"><h3>Look Sheet</h3><p>Generate look summaries for clients or retail partners.</p><a href="/mockups.html">Generate</a></div>
-    </div>
-  </section>
-  <section id="demo" class="demo-section">
-    <div class="container">
-      <h2>Virtual Fitting Experience</h2>
-      <div class="demo-grid">
-        <div class="demo-step"><span class="step-number">1</span><h4>Upload Photo</h4><p>Create your avatar from a photo.</p></div>
-        <div class="demo-step"><span class="step-number">2</span><h4>Generate Avatar</h4><p>AI creates parametric body model.</p></div>
-        <div class="demo-step"><span class="step-number">3</span><h4>Try On Clothes</h4><p>See garments fit in real-time 360.</p></div>
-        <div class="demo-step"><span class="step-number">4</span><h4>Get Recommendations</h4><p>PAU suggests best looks for you.</p></div>
-      </div>
-    </div>
-  </section>
-  <section id="pau" class="pau-section">
-    <div class="container">
-      <h2>Meet PAU - Your Style AI</h2>
-      <div class="pau-features">
-        <div class="pau-feature"><h4>98% Fit Accuracy</h4><p>Precision technology meets style</p></div>
-        <div class="pau-feature"><h4>-70% Returns</h4><p>Reduce returns with virtual fitting</p></div>
-        <div class="pau-feature"><h4>3 sec Preview</h4><p>Instant visualization</p></div>
-      </div>
-    </div>
-  </section>
-  <section class="investor-section">
-    <div class="container">
-      <h2>For Investors & Partners</h2>
-      <div class="investor-grid">
-        <a href="/investor/TRYONYOU_OnePager.pdf" class="investor-card" target="_blank"><h4>One Pager</h4></a>
-        <a href="/investor/TRYONYOU_ShortDeck.pdf" class="investor-card" target="_blank"><h4>Short Deck</h4></a>
-        <a href="/investor/TRYONYOU_ExtendedDeck.pdf" class="investor-card" target="_blank"><h4>Extended Deck</h4></a>
-      </div>
-    </div>
-  </section>
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div><h4>For Retailers</h4><p>AI-powered virtual try-on.</p></div>
-        <div><h4>For Brands</h4><p>Reduce returns, increase satisfaction.</p></div>
-        <div><h4>Technology</h4><p>EPCT-patented system.</p></div>
-      </div>
-      <p class="legal-link"><a href="/docs/legal/EPCT_AMENDMENTS_2025.pdf" target="_blank">Patent Amendments (EPCT, 2025)</a></p>
-      <p class="copyright">TRYONYOU - ABVETOS - ULTRA-PLUS-ULTIMATUM 2025</p>
-    </div>
-  </footer>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <svg class="peacock-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="90" fill="url(#peacock-gradient)" />
+      <circle cx="100" cy="100" r="70" fill="#003459" />
+      <circle cx="100" cy="100" r="50" fill="url(#inner-gradient)" />
+      <path d="M100 50 L120 80 L100 75 L80 80 Z" fill="#00A8E8" />
+      <path d="M100 150 L85 130 L100 135 L115 130 Z" fill="#00A8E8" />
+      <circle cx="100" cy="100" r="15" fill="#D4AF37" />
+      
+      <defs>
+        <linearGradient id="peacock-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#8B92A0;stop-opacity:1" />
+          <stop offset="50%" style="stop-color:#C0C0C0;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#8B92A0;stop-opacity:1" />
+        </linearGradient>
+        <radialGradient id="inner-gradient">
+          <stop offset="0%" style="stop-color:#00A8E8;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#003459;stop-opacity:1" />
+        </radialGradient>
+      </defs>
+    </svg>
+    <div class="loading-text">TRYONYOU</div>
+  </div>
+  
+  <!-- React Root -->
+  <div id="root"></div>
+  
+  <!-- Vite Bundle -->
+  
+  <script>
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+          loadingScreen.classList.add('hidden');
+          setTimeout(() => loadingScreen.remove(), 500);
+        }
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
