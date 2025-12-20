@@ -45,7 +45,7 @@ const Home = () => {
       title: 'Try Demo',
       description: 'Experience our virtual try-on technology in action.',
       color: 'from-cyan-500 to-blue-500',
-      link: '/demo'
+      link: '/try'
     },
   ]
 
@@ -102,7 +102,7 @@ const Home = () => {
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <Link to="/demo" className="btn-primary text-lg px-8 py-4 group">
+                <Link to="/try" className="btn-primary text-lg px-8 py-4 group">
                   Try Demo
                   <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
                 </Link>
@@ -294,7 +294,7 @@ const Home = () => {
               Join thousands of satisfied users and discover your perfect look today
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/demo" className="btn-primary text-lg px-8 py-4">
+              <Link to="/try" className="btn-primary text-lg px-8 py-4">
                 Try Demo Now
                 <ArrowRight className="inline ml-2" size={20} />
               </Link>

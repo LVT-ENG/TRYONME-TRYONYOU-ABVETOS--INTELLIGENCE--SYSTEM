@@ -1,3 +1,4 @@
+import Try from "./pages/Try";
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
@@ -25,7 +26,8 @@ function App() {
           <Route path="/showroom" element={<Showroom />} />
           <Route path="/glow-up" element={<GlowUp />} />
           <Route path="/demo" element={<Demo />} />
-        </Routes>
+          <Route path="/try" element={<Try />} />
+</Routes>
       </main>
       <Footer />
     </div>
