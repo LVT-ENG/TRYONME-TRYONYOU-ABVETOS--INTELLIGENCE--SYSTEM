@@ -234,6 +234,7 @@ const FittingRoom = () => {
                         type="file"
                         accept="image/*"
                         capture="environment"
+                        aria-label="Take a photo of your hand on A4 paper for calibration"
                         onChange={handleHandCalibration}
                         className="hidden"
                       />
