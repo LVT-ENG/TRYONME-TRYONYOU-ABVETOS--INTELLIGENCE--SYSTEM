@@ -13,12 +13,13 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://tryonyou.app/" />
   <meta property="og:title" content="TRYONYOU - AI-Powered Virtual Try-On Platform" />
-  <meta property="og:description" content="Experience the future of fashion with TRYONYOU's AI-powered virtual try-on technology." />
+  <meta property="og:description" content="Experience the future of fashion with TRYONYOU's AI-powered virtual try-on technology. Transform your wardrobe with intelligent styling and seamless digital fitting." />
   
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://tryonyou.app/" />
   <meta property="twitter:title" content="TRYONYOU - AI-Powered Virtual Try-On Platform" />
+  <meta property="twitter:description" content="Experience the future of fashion with TRYONYOU's AI-powered virtual try-on technology. Transform your wardrobe with intelligent styling and seamless digital fitting." />
   
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -114,14 +115,18 @@
   <script type="module" src="/src/main.jsx"></script>
   
   <script>
+    // Loading screen configuration
+    const LOADING_SCREEN_DELAY = 1000; // milliseconds
+    const FADE_OUT_DURATION = 500; // milliseconds
+    
     window.addEventListener('load', () => {
       setTimeout(() => {
         const loadingScreen = document.getElementById('loading-screen');
         if (loadingScreen) {
           loadingScreen.classList.add('hidden');
-          setTimeout(() => loadingScreen.remove(), 500);
+          setTimeout(() => loadingScreen.remove(), FADE_OUT_DURATION);
         }
-      }, 1000);
+      }, LOADING_SCREEN_DELAY);
     });
   </script>
 </body>
