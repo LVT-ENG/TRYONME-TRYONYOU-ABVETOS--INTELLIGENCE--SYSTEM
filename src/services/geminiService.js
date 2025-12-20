@@ -219,11 +219,15 @@ export const analyzePalmVerification = async (imageFile) => {
     
     const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
-      const result = JSON.parse(jsonMatch[0]);
-      return {
-        success: true,
-        ...result
-      };
+      try {
+        const result = JSON.parse(jsonMatch[0]);
+        return {
+          success: true,
+          ...result
+        };
+      } catch (parseError) {
+        throw new Error('Failed to parse JSON from Gemini API response');
+      }
     }
 
     throw new Error('Invalid response format from Gemini API');
