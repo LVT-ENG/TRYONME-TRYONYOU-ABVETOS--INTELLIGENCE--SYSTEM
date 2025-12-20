@@ -86,6 +86,27 @@ export const analyzeHandCalibration = async (imageFile) => {
       })
     });
 
+    if (!response.ok) {
+      let errorDetail = '';
+      try {
+        const errorBody = await response.json();
+        if (errorBody && errorBody.error && typeof errorBody.error.message === 'string') {
+          errorDetail = errorBody.error.message;
+        } else {
+          errorDetail = JSON.stringify(errorBody);
+        }
+      } catch {
+        try {
+          errorDetail = await response.text();
+        } catch {
+          errorDetail = '';
+        }
+      }
+
+      const statusText = response.statusText || '';
+      const messageBase = `Gemini API request failed with status ${response.status}${statusText ? ' ' + statusText : ''}`;
+      throw new Error(errorDetail ? `${messageBase}: ${errorDetail}` : messageBase);
+    }
     const data = await response.json();
     const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     
