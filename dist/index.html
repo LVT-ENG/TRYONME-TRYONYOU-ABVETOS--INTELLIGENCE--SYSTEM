@@ -3,37 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TRYONYOU — Pilot</title>
-
+  <title>TRYONYOU — Virtual Try-On Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f8fafc;
-    }
-  </style>
+  <script type="module" crossorigin src="/assets/index-ufD0Yws9.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/react-vendor-Co_thh9N.js">
+  <link rel="modulepreload" crossorigin href="/assets/animation-vendor-BQeySJbx.js">
+  <link rel="modulepreload" crossorigin href="/assets/three-vendor-DvONQdC-.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-DEvKsFen.css">
 </head>
-
-<body class="min-h-screen flex items-center justify-center">
-
-  <div id="app" class="w-full max-w-md text-center p-8">
-    <h1 class="text-4xl font-bold mb-6">Real Measure. Real Fit.</h1>
-
-    <button
-      id="startPilot"
-      class="px-8 py-4 bg-black text-white rounded-xl text-lg"
-    >
-      Start Pilot
-    </button>
-  </div>
-
-  <script>
-    const btn = document.getElementById("startPilot");
-    btn.onclick = () => {
-      window.location.href = "/pilot.html";
-    };
-  </script>
-
+<body>
+  <div id="root"></div>
 </body>
 </html>
