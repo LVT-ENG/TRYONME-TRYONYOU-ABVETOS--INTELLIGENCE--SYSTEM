@@ -263,9 +263,11 @@ export const analyzeBodyMeasurements = async (photos, scaleFactor = 1.0) => {
   }
 
   try {
-    const frontBase64 = await fileToBase64(photos.frontPhoto);
-    const leftBase64 = await fileToBase64(photos.leftPhoto);
-    const rightBase64 = await fileToBase64(photos.rightPhoto);
+    const [frontBase64, leftBase64, rightBase64] = await Promise.all([
+      fileToBase64(photos.frontPhoto),
+      fileToBase64(photos.leftPhoto),
+      fileToBase64(photos.rightPhoto)
+    ]);
     
     const response = await fetch(GEMINI_API_URL, {
       method: 'POST',
