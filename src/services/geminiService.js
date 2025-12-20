@@ -12,9 +12,9 @@ if (!GEMINI_API_KEY && import.meta.env.PROD) {
 }
 
 /**
- * Converts image file to base64 string
- * @param {File} file - Image file to convert
- * @returns {Promise<string>} Base64 encoded image
+ * Converts an image file to a base64-encoded string.
+ * @param {File} file - Image file to convert.
+ * @returns {Promise<string>} Base64 encoded image data without the data URL prefix.
  */
 const fileToBase64 = (file) => {
   return new Promise((resolve, reject) => {
