@@ -350,11 +350,16 @@ export const analyzeBodyMeasurements = async (photos, scaleFactor = 1.0) => {
     
     const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
-      const result = JSON.parse(jsonMatch[0]);
-      return {
-        success: true,
-        ...result
-      };
+      try {
+        const result = JSON.parse(jsonMatch[0]);
+        return {
+          success: true,
+          ...result
+        };
+      } catch (parseError) {
+        console.error('Failed to parse Gemini API JSON response:', parseError, 'Raw response:', jsonMatch[0]);
+        throw new Error('Invalid JSON in response from Gemini API');
+      }
     }
 
     throw new Error('Invalid response format from Gemini API');
