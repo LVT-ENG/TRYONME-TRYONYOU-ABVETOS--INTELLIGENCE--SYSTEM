@@ -85,6 +85,8 @@ const FittingRoom = () => {
         setHandCalibrationData(result)
         // Auto-advance to next step on success
         setTimeout(() => {
+          // Ensure any previous error is cleared when moving to the next step
+          setError(null)
           setCurrentStep(1)
           setIsProcessing(false)
         }, 1000)
