@@ -102,6 +102,7 @@ const Demo = () => {
 
   const handleTouchMove = (e) => {
     if (isDragging) {
+      e.preventDefault()
       const delta = e.touches[0].clientX - dragStartX
       setRotation(prev => (prev + delta * 0.5) % 360)
       setDragStartX(e.touches[0].clientX)
@@ -137,8 +138,10 @@ const Demo = () => {
     return 'bg-orange-500'
   }
 
+  const normalizeAngle = (angle) => ((angle % 360) + 360) % 360
+
   const getCurrentView = () => {
-    const normalizedRotation = ((rotation % 360) + 360) % 360
+    const normalizedRotation = normalizeAngle(rotation)
     if (normalizedRotation < 22.5 || normalizedRotation >= 337.5) return 'front'
     if (normalizedRotation >= 22.5 && normalizedRotation < 67.5) return 'front-right'
     if (normalizedRotation >= 67.5 && normalizedRotation < 112.5) return 'right'
@@ -152,7 +155,7 @@ const Demo = () => {
   // Avatar SVG Component with rotation views
   const AvatarSVG = () => {
     const currentView = getCurrentView()
-    const normalizedRotation = ((rotation % 360) + 360) % 360
+    const normalizedRotation = normalizeAngle(rotation)
     
     // Calculate perspective scale based on rotation
     const perspectiveScale = 1 - Math.abs(Math.sin(normalizedRotation * Math.PI / 180)) * 0.15
@@ -266,7 +269,6 @@ const Demo = () => {
     )
 
     const renderSideView = (isRight) => {
-      const flip = isRight ? 1 : -1
       return (
         <g transform={isRight ? '' : 'translate(200, 0) scale(-1, 1)'}>
           {/* Hair side */}
@@ -333,7 +335,7 @@ const Demo = () => {
     }
 
     const renderCurrentView = () => {
-      const normalizedAngle = ((rotation % 360) + 360) % 360
+      const normalizedAngle = normalizeAngle(rotation)
       
       if (normalizedAngle < 15 || normalizedAngle >= 345) return renderFrontView()
       if (normalizedAngle >= 165 && normalizedAngle < 195) return renderBackView()
@@ -522,7 +524,7 @@ const Demo = () => {
                 onTouchEnd={handleMouseUp}
               >
                 {/* Platform glow effect */}
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-gradient-radial from-blue-500/30 to-transparent rounded-full blur-xl" />
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-48 h-24 bg-blue-500/30 rounded-full blur-xl" />
                 
                 {/* Platform base */}
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-40 h-4 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-full shadow-lg" />
@@ -550,7 +552,7 @@ const Demo = () => {
                   className="absolute top-4 left-4 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-2"
                 >
                   <div className="text-xs text-white/60">View Angle</div>
-                  <div className="text-lg font-bold text-blue-400">{Math.round(((rotation % 360) + 360) % 360)}°</div>
+                  <div className="text-lg font-bold text-blue-400">{Math.round(normalizeAngle(rotation))}°</div>
                   <div className="text-xs text-white/40 capitalize">{getCurrentView().replace('-', ' ')}</div>
                 </motion.div>
 
@@ -586,7 +588,7 @@ const Demo = () => {
                       key={view.angle}
                       onClick={() => rotateToAngle(view.angle)}
                       className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-                        Math.abs(((rotation % 360) + 360) % 360 - view.angle) < 22.5
+                        Math.abs(normalizeAngle(rotation) - view.angle) < 22.5
                           ? 'bg-blue-500 text-white'
                           : 'bg-white/10 text-white/70 hover:bg-white/20'
                       }`}
