@@ -1,4 +1,3 @@
-import Try from "./pages/Try";
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
@@ -12,6 +11,8 @@ import Wardrobe from './pages/Wardrobe'
 import Showroom from './pages/Showroom'
 import GlowUp from './pages/GlowUp'
 import Demo from './pages/Demo'
+import Try from './pages/Try'
+import Measure from './pages/Measure'
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
           <Route path="/glow-up" element={<GlowUp />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/try" element={<Try />} />
-</Routes>
+          <Route path="/measure" element={<Measure />} />
+        </Routes>
       </main>
       <Footer />
     </div>
