@@ -220,10 +220,11 @@ export const analyzeBodyMeasurements = async (photos, scaleFactor = 1.0) => {
     const leftBase64 = await fileToBase64(photos.leftPhoto);
     const rightBase64 = await fileToBase64(photos.rightPhoto);
     
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+    const response = await fetch(GEMINI_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GEMINI_API_KEY}`,
       },
       body: JSON.stringify({
         contents: [{
