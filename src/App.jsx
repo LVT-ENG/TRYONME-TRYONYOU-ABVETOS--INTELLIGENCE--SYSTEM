@@ -13,6 +13,7 @@ import GlowUp from './pages/GlowUp'
 import Demo from './pages/Demo'
 import Try from './pages/Try'
 import Measure from './pages/Measure'
+import Landing from './pages/Landing'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/landing" element={<Landing />} />
           <Route path="/brands" element={<Brands />} />
           <Route path="/my-avatar" element={<MyAvatar />} />
           <Route path="/wardrobe" element={<Wardrobe />} />
