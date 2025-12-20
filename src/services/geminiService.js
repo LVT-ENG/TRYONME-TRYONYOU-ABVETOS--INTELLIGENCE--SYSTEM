@@ -92,11 +92,15 @@ export const analyzeHandCalibration = async (imageFile) => {
     // Extract JSON from response
     const jsonMatch = textResponse.match(/\{[\s\S]*\}/);
     if (jsonMatch) {
-      const result = JSON.parse(jsonMatch[0]);
-      return {
-        success: true,
-        ...result
-      };
+      try {
+        const result = JSON.parse(jsonMatch[0]);
+        return {
+          success: true,
+          ...result
+        };
+      } catch (parseError) {
+        console.error('Failed to parse JSON from Gemini API response:', parseError);
+      }
     }
 
     throw new Error('Invalid response format from Gemini API');
