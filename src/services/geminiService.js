@@ -327,6 +327,24 @@ export const analyzeBodyMeasurements = async (photos, scaleFactor = 1.0) => {
       })
     });
 
+    if (!response.ok) {
+      let errorDetail = '';
+      try {
+        const errorBody = await response.json();
+        errorDetail = errorBody?.error?.message || JSON.stringify(errorBody);
+      } catch (e) {
+        try {
+          errorDetail = await response.text();
+        } catch (e2) {
+          errorDetail = '';
+        }
+      }
+
+      throw new Error(
+        `Gemini API request failed with status ${response.status} ${response.statusText}` +
+        (errorDetail ? `: ${errorDetail}` : '')
+      );
+    }
     const data = await response.json();
     const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     
