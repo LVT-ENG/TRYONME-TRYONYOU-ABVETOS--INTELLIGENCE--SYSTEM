@@ -1,309 +1,284 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from 'react'
+import { motion } from 'framer-motion'
 
-const looks = [
-  {
-    id: 1,
-    name: "Artisan Colorful Jacket",
-    brand: "TRYONYOU x Lafayette",
-    price: 1890,
-    fit: 96,
-    category: "Avant-Garde",
-    image: "/images/look1-colorful-jacket.png",
-    details: { shoulder: 98, chest: 95, waist: 94, length: 97 },
-    description: "Hand-painted leather jacket with cubist face motif, paired with purple metallic trousers",
-    colors: ["Purple", "Teal", "Gold"],
-  },
-  {
-    id: 2,
-    name: "Heritage Brown Suit",
-    brand: "TRYONYOU x Lafayette",
-    price: 2450,
-    fit: 94,
-    category: "Classic",
-    image: "/images/look2-brown-suit.png",
-    details: { shoulder: 96, chest: 93, waist: 92, length: 95 },
-    description: "Textured brown blazer with burgundy shirt, leather trousers and gold buckle belt",
-    colors: ["Brown", "Burgundy", "Black"],
-  },
-  {
-    id: 3,
-    name: "Noir Couture Dress",
-    brand: "TRYONYOU x Lafayette",
-    price: 3200,
-    fit: 98,
-    category: "Haute Couture",
-    image: "/images/look3-black-dress.png",
-    details: { shoulder: 99, chest: 98, waist: 97, length: 98 },
-    description: "Black evening dress with gold LV motif, red opera gloves and fur stole",
-    colors: ["Black", "Gold", "Red"],
-  },
-  {
-    id: 4,
-    name: "Graphic White Biker",
-    brand: "TRYONYOU x Lafayette",
-    price: 1650,
-    fit: 95,
-    category: "Contemporary",
-    image: "/images/look4-white-jacket.png",
-    details: { shoulder: 97, chest: 94, waist: 93, length: 96 },
-    description: "White leather biker jacket with geometric black face print, minimal black base",
-    colors: ["White", "Black"],
-  },
-];
+const Demo = () => {
+  const [selectedSize, setSelectedSize] = useState('M')
+  const [selectedGarment, setSelectedGarment] = useState('blazer')
 
-const FitBar = ({ label, value, delay = 0 }) => (
-  <motion.div 
-    className="flex items-center gap-3"
-    initial={{ opacity: 0, x: -20 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ delay: delay * 0.1, duration: 0.4 }}
-  >
-    <span className="text-white/50 text-xs uppercase tracking-wider w-16">{label}</span>
-    <div className="flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden">
-      <motion.div
-        className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full"
-        initial={{ width: 0 }}
-        animate={{ width: `${value}%` }}
-        transition={{ delay: delay * 0.1 + 0.2, duration: 0.8, ease: "easeOut" }}
-      />
-    </div>
-    <span className="text-amber-400 text-xs font-medium w-10 text-right">{value}%</span>
-  </motion.div>
-);
+  const sizes = ['XS', 'S', 'M', 'L', 'XL']
+  
+  const garments = [
+    { id: 'blazer', name: 'Navy Blazer', brand: 'TRYONYOU Collection', price: 189, fit: 94 },
+    { id: 'shirt', name: 'White Oxford Shirt', brand: 'TRYONYOU Collection', price: 79, fit: 97 },
+    { id: 'trousers', name: 'Tailored Trousers', brand: 'TRYONYOU Collection', price: 129, fit: 91 },
+  ]
 
-export default function Demo() {
-  const [selectedLook, setSelectedLook] = useState(looks[0]);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  const handleLookChange = (look) => {
-    if (look.id !== selectedLook.id) {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setSelectedLook(look);
-        setIsTransitioning(false);
-      }, 300);
-    }
-  };
+  const selectedGarmentData = garments.find(g => g.id === selectedGarment)
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen pt-20">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
-              <span className="text-black font-bold text-sm">TY</span>
-            </div>
-            <div>
-              <div className="text-white font-semibold">TRYONYOU</div>
-              <div className="text-white/40 text-xs">for Lafayette Paris</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-white/40 text-sm hidden md:block">Virtual Fitting Experience</span>
-            <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-          </div>
+      <section className="py-12 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              Virtual Try-On Demo
+            </span>
+          </h1>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+            Experience how TRYONYOU technology matches garments to your body measurements
+          </p>
         </div>
-      </header>
+      </section>
 
-      <div className="pt-20 pb-8 px-4">
+      {/* Main Demo Area */}
+      <section className="py-8 px-4">
         <div className="max-w-7xl mx-auto">
-          {/* Main Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            {/* Left: Main Image Display */}
-            <div className="lg:col-span-7 xl:col-span-8">
-              <div className="relative bg-gradient-to-br from-neutral-900 to-black rounded-2xl overflow-hidden border border-white/10">
-                {/* Fit Score Badge */}
-                <div className="absolute top-4 right-4 z-20">
-                  <motion.div 
-                    className="bg-black/70 backdrop-blur-md rounded-xl px-4 py-3 border border-white/10"
-                    key={selectedLook.id}
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="text-white/50 text-xs uppercase tracking-wider mb-1">Fit Score</div>
-                    <div className="text-4xl font-light text-amber-400">{selectedLook.fit}%</div>
-                  </motion.div>
-                </div>
+            {/* Left Panel - Garment Selection */}
+            <div className="space-y-4">
+              <h2 className="text-xl font-semibold text-white mb-4">Select Garment</h2>
+              {garments.map((garment) => (
+                <motion.button
+                  key={garment.id}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setSelectedGarment(garment.id)}
+                  className={`w-full p-4 rounded-xl text-left transition-all ${
+                    selectedGarment === garment.id
+                      ? 'bg-blue-500/20 border-2 border-blue-500'
+                      : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                  }`}
+                >
+                  <div className="font-semibold text-white">{garment.name}</div>
+                  <div className="text-sm text-white/60">{garment.brand}</div>
+                  <div className="text-sm text-blue-400 mt-1">${garment.price}</div>
+                </motion.button>
+              ))}
+            </div>
 
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4 z-20">
-                  <motion.div 
-                    className="bg-black/70 backdrop-blur-md rounded-full px-4 py-2 border border-white/10"
-                    key={selectedLook.category}
-                    initial={{ y: -10, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                  >
-                    <span className="text-white/80 text-sm">{selectedLook.category}</span>
-                  </motion.div>
-                </div>
+            {/* Center - Avatar Display */}
+            <div className="flex flex-col items-center">
+              <div className="relative w-full max-w-md aspect-[3/4] bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl overflow-hidden border border-white/10">
+                {/* Human Avatar - Realistic silhouette representation */}
+                <svg 
+                  viewBox="0 0 200 300" 
+                  className="w-full h-full"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  {/* Background gradient */}
+                  <defs>
+                    <linearGradient id="skinGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#D4A574" />
+                      <stop offset="100%" stopColor="#C4956A" />
+                    </linearGradient>
+                    <linearGradient id="hairGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#3D2314" />
+                      <stop offset="100%" stopColor="#2A1810" />
+                    </linearGradient>
+                    <linearGradient id="blazerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#1E3A5F" />
+                      <stop offset="100%" stopColor="#152A45" />
+                    </linearGradient>
+                    <linearGradient id="shirtGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFFFFF" />
+                      <stop offset="100%" stopColor="#F0F0F0" />
+                    </linearGradient>
+                    <linearGradient id="trousersGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#2C3E50" />
+                      <stop offset="100%" stopColor="#1A252F" />
+                    </linearGradient>
+                  </defs>
 
-                {/* Main Image */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={selectedLook.id}
-                    className="aspect-[3/4] md:aspect-[4/5] relative"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: isTransitioning ? 0.3 : 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <img
-                      src={selectedLook.image}
-                      alt={selectedLook.name}
-                      className="w-full h-full object-cover object-top"
-                    />
-                    {/* Gradient overlay at bottom */}
-                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                  </motion.div>
-                </AnimatePresence>
+                  {/* Hair */}
+                  <ellipse cx="100" cy="45" rx="28" ry="30" fill="url(#hairGradient)" />
+                  
+                  {/* Head */}
+                  <ellipse cx="100" cy="55" rx="22" ry="26" fill="url(#skinGradient)" />
+                  
+                  {/* Neck */}
+                  <rect x="92" y="78" width="16" height="15" fill="url(#skinGradient)" />
 
-                {/* Product Info Overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <motion.div
-                    key={selectedLook.id}
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <h2 className="text-2xl md:text-3xl font-light text-white mb-2">{selectedLook.name}</h2>
-                    <p className="text-white/60 text-sm mb-4 max-w-lg">{selectedLook.description}</p>
-                    <div className="flex items-center gap-4">
-                      <span className="text-2xl font-light text-white">${selectedLook.price.toLocaleString()}</span>
-                      <div className="flex gap-2">
-                        {selectedLook.colors.map((color, i) => (
-                          <span key={i} className="px-3 py-1 bg-white/10 rounded-full text-white/60 text-xs">
-                            {color}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
+                  {/* Shirt collar visible */}
+                  <path d="M85 90 L100 100 L115 90 L115 95 L100 105 L85 95 Z" fill="url(#shirtGradient)" />
+
+                  {/* Torso - Blazer or Shirt */}
+                  {selectedGarment === 'blazer' ? (
+                    <>
+                      {/* Blazer */}
+                      <path d="M70 93 L85 90 L100 95 L115 90 L130 93 L135 180 L65 180 Z" fill="url(#blazerGradient)" />
+                      {/* Blazer lapels */}
+                      <path d="M85 90 L95 110 L100 95 L105 110 L115 90 L100 100 Z" fill="url(#shirtGradient)" />
+                      {/* Blazer buttons */}
+                      <circle cx="100" cy="130" r="3" fill="#1A1A1A" />
+                      <circle cx="100" cy="150" r="3" fill="#1A1A1A" />
+                    </>
+                  ) : selectedGarment === 'shirt' ? (
+                    <>
+                      {/* Shirt */}
+                      <path d="M75 93 L85 90 L100 95 L115 90 L125 93 L130 180 L70 180 Z" fill="url(#shirtGradient)" />
+                      {/* Shirt buttons */}
+                      <circle cx="100" cy="110" r="2" fill="#CCCCCC" />
+                      <circle cx="100" cy="125" r="2" fill="#CCCCCC" />
+                      <circle cx="100" cy="140" r="2" fill="#CCCCCC" />
+                      <circle cx="100" cy="155" r="2" fill="#CCCCCC" />
+                    </>
+                  ) : (
+                    <>
+                      {/* Default shirt for trousers selection */}
+                      <path d="M75 93 L85 90 L100 95 L115 90 L125 93 L130 180 L70 180 Z" fill="url(#shirtGradient)" />
+                    </>
+                  )}
+
+                  {/* Arms */}
+                  <path d="M70 93 L55 100 L45 160 L55 162 L62 110 L70 100 Z" fill={selectedGarment === 'blazer' ? 'url(#blazerGradient)' : 'url(#shirtGradient)'} />
+                  <path d="M130 93 L145 100 L155 160 L145 162 L138 110 L130 100 Z" fill={selectedGarment === 'blazer' ? 'url(#blazerGradient)' : 'url(#shirtGradient)'} />
+                  
+                  {/* Hands */}
+                  <ellipse cx="50" cy="165" rx="8" ry="10" fill="url(#skinGradient)" />
+                  <ellipse cx="150" cy="165" rx="8" ry="10" fill="url(#skinGradient)" />
+
+                  {/* Trousers */}
+                  <path d="M70 178 L75 280 L95 280 L100 200 L105 280 L125 280 L130 178 Z" fill={selectedGarment === 'trousers' ? 'url(#trousersGradient)' : '#34495E'} />
+                  
+                  {/* Belt */}
+                  <rect x="68" y="175" width="64" height="8" fill="#1A1A1A" rx="2" />
+                  <rect x="96" y="176" width="8" height="6" fill="#B8860B" rx="1" />
+
+                  {/* Facial features */}
+                  <ellipse cx="92" cy="50" rx="3" ry="2" fill="#2A1810" />
+                  <ellipse cx="108" cy="50" rx="3" ry="2" fill="#2A1810" />
+                  <path d="M96 60 Q100 63 104 60" stroke="#8B6914" strokeWidth="1.5" fill="none" />
+                  <path d="M93 68 Q100 72 107 68" stroke="#C4956A" strokeWidth="2" fill="none" />
+                </svg>
+
+                {/* Fit indicator overlay */}
+                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm rounded-lg px-3 py-2">
+                  <div className="text-xs text-white/60">Fit Score</div>
+                  <div className="text-2xl font-bold text-green-400">{selectedGarmentData?.fit}%</div>
                 </div>
               </div>
 
-              {/* Fit Analysis */}
-              <motion.div 
-                className="mt-4 bg-neutral-900/50 rounded-xl border border-white/10 p-5"
-                key={selectedLook.id}
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-white/80 text-sm uppercase tracking-wider">Fit Analysis</h3>
-                  <span className="text-amber-400 text-sm">Your measurements applied</span>
-                </div>
-                <div className="space-y-3">
-                  {Object.entries(selectedLook.details).map(([key, value], index) => (
-                    <FitBar 
-                      key={key} 
-                      label={key} 
-                      value={value} 
-                      delay={index}
-                    />
+              {/* Size selector */}
+              <div className="mt-6 w-full max-w-md">
+                <h3 className="text-sm font-medium text-white/60 mb-3">Select Size</h3>
+                <div className="flex gap-2 justify-center">
+                  {sizes.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSize(size)}
+                      className={`w-12 h-12 rounded-lg font-semibold transition-all ${
+                        selectedSize === size
+                          ? 'bg-blue-500 text-white'
+                          : 'bg-white/10 text-white/70 hover:bg-white/20'
+                      }`}
+                    >
+                      {size}
+                    </button>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             </div>
 
-            {/* Right: Selection Panel */}
-            <div className="lg:col-span-5 xl:col-span-4 space-y-4">
-              {/* Collection Title */}
-              <div className="text-center lg:text-left mb-6">
-                <h1 className="text-white/40 text-xs uppercase tracking-[0.3em] mb-2">AW 2025 Collection</h1>
-                <p className="text-white text-xl font-light">Select Your Look</p>
-              </div>
-
-              {/* Look Cards */}
-              <div className="grid grid-cols-2 gap-3">
-                {looks.map((look) => (
-                  <motion.button
-                    key={look.id}
-                    onClick={() => handleLookChange(look)}
-                    className={`relative rounded-xl overflow-hidden border transition-all ${
-                      selectedLook.id === look.id
-                        ? "border-amber-500 ring-2 ring-amber-500/30"
-                        : "border-white/10 hover:border-white/30"
-                    }`}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="aspect-[3/4]">
-                      <img
-                        src={look.image}
-                        alt={look.name}
-                        className="w-full h-full object-cover object-top"
-                      />
+            {/* Right Panel - Fit Analysis */}
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-white mb-4">Fit Analysis</h2>
+              
+              <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+                <h3 className="font-semibold text-white mb-4">{selectedGarmentData?.name}</h3>
+                
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-white/60">Shoulder Fit</span>
+                      <span className="text-green-400">Excellent</span>
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                    <div className="absolute bottom-0 left-0 right-0 p-3">
-                      <h4 className="text-white text-xs font-medium truncate">{look.name}</h4>
-                      <div className="flex items-center justify-between mt-1">
-                        <span className="text-white/60 text-xs">${look.price.toLocaleString()}</span>
-                        <span className="text-amber-400 text-xs font-medium">{look.fit}%</span>
-                      </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-green-500 rounded-full" style={{ width: '95%' }} />
                     </div>
-                    {selectedLook.id === look.id && (
-                      <motion.div 
-                        className="absolute top-2 right-2 w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center"
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                      >
-                        <svg className="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </motion.div>
-                    )}
-                  </motion.button>
-                ))}
-              </div>
-
-              {/* Your Profile */}
-              <div className="bg-neutral-900/50 rounded-xl border border-white/10 p-4 mt-6">
-                <h3 className="text-white/60 text-xs uppercase tracking-wider mb-3">Your Profile</h3>
-                <div className="grid grid-cols-2 gap-2 text-sm">
-                  <div className="bg-black/30 rounded-lg p-3">
-                    <div className="text-white/40 text-xs mb-1">Height</div>
-                    <div className="text-white font-medium">175 cm</div>
                   </div>
-                  <div className="bg-black/30 rounded-lg p-3">
-                    <div className="text-white/40 text-xs mb-1">Size</div>
-                    <div className="text-white font-medium">M / 48</div>
+                  
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-white/60">Chest Fit</span>
+                      <span className="text-green-400">Good</span>
+                    </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-green-500 rounded-full" style={{ width: '88%' }} />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-white/60">Waist Fit</span>
+                      <span className="text-blue-400">Optimal</span>
+                    </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-blue-500 rounded-full" style={{ width: '92%' }} />
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="text-white/60">Length</span>
+                      <span className="text-green-400">Perfect</span>
+                    </div>
+                    <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-green-500 rounded-full" style={{ width: '98%' }} />
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* CTAs */}
-              <div className="space-y-3 pt-4">
-                <motion.button 
-                  className="w-full py-4 bg-white text-black rounded-xl font-medium hover:bg-white/90 transition-all"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
-                >
-                  Add to Bag - ${selectedLook.price.toLocaleString()}
-                </motion.button>
-                <motion.button 
-                  className="w-full py-4 bg-transparent text-white border border-white/20 rounded-xl font-medium hover:bg-white/5 transition-all"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
-                >
-                  Reserve for In-Store Try-On
-                </motion.button>
+              <div className="bg-white/5 rounded-xl p-6 border border-white/10">
+                <h3 className="font-semibold text-white mb-3">Recommendation</h3>
+                <p className="text-white/70 text-sm">
+                  Based on your measurements, size <span className="text-blue-400 font-semibold">{selectedSize}</span> provides 
+                  the best fit for this {selectedGarmentData?.name.toLowerCase()}. The garment will sit comfortably 
+                  across your shoulders with optimal room in the chest area.
+                </p>
               </div>
 
-              {/* Trust */}
-              <div className="flex items-center justify-center gap-4 text-white/30 text-xs pt-4">
-                <span>Free Returns</span>
-                <span className="w-1 h-1 bg-white/30 rounded-full"></span>
-                <span>Size Guarantee</span>
-                <span className="w-1 h-1 bg-white/30 rounded-full"></span>
-                <span>Expert Styling</span>
-              </div>
+              <button className="w-full py-4 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl font-semibold text-white hover:opacity-90 transition-opacity">
+                Add to Cart - ${selectedGarmentData?.price}
+              </button>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* Technology Section */}
+      <section className="py-16 px-4 bg-white/5">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-2xl font-bold text-white mb-6">How It Works</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-6">
+              <div className="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-blue-400">1</span>
+              </div>
+              <h3 className="font-semibold text-white mb-2">Input Measurements</h3>
+              <p className="text-white/60 text-sm">Enter your body measurements or use our 3D scanning technology</p>
+            </div>
+            <div className="p-6">
+              <div className="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-blue-400">2</span>
+              </div>
+              <h3 className="font-semibold text-white mb-2">AI Analysis</h3>
+              <p className="text-white/60 text-sm">Our algorithm compares your measurements with garment specifications</p>
+            </div>
+            <div className="p-6">
+              <div className="w-16 h-16 bg-blue-500/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl font-bold text-blue-400">3</span>
+              </div>
+              <h3 className="font-semibold text-white mb-2">Perfect Fit</h3>
+              <p className="text-white/60 text-sm">Get personalized size recommendations with confidence scores</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
+
+export default Demo
