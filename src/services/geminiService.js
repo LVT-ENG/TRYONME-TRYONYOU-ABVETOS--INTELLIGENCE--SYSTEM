@@ -167,6 +167,31 @@ export const analyzePalmVerification = async (imageFile) => {
       })
     });
 
+    if (!response.ok) {
+      let errorDetail = '';
+      try {
+        const errorData = await response.json();
+        // Gemini errors commonly expose details in 'error' or 'message' fields
+        errorDetail =
+          (errorData && (errorData.error?.message || errorData.message)) ||
+          JSON.stringify(errorData);
+      } catch {
+        // Fallback if response is not JSON
+        try {
+          errorDetail = await response.text();
+        } catch {
+          errorDetail = '';
+        }
+      }
+
+      const statusInfo = `${response.status} ${response.statusText}`.trim();
+      const message =
+        errorDetail && errorDetail !== '{}'
+          ? `Gemini API error (${statusInfo}): ${errorDetail}`
+          : `Gemini API error (${statusInfo})`;
+
+      throw new Error(message);
+    }
     const data = await response.json();
     const textResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
     
