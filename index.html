@@ -2,69 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TRYONYOU — Pilot</title>
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-      background: #f8fafc;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <title>TRYONYOU - Virtual Try-On Platform</title>
 </head>
-
-<body class="text-slate-900">
-
-  <!-- HEADER -->
-  <header class="fixed top-0 left-0 w-full bg-white/90 backdrop-blur border-b z-50">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <strong class="text-xl">TRYONYOU</strong>
-      <span class="text-sm text-slate-500">Pilot Mode</span>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="pt-32 pb-24 text-center">
-    <h1 class="text-5xl font-bold mb-6">
-      Real Measure.<br/>Real Fit.
-    </h1>
-    <p class="max-w-xl mx-auto text-lg text-slate-600 mb-10">
-      This is the live TRYONYOU pilot running on the production domain.
-    </p>
-
-    <button onclick="startPilot()"
-      class="px-10 py-4 rounded-full bg-black text-white text-lg hover:scale-105 transition">
-      Start Pilot
-    </button>
-  </section>
-
-  <!-- PILOT -->
-  <section id="pilot" class="hidden max-w-5xl mx-auto px-6 pb-32">
-    <div class="bg-white rounded-2xl shadow-xl p-10 text-center">
-      <h2 class="text-3xl font-semibold mb-6">Pilot Running</h2>
-
-      <div class="w-full h-96 bg-slate-100 rounded-xl flex items-center justify-center mb-6">
-        <span class="text-slate-500">Camera / Measure Engine Placeholder</span>
-      </div>
-
-      <p class="text-slate-600">
-        Measurement · Morphology · Fit Intelligence
-      </p>
-    </div>
-  </section>
-
-  <script>
-    function startPilot() {
-      document.getElementById('pilot').classList.remove('hidden');
-      document.getElementById('pilot').scrollIntoView({ behavior: 'smooth' });
-    }
-  </script>
-
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
