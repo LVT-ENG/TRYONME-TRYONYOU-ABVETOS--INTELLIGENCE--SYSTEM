@@ -3,30 +3,140 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TRYONYOU — Pilot</title>
+  <title>TRYONYOU — AI-Powered Virtual Try-On Platform</title>
+  
+  <!-- Meta Tags -->
+  <meta name="description" content="Experience the future of fashion with TRYONYOU's AI-powered virtual try-on technology. Transform your wardrobe with intelligent styling and seamless digital fitting." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f8fafc;
+      background: linear-gradient(135deg, #0A0A0A 0%, #1A1A2E 50%, #003459 100%);
+      color: #F5EFE6;
+    }
+    
+    .gold-accent {
+      color: #C5A46D;
+    }
+    
+    .peacock-accent {
+      color: #006D77;
     }
   </style>
 </head>
 
-<body class="min-h-screen flex items-center justify-center">
+<body class="min-h-screen">
 
-  <div id="app" class="w-full max-w-md text-center p-8">
-    <h1 class="text-4xl font-bold mb-6">Real Measure. Real Fit.</h1>
+  <!-- Hero Section -->
+  <div class="min-h-screen flex items-center justify-center">
+    <div id="app" class="w-full max-w-4xl text-center p-8">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 gold-accent">TRYONYOU</h1>
+      <p class="text-2xl md:text-3xl font-semibold mb-4">Real Measure. Real Fit.</p>
+      <p class="text-lg md:text-xl mb-8 opacity-80 max-w-2xl mx-auto">
+        Experience AI-powered virtual try-on technology with your personal stylist PAU
+      </p>
 
-    <button
-      id="startPilot"
-      class="px-8 py-4 bg-black text-white rounded-xl text-lg"
-    >
-      Start Pilot
-    </button>
+      <div class="flex gap-4 justify-center flex-wrap">
+        <button
+          id="startPilot"
+          class="px-8 py-4 bg-white text-black rounded-xl text-lg font-semibold hover:bg-gray-100 transition"
+        >
+          Start Pilot
+        </button>
+        <a
+          href="/dist/index.html"
+          class="px-8 py-4 border-2 border-white text-white rounded-xl text-lg font-semibold hover:bg-white hover:text-black transition"
+        >
+          Explore Platform
+        </a>
+      </div>
+    </div>
   </div>
+
+  <!-- PAU Section -->
+  <section class="py-20 px-8 bg-gradient-to-b from-transparent to-black/30">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-6 gold-accent">Meet PAU - Your Personal AI Stylist</h2>
+      <p class="text-xl mb-12 opacity-90 max-w-3xl mx-auto">
+        PAU combines fashion expertise with psychological insight to help you look great and feel confident. 
+        More than just a stylist—PAU is your personal fashion companion.
+      </p>
+      <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div class="p-6">
+          <div class="text-5xl font-bold mb-2 peacock-accent">24/7</div>
+          <p class="text-lg">Always Available</p>
+        </div>
+        <div class="p-6">
+          <div class="text-5xl font-bold mb-2 peacock-accent">∞</div>
+          <p class="text-lg">Unlimited Looks</p>
+        </div>
+        <div class="p-6">
+          <div class="text-5xl font-bold mb-2 peacock-accent">AI</div>
+          <p class="text-lg">Smart Recommendations</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Investor Section -->
+  <section class="py-20 px-8">
+    <div class="max-w-6xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-6 gold-accent">Investment Opportunity</h2>
+      <p class="text-xl mb-12 opacity-80 max-w-3xl mx-auto">
+        Join us in revolutionizing the fashion industry with AI-powered virtual try-on technology.
+      </p>
+      <div class="flex gap-6 justify-center flex-wrap">
+        <a href="/dist/investor/TRYONYOU_OnePager.pdf" target="_blank" 
+           class="px-8 py-6 bg-white/10 border-2 border-white/30 rounded-xl hover:bg-white hover:text-black transition">
+          <h4 class="text-xl font-semibold">One Pager</h4>
+        </a>
+        <a href="/dist/investor/TRYONYOU_ShortDeck.pdf" target="_blank"
+           class="px-8 py-6 bg-white/10 border-2 border-white/30 rounded-xl hover:bg-white hover:text-black transition">
+          <h4 class="text-xl font-semibold">Short Deck</h4>
+        </a>
+        <a href="/dist/investor/TRYONYOU_ExtendedDeck.pdf" target="_blank"
+           class="px-8 py-6 bg-white/10 border-2 border-white/30 rounded-xl hover:bg-white hover:text-black transition">
+          <h4 class="text-xl font-semibold">Extended Deck</h4>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-8 bg-black/50 border-t border-white/10">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-3 gap-8 mb-8">
+        <div>
+          <h4 class="font-bold mb-4 gold-accent">TRYONYOU</h4>
+          <p class="opacity-70">AI-Powered Virtual Try-On Platform</p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4 gold-accent">Legal</h4>
+          <div class="space-y-2 opacity-70">
+            <div><a href="/dist/docs/legal/company_registration_dubai.pdf" class="hover:opacity-100">Company Registration</a></div>
+            <div><a href="/dist/docs/legal/investment_terms.docx" class="hover:opacity-100">Investment Terms</a></div>
+            <div><a href="/dist/docs/legal/nda_template.docx" class="hover:opacity-100">NDA Template</a></div>
+          </div>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4 gold-accent">Patents</h4>
+          <div class="space-y-2 opacity-70">
+            <div><a href="/dist/docs/patents/tryonyou_patent_epct.pdf" class="hover:opacity-100">EPCT Patent</a></div>
+            <div><a href="/dist/docs/patents/tryonyou_patent_drawings.pdf" class="hover:opacity-100">Patent Drawings</a></div>
+            <div><a href="/dist/docs/patents/trademarks_memo.pdf" class="hover:opacity-100">Trademarks</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center opacity-50 text-sm">
+        © 2025 TRYONYOU. All rights reserved.
+      </div>
+    </div>
+  </footer>
 
   <script>
     const btn = document.getElementById("startPilot");
