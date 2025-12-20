@@ -292,7 +292,7 @@ export const analyzeBodyMeasurements = async (photos, scaleFactor = 1.0) => {
       success: false,
       error: error.message,
       measurements: null,
-      message: 'Failed to analyze body measurements'
+      message: 'Unable to analyze your body measurements from the photos provided. Please make sure all required photos (front, left, and right) clearly show your full body, that an A4 sheet of paper is fully visible and not covered, and that the images are well lit and not blurry, then try again.'
     };
   }
 };
