@@ -106,7 +106,7 @@ export const analyzeHandCalibration = async (imageFile) => {
       success: false,
       error: error.message,
       calibrated: false,
-      message: 'Failed to analyze hand calibration'
+      message: 'Unable to analyze the hand calibration image. Please retake the photo making sure the A4 paper is fully visible and flat, your hand is clearly on top of it, the image is in focus (not blurry), and the scene is well lit, then try again.'
     };
   }
 };
