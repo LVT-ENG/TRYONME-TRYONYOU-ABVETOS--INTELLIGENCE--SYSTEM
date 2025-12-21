@@ -14,7 +14,7 @@ export default function App() {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
         .then(stream => { if (videoRef.current) videoRef.current.srcObject = stream; })
-        .catch(err => console.error("Error de cámara:", err));
+        .catch(err => console.error("Error:", err));
     }
   }, []);
 
@@ -27,32 +27,19 @@ export default function App() {
   };
 
   return (
-    <div style={{ backgroundColor: '#050505', height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'white', fontFamily: 'sans-serif', position: 'fixed', top: 0, left: 0 }}>
-      
-      {/* Contenedor del Escáner */}
-      <div style={{ position: 'relative', width: '300px', height: '500px', borderRadius: '30px', overflow: 'hidden', border: '2px solid rgba(255,255,255,0.1)', zIndex: 10 }}>
+    <div style={{ backgroundColor: '#000', height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#fff', position: 'fixed', top: 0, left: 0, overflow: 'hidden' }}>
+      <div style={{ position: 'relative', width: '90%', maxWidth: '350px', height: '70vh', borderRadius: '20px', overflow: 'hidden', border: '1px solid #333' }}>
         <video ref={videoRef} autoPlay muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        
-        {/* Capa de Color de la Tela */}
-        <div style={{ position: 'absolute', inset: 0, backgroundColor: catalog[index].color, mixBlendMode: 'multiply', pointerEvents: 'none' }} />
-        
-        {/* Línea de Escaneo Láser */}
-        <div style={{ position: 'absolute', width: '100%', height: '2px', background: '#ff0000', boxShadow: '0 0 15px #ff0000', animation: 'scan 2s linear infinite', left: 0, top: 0, zIndex: 20 }} />
-        
-        <div style={{ position: 'absolute', top: '20px', left: '20px', fontSize: '8px', letterSpacing: '2px', color: '#00ff00' }}>[ LIVE_RECOGNITION: ACTIVE ]</div>
+        <div style={{ position: 'absolute', inset: 0, backgroundColor: catalog[index].color, mixBlendMode: 'multiply' }} />
+        <div style={{ position: 'absolute', width: '100%', height: '2px', background: '#ff0000', boxShadow: '0 0 10px red', animation: 'scan 2.5s linear infinite', top: 0 }} />
       </div>
-
-      {/* Controles e Información */}
-      <div style={{ marginTop: '30px', textAlign: 'center', zIndex: 30 }}>
-        <h2 style={{ fontSize: '14px', letterSpacing: '4px', color: '#f59e0b' }}>{catalog[index].name}</h2>
-        <p style={{ fontSize: '9px', opacity: 0.5, marginBottom: '20px' }}>ULTIMATUM INTELLIGENCE SYSTEM</p>
-        
-        <button onClick={next} style={{ padding: '15px 30px', borderRadius: '5px', border: '1px solid #f59e0b', backgroundColor: 'transparent', color: '#f59e0b', cursor: 'pointer', fontSize: '10px', fontWeight: 'bold', letterSpacing: '2px' }}>
-          {isAnalyzing ? "ANALYZING BODY..." : "CHANGE TEXTURE →"}
+      <div style={{ marginTop: '20px', textAlign: 'center' }}>
+        <p style={{ color: '#f59e0b', fontSize: '14px', letterSpacing: '2px' }}>{catalog[index].name}</p>
+        <button onClick={next} style={{ marginTop: '15px', padding: '12px 25px', background: 'transparent', border: '1px solid #fff', color: '#fff', borderRadius: '50px', cursor: 'pointer' }}>
+          {isAnalyzing ? "ANALYZING..." : "CHANGE FABRIC"}
         </button>
       </div>
-
-      <style>{" @keyframes scan { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } } "}</style>
+      <style>{"@keyframes scan { 0% { top: 0; } 100% { top: 100%; } }"}</style>
     </div>
   );
 }
