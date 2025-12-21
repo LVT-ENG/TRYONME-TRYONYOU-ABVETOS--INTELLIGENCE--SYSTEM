@@ -30,13 +30,14 @@ export default function App() {
   return (
     <div style={{ backgroundColor: '#000', height: '100vh', width: '100vw', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'monospace', position: 'fixed', top: 0, left: 0 }}>
       
+      {/* SCANNER VIEWPORT */}
       <div style={{ position: 'relative', width: '320px', height: '520px', borderRadius: '40px', border: '1px solid rgba(255,255,255,0.1)', overflow: 'hidden', boxShadow: '0 0 50px rgba(0,0,0,0.8)', backgroundColor: '#111' }}>
         <video ref={videoRef} autoPlay muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
         
-        {/* Fabric Overlay */}
+        {/* Fabric Multiplier Overlay */}
         <div style={{ position: 'absolute', inset: 0, backgroundColor: catalog[index].color, mixBlendMode: 'multiply', pointerEvents: 'none' }} />
         
-        {/* Scanner Line */}
+        {/* Animated Scanner Line */}
         <div style={{ position: 'absolute', width: '100%', height: '2px', background: '#ff0000', boxShadow: '0 0 15px red', animation: 'scan 2.5s linear infinite', top: 0 }} />
         
         <div style={{ position: 'absolute', bottom: '20px', left: '20px', fontSize: '10px', color: '#0f0', textShadow: '0 0 5px #0f0' }}>
@@ -44,11 +45,12 @@ export default function App() {
         </div>
       </div>
 
+      {/* UI CONTROLS */}
       <div style={{ marginTop: '30px', textAlign: 'center' }}>
         <h2 style={{ fontSize: '18px', color: '#f59e0b', margin: '0', letterSpacing: '3px' }}>{catalog[index].name}</h2>
         <p style={{ fontSize: '11px', color: '#888', marginTop: '8px' }}>{catalog[index].fabric} | {catalog[index].tech}</p>
         
-        <button onClick={handleNext} style={{ marginTop: '25px', background: 'transparent', border: '1px solid #fff', color: '#fff', padding: '15px 40px', borderRadius: '50px', cursor: 'pointer', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px', transition: 'all 0.3s' }}>
+        <button onClick={handleNext} style={{ marginTop: '25px', background: 'transparent', border: '1px solid #fff', color: '#fff', padding: '15px 40px', borderRadius: '50px', cursor: 'pointer', fontSize: '10px', fontWeight: 'bold', letterSpacing: '1px' }}>
           {isAnalyzing ? "ANALYZING BIOMETRICS..." : "CHANGE TEXTURE →"}
         </button>
       </div>
