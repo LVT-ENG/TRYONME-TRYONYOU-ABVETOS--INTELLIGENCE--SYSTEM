@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 """
 TRYONYOU – Pilote Retail (30 jours) PACK GENERATOR
-Genera:
-  - PDF 2 páginas: Pilote Retail TryOnYou – 30 jours
-  - PDF Proforma: 5.000 € HT (o lo que indiques)
-  - Emails listos (kickoff + follow-up)
-  - Checklist operacional (Markdown)
-  - ZIP final para enviar por email
-Requisitos: reportlab (instalado en este entorno normalmente).
+Generates:
+  - PDF 2 pages: Pilote Retail TryOnYou – 30 jours
+  - PDF Proforma: 5.000 € HT (or specified amount)
+  - Ready-to-use emails (kickoff + follow-up)
+  - Operational checklist (Markdown)
+  - Final ZIP package for email distribution
+Requirements: reportlab (usually pre-installed in this environment).
 """
 
 import argparse
@@ -437,10 +437,10 @@ FILES:
     zip_path = os.path.join(os.path.dirname(out_dir), zip_name)
     zip_pack(out_dir, zip_path)
 
-    print("\n✅ PACK GENERADO")
-    print(f"Folder: {out_dir}")
-    print(f"ZIP:    {zip_path}")
-    print("\nSiguiente: envía el ZIP + proforma y pide pago antes de empezar.\n")
+    print("\n✅ PACK GÉNÉRÉ")
+    print(f"Dossier: {out_dir}")
+    print(f"ZIP:     {zip_path}")
+    print("\nProchaine étape: envoyez le ZIP + proforma et demandez le paiement avant de commencer.\n")
 
 
 if __name__ == "__main__":
