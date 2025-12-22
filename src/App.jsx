@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-function App() {
+function Home() {
   const videoRef = useRef(null);
   const [status, setStatus] = useState("INITIALIZING BIOMETRICS...");
 
@@ -46,4 +47,26 @@ function App() {
   );
 }
 
-export default App;
+function AvatarPilot() {
+  return (
+    <div style={{ backgroundColor: 'black', width: '100vw', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px', color: 'white' }}>
+      <div style={{ textAlign: 'center' }}>
+        <h1 style={{ color: '#FFBF00', fontFamily: 'monospace', letterSpacing: '4px', fontSize: '32px', marginBottom: '20px' }}>MY AVATAR</h1>
+        <div style={{ width: '300px', height: '2px', backgroundColor: '#FFBF00', margin: '20px auto', opacity: 0.5 }} />
+        <p style={{ color: 'white', fontFamily: 'sans-serif', fontWeight: 'lighter', fontSize: '16px', letterSpacing: '2px' }}>AVATAR PILOT SYSTEM ACTIVE</p>
+        <p style={{ color: '#FFBF00', fontFamily: 'monospace', fontSize: '12px', marginTop: '40px' }}>TRYONYOU // ABVETOS INTELLIGENCE</p>
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/my-avatar" element={<AvatarPilot />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
