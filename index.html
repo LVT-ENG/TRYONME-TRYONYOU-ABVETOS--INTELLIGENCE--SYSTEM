@@ -1,12 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TRYONYOU – ABVETOS – ULTRA – PLUS – ULTIMATUM</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRYONYOU – Virtual Try-On Intelligence</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    .container {
+      text-align: center;
+      padding: 40px;
+      max-width: 800px;
+    }
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      font-weight: 900;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .tagline {
+      font-size: 1.5rem;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 20px 60px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid white;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+    .cta-button:hover {
+      background: white;
+      color: #667eea;
+      transform: scale(1.05);
+    }
+    .features {
+      margin-top: 60px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .feature {
+      background: rgba(255,255,255,0.1);
+      padding: 20px;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      flex: 1;
+      min-width: 200px;
+      max-width: 250px;
+    }
+    .feature h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+  </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="module" src="/src/main.jsx"></script>
+  <div class="container">
+    <h1>TRYONYOU</h1>
+    <p class="tagline">AI-Powered Virtual Try-On Intelligence System</p>
+    <a href="pilot.html" class="cta-button">Start Pilot</a>
+    
+    <div class="features">
+      <div class="feature">
+        <h3>🎯 Precision Fit</h3>
+        <p>Advanced body measurements using AI</p>
+      </div>
+      <div class="feature">
+        <h3>👔 Virtual Try-On</h3>
+        <p>See clothes on your digital twin</p>
+      </div>
+      <div class="feature">
+        <h3>⚡ Real-Time</h3>
+        <p>Instant results powered by ABVETOS</p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
