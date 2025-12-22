@@ -28,10 +28,11 @@ class TryOnBiometrics:
         # Ejemplo: Altura de hombros para escalado de prendas
         left_shoulder = landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER]
         right_shoulder = landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER]
+        left_ankle = landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE]
         
         metrics = {
             "shoulder_width": np.abs(left_shoulder.x - right_shoulder.x),
-            "is_full_body": landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE].visibility > 0.5
+            "is_full_body": left_ankle.visibility > 0.5
         }
 
         # Dibujar para la demo visual

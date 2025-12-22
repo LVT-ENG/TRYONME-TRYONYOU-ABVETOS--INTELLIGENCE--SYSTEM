@@ -3,6 +3,8 @@ import cv2
 from mediapipe_engine import TryOnBiometrics
 
 # Configuración del servidor ABVETOS
+# SECURITY: Replace these placeholders with your actual credentials
+# Consider using environment variables: os.getenv('ABVETOS_API_URL') and os.getenv('ABVETOS_API_KEY')
 API_URL = "https://tu-api-abvetos.com/v1/intelligence/analyze"
 API_KEY = "tu_secure_client_key"
 
@@ -28,7 +30,12 @@ def run_live_pilot():
             }
             
             # Llamada asíncrona simulada a tu API
-            # response = requests.post(API_URL, json=payload, headers={"X-ABVETOS-AUTH": API_KEY})
+            # Uncomment to enable API integration (add proper error handling):
+            # try:
+            #     response = requests.post(API_URL, json=payload, headers={"X-ABVETOS-AUTH": API_KEY}, timeout=5)
+            #     response.raise_for_status()
+            # except requests.exceptions.RequestException as e:
+            #     print(f"API Error: {e}")
             
             cv2.putText(debug_frame, f"Hombros: {metrics['shoulder_width']:.2f}", (10, 30), 
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
