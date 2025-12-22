@@ -9,6 +9,7 @@ class ProcessingView {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
     this.status = 'INITIALIZING';
+    this.stylesApplied = false;
   }
 
   /**
@@ -19,6 +20,7 @@ class ProcessingView {
       console.error('ProcessingView: Container not found');
       return;
     }
+    this.applyStyles();
     this.render();
   }
 
@@ -37,26 +39,52 @@ class ProcessingView {
   render() {
     if (!this.container) return;
 
-    this.container.innerHTML = `
-      <div class="processing-view">
-        <div class="processing-overlay"></div>
-        <div class="processing-content">
-          <div class="processing-spinner"></div>
-          <p class="processing-status">${this.status}</p>
-          <div class="processing-line"></div>
-          <p class="processing-subtitle">TRY ON ME // PROCESSING</p>
-        </div>
-      </div>
-    `;
+    // Create elements safely to avoid XSS
+    const processingView = document.createElement('div');
+    processingView.className = 'processing-view';
 
-    this.applyStyles();
+    const overlay = document.createElement('div');
+    overlay.className = 'processing-overlay';
+
+    const content = document.createElement('div');
+    content.className = 'processing-content';
+
+    const spinner = document.createElement('div');
+    spinner.className = 'processing-spinner';
+
+    const statusEl = document.createElement('p');
+    statusEl.className = 'processing-status';
+    statusEl.textContent = this.status; // Use textContent to prevent XSS
+
+    const line = document.createElement('div');
+    line.className = 'processing-line';
+
+    const subtitle = document.createElement('p');
+    subtitle.className = 'processing-subtitle';
+    subtitle.textContent = 'TRY ON ME // PROCESSING';
+
+    content.appendChild(spinner);
+    content.appendChild(statusEl);
+    content.appendChild(line);
+    content.appendChild(subtitle);
+
+    processingView.appendChild(overlay);
+    processingView.appendChild(content);
+
+    this.container.innerHTML = '';
+    this.container.appendChild(processingView);
   }
 
   /**
    * Apply styles to the processing view
    */
   applyStyles() {
+    if (this.stylesApplied || document.querySelector('style[data-processing-view]')) {
+      return;
+    }
+
     const style = document.createElement('style');
+    style.setAttribute('data-processing-view', 'true');
     style.textContent = `
       .processing-view {
         position: relative;
@@ -124,10 +152,8 @@ class ProcessingView {
       }
     `;
 
-    if (!document.querySelector('style[data-processing-view]')) {
-      style.setAttribute('data-processing-view', 'true');
-      document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
+    this.stylesApplied = true;
   }
 
   /**
