@@ -10,6 +10,8 @@ from pathlib import Path
 # CONFIGURACIÓN
 # ===============================
 
+# Expected files/directories for repository validation
+# Customize these for your specific project structure
 EXPECTED_FILES = ["package.json", "vite.config.js", "src", "index.html"]
 
 NODE_MIN_VERSION = 18
@@ -20,7 +22,7 @@ NODE_MIN_VERSION = 18
 
 def run(cmd, fatal=True):
     print(f"\n🧠 Ejecutando: {' '.join(cmd)}")
-    result = subprocess.run(cmd, text=True)
+    result = subprocess.run(cmd, text=True, shell=False)
     if result.returncode != 0:
         print(f"❌ Error ejecutando: {' '.join(cmd)}")
         if fatal:
@@ -56,13 +58,23 @@ header("PASO 1 — Validar versión de Node")
 
 try:
     node_version = subprocess.check_output(["node", "-v"], text=True).strip()
-    major = int(node_version.replace("v", "").split(".")[0])
+    # Parse version more robustly
+    version_str = node_version.replace("v", "").strip()
+    try:
+        major = int(version_str.split(".")[0])
+    except (ValueError, IndexError):
+        print(f"❌ No se pudo parsear la versión de Node: {node_version}")
+        sys.exit(1)
+    
     print(f"Node detectado: {node_version}")
     if major < NODE_MIN_VERSION:
-        print("❌ Node demasiado antiguo.")
+        print(f"❌ Node demasiado antiguo. Se requiere Node >={NODE_MIN_VERSION}, tienes {major}.")
         sys.exit(1)
-except Exception:
+except FileNotFoundError:
     print("❌ Node no está instalado.")
+    sys.exit(1)
+except subprocess.CalledProcessError as e:
+    print(f"❌ Error al verificar Node: {e}")
     sys.exit(1)
 
 print("✅ Node OK.")
@@ -119,12 +131,16 @@ print("✅ Dependencias instaladas.")
 header("PASO 4 — Validar script de build")
 
 try:
-    package_json = json.loads((cwd / "package.json").read_text())
+    with open(cwd / "package.json", 'r') as f:
+        package_json = json.load(f)
+    
     build_script = package_json.get("scripts", {}).get("build", "")
     
-    # Check if the build script is exactly "vite build" or contains it as a standalone command
-    if build_script.strip() != "vite build" and "vite build" not in build_script:
+    # Check if the build script is exactly "vite build" or starts with "vite build "
+    # This allows for "vite build --flag" but not "my-vite build"
+    if not (build_script.strip() == "vite build" or build_script.startswith("vite build ")):
         print("⚠️ Script de build incorrecto detectado.")
+        print(f"   Script actual: '{build_script}'")
         print("👉 Debe usar Vite. Corrige package.json manualmente así:")
         print("""
 "scripts": {
@@ -134,7 +150,7 @@ try:
 }
 """)
         sys.exit(1)
-except (json.JSONDecodeError, KeyError) as e:
+except (json.JSONDecodeError, KeyError, IOError) as e:
     print(f"❌ Error al leer package.json: {e}")
     sys.exit(1)
 
