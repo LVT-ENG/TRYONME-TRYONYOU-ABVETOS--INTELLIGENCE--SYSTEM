@@ -7,6 +7,9 @@ def check_ai_gateway_health():
     Validates connectivity with the Paid Gemini API (AI Gateway).
     """
     try:
+        # Configure API key from environment variable
+        genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+        
         start_time = time.time()
         # Initialize model for a quick health check
         model = genai.GenerativeModel('gemini-1.5-flash')
