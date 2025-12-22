@@ -1,0 +1,2 @@
+# ABVETOS Intelligence System - Python Dependencies
+# Core dependencies for logging and monitoring
