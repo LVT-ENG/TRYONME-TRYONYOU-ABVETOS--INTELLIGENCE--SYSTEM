@@ -201,8 +201,10 @@ def generate_auth_token():
 
 # Helper function to mask API key
 def mask_api_key(api_key):
-    if not api_key or len(api_key) < 8:
+    if not api_key:
         return "****"
+    if len(api_key) <= 8:
+        return f"{api_key[:2]}{'*' * (len(api_key) - 2)}"
     return f"{api_key[:4]}{'*' * (len(api_key) - 8)}{api_key[-4:]}"
 
 # Title
@@ -224,7 +226,6 @@ with col1:
             add_console_log("INFO", "Simulation initiated...")
             add_console_log("INFO", "Neural HUD: Rendering with 0.3s fade-in")
             add_console_log("INFO", "Scan line: 4s animation cycle active")
-            time.sleep(0.5)
             add_console_log("SUCCESS", "UI/UX: CSS Injection validated ✓")
             st.rerun()
     
@@ -284,7 +285,10 @@ with col2:
     st.markdown("**🔐 Authorization Token:**")
     if st.session_state.auth_token:
         st.markdown(f"<div class='token-display'>{st.session_state.auth_token}</div>", unsafe_allow_html=True)
-        add_console_log("INFO", f"Token {st.session_state.auth_token} active in session")
+        if 'token_logged' not in st.session_state or st.session_state.get('current_token') != st.session_state.auth_token:
+            add_console_log("INFO", f"Token {st.session_state.auth_token} active in session")
+            st.session_state.token_logged = True
+            st.session_state.current_token = st.session_state.auth_token
     else:
         st.markdown("<div class='token-display' style='color: #666;'>No token generated</div>", unsafe_allow_html=True)
     
