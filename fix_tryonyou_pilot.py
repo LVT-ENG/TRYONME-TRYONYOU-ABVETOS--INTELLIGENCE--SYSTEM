@@ -72,10 +72,11 @@ def create_pilot():
   const handleImageError = (e) => {
     const container = e.target.parentElement;
     // Check if error message already exists
-    if (container.querySelector('p')) return;
+    if (container.querySelector('[data-error-message]')) return;
     
     e.target.style.display = 'none';
     const message = document.createElement('p');
+    message.setAttribute('data-error-message', 'true');
     message.textContent = 'Add pilot-look.jpg to /public/assets/';
     message.style.color = '#666';
     message.style.textAlign = 'center';
