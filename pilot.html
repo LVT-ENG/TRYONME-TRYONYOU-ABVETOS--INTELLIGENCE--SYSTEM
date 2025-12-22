@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRYONYOU – Pilot</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    #app {
+      max-width: 500px;
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+    }
+    /* Tailwind-like utility classes */
+    .text-3xl {
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    .font-bold {
+      font-weight: 700;
+    }
+    .mb-6 {
+      margin-bottom: 1.5rem;
+    }
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+    .px-8 {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    .py-4 {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+    .p-4 {
+      padding: 1rem;
+    }
+    .bg-black {
+      background-color: #000000;
+    }
+    .text-white {
+      color: #ffffff;
+    }
+    .rounded-xl {
+      border-radius: 0.75rem;
+    }
+    .text-lg {
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+    }
+    .font-medium {
+      font-weight: 500;
+    }
+    .text-xl {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+    .font-semibold {
+      font-weight: 600;
+    }
+    .w-full {
+      width: 100%;
+    }
+    .bg-slate-200 {
+      background-color: #e2e8f0;
+    }
+    .rounded-full {
+      border-radius: 9999px;
+    }
+    .h-3 {
+      height: 0.75rem;
+    }
+    .w-0 {
+      width: 0;
+    }
+    .transition-all {
+      transition-property: all;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+    }
+    .text-slate-600 {
+      color: #475569;
+    }
+    .text-2xl {
+      font-size: 1.5rem;
+      line-height: 2rem;
+    }
+    .border {
+      border-width: 1px;
+      border-color: #e5e7eb;
+    }
+    .bg-white {
+      background-color: #ffffff;
+    }
+    .text-sm {
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    .underline {
+      text-decoration: underline;
+    }
+    .text-slate-500 {
+      color: #64748b;
+    }
+    button {
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    const app = document.getElementById("app");
+
+    function screenStart() {
+      app.innerHTML = `
+        <h1 class="text-3xl font-bold mb-6">Real Measure.<br/>Real Fit.</h1>
+
+        <button
+          onclick="screenScan()"
+          class="px-8 py-4 bg-black text-white rounded-xl text-lg font-medium"
+        >
+          Start Pilot
+        </button>
+      `;
+    }
+
+    function screenScan() {
+      app.innerHTML = `
+        <h2 class="text-xl font-semibold mb-4">Scanning body & style…</h2>
+
+        <div class="w-full bg-slate-200 rounded-full h-3 mb-6">
+          <div id="bar" class="bg-black h-3 rounded-full w-0 transition-all"></div>
+        </div>
+
+        <p class="text-slate-600">Analysing posture, measures & preferences</p>
+      `;
+
+      let progress = 0;
+      const bar = document.getElementById("bar");
+
+      const interval = setInterval(() => {
+        progress += 10;
+        bar.style.width = progress + "%";
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(screenResult, 500);
+        }
+      }, 200);
+    }
+
+    function screenResult() {
+      app.innerHTML = `
+        <h2 class="text-2xl font-bold mb-4">Your Fit is Ready</h2>
+
+        <div class="p-4 border rounded-xl mb-6 bg-white">
+          <p><strong>Body Type:</strong> Athletic</p>
+          <p><strong>Recommended Size:</strong> M</p>
+          <p><strong>Best Fit:</strong> Slim / Structured</p>
+        </div>
+
+        <button
+          onclick="screenStart()"
+          class="text-sm underline text-slate-500"
+        >
+          Restart Pilot
+        </button>
+      `;
+    }
+
+    screenStart();
+  </script>
+</body>
+</html>
