@@ -23,6 +23,14 @@ cat > "$ROOT_DIR/index.html" << 'EOF'
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TRYONYOU – Real Measure · Real Fit</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@18.2.0",
+          "react-dom/client": "https://esm.sh/react-dom@18.2.0/client"
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
@@ -100,8 +108,8 @@ export default function MeasureFlow() {
       <h3 className="font-semibold mb-2">Real Measure</h3>
       <ul className="text-sm text-slate-600 list-disc pl-4">
         <li>Bust length</li>
-        <li>Waist &amp; hips</li>
-        <li>Leg &amp; calf width</li>
+        <li>Waist & hips</li>
+        <li>Leg & calf width</li>
       </ul>
     </div>
   );
