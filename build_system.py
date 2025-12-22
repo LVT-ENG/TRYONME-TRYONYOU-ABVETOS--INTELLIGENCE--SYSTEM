@@ -1,6 +1,6 @@
 import os
 
-# --- ARQUITECTURA FINAL TRYONYOU (ONE-SHOT COMPLETE) ---
+# --- FINAL TRYONYOU ARCHITECTURE (ONE-SHOT COMPLETE) ---
 
 # 1. Landing Page (Entry Point)
 INDEX_HTML = """<!DOCTYPE html>
@@ -62,7 +62,7 @@ INDEX_HTML = """<!DOCTYPE html>
 </body>
 </html>"""
 
-# 2. Pilot Runtime (Con Deep Linking e Inteligencia)
+# 2. Pilot Runtime (With Deep Linking and Intelligence)
 PILOT_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -238,10 +238,10 @@ jobs:
         uses: actions/deploy-pages@v4"""
 
 def build():
-    # Asegurar directorios
+    # Ensure directories exist
     os.makedirs(".github/workflows", exist_ok=True)
     
-    # Generar archivos
+    # Generate files
     files = {
         "index.html": INDEX_HTML,
         "pilot.html": PILOT_HTML,
