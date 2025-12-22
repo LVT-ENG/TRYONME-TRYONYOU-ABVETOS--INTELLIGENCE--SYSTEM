@@ -1,2 +1,10 @@
 node_modules/
 dist/
+OUT_TRYONYOU_PILOTE_PACK/
+TRYONYOU_PILOTE_PACK_*.zip
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
