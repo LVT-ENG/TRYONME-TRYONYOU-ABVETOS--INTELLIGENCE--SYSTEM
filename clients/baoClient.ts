@@ -120,11 +120,11 @@ export async function computeIdentityDistance(
 
     return distance;
   } catch (error) {
-    // Re-throw with more context if it's already an Error
+    // Preserve error context and stack trace
     if (error instanceof Error) {
-      throw new Error(
-        `Failed to compute identity distance: ${error.message}`
-      );
+      // Add context to the error message but preserve the original error
+      error.message = `Failed to compute identity distance: ${error.message}`;
+      throw error;
     }
     // Handle unexpected error types
     throw new Error(

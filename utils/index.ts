@@ -27,19 +27,17 @@ export function cosineDistance(vectorA: number[], vectorB: number[]): number {
     );
   }
 
-  // Calculate dot product
+  // Calculate dot product and magnitudes in a single loop for efficiency
   let dotProduct = 0;
-  for (let i = 0; i < vectorA.length; i++) {
-    dotProduct += vectorA[i] * vectorB[i];
-  }
-
-  // Calculate magnitudes
   let magnitudeA = 0;
   let magnitudeB = 0;
+  
   for (let i = 0; i < vectorA.length; i++) {
+    dotProduct += vectorA[i] * vectorB[i];
     magnitudeA += vectorA[i] * vectorA[i];
     magnitudeB += vectorB[i] * vectorB[i];
   }
+  
   magnitudeA = Math.sqrt(magnitudeA);
   magnitudeB = Math.sqrt(magnitudeB);
 
