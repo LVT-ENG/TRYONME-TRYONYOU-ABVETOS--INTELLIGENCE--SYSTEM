@@ -1,6 +1,7 @@
 import logging
 import time
 from datetime import datetime
+from functools import wraps
 
 # Configure professional logging format
 logging.basicConfig(
@@ -14,12 +15,13 @@ def log_ai_transaction(user_id, operation, tokens_used=0):
     Records an AI transaction for billing and auditing.
     """
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    log_entry = f"User: {user_id} | Op: {operation} | Status: SUCCESS"
+    log_entry = f"User: {user_id} | Op: {operation} | Tokens: {tokens_used} | Status: SUCCESS"
     logging.info(log_entry)
     print(f"[{timestamp}] Logged transaction for {user_id}")
 
 # Middleware-style wrapper for FastAPI
 def monitor_performance(func):
+    @wraps(func)
     async def wrapper(*args, **kwargs):
         start_time = time.time()
         result = await func(*args, **kwargs)
