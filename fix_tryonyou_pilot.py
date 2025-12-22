@@ -70,13 +70,17 @@ def create_pilot():
     pilot.write_text(
         """export default function Pilot() {
   const handleImageError = (e) => {
+    const container = e.target.parentElement;
+    // Check if error message already exists
+    if (container.querySelector('p')) return;
+    
     e.target.style.display = 'none';
     const message = document.createElement('p');
     message.textContent = 'Add pilot-look.jpg to /public/assets/';
     message.style.color = '#666';
     message.style.textAlign = 'center';
     message.style.padding = '2rem';
-    e.target.parentElement.appendChild(message);
+    container.appendChild(message);
   };
 
   return (
