@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -82,9 +83,16 @@ paths_to_remove = [
 ]
 
 for p in paths_to_remove:
-    if (cwd / p).exists():
+    path = cwd / p
+    if path.exists():
         print(f"🧹 Eliminando {p}")
-        run(["rm", "-rf", p], fatal=False)
+        try:
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
+        except Exception as e:
+            print(f"⚠️ No se pudo eliminar {p}: {e}")
 
 run(["npm", "cache", "verify"], fatal=False)
 
@@ -114,7 +122,8 @@ try:
     package_json = json.loads((cwd / "package.json").read_text())
     build_script = package_json.get("scripts", {}).get("build", "")
     
-    if "vite build" not in build_script:
+    # Check if the build script is exactly "vite build" or contains it as a standalone command
+    if build_script.strip() != "vite build" and "vite build" not in build_script:
         print("⚠️ Script de build incorrecto detectado.")
         print("👉 Debe usar Vite. Corrige package.json manualmente así:")
         print("""
