@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import json
 import os
 import subprocess
 import sys
@@ -8,7 +9,6 @@ from pathlib import Path
 # CONFIGURACIÓN
 # ===============================
 
-REPO_NAME = "TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM"
 EXPECTED_FILES = ["package.json", "vite.config.js", "src", "index.html"]
 
 NODE_MIN_VERSION = 18
@@ -110,18 +110,23 @@ print("✅ Dependencias instaladas.")
 
 header("PASO 4 — Validar script de build")
 
-package_json = (cwd / "package.json").read_text()
-
-if "vite build" not in package_json:
-    print("⚠️ Script de build incorrecto detectado.")
-    print("👉 Debe usar Vite. Corrige package.json manualmente así:")
-    print("""
+try:
+    package_json = json.loads((cwd / "package.json").read_text())
+    build_script = package_json.get("scripts", {}).get("build", "")
+    
+    if "vite build" not in build_script:
+        print("⚠️ Script de build incorrecto detectado.")
+        print("👉 Debe usar Vite. Corrige package.json manualmente así:")
+        print("""
 "scripts": {
   "dev": "vite",
   "build": "vite build",
   "preview": "vite preview"
 }
 """)
+        sys.exit(1)
+except (json.JSONDecodeError, KeyError) as e:
+    print(f"❌ Error al leer package.json: {e}")
     sys.exit(1)
 
 print("✅ Script de build correcto.")
