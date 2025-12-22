@@ -71,7 +71,10 @@ class ProcessingView {
     processingView.appendChild(overlay);
     processingView.appendChild(content);
 
-    this.container.innerHTML = '';
+    // Clear container safely
+    while (this.container.firstChild) {
+      this.container.removeChild(this.container.firstChild);
+    }
     this.container.appendChild(processingView);
   }
 
@@ -179,7 +182,9 @@ class ProcessingView {
    */
   destroy() {
     if (this.container) {
-      this.container.innerHTML = '';
+      while (this.container.firstChild) {
+        this.container.removeChild(this.container.firstChild);
+      }
     }
   }
 }
