@@ -1,12 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>TRYONYOU – ABVETOS – ULTRA – PLUS – ULTIMATUM</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRYONYOU – Virtual Fitting System</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .landing-container {
+      max-width: 800px;
+      text-align: center;
+      animation: fadeIn 0.8s ease-in;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .logo {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .tagline {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      opacity: 0.95;
+    }
+    .description {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .feature {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .feature-desc {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+    .cta-button {
+      display: inline-block;
+      padding: 1.2rem 3rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #667eea;
+      background: #fff;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+    .cta-button:active {
+      transform: translateY(-1px);
+    }
+    .footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+  </style>
 </head>
 <body>
-<div id="root"></div>
-<script type="module" src="/src/main.jsx"></script>
+  <div class="landing-container">
+    <div class="logo">TRYONYOU</div>
+    <div class="tagline">ABVETOS – ULTRA – PLUS – ULTIMATUM</div>
+    
+    <p class="description">
+      Experience the future of virtual fitting. Ultra-precise measurements, 
+      AI-powered style recommendations, and biometric payment in one seamless platform.
+    </p>
+    
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">👕</div>
+        <div class="feature-title">Virtual Try-On</div>
+        <div class="feature-desc">Millimetric precision fitting</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🤖</div>
+        <div class="feature-title">AI Assistant</div>
+        <div class="feature-desc">Emotional style recommendations</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">👁️</div>
+        <div class="feature-title">Biometric Pay</div>
+        <div class="feature-desc">Iris + Voice authentication</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">Smart Wardrobe</div>
+        <div class="feature-desc">Intelligent garment management</div>
+      </div>
+    </div>
+    
+    <a href="/pilot.html" class="cta-button">Start Pilot</a>
+    
+    <div class="footer">
+      TRYONYOU © 2025 - Advanced Virtual Fitting System
+    </div>
+  </div>
 </body>
 </html>

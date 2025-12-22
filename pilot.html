@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pilot Running – TRYONYOU</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0e27;
+      color: #00ff00;
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .pilot-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 2px solid #00ff00;
+      margin-bottom: 2rem;
+    }
+    .title {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .status-badge {
+      padding: 0.5rem 1rem;
+      background: rgba(0, 255, 0, 0.2);
+      border: 1px solid #00ff00;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .terminal {
+      background: #000;
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      min-height: 300px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    .terminal-line {
+      margin-bottom: 0.5rem;
+      opacity: 0;
+      animation: fadeInLine 0.3s forwards;
+    }
+    @keyframes fadeInLine {
+      to { opacity: 1; }
+    }
+    .terminal-line.success { color: #00ff00; }
+    .terminal-line.info { color: #00ccff; }
+    .terminal-line.warning { color: #ffaa00; }
+    .terminal-line.error { color: #ff0000; }
+    .terminal-prompt::before {
+      content: '> ';
+      color: #00ff00;
+    }
+    .progress-section {
+      margin-bottom: 2rem;
+    }
+    .progress-title {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: #00ccff;
+    }
+    .progress-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .progress-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .progress-label {
+      min-width: 150px;
+      font-size: 0.9rem;
+    }
+    .progress-bar-container {
+      flex: 1;
+      height: 20px;
+      background: rgba(0, 255, 0, 0.1);
+      border: 1px solid #00ff00;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #00ff00, #00cc00);
+      width: 0%;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px #00ff00;
+    }
+    .progress-percentage {
+      min-width: 50px;
+      text-align: right;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .metric-card {
+      background: rgba(0, 255, 0, 0.05);
+      border: 1px solid #00ff00;
+      border-radius: 8px;
+      padding: 1rem;
+    }
+    .metric-label {
+      font-size: 0.8rem;
+      opacity: 0.7;
+      margin-bottom: 0.5rem;
+    }
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #00ccff;
+    }
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .btn {
+      padding: 0.8rem 2rem;
+      border: 2px solid #00ff00;
+      background: transparent;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: rgba(0, 255, 0, 0.2);
+      box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
+    }
+    .btn-secondary {
+      border-color: #00ccff;
+      color: #00ccff;
+    }
+    .btn-secondary:hover {
+      background: rgba(0, 204, 255, 0.2);
+      box-shadow: 0 0 15px rgba(0, 204, 255, 0.5);
+    }
+    .completion-message {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      background: rgba(0, 255, 0, 0.1);
+      border: 2px solid #00ff00;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      animation: fadeIn 0.5s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .completion-message.show {
+      display: block;
+    }
+    .completion-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .completion-text {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="pilot-container">
+    <div class="header">
+      <div class="title">🚀 TRYONYOU PILOT MODE</div>
+      <div class="status-badge" id="statusBadge">RUNNING</div>
+    </div>
+
+    <div class="completion-message" id="completionMessage">
+      <div class="completion-icon">✅</div>
+      <div class="completion-text">Pilot Completed Successfully</div>
+      <p>All systems operational. Virtual fitting engine ready.</p>
+    </div>
+
+    <div class="terminal" id="terminal">
+      <div class="terminal-line success terminal-prompt">Initializing TRYONYOU Pilot System v1.0...</div>
+    </div>
+
+    <div class="progress-section">
+      <div class="progress-title">System Progress</div>
+      <div class="progress-bars">
+        <div class="progress-item">
+          <div class="progress-label">Initialization</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progressInit"></div>
+          </div>
+          <div class="progress-percentage" id="percentInit">0%</div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label">Measuring Engine</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progressMeasure"></div>
+          </div>
+          <div class="progress-percentage" id="percentMeasure">0%</div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label">AI Matching</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progressMatch"></div>
+          </div>
+          <div class="progress-percentage" id="percentMatch">0%</div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label">System Validation</div>
+          <div class="progress-bar-container">
+            <div class="progress-bar" id="progressValidate"></div>
+          </div>
+          <div class="progress-percentage" id="percentValidate">0%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">UPTIME</div>
+        <div class="metric-value" id="uptime">0s</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">MODULES LOADED</div>
+        <div class="metric-value" id="modules">0/12</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">ACCURACY</div>
+        <div class="metric-value" id="accuracy">0%</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">STATUS</div>
+        <div class="metric-value" id="systemStatus">STARTING</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-secondary" onclick="window.location.href='/'">← Back to Landing</button>
+      <button class="btn" id="restartBtn" onclick="restartPilot()" style="display:none;">Restart Pilot</button>
+    </div>
+  </div>
+
+  <script>
+    // Pilot runtime simulation
+    let startTime = Date.now();
+    let terminalLines = [];
+    let currentPhase = 0;
+    let isCompleted = false;
+
+    const phases = [
+      {
+        name: 'initialization',
+        duration: 3000,
+        logs: [
+          { text: 'Loading core modules...', type: 'info', delay: 200 },
+          { text: 'Connecting to ABVETOS intelligence layer...', type: 'info', delay: 600 },
+          { text: 'Initializing biometric authentication system...', type: 'info', delay: 1000 },
+          { text: 'Virtual fitting engine loaded', type: 'success', delay: 1400 },
+          { text: 'Smart Wardrobe API connected', type: 'success', delay: 1800 },
+          { text: 'Initialization complete ✓', type: 'success', delay: 2400 }
+        ],
+        progressBar: 'progressInit',
+        percentLabel: 'percentInit'
+      },
+      {
+        name: 'measuring',
+        duration: 4000,
+        logs: [
+          { text: 'Starting measurement calibration...', type: 'info', delay: 200 },
+          { text: 'Scanning body reference points...', type: 'info', delay: 800 },
+          { text: 'Calculating millimetric precision coordinates...', type: 'info', delay: 1600 },
+          { text: 'Processing 3D avatar mesh...', type: 'info', delay: 2400 },
+          { text: 'Measurement engine calibrated ✓', type: 'success', delay: 3200 }
+        ],
+        progressBar: 'progressMeasure',
+        percentLabel: 'percentMeasure'
+      },
+      {
+        name: 'matching',
+        duration: 3500,
+        logs: [
+          { text: 'Activating AI recommendation engine...', type: 'info', delay: 200 },
+          { text: 'Loading Pau emotional intelligence model...', type: 'info', delay: 700 },
+          { text: 'Analyzing style preferences...', type: 'info', delay: 1400 },
+          { text: 'Matching garments to body profile...', type: 'info', delay: 2100 },
+          { text: 'AI matching complete ✓', type: 'success', delay: 2800 }
+        ],
+        progressBar: 'progressMatch',
+        percentLabel: 'percentMatch'
+      },
+      {
+        name: 'validation',
+        duration: 2500,
+        logs: [
+          { text: 'Running system validation checks...', type: 'info', delay: 200 },
+          { text: 'Verifying security protocols...', type: 'info', delay: 700 },
+          { text: 'Testing biometric payment flow...', type: 'info', delay: 1200 },
+          { text: 'All systems operational ✓', type: 'success', delay: 1700 },
+          { text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'success', delay: 2000 },
+          { text: 'PILOT COMPLETED SUCCESSFULLY', type: 'success', delay: 2200 }
+        ],
+        progressBar: 'progressValidate',
+        percentLabel: 'percentValidate'
+      }
+    ];
+
+    function addTerminalLine(text, type = 'info') {
+      const terminal = document.getElementById('terminal');
+      const line = document.createElement('div');
+      line.className = `terminal-line ${type} terminal-prompt`;
+      line.textContent = text;
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function updateProgress(barId, percentId, percent) {
+      document.getElementById(barId).style.width = percent + '%';
+      document.getElementById(percentId).textContent = percent + '%';
+    }
+
+    function updateMetrics() {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      document.getElementById('uptime').textContent = elapsed + 's';
+    }
+
+    function runPhase(phaseIndex) {
+      if (phaseIndex >= phases.length) {
+        completePilot();
+        return;
+      }
+
+      const phase = phases[phaseIndex];
+      const startPhaseTime = Date.now();
+
+      // Update system status
+      const statusNames = ['INITIALIZING', 'MEASURING', 'MATCHING', 'VALIDATING'];
+      document.getElementById('systemStatus').textContent = statusNames[phaseIndex];
+
+      // Schedule logs
+      phase.logs.forEach(log => {
+        setTimeout(() => {
+          addTerminalLine(log.text, log.type);
+        }, log.delay);
+      });
+
+      // Animate progress bar
+      const progressInterval = setInterval(() => {
+        const elapsed = Date.now() - startPhaseTime;
+        const percent = Math.min(100, Math.floor((elapsed / phase.duration) * 100));
+        updateProgress(phase.progressBar, phase.percentLabel, percent);
+
+        if (percent >= 100) {
+          clearInterval(progressInterval);
+        }
+      }, 50);
+
+      // Update modules loaded
+      setTimeout(() => {
+        const modulesLoaded = (phaseIndex + 1) * 3;
+        document.getElementById('modules').textContent = modulesLoaded + '/12';
+        document.getElementById('accuracy').textContent = (70 + phaseIndex * 7) + '%';
+      }, phase.duration / 2);
+
+      // Move to next phase
+      setTimeout(() => {
+        runPhase(phaseIndex + 1);
+      }, phase.duration);
+    }
+
+    function completePilot() {
+      isCompleted = true;
+      document.getElementById('statusBadge').textContent = 'COMPLETED';
+      document.getElementById('statusBadge').style.background = 'rgba(0, 255, 0, 0.3)';
+      document.getElementById('statusBadge').style.animation = 'none';
+      document.getElementById('systemStatus').textContent = 'OPERATIONAL';
+      document.getElementById('accuracy').textContent = '98%';
+      document.getElementById('modules').textContent = '12/12';
+      document.getElementById('completionMessage').classList.add('show');
+      document.getElementById('restartBtn').style.display = 'inline-block';
+    }
+
+    function restartPilot() {
+      window.location.reload();
+    }
+
+    // Update metrics every second
+    setInterval(updateMetrics, 1000);
+
+    // Start pilot sequence
+    setTimeout(() => {
+      runPhase(0);
+    }, 500);
+  </script>
+</body>
+</html>
