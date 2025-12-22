@@ -33,6 +33,20 @@ const BEAUTY_CONFIG = {
 };
 
 /**
+ * Constants for the scoring algorithm
+ */
+const SCORING_CONSTANTS = {
+  /** Sampling interval for buffer checksum calculation */
+  BUFFER_SAMPLE_INTERVAL: 100,
+  /** Maximum byte value for normalization */
+  BYTE_MAX_VALUE: 256,
+  /** Base score offset to bias toward passing range */
+  BASE_SCORE_OFFSET: 40,
+  /** Score scaling factor */
+  SCORE_SCALE_FACTOR: 0.6,
+};
+
+/**
  * Custom error class for beauty analysis failures
  */
 export class BeautyAnalysisError extends Error {
@@ -113,20 +127,20 @@ export async function analyzeBeauty(avatarImage: Buffer): Promise<BeautyAnalysis
     // This ensures consistent results for testing while simulating variability
     const bufferChecksum = avatarImage.reduce((sum, byte, index) => {
       // Use a subset of bytes to avoid processing very large images
-      if (index % 100 === 0) {
-        return (sum + byte) % 256;
+      if (index % SCORING_CONSTANTS.BUFFER_SAMPLE_INTERVAL === 0) {
+        return (sum + byte) % SCORING_CONSTANTS.BYTE_MAX_VALUE;
       }
       return sum;
     }, 0);
     
     // Normalize checksum to 0-100 range with bias toward passing
     // Real service would use ML models for actual beauty scoring
-    const rawScore = (bufferChecksum / 256) * 100;
+    const rawScore = (bufferChecksum / SCORING_CONSTANTS.BYTE_MAX_VALUE) * BEAUTY_CONFIG.MAX_SCORE;
     const biasedScore = Math.min(
       BEAUTY_CONFIG.MAX_SCORE,
       Math.max(
         BEAUTY_CONFIG.MIN_SCORE,
-        Math.round(40 + rawScore * 0.6) // Bias toward 40-100 range
+        Math.round(SCORING_CONSTANTS.BASE_SCORE_OFFSET + rawScore * SCORING_CONSTANTS.SCORE_SCALE_FACTOR)
       )
     );
     
