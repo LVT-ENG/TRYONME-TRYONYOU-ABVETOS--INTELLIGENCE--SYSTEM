@@ -20,6 +20,16 @@ This module provides real-time biometric analysis using MediaPipe for the TRYONY
 pip install -r requirements.txt
 ```
 
+### Verify Installation
+
+Run the test script to verify the biometric engine is working:
+
+```bash
+python test_biometric_engine.py
+```
+
+This will validate the core functionality without requiring a webcam.
+
 ## Usage
 
 ### Basic Integration
