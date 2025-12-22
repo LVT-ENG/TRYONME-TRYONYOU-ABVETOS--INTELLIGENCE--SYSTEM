@@ -261,7 +261,7 @@
     </div>
 
     <div class="actions">
-      <button class="btn btn-secondary" onclick="window.location.href='/'">← Back to Landing</button>
+      <button class="btn btn-secondary" onclick="window.location.href='index.html'">← Back to Landing</button>
       <button class="btn" id="restartBtn" onclick="restartPilot()" style="display:none;">Restart Pilot</button>
     </div>
   </div>
@@ -269,8 +269,6 @@
   <script>
     // Pilot runtime simulation
     let startTime = Date.now();
-    let terminalLines = [];
-    let currentPhase = 0;
     let isCompleted = false;
 
     const phases = [
