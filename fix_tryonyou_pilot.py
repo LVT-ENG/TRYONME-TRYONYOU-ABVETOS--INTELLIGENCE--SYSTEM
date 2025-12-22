@@ -69,6 +69,16 @@ def create_pilot():
     pilot = PAGES_DIR / "Pilot.jsx"
     pilot.write_text(
         """export default function Pilot() {
+  const handleImageError = (e) => {
+    e.target.style.display = 'none';
+    const message = document.createElement('p');
+    message.textContent = 'Add pilot-look.jpg to /public/assets/';
+    message.style.color = '#666';
+    message.style.textAlign = 'center';
+    message.style.padding = '2rem';
+    e.target.parentElement.appendChild(message);
+  };
+
   return (
     <div style={{ 
       display: 'flex', 
@@ -102,10 +112,7 @@ def create_pilot():
             borderRadius: '12px',
             display: 'block'
           }}
-          onError={(e) => {
-            e.target.style.display = 'none';
-            e.target.parentElement.innerHTML = '<p style="color: #666; text-align: center; padding: 2rem;">Add pilot-look.jpg to /public/assets/</p>';
-          }}
+          onError={handleImageError}
         />
       </div>
     </div>
@@ -117,7 +124,6 @@ def create_pilot():
 def prepare_assets():
     print("🖼 Preparing assets folder...")
     ASSETS_DIR.mkdir(parents=True, exist_ok=True)
-    placeholder = ASSETS_DIR / "pilot-look.jpg"
     readme = ASSETS_DIR / "README.txt"
     if not readme.exists():
         readme.write_text("PLACEHOLDER IMAGE — REPLACE pilot-look.jpg WITH REAL LOOK")

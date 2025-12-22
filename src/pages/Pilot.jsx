@@ -1,4 +1,14 @@
 export default function Pilot() {
+  const handleImageError = (e) => {
+    e.target.style.display = 'none';
+    const message = document.createElement('p');
+    message.textContent = 'Add pilot-look.jpg to /public/assets/';
+    message.style.color = '#666';
+    message.style.textAlign = 'center';
+    message.style.padding = '2rem';
+    e.target.parentElement.appendChild(message);
+  };
+
   return (
     <div style={{ 
       display: 'flex', 
@@ -32,10 +42,7 @@ export default function Pilot() {
             borderRadius: '12px',
             display: 'block'
           }}
-          onError={(e) => {
-            e.target.style.display = 'none';
-            e.target.parentElement.innerHTML = '<p style="color: #666; text-align: center; padding: 2rem;">Add pilot-look.jpg to /public/assets/</p>';
-          }}
+          onError={handleImageError}
         />
       </div>
     </div>
