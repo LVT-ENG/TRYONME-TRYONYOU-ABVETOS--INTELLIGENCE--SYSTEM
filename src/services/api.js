@@ -13,25 +13,54 @@ class AbvetosAPI {
   }
 
   async request(endpoint, options = {}) {
+    // Check cache for GET requests
+    const isGet = !options.method || options.method === 'GET';
+    if (isGet) {
+      const cached = this.cache.get(endpoint);
+      if (cached && (Date.now() - cached.timestamp < this.cacheTimeout)) {
+        console.log(`⚡ CACHE HIT: ${endpoint}`);
+        return cached.data;
+      }
+    }
+
     // If mock mode is on, bypass fetch and return mock data
     if (this.mockMode) {
       console.log(`🎭 MOCK API Request: ${endpoint}`);
       await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network latency
-      return this.getMockData(endpoint, options);
+      const data = this.getMockData(endpoint, options);
+
+      if (isGet) {
+        this.cache.set(endpoint, {
+          timestamp: Date.now(),
+          data: data
+        });
+      }
+
+      return data;
     }
 
     // ... existing real fetch logic ...
     try {
         const response = await fetch(`${this.baseURL}${endpoint}`, options);
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        return await response.json();
+        const data = await response.json();
+
+        if (isGet) {
+          this.cache.set(endpoint, {
+            timestamp: Date.now(),
+            data: data
+          });
+        }
+
+        return data;
     } catch (error) {
         console.warn("API Request failed, falling back to mock data", error);
         return this.getMockData(endpoint, options);
     }
   }
 
-  getMockData(endpoint, options) {
+  // eslint-disable-next-line no-unused-vars
+  getMockData(endpoint, _options) {
     if (endpoint.includes('/biometric_scan')) {
       return {
         user_id: `user_${Math.random().toString(36).substr(2, 9)}`,
