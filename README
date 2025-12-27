@@ -40,3 +40,14 @@ Payment flow with biometric verification (voice / iris – mock implementation).
 🏗️ System Architecture
 
 This repository represents the frontend core and orchestration layer of the TRYONYOU–ABVETOS system
+
+⸻
+
+🚀 Roadmap & Google Integrations
+
+We are actively integrating the latest Google Platform technologies to enhance the Intelligence System:
+- **Veo 3.1**: For dynamic avatar video generation.
+- **Gemini 3 Pro/Flash**: Powering the CLI and backend reasoning engines.
+- **Google Antigravity**: For next-gen agentic orchestration.
+
+See [Google Platform News & Roadmap](docs/GOOGLE_PLATFORM_NEWS.md) for details.
