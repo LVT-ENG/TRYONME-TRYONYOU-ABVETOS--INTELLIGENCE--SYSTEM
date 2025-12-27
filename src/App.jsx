@@ -6,6 +6,7 @@ import ScannerView from './components/ScannerView';
 import ResultsView from './components/ResultsView';
 import CatalogView from './components/CatalogView';
 import Dashboard from './dashboard/Dashboard';
+import { SmartWardrobe } from './modules/Wardrobe/SmartWardrobe';
 import { useCamera } from './hooks/useCamera';
 import { useBiometrics } from './hooks/useBiometrics';
 
@@ -99,6 +100,13 @@ export default function App() {
 
       <main className={view !== 'landing' && view !== 'dashboard' ? "pt-24" : ""}>
         {renderContent()}
+        
+        {/* CRITICAL FIX: Explicit rendering of Wardrobe Module [Source 5005] */}
+        {view !== 'landing' && view !== 'scanner' && (
+          <div className="module-layer fixed bottom-8 right-8 z-40 max-w-md">
+            <SmartWardrobe visible={true} mode="production" userId="current-user" /> 
+          </div>
+        )}
       </main>
     </div>
   );

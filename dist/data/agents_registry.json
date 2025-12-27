@@ -1,0 +1,35 @@
+{
+  "2": {
+    "id": 2,
+    "name": "Content Pro",
+    "role": "Deployment & Production",
+    "specialization": "Release Management",
+    "status": "ACTIVE",
+    "lastActive": "2025-12-27T10:35:07.045Z",
+    "activatedBy": "Agente 70 Orchestrator",
+    "version": "2.1.0",
+    "patent": "PCT/EP2025/067317"
+  },
+  "25": {
+    "id": 25,
+    "name": "Image Curator",
+    "role": "Business & Strategy",
+    "specialization": "Visual Assets",
+    "status": "ACTIVE",
+    "lastActive": "2025-12-27T10:35:07.045Z",
+    "activatedBy": "Agente 70 Orchestrator",
+    "version": "2.1.0",
+    "patent": "PCT/EP2025/067317"
+  },
+  "31": {
+    "id": 31,
+    "name": "Video Curator",
+    "role": "Video & Visual",
+    "specialization": "Content Creation",
+    "status": "ACTIVE",
+    "lastActive": "2025-12-27T10:35:07.045Z",
+    "activatedBy": "Agente 70 Orchestrator",
+    "version": "2.1.0",
+    "patent": "PCT/EP2025/067317"
+  }
+}
