@@ -26,7 +26,7 @@ export class SystemMonitor {
         return ((entries[0].domContentLoadedEventEnd / entries[0].loadEventEnd) * 100).toFixed(2);
       }
     }
-    return (Math.random() * 40 + 10).toFixed(2); // Simulated: 10-50%
+    return '0.00';
   }
 
   /**
@@ -38,7 +38,7 @@ export class SystemMonitor {
       const total = window.performance.memory.jsHeapSizeLimit;
       return ((used / total) * 100).toFixed(2);
     }
-    return (Math.random() * 30 + 40).toFixed(2); // Simulated: 40-70%
+    return '0.00';
   }
 
   /**
