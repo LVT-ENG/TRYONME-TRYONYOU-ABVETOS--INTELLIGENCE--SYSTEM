@@ -19,22 +19,22 @@ const Landing = ({ startCamera }) => {
         <div className="flex justify-center items-center gap-3">
           <Sparkles className="text-abvetos-gold" size={32} />
           <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
-            El Espejo Inteligente
+            The Intelligent Mirror
           </h1>
         </div>
 
         <p className="text-abvetos-bone/80 max-w-3xl mx-auto text-xl italic">
-          Visualiza, prueba y compra ropa sin cambiarte. Nuestra IA analiza tu biometría y estilo para crear el look perfecto, reflejado instantáneamente en el espejo.
+          Visualize, try on, and buy clothes without changing. Our AI analyzes your biometrics and style to create the perfect look, instantly reflected in the mirror.
         </p>
 
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           <div className="bg-black/30 p-4 rounded-3xl border border-abvetos-gold/10">
-            <img src="/images/mirror-before.jpg" alt="Persona frente al espejo con ropa normal" className="rounded-xl aspect-[3/4] object-cover"/>
-            <p className="mt-3 text-sm font-bold uppercase tracking-wider text-abvetos-steel">Antes: Tu Ropa Actual</p>
+            <img src="/images/mirror-before.jpg" alt="Person in front of mirror with regular clothes" className="rounded-xl aspect-[3/4] object-cover"/>
+            <p className="mt-3 text-sm font-bold uppercase tracking-wider text-abvetos-steel">Before: Your Current Outfit</p>
           </div>
           <div className="bg-black/30 p-4 rounded-3xl border-2 border-abvetos-gold/50 shadow-[0_0_30px_rgba(211,178,106,0.2)]">
-            <img src="/images/mirror-after.jpg" alt="Reflejo en el espejo con un atuendo sugerido por IA" className="rounded-xl aspect-[3/4] object-cover"/>
-            <p className="mt-3 text-sm font-bold uppercase tracking-wider text-abvetos-gold">Después: Tu Look Ideal</p>
+            <img src="/images/mirror-after.jpg" alt="Mirror reflection with AI-suggested outfit" className="rounded-xl aspect-[3/4] object-cover"/>
+            <p className="mt-3 text-sm font-bold uppercase tracking-wider text-abvetos-gold">After: Your Ideal Look</p>
           </div>
         </div>
 
@@ -44,7 +44,7 @@ const Landing = ({ startCamera }) => {
           className="bg-abvetos-gold text-black px-12 py-6 rounded-full font-black text-2xl hover:scale-105 transition-transform shadow-[0_0_40px_rgba(211,178,106,0.4)] flex items-center gap-4 mx-auto hover:bg-yellow-300"
         >
           <Camera size={28} />
-          INICIAR EXPERIENCIA
+          START EXPERIENCE
         </Button>
 
         {/* Patent Reference */}
