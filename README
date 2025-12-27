@@ -1,0 +1,42 @@
+https://TRYONME · TRYONYOU · ABVETOS
+
+Intelligence System for Digital Fashion & Perfect Fit
+
+The end of clothes that don’t fit.
+TRYONYOU is a fashion intelligence system combining AI, digital avatars, smart wardrobes, and biometric payments to transform how people choose, try, and buy clothing.
+
+⸻
+
+🌍 Vision
+
+The fashion industry loses billions every year due to:
+	•	Product returns
+	•	Poor purchasing experiences
+	•	Clothes that are never worn
+
+TRYONYOU exists to eliminate this problem at its root.
+
+Our mission is simple:
+👉 People should only buy clothes that truly fit them, at the right moment, for the right context, without friction.
+
+⸻
+
+🧠 What is TRYONYOU?
+
+TRYONYOU is a modular fashion intelligence platform that integrates:
+	•	🧍 3D Digital Avatar
+A body-accurate digital representation for realistic virtual try-ons.
+	•	👗 Wardrobe Intelligence
+A smart digital wardrobe that understands what you own, what you wear, and what suits you best.
+	•	📊 PAU – Personal Analytics Unit
+Continuous learning of personal style, habits, and preferences.
+	•	🧠 Contextual AI Recommendations
+Not just size — occasion, weather, mood, and style.
+	•	💳 ABVETOS – Biometric Payments (demo)
+Payment flow with biometric verification (voice / iris – mock implementation).
+
+⸻
+
+🏗️ System Architecture
+
+This repository represents the frontend core and orchestration layer of the TRYONYOU–ABVETOS system
