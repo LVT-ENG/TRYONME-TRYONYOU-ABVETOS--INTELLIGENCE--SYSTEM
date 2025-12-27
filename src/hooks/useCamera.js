@@ -1,3 +1,14 @@
+/**
+ * TRYONYOU Camera Management Hook
+ * Patent: PCT/EP2025/067317
+ * 
+ * Handles camera permissions, stream lifecycle, and device selection
+ * for biometric capture and AR try-on experiences.
+ * 
+ * @module hooks/useCamera
+ * @copyright 2025 TRYONYOU - ABVETOS Intelligence System
+ */
+
 import { useState, useRef, useEffect } from 'react';
 
 /**

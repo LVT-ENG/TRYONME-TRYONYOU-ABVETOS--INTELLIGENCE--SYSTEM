@@ -1,7 +1,21 @@
 /**
  * CAP (Creative Auto-Production)
- * Generación de patrones JIT (Just-in-Time)
  * Patent: PCT/EP2025/067317
+ * 
+ * Just-in-Time industrial pattern generation engine.
+ * Automatically creates custom garment patterns when perfect fit
+ * is not found in existing inventory, enabling zero-waste production.
+ * 
+ * Key Features:
+ * - Automatic pattern grading from biometric data
+ * - Industrial file generation (DXF, PLT, HPGL)
+ * - Fabric optimization algorithms
+ * - Production time estimation
+ * - Direct CNC integration
+ * 
+ * @module modules/CAP
+ * @copyright 2025 TRYONYOU - ABVETOS Intelligence System
+ * @version 2.1.0
  */
 
 class CAPModule {

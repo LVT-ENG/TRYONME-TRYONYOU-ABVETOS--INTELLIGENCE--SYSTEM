@@ -1,3 +1,15 @@
+/**
+ * TRYONYOU Biometric Processing Hook
+ * Patent: PCT/EP2025/067317
+ * 
+ * Core biometric extraction and digital twin management.
+ * Implements ABVET (Advanced Biometric Verification & Emotional Tracking)
+ * technology for precise body measurements and emotional state analysis.
+ * 
+ * @module hooks/useBiometrics
+ * @copyright 2025 TRYONYOU - ABVETOS Intelligence System
+ */
+
 import { useState, useCallback } from 'react';
 import api from '../services/api';
 

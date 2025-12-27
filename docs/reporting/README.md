@@ -73,6 +73,7 @@ Required environment variables:
 **For CI/CD (GitHub Actions):**
 
 Set these as repository secrets in GitHub:
+
 1. Go to: `Settings` → `Secrets and variables` → `Actions`
 2. Add `VERCEL_TOKEN` as a secret
 3. The workflow will use it automatically

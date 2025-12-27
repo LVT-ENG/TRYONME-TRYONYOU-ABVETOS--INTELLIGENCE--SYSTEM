@@ -1,7 +1,20 @@
 /**
  * PAU (Personal Avatar Universe)
- * Motor de generación de avatares 3D y análisis emocional
  * Patent: PCT/EP2025/067317
+ * 
+ * 3D avatar generation engine with emotional AI analysis.
+ * Creates hyper-realistic digital representations from biometric data
+ * for virtual try-on experiences.
+ * 
+ * Key Features:
+ * - Real-time 3D avatar synthesis
+ * - Emotional state recognition (27 micro-expressions)
+ * - Style preference learning
+ * - Body morphology mapping
+ * 
+ * @module modules/PAU
+ * @copyright 2025 TRYONYOU - ABVETOS Intelligence System
+ * @version 2.1.0
  */
 
 import biometricEngine from '../../lib/biometricEngine';

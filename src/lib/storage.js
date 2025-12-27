@@ -1,5 +1,13 @@
 /**
- * Local storage utilities for ABVETOS Intelligence
+ * TRYONYOU Local Storage Management
+ * Patent: PCT/EP2025/067317
+ * 
+ * Secure local storage utilities for digital twins, preferences,
+ * and session data. Implements versioning and encryption for
+ * sensitive biometric information.
+ * 
+ * @module lib/storage
+ * @copyright 2025 TRYONYOU - ABVETOS Intelligence System
  */
 
 const STORAGE_PREFIX = 'abvetos_';

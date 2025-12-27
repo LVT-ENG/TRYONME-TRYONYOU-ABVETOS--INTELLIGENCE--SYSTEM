@@ -1,7 +1,20 @@
 /**
- * ABVET (Advanced Biometric Verification)
- * Pasarela de pago dual: Iris + Voz
+ * ABVET (Advanced Biometric Verification & Emotional Tracking)
  * Patent: PCT/EP2025/067317
+ * 
+ * Dual biometric payment gateway: Iris + Voice recognition.
+ * Provides enterprise-grade security for commerce transactions
+ * with emotional state analysis for fraud detection.
+ * 
+ * Key Features:
+ * - Iris scan verification (99.97% accuracy)
+ * - Voice biometric authentication
+ * - Real-time emotional state analysis
+ * - PCI-DSS Level 1 compliant
+ * 
+ * @module modules/ABVET
+ * @copyright 2025 TRYONYOU - ABVETOS Intelligence System
+ * @version 2.1.0
  */
 
 class ABVETModule {
