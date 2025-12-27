@@ -11,6 +11,11 @@ const Landing = ({ startCamera }) => {
       <div className="absolute inset-0 bg-abvetos-anthracite/70 backdrop-blur-sm"></div>
       <div className="relative z-10 animate-in fade-in zoom-in duration-1000 space-y-10">
         
+        {/* TRYONYOU/ABVETOS Logo - Patent PCT/EP2025/067317 */}
+        <div className="flex justify-center mb-6">
+          <img src="/logo.svg" alt="TRYONYOU - ABVETOS Intelligence" className="h-16 md:h-20 drop-shadow-2xl" />
+        </div>
+        
         <div className="flex justify-center items-center gap-3">
           <Sparkles className="text-abvetos-gold" size={32} />
           <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none">
@@ -41,6 +46,12 @@ const Landing = ({ startCamera }) => {
           <Camera size={28} />
           INICIAR EXPERIENCIA
         </Button>
+
+        {/* Patent Reference */}
+        <div className="mt-8 text-xs text-abvetos-steel/60">
+          <p>Protected by Patent PCT/EP2025/067317</p>
+          <p className="mt-1">© 2025 TRYONYOU - ABVETOS Intelligence System</p>
+        </div>
 
       </div>
     </div>

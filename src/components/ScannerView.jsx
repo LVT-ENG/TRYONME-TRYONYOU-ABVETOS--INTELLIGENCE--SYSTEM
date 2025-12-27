@@ -1,3 +1,8 @@
+/**
+ * TRYONYOU Scanner View
+ * Biometric extraction and analysis component
+ * Patent: PCT/EP2025/067317
+ */
 
 import { Button } from './ui/button';
 import { X, Camera } from 'lucide-react';
@@ -5,6 +10,11 @@ import { X, Camera } from 'lucide-react';
 const ScannerView = ({ videoRef, isAnalyzing, processBiometry, onCancel }) => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6">
+      {/* Logo Header */}
+      <div className="absolute top-6 left-6">
+        <img src="/logo.svg" alt="TRYONYOU" className="h-12 drop-shadow-lg" />
+      </div>
+      
       <div className="w-full max-w-md space-y-6 text-center">
         <div className="relative aspect-[3/4] bg-gray-900 rounded-[3rem] overflow-hidden border-4 border-abvetos-gold/50 shadow-2xl">
           <video ref={videoRef} autoPlay playsInline className="w-full h-full object-cover grayscale" />

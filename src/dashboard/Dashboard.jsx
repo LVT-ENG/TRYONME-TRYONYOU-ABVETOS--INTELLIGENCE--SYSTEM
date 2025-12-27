@@ -30,6 +30,7 @@ export default function Dashboard() {
     { id: 2, timestamp: '2025-12-27 06:46:10', message: 'Git push to main branch', status: 'success' },
     { id: 3, timestamp: '2025-12-27 06:46:11', message: 'Dependencies installed (340 packages)', status: 'success' },
     { id: 4, timestamp: '2025-12-27 06:46:12', message: '8 Core modules verified', status: 'success' },
+    { id: 5, timestamp: '2025-12-27 12:36:45', message: 'Logo and assets integrated', status: 'success' },
   ]);
 
   useEffect(() => {

@@ -1,3 +1,12 @@
+/**
+ * TRYONYOU - ABVETOS Intelligence System
+ * Patent: PCT/EP2025/067317
+ * Version: 2.1.0 "ULTIMATUM"
+ * 
+ * Revolutionary biometric commerce platform combining AR try-on,
+ * emotional AI, and just-in-time production.
+ */
+
 import { useState } from 'react';
 import { Sparkles, ShieldCheck, Activity } from 'lucide-react';
 
