@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { Camera, Sparkles } from 'lucide-react';
 import { Button } from './components/ui/button';
 

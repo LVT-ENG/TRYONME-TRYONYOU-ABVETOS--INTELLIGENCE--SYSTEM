@@ -4,7 +4,7 @@
  * Patent: PCT/EP2025/067317
  */
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Activity, Database, Zap, TrendingUp, CheckCircle, AlertTriangle, Server, Users } from 'lucide-react';
 
 export default function Dashboard() {

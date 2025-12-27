@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Sparkles, ShieldCheck, Activity } from 'lucide-react';
 
 import Landing from './Landing';
@@ -7,6 +7,7 @@ import ResultsView from './components/ResultsView';
 import CatalogView from './components/CatalogView';
 import Dashboard from './dashboard/Dashboard';
 import { SmartWardrobe } from './modules/Wardrobe/SmartWardrobe';
+import { LanguageTranslator } from './components/LanguageTranslator';
 import { useCamera } from './hooks/useCamera';
 import { useBiometrics } from './hooks/useBiometrics';
 
@@ -86,6 +87,7 @@ export default function App() {
             <span className="font-black tracking-tighter text-xl">TRYONYOU</span>
           </div>
           <div className="flex items-center gap-4">
+            <LanguageTranslator />
             <Activity 
               className="text-abvetos-gold cursor-pointer hover:scale-110 transition-transform" 
               size={20}

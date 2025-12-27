@@ -4,7 +4,7 @@
  * Patent: PCT/EP2025/067317
  */
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Shirt, TrendingUp, Heart, Package } from 'lucide-react';
 
 export const SmartWardrobe = ({ visible = true, mode = 'production', userId = 'demo' }) => {
