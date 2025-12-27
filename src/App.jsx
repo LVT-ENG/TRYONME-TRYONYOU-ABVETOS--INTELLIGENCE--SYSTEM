@@ -19,6 +19,7 @@ import { SmartWardrobe } from './modules/Wardrobe/SmartWardrobe';
 import { LanguageTranslator } from './components/LanguageTranslator';
 import { useCamera } from './hooks/useCamera';
 import { useBiometrics } from './hooks/useBiometrics';
+import { RetailMirror } from './components/RetailMirror';
 
 export default function App() {
   const [view, setView] = useState('landing');
@@ -82,6 +83,11 @@ export default function App() {
         );
       case 'dashboard':
         return <Dashboard />;
+      case 'mirror':
+        return <RetailMirror onExit={() => setView('landing')} onBuy={(product) => {
+            alert(`Buying ${product.name}`);
+            setView('catalog');
+        }}/>
       default:
         return <Landing startCamera={handleStartCamera} />;
     }
@@ -89,7 +95,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-abvetos-anthracite text-abvetos-bone font-sans italic">
-      {view !== 'landing' && view !== 'dashboard' && (
+      {view !== 'landing' && view !== 'dashboard' && view !== 'mirror' && (
         <header className="p-6 flex justify-between items-center border-b border-abvetos-gold/10 bg-abvetos-anthracite/50 backdrop-blur-xl fixed w-full z-50">
           <div className="flex items-center gap-2 cursor-pointer" onClick={handleReset}>
             <Sparkles className="text-abvetos-gold" size={20} />
@@ -109,11 +115,22 @@ export default function App() {
         </header>
       )}
 
-      <main className={view !== 'landing' && view !== 'dashboard' ? "pt-24" : ""}>
+      {view === 'landing' && (
+         <div className="fixed top-6 right-6 z-50">
+            <button
+                onClick={() => setView('mirror')}
+                className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 text-white hover:bg-white/20 flex items-center gap-2 transition-all"
+            >
+                <Sparkles size={16} /> Retail Mirror Mode
+            </button>
+         </div>
+      )}
+
+      <main className={view !== 'landing' && view !== 'dashboard' && view !== 'mirror' ? "pt-24" : ""}>
         {renderContent()}
         
         {/* CRITICAL FIX: Explicit rendering of Wardrobe Module [Source 5005] */}
-        {view !== 'landing' && view !== 'scanner' && (
+        {view !== 'landing' && view !== 'scanner' && view !== 'mirror' && (
           <div className="module-layer fixed bottom-8 right-8 z-40 max-w-md">
             <SmartWardrobe visible={true} mode="production" userId="current-user" /> 
           </div>
