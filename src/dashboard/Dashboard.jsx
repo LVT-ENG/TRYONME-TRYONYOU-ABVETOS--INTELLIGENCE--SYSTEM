@@ -6,6 +6,7 @@
 
 import { useState, useEffect } from 'react';
 import { Activity, Database, Zap, TrendingUp, CheckCircle, AlertTriangle, Server, Users } from 'lucide-react';
+import { systemMonitor } from './systemMonitor';
 
 export default function Dashboard() {
   const [metrics, setMetrics] = useState({
@@ -15,7 +16,7 @@ export default function Dashboard() {
     users: 0,
   });
 
-  const [moduleStatus, setModuleStatus] = useState({
+  const [moduleStatus] = useState({
     PAU: 'operational',
     ABVET: 'operational',
     CAP: 'operational',
@@ -25,7 +26,7 @@ export default function Dashboard() {
     PersonalShopperAI: 'operational',
   });
 
-  const [deployLogs, setDeployLogs] = useState([
+  const [deployLogs] = useState([
     { id: 1, timestamp: '2025-12-27 06:46:09', message: 'SUPERCOMMIT MAX executed', status: 'success' },
     { id: 2, timestamp: '2025-12-27 06:46:10', message: 'Git push to main branch', status: 'success' },
     { id: 3, timestamp: '2025-12-27 06:46:11', message: 'Dependencies installed (340 packages)', status: 'success' },
@@ -34,15 +35,18 @@ export default function Dashboard() {
   ]);
 
   useEffect(() => {
-    // Simular métricas en tiempo real
-    const interval = setInterval(() => {
+    const updateMetrics = () => {
+      const currentMetrics = systemMonitor.getAllMetrics();
       setMetrics({
-        cpu: Math.random() * 40 + 10, // 10-50%
-        memory: Math.random() * 30 + 40, // 40-70%
-        requests: Math.floor(Math.random() * 1000 + 500), // 500-1500
-        users: Math.floor(Math.random() * 50 + 20), // 20-70
+        cpu: parseFloat(currentMetrics.cpu),
+        memory: parseFloat(currentMetrics.memory),
+        requests: currentMetrics.requests,
+        users: currentMetrics.digitalTwins || 0, // Mapping digital twins to users roughly
       });
-    }, 3000);
+    };
+
+    updateMetrics(); // Initial fetch
+    const interval = setInterval(updateMetrics, 3000);
 
     return () => clearInterval(interval);
   }, []);
