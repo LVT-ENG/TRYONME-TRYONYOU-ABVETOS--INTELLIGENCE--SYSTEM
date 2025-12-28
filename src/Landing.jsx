@@ -12,6 +12,7 @@ const Landing = ({ startCamera }) => {
             src="/images/luxury-background.jpg"
             alt="Luxury Fashion Background"
             className="w-full h-full object-cover"
+            fetchPriority="high"
             onError={(e) => e.target.src = 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070&auto=format&fit=crop'}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
