@@ -7,16 +7,18 @@
  * emotional AI, and just-in-time production.
  */
 
-import { useState } from 'react';
-import { Sparkles, ShieldCheck, Activity } from 'lucide-react';
+import { useState, Suspense, lazy } from 'react';
+import { Sparkles, ShieldCheck, Activity, Loader2 } from 'lucide-react';
 
 import Landing from './Landing';
-import ScannerView from './components/ScannerView';
-import ResultsView from './components/ResultsView';
-import CatalogView from './components/CatalogView';
-import Dashboard from './dashboard/Dashboard';
-import { SmartWardrobe } from './modules/Wardrobe/SmartWardrobe';
-import { LanguageTranslator } from './components/LanguageTranslator';
+const ScannerView = lazy(() => import('./components/ScannerView'));
+const ResultsView = lazy(() => import('./components/ResultsView'));
+const CatalogView = lazy(() => import('./components/CatalogView'));
+const Dashboard = lazy(() => import('./dashboard/Dashboard'));
+// Bolt Optimization: Lazy load SmartWardrobe (default export)
+const SmartWardrobe = lazy(() => import('./modules/Wardrobe/SmartWardrobe'));
+// Bolt Optimization: Lazy load LanguageTranslator (named export)
+const LanguageTranslator = lazy(() => import('./components/LanguageTranslator').then(module => ({ default: module.LanguageTranslator })));
 import { useCamera } from './hooks/useCamera';
 import { useBiometrics } from './hooks/useBiometrics';
 
@@ -96,7 +98,9 @@ export default function App() {
             <span className="font-black tracking-tighter text-xl">TRYONYOU</span>
           </div>
           <div className="flex items-center gap-4">
-            <LanguageTranslator />
+            <Suspense fallback={<div className="w-4 h-4 rounded-full bg-abvetos-gold/20 animate-pulse" />}>
+              <LanguageTranslator />
+            </Suspense>
             <Activity 
               className="text-abvetos-gold cursor-pointer hover:scale-110 transition-transform" 
               size={20}
@@ -110,12 +114,20 @@ export default function App() {
       )}
 
       <main className={view !== 'landing' && view !== 'dashboard' ? "pt-24" : ""}>
-        {renderContent()}
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <Loader2 className="animate-spin text-abvetos-gold" size={48} />
+          </div>
+        }>
+          {renderContent()}
+        </Suspense>
         
         {/* CRITICAL FIX: Explicit rendering of Wardrobe Module [Source 5005] */}
         {view !== 'landing' && view !== 'scanner' && (
           <div className="module-layer fixed bottom-8 right-8 z-40 max-w-md">
-            <SmartWardrobe visible={true} mode="production" userId="current-user" /> 
+            <Suspense fallback={null}>
+              <SmartWardrobe visible={true} mode="production" userId="current-user" />
+            </Suspense>
           </div>
         )}
       </main>
