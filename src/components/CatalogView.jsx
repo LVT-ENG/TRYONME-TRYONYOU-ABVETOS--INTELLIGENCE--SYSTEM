@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowLeft, ShoppingBag, CheckCircle, Factory, Clock } from 'lucide-react';
 import api from '../services/api';
 import ABVET from '../modules/ABVET';
@@ -79,7 +79,14 @@ const CatalogView = ({ digitalTwin, setView }) => {
           <div key={item.id} className="group relative bg-gray-900 rounded-[2rem] p-4 border border-white/5 hover:border-[#D3B26A] transition-all flex flex-col">
             <div className="aspect-[3/4] bg-[#1a1a1a] rounded-2xl mb-4 overflow-hidden relative">
               <div className="absolute top-3 right-3 bg-black/60 px-3 py-1 rounded-full text-[10px] font-black text-[#D3B26A] z-10">MATCH {item.match}%</div>
-              <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+              {/* Bolt Optimization: Added lazy loading to improve performance */}
+              <img
+                src={item.image}
+                alt={item.name}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+              />
             </div>
 
             <div className="flex-grow">

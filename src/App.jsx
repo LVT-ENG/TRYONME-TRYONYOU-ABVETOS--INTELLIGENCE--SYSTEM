@@ -7,14 +7,14 @@
  * emotional AI, and just-in-time production.
  */
 
-import { useState } from 'react';
-import { Sparkles, ShieldCheck, Activity } from 'lucide-react';
+import { useState, Suspense, lazy } from 'react';
+import { Sparkles, ShieldCheck, Activity, Loader2 } from 'lucide-react';
 
 import Landing from './Landing';
-import ScannerView from './components/ScannerView';
-import ResultsView from './components/ResultsView';
-import CatalogView from './components/CatalogView';
-import Dashboard from './dashboard/Dashboard';
+const ScannerView = lazy(() => import('./components/ScannerView'));
+const ResultsView = lazy(() => import('./components/ResultsView'));
+const CatalogView = lazy(() => import('./components/CatalogView'));
+const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 import { SmartWardrobe } from './modules/Wardrobe/SmartWardrobe';
 import { LanguageTranslator } from './components/LanguageTranslator';
 import { useCamera } from './hooks/useCamera';
@@ -110,7 +110,13 @@ export default function App() {
       )}
 
       <main className={view !== 'landing' && view !== 'dashboard' ? "pt-24" : ""}>
-        {renderContent()}
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center">
+            <Loader2 className="animate-spin text-abvetos-gold" size={48} />
+          </div>
+        }>
+          {renderContent()}
+        </Suspense>
         
         {/* CRITICAL FIX: Explicit rendering of Wardrobe Module [Source 5005] */}
         {view !== 'landing' && view !== 'scanner' && (
