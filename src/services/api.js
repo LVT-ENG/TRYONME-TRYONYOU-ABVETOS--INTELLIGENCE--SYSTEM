@@ -71,6 +71,9 @@ class AbvetosAPI {
           waist: 80 + Math.floor(Math.random() * 10),
           hips: 98 + Math.floor(Math.random() * 10),
           shoulders: 45 + Math.floor(Math.random() * 5),
+          arm_length: 60 + Math.floor(Math.random() * 5),
+          leg_length: 85 + Math.floor(Math.random() * 5),
+          torso_length: 50 + Math.floor(Math.random() * 5),
           build: ['athletic', 'slim', 'average', 'muscular'][Math.floor(Math.random() * 4)]
         },
         skin_tone: 'type_3',

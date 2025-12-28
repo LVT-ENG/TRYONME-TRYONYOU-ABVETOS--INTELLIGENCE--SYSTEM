@@ -29,8 +29,7 @@ export function findBestFit(userMeasurements, userPreferences) {
     };
   });
 
-  // Filter out garments that don't fit at all and sort by score (lower is better, 0 is perfect)
-  // Actually, let's say Score: 100 is perfect, 0 is bad.
+  // Filter out garments that don't fit at all and sort by score (higher is better)
   const ranked = scoredGarments
     .filter(item => item.bestSize !== null)
     .sort((a, b) => b.score - a.score);
@@ -45,13 +44,14 @@ function findBestSize(garment, measurements, fitPreference) {
   garment.size_table.forEach(sizeVariant => {
     const score = calculateVariantScore(sizeVariant, garment.fabric, measurements, fitPreference);
 
-    if (score > bestScore) {
-      bestScore = score;
+    if (score.totalScore > bestScore) {
+      bestScore = score.totalScore;
       bestSize = {
         name: sizeVariant.size,
         details: sizeVariant,
-        score: score,
-        fitStatus: getFitStatus(score)
+        score: score.totalScore,
+        fitStatus: getFitStatus(score.totalScore),
+        explanation: score.explanation
       };
     }
   });
@@ -62,10 +62,10 @@ function findBestSize(garment, measurements, fitPreference) {
 
 function calculateVariantScore(variant, fabric, userMeasurements, fitPreference) {
   // Key measurements to check based on garment type
-  // Simplified logic: Check Chest, Waist, Hips if they exist in both
   const keys = ['chest', 'waist', 'hips', 'shoulders'];
   let totalDiff = 0;
   let checks = 0;
+  const reasons = [];
 
   keys.forEach(key => {
     if (variant[key] && userMeasurements[key]) {
@@ -76,10 +76,6 @@ function calculateVariantScore(variant, fabric, userMeasurements, fitPreference)
 
       // Elasticity Logic:
       // If fabric has elasticity, negative diff (User > Garment) is acceptable up to a point.
-      // E.g. User Chest 90, Garment 88. Diff = -2.
-      // If Elasticity 0.05 (5%), Max Stretch = 88 * 0.05 = 4.4.
-      // -2 is within -4.4. So this is a "Tight/Fitted" fit, not "Too Small".
-
       const maxStretch = garmentVal * fabric.elasticity;
 
       let keyScore = 0;
@@ -90,29 +86,47 @@ function calculateVariantScore(variant, fabric, userMeasurements, fitPreference)
           keyScore = 100; // Perfect fit range
         } else {
           // Too loose
-          // Penalize based on how much loose
-          keyScore = 100 - (diff - variant.tolerance) * 5;
+          keyScore = Math.max(0, 100 - (diff - variant.tolerance) * 5);
+          if (keyScore < 80) reasons.push(`${key} too loose`);
         }
       } else {
         // Garment is smaller than body (Needs stretch)
         const stretchNeeded = Math.abs(diff);
         if (stretchNeeded <= maxStretch) {
           // Fits with stretch
-          // If preference is 'slim', this is good (100).
-          // If preference is 'relaxed', this is bad.
-          if (fitPreference === 'slim') keyScore = 95;
-          else if (fitPreference === 'regular') keyScore = 80;
-          else keyScore = 60; // Relaxed preferer hates stretch
+          if (fitPreference === 'slim') {
+            keyScore = 95;
+            reasons.push(`${key} fits snug (stretch used)`);
+          }
+          else if (fitPreference === 'regular') {
+            keyScore = 80;
+            reasons.push(`${key} slightly tight`);
+          }
+          else {
+            keyScore = 60; // Relaxed preferer hates stretch
+            reasons.push(`${key} too tight for relaxed fit`);
+          }
         } else {
           // Too small even with stretch
           keyScore = 0;
+          reasons.push(`${key} too small`);
         }
       }
       totalDiff += keyScore;
     }
   });
 
-  return checks > 0 ? totalDiff / checks : 0;
+  const finalScore = checks > 0 ? totalDiff / checks : 0;
+
+  // Generate generic explanation if no specific issues
+  let explanation = "Fits well based on your measurements.";
+  if (reasons.length > 0) {
+    explanation = reasons.join(", ");
+  } else if (finalScore >= 95) {
+    explanation = "Measurements align perfectly with garment specs.";
+  }
+
+  return { totalScore: finalScore, explanation };
 }
 
 function getFitStatus(score) {
