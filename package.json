@@ -3,7 +3,7 @@
   "version": "3.0.0",
   "private": true,
   "type": "module",
-  "description": "Patented Fashion Intelligence System | PCT/EP2025/067317",
+  "description": "Patented Fashion Intelligence System | PCT/EP2025/067317 | Unified Architecture",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

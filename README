@@ -37,9 +37,23 @@ Payment flow with biometric verification (voice / iris – mock implementation).
 
 ⸻
 
-🏗️ System Architecture
+🏗️ System Architecture v3.0.0 - UNIFIED
 
-This repository represents the frontend core and orchestration layer of the TRYONYOU–ABVETOS system
+**NEW:** All 8 core modules have been consolidated into a single unified system file for improved maintainability and performance.
+
+This repository represents the frontend core and orchestration layer of the TRYONYOU–ABVETOS system with a **unified architecture** where all modules are integrated into one comprehensive file: `src/TRYONYOUUnifiedSystem.js`
+
+**8 Core Modules Unified:**
+1. PAU (Personal Avatar Universe) - 3D avatar generation
+2. ABVET (Advanced Biometric Verification) - Dual biometric payments
+3. CAP (Creative Auto-Production) - Just-in-time pattern generation
+4. SmartWardrobe - Digital closet management
+5. SolidarityWardrobe - Circular economy engine
+6. FTT (Fashion Trend Tracker) - Real-time trend analysis
+7. LiveItFactory - Supply chain orchestration
+8. PersonalShopperAI - AI shopping assistant
+
+📖 See [Unified Architecture Documentation](docs/UNIFIED_ARCHITECTURE.md) for complete details.
 
 ⸻
 
