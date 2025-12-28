@@ -4,6 +4,7 @@
  */
 import { CheckCircle, Ruler } from 'lucide-react';
 import { Button } from './ui/button';
+import { BodyWireframe } from './BodyWireframe';
 
 export default function ResultsView({ digitalTwin, matchedGarment, onReset }) {
 
@@ -64,37 +65,45 @@ export default function ResultsView({ digitalTwin, matchedGarment, onReset }) {
           </div>
 
           {/* Biometric Validation Data */}
-          <div className="bg-white/5 p-6 rounded-sm border border-white/10">
-            <div className="flex items-center gap-3 mb-6">
-               <Ruler className="text-abvetos-gold" />
-               <h4 className="font-bold uppercase tracking-widest text-sm">Biometric Alignment</h4>
+          <div className="bg-white/5 p-6 rounded-sm border border-white/10 flex flex-col md:flex-row gap-8">
+            {/* Wireframe Visualization */}
+            <div className="flex-shrink-0">
+               <BodyWireframe measurements={digitalTwin.measurements} />
             </div>
 
-            <div className="grid grid-cols-2 gap-y-4 gap-x-8 text-sm font-mono text-gray-400">
-               <div className="flex justify-between border-b border-white/5 pb-1">
-                 <span>Height</span>
-                 <span className="text-white">{digitalTwin.measurements.height} cm</span>
-               </div>
-               <div className="flex justify-between border-b border-white/5 pb-1">
-                 <span>Chest</span>
-                 <span className="text-white">{digitalTwin.measurements.chest} cm</span>
-               </div>
-               <div className="flex justify-between border-b border-white/5 pb-1">
-                 <span>Waist</span>
-                 <span className="text-white">{digitalTwin.measurements.waist} cm</span>
-               </div>
-               <div className="flex justify-between border-b border-white/5 pb-1">
-                 <span>Hips</span>
-                 <span className="text-white">{digitalTwin.measurements.hips} cm</span>
-               </div>
-               <div className="flex justify-between border-b border-white/5 pb-1">
-                 <span>Arm Length</span>
-                 <span className="text-white">{digitalTwin.measurements.arm_length || '--'} cm</span>
-               </div>
-               <div className="flex justify-between border-b border-white/5 pb-1">
-                 <span>Leg Length</span>
-                 <span className="text-white">{digitalTwin.measurements.leg_length || '--'} cm</span>
-               </div>
+            {/* Numeric Data */}
+            <div className="flex-grow">
+              <div className="flex items-center gap-3 mb-6">
+                 <Ruler className="text-abvetos-gold" />
+                 <h4 className="font-bold uppercase tracking-widest text-sm">Biometric Alignment</h4>
+              </div>
+
+              <div className="grid grid-cols-2 gap-y-4 gap-x-8 text-sm font-mono text-gray-400">
+                 <div className="flex justify-between border-b border-white/5 pb-1">
+                   <span>Height</span>
+                   <span className="text-white">{digitalTwin.measurements.height} cm</span>
+                 </div>
+                 <div className="flex justify-between border-b border-white/5 pb-1">
+                   <span>Chest</span>
+                   <span className="text-white">{digitalTwin.measurements.chest} cm</span>
+                 </div>
+                 <div className="flex justify-between border-b border-white/5 pb-1">
+                   <span>Waist</span>
+                   <span className="text-white">{digitalTwin.measurements.waist} cm</span>
+                 </div>
+                 <div className="flex justify-between border-b border-white/5 pb-1">
+                   <span>Hips</span>
+                   <span className="text-white">{digitalTwin.measurements.hips} cm</span>
+                 </div>
+                 <div className="flex justify-between border-b border-white/5 pb-1">
+                   <span>Arm Length</span>
+                   <span className="text-white">{digitalTwin.measurements.arm_length || '--'} cm</span>
+                 </div>
+                 <div className="flex justify-between border-b border-white/5 pb-1">
+                   <span>Leg Length</span>
+                   <span className="text-white">{digitalTwin.measurements.leg_length || '--'} cm</span>
+                 </div>
+              </div>
             </div>
           </div>
 

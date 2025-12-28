@@ -21,6 +21,7 @@ export function findBestFit(userMeasurements, userPreferences) {
   );
 
   const scoredGarments = relevantGarments.map(garment => {
+    // Pass weight for drape analysis
     const bestSize = findBestSize(garment, userMeasurements, fitPreference);
     return {
       garment,
@@ -42,7 +43,7 @@ function findBestSize(garment, measurements, fitPreference) {
   let bestScore = -Infinity;
 
   garment.size_table.forEach(sizeVariant => {
-    const score = calculateVariantScore(sizeVariant, garment.fabric, measurements, fitPreference);
+    const score = calculateVariantScore(sizeVariant, garment.fabric, measurements, fitPreference, garment.cut_type);
 
     if (score.totalScore > bestScore) {
       bestScore = score.totalScore;
@@ -60,13 +61,14 @@ function findBestSize(garment, measurements, fitPreference) {
   return bestScore > 50 ? bestSize : null;
 }
 
-function calculateVariantScore(variant, fabric, userMeasurements, fitPreference) {
+function calculateVariantScore(variant, fabric, userMeasurements, fitPreference, cutType) {
   // Key measurements to check based on garment type
   const keys = ['chest', 'waist', 'hips', 'shoulders'];
   let totalDiff = 0;
   let checks = 0;
   const reasons = [];
 
+  // 1. Basic Dimensional Match
   keys.forEach(key => {
     if (variant[key] && userMeasurements[key]) {
       checks++;
@@ -75,7 +77,6 @@ function calculateVariantScore(variant, fabric, userMeasurements, fitPreference)
       const diff = garmentVal - userVal;
 
       // Elasticity Logic:
-      // If fabric has elasticity, negative diff (User > Garment) is acceptable up to a point.
       const maxStretch = garmentVal * fabric.elasticity;
 
       let keyScore = 0;
@@ -116,14 +117,37 @@ function calculateVariantScore(variant, fabric, userMeasurements, fitPreference)
     }
   });
 
-  const finalScore = checks > 0 ? totalDiff / checks : 0;
+  let finalScore = checks > 0 ? totalDiff / checks : 0;
+
+  // 2. Advanced: Drape & Comfort Analysis (Weight/BMI Logic)
+  // If user is heavier (BMI > 25 approx proxy), penalize High Rigidity fabrics unless cut is relaxed
+  if (userMeasurements.weight && userMeasurements.height) {
+    const heightM = userMeasurements.height / 100;
+    const bmi = userMeasurements.weight / (heightM * heightM);
+
+    // Logic: Higher BMI + High Rigidity (Low Drape) + Slim Cut = Uncomfortable
+    // fabric.rigidity is 0 (soft) to 1 (stiff)
+    if (bmi > 25 && fabric.rigidity > 0.6 && cutType === 'slim') {
+      finalScore -= 15;
+      reasons.push("Fabric rigidity might be uncomfortable for this cut");
+    }
+
+    // Logic: High Elasticity bonus for comfort
+    if (fabric.elasticity > 0.10) {
+      finalScore += 5; // Bonus for comfort
+      // reasons.push("High elasticity fabric selected for comfort"); // Optional, maybe too verbose
+    }
+  }
+
+  // Cap score at 100
+  finalScore = Math.min(100, Math.max(0, finalScore));
 
   // Generate generic explanation if no specific issues
   let explanation = "Fits well based on your measurements.";
   if (reasons.length > 0) {
     explanation = reasons.join(", ");
   } else if (finalScore >= 95) {
-    explanation = "Measurements align perfectly with garment specs.";
+    explanation = "Perfect match on dimensions and fabric physics.";
   }
 
   return { totalScore: finalScore, explanation };
