@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { UserCheck, Ruler, BarChart3, ChevronRight, Loader2, Sparkles, Brain, Palette } from 'lucide-react';
+import { UserCheck, Ruler, BarChart3, ChevronRight, Loader2, Sparkles, Brain, Palette, Shirt, Scissors } from 'lucide-react';
 import PAU from '../modules/PAU';
 
 const ResultsView = ({ digitalTwin, setView }) => {
@@ -28,8 +28,11 @@ const ResultsView = ({ digitalTwin, setView }) => {
 
   const stats = [
     { icon: UserCheck, label: "ID Biométrico", value: digitalTwin?.user_id.substring(0, 8) },
-    { icon: Ruler, label: "Altura Estimada", value: digitalTwin?.measurements.height },
-    { icon: BarChart3, label: "Complexión", value: digitalTwin?.measurements.build }
+    { icon: Ruler, label: "Altura Estimada", value: `${digitalTwin?.measurements.height} cm` },
+    { icon: BarChart3, label: "Complexión", value: digitalTwin?.measurements.build },
+    { icon: Shirt, label: "Pecho", value: `${digitalTwin?.measurements.chest} cm` },
+    { icon: Scissors, label: "Cintura", value: `${digitalTwin?.measurements.waist} cm` },
+    { icon: Ruler, label: "Entrepierna", value: `${digitalTwin?.measurements.inseam || '--'} cm` },
   ];
 
   return (
@@ -46,15 +49,24 @@ const ResultsView = ({ digitalTwin, setView }) => {
             <h3 className="text-xl font-bold text-left mb-4 flex items-center gap-2">
               <ActivityIcon /> Datos Biométricos
             </h3>
-            {stats.map((stat, index) => (
-              <div key={index} className="flex items-center justify-between text-left p-3 bg-black/20 rounded-xl">
-                <div className="flex items-center gap-4">
-                  <stat.icon size={20} className="text-abvetos-gold" />
-                  <span className="font-medium text-gray-300">{stat.label}</span>
+            <div className="grid grid-cols-1 gap-2">
+                {stats.map((stat, index) => (
+                <div key={index} className="flex items-center justify-between text-left p-3 bg-black/20 rounded-xl">
+                    <div className="flex items-center gap-4">
+                    <stat.icon size={20} className="text-abvetos-gold" />
+                    <span className="font-medium text-gray-300">{stat.label}</span>
+                    </div>
+                    <span className="font-mono text-abvetos-gold uppercase">{stat.value}</span>
                 </div>
-                <span className="font-mono text-abvetos-gold">{stat.value}</span>
-              </div>
-            ))}
+                ))}
+            </div>
+
+            <div className="mt-4 pt-4 border-t border-white/10 text-xs text-gray-500 grid grid-cols-2 gap-2">
+                <div>Cuello: {digitalTwin?.measurements.neck || '--'} cm</div>
+                <div>Manga: {digitalTwin?.measurements.sleeve || '--'} cm</div>
+                <div>Hombros: {digitalTwin?.measurements.shoulders || '--'} cm</div>
+                <div>Muslo: {digitalTwin?.measurements.thigh || '--'} cm</div>
+            </div>
           </div>
 
           {/* PAU Avatar Analysis */}

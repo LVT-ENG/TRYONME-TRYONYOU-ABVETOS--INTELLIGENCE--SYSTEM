@@ -71,6 +71,10 @@ class AbvetosAPI {
           waist: 80 + Math.floor(Math.random() * 10),
           hips: 98 + Math.floor(Math.random() * 10),
           shoulders: 45 + Math.floor(Math.random() * 5),
+          neck: 38 + Math.floor(Math.random() * 4),
+          inseam: 78 + Math.floor(Math.random() * 8),
+          sleeve: 62 + Math.floor(Math.random() * 5),
+          thigh: 55 + Math.floor(Math.random() * 8),
           build: ['athletic', 'slim', 'average', 'muscular'][Math.floor(Math.random() * 4)]
         },
         skin_tone: 'type_3',
@@ -80,10 +84,10 @@ class AbvetosAPI {
 
     if (endpoint.includes('/recommendations')) {
       return [
-        { id: 1, name: "Chaqueta Técnica ABVET", price: 299, type: "jacket", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400", match: 98 },
-        { id: 2, name: "Pantalón Modular Zero-G", price: 189, type: "pants", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=400", match: 95 },
-        { id: 3, name: "Camisa Inteligente Bio-Mesh", price: 120, type: "shirt", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=400", match: 92 },
-        { id: 4, name: "Vestido Asimétrico Neural", price: 350, type: "dress", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=400", match: 89 }
+        { id: 1, name: "Chaqueta Técnica ABVET", price: 299, type: "jacket", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400", match: 98, explanation: "Perfect fit for your shoulder width." },
+        { id: 2, name: "Pantalón Modular Zero-G", price: 189, type: "pants", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=400", match: 95, explanation: "Optimized for your inseam length." },
+        { id: 3, name: "Camisa Inteligente Bio-Mesh", price: 120, type: "shirt", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=400", match: 92, explanation: "Breathable fabric for athletic build." },
+        { id: 4, name: "Vestido Asimétrico Neural", price: 350, type: "dress", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=400", match: 89, explanation: "Drapes elegantly on your frame." }
       ];
     }
 

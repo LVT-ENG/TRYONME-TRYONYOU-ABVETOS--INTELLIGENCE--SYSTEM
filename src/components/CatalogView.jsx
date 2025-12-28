@@ -84,7 +84,12 @@ const CatalogView = ({ digitalTwin, setView }) => {
 
             <div className="flex-grow">
                 <p className="font-bold text-sm uppercase mb-1">{item.name}</p>
-                <p className="text-xs text-gray-500 mb-4">Ajustado a tu biometría</p>
+                <p className="text-xs text-gray-500 mb-2">Ajustado a tu biometría</p>
+                {item.explanation && (
+                  <div className="bg-abvetos-gold/10 border border-abvetos-gold/20 p-2 rounded-lg mb-4">
+                    <p className="text-[10px] text-abvetos-gold italic">"{item.explanation}"</p>
+                  </div>
+                )}
                 <div className="text-xl font-black text-white mb-4">{item.price} €</div>
             </div>
 
