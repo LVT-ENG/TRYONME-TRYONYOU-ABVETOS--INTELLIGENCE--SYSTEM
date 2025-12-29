@@ -132,7 +132,8 @@ See `ASSETS_GUIDE.md` for detailed asset requirements and naming conventions.
 ```bash
 npm run build
 ```
-
+> ⚠️ This repository contains architecture, specifications and intelligence design.
+> It is NOT intended to execute runtime services in CI.
 ### Output Directory
 ```
 dist/
