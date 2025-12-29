@@ -38,10 +38,14 @@ class AbvetosAPI {
         success: true,
         measurements: {
           height: 175 + Math.floor(Math.random() * 10),
+          weight: 70 + Math.floor(Math.random() * 15),
+          shoulder_width: 45 + Math.floor(Math.random() * 5),
           chest: 95 + Math.floor(Math.random() * 10),
           waist: 80 + Math.floor(Math.random() * 10),
           hips: 98 + Math.floor(Math.random() * 10),
-          shoulders: 45 + Math.floor(Math.random() * 5),
+          arm_length: 60 + Math.floor(Math.random() * 5),
+          leg_length: 85 + Math.floor(Math.random() * 5),
+          torso_length: 50 + Math.floor(Math.random() * 5),
           build: ['athletic', 'slim', 'average', 'muscular'][Math.floor(Math.random() * 4)]
         },
         skin_tone: 'type_3',
@@ -51,10 +55,74 @@ class AbvetosAPI {
 
     if (endpoint.includes('/recommendations')) {
       return [
-        { id: 1, name: "Chaqueta Técnica ABVET", price: 299, type: "jacket", image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400", match: 98 },
-        { id: 2, name: "Pantalón Modular Zero-G", price: 189, type: "pants", image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=400", match: 95 },
-        { id: 3, name: "Camisa Inteligente Bio-Mesh", price: 120, type: "shirt", image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=400", match: 92 },
-        { id: 4, name: "Vestido Asimétrico Neural", price: 350, type: "dress", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=400", match: 89 }
+        {
+          id: 1,
+          name: "Chaqueta Técnica ABVET",
+          price: 299,
+          type: "jacket",
+          image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=400",
+          match: 98,
+          fabric: {
+            composition: "95% Technical Nylon, 5% Elastane",
+            elasticity: 5, // percentage of stretch
+            drape_score: 8 // 1-10 stiff to fluid
+          },
+          dimensions: {
+            chest: 98, // Ideal chest cm
+            shoulder_width: 46
+          }
+        },
+        {
+          id: 2,
+          name: "Pantalón Modular Zero-G",
+          price: 189,
+          type: "pants",
+          image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&q=80&w=400",
+          match: 95,
+          fabric: {
+             composition: "100% Cotton Canvas",
+             elasticity: 0,
+             drape_score: 4
+          },
+          dimensions: {
+            waist: 82,
+            hips: 100
+          }
+        },
+        {
+          id: 3,
+          name: "Camisa Inteligente Bio-Mesh",
+          price: 120,
+          type: "shirt",
+          image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&q=80&w=400",
+          match: 92,
+           fabric: {
+             composition: "Bamboo Fiber Blend",
+             elasticity: 15,
+             drape_score: 9
+          },
+          dimensions: {
+            chest: 96,
+            shoulder_width: 44
+          }
+        },
+        {
+          id: 4,
+          name: "Vestido Asimétrico Neural",
+          price: 350,
+          type: "dress",
+          image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=400",
+          match: 89,
+           fabric: {
+             composition: "Silk Polymer",
+             elasticity: 2,
+             drape_score: 10
+          },
+          dimensions: {
+            bust: 90,
+            waist: 70
+          }
+        }
       ];
     }
 

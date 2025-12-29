@@ -23,7 +23,7 @@ import { useBiometrics } from './hooks/useBiometrics';
 export default function App() {
   const [view, setView] = useState('landing');
   const camera = useCamera();
-  const { digitalTwin, isProcessing, processBiometry, resetTwin } = useBiometrics();
+  const { digitalTwin, isProcessing, processBiometry, resetTwin, updateMeasurements } = useBiometrics();
 
   const handleStartCamera = async () => {
     try {
@@ -70,6 +70,7 @@ export default function App() {
             digitalTwin={digitalTwin} 
             setView={setView}
             onReset={handleReset}
+            updateMeasurements={updateMeasurements}
           />
         );
       case 'catalog':
