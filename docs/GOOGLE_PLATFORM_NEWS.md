@@ -72,3 +72,11 @@ Conductor is an open-source extension for the Gemini CLI designed to solve the "
     1.  **Setup (Interview)**: Understands the project.
     2.  **Planning (Deliberation)**: Creates a plan before coding.
     3.  **Execution (Implementation)**: Executes the approved plan.
+
+## References
+
+*   [Building with Gemini 3 in Jules](https://developers.googleblog.com/jules-gemini-3/)
+*   [Introducing Veo 3.1](https://developers.googleblog.com/introducing-veo-3-1-and-new-creative-capabilities-in-the-gemini-api/)
+*   [Google Conductor: Context-Driven Development](https://atalupadhyay.wordpress.com/2025/12/23/google-conductor-context-driven-development-for-ai-assisted-coding/)
+*   [ThursdAI Special: Google's Big Week](https://www.youtube.com/watch?v=eewOIvIralU)
+*   [Google AI Studio](https://aistudio.google.com/apps)
