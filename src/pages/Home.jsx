@@ -1,10 +1,17 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles, Shirt, User, ShoppingBag, Wand2, Play, Star } from 'lucide-react'
+import { ArrowRight, Sparkles, Shirt, User, ShoppingBag, Wand2, Play, Star, Scan } from 'lucide-react'
 
 const Home = () => {
   const features = [
+    {
+      icon: Scan,
+      title: 'Smart Scanner',
+      description: 'Get your precise body measurements in seconds using just your camera.',
+      color: 'from-cyan-500 to-blue-500',
+      link: '/demo'
+    },
     {
       icon: User,
       title: 'My Avatar',
@@ -40,20 +47,13 @@ const Home = () => {
       color: 'from-rose-500 to-pink-500',
       link: '/brands'
     },
-    {
-      icon: Play,
-      title: 'Try Demo',
-      description: 'Experience our virtual try-on technology in action.',
-      color: 'from-cyan-500 to-blue-500',
-      link: '/demo'
-    },
   ]
 
-  const stats = [
-    { value: '75%', label: 'Fewer Returns' },
-    { value: '10K+', label: 'Happy Users' },
-    { value: '50+', label: 'Partner Brands' },
-    { value: '98%', label: 'Satisfaction' },
+  const claims = [
+    "Fewer Returns",
+    "Perfect Fit",
+    "Fabric Physics",
+    "AI Powered"
   ]
 
   return (
@@ -69,8 +69,10 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="relative z-10 section-container">
-          <div className="max-w-5xl mx-auto text-center">
+        <div className="relative z-10 section-container grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+          {/* Text Content */}
+          <div className="text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -81,59 +83,80 @@ const Home = () => {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 mx-auto lg:mx-0"
               >
                 <Sparkles size={18} className="text-tryonyou-gold" />
-                <span className="text-tryonyou-gold font-semibold">AI-Powered Virtual Try-On</span>
+                <span className="text-tryonyou-gold font-semibold">Live Pilot Demo</span>
               </motion.div>
 
               {/* Title */}
-              <h1 className="heading-xl mb-6">
-                <span className="gradient-text">Your Trusted</span>
+              <h1 className="heading-xl mb-6 leading-tight">
+                <span className="gradient-text">The End of Returns.</span>
                 <br />
-                <span className="text-white">Virtual Fitting Room</span>
+                <span className="text-white">The Perfect Fit.</span>
               </h1>
 
               {/* Subtitle */}
-              <p className="text-xl md:text-2xl text-white/70 mb-8 max-w-3xl mx-auto leading-relaxed">
-                Find the perfect outfit without trying on 510 pants or making infinite returns. 
-                AI-powered styling that understands <span className="text-tryonyou-blue font-semibold">you</span>.
+              <p className="text-xl md:text-2xl text-white/70 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                Experience the first AI that matches clothing to your <span className="text-tryonyou-blue font-semibold">real measurements</span> and <span className="text-tryonyou-blue font-semibold">fabric physics</span>.
               </p>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap justify-center gap-4 mb-12">
-                <Link to="/demo" className="btn-primary text-lg px-8 py-4 group">
-                  Try Demo
-                  <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link to="/my-avatar" className="btn-metallic text-lg px-8 py-4 flex items-center gap-2">
-                  <User size={20} />
-                  Create Avatar
-                </Link>
+              {/* Carousel Claims */}
+              <div className="h-8 mb-8 overflow-hidden relative">
+                 <motion.div
+                    animate={{ y: [0, -32, -64, -96, 0] }}
+                    transition={{ duration: 10, repeat: Infinity, times: [0, 0.25, 0.5, 0.75, 1], ease: "linear" }}
+                    className="flex flex-col items-center lg:items-start"
+                 >
+                    {claims.map((claim, i) => (
+                        <span key={i} className="h-8 text-xl font-mono text-tryonyou-gold/80 block">{claim}</span>
+                    ))}
+                    <span className="h-8 text-xl font-mono text-tryonyou-gold/80 block">{claims[0]}</span>
+                 </motion.div>
               </div>
 
-              {/* Stats */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-4"
-              >
-                {stats.map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.7 + index * 0.1 }}
-                    className="glass rounded-xl p-4 text-center"
-                  >
-                    <div className="text-3xl font-bold gradient-text">{stat.value}</div>
-                    <div className="text-sm text-white/60">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </motion.div>
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-12">
+                <Link to="/demo" className="btn-primary text-lg px-8 py-4 group shadow-[0_0_30px_rgba(0,255,255,0.3)] hover:shadow-[0_0_50px_rgba(0,255,255,0.5)] transition-shadow">
+                  Enter Pilot Demo
+                  <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <a href="#how-it-works" className="btn-glass text-lg px-8 py-4 flex items-center gap-2">
+                  Learn More
+                </a>
+              </div>
             </motion.div>
           </div>
+
+          {/* Visual Side (Mascot Interaction Placeholder) */}
+          <div className="relative hidden lg:flex justify-center items-center">
+             <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1 }}
+                className="relative w-[400px] h-[600px] bg-black/40 rounded-[2rem] border border-white/10 backdrop-blur-md overflow-hidden shadow-2xl"
+             >
+                {/* Simulated Mirror UI */}
+                <div className="absolute top-4 left-0 right-0 text-center text-white/50 text-xs font-mono">SMART MIRROR OS v1.0</div>
+
+                {/* Placeholder for "Chica frente a espejo" */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                   <User size={120} className="text-white/20" />
+                   <p className="absolute bottom-20 text-white/40">Waiting for user...</p>
+                </div>
+
+                {/* Pau Mascot Trigger */}
+                <motion.div
+                   className="absolute bottom-4 right-4 w-16 h-16 bg-gradient-to-tr from-tryonyou-blue to-purple-500 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform shadow-lg z-20"
+                   whileTap={{ scale: 0.9 }}
+                   animate={{ boxShadow: ["0 0 0 0 rgba(124, 58, 237, 0.4)", "0 0 0 20px rgba(124, 58, 237, 0)"] }}
+                   transition={{ duration: 2, repeat: Infinity }}
+                >
+                   <Sparkles className="text-white" size={24} />
+                </motion.div>
+             </motion.div>
+          </div>
+
         </div>
 
         {/* Scroll Indicator */}
@@ -148,50 +171,8 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Features Section */}
-      <section className="section-container bg-tryonyou-smoke/30">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="heading-lg mb-4 gradient-text">
-            Everything You Need
-          </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
-            A complete virtual fashion experience powered by cutting-edge AI
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <Link to={feature.link} className="block group">
-                <div className="card h-full hover:scale-[1.02] transition-all duration-300">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                    <feature.icon size={28} className="text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-tryonyou-blue transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-white/60">{feature.description}</p>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
       {/* How It Works */}
-      <section className="section-container">
+      <section id="how-it-works" className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -200,18 +181,18 @@ const Home = () => {
           className="text-center mb-16"
         >
           <h2 className="heading-lg mb-4 gradient-text">
-            How It Works
+            Real Science, Real Fit
           </h2>
           <p className="text-xl text-white/60">
-            Three simple steps to your perfect outfit
+            No cartoons. No guessing. Just precision.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {[
-            { step: '1', title: 'Create Your Avatar', description: 'Build your digital twin with accurate measurements', icon: User },
-            { step: '2', title: 'Browse & Try On', description: 'Virtually try clothes from top brands', icon: Shirt },
-            { step: '3', title: 'Shop with Confidence', description: 'Buy knowing it will fit perfectly', icon: ShoppingBag },
+            { step: '1', title: 'Smart Scan', description: 'Our AI analyzes your unique biometric profile via camera.', icon: Scan },
+            { step: '2', title: 'Fabric Matching', description: 'We calculate elasticity & drape against your measurements.', icon: Shirt },
+            { step: '3', title: 'True Recommendation', description: 'See the exact garment that fits YOUR body.', icon: Star },
           ].map((item, index) => (
             <motion.div
               key={item.step}
@@ -219,92 +200,18 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className="relative text-center"
+              className="relative text-center p-6 glass rounded-2xl border border-white/5 hover:border-tryonyou-blue/30 transition-colors"
             >
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-tryonyou-blue to-tryonyou-darkblue flex items-center justify-center mx-auto mb-6 glow-blue">
-                <item.icon size={36} className="text-white" />
-              </div>
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2 text-6xl font-display font-bold text-white/5">
-                {item.step}
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-tryonyou-blue to-tryonyou-darkblue flex items-center justify-center mx-auto mb-6 glow-blue">
+                <item.icon size={32} className="text-white" />
               </div>
               <h3 className="text-xl font-bold mb-2">{item.title}</h3>
               <p className="text-white/60">{item.description}</p>
-              
-              {index < 2 && (
-                <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-tryonyou-blue/50 to-transparent" />
-              )}
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="section-container bg-gradient-to-br from-tryonyou-blue/10 to-amparo-light/5">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <h2 className="heading-lg mb-12 gradient-text">
-            Loved by Thousands
-          </h2>
-          
-          <div className="card bg-gradient-to-br from-tryonyou-blue/5 to-purple-500/5">
-            <div className="flex justify-center gap-1 mb-4">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={24} className="text-yellow-400 fill-yellow-400" />
-              ))}
-            </div>
-            <blockquote className="text-xl md:text-2xl text-white/90 italic mb-6">
-              "Finally, an app that actually understands my body type. No more returns, 
-              no more guessing. TryOnYou changed how I shop online!"
-            </blockquote>
-            <div className="flex items-center justify-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center">
-                <User size={24} className="text-white" />
-              </div>
-              <div className="text-left">
-                <div className="font-bold">Maria Garcia</div>
-                <div className="text-sm text-white/60">Fashion Enthusiast</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto text-center"
-        >
-          <div className="card bg-gradient-to-br from-tryonyou-blue/20 via-purple-500/10 to-pink-500/20 border-tryonyou-blue/30 py-12 px-8">
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-              <Sparkles size={40} className="text-white" />
-            </div>
-            <h2 className="heading-lg mb-4 gradient-text">
-              Ready to Transform Your Style?
-            </h2>
-            <p className="text-xl text-white/70 mb-8">
-              Join thousands of satisfied users and discover your perfect look today
-            </p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/demo" className="btn-primary text-lg px-8 py-4">
-                Try Demo Now
-                <ArrowRight className="inline ml-2" size={20} />
-              </Link>
-              <Link to="/my-avatar" className="btn-metallic text-lg px-8 py-4">
-                Create Your Avatar
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      </section>
     </div>
   )
 }
