@@ -5,15 +5,40 @@ const content = {
     title: "PARTENARIAT STRATÉGIQUE", 
     problem: "Le Défi des 1 000 Pantalons",
     solution: "Précision Biométrique 99%",
-    impact: "Réduction des Retours",
-    button: "Voir Analyse Technique" 
+    impact: "Impact Financier (Par 10k unités)",
+    labels: ["Mesure", "Traditionnel", "TryOnYou", "Économies"],
+    rows: [
+      ["Taux de retour", "35%", "3.2%", "-90%"],
+      ["Coût Logistique", "€150k", "€12k", "€138k"],
+      ["Capital Immobilisé", "€450k", "€40k", "€410k"]
+    ],
+    button: "Télécharger l'Audit Complet" 
   },
   en: { 
     title: "STRATEGIC PARTNERSHIP", 
     problem: "The 1,000 Pants Challenge",
     solution: "99% Biometric Precision",
-    impact: "Return Reduction",
-    button: "View Technical Analysis" 
+    impact: "Financial ROI (Per 10k units)",
+    labels: ["Metric", "Traditional", "TryOnYou", "Savings"],
+    rows: [
+      ["Return Rate", "35%", "3.2%", "-90%"],
+      ["Logistics Cost", "$150k", "$12k", "$138k"],
+      ["Dead Inventory", "$450k", "$40k", "$410k"]
+    ],
+    button: "Download Full Audit" 
+  },
+  es: { 
+    title: "ALIANZA ESTRATÉGICA", 
+    problem: "El Reto de los 1,000 Pantalones",
+    solution: "Precisión Biométrica 99%",
+    impact: "ROI Financiero (Por 10k unidades)",
+    labels: ["Métrica", "Tradicional", "TryOnYou", "Ahorro"],
+    rows: [
+      ["Tasa de retorno", "35%", "3.2%", "-90%"],
+      ["Coste Logístico", "€150k", "€12k", "€138k"],
+      ["Capital Muerto", "€450k", "€40k", "€410k"]
+    ],
+    button: "Descargar Auditoría" 
   }
 };
 
@@ -22,59 +47,57 @@ export default function Investors() {
   const t = content[lang];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-10 font-light">
-      {/* Brand Header */}
-      <div className="flex justify-between items-center mb-20 max-w-7xl mx-auto">
-        <img src="/assets/brand/logo_peacock.png" className="w-16 grayscale hover:grayscale-0 transition-all" alt="Logo" />
-        <div className="flex gap-4">
-          {['en', 'fr'].map(l => (
-            <button key={l} onClick={() => setLang(l)} className="uppercase text-[10px] tracking-[0.3em] opacity-40 hover:opacity-100">{l}</button>
-          ))}
+    <div className="min-h-screen bg-[#050505] text-white p-10 font-light overflow-x-hidden">
+      {/* Selector Idioma */}
+      <div className="w-full max-w-7xl mx-auto flex justify-end gap-6 mb-12">
+        {['es', 'en', 'fr'].map(l => (
+          <button key={l} onClick={() => setLang(l)} className={`uppercase text-[10px] tracking-[0.3em] ${lang === l ? 'text-[#C5A46D] font-bold underline decoration-gold' : 'opacity-30'}`}>{l}</button>
+        ))}
+      </div>
+
+      {/* Hero Narrative */}
+      <div className="max-w-7xl mx-auto text-center mb-24">
+        <h1 className="text-7xl font-black italic mb-4 tracking-tighter uppercase">{t.title}</h1>
+        <p className="gold-text text-xl tracking-[0.5em] uppercase italic opacity-80">Galeries Lafayette • Technical Proposal 2026</p>
+      </div>
+
+      {/* ROI TABLE SECTION */}
+      <div className="max-w-6xl mx-auto mb-32 bg-zinc-900/30 border border-zinc-800 rounded-[2.5rem] p-12 shadow-2xl">
+        <h2 className="text-3xl font-black italic mb-10 tracking-tight uppercase text-center">{t.impact}</h2>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="border-b border-zinc-800">
+                {t.labels.map(label => (
+                  <th key={label} className="py-6 text-[10px] uppercase tracking-[0.3em] opacity-40">{label}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {t.rows.map((row, i) => (
+                <tr key={i} className="border-b border-zinc-800/50 hover:bg-white/5 transition-colors">
+                  <td className="py-8 font-bold italic text-lg">{row[0]}</td>
+                  <td className="py-8 opacity-60 line-through text-red-500/70">{row[1]}</td>
+                  <td className="py-8 gold-text font-black text-xl">{row[2]}</td>
+                  <td className="py-8">
+                    <span className="bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-xs font-bold">{row[3]}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* The Pain Point Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 max-w-7xl mx-auto items-center mb-32">
-        <div className="relative group">
-          <img src="/assets/pitch/pants_mountain.jpg" className="rounded-3xl border border-zinc-800 opacity-60 group-hover:opacity-100 transition-all" />
-          <div className="absolute inset-0 flex items-center justify-center">
-             <span className="bg-black/80 px-6 py-3 border border-red-500 text-red-500 text-xs uppercase tracking-[0.4em]">The Friction</span>
-          </div>
+      {/* Branding Footer */}
+      <div className="max-w-7xl mx-auto border-t border-zinc-800 pt-10 flex justify-between items-center opacity-30">
+        <div className="flex items-center gap-6">
+          <span className="text-xl font-black italic uppercase">TryOnYou</span>
+          <div className="w-[1px] h-6 bg-zinc-700"></div>
+          <span className="text-[10px] tracking-widest uppercase italic">Secure Enterprise Deployment</span>
         </div>
-        <div>
-          <h2 className="text-5xl font-black italic mb-6 tracking-tighter uppercase">{t.problem}</h2>
-          <p className="text-xl opacity-60 leading-relaxed mb-8">
-            Millions are lost in reverse logistics because customers cannot find their perfect fit among thousands of references. 
-            TryOnYou eliminates the "Mountain of Choice" with a single biometric truth.
-          </p>
-          <div className="bg-red-900/10 border border-red-500/20 p-6 rounded-2xl flex justify-between">
-             <span className="text-red-500 uppercase text-[10px] tracking-widest">Revenue Loss</span>
-             <span className="text-2xl font-black italic">-30% EBITDA</span>
-          </div>
-        </div>
-      </div>
-
-      {/* The Solution Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 max-w-7xl mx-auto items-center mb-32">
-        <div className="order-2 lg:order-1">
-          <h2 className="text-5xl font-black italic mb-6 tracking-tighter uppercase gold-text">{t.solution}</h2>
-          <p className="text-xl opacity-60 leading-relaxed mb-8">
-            Our Drape-Aware engine simulates fabric elasticity and recovery. We don't just measure the body; we measure the fit.
-          </p>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
-               <p className="text-[10px] opacity-40 uppercase mb-2">Stretch Accuracy</p>
-               <p className="text-3xl font-bold">99.2%</p>
-            </div>
-            <div className="bg-zinc-900 p-6 rounded-2xl border border-zinc-800">
-               <p className="text-[10px] opacity-40 uppercase mb-2">User Conversion</p>
-               <p className="text-3xl font-bold">+24%</p>
-            </div>
-          </div>
-        </div>
-        <div className="order-1 lg:order-2">
-           <img src="/assets/pitch/robotic_test.jpg" className="rounded-3xl border border-gold/30 shadow-[0_0_50px_rgba(197,164,109,0.1)]" />
-        </div>
+        <p className="text-[10px] tracking-[0.4em] uppercase">Powered by Pau AI System</p>
       </div>
     </div>
   );
