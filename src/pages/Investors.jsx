@@ -1,103 +1,27 @@
 import React, { useState } from 'react';
 
 const content = {
-  fr: { 
-    title: "PARTENARIAT STRATÉGIQUE", 
-    problem: "Le Défi des 1 000 Pantalons",
-    solution: "Précision Biométrique 99%",
-    impact: "Impact Financier (Par 10k unités)",
-    labels: ["Mesure", "Traditionnel", "TryOnYou", "Économies"],
-    rows: [
-      ["Taux de retour", "35%", "3.2%", "-90%"],
-      ["Coût Logistique", "€150k", "€12k", "€138k"],
-      ["Capital Immobilisé", "€450k", "€40k", "€410k"]
-    ],
-    button: "Télécharger l'Audit Complet" 
-  },
-  en: { 
-    title: "STRATEGIC PARTNERSHIP", 
-    problem: "The 1,000 Pants Challenge",
-    solution: "99% Biometric Precision",
-    impact: "Financial ROI (Per 10k units)",
-    labels: ["Metric", "Traditional", "TryOnYou", "Savings"],
-    rows: [
-      ["Return Rate", "35%", "3.2%", "-90%"],
-      ["Logistics Cost", "$150k", "$12k", "$138k"],
-      ["Dead Inventory", "$450k", "$40k", "$410k"]
-    ],
-    button: "Download Full Audit" 
-  },
-  es: { 
-    title: "ALIANZA ESTRATÉGICA", 
-    problem: "El Reto de los 1,000 Pantalones",
-    solution: "Precisión Biométrica 99%",
-    impact: "ROI Financiero (Por 10k unidades)",
-    labels: ["Métrica", "Tradicional", "TryOnYou", "Ahorro"],
-    rows: [
-      ["Tasa de retorno", "35%", "3.2%", "-90%"],
-      ["Coste Logístico", "€150k", "€12k", "€138k"],
-      ["Capital Muerto", "€450k", "€40k", "€410k"]
-    ],
-    button: "Descargar Auditoría" 
-  }
+  fr: { title: "PARTENARIAT STRATÉGIQUE", stats: "Réduction des retours: 30%", button: "Proposition Technique" },
+  en: { title: "STRATEGIC PARTNERSHIP", stats: "Return reduction: 30%", button: "Technical Proposal" },
+  es: { title: "ALIANZA ESTRATÉGICA", stats: "Reducción de devoluciones: 30%", button: "Propuesta Técnica" }
 };
 
 export default function Investors() {
   const [lang, setLang] = useState('fr');
-  const t = content[lang];
+  const t = content[lang] || content['en'];
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-10 font-light overflow-x-hidden">
-      {/* Selector Idioma */}
-      <div className="w-full max-w-7xl mx-auto flex justify-end gap-6 mb-12">
+    <div style={{ backgroundColor: '#050505', minHeight: '100vh', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', padding: '20px' }}>
+      <div style={{ display: 'flex', gap: '20px', marginBottom: '40px' }}>
         {['es', 'en', 'fr'].map(l => (
-          <button key={l} onClick={() => setLang(l)} className={`uppercase text-[10px] tracking-[0.3em] ${lang === l ? 'text-[#C5A46D] font-bold underline decoration-gold' : 'opacity-30'}`}>{l}</button>
+          <button key={l} onClick={() => setLang(l)} style={{ color: lang === l ? '#C5A46D' : '#666', background: 'none', border: 'none', cursor: 'pointer', textTransform: 'uppercase', fontSize: '12px', letterSpacing: '2px' }}>{l}</button>
         ))}
       </div>
-
-      {/* Hero Narrative */}
-      <div className="max-w-7xl mx-auto text-center mb-24">
-        <h1 className="text-7xl font-black italic mb-4 tracking-tighter uppercase">{t.title}</h1>
-        <p className="gold-text text-xl tracking-[0.5em] uppercase italic opacity-80">Galeries Lafayette • Technical Proposal 2026</p>
-      </div>
-
-      {/* ROI TABLE SECTION */}
-      <div className="max-w-6xl mx-auto mb-32 bg-zinc-900/30 border border-zinc-800 rounded-[2.5rem] p-12 shadow-2xl">
-        <h2 className="text-3xl font-black italic mb-10 tracking-tight uppercase text-center">{t.impact}</h2>
-        
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-zinc-800">
-                {t.labels.map(label => (
-                  <th key={label} className="py-6 text-[10px] uppercase tracking-[0.3em] opacity-40">{label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {t.rows.map((row, i) => (
-                <tr key={i} className="border-b border-zinc-800/50 hover:bg-white/5 transition-colors">
-                  <td className="py-8 font-bold italic text-lg">{row[0]}</td>
-                  <td className="py-8 opacity-60 line-through text-red-500/70">{row[1]}</td>
-                  <td className="py-8 gold-text font-black text-xl">{row[2]}</td>
-                  <td className="py-8">
-                    <span className="bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-xs font-bold">{row[3]}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Branding Footer */}
-      <div className="max-w-7xl mx-auto border-t border-zinc-800 pt-10 flex justify-between items-center opacity-30">
-        <div className="flex items-center gap-6">
-          <span className="text-xl font-black italic uppercase">TryOnYou</span>
-          <div className="w-[1px] h-6 bg-zinc-700"></div>
-          <span className="text-[10px] tracking-widest uppercase italic">Secure Enterprise Deployment</span>
-        </div>
-        <p className="text-[10px] tracking-[0.4em] uppercase">Powered by Pau AI System</p>
+      <h1 style={{ fontSize: '4rem', fontWeight: '900', fontStyle: 'italic', textAlign: 'center', margin: '0', letterSpacing: '-2px' }}>{t.title}</h1>
+      <p style={{ color: '#C5A46D', fontSize: '1.5rem', marginTop: '20px', textTransform: 'uppercase', letterSpacing: '4px' }}>{t.stats}</p>
+      <div style={{ marginTop: '50px', padding: '30px', border: '1px solid #333', borderRadius: '20px', textAlign: 'center', maxWidth: '500px' }}>
+        <p style={{ opacity: 0.5, fontSize: '14px' }}>EXCLUSIVEMENT POUR</p>
+        <h2 style={{ fontSize: '1.8rem', fontWeight: 'bold', letterSpacing: '1px' }}>GALERIES LAFAYETTE</h2>
       </div>
     </div>
   );
