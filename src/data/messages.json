@@ -1,0 +1,47 @@
+{
+  "en": {
+    "status": {
+      "recalibrating": "Recalibrating...",
+      "scan_complete": "Scan Complete",
+      "processing": "Analyzing Physics..."
+    },
+    "input": {
+      "height": "Height",
+      "weight": "Weight",
+      "event": "Event"
+    },
+    "error": {
+      "out_of_bounds": "Measurement out of range. Please step back."
+    }
+  },
+  "fr": {
+    "status": {
+      "recalibrating": "Recalibrage en cours...",
+      "scan_complete": "Scan Terminé",
+      "processing": "Analyse Physique..."
+    },
+    "input": {
+      "height": "Taille",
+      "weight": "Poids",
+      "event": "Événement"
+    },
+    "error": {
+      "out_of_bounds": "Mesure hors limites. Veuillez reculer."
+    }
+  },
+  "es": {
+    "status": {
+      "recalibrating": "Recalibrando...",
+      "scan_complete": "Escaneo Completo",
+      "processing": "Analizando Física..."
+    },
+    "input": {
+      "height": "Altura",
+      "weight": "Peso",
+      "event": "Evento"
+    },
+    "error": {
+      "out_of_bounds": "Medida fuera de rango. Por favor retroceda."
+    }
+  }
+}
