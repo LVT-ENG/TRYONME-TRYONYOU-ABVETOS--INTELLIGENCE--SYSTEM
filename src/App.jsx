@@ -5,6 +5,7 @@ import Loading from './components/Loading';
 // Lazy load pages to split bundles
 const Investors = lazy(() => import('./pages/Investors'));
 const MagicMirror = lazy(() => import('./pages/MagicMirror'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 export default function App() {
   return (
@@ -14,7 +15,7 @@ export default function App() {
           <Route path="/" element={<Investors />} />
           <Route path="/investors" element={<Investors />} />
           <Route path="/MagicMirror" element={<MagicMirror />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
     </Router>
