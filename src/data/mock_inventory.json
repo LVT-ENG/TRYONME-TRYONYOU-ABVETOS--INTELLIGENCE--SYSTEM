@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Blazer Lafayette Slim",
+    "brand": "Galeries Lafayette",
+    "size": "M",
+    "measurements": { "chest": 102, "waist": 88, "shoulders": 44 },
+    "image": "https://url-de-prueba.com/blazer.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Pantalón Técnico Pro",
+    "brand": "TRYONYOU Core",
+    "size": "L",
+    "measurements": { "waist": 92, "hips": 105, "length": 110 },
+    "image": "https://url-de-prueba.com/pantalon.jpg"
+  }
+]
