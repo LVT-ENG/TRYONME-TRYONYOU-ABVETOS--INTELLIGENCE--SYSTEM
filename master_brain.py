@@ -1,20 +1,59 @@
-import json, time
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
+import os
+from http.server import HTTPServer, BaseHTTPRequestHandler
+from core.agent_executor import AgentExecutor
 
-# --- CONFIGURACIÓN ESTRATÉGICA ---
-VAL, PAT = "120M-400M EUR", "PCT/EP2025/067317"
-DATOS = {"altura": 1.78, "hombros": 44, "talla": "M (Couture Fit)"}
+# Intentar cargar variables de entorno si existe un archivo .env simple
+if os.path.exists(".env"):
+    with open(".env", "r") as f:
+        for line in f:
+            if "=" in line and not line.startswith("#"):
+                k, v = line.strip().split("=", 1)
+                os.environ[k] = v
 
-H = """<!DOCTYPE html><html lang='es'><head><meta charset='UTF-8'><script src='https://cdn.tailwindcss.com'></script><script type='module' src='https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js'></script></head>"""
-N = """<body class='bg-black text-white font-sans'><nav class='p-6 border-b border-white/10 flex justify-between items-center'><h1 class='text-[#C5A46D] font-black italic text-2xl'>TRYONYOU × LAFAYETTE</h1><div class='text-[10px] opacity-60 uppercase'>Patent: """+PAT+"""</div></nav>"""
-C = """<div id='app' class='min-h-[85vh] flex flex-col items-center justify-center p-6 text-center'><div id='w' class='space-y-8 animate-pulse'><h2 class='text-8xl font-black uppercase italic leading-none'>EL ESPEJO<br/><span class='text-[#C5A46D] font-black'>INTELIGENTE.</span></h2><button onclick='st()' class='bg-[#C5A46D] text-black px-16 py-7 rounded-full font-black text-2xl shadow-[0_0_50px_rgba(197,164,109,0.4)]'>INICIAR IA</button></div><div id='sc' class='hidden space-y-6'><video id='v' autoplay playsinline class='w-80 h-[480px] rounded-[3rem] object-cover border-2 border-[#C5A46D]/30'></video><button onclick='pr()' class='bg-white text-black px-12 py-4 rounded-2xl font-black uppercase text-xs'>Escanear</button></div><div id='r' class='hidden grid lg:grid-cols-2 gap-12 w-full max-w-6xl text-left'><div class='bg-zinc-900 rounded-[4rem] aspect-[3/4] overflow-hidden border border-white/5 relative shadow-2xl'><model-viewer src='https://modelviewer.dev/shared-assets/models/RobotExpressive.glb' auto-rotate camera-controls style='width:100%;height:100%' shadow-intensity='1' environment-image='neutral'></model-viewer></div><div class='flex flex-col justify-center space-y-8'><h3 class='text-5xl font-black text-[#C5A46D] italic uppercase'>Ficha Técnica</h3><div class='grid grid-cols-2 gap-4'><div class='bg-white/5 p-6 rounded-3xl border border-white/10'><p class='text-[10px] uppercase opacity-50'>Altura</p><p class='text-3xl font-black italic'>1.78 m</p></div><div class='bg-white/5 p-6 rounded-3xl border border-white/10'><p class='text-[10px] uppercase opacity-50'>Hombros</p><p class='text-3xl font-black italic'>44 cm</p></div></div><div class='bg-[#C5A46D] p-10 rounded-[3rem] text-black shadow-2xl'><p class='font-black text-sm opacity-70 uppercase tracking-tighter'>Talla Sugerida</p><p class='text-6xl font-black italic'>TALLA M</p></div><div class='p-6 bg-green-500/10 border border-green-500/20 rounded-3xl text-center'><p class='text-green-500 font-bold text-xs uppercase text-center'>Sincronizado con Looker Studio y Patente ✅</p></div></div></div></div>"""
-JS = """<script>async function st(){document.getElementById('w').className='hidden';document.getElementById('sc').className='block';const s=await navigator.mediaDevices.getUserMedia({video:true});document.getElementById('v').srcObject=s;} function pr(){document.getElementById('sc').innerHTML='<div class=\"text-4xl font-black animate-pulse text-[#C5A46D] italic uppercase\">Procesando...</div>';setTimeout(()=>{document.getElementById('sc').className='hidden';document.getElementById('r').className='grid lg:grid-cols-2 gap-12 w-full max-w-6xl';},2500);}</script></body></html>"""
+# Inicializar el Ejecutor de IA
+executor = AgentExecutor()
 
-class M(BaseHTTPRequestHandler):
-    def _h(self, s=200, c="text/html"):
-        self.send_response(s); self.send_header("Content-type", c); self.send_header("Access-Control-Allow-Origin", "*"); self.send_header("bypass-tunnel-reminder", "true"); self.end_headers()
+class BrainHandler(BaseHTTPRequestHandler):
+    def _set_headers(self, status=200):
+        self.send_response(status)
+        self.send_header("Content-type", "application/json")
+        self.send_header("Access-Control-Allow-Origin", "*") # Permite conexión desde React
+        self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.end_headers()
+
+    def do_OPTIONS(self):
+        self._set_headers()
+
     def do_GET(self):
-        if self.path == '/': self._h(); self.wfile.write((H+N+C+JS).encode())
-        elif self.path == '/api/stats': self._h(200,"application/json"); self.wfile.write(json.dumps([{"h":1.78,"s":44,"t":"M"}]).encode())
-        elif self.path == '/invest': self._h(200,"application/json"); self.wfile.write(json.dumps({"val":VAL,"pat":PAT}).encode())
-print("🚀 ECOSISTEMA ACTUALIZADO Y PREVIEW FIX"); HTTPServer(('', 8080), M).serve_forever()
+        self._set_headers()
+        self.wfile.write(json.dumps({"status": "TRYONYOU Brain Online", "ai_ready": executor.model_active}).encode())
+
+    def do_POST(self):
+        if self.path == '/api/ask-pau':
+            content_length = int(self.headers['Content-Length'])
+            post_data = self.rfile.read(content_length)
+            
+            try:
+                data = json.loads(post_data)
+                
+                # Ejecutar Agente Pau
+                result = executor.run_expert("agent_01_pau_assistant", data)
+                
+                self._set_headers(200)
+                self.wfile.write(json.dumps(result).encode())
+            except Exception as e:
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"error": str(e)}).encode())
+        else:
+            self._set_headers(404)
+            self.wfile.write(json.dumps({"error": "Ruta no encontrada"}).encode())
+
+print(f"💎 TRYONYOU SERVER LIVE: http://localhost:8080")
+if not os.getenv("GOOGLE_API_KEY"):
+    print("⚠️  AVISO: No se detectó GOOGLE_API_KEY. La IA no responderá.")
+else:
+    print("✅  IA Conectada y lista.")
+
+HTTPServer(('', 8080), BrainHandler).serve_forever()
