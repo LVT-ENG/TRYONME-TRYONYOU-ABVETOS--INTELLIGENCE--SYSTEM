@@ -1,9 +1,22 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 from garment_data import GARMENT_DB
 
 app = FastAPI(title="TRYONYOU Core Engine", version="Ultimatum-2.1")
 
+# Configure CORS to allow requests from the frontend (adjust origins as needed)
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Fuente [4]: Modelo de datos de entrada (Medidas normalizadas, no video raw)
 class UserMeasurements(BaseModel):
     chest: float = Field(..., ge=30, le=200, description="Contorno de pecho en cm")
