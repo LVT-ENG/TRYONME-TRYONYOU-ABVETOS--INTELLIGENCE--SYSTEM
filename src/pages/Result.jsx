@@ -17,33 +17,29 @@ const Result = () => {
         setLoading(true)
         
         // Call the matching endpoint
-        const response = await fetch('/api/matching', {
+        // Updated path to point to the Python backend on /api/match/best
+        const response = await fetch('/api/match/best', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
+            // Added height as required by the Python backend
             height: measurements.height || 170,
-            weight: measurements.weight || 70,
             chest: measurements.chest || 96,
             waist: measurements.waist || 86,
             hips: measurements.hips || 100,
-            shoulder_width: measurements.shoulder_width || 42,
-            arm_length: measurements.arm_length || 62,
-            leg_length: measurements.leg_length || 84,
-            torso_length: measurements.torso_length || 66,
-            occasion: measurements.occasion || null,
-            category: measurements.category || null,
-            size_preference: measurements.size_preference || 'M',
+            // Only send fields required by the backend Pydantic model
           }),
         })
 
         const data = await response.json()
         
-        if (data.success) {
+        // Adapt Python response to frontend state structure if needed
+        if (data.garment_id) {
           setResult(data)
         } else {
-          setError(data.error || 'Failed to find a matching garment')
+          setError('Failed to find a matching garment')
         }
       } catch (err) {
         setError(err.message || 'An error occurred')
@@ -98,18 +94,25 @@ const Result = () => {
     )
   }
 
-  if (!result) {
-    return (
-      <div className="min-h-screen bg-gray-900 text-white pt-20 flex items-center justify-center">
-        <p className="text-xl text-gray-300">No results found</p>
-      </div>
-    )
+  if (!result || result.garment_id === "NONE") {
+     return (
+       <div className="min-h-screen bg-gray-900 text-white pt-20 flex items-center justify-center flex-col">
+         <p className="text-xl text-gray-300 mb-4">{result?.explanation || "No suitable garment found."}</p>
+         <button
+            onClick={() => navigate('/')}
+            className="px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white transition-colors"
+          >
+            Try Again
+          </button>
+       </div>
+     )
   }
 
-  const garment = result.best_garment
-  const fitScore = result.fit_score
-  const explanation = result.explanation
-  const details = result.details || {}
+  // Use dynamic fields from API
+  const garmentName = result.garment_name;
+  const fitScore = result.match_score.toFixed(1);
+  const explanation = result.explanation;
+  const fitStatus = result.fit_status;
 
   return (
     <div className="min-h-screen bg-gray-900 text-white pt-20">
@@ -135,8 +138,8 @@ const Result = () => {
             >
               <div className="text-center">
                 <div className="text-6xl mb-4">👗</div>
-                <p className="text-gray-400">{garment.name}</p>
-                <p className="text-sm text-gray-500 mt-2">{garment.brand}</p>
+                <p className="text-gray-400">{garmentName}</p>
+                <p className="text-sm text-gray-500 mt-2">{fitStatus}</p>
               </div>
             </motion.div>
 
@@ -156,19 +159,8 @@ const Result = () => {
 
               {/* Garment Info */}
               <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                <h3 className="text-2xl font-bold mb-2">{garment.name}</h3>
-                <p className="text-gray-400 mb-4">{garment.brand}</p>
-                <p className="text-gray-300 mb-4">{garment.description}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-lg font-bold text-blue-400">${garment.price.toLocaleString('en-US')}</span>
-                  <span className="text-sm bg-blue-600/30 px-3 py-1 rounded-full">{garment.category.toUpperCase()}</span>
-                </div>
-              </div>
-
-              {/* Why It Fits */}
-              <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-                <h3 className="text-lg font-bold mb-4">Why This Fit</h3>
-                <p className="text-gray-300 leading-relaxed">{explanation}</p>
+                <h3 className="text-2xl font-bold mb-2">{garmentName}</h3>
+                <p className="text-gray-300 mb-4">{explanation}</p>
               </div>
 
               {/* CTA Buttons */}
@@ -191,64 +183,6 @@ const Result = () => {
               </div>
             </motion.div>
           </div>
-
-          {/* Detailed Measurements Analysis */}
-          {details.measurement_details && details.measurement_details.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="bg-gray-800 rounded-xl p-8 border border-gray-700"
-            >
-              <h3 className="text-2xl font-bold mb-6">Detailed Fit Analysis</h3>
-              
-              <div className="space-y-6">
-                {details.measurement_details.map((measurement, index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="font-semibold">{measurement.measurement}</span>
-                      <span className={`text-sm font-bold ${
-                        measurement.fit_quality === 'Perfect' ? 'text-green-400' :
-                        measurement.fit_quality === 'Excellent' ? 'text-green-400' :
-                        measurement.fit_quality === 'Good' ? 'text-blue-400' :
-                        measurement.fit_quality === 'Fair' ? 'text-yellow-400' :
-                        'text-orange-400'
-                      }`}>
-                        {measurement.fit_quality}
-                      </span>
-                    </div>
-                    <div className="flex justify-between text-sm text-gray-400 mb-1">
-                      <span>Your: {measurement.user_value}cm</span>
-                      <span>Garment: {measurement.garment_value}cm</span>
-                      <span>Deviation: {measurement.deviation.toFixed(1)}cm</span>
-                    </div>
-                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${Math.min(measurement.fit_score, 100)}%` }}
-                        transition={{ duration: 0.6, delay: 0.1 * index }}
-                        className={`h-full ${
-                          measurement.fit_score >= 95 ? 'bg-green-500' :
-                          measurement.fit_score >= 90 ? 'bg-green-500' :
-                          measurement.fit_score >= 75 ? 'bg-blue-500' :
-                          measurement.fit_score >= 60 ? 'bg-yellow-500' :
-                          'bg-orange-500'
-                        }`}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-gray-700">
-                <p className="text-sm text-gray-400">
-                  Fabric elasticity: <span className="text-blue-400 font-semibold">{details.fabric_elasticity}%</span> | 
-                  Drape score: <span className="text-blue-400 font-semibold">{details.fabric_drape}/10</span> | 
-                  Tolerance: <span className="text-blue-400 font-semibold">{details.tolerance.toFixed(1)}cm</span>
-                </p>
-              </div>
-            </motion.div>
-          )}
         </div>
       </section>
 
