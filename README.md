@@ -156,6 +156,10 @@ dist/
 - ✅ Check all images load correctly
 - ✅ Test on mobile devices
 
+## 📚 Documentation
+
+- [Google Platform News & Updates](./docs/GOOGLE_PLATFORM_NEWS.md) - Information on Gemini 3 Pro, Jules, Veo 3.1, and other integrated technologies.
+
 ## 📄 License
 
 Private - TRYONYOU © 2025
