@@ -51,7 +51,7 @@ def convert_md_to_pdf(md_path, pdf_path):
 def update_pdf():
     """Función principal para actualizar el PDF."""
     try:
-        content_data = parse_content_map('content_map.txt')
+        content_data = parse_content_map('../landing/content_map.txt')
         md_file = generate_markdown_content('one_pager_template.md', content_data)
         convert_md_to_pdf(md_file, "tryonyou_one_pager.pdf")
         
