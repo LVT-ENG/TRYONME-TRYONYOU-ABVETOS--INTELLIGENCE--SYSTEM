@@ -1,35 +1,24 @@
-import React from 'react'
-import { Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Home from './pages/Home';
+import Pilot from './pages/Pilot';
+import Scan from './pages/Scan';
+import Voice from './pages/Voice';
+import Result from './pages/Result';
+import Demo from './pages/Demo';
 
-// Pages
-import Home from './pages/Home'
-import Brands from './pages/Brands'
-import MyAvatar from './pages/MyAvatar'
-import Wardrobe from './pages/Wardrobe'
-import Showroom from './pages/Showroom'
-import GlowUp from './pages/GlowUp'
-import Demo from './pages/Demo'
-
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen bg-tryonyou-black">
-      <Navbar />
-      <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/brands" element={<Brands />} />
-          <Route path="/my-avatar" element={<MyAvatar />} />
-          <Route path="/wardrobe" element={<Wardrobe />} />
-          <Route path="/showroom" element={<Showroom />} />
-          <Route path="/glow-up" element={<GlowUp />} />
-          <Route path="/demo" element={<Demo />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/pilot" element={<Pilot />} />
+        <Route path="/scan" element={<Scan />} />
+        <Route path="/voice" element={<Voice />} />
+        <Route path="/result" element={<Result />} />
+        <Route path="/demo" element={<Demo />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
 }
-
-export default App
