@@ -67,7 +67,7 @@ npm run preview
 #### Vercel
 ```bash
 # Install Vercel CLI (if not installed)
-npm i -g vercel
+npx vercel
 
 # Deploy
 vercel --prod
