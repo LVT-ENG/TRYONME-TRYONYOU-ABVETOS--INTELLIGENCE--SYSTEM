@@ -6,12 +6,12 @@ instalacion: 0 EUR
 soporte: Incluido
 
 [beneficios]
-beneficio_1: Aumento del 20%% en la tasa de conversión.
-beneficio_2: Reducción del 15%% en devoluciones.
+beneficio_1: Aumento del 20% en la tasa de conversión.
+beneficio_2: Reducción del 15% en devoluciones.
 beneficio_3: Experiencia de cliente innovadora y memorable.
 
 [contacto]
-nombre: Pau Fernández
+nombre: [Your Name]
 cargo: Director Comercial
-email: pau.fernandez@tryonyou.com
-telefono: +34 600 123 456
+email: contact@tryonyou.com
+telefono: [Your Phone Number]
