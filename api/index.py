@@ -1,15 +1,15 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from garment_data import GARMENT_DB
 
 app = FastAPI(title="TRYONYOU Core Engine", version="Ultimatum-2.1")
 
 # Fuente [4]: Modelo de datos de entrada (Medidas normalizadas, no video raw)
 class UserMeasurements(BaseModel):
-    chest: float
-    waist: float
-    hips: float
-    height: float
+    chest: float = Field(..., ge=30, le=200, description="Contorno de pecho en cm")
+    waist: float = Field(..., ge=30, le=200, description="Contorno de cintura en cm")
+    hips: float = Field(..., ge=30, le=200, description="Contorno de cadera en cm")
+    height: float = Field(..., ge=100, le=250, description="Altura en cm")
 
 class MatchResponse(BaseModel):
     garment_id: str
