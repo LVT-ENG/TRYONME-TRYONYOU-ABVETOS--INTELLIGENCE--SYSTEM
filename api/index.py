@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from garment_data import GARMENT_DB
+from .garment_data import GARMENT_DB
 
 app = FastAPI(title="TRYONYOU Core Engine", version="Ultimatum-2.1")
 
