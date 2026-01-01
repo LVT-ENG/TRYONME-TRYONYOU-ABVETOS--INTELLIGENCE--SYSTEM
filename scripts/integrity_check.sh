@@ -26,7 +26,7 @@ for file in "${REQUIRED_FILES[@]}"; do
   fi
 done
 
-if [ $MISSING -eq 1 ]; then
+if [ "$MISSING" -eq 1 ]; then
   echo "⚠️  Integrity Check FAILED. Please fix missing files/directories."
   exit 1
 else
