@@ -73,13 +73,13 @@ const Home = () => {
             >
               <motion.div variants={itemVariants}>
                 <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4">
-                  Your Perfect Fit,
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> Instantly</span>
+                  No vas a hacerte un TryOnYou.
+                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> TryOnYou lo hará por ti.</span>
                 </h2>
               </motion.div>
 
               <motion.p variants={itemVariants} className="text-xl text-gray-300 leading-relaxed">
-                TRYONYOU uses AI and biometric body scanning to find the garment that fits you perfectly. No more returns. No more guessing. Just fashion that works for your body.
+                Medimos tu cuerpo para que la ropa encaje a la primera.
               </motion.p>
 
               <motion.div variants={itemVariants} className="flex gap-4">
@@ -87,18 +87,18 @@ const Home = () => {
                   onClick={() => navigate('/pilot')}
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition-colors shadow-lg uppercase tracking-wider"
                 >
-                  Enter Pilot
+                  ¿De verdad vas a probarte 50 pantalones para acertar uno?
                 </button>
                 <button
-                  onClick={() => navigate('/demo')}
+                  onClick={() => navigate('/pilot')}
                   className="px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white transition-colors uppercase tracking-wider"
                 >
-                  View Demo
+                  Empezar ahora
                 </button>
               </motion.div>
 
               <motion.div variants={itemVariants} className="text-sm text-gray-400">
-                No login required. No friction. Just scan, confirm, and discover your perfect fit.
+                Cero fricción. Mensaje claro en menos de 5 segundos.
               </motion.div>
             </motion.div>
 
@@ -260,7 +260,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold mb-6"
           >
-            Ready to Find Your Perfect Fit?
+            ¿Listo para que TryOnYou lo haga por ti?
           </motion.h2>
 
           <motion.p
@@ -269,7 +269,7 @@ const Home = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-xl text-gray-300 mb-8"
           >
-            Join the TRYONYOU pilot and experience fashion technology that actually works.
+            El flujo mínimo de usuario te llevará al resultado en segundos.
           </motion.p>
 
           <motion.button
@@ -281,7 +281,7 @@ const Home = () => {
             onClick={() => navigate('/pilot')}
             className="px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white text-lg transition-colors shadow-lg uppercase tracking-wider"
           >
-            Start Your Scan
+            Empezar ahora
           </motion.button>
         </div>
       </section>
