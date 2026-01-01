@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import SyncControl from '../components/SyncControl';
 import inventory from '../data/mock_inventory.json';
 
 const translations = {
@@ -14,7 +15,8 @@ export default function MagicMirror() {
 
   return (
     <div className="min-h-screen bg-black text-white p-10 flex flex-col items-center">
-      <h1 className="text-4xl font-black italic gold-text mb-10 tracking-widest">{t.match}</h1>
+      <h1 className="text-4xl font-black italic gold-text mb-4 tracking-widest">TU AJUSTE PERFECTO</h1>
+<SyncControl />
       
       <div className="border-2 border-[#C5A46D] p-8 rounded-full mb-10 animate-pulse">
         <div className="w-64 h-64 rounded-full bg-zinc-900 flex items-center justify-center border border-zinc-700">
