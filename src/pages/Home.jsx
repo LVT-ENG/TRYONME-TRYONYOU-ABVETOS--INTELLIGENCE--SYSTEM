@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { ArrowRight, CheckCircle, Smartphone, UserCheck, Shirt } from 'lucide-react'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -11,22 +12,22 @@ const Home = () => {
     {
       title: "Cero Devoluciones",
       description: "Ajuste perfecto garantizado. Nuestra inteligencia corporal asegura que cada prenda te quede como un guante.",
-      icon: "✓"
+      icon: <CheckCircle className="w-8 h-8 text-green-400" />
     },
     {
       title: "Ajuste por Inteligencia Corporal",
       description: "Análisis biométrico por IA que entiende tus proporciones únicas y recomienda prendas adaptadas a ti.",
-      icon: "◆"
+      icon: <UserCheck className="w-8 h-8 text-blue-400" />
     },
     {
       title: "Análisis de Tejido y Caída",
       description: "Analizamos la elasticidad y rigidez de la tela para predecir cómo se moverá y sentirá en tu cuerpo.",
-      icon: "≈"
+      icon: <Shirt className="w-8 h-8 text-purple-400" />
     },
     {
       title: "IA + Medición Biométrica",
       description: "Visión artificial avanzada que captura tus medidas con precisión. Sin cintas métricas. Solo tu móvil.",
-      icon: "⊙"
+      icon: <Smartphone className="w-8 h-8 text-pink-400" />
     },
   ]
 
@@ -75,7 +76,7 @@ const Home = () => {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold tracking-widest text-white">TRYONYOU</h1>
+          <h1 className="text-2xl font-bold tracking-widest text-white cursor-pointer" onClick={() => navigate('/')}>TRYONYOU</h1>
           <div className="text-sm text-gray-400 hidden md:block">Tecnología de Moda para el Ajuste Perfecto</div>
         </div>
       </nav>
@@ -175,6 +176,78 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Features/Claims Section */}
+      <section className="py-20 bg-gray-900 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+             <h2 className="text-3xl md:text-4xl font-bold mb-4">¿Por qué TryOnYou?</h2>
+             <p className="text-gray-400 max-w-2xl mx-auto">Nuestra tecnología elimina la incertidumbre de comprar ropa online.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {claims.map((claim, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors"
+              >
+                <div className="bg-gray-700/50 w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto md:mx-0">
+                  {claim.icon}
+                </div>
+                <h3 className="text-xl font-bold mb-2">{claim.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{claim.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+         <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Cómo Funciona</h2>
+              <p className="text-gray-400">Tres pasos simples para tu ajuste perfecto.</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {steps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  className="relative bg-gray-900 p-8 rounded-2xl border border-gray-700 text-center"
+                >
+                  <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl border-4 border-gray-800">
+                    {step.step}
+                  </div>
+                  <h3 className="text-xl font-bold mt-6 mb-3">{step.title}</h3>
+                  <p className="text-gray-400">{step.description}</p>
+                </motion.div>
+              ))}
+            </div>
+         </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-950 py-12 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-2xl font-bold tracking-widest text-white mb-4">TRYONYOU</h2>
+          <p className="text-gray-500 mb-8">Live it. Where beauty lives in movement.</p>
+          <div className="flex justify-center gap-6 text-sm text-gray-400">
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Contact</a>
+          </div>
+          <div className="mt-8 text-xs text-gray-600">
+            © 2025 TryOnYou. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
