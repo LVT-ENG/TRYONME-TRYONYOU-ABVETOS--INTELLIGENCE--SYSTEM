@@ -1,17 +1,167 @@
 {
-  "hero": {
-    "title": "Your Trusted Virtual Fitting Room",
-    "subtitle": "Find the perfect outfit without trying on 510 pants or making infinite returns.",
-    "cta": "Get Started Now"
+  "en": {
+    "hero": {
+      "title": "You won't do a TryOnYou.",
+      "title_gradient": "TryOnYou will do it for you.",
+      "description": "Forget confused sizing. We measure your body with AI so clothes fit the first time.",
+      "cta_primary": "Try Now",
+      "cta_secondary": "Learn More",
+      "badge": "Zero friction. Results in under 5 seconds."
+    },
+    "claims": [
+      {
+        "title": "Zero Returns",
+        "description": "Perfect fit guaranteed. Our body intelligence ensures every garment fits like a glove."
+      },
+      {
+        "title": "Body Intelligence Fit",
+        "description": "AI biometric analysis that understands your unique proportions and recommends clothes adapted to you."
+      },
+      {
+        "title": "Fabric & Drape Analysis",
+        "description": "We analyze fabric elasticity and rigidity to predict how it will move and feel on your body."
+      },
+      {
+        "title": "AI + Biometric Measurement",
+        "description": "Advanced computer vision that captures your measurements with precision. No tape measures. Just your phone."
+      }
+    ],
+    "steps": {
+      "title": "How It Works",
+      "subtitle": "Three simple steps for your perfect fit.",
+      "items": [
+        {
+          "step": "1",
+          "title": "Body Scan",
+          "description": "Use your phone camera to capture your measurements with AI precision."
+        },
+        {
+          "step": "2",
+          "title": "Confirm Details",
+          "description": "Answer a few quick questions about your preferences and the occasion."
+        },
+        {
+          "step": "3",
+          "title": "Perfect Match",
+          "description": "Receive the garment that fits you best, with a detailed explanation of why."
+        }
+      ]
+    },
+    "features_title": "Why TryOnYou?",
+    "features_subtitle": "Our technology eliminates the uncertainty of online clothing shopping.",
+    "footer": {
+      "rights": "© 2025 TryOnYou. All rights reserved.",
+      "links": ["Privacy Policy", "Terms of Service", "Contact"]
+    }
   },
-  "footer": {
-    "contact": "Contact: hello@tryonyou.app",
-    "rights": "© 2025 TRYONYOU · All rights reserved",
-    "mini_cta": "Want to integrate TryOnYou with your brand? Request the demo."
+  "es": {
+    "hero": {
+      "title": "No vas a hacerte un TryOnYou.",
+      "title_gradient": "TryOnYou lo hará por ti.",
+      "description": "Olvídate de las tallas confusas. Medimos tu cuerpo con IA para que la ropa encaje a la primera.",
+      "cta_primary": "Probar ahora",
+      "cta_secondary": "Saber más",
+      "badge": "Cero fricción. Resultados en menos de 5 segundos."
+    },
+    "claims": [
+      {
+        "title": "Cero Devoluciones",
+        "description": "Ajuste perfecto garantizado. Nuestra inteligencia corporal asegura que cada prenda te quede como un guante."
+      },
+      {
+        "title": "Ajuste por Inteligencia Corporal",
+        "description": "Análisis biométrico por IA que entiende tus proporciones únicas y recomienda prendas adaptadas a ti."
+      },
+      {
+        "title": "Análisis de Tejido y Caída",
+        "description": "Analizamos la elasticidad y rigidez de la tela para predecir cómo se moverá y sentirá en tu cuerpo."
+      },
+      {
+        "title": "IA + Medición Biométrica",
+        "description": "Visión artificial avanzada que captura tus medidas con precisión. Sin cintas métricas. Solo tu móvil."
+      }
+    ],
+    "steps": {
+      "title": "Cómo Funciona",
+      "subtitle": "Tres pasos simples para tu ajuste perfecto.",
+      "items": [
+        {
+          "step": "1",
+          "title": "Escaneo Corporal",
+          "description": "Usa la cámara de tu móvil para capturar tus medidas con precisión de IA."
+        },
+        {
+          "step": "2",
+          "title": "Confirma Detalles",
+          "description": "Responde unas preguntas rápidas sobre tus preferencias y la ocasión."
+        },
+        {
+          "step": "3",
+          "title": "Match Perfecto",
+          "description": "Recibe la prenda que mejor te sienta, con una explicación detallada del porqué."
+        }
+      ]
+    },
+    "features_title": "¿Por qué TryOnYou?",
+    "features_subtitle": "Nuestra tecnología elimina la incertidumbre de comprar ropa online.",
+    "footer": {
+      "rights": "© 2025 TryOnYou. Todos los derechos reservados.",
+      "links": ["Política de Privacidad", "Términos de Servicio", "Contacto"]
+    }
   },
-  "about": {
-    "title": "About TRYONYOU",
-    "description": "AI-powered virtual try-on platform revolutionizing online fashion shopping."
+  "fr": {
+    "hero": {
+      "title": "Vous ne ferez pas un TryOnYou.",
+      "title_gradient": "TryOnYou le fera pour vous.",
+      "description": "Oubliez les tailles confuses. Nous mesurons votre corps avec l'IA pour que les vêtements vous aillent du premier coup.",
+      "cta_primary": "Essayer maintenant",
+      "cta_secondary": "En savoir plus",
+      "badge": "Zéro friction. Résultats en moins de 5 secondes."
+    },
+    "claims": [
+      {
+        "title": "Zéro Retour",
+        "description": "Ajustement parfait garanti. Notre intelligence corporelle assure que chaque vêtement vous va comme un gant."
+      },
+      {
+        "title": "Ajustement par Intelligence Corporelle",
+        "description": "Analyse biométrique par IA qui comprend vos proportions uniques et recommande des vêtements adaptés à vous."
+      },
+      {
+        "title": "Analyse du Tissu et du Drapé",
+        "description": "Nous analysons l'élasticité et la rigidité du tissu pour prédire comment il bougera et se sentira sur votre corps."
+      },
+      {
+        "title": "IA + Mesure Biométrique",
+        "description": "Vision par ordinateur avancée qui capture vos mesures avec précision. Pas de ruban à mesurer. Juste votre téléphone."
+      }
+    ],
+    "steps": {
+      "title": "Comment ça marche",
+      "subtitle": "Trois étapes simples pour votre ajustement parfait.",
+      "items": [
+        {
+          "step": "1",
+          "title": "Scan Corporel",
+          "description": "Utilisez l'appareil photo de votre téléphone pour capturer vos mesures avec la précision de l'IA."
+        },
+        {
+          "step": "2",
+          "title": "Confirmer les Détails",
+          "description": "Répondez à quelques questions rapides sur vos préférences et l'occasion."
+        },
+        {
+          "step": "3",
+          "title": "Match Parfait",
+          "description": "Recevez le vêtement qui vous va le mieux, avec une explication détaillée du pourquoi."
+        }
+      ]
+    },
+    "features_title": "Pourquoi TryOnYou ?",
+    "features_subtitle": "Notre technologie élimine l'incertitude de l'achat de vêtements en ligne.",
+    "footer": {
+      "rights": "© 2025 TryOnYou. Tous droits réservés.",
+      "links": ["Politique de Confidentialité", "Conditions d'Utilisation", "Contact"]
+    }
   }
 }
-

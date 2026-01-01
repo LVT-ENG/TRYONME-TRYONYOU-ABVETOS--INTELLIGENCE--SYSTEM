@@ -1,54 +1,26 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { ArrowRight, CheckCircle, Smartphone, UserCheck, Shirt } from 'lucide-react'
+import { ArrowRight, CheckCircle, Smartphone, UserCheck, Shirt, Globe } from 'lucide-react'
+import texts from '../data/texts.json'
 
 const Home = () => {
   const navigate = useNavigate()
-  const [activeClaimIndex, setActiveClaimIndex] = useState(0)
+  const [lang, setLang] = useState('en')
 
-  // FEATURES / CLAIMS (Translated to Spanish)
-  const claims = [
-    {
-      title: "Cero Devoluciones",
-      description: "Ajuste perfecto garantizado. Nuestra inteligencia corporal asegura que cada prenda te quede como un guante.",
-      icon: <CheckCircle className="w-8 h-8 text-green-400" />
-    },
-    {
-      title: "Ajuste por Inteligencia Corporal",
-      description: "Análisis biométrico por IA que entiende tus proporciones únicas y recomienda prendas adaptadas a ti.",
-      icon: <UserCheck className="w-8 h-8 text-blue-400" />
-    },
-    {
-      title: "Análisis de Tejido y Caída",
-      description: "Analizamos la elasticidad y rigidez de la tela para predecir cómo se moverá y sentirá en tu cuerpo.",
-      icon: <Shirt className="w-8 h-8 text-purple-400" />
-    },
-    {
-      title: "IA + Medición Biométrica",
-      description: "Visión artificial avanzada que captura tus medidas con precisión. Sin cintas métricas. Solo tu móvil.",
-      icon: <Smartphone className="w-8 h-8 text-pink-400" />
-    },
-  ]
+  const content = texts[lang] || texts['en']
+  const { hero, claims, steps, features_title, features_subtitle, footer } = content
 
-  // HOW IT WORKS STEPS (Translated to Spanish)
-  const steps = [
-    {
-      step: "1",
-      title: "Escaneo Corporal",
-      description: "Usa la cámara de tu móvil para capturar tus medidas con precisión de IA."
-    },
-    {
-      step: "2",
-      title: "Confirma Detalles",
-      description: "Responde unas preguntas rápidas sobre tus preferencias y la ocasión."
-    },
-    {
-      step: "3",
-      title: "Match Perfecto",
-      description: "Recibe la prenda que mejor te sienta, con una explicación detallada del porqué."
-    }
-  ]
+  // Map icon names to components if needed, or static mapping
+  const getIcon = (index) => {
+    const icons = [
+      <CheckCircle className="w-8 h-8 text-green-400" />,
+      <UserCheck className="w-8 h-8 text-blue-400" />,
+      <Shirt className="w-8 h-8 text-purple-400" />,
+      <Smartphone className="w-8 h-8 text-pink-400" />
+    ]
+    return icons[index] || <CheckCircle className="w-8 h-8 text-gray-400" />
+  }
 
   // ANIMATION VARIANTS
   const containerVariants = {
@@ -71,13 +43,26 @@ const Home = () => {
     },
   }
 
+  const toggleLang = () => {
+    const langs = ['en', 'es', 'fr']
+    const currentIndex = langs.indexOf(lang)
+    const nextIndex = (currentIndex + 1) % langs.length
+    setLang(langs[nextIndex])
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-hidden font-sans">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-widest text-white cursor-pointer" onClick={() => navigate('/')}>TRYONYOU</h1>
-          <div className="text-sm text-gray-400 hidden md:block">Tecnología de Moda para el Ajuste Perfecto</div>
+          <div className="flex items-center gap-4">
+             <div className="text-sm text-gray-400 hidden md:block">Fashion Tech for the Perfect Fit</div>
+             <button onClick={toggleLang} className="flex items-center gap-2 px-3 py-1 rounded-full bg-gray-800 hover:bg-gray-700 transition-colors text-xs uppercase font-bold border border-gray-700">
+               <Globe className="w-3 h-3" />
+               {lang}
+             </button>
+          </div>
         </div>
       </nav>
 
@@ -95,15 +80,15 @@ const Home = () => {
             >
               <motion.div variants={itemVariants}>
                 <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white">
-                  No vas a hacerte un TryOnYou.
+                  {hero.title}
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent block mt-2">
-                    TryOnYou lo hará por ti.
+                    {hero.title_gradient}
                   </span>
                 </h2>
               </motion.div>
 
               <motion.p variants={itemVariants} className="text-xl text-gray-300 leading-relaxed max-w-lg">
-                Olvídate de las tallas confusas. Medimos tu cuerpo con IA para que la ropa encaje a la primera.
+                {hero.description}
               </motion.p>
 
               <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
@@ -111,19 +96,19 @@ const Home = () => {
                   onClick={() => navigate('/pilot')}
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition-all shadow-lg shadow-blue-900/20 uppercase tracking-wider transform hover:-translate-y-1"
                 >
-                  Probar ahora
+                  {hero.cta_primary}
                 </button>
                 <button
                   onClick={() => navigate('/pilot')}
                   className="px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg font-bold text-gray-200 transition-colors uppercase tracking-wider"
                 >
-                  Saber más
+                  {hero.cta_secondary}
                 </button>
               </motion.div>
 
               <motion.div variants={itemVariants} className="flex items-center gap-2 text-sm text-gray-400">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                Cero fricción. Resultados en menos de 5 segundos.
+                {hero.badge}
               </motion.div>
             </motion.div>
 
@@ -181,8 +166,8 @@ const Home = () => {
       <section className="py-20 bg-gray-900 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-             <h2 className="text-3xl md:text-4xl font-bold mb-4">¿Por qué TryOnYou?</h2>
-             <p className="text-gray-400 max-w-2xl mx-auto">Nuestra tecnología elimina la incertidumbre de comprar ropa online.</p>
+             <h2 className="text-3xl md:text-4xl font-bold mb-4">{features_title}</h2>
+             <p className="text-gray-400 max-w-2xl mx-auto">{features_subtitle}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {claims.map((claim, index) => (
@@ -195,7 +180,7 @@ const Home = () => {
                 className="bg-gray-800/50 p-6 rounded-xl border border-gray-700 hover:border-blue-500/50 transition-colors"
               >
                 <div className="bg-gray-700/50 w-16 h-16 rounded-full flex items-center justify-center mb-4 mx-auto md:mx-0">
-                  {claim.icon}
+                  {getIcon(index)}
                 </div>
                 <h3 className="text-xl font-bold mb-2">{claim.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">{claim.description}</p>
@@ -209,11 +194,11 @@ const Home = () => {
       <section className="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
          <div className="max-w-7xl mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Cómo Funciona</h2>
-              <p className="text-gray-400">Tres pasos simples para tu ajuste perfecto.</p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">{steps.title}</h2>
+              <p className="text-gray-400">{steps.subtitle}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {steps.map((step, index) => (
+              {steps.items.map((item, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -223,10 +208,10 @@ const Home = () => {
                   className="relative bg-gray-900 p-8 rounded-2xl border border-gray-700 text-center"
                 >
                   <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-xl border-4 border-gray-800">
-                    {step.step}
+                    {item.step}
                   </div>
-                  <h3 className="text-xl font-bold mt-6 mb-3">{step.title}</h3>
-                  <p className="text-gray-400">{step.description}</p>
+                  <h3 className="text-xl font-bold mt-6 mb-3">{item.title}</h3>
+                  <p className="text-gray-400">{item.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -239,12 +224,12 @@ const Home = () => {
           <h2 className="text-2xl font-bold tracking-widest text-white mb-4">TRYONYOU</h2>
           <p className="text-gray-500 mb-8">Live it. Where beauty lives in movement.</p>
           <div className="flex justify-center gap-6 text-sm text-gray-400">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-white transition-colors">Contact</a>
+            {footer.links.map((link, i) => (
+               <a key={i} href="#" className="hover:text-white transition-colors">{link}</a>
+            ))}
           </div>
           <div className="mt-8 text-xs text-gray-600">
-            © 2025 TryOnYou. All rights reserved.
+            {footer.rights}
           </div>
         </div>
       </footer>
