@@ -59,7 +59,7 @@
          */
 
         // URL de la demo final del informático (Placeholder inicial)
-        const finalDemoUrl = "URL_DE_LA_DEMO_FINAL_DEL_INFORMATICO_AQUI"; 
+        const finalDemoUrl = ""; 
 
         // ID del iframe en la landing de Wix
         const iframeId = "tryonyou_demo_iframe";
@@ -71,7 +71,8 @@
             const iframe = document.getElementById(iframeId);
 
             if (iframe) {
-                if (finalDemoUrl && finalDemoUrl !== "URL_DE_LA_DEMO_FINAL_DEL_INFORMATICO_AQUI") {
+                if (finalDemoUrl) {
+                    // Si la URL final está definida, la usamos
                     // Si la URL final está definida, la usamos
                     iframe.src = finalDemoUrl;
                     console.log(\`Iframe actualizado a la URL final: \${finalDemoUrl}\`);
