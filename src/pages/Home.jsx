@@ -222,7 +222,7 @@ const Home = () => {
       <footer className="bg-gray-950 py-12 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-2xl font-bold tracking-widest text-white mb-4">TRYONYOU</h2>
-          <p className="text-gray-500 mb-8">Live it. Where beauty lives in movement.</p>
+          <p className="text-gray-500 mb-8">Live it, where beauty moves with you.</p>
           <div className="flex justify-center gap-6 text-sm text-gray-400">
             {footer.links.map((link, i) => (
                <a key={i} href="#!" onClick={(e) => e.preventDefault()} className="hover:text-white transition-colors">{link}</a>
