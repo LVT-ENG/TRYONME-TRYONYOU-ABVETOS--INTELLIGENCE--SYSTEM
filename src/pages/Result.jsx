@@ -110,7 +110,8 @@ const Result = () => {
 
   // Use dynamic fields from API
   const garmentName = result.garment_name;
-  const fitScore = result.match_score.toFixed(1);
+  const rawFitScore = Number(result?.match_score);
+  const fitScore = Number.isFinite(rawFitScore) ? rawFitScore.toFixed(1) : 'N/A';
   const explanation = result.explanation;
   const fitStatus = result.fit_status;
 
