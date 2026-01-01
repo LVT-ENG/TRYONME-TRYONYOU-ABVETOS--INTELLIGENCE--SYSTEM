@@ -6,29 +6,50 @@ const Home = () => {
   const navigate = useNavigate()
   const [activeClaimIndex, setActiveClaimIndex] = useState(0)
 
+  // FEATURES / CLAIMS (Translated to Spanish)
   const claims = [
     {
-      title: "Zero Returns",
-      description: "Perfect fit guaranteed. No more wrong sizes. Our body intelligence ensures every garment fits you perfectly.",
+      title: "Cero Devoluciones",
+      description: "Ajuste perfecto garantizado. Nuestra inteligencia corporal asegura que cada prenda te quede como un guante.",
       icon: "✓"
     },
     {
-      title: "Perfect Fit by Body Intelligence",
-      description: "AI-powered biometric analysis understands your unique body proportions and recommends garments tailored to you.",
+      title: "Ajuste por Inteligencia Corporal",
+      description: "Análisis biométrico por IA que entiende tus proporciones únicas y recomienda prendas adaptadas a ti.",
       icon: "◆"
     },
     {
-      title: "Fabric Elasticity & Drape-Aware",
-      description: "We analyze fabric properties—elasticity, drape, rigidity—to predict how garments will move and feel on your body.",
+      title: "Análisis de Tejido y Caída",
+      description: "Analizamos la elasticidad y rigidez de la tela para predecir cómo se moverá y sentirá en tu cuerpo.",
       icon: "≈"
     },
     {
-      title: "AI + Biometric Measurements",
-      description: "Advanced computer vision captures your body measurements with precision. No manual tape measures. Just your phone.",
+      title: "IA + Medición Biométrica",
+      description: "Visión artificial avanzada que captura tus medidas con precisión. Sin cintas métricas. Solo tu móvil.",
       icon: "⊙"
     },
   ]
 
+  // HOW IT WORKS STEPS (Translated to Spanish)
+  const steps = [
+    {
+      step: "1",
+      title: "Escaneo Corporal",
+      description: "Usa la cámara de tu móvil para capturar tus medidas con precisión de IA."
+    },
+    {
+      step: "2",
+      title: "Confirma Detalles",
+      description: "Responde unas preguntas rápidas sobre tus preferencias y la ocasión."
+    },
+    {
+      step: "3",
+      title: "Match Perfecto",
+      description: "Recibe la prenda que mejor te sienta, con una explicación detallada del porqué."
+    }
+  ]
+
+  // ANIMATION VARIANTS
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -50,12 +71,12 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white overflow-hidden">
+    <div className="min-h-screen bg-gray-900 text-white overflow-hidden font-sans">
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold tracking-widest">TRYONYOU</h1>
-          <div className="text-sm text-gray-400">Fashion Tech for Perfect Fit</div>
+          <h1 className="text-2xl font-bold tracking-widest text-white">TRYONYOU</h1>
+          <div className="text-sm text-gray-400 hidden md:block">Tecnología de Moda para el Ajuste Perfecto</div>
         </div>
       </nav>
 
@@ -72,224 +93,88 @@ const Home = () => {
               className="space-y-8"
             >
               <motion.div variants={itemVariants}>
-                <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4">
-                  Your Perfect Fit,
-                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent"> Instantly</span>
+                <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white">
+                  No vas a hacerte un TryOnYou.
+                  <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent block mt-2">
+                    TryOnYou lo hará por ti.
+                  </span>
                 </h2>
               </motion.div>
 
-              <motion.p variants={itemVariants} className="text-xl text-gray-300 leading-relaxed">
-                TRYONYOU uses AI and biometric body scanning to find the garment that fits you perfectly. No more returns. No more guessing. Just fashion that works for your body.
+              <motion.p variants={itemVariants} className="text-xl text-gray-300 leading-relaxed max-w-lg">
+                Olvídate de las tallas confusas. Medimos tu cuerpo con IA para que la ropa encaje a la primera.
               </motion.p>
 
-              <motion.div variants={itemVariants} className="flex gap-4">
+              <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={() => navigate('/pilot')}
-                  className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition-colors shadow-lg uppercase tracking-wider"
+                  className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition-all shadow-lg shadow-blue-900/20 uppercase tracking-wider transform hover:-translate-y-1"
                 >
-                  Enter Pilot
+                  Probar ahora
                 </button>
                 <button
-                  onClick={() => navigate('/demo')}
-                  className="px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white transition-colors uppercase tracking-wider"
+                  onClick={() => navigate('/pilot')}
+                  className="px-8 py-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 rounded-lg font-bold text-gray-200 transition-colors uppercase tracking-wider"
                 >
-                  View Demo
+                  Saber más
                 </button>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="text-sm text-gray-400">
-                No login required. No friction. Just scan, confirm, and discover your perfect fit.
+              <motion.div variants={itemVariants} className="flex items-center gap-2 text-sm text-gray-400">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                Cero fricción. Resultados en menos de 5 segundos.
               </motion.div>
             </motion.div>
 
-            {/* Right: Hero Image (Realistic Model) */}
+            {/* Right: Hero Image (Realistic) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="relative h-[600px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-gray-700 shadow-2xl"
+              className="relative h-[500px] md:h-[600px] bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 shadow-2xl group"
             >
-              {/* Placeholder for realistic model image */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">👤</div>
-                  <p className="text-gray-400">Realistic Model Image</p>
-                  <p className="text-sm text-gray-500 mt-2">High-quality fashion photography</p>
-                </div>
-              </div>
+              {/* Real Image loaded via URL */}
+              <img
+                src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1287&auto=format&fit=crop"
+                alt="Fashion Model"
+                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-70 transition-all duration-700"
+              />
 
-              {/* Pau Assistant (Peacock) - Animated */}
+              {/* Overlay Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+
+              {/* Animated Floating Badge */}
               <motion.div
                 animate={{
                   y: [0, -10, 0],
-                  rotate: [0, 2, -2, 0],
                 }}
                 transition={{
                   duration: 4,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute bottom-8 right-8 bg-blue-600 rounded-full p-4 shadow-lg border-2 border-blue-400"
+                className="absolute bottom-8 right-8 bg-blue-600/90 backdrop-blur rounded-full p-4 shadow-lg border border-blue-400 z-10"
               >
-                <div className="text-4xl">✨</div>
+                <span className="text-3xl">✨</span>
               </motion.div>
 
-              {/* Outfit Change Indicator */}
+              {/* Status Badge */}
               <motion.div
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute top-8 left-8 bg-green-600/20 border border-green-500 rounded-lg px-4 py-2"
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 1 }}
+                className="absolute top-8 left-8 bg-black/60 backdrop-blur border border-green-500/50 rounded-lg px-4 py-2 flex items-center gap-3"
               >
-                <p className="text-sm text-green-400 font-semibold">Outfit Changing...</p>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <div className="text-xs">
+                  <p className="text-gray-300 uppercase tracking-wider text-[10px]">Confidence Score</p>
+                  <p className="text-green-400 font-bold">98.5% MATCH</p>
+                </div>
               </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
-
-      {/* Claims Section - Carousel */}
-      <section className="py-20 px-4 bg-gray-800/50">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-center mb-16"
-          >
-            Why TRYONYOU?
-          </motion.h2>
-
-          {/* Claims Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            {claims.map((claim, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                onClick={() => setActiveClaimIndex(index)}
-                className={`p-8 rounded-xl border-2 transition-all cursor-pointer ${
-                  activeClaimIndex === index
-                    ? 'bg-blue-600/20 border-blue-500 shadow-lg'
-                    : 'bg-gray-800 border-gray-700 hover:border-gray-600'
-                }`}
-              >
-                <div className="text-4xl mb-4">{claim.icon}</div>
-                <h3 className="text-2xl font-bold mb-3">{claim.title}</h3>
-                <p className="text-gray-300 leading-relaxed">{claim.description}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Active Claim Detail */}
-          <motion.div
-            key={activeClaimIndex}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-xl p-8 border border-blue-500/30 text-center"
-          >
-            <p className="text-lg text-gray-200">
-              {claims[activeClaimIndex].description}
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* How It Works Section */}
-      <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-center mb-16"
-          >
-            How It Works
-          </motion.h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                step: "1",
-                title: "Body Scan",
-                description: "Use your phone camera to capture your body measurements with AI precision."
-              },
-              {
-                step: "2",
-                title: "Confirm Details",
-                description: "Answer a few quick questions about your preferences and the occasion."
-              },
-              {
-                step: "3",
-                title: "Perfect Match",
-                description: "Get the garment that fits you best, with a detailed explanation of why."
-              }
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="relative"
-              >
-                <div className="bg-gray-800 rounded-xl p-8 border border-gray-700 h-full">
-                  <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mb-4 font-bold text-lg">
-                    {item.step}
-                  </div>
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                  <p className="text-gray-400">{item.description}</p>
-                </div>
-                {index < 2 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2">
-                    <div className="text-2xl text-gray-600">→</div>
-                  </div>
-                )}
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 border-y border-gray-700">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-bold mb-6"
-          >
-            Ready to Find Your Perfect Fit?
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-xl text-gray-300 mb-8"
-          >
-            Join the TRYONYOU pilot and experience fashion technology that actually works.
-          </motion.p>
-
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/pilot')}
-            className="px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white text-lg transition-colors shadow-lg uppercase tracking-wider"
-          >
-            Start Your Scan
-          </motion.button>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-8 px-4 border-t border-gray-800 text-center text-gray-500">
-        <p>TRYONYOU Pilot | Fashion Tech for Perfect Fit | No Returns. No Guessing. Just Fit.</p>
-      </footer>
     </div>
   )
 }
