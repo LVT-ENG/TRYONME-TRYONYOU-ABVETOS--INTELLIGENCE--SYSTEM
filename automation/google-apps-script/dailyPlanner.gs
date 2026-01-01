@@ -3,12 +3,13 @@
    Basado en Source [10]: automation/google-apps-script/dailyPlanner.gs
 */
 
+const SCRIPT_PROPS = PropertiesService.getScriptProperties();
 const CFG = {
   SHEET: 'Dashboard',
-  // Reemplaza con tu token real obtenido de @BotFather
-  TELEGRAM_BOT: 'TU_TELEGRAM_BOT_TOKEN',
-  // Tu ID de chat (Agente 70)
-  TELEGRAM_CHAT_MAIN: 'TU_CHAT_ID',
+  // Fetch token from Script Properties
+  TELEGRAM_BOT: SCRIPT_PROPS.getProperty('TELEGRAM_BOT_TOKEN'),
+  // Fetch chat ID from Script Properties
+  TELEGRAM_CHAT_MAIN: SCRIPT_PROPS.getProperty('TELEGRAM_CHAT_ID'),
   TZ: 'Europe/Madrid'
 };
 
