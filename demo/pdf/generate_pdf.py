@@ -6,11 +6,7 @@ def parse_content_map(file_path):
     """Parsea el archivo content_map.txt para extraer los datos."""
     data = {}
     config = configparser.ConfigParser()
-    # Leer el archivo, ignorando la primera línea de comentario
-    with open(file_path, 'r', encoding='utf-8') as f:
-        content = f.read().split('\n', 1)[1]
-    
-    config.read_string(content)
+    config.read(file_path, encoding='utf-8')
     
     for section in config.sections():
         data.update(config.items(section))
