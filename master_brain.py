@@ -1,7 +1,9 @@
 import json
 import os
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from urllib.parse import urlparse, parse_qs
 from core.agent_executor import AgentExecutor
+from core.git_utils import get_commits, get_commit_stats
 
 # Intentar cargar variables de entorno si existe un archivo .env simple
 if os.path.exists(".env"):
@@ -27,8 +29,36 @@ class BrainHandler(BaseHTTPRequestHandler):
         self._set_headers()
 
     def do_GET(self):
-        self._set_headers()
-        self.wfile.write(json.dumps({"status": "TRYONYOU Brain Online", "ai_ready": executor.model_active}).encode())
+        parsed_path = urlparse(self.path)
+        
+        if parsed_path.path == '/api/commits':
+            # Get commits endpoint
+            try:
+                query_params = parse_qs(parsed_path.query)
+                limit = int(query_params.get('limit', [20])[0])
+                branch = query_params.get('branch', [None])[0]
+                
+                result = get_commits(limit=limit, branch=branch)
+                self._set_headers(200)
+                self.wfile.write(json.dumps(result).encode())
+            except Exception as e:
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"success": False, "error": str(e)}).encode())
+        
+        elif parsed_path.path == '/api/commit-stats':
+            # Get commit statistics endpoint
+            try:
+                result = get_commit_stats()
+                self._set_headers(200)
+                self.wfile.write(json.dumps(result).encode())
+            except Exception as e:
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"success": False, "error": str(e)}).encode())
+        
+        else:
+            # Default status endpoint
+            self._set_headers()
+            self.wfile.write(json.dumps({"status": "TRYONYOU Brain Online", "ai_ready": executor.model_active}).encode())
 
     def do_POST(self):
         if self.path == '/api/ask-pau':
