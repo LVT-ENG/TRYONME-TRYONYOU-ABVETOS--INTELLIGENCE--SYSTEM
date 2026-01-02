@@ -1,0 +1,1 @@
+{"name": "tryonyou-monorepo", "private": true, "workspaces": ["apps/*", "packages/*"]}
