@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ShieldCheck, FileText, Award } from 'lucide-react';
+import { PATENT_NUMBER, COMPANY_NAME, COPYRIGHT_YEAR } from '../constants';
 
 const Claims = () => {
   const claims = [
@@ -80,7 +81,7 @@ const Claims = () => {
           <div className="flex items-center justify-center space-x-4 text-sm text-gray-400">
             <div className="flex items-center">
               <FileText size={16} className="mr-2" />
-              <span>PCT/EP2025/067317</span>
+              <span>{PATENT_NUMBER}</span>
             </div>
             <div className="flex items-center">
               <Award size={16} className="mr-2" />
@@ -168,12 +169,12 @@ const Claims = () => {
             Patent Pending - International Protection
           </h3>
           <p className="text-gray-400 max-w-3xl mx-auto mb-4">
-            TRYONYOU's Emotional Fashion Intelligence System is protected under PCT patent application 
-            PCT/EP2025/067317, covering innovative methods for biometric fashion recommendations, 
+            {COMPANY_NAME}'s Emotional Fashion Intelligence System is protected under PCT patent application 
+            {PATENT_NUMBER}, covering innovative methods for biometric fashion recommendations, 
             AI-driven fit prediction, and automated production systems.
           </p>
           <p className="text-sm text-gray-500">
-            © 2025 TRYONYOU | All Rights Reserved | Small Entity Declaration Filed
+            © {COPYRIGHT_YEAR} {COMPANY_NAME} | All Rights Reserved | Small Entity Declaration Filed
           </p>
         </motion.div>
       </div>

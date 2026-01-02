@@ -1,8 +1,8 @@
 {
-  "name": "tryonyou-app",
-  "version": "3.0.0",
+  "name": "tryonyou-unified-platform",
+  "version": "4.0.0",
   "type": "module",
-  "description": "TRYONYOU - AI-Powered Virtual Try-On Platform",
+  "description": "TRYONYOU - Unified AI-Powered Fashion Intelligence Platform with Virtual Try-On, Biometric Systems, and Automated Production",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
