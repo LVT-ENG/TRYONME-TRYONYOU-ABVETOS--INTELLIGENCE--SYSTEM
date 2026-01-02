@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, ShoppingBag, User, Shirt, Sparkles, Wand2, Home, Play } from 'lucide-react'
+import { Menu, X, ShoppingBag, User, Shirt, Sparkles, Wand2, Home, Play, Ruler, Package, CreditCard, ShieldCheck, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const Navbar = () => {
@@ -29,6 +29,11 @@ const Navbar = () => {
     { path: '/wardrobe', label: 'Wardrobe', icon: Shirt },
     { path: '/showroom', label: 'Showroom', icon: Sparkles },
     { path: '/glow-up', label: 'Glow-Up', icon: Wand2 },
+    { path: '/ask-peacock', label: 'Ask Peacock', icon: MessageCircle },
+    { path: '/fit', label: 'FIT', icon: Ruler },
+    { path: '/cap', label: 'CAP', icon: Package },
+    { path: '/abvet', label: 'ABVET', icon: CreditCard },
+    { path: '/claims', label: 'Claims', icon: ShieldCheck },
   ]
 
   return (
