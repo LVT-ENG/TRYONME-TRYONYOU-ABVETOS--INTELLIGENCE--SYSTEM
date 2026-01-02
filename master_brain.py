@@ -1,6 +1,6 @@
 import json
 import os
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import HTTPServer, BaseHTTPRequestHandler, ThreadingHTTPServer
 from core.agent_executor import AgentExecutor
 
 # Intentar cargar variables de entorno si existe un archivo .env simple
@@ -56,4 +56,4 @@ if not os.getenv("GOOGLE_API_KEY"):
 else:
     print("✅  IA Conectada y lista.")
 
-HTTPServer(('', 8080), BrainHandler).serve_forever()
+ThreadingHTTPServer(('', 8080), BrainHandler).serve_forever()
