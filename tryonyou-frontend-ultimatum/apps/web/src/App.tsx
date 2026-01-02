@@ -1,7 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import { Home, Ruler, Activity, CreditCard, ShieldCheck } from 'lucide-react';
 import { AgentRouter } from '@tryonyou/agents';
+import { BiometricScanner } from './components/BiometricScanner';
 
 // Components
 const Navbar = () => (
@@ -49,19 +50,25 @@ const PauMascot = () => (
 );
 
 // Pages
-const HomePage = () => (
-  <div className="pt-24 px-8 min-h-screen flex flex-col items-center justify-center bg-[url('/assets/catalog/red_dress_minimal.png')] bg-cover bg-center bg-no-repeat bg-blend-overlay bg-[rgba(20,22,25,0.85)]">
-    <h1 className="text-6xl font-light tracking-[0.2em] text-[var(--gold)] mb-4 text-center">DIVINEO V7</h1>
-    <p className="text-[var(--bone)] text-xl font-light tracking-wide max-w-2xl text-center">
-      The Emotional Fashion Intelligence Ecosystem.
-    </p>
-    <div className="mt-12 flex space-x-6">
-      <button className="px-8 py-3 border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-[var(--anth)] transition-all duration-500 uppercase tracking-widest text-xs">
-        Initialize Pilot
-      </button>
+const HomePage = () => {
+  const navigate = useNavigate();
+  return (
+    <div className="pt-24 px-8 min-h-screen flex flex-col items-center justify-center bg-[url('/assets/catalog/red_dress_minimal.png')] bg-cover bg-center bg-no-repeat bg-blend-overlay bg-[rgba(20,22,25,0.85)]">
+      <h1 className="text-6xl font-light tracking-[0.2em] text-[var(--gold)] mb-4 text-center">DIVINEO V7</h1>
+      <p className="text-[var(--bone)] text-xl font-light tracking-wide max-w-2xl text-center">
+        The Emotional Fashion Intelligence Ecosystem.
+      </p>
+      <div className="mt-12 flex space-x-6">
+        <button
+          onClick={() => navigate('/scan')}
+          className="px-8 py-3 border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-[var(--anth)] transition-all duration-500 uppercase tracking-widest text-xs"
+        >
+          Initialize Pilot
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const FitPage = () => {
   React.useEffect(() => {
@@ -131,6 +138,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/scan" element={<BiometricScanner />} />
           <Route path="/fit" element={<FitPage />} />
           <Route path="/cap" element={<CAPPage />} />
           <Route path="/abvet" element={<ABVETPage />} />
