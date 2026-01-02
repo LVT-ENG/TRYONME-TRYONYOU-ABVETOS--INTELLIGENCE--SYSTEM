@@ -1,0 +1,277 @@
+# TRYONYOU
+
+**LIVE 'IT – Where beauty lives in movement**
+
+AI-Powered Virtual Try-On Platform built with React, Vite, Tailwind CSS, Framer Motion, and Three.js.
+
+## 🚀 Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 📁 Project Structure
+
+```
+src/
+├── components/       # Reusable UI components
+│   ├── Navbar.jsx    # Navigation with mobile menu
+│   └── Footer.jsx    # Site footer with links
+├── pages/            # Route pages (7 total)
+│   ├── Home.jsx      # Landing page with hero
+│   ├── Brands.jsx    # Brand selection & filtering
+│   ├── MyAvatar.jsx  # Avatar creation wizard
+│   ├── Wardrobe.jsx  # Virtual closet with try-on
+│   ├── Showroom.jsx  # Curated looks gallery
+│   ├── GlowUp.jsx    # Style transformation
+│   └── AskPeacock.jsx # AI chat assistant
+├── data/             # JSON data files
+│   └── texts.json    # Content & copy
+├── hooks/            # Custom React hooks
+│   └── useScrollPosition.js
+├── styles/           # Global styles
+│   └── index.css     # Tailwind + custom CSS
+├── assets/           # Static assets
+│   ├── images/
+│   ├── videos/
+│   └── 3d/
+├── App.jsx           # Router configuration
+└── main.jsx          # Entry point
+
+public/
+├── assets/           # All static assets
+│   ├── images/       # Clothing, showroom, glow-up images
+│   ├── videos/       # Video files
+│   ├── animation/    # Animation files
+│   └── logo/         # Brand logos
+├── models/           # 3D models for avatar (GLB/GLTF)
+└── favicon.svg       # Site favicon
+```
+
+## 🎯 Pages & Routes
+
+| Route | Page | Description |
+|-------|------|-------------|
+| `/` | Home | Landing with features & CTA |
+| `/brands` | Brands | Browse & filter fashion brands |
+| `/my-avatar` | My Avatar | Create your digital twin |
+| `/wardrobe` | Wardrobe | Virtual try-on closet |
+| `/showroom` | Showroom | Curated looks by mood/occasion |
+| `/glow-up` | Glow-Up | AI style transformation |
+| `/ask-peacock` | Ask Peacock | Chat with AI stylist 🦚 |
+
+## 🛠 Tech Stack
+
+- **React 18** - UI library
+- **Vite 5** - Build tool
+- **React Router 7** - Client-side routing
+- **Tailwind CSS 3** - Utility-first styling
+- **Framer Motion 11** - Animations
+- **Three.js + @react-three/fiber** - 3D graphics
+- **GSAP** - Advanced animations
+- **Lucide React** - Icons
+
+## ✨ Features
+
+- 🎨 **Glass morphism UI** with blur effects
+- 🌙 **Dark theme** with neon accents
+- 📱 **Fully responsive** mobile-first design
+- ⚡ **Smooth animations** throughout
+- 🔍 **Search & filter** functionality
+- 💾 **Favorites/saved items** system
+- 🦚 **AI Peacock** chat assistant
+- 🎯 **Match percentage** for fit prediction
+
+## 🎨 Color Palette
+
+```css
+--tryonyou-blue: #00A8E8
+--tryonyou-darkblue: #003459
+--tryonyou-gold: #D4AF37
+--tryonyou-metallic: #8B92A0
+--tryonyou-black: #0A0A0A
+--tryonyou-smoke: #1A1A2E
+```
+
+## 📱 Responsive Breakpoints
+
+- Mobile: < 640px
+- Tablet: 640px - 1024px
+- Desktop: > 1024px
+
+## 📦 Adding Your Assets
+
+**IMPORTANT:** Before deploying, add your real assets to `/public/`:
+
+1. **Images**: Place in `/public/assets/images/`
+   - Wardrobe items (clothing images)
+   - Showroom looks
+   - Glow-up before/after photos
+   - Brand logos in `/public/assets/logo/`
+
+2. **3D Models**: Place in `/public/models/`
+   - Avatar model: `avatar.glb` or `avatar.gltf`
+
+3. **Videos**: Place in `/public/assets/videos/`
+
+See `ASSETS_GUIDE.md` for detailed asset requirements and naming conventions.
+
+## 🚀 Deployment
+
+### Build Command
+```bash
+npm run build
+```
+
+### Output Directory
+```
+dist/
+├── assets/          # All public assets (automatically copied)
+├── models/          # 3D models (automatically copied)
+└── index.html       # Entry point
+```
+
+### Deployment Platforms
+- **Vercel**: Framework preset: Vite, Build command: `npm run build`, Output: `dist`
+- **Netlify**: Build command: `npm run build`, Publish directory: `dist`
+- **Railway**: Build command: `npm run build`, Output: `dist`
+- **AWS S3/CloudFront**: Upload `dist/` folder
+
+### Pre-Deployment Checklist
+- ✅ All assets added to `/public/`
+- ✅ Build completes without errors (`npm run build`)
+- ✅ Assets appear in `/dist/assets/` and `/dist/models/`
+- ✅ Test navigation on all pages
+- ✅ Verify 3D avatar loads (or uses procedural fallback)
+- ✅ Check all images load correctly
+- ✅ Test on mobile devices
+
+## 📚 Documentation
+
+- [Google Platform News & Updates](./docs/GOOGLE_PLATFORM_NEWS.md) - Information on Gemini 3 Pro, Jules, Veo 3.1, and other integrated technologies.
+
+## 📄 License
+
+Private - TRYONYOU © 2025
+# SPECIFICATION: TRY ON YOU V3 CONSOLIDATED
+- Goal: Monolithic architecture (Simple & Fast).
+- Backend: Python/FastAPI in /backend.
+- Frontend: React (Vercel) in /frontend.
+- Core Logic: Located in /core/calibration.py.
+- Deadline: 7-10 days.
+# Google Platform News & Updates
+
+**Status:** ACTIVE
+**Timeline:** November/December 2025
+
+This document serves as the central knowledge base for the latest Google Platform technologies powering the **TRYONYOU** ecosystem. These advancements leverage the next generation of AI and infrastructure tools.
+
+## Key Releases
+
+### 1. Gemini 3 Pro
+*   **Release Date:** November 19, 2025
+*   **Description:** The newest flagship multimodal AI model from Google.
+*   **Role in Project:** Acts as the cognitive backbone for autonomous operations, providing advanced reasoning, code comprehension, and architectural planning capabilities.
+
+### 2. Jules
+*   **Identity:** An always-on autonomous coding agent.
+*   **Engine:** Powered specifically by **Gemini 3 Pro**.
+*   **Function:** "Jules" is the active maintainer of this repository (that's me!). I am responsible for executing tasks, solving bugs, and implementing features with high autonomy.
+
+### 3. Veo 3.1
+*   **Description:** Advanced generative video model.
+*   **Access:** Available via the Gemini API.
+*   **Application:** Enables the creation of high-fidelity, physics-aware video content, potentially for dynamic virtual try-on visualizations and immersive user experiences.
+
+### 4. Antigravity
+*   **Overview:** A breakthrough platform for scalable, serverless application deployment.
+*   **Benefit:** Provides the infrastructure agility required to host complex AI-driven applications like TRYONYOU with minimal latency and maximum reliability.
+
+### 5. Conductor
+*   **Overview:** An orchestration layer for managing multi-agent systems and complex workflows.
+*   **Benefit:** Ensures seamless coordination between various AI services and backend processes, streamlining the "pilot to production" pipeline.
+
+---
+*Maintained by Jules - Powered by Gemini 3 Pro*
+{
+  "name": "tryonyou-app",
+  "version": "3.0.0",
+  "type": "module",
+  "description": "TRYONYOU - AI-Powered Virtual Try-On Platform",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
+    "framer-motion": "^11.0.0",
+    "three": "^0.160.0",
+    "@react-three/fiber": "^8.15.0",
+    "@react-three/drei": "^9.92.0",
+    "gsap": "^3.12.5",
+    "lucide-react": "^0.320.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.0",
+    "autoprefixer": "^10.4.17",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
+  }
+}
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+\n\n--- SRC STRUCTURE ---\n
+src
+src/pages
+src/pages/Home.jsx
+src/pages/GlowUp.jsx
+src/pages/AskPeacock.jsx
+src/pages/Showroom.jsx
+src/pages/Demo.jsx
+src/pages/MagicMirror.jsx
+src/pages/Wardrobe.jsx
+src/pages/MyAvatar.jsx
+src/pages/Brands.jsx
+src/pages/Investors.jsx
+src/main.jsx
+src/assets
+src/assets/3d
+src/assets/videos
+src/assets/images
+src/utils
+src/utils/mezclador.worker.js
+src/utils/assets.js
+src/hooks
+src/hooks/useScrollPosition.js
+src/data
+src/data/texts.json
+src/data/mock_inventory.json
+src/components
+src/components/Footer.jsx
+src/components/Navbar.jsx
+src/components/Avatar3D.jsx
+src/components/SyncControl.jsx
+src/styles
+src/styles/index.css
+src/App.jsx
