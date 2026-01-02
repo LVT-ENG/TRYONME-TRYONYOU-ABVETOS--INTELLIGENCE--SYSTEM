@@ -28,7 +28,6 @@ export default function App() {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
           <Route path="/brands" element={<Brands />} />
           <Route path="/my-avatar" element={<MyAvatar />} />
           <Route path="/wardrobe" element={<Wardrobe />} />
@@ -38,6 +37,8 @@ export default function App() {
           <Route path="/demo" element={<Demo />} />
           <Route path="/investors" element={<Investors />} />
           <Route path="/magic-mirror" element={<MagicMirror />} />
+          {/* Backward compatibility redirects */}
+          <Route path="/MagicMirror" element={<Navigate to="/magic-mirror" replace />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
