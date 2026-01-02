@@ -2,6 +2,14 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // Lazy load pages for performance optimization
+const Home = lazy(() => import('./pages/Home'));
+const Brands = lazy(() => import('./pages/Brands'));
+const MyAvatar = lazy(() => import('./pages/MyAvatar'));
+const Wardrobe = lazy(() => import('./pages/Wardrobe'));
+const Showroom = lazy(() => import('./pages/Showroom'));
+const GlowUp = lazy(() => import('./pages/GlowUp'));
+const AskPeacock = lazy(() => import('./pages/AskPeacock'));
+const Demo = lazy(() => import('./pages/Demo'));
 const Investors = lazy(() => import('./pages/Investors'));
 const MagicMirror = lazy(() => import('./pages/MagicMirror'));
 
@@ -19,9 +27,17 @@ export default function App() {
     <Router>
       <Suspense fallback={<Loading />}>
         <Routes>
-          <Route path="/" element={<Investors />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/brands" element={<Brands />} />
+          <Route path="/my-avatar" element={<MyAvatar />} />
+          <Route path="/wardrobe" element={<Wardrobe />} />
+          <Route path="/showroom" element={<Showroom />} />
+          <Route path="/glow-up" element={<GlowUp />} />
+          <Route path="/ask-peacock" element={<AskPeacock />} />
+          <Route path="/demo" element={<Demo />} />
           <Route path="/investors" element={<Investors />} />
-          <Route path="/MagicMirror" element={<MagicMirror />} />
+          <Route path="/magic-mirror" element={<MagicMirror />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
