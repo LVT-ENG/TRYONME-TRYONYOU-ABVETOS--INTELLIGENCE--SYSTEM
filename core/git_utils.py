@@ -96,15 +96,18 @@ def get_commit_stats():
             check=True
         ).stdout.strip()
         
-        # Get list of contributors
-        contributors = subprocess.run(
-            ['git', 'log', '--format=%an', '--no-merges'],
+        # Get list of contributors efficiently using shortlog
+        contributors_output = subprocess.run(
+            ['git', 'shortlog', '-sn', '--no-merges', 'HEAD'],
             capture_output=True,
             text=True,
             check=True
-        ).stdout.strip().split('\n')
+        ).stdout.strip()
         
-        unique_contributors = len(set(contributors))
+        # Count unique contributors from shortlog output
+        unique_contributors = 0
+        if contributors_output:
+            unique_contributors = len([line for line in contributors_output.split('\n') if line.strip()])
         
         return {
             'success': True,

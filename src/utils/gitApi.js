@@ -65,7 +65,10 @@ export function formatCommitDate(isoDate) {
   const diffHours = Math.floor(diffMs / 3600000);
   const diffDays = Math.floor(diffMs / 86400000);
 
-  if (diffMins < 60) {
+  // Handle future dates or very recent commits
+  if (diffMins < 1) {
+    return 'just now';
+  } else if (diffMins < 60) {
     return `${diffMins} minute${diffMins !== 1 ? 's' : ''} ago`;
   } else if (diffHours < 24) {
     return `${diffHours} hour${diffHours !== 1 ? 's' : ''} ago`;
