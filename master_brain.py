@@ -35,7 +35,17 @@ class BrainHandler(BaseHTTPRequestHandler):
             # Get commits endpoint
             try:
                 query_params = parse_qs(parsed_path.query)
-                limit = int(query_params.get('limit', [20])[0])
+                limit_str = query_params.get('limit', [20])[0]
+                try:
+                    limit = int(limit_str)
+                except ValueError:
+                    self._set_headers(400)
+                    self.wfile.write(json.dumps({"success": False, "error": "limit must be a positive integer"}).encode())
+                    return
+                if limit <= 0:
+                    self._set_headers(400)
+                    self.wfile.write(json.dumps({"success": False, "error": "limit must be a positive integer"}).encode())
+                    return
                 branch = query_params.get('branch', [None])[0]
                 
                 result = get_commits(limit=limit, branch=branch)
