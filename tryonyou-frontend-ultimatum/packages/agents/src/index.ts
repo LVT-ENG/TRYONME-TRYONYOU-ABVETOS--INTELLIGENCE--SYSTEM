@@ -15,7 +15,7 @@ export class AgentDrape {
   static id = "015";
   static role = "Physics Simulation";
 
-  static async calculateFitScore(garmentId: string, biometrics: any): Promise<number> {
+  static async calculateFitScore(garmentId: string, biometrics: Record<string, unknown>): Promise<number> {
     console.log(`[Drape] Simulating physics for ${garmentId}...`);
     return 98.5; // Divineo standard
   }
