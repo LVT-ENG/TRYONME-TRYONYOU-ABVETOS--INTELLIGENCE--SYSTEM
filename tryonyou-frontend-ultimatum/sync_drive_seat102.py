@@ -58,7 +58,7 @@ class Seat102Engine:
 
         for root, dirs, files in os.walk(self.drive_folder):
             for file in files:
-                if "seat 102" in file.lower() or "seat102" in file.lower() or "tryon" in file.lower():
+                if "Seat 102" in file or "Seat102" in file or "TRYON" in file:
                     found_files.append(os.path.join(root, file))
 
         return found_files

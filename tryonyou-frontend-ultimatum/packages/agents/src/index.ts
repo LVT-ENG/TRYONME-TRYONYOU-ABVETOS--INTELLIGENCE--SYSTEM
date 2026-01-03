@@ -3,7 +3,7 @@ export class AgentPAU {
   static id = "001";
   static role = "Emotional Recommender";
 
-  static async recommend(emotion: string, biometrics: Record<string, unknown>): Promise<string> {
+  static async recommend(emotion: string, biometrics: any): Promise<string> {
     console.log(`[PAU] Analyzing emotion: ${emotion} with biometrics...`);
     // Placeholder logic
     return "OUTFIT_ID_123_GOLD_DRESS";
@@ -15,7 +15,7 @@ export class AgentDrape {
   static id = "015";
   static role = "Physics Simulation";
 
-  static async calculateFitScore(garmentId: string, biometrics: Record<string, unknown>): Promise<number> {
+  static async calculateFitScore(garmentId: string, biometrics: any): Promise<number> {
     console.log(`[Drape] Simulating physics for ${garmentId}...`);
     return 98.5; // Divineo standard
   }

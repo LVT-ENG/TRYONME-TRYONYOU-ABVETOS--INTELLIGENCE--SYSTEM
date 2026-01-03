@@ -74,7 +74,7 @@ const FitPage = () => {
   React.useEffect(() => {
     // Agent Interaction Stub
     AgentRouter.route('FIT_SCORE', { garmentId: '123', biometrics: {} })
-      .then((score: number) => console.log('Fit Score:', score));
+      .then((score: any) => console.log('Fit Score:', score));
   }, []);
 
   return (
