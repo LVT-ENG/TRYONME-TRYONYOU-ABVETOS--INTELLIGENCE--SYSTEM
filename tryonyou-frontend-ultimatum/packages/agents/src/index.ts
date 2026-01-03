@@ -3,7 +3,7 @@ export class AgentPAU {
   static id = "001";
   static role = "Emotional Recommender";
 
-  static async recommend(emotion: string, biometrics: any): Promise<string> {
+  static async recommend(emotion: string, biometrics: Record<string, unknown>): Promise<string> {
     console.log(`[PAU] Analyzing emotion: ${emotion} with biometrics...`);
     // Placeholder logic
     return "OUTFIT_ID_123_GOLD_DRESS";
