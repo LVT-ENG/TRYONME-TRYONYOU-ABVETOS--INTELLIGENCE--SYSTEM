@@ -37,8 +37,16 @@ def get_commits(limit=20, branch=None):
         )
         
         # Parse the output
+        output = result.stdout.strip()
+        if not output:
+            return {
+                'success': True,
+                'commits': [],
+                'count': 0
+            }
+
         commits = []
-        for line in result.stdout.strip().split('\n'):
+        for line in output.split('\n'):
             if line:
                 parts = line.split('|')
                 if len(parts) == 5:
