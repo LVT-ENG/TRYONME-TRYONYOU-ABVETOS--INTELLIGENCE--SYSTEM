@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-echo "🔗 TRYONYOU Fusion & Deploy Script"
-echo "=================================="
+echo "════════════════════════════════════════════════════════════════"
+echo "🚀 TRYONYOU — SuperCommit Deploy — Fusion & Deploy Script"
+echo "════════════════════════════════════════════════════════════════"
 
 echo ""
 echo "STEP 1: Clean install dependencies"
@@ -26,14 +27,15 @@ if [ ! -d ".git" ]; then
 fi
 
 echo ""
-echo "STEP 5: Commit changes"
+echo "STEP 5: Commit changes (SuperCommit Pattern)"
 git add .
-git commit -m "🚀 Fusion complete - unified TRYONYOU platform with technical pages" || true
+git commit -m "🚀 Fusion complete - unified TRYONYOU platform with technical pages" || echo "No hay cambios para commit"
 
 echo ""
-echo "STEP 6: Push to repository (if origin exists)"
+echo "STEP 6: Push to repository (SuperCommit Pattern)"
 if git remote | grep -q origin; then
-  git push -u origin main
+  git push origin main --force-with-lease
+  echo "✅ Código consolidado en main"
 else
   echo "⚠️  NO remote origin configured."
   echo "Add it with:"
@@ -45,8 +47,9 @@ echo "STEP 7: Deploy to Vercel"
 npx vercel --prod
 
 echo ""
-echo "✅ FUSION & DEPLOYMENT COMPLETED"
-echo "=================================="
+echo "════════════════════════════════════════════════════════════════"
+echo "✅ ÉXITO: FUSION & DEPLOYMENT COMPLETED"
+echo "════════════════════════════════════════════════════════════════"
 echo "Your unified TRYONYOU platform is now live!"
 echo "Features integrated:"
 echo "  ✓ Virtual Try-On (Wardrobe, Avatar, Showroom)"
@@ -54,4 +57,5 @@ echo "  ✓ AI Styling (Glow-Up, Ask Peacock)"
 echo "  ✓ Technical Systems (FIT, CAP, ABVET)"
 echo "  ✓ Patent Claims"
 echo "  ✓ Agent System Integration"
+echo "════════════════════════════════════════════════════════════════"
 
