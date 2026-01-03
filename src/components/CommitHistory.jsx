@@ -84,7 +84,10 @@ export default function CommitHistory({ limit = 20, showStats = true }) {
 
   if (error) {
     return (
-      <div className="bg-red-900/20 border border-red-500/50 rounded-lg p-4 text-red-300">
+      <div
+        role="alert"
+        className="bg-red-900/20 border border-red-500/50 rounded-lg p-4 text-red-300"
+      >
         <p className="font-semibold">Error loading commits:</p>
         <p className="text-sm mt-1">{error}</p>
       </div>
