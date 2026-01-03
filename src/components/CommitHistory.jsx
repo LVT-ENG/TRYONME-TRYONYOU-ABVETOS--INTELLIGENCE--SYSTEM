@@ -8,35 +8,73 @@ import { fetchCommits, fetchCommitStats, formatCommitDate } from '../utils/gitAp
 export default function CommitHistory({ limit = 20, showStats = true }) {
   const [commits, setCommits] = useState([]);
   const [stats, setStats] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [commitsLoading, setCommitsLoading] = useState(true);
+  const [statsLoading, setStatsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Fetch commits whenever the limit changes
   useEffect(() => {
-    const loadData = async () => {
+    let cancelled = false;
+
+    const loadCommits = async () => {
       try {
-        setLoading(true);
+        setCommitsLoading(true);
         setError(null);
 
-        // Fetch commits
         const commitsData = await fetchCommits(limit);
+        if (cancelled) return;
         setCommits(commitsData.commits || []);
-
-        // Fetch stats if enabled
-        if (showStats) {
-          const statsData = await fetchCommitStats();
-          setStats(statsData.stats || null);
-        }
       } catch (err) {
+        if (cancelled) return;
         setError(err.message);
       } finally {
-        setLoading(false);
+        if (cancelled) return;
+        setCommitsLoading(false);
       }
     };
 
-    loadData();
-  }, [limit, showStats]);
+    loadCommits();
 
-  if (loading) {
+    return () => {
+      cancelled = true;
+    };
+  }, [limit]);
+
+  // Fetch stats when stats are enabled or when limit changes (to preserve existing behavior)
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadStats = async () => {
+      if (!showStats) {
+        setStats(null);
+        setStatsLoading(false);
+        return;
+      }
+
+      try {
+        setStatsLoading(true);
+        setError(null);
+
+        const statsData = await fetchCommitStats();
+        if (cancelled) return;
+        setStats(statsData.stats || null);
+      } catch (err) {
+        if (cancelled) return;
+        setError(err.message);
+      } finally {
+        if (cancelled) return;
+        setStatsLoading(false);
+      }
+    };
+
+    loadStats();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [showStats, limit]);
+
+  if (commitsLoading || statsLoading) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="text-[#C5A46D] animate-pulse">Loading commits...</div>
