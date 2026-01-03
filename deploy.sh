@@ -34,7 +34,7 @@ git commit -m "🚀 Fusion complete - unified TRYONYOU platform with technical p
 echo ""
 echo "STEP 6: Push to repository (SuperCommit Pattern)"
 if git remote | grep -q origin; then
-  git push origin main --force
+  git push origin main --force-with-lease
   echo "✅ Código consolidado en main"
 else
   echo "⚠️  NO remote origin configured."
