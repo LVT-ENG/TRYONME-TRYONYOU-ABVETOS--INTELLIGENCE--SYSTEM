@@ -2,7 +2,6 @@
 Git utilities for fetching commit information
 """
 import subprocess
-import json
 from datetime import datetime
 
 def get_commits(limit=20, branch=None):
