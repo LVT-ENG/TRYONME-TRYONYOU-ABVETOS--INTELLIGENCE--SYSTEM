@@ -77,7 +77,7 @@ export default function CommitHistory({ limit = 20, showStats = true }) {
   if (commitsLoading || statsLoading) {
     return (
       <div className="flex items-center justify-center p-8">
-        <div className="text-[#C5A46D] animate-pulse">Loading commits...</div>
+        <div className="text-[#C5A46D] animate-pulse" role="status" aria-live="polite">Loading commits...</div>
       </div>
     );
   }
