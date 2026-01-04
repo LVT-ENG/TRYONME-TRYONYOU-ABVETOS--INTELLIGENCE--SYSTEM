@@ -101,10 +101,10 @@ const AskPeacock = () => {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Hero Section - Compact */}
-      <section className="relative py-8 bg-gradient-to-br from-cyan-950 via-blue-900/50 to-tryonyou-black">
+      <section className="relative py-8 bg-gradient-to-br from-peacock-900 via-peacock-800/50 to-tryonyou-black">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-cyan-500/20 rounded-full blur-[100px] animate-float" />
-          <div className="absolute bottom-1/4 left-1/4 w-[200px] h-[200px] bg-blue-500/15 rounded-full blur-[80px] animate-float" style={{ animationDelay: '2s' }} />
+          <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-peacock-500/20 rounded-full blur-[100px] animate-float" />
+          <div className="absolute bottom-1/4 left-1/4 w-[200px] h-[200px] bg-gold-500/15 rounded-full blur-[80px] animate-float" style={{ animationDelay: '2s' }} />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
@@ -124,7 +124,7 @@ const AskPeacock = () => {
                 ease: "easeInOut"
               }}
             >
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-500 flex items-center justify-center glow-blue">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-peacock-400 via-peacock-500 to-gold-500 flex items-center justify-center glow-luxury animate-glow-pulse">
                 <span className="text-3xl">🦚</span>
               </div>
             </motion.div>
@@ -154,27 +154,27 @@ const AskPeacock = () => {
                 className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.type === 'peacock' && (
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mr-3 flex-shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-peacock-400 to-peacock-600 flex items-center justify-center mr-3 flex-shrink-0 glow-blue">
                     <span className="text-lg">🦚</span>
                   </div>
                 )}
                 
                 <div className={`max-w-[80%] ${
                   message.type === 'user'
-                    ? 'bg-tryonyou-blue/30 rounded-2xl rounded-tr-sm'
-                    : 'glass rounded-2xl rounded-tl-sm'
-                } px-4 py-3`}>
+                    ? 'glass-premium rounded-2xl rounded-tr-sm'
+                    : 'glass-luxury rounded-2xl rounded-tl-sm'
+                } px-4 py-3 transition-all duration-300`}>
                   <p className="text-white/90 whitespace-pre-wrap">{message.content}</p>
                   
                   {message.type === 'peacock' && (
                     <div className="flex items-center gap-2 mt-2 pt-2 border-t border-white/10">
-                      <button className="p-1 hover:bg-white/10 rounded transition-colors">
+                      <button className="p-1 hover:bg-white/10 rounded transition-all duration-200 hover:text-peacock-400">
                         <ThumbsUp size={14} className="text-white/40" />
                       </button>
-                      <button className="p-1 hover:bg-white/10 rounded transition-colors">
+                      <button className="p-1 hover:bg-white/10 rounded transition-all duration-200 hover:text-peacock-400">
                         <ThumbsDown size={14} className="text-white/40" />
                       </button>
-                      <button className="p-1 hover:bg-white/10 rounded transition-colors ml-auto">
+                      <button className="p-1 hover:bg-white/10 rounded transition-all duration-200 ml-auto hover:text-gold-400">
                         <RefreshCw size={14} className="text-white/40" />
                       </button>
                     </div>
@@ -191,25 +191,25 @@ const AskPeacock = () => {
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center gap-3"
             >
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-peacock-400 to-peacock-600 flex items-center justify-center glow-blue">
                 <span className="text-lg">🦚</span>
               </div>
-              <div className="glass rounded-2xl rounded-tl-sm px-4 py-3">
+              <div className="glass-luxury rounded-2xl rounded-tl-sm px-4 py-3">
                 <div className="flex gap-1">
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                    className="w-2 h-2 rounded-full bg-cyan-400"
+                    className="w-2 h-2 rounded-full bg-peacock-400"
                   />
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                    className="w-2 h-2 rounded-full bg-cyan-400"
+                    className="w-2 h-2 rounded-full bg-peacock-400"
                   />
                   <motion.div
                     animate={{ scale: [1, 1.2, 1] }}
                     transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                    className="w-2 h-2 rounded-full bg-cyan-400"
+                    className="w-2 h-2 rounded-full bg-gold-400"
                   />
                 </div>
               </div>
@@ -235,7 +235,7 @@ const AskPeacock = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.1 }}
                   onClick={() => handleSendMessage(q.text)}
-                  className="glass px-4 py-2 rounded-full text-sm hover:bg-white/10 transition-colors flex items-center gap-2"
+                  className="glass-premium px-4 py-2 rounded-full text-sm hover:glass-luxury transition-all duration-300 flex items-center gap-2 hover:scale-105"
                 >
                   <span>{q.icon}</span>
                   {q.text}
@@ -246,13 +246,13 @@ const AskPeacock = () => {
         )}
 
         {/* Input Area */}
-        <div className="glass rounded-2xl p-3">
+        <div className="glass-luxury rounded-2xl p-3 transition-all duration-300">
           <div className="flex items-end gap-3">
             <div className="flex gap-2">
-              <button className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white/60 hover:text-white">
+              <button className="p-2 rounded-lg hover:bg-white/10 transition-all duration-200 text-white/60 hover:text-peacock-400">
                 <Camera size={20} />
               </button>
-              <button className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white/60 hover:text-white">
+              <button className="p-2 rounded-lg hover:bg-white/10 transition-all duration-200 text-white/60 hover:text-gold-400">
                 <Mic size={20} />
               </button>
             </div>
@@ -269,9 +269,9 @@ const AskPeacock = () => {
             <button
               onClick={() => handleSendMessage()}
               disabled={!inputValue.trim()}
-              className={`p-3 rounded-xl transition-all ${
+              className={`p-3 rounded-xl transition-all duration-300 ${
                 inputValue.trim()
-                  ? 'bg-tryonyou-blue hover:bg-amparo-light'
+                  ? 'bg-gradient-to-r from-peacock-500 to-peacock-600 hover:from-peacock-400 hover:to-peacock-500 glow-blue hover:scale-105'
                   : 'bg-white/10 cursor-not-allowed'
               }`}
             >
@@ -286,10 +286,10 @@ const AskPeacock = () => {
         <div className="max-w-4xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {[
-              { icon: Globe, label: 'Global Knowledge', color: 'text-cyan-400' },
-              { icon: Sparkles, label: 'Advanced AI', color: 'text-purple-400' },
+              { icon: Globe, label: 'Global Knowledge', color: 'text-peacock-400' },
+              { icon: Sparkles, label: 'Advanced AI', color: 'text-gold-400' },
               { icon: Heart, label: 'Personalized', color: 'text-rose-400' },
-              { icon: Zap, label: 'Instant Responses', color: 'text-amber-400' },
+              { icon: Zap, label: 'Instant Responses', color: 'text-gold-300' },
             ].map((feature, i) => (
               <motion.div
                 key={feature.label}
@@ -316,12 +316,12 @@ const AskPeacock = () => {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="card bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border-cyan-500/30">
+          <div className="card-luxury bg-gradient-to-br from-peacock-500/10 to-gold-500/10 border-peacock-500/30">
             <div className="flex flex-col md:flex-row items-center gap-6">
               <motion.div
                 animate={{ rotate: [0, 5, -5, 0] }}
                 transition={{ duration: 4, repeat: Infinity }}
-                className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center flex-shrink-0"
+                className="w-24 h-24 rounded-full bg-gradient-to-br from-peacock-400 to-gold-500 flex items-center justify-center flex-shrink-0 glow-luxury"
               >
                 <span className="text-5xl">🦚</span>
               </motion.div>

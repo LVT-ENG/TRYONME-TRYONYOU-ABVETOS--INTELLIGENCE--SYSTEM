@@ -20,24 +20,81 @@
 }
 
 @layer components {
-  /* Glass morphism effect */
+  /* Glass morphism effect - Enhanced */
   .glass {
     @apply bg-white/10 backdrop-blur-lg border border-white/20;
+    box-shadow: 0 8px 32px 0 rgba(0, 168, 232, 0.1);
+  }
+  
+  /* Premium Glass - Luxury variant */
+  .glass-premium {
+    @apply bg-gradient-to-br from-white/15 to-white/5 backdrop-blur-xl border border-white/30;
+    box-shadow: 0 8px 32px 0 rgba(0, 168, 232, 0.15), 
+                0 0 0 1px rgba(212, 175, 55, 0.1) inset;
+  }
+  
+  /* Luxury Glass - With gold accent */
+  .glass-luxury {
+    @apply bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-2xl border border-white/40;
+    box-shadow: 0 12px 48px 0 rgba(0, 168, 232, 0.2), 
+                0 0 0 1px rgba(212, 175, 55, 0.2) inset,
+                0 4px 16px 0 rgba(212, 175, 55, 0.1);
   }
   
   /* Metallic button */
   .btn-metallic {
     @apply px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-tryonyou-metallic to-tryonyou-silver hover:from-tryonyou-silver hover:to-tryonyou-gold transition-all duration-300 transform hover:scale-105;
+    box-shadow: 0 4px 12px rgba(139, 146, 160, 0.3);
   }
   
-  /* Primary button */
+  /* Primary button - Enhanced with luxury feel */
   .btn-primary {
-    @apply px-6 py-3 rounded-lg font-semibold text-white bg-tryonyou-blue hover:bg-amparo-light transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-tryonyou-blue/50;
+    @apply px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-peacock-500 to-peacock-600 hover:from-peacock-400 hover:to-peacock-500 transition-all duration-300 transform hover:scale-105;
+    box-shadow: 0 4px 20px rgba(0, 168, 232, 0.4), 
+                0 0 40px rgba(0, 168, 232, 0.1);
   }
   
-  /* Card component */
+  .btn-primary:hover {
+    box-shadow: 0 6px 30px rgba(0, 168, 232, 0.6), 
+                0 0 60px rgba(0, 168, 232, 0.2);
+  }
+  
+  /* Gold button variant */
+  .btn-gold {
+    @apply px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 transition-all duration-300 transform hover:scale-105;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 
+                0 0 40px rgba(212, 175, 55, 0.1);
+  }
+  
+  .btn-gold:hover {
+    box-shadow: 0 6px 30px rgba(212, 175, 55, 0.6), 
+                0 0 60px rgba(212, 175, 55, 0.2);
+  }
+  
+  /* Card component - Enhanced */
   .card {
-    @apply bg-tryonyou-smoke/50 backdrop-blur-sm border border-tryonyou-metallic/30 rounded-xl p-6 transition-all duration-300 hover:border-tryonyou-blue/50 hover:shadow-lg hover:shadow-tryonyou-blue/20;
+    @apply bg-tryonyou-smoke/50 backdrop-blur-sm border border-tryonyou-metallic/30 rounded-xl p-6 transition-all duration-300 hover:border-peacock-500/50;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(0, 168, 232, 0.2),
+                0 0 48px rgba(0, 168, 232, 0.1);
+  }
+  
+  /* Luxury card variant */
+  .card-luxury {
+    @apply bg-gradient-to-br from-tryonyou-smoke/60 to-tryonyou-smoke/30 backdrop-blur-md border border-peacock-500/20 rounded-xl p-6 transition-all duration-500;
+    box-shadow: 0 8px 32px rgba(0, 168, 232, 0.15),
+                0 0 0 1px rgba(212, 175, 55, 0.1) inset;
+  }
+  
+  .card-luxury:hover {
+    @apply border-gold-500/40;
+    box-shadow: 0 12px 48px rgba(0, 168, 232, 0.25),
+                0 0 64px rgba(212, 175, 55, 0.15),
+                0 0 0 1px rgba(212, 175, 55, 0.2) inset;
+    transform: translateY(-2px);
   }
   
   /* Section container */
@@ -58,21 +115,47 @@
     @apply font-display text-2xl md:text-4xl font-bold tracking-tight;
   }
   
-  /* Gradient text */
+  /* Gradient text - Enhanced with peacock & gold */
   .gradient-text {
-    @apply bg-gradient-to-r from-tryonyou-blue via-amparo-light to-tryonyou-blue bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-peacock-400 via-peacock-300 to-gold-400 bg-clip-text text-transparent;
   }
   
-  /* Glow effect */
+  /* Peacock gradient text variant */
+  .gradient-text-peacock {
+    @apply bg-gradient-to-r from-peacock-300 via-peacock-500 to-peacock-700 bg-clip-text text-transparent;
+  }
+  
+  /* Gold gradient text variant */
+  .gradient-text-gold {
+    @apply bg-gradient-to-r from-gold-300 via-gold-500 to-gold-700 bg-clip-text text-transparent;
+  }
+  
+  /* Glow effect - Enhanced */
   .glow-blue {
-    box-shadow: 0 0 20px rgba(0, 168, 232, 0.5), 0 0 40px rgba(0, 168, 232, 0.3);
+    box-shadow: 0 0 20px rgba(0, 168, 232, 0.5), 
+                0 0 40px rgba(0, 168, 232, 0.3),
+                0 0 60px rgba(0, 168, 232, 0.1);
   }
   
-  /* Animated gradient background */
+  /* Gold glow effect */
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 
+                0 0 40px rgba(212, 175, 55, 0.3),
+                0 0 60px rgba(212, 175, 55, 0.1);
+  }
+  
+  /* Luxury glow - Combined peacock & gold */
+  .glow-luxury {
+    box-shadow: 0 0 20px rgba(0, 168, 232, 0.4), 
+                0 0 40px rgba(0, 168, 232, 0.2),
+                0 0 60px rgba(212, 175, 55, 0.2);
+  }
+  
+  /* Animated gradient background - Enhanced */
   .animated-gradient {
-    background: linear-gradient(270deg, #00A8E8, #003459, #00D9FF, #003459);
-    background-size: 800% 800%;
-    animation: gradientShift 15s ease infinite;
+    background: linear-gradient(270deg, #00A8E8, #003459, #D4AF37, #00D9FF, #003459);
+    background-size: 1000% 1000%;
+    animation: gradientShift 20s ease infinite;
   }
   
   @keyframes gradientShift {

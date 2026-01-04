@@ -143,6 +143,37 @@ public/
 
 ## 🎨 Color Palette
 
+### Official Peacock Blue & Gold Palette
+
+**Peacock Blue Spectrum:**
+```css
+--peacock-50: #E0F7FF   /* Lightest */
+--peacock-100: #B8EEFF
+--peacock-200: #8BE4FF
+--peacock-300: #5DD9FF
+--peacock-400: #2ECEFF
+--peacock-500: #00A8E8  /* Primary Peacock Blue */
+--peacock-600: #0088C4
+--peacock-700: #006BA0
+--peacock-800: #004F7C
+--peacock-900: #003459  /* Deep Peacock Blue */
+```
+
+**Gold Spectrum:**
+```css
+--gold-50: #FFF9E6     /* Lightest */
+--gold-100: #FFF0C2
+--gold-200: #FFE699
+--gold-300: #FFDD70
+--gold-400: #FFD447
+--gold-500: #D4AF37    /* Primary Gold */
+--gold-600: #B8962F
+--gold-700: #9C7D27
+--gold-800: #80641F
+--gold-900: #644B17    /* Deep Gold */
+```
+
+**Legacy Colors (Still Available):**
 ```css
 --tryonyou-blue: #00A8E8
 --tryonyou-darkblue: #003459
@@ -151,6 +182,12 @@ public/
 --tryonyou-black: #0A0A0A
 --tryonyou-smoke: #1A1A2E
 ```
+
+### Luxury Effects
+- **Glassmorphism**: Premium glass effects with backdrop blur
+- **Glow Effects**: Peacock blue and gold glow shadows
+- **Luxury Transitions**: Smooth, refined animations (300-500ms)
+- **Premium Shadows**: Multi-layered shadows with color accents
 
 ## 📱 Responsive Breakpoints
 
