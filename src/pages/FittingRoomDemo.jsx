@@ -57,7 +57,7 @@ const FittingRoomDemo = () => {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="space-y-6"
           >
-            <div className="glass-panel p-6 rounded-2xl">
+            <div className="glass p-6 rounded-2xl">
               <h3 className="text-xl font-light tracking-wider text-white mb-4">
                 Customize Your Avatar
               </h3>
@@ -114,7 +114,7 @@ const FittingRoomDemo = () => {
               </div>
             </div>
 
-            <div className="glass-panel p-6 rounded-2xl">
+            <div className="glass p-6 rounded-2xl">
               <h4 className="text-lg font-light text-white mb-3">Features</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li className="flex items-center gap-2">
