@@ -19,6 +19,10 @@ def process_biometrics(on_progress):
     """
     Ejecuta el escaneo reportando progreso real al callback.
     """
+    # Validar que on_progress es callable
+    if not callable(on_progress):
+        raise TypeError("on_progress debe ser una función callable")
+    
     stages = [
         (25, "Analizando imagen..."),
         (50, "Extrayendo características..."),
@@ -27,7 +31,10 @@ def process_biometrics(on_progress):
     ]
     
     for progress, message in stages:
-        on_progress(progress, message)
+        try:
+            on_progress(progress, message)
+        except Exception as e:
+            print(f"Error en callback: {e}")
         time.sleep(0.5) # Simulación de tiempo de procesamiento real
     
     return {"success": True, "token": "mock_auth_token_123"}
