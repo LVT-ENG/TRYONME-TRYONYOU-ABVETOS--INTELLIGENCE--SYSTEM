@@ -30,12 +30,17 @@ GOOGLE_APPLICATION_CREDENTIALS=service_account.json
 SPREADSHEET_ID=your_google_sheet_id (opcional, se puede hardcodear)
 """
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from datetime import datetime
 import os
 import json
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # ------------------ GEMINI ------------------
 import google.generativeai as genai
@@ -84,15 +89,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Gemini client
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+# Gemini client - validate API key
+gemini_api_key = os.getenv("GEMINI_API_KEY")
+if not gemini_api_key:
+    logger.warning("GEMINI_API_KEY not set. Gemini functionality will not work.")
+else:
+    genai.configure(api_key=gemini_api_key)
 
-# Google Sheets client
-credentials = service_account.Credentials.from_service_account_file(
-    os.getenv("GOOGLE_APPLICATION_CREDENTIALS"),
-    scopes=SCOPES,
-)
-sheets_service = build("sheets", "v4", credentials=credentials)
+# Google Sheets client - validate credentials
+sheets_service = None
+credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+if credentials_path and os.path.exists(credentials_path):
+    try:
+        credentials = service_account.Credentials.from_service_account_file(
+            credentials_path,
+            scopes=SCOPES,
+        )
+        sheets_service = build("sheets", "v4", credentials=credentials)
+        logger.info("Google Sheets service initialized successfully")
+    except Exception as e:
+        logger.warning(f"Failed to initialize Google Sheets: {e}")
+else:
+    logger.warning("GOOGLE_APPLICATION_CREDENTIALS not set or file not found. Sheets persistence disabled.")
 
 # ==================================================
 # PROMPT GEMINI
@@ -120,47 +138,64 @@ Devuelve EXCLUSIVAMENTE un JSON con este formato:
 # ==================================================
 
 def analyze_with_gemini(payload: dict) -> Metrics:
-    model = genai.GenerativeModel("gemini-pro")
-    
-    # Construct the prompt with system instructions and user data
-    prompt = f"{SYSTEM_PROMPT}\n\nDatos del escaneo: {json.dumps(payload)}"
-    
-    response = model.generate_content(prompt)
-    
-    # Extract JSON from response text
-    response_text = response.text.strip()
-    
-    # Try to extract JSON if wrapped in markdown code blocks
-    if "```json" in response_text:
-        start = response_text.find("```json") + 7
-        end = response_text.find("```", start)
-        response_text = response_text[start:end].strip()
-    elif "```" in response_text:
-        start = response_text.find("```") + 3
-        end = response_text.find("```", start)
-        response_text = response_text[start:end].strip()
-    
-    data = json.loads(response_text)
-    return Metrics(**data)
+    try:
+        model = genai.GenerativeModel("gemini-pro")
+        
+        # Construct the prompt with system instructions and user data
+        prompt = f"{SYSTEM_PROMPT}\n\nDatos del escaneo: {json.dumps(payload)}"
+        
+        response = model.generate_content(prompt)
+        
+        # Extract JSON from response text
+        response_text = response.text.strip()
+        
+        # Try to extract JSON if wrapped in markdown code blocks
+        if "```json" in response_text:
+            start = response_text.find("```json") + 7
+            end = response_text.find("```", start)
+            response_text = response_text[start:end].strip()
+        elif "```" in response_text:
+            start = response_text.find("```") + 3
+            end = response_text.find("```", start)
+            response_text = response_text[start:end].strip()
+        
+        data = json.loads(response_text)
+        return Metrics(**data)
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse Gemini response as JSON: {e}")
+        raise HTTPException(status_code=500, detail="Error parsing AI response")
+    except Exception as e:
+        logger.error(f"Error calling Gemini API: {e}")
+        raise HTTPException(status_code=500, detail="Error generating biometric analysis")
 
 
 def save_to_sheets(session_id: str, metrics: Metrics):
-    values = [[
-        datetime.utcnow().isoformat(),
-        session_id,
-        metrics.altura,
-        metrics.hombros,
-        metrics.pecho,
-        metrics.cintura,
-        metrics.talla,
-    ]]
+    """Save metrics to Google Sheets. Fails silently if sheets service is unavailable."""
+    if not sheets_service:
+        logger.warning("Sheets service not available. Skipping persistence.")
+        return
+    
+    try:
+        values = [[
+            datetime.utcnow().isoformat(),
+            session_id,
+            metrics.altura,
+            metrics.hombros,
+            metrics.pecho,
+            metrics.cintura,
+            metrics.talla,
+        ]]
 
-    sheets_service.spreadsheets().values().append(
-        spreadsheetId=SPREADSHEET_ID,
-        range=SHEET_RANGE,
-        valueInputOption="RAW",
-        body={"values": values},
-    ).execute()
+        sheets_service.spreadsheets().values().append(
+            spreadsheetId=SPREADSHEET_ID,
+            range=SHEET_RANGE,
+            valueInputOption="RAW",
+            body={"values": values},
+        ).execute()
+        logger.info(f"Successfully saved metrics for session {session_id}")
+    except Exception as e:
+        logger.error(f"Failed to save to Google Sheets: {e}")
+        # Don't raise - allow the API to return results even if persistence fails
 
 
 # ==================================================
