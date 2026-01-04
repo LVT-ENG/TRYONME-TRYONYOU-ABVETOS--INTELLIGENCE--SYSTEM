@@ -152,6 +152,13 @@ class BackupManager:
     
     def generate_backup_report(self, snapshot_info, compressed_logs, synced_files):
         """Generate comprehensive backup report"""
+        # Count successful checksums (non-None values)
+        checksums_count = 0
+        if snapshot_info.get("checksum"):
+            checksums_count += 1
+        checksums_count += sum(1 for log in compressed_logs if log.get("checksum"))
+        checksums_count += sum(1 for file in synced_files if file.get("checksum"))
+        
         report = {
             "backup_id": f"BACKUP_{self.current_session}_{datetime.now().strftime('%H%M%S')}",
             "timestamp": datetime.now().isoformat(),
@@ -169,7 +176,7 @@ class BackupManager:
             },
             "verification_status": "VERIFIED",
             "total_files_backed_up": 1 + len(compressed_logs) + len(synced_files),
-            "checksums_generated": 1 + len(compressed_logs) + len(synced_files)
+            "checksums_generated": checksums_count
         }
         
         report_file = self.session_backup_dir / f"backup_report_{self.current_session}.json"
