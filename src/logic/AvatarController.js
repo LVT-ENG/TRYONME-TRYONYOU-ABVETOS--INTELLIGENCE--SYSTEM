@@ -1,12 +1,17 @@
 // src/logic/AvatarController.js
-
-// ANTES: const modelPath = "/assets/models/dummy.glb";
-// AHORA: Integrando la estética de la chica del vestido rojo
+// Avatar Model Configuration - Official High-Fidelity Model
+// BEFORE: const modelPath = "/assets/models/dummy.glb";
+// NOW: Integrating the aesthetic of the girl in the red dress (official avatar v1)
 const modelPath = "/assets/models/official_avatar_v1.glb"; 
 
-export const loadAvatar = (scene) => {
+/**
+ * Loads the official high-fidelity avatar model
+ * @returns {string} The path to the official avatar model
+ */
+export const loadAvatar = () => {
   console.log("🚀 Cargando Avatar Real (Singularidad Activa)...");
-  // Lógica de carga del modelo de alta fidelidad
+  console.log("Loading Official Avatar (Singularity Active)...");
+  // High-fidelity model loading logic
   return modelPath;
 };
 
