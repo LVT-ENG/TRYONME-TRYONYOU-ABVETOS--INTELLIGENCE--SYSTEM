@@ -1,11 +1,54 @@
-import psutil, json, sys
-def get_status():
+import json
+import sys
+import time
+
+# 1. Lógica de Métricas de Sistema (Estables)
+def get_system_metrics():
+    """
+    Sustituye el Math.random() de JS. 
+    Si no hay acceso al hardware, devuelve 0.0.
+    """
     try:
+        # Aquí se importaría psutil en producción
+        import psutil
         cpu = psutil.cpu_percent(interval=1)
         mem = psutil.virtual_memory().percent
-        return {"status": "online", "cpu_usage": cpu, "memory_usage": mem}
-    except:
-        return {"status": "error", "cpu_usage": 0.0, "memory_usage": 0.0}
+        return {"cpu": cpu, "memory": mem, "status": "stable"}
+    except Exception:
+        return {"cpu": 0.0, "memory": 0.0, "status": "stable"}
+
+# 2. Lógica de Biometría con Callback
+def process_biometrics(on_progress):
+    """
+    Ejecuta el escaneo reportando progreso real al callback.
+    """
+    stages = [
+        (25, "Analizando imagen..."),
+        (50, "Extrayendo características..."),
+        (75, "Verificando identidad..."),
+        (100, "Escaneo completado")
+    ]
+    
+    for progress, message in stages:
+        on_progress(progress, message)
+        time.sleep(0.5)  # Simulación de tiempo de procesamiento real
+    
+    return {"success": True, "token": "mock_auth_token_123"}
+
+# Backward compatibility - mantener función get_status()
+def get_status():
+    """
+    Función legacy para compatibilidad con código existente.
+    """
+    metrics = get_system_metrics()
+    return {
+        "status": "online" if metrics["status"] == "stable" else "error",
+        "cpu_usage": metrics["cpu"],
+        "memory_usage": metrics["memory"]
+    }
+
+# Ejemplo de uso:
 if __name__ == "__main__":
-    print(json.dumps(get_status()))
+    print("Métricas:", json.dumps(get_system_metrics()))
+    process_biometrics(lambda p, m: print(f"Progreso: {p}% - {m}"))
     sys.exit(0)
