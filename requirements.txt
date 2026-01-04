@@ -1,4 +1,11 @@
+# Monitoreo de Hardware
 psutil==5.9.8
+
+# Procesamiento de Datos y Biometría
 numpy==1.26.4
+
+# Utilidades de Red y API (opcional para el futuro)
 requests==2.31.0
+
+# Integración con Google AI
 google-generativeai==0.8.3
