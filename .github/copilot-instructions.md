@@ -37,7 +37,7 @@ npm run preview     # Preview production build
 
 # Backend
 # Ensure GOOGLE_API_KEY is set in .env file before starting
-python master_brain.py  # Start AI backend server (port 8000 by default)
+python master_brain.py  # Start AI backend server (port 8080 by default)
 ```
 
 ## Code Style & Conventions
