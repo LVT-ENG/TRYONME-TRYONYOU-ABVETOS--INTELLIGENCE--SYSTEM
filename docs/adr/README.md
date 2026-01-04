@@ -23,7 +23,7 @@ Each ADR follows this structure:
 
 | ADR | Title | Status | Date |
 |-----|-------|--------|------|
-| [ADR-014](./ADR-014-unified-biometric-engine.md) | Unified Biometric Intelligence Engine (FastAPI + Gemini + Looker) | Propuesto | 2025-01-XX |
+| [ADR-014](./ADR-014-unified-biometric-engine.md) | Unified Biometric Intelligence Engine (FastAPI + Gemini + Looker) | Propuesto | 2025-01-04 |
 
 ## Creating a New ADR
 

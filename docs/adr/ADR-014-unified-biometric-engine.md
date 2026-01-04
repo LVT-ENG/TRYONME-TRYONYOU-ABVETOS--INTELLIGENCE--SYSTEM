@@ -1,7 +1,7 @@
 # ADR-014: Unified Biometric Intelligence Engine (FastAPI + Gemini + Looker)
 
 **Estado**: Propuesto  
-**Fecha**: 2025-01-XX  
+**Fecha**: 2025-01-04  
 **Deciders**: LVT-ENG / ABVETOS Core Team  
 **Contexto**: Sistema TRYONME / TRYONYOU – ABVETOS Intelligence System  
 **Issue relacionado**: [LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM#1408](https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/issues/1408)
@@ -152,6 +152,8 @@ Este backend:
 ### Archivo Principal: `unified_engine.py`
 
 ```python
+import os
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import google.generativeai as genai
@@ -292,4 +294,4 @@ Este ADR debe ser aprobado por:
 
 ---
 
-**Fecha de revisión sugerida**: 2025-03-XX (trimestral)
+**Fecha de revisión sugerida**: 2025-04-04 (trimestral)
