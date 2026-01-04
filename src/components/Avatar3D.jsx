@@ -3,6 +3,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls, Environment, ContactShadows, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 import { motion } from 'framer-motion'
+import modelPath from '../logic/AvatarController'
 
 // 3D Model Loader Component
 function AvatarModel({ modelPath, customizations = {} }) {
@@ -155,11 +156,13 @@ function Loader() {
 
 export default function Avatar3D({ 
   customizations = {},
-  modelPath = '/models/avatar.glb', // Default path - will use procedural if not found
+  modelPath: customModelPath = null, // Allow override, defaults to AvatarController path
   className = '',
   showControls = true,
   height = '100%',
 }) {
+  // Use custom path if provided, otherwise use the official avatar path
+  const avatarModelPath = customModelPath || modelPath;
   // Optimization: Removed unused isLoading state and redundant HEAD request
 
   return (
@@ -184,7 +187,7 @@ export default function Avatar3D({
 
         <Suspense fallback={<Loader />}>
           <AvatarModel 
-            modelPath={modelPath} 
+            modelPath={avatarModelPath} 
             customizations={customizations} 
           />
           <Stage />

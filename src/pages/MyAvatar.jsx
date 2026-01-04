@@ -317,7 +317,6 @@ const MyAvatar = () => {
                       skin: avatarData.skinTone ? skinTones.find(s => s.id === avatarData.skinTone)?.color : '#f5d0c5',
                       outfit: avatarData.style ? { top: '#1a1a1a', bottom: '#2d2d2d', shoes: '#0a0a0a' } : null,
                     }}
-                    modelPath="/models/avatar.glb"
                     showControls={true}
                     height="100%"
                   />

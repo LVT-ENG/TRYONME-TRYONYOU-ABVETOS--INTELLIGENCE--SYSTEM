@@ -350,7 +350,6 @@ const Wardrobe = () => {
                           shoes: selectedItem.category === 'accessories' ? selectedItem.color : '#0a0a0a',
                         }
                       }}
-                      modelPath="/models/avatar.glb"
                       showControls={true}
                       height="100%"
                     />
