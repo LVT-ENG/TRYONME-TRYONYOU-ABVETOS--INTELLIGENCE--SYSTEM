@@ -2,18 +2,20 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ShoppingBag, Star, Filter, Search, Heart, TrendingUp, ArrowRight, Sparkles } from 'lucide-react'
 import { getImageWithFallback, getLogoPath } from '../utils/assets'
+import { useTranslation } from 'react-i18next'
 
 const Brands = () => {
+  const { t } = useTranslation()
   const [activeCategory, setActiveCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
 
   const categories = [
-    { id: 'all', name: 'All', count: 48 },
-    { id: 'luxury', name: 'Luxury', count: 12 },
-    { id: 'streetwear', name: 'Streetwear', count: 15 },
-    { id: 'sustainable', name: 'Sustainable', count: 8 },
-    { id: 'sportswear', name: 'Sportswear', count: 10 },
-    { id: 'vintage', name: 'Vintage', count: 3 },
+    { id: 'all', name: t('brands.categories.all'), count: 48 },
+    { id: 'luxury', name: t('brands.categories.luxury'), count: 12 },
+    { id: 'streetwear', name: t('brands.categories.streetwear'), count: 15 },
+    { id: 'sustainable', name: t('brands.categories.sustainable'), count: 8 },
+    { id: 'sportswear', name: t('brands.categories.sportswear'), count: 10 },
+    { id: 'vintage', name: t('brands.categories.vintage'), count: 3 },
   ]
 
   const brands = [
@@ -56,15 +58,15 @@ const Brands = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
               <ShoppingBag size={18} className="text-rose-400" />
-              <span className="text-rose-300 font-semibold">Verified Brands</span>
+              <span className="text-rose-300 font-semibold">{t('brands.verifiedBrands')}</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Brands
+              {t('brands.title')}
             </h1>
             
             <p className="text-xl text-white/80 max-w-3xl mx-auto mb-8">
-              TRYONYOU connects with catalogs, collections, and sizing data to reduce returns and increase conversion.
+              {t('brands.subtitle')}
             </p>
           </motion.div>
         </div>

@@ -1,30 +1,32 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const Home = () => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [activeClaimIndex, setActiveClaimIndex] = useState(0)
 
   const claims = [
     {
-      title: "Zero Returns",
-      description: "Perfect fit guaranteed. No more wrong sizes. Our body intelligence ensures every garment fits you perfectly.",
+      title: t('home.claims.zeroReturns.title'),
+      description: t('home.claims.zeroReturns.description'),
       icon: "✓"
     },
     {
-      title: "Perfect Fit by Body Intelligence",
-      description: "AI-powered biometric analysis understands your unique body proportions and recommends garments tailored to you.",
+      title: t('home.claims.perfectFit.title'),
+      description: t('home.claims.perfectFit.description'),
       icon: "◆"
     },
     {
-      title: "Fabric Elasticity & Drape-Aware",
-      description: "We analyze fabric properties—elasticity, drape, rigidity—to predict how garments will move and feel on your body.",
+      title: t('home.claims.fabricAware.title'),
+      description: t('home.claims.fabricAware.description'),
       icon: "≈"
     },
     {
-      title: "AI + Biometric Measurements",
-      description: "Advanced computer vision captures your body measurements with precision. No manual tape measures. Just your phone.",
+      title: t('home.claims.aiMeasurements.title'),
+      description: t('home.claims.aiMeasurements.description'),
       icon: "⊙"
     },
   ]
@@ -55,7 +57,7 @@ const Home = () => {
       <nav className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-widest text-white">TRYONYOU</h1>
-          <div className="text-sm text-gray-400 hidden md:block">Fashion Tech for Perfect Fit</div>
+          <div className="text-sm text-gray-400 hidden md:block">{t('home.tagline')}</div>
         </div>
       </nav>
 
@@ -73,15 +75,15 @@ const Home = () => {
             >
               <motion.div variants={itemVariants}>
                 <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white">
-                  No vas a hacerte un TryOnYou.
+                  {t('home.heroTitle')}
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent block mt-2"> 
-                    TryOnYou lo hará por ti.
+                    {t('home.heroSubtitle')}
                   </span>
                 </h2>
               </motion.div>
 
               <motion.p variants={itemVariants} className="text-xl text-gray-300 leading-relaxed">
-                Medimos tu cuerpo para que la ropa encaje a la primera.
+                {t('home.heroDescription')}
               </motion.p>
 
               <motion.div variants={itemVariants} className="flex gap-4">
@@ -89,13 +91,13 @@ const Home = () => {
                   onClick={() => navigate('/pilot')}
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition-colors shadow-lg uppercase tracking-wider"
                 >
-                  Probar Ahora
+                  {t('home.tryNow')}
                 </button>
                 <button
                   onClick={() => navigate('/investors')}
                   className="px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white transition-colors uppercase tracking-wider"
                 >
-                  Inversores
+                  {t('home.investors')}
                 </button>
               </motion.div>
 
