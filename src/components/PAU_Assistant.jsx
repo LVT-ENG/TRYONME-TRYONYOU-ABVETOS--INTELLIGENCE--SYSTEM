@@ -64,6 +64,13 @@ const PAU_Assistant = () => {
     }
   ]
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      isMountedRef.current = false
+    }
+  }, [])
+
   const handleEmotionSelect = async (emotion) => {
     setSelectedEmotion(emotion)
     setIsProcessing(true)
@@ -72,8 +79,8 @@ const PAU_Assistant = () => {
     try {
       // Simulate biometric reading
       const simulatedBiometrics = {
-        heartRate: Math.floor(60 + Math.random() * 40),
-        skinTemp: (36 + Math.random() * 1.5).toFixed(1),
+        heartRate: Math.floor(MIN_HEART_RATE + Math.random() * HEART_RATE_RANGE),
+        skinTemp: (MIN_SKIN_TEMP + Math.random() * TEMP_RANGE).toFixed(1),
         stressLevel: ['low', 'medium', 'high'][Math.floor(Math.random() * 3)]
       }
       setBiometrics(simulatedBiometrics)
@@ -83,18 +90,23 @@ const PAU_Assistant = () => {
       
       // Simulate processing time for better UX
       setTimeout(() => {
-        setRecommendation({
-          outfitId: result,
-          emotion: emotion.label,
-          confidence: Math.floor(85 + Math.random() * 15),
-          description: getRecommendationDescription(emotion.id),
-          items: getRecommendedItems(emotion.id)
-        })
-        setIsProcessing(false)
+        // Only update state if component is still mounted
+        if (isMountedRef.current) {
+          setRecommendation({
+            outfitId: result,
+            emotion: emotion.label,
+            confidence: Math.floor(85 + Math.random() * 15),
+            description: getRecommendationDescription(emotion.id),
+            items: getRecommendedItems(emotion.id)
+          })
+          setIsProcessing(false)
+        }
       }, 1500)
     } catch (error) {
       console.error('PAU recommendation error:', error)
-      setIsProcessing(false)
+      if (isMountedRef.current) {
+        setIsProcessing(false)
+      }
     }
   }
 
