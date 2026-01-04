@@ -47,7 +47,9 @@ fi
 # 2. CARGA DE SECRETOS
 # ---------------------------------------------------------
 if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
+  set -a
+  source .env
+  set +a
   echo -e "${GREEN}✅ Variables .env cargadas.${NC}"
 else
   echo -e "${YELLOW}⚠️  No hay archivo .env (Continuando con variables de sistema)${NC}"
@@ -59,8 +61,13 @@ fi
 echo -e "\n${YELLOW}📡 Sincronizando con el equipo (Git Pull Rebase)...${NC}"
 # git stash guarda tus cambios locales temporalmente para evitar conflictos al bajar código
 git stash push -m "Guardado automático antes de deploy" --quiet
-git pull origin main --rebase
-git stash pop --quiet || echo "ℹ️  Nada que recuperar del stash."
+if git pull origin main --rebase; then
+  git stash pop --quiet || echo "ℹ️  Nada que recuperar del stash."
+else
+  echo -e "${RED}❌ Error en git pull. Recuperando cambios del stash...${NC}"
+  git stash pop --quiet
+  exit 1
+fi
 
 # ---------------------------------------------------------
 # 4. LIMPIEZA E INSTALACIÓN PROFUNDA
@@ -87,8 +94,7 @@ git add .
 if git diff-index --quiet HEAD --; then
     echo "ℹ️  No hay cambios de código para GitHub, pero forzaremos despliegue en Vercel."
 else
-    git commit -m "🚀 AUTO-DEPLOY: Código formateado y sincronizado
-    📅 $(date)"
+    git commit -m "🚀 AUTO-DEPLOY: Código formateado y sincronizado" -m "📅 $(date)"
     git push origin main
     echo -e "${GREEN}✅ Código subido a GitHub.${NC}"
 fi
@@ -101,7 +107,7 @@ if [ -z "$VERCEL_TOKEN" ]; then
     npx vercel --prod --yes --force
 else
     # Si hay token, modo silencioso y automático
-    npx vercel --prod --token=$VERCEL_TOKEN --yes --force
+    npx vercel --prod --token="$VERCEL_TOKEN" --yes --force
 fi
 
 echo -e "\n${GREEN}════════════════════════════════════════════════════════════════${NC}"
