@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Heart, Sparkles, Smile, Frown, Meh, Zap, TrendingUp, Activity } from 'lucide-react'
 import { AgentPAU } from '../agents'
+
+// Biometric simulation constants
+const MIN_HEART_RATE = 60
+const HEART_RATE_RANGE = 40
+const MIN_SKIN_TEMP = 36
+const TEMP_RANGE = 1.5
 
 /**
  * PAU Assistant Component (Agent 001)
@@ -17,6 +23,7 @@ const PAU_Assistant = () => {
     skinTemp: 36.5,
     stressLevel: 'low'
   })
+  const isMountedRef = useRef(true)
 
   // Available emotions for selection
   const emotions = [
