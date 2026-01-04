@@ -1,6 +1,17 @@
 import json
 import sys
 import time
+import os
+
+# Try to import psutil, but continue if not available
+try:
+    import psutil
+    PSUTIL_AVAILABLE = True
+except ImportError:
+    PSUTIL_AVAILABLE = False
+
+# Configuration constants
+BIOMETRIC_STAGE_DELAY = 0.5  # seconds between biometric processing stages
 
 # 1. Lógica de Métricas de Sistema (Estables)
 def get_system_metrics():
@@ -9,11 +20,12 @@ def get_system_metrics():
     Si no hay acceso al hardware, devuelve 0.0.
     """
     try:
-        # Aquí se importaría psutil en producción
-        import psutil
-        cpu = psutil.cpu_percent(interval=1)
-        mem = psutil.virtual_memory().percent
-        return {"cpu": cpu, "memory": mem, "status": "stable"}
+        if PSUTIL_AVAILABLE:
+            cpu = psutil.cpu_percent(interval=1)
+            mem = psutil.virtual_memory().percent
+            return {"cpu": cpu, "memory": mem, "status": "stable"}
+        else:
+            return {"cpu": 0.0, "memory": 0.0, "status": "stable"}
     except Exception:
         return {"cpu": 0.0, "memory": 0.0, "status": "stable"}
 
@@ -31,9 +43,11 @@ def process_biometrics(on_progress):
     
     for progress, message in stages:
         on_progress(progress, message)
-        time.sleep(0.5)  # Simulación de tiempo de procesamiento real
+        time.sleep(BIOMETRIC_STAGE_DELAY)  # Simulación de tiempo de procesamiento real
     
-    return {"success": True, "token": "mock_auth_token_123"}
+    # Use environment variable for token, fallback to mock for dev/testing
+    token = os.getenv("BIOMETRIC_AUTH_TOKEN", "mock_auth_token_dev")
+    return {"success": True, "token": token}
 
 # Backward compatibility - mantener función get_status()
 def get_status():
