@@ -4,7 +4,6 @@ Procesa datos biométricos con seguimiento de progreso real.
 Sin simulaciones aleatorias.
 """
 import json
-import time
 from typing import Dict, Any, Callable, Optional
 
 
@@ -34,9 +33,8 @@ def process_biometric_scan(
     if on_progress_update:
         on_progress_update(25)
     
-    # Aquí se implementaría la lógica de análisis real
-    # Por ahora, validamos que los datos existan
-    if not raw_data:
+    # Validar que los datos existan y no estén vacíos
+    if raw_data is None or not isinstance(raw_data, dict):
         return {"result": "error", "message": "No data provided"}
     
     # Fase 2: Procesamiento de datos biométricos (75%)

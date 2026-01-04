@@ -17,8 +17,8 @@ def get_system_metrics():
               {"cpu": float, "memory": float}
     """
     try:
-        # Usar interval=None para lectura instantánea sin bloqueo
-        cpu = psutil.cpu_percent(interval=None)
+        # Usar interval=0.1 para lectura rápida con medición confiable
+        cpu = psutil.cpu_percent(interval=0.1)
         memory = psutil.virtual_memory().percent
         return {"cpu": cpu, "memory": memory}
     except Exception:
