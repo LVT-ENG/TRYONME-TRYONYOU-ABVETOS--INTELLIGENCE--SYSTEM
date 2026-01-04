@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Shirt, ShoppingBag, Heart, Filter, Search, Grid, List, Plus, X, Sparkles, Eye, ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { getImageWithFallback } from '../utils/assets'
 import Avatar3D from '../components/Avatar3D'
 
 const Wardrobe = () => {
+  const { t } = useTranslation()
   const [activeCategory, setActiveCategory] = useState('all')
   const [viewMode, setViewMode] = useState('grid')
   const [searchQuery, setSearchQuery] = useState('')
@@ -13,12 +15,12 @@ const Wardrobe = () => {
   const [selectedItem, setSelectedItem] = useState(null)
 
   const categories = [
-    { id: 'all', name: 'All', icon: Grid, count: 48 },
-    { id: 'tops', name: 'Tops', icon: Shirt, count: 15 },
-    { id: 'bottoms', name: 'Bottoms', icon: Shirt, count: 12 },
-    { id: 'dresses', name: 'Dresses', icon: Shirt, count: 8 },
-    { id: 'outerwear', name: 'Outerwear', icon: Shirt, count: 6 },
-    { id: 'accessories', name: 'Accessories', icon: Shirt, count: 7 },
+    { id: 'all', name: t('wardrobe.categories.all'), icon: Grid, count: 48 },
+    { id: 'tops', name: t('wardrobe.categories.tops'), icon: Shirt, count: 15 },
+    { id: 'bottoms', name: t('wardrobe.categories.bottoms'), icon: Shirt, count: 12 },
+    { id: 'dresses', name: t('wardrobe.categories.dresses'), icon: Shirt, count: 8 },
+    { id: 'outerwear', name: t('wardrobe.categories.outerwear'), icon: Shirt, count: 6 },
+    { id: 'accessories', name: t('wardrobe.categories.accessories'), icon: Shirt, count: 7 },
   ]
 
   const clothes = [
@@ -71,15 +73,15 @@ const Wardrobe = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-6">
               <Shirt size={18} className="text-blue-400" />
-              <span className="text-blue-300 font-semibold">Your Digital Closet</span>
+              <span className="text-blue-300 font-semibold">{t('common.yourDigitalCloset')}</span>
             </div>
             
             <h1 className="heading-xl mb-6 gradient-text">
-              Wardrobe
+              {t('wardrobe.title')}
             </h1>
             
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Try on clothes virtually and find your perfect fit. Save favorites and build your dream wardrobe.
+              {t('wardrobe.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -94,7 +96,7 @@ const Wardrobe = () => {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40" size={20} />
               <input
                 type="text"
-                placeholder="Search clothes, brands..."
+                placeholder={t('common.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-xl glass focus:outline-none focus:ring-2 focus:ring-tryonyou-blue bg-transparent"

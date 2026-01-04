@@ -1,26 +1,28 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Wand2, Sparkles, Crown, Camera, Star, ArrowRight, Check, Play, Palette, Scissors, Heart, Zap, TrendingUp } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { getImageWithFallback } from '../utils/assets'
 
 const GlowUp = () => {
+  const { t } = useTranslation()
   const [activeSection, setActiveSection] = useState('analyze')
   const [selectedGoal, setSelectedGoal] = useState(null)
 
   const goals = [
-    { id: 'style-upgrade', name: 'Style Upgrade', icon: Sparkles, color: 'from-fuchsia-500 to-pink-500' },
-    { id: 'color-harmony', name: 'Color Harmony', icon: Palette, color: 'from-violet-500 to-purple-500' },
-    { id: 'body-confidence', name: 'Highlight Figure', icon: Crown, color: 'from-amber-500 to-orange-500' },
-    { id: 'hair-advice', name: 'Hair Advice', icon: Scissors, color: 'from-rose-500 to-pink-500' },
-    { id: 'signature-look', name: 'Signature Look', icon: Star, color: 'from-cyan-500 to-blue-500' },
-    { id: 'seasonal-update', name: 'Seasonal Update', icon: TrendingUp, color: 'from-emerald-500 to-teal-500' },
+    { id: 'style-upgrade', name: t('glowUp.goals.styleUpgrade'), icon: Sparkles, color: 'from-fuchsia-500 to-pink-500' },
+    { id: 'color-harmony', name: t('glowUp.goals.colorHarmony'), icon: Palette, color: 'from-violet-500 to-purple-500' },
+    { id: 'body-confidence', name: t('glowUp.goals.bodyConfidence'), icon: Crown, color: 'from-amber-500 to-orange-500' },
+    { id: 'hair-advice', name: t('glowUp.goals.hairAdvice'), icon: Scissors, color: 'from-rose-500 to-pink-500' },
+    { id: 'signature-look', name: t('glowUp.goals.signatureLook'), icon: Star, color: 'from-cyan-500 to-blue-500' },
+    { id: 'seasonal-update', name: t('glowUp.goals.seasonalUpdate'), icon: TrendingUp, color: 'from-emerald-500 to-teal-500' },
   ]
 
   const transformations = [
     {
       id: 1,
-      before: 'Undefined style',
-      after: 'Sophisticated minimalist look',
+      before: t('glowUp.transformations.before'),
+      after: t('glowUp.transformations.after'),
       improvement: '+85%',
       timeframe: '2 weeks',
       steps: 12,
@@ -54,29 +56,29 @@ const GlowUp = () => {
 
   const tips = [
     {
-      category: 'Color',
-      title: 'Your Perfect Palette',
-      description: 'Based on your skin tone and hair, warm earth colors highlight your natural beauty.',
+      category: t('glowUp.tips.color.category'),
+      title: t('glowUp.tips.color.title'),
+      description: t('glowUp.tips.color.description'),
       colors: ['#C4A77D', '#8B7355', '#D4AF37', '#5C4033'],
     },
     {
-      category: 'Style',
-      title: 'Flattering Silhouettes',
-      description: 'Clean lines and structured cuts balance your proportions perfectly.',
+      category: t('glowUp.tips.style.category'),
+      title: t('glowUp.tips.style.title'),
+      description: t('glowUp.tips.style.description'),
       icon: '📐',
     },
     {
-      category: 'Accessories',
-      title: 'Finishing Touches',
-      description: 'Minimalist jewelry in gold tones complements your elegant style.',
+      category: t('glowUp.tips.accessories.category'),
+      title: t('glowUp.tips.accessories.title'),
+      description: t('glowUp.tips.accessories.description'),
       icon: '✨',
     },
   ]
 
   const sections = [
-    { id: 'analyze', name: 'Analyze', icon: Camera },
-    { id: 'discover', name: 'Discover', icon: Sparkles },
-    { id: 'transform', name: 'Transform', icon: Wand2 },
+    { id: 'analyze', name: t('glowUp.sections.analyze'), icon: Camera },
+    { id: 'discover', name: t('glowUp.sections.discover'), icon: Sparkles },
+    { id: 'transform', name: t('glowUp.sections.transform'), icon: Wand2 },
   ]
 
   return (
