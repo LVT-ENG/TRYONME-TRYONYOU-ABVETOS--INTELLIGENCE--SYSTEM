@@ -39,5 +39,28 @@ class AgentExecutor:
             response = model.generate_content(user_prompt)
             return json.loads(self._clean_json_response(response.text))
         except Exception as e:
+            error_str = str(e).lower()
+            if "not found" in error_str or "404" in error_str or "invalid argument" in error_str:
+                print(f"⚠️ Model {agent_config['model']} not found or unavailable. Falling back to Gemini 1.5...")
+
+                # Determine fallback model
+                fallback_model_name = "gemini-1.5-flash"
+                if "pro" in agent_config['model']:
+                    fallback_model_name = "gemini-1.5-pro"
+
+                fallback_model = genai.GenerativeModel(
+                    model_name=fallback_model_name,
+                    generation_config={"temperature": agent_config['temperature'], "response_mime_type": "application/json"},
+                    system_instruction=agent_config['system_instruction']
+                )
+
+                try:
+                    print(f"⚡ Rerunning with {fallback_model_name}...")
+                    response = fallback_model.generate_content(user_prompt)
+                    return json.loads(self._clean_json_response(response.text))
+                except Exception as fallback_error:
+                    print(f"❌ Error en Fallback Gemini: {str(fallback_error)}")
+                    return {"error": str(fallback_error)}
+
             print(f"❌ Error en Gemini: {str(e)}")
             return {"error": str(e)}
