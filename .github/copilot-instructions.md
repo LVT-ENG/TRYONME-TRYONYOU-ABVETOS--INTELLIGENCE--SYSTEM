@@ -36,7 +36,8 @@ npm run build       # Build for production
 npm run preview     # Preview production build
 
 # Backend
-python master_brain.py  # Start AI backend server
+# Ensure GOOGLE_API_KEY is set in .env file before starting
+python master_brain.py  # Start AI backend server (port 8000 by default)
 ```
 
 ## Code Style & Conventions
@@ -113,12 +114,14 @@ public/                # Static assets
 - `/showroom` - Curated looks gallery
 - `/glow-up` - Style transformation
 - `/ask-peacock` - AI chat assistant (🦚 Pau the Peacock)
+- `/MagicMirror` - Magic mirror experience
 
-### Technical Pages (B2B/Patent)
+### Technical/Business Pages (B2B/Patent)
 - `/fit` - FIT Intelligence (biometric measurement)
 - `/cap` - Computer-Aided Production system
 - `/abvet` - Advanced Biometric Verification & Encrypted Transactions
 - `/claims` - Patent claims (PCT/EP2025/067317)
+- `/investors` - Investor information and pitch
 
 ## Common Patterns
 
@@ -159,11 +162,18 @@ def do_POST(self):
 ```
 
 ## Testing
-- No formal test framework is currently set up
-- Manual testing is the primary validation method
-- Test all pages by navigating through the UI
-- Verify 3D avatar loads correctly (or uses fallback)
-- Check responsive behavior on mobile, tablet, and desktop
+- **Current State**: No formal test framework is currently set up
+- **Primary Method**: Manual testing through UI navigation
+- **Manual Testing Checklist**:
+  - Test all 14 pages by navigating through the UI
+  - Verify 3D avatar loads correctly (or uses fallback)
+  - Check responsive behavior on mobile, tablet, and desktop
+  - Test AI agent endpoints with sample data
+- **Future Testing Recommendations**:
+  - **Frontend**: Jest + React Testing Library + Vitest for unit/component tests
+  - **Backend**: pytest for Python unit tests and API integration tests
+  - **E2E**: Playwright or Cypress for end-to-end user flows
+  - **Visual**: Chromatic or Percy for visual regression testing
 
 ## Important Notes
 
