@@ -5,7 +5,7 @@ echo "🦚 TRYONYOU — SuperCommit MAX — Lanzamiento Lafayette"
 # Sincronizar GitHub
 git add .
 git commit -m "🚀 FINAL RELEASE: Ecosistema TRYONYOU totalmente operativo para Lafayette" || echo "No hay cambios para commit"
-git push origin main --force
+git push origin main --force-with-lease
 
 # Despliegue en Vercel
 if [ -n "$VERCEL_TOKEN" ]; then
