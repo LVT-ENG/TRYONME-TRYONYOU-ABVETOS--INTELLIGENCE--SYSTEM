@@ -3,7 +3,7 @@ import time
 # 1. Lógica de Métricas de Sistema (Estables)
 def get_system_metrics():
     """
-    Sustituye el Math.random() de JS. 
+    Sustituye el Math.random() de JS.
     Si no hay acceso al hardware, devuelve 0.0.
     """
     try:
@@ -35,7 +35,7 @@ def process_biometrics(on_progress):
             on_progress(progress, message)
         except Exception as e:
             print(f"Error en callback: {e}")
-        time.sleep(0.5) # Simulación de tiempo de procesamiento real
+        time.sleep(0.5)  # Simulación de tiempo de procesamiento real
     
     return {"success": True, "token": "mock_auth_token_123"}
 
