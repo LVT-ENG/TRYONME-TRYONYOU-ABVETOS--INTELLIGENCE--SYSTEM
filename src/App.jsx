@@ -18,6 +18,7 @@ const ABVET = lazy(() => import('./pages/ABVET'));
 const Claims = lazy(() => import('./pages/Claims'));
 const Investors = lazy(() => import('./pages/Investors'));
 const MagicMirror = lazy(() => import('./pages/MagicMirror'));
+const FittingRoomDemo = lazy(() => import('./pages/FittingRoomDemo'));
 
 // Simple loading fallback
 const Loading = () => (
@@ -49,6 +50,7 @@ export default function App() {
             <Route path="/claims" element={<Claims />} />
             <Route path="/investors" element={<Investors />} />
             <Route path="/MagicMirror" element={<MagicMirror />} />
+            <Route path="/fitting-room" element={<FittingRoomDemo />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
