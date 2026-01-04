@@ -8,6 +8,9 @@ const MIN_HEART_RATE = 60
 const HEART_RATE_RANGE = 40
 const MIN_SKIN_TEMP = 36
 const TEMP_RANGE = 1.5
+const PROCESSING_DELAY = 1500 // ms - UX simulation delay
+const MIN_CONFIDENCE = 85
+const CONFIDENCE_RANGE = 15
 
 /**
  * PAU Assistant Component (Agent 001)
@@ -102,13 +105,13 @@ const PAU_Assistant = () => {
           setRecommendation({
             outfitId: result,
             emotion: emotion.label,
-            confidence: Math.floor(85 + Math.random() * 15),
+            confidence: Math.floor(MIN_CONFIDENCE + Math.random() * CONFIDENCE_RANGE),
             description: getRecommendationDescription(emotion.id),
             items: getRecommendedItems(emotion.id)
           })
           setIsProcessing(false)
         }
-      }, 1500)
+      }, PROCESSING_DELAY)
     } catch (error) {
       console.error('PAU recommendation error:', error)
       if (isMountedRef.current) {
