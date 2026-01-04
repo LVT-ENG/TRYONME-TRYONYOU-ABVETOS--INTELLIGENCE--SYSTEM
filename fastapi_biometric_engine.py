@@ -16,17 +16,18 @@ usando Gemini, devolverlas al frontend y guardarlas para analítica.
 STACK
 -----
 - FastAPI
-- Gemini (google-genai)
+- Gemini (google-generativeai)
 - Google Sheets API (fuente de Looker Studio)
 
 REQUISITOS
 ----------
-pip install fastapi uvicorn google-genai google-auth google-api-python-client python-dotenv
+pip install fastapi uvicorn google-generativeai google-auth google-api-python-client python-dotenv
 
 VARIABLES DE ENTORNO
 -------------------
 GEMINI_API_KEY=xxxxx
 GOOGLE_APPLICATION_CREDENTIALS=service_account.json
+SPREADSHEET_ID=your_google_sheet_id (opcional, se puede hardcodear)
 """
 
 from fastapi import FastAPI
@@ -37,7 +38,7 @@ import os
 import json
 
 # ------------------ GEMINI ------------------
-from google import genai
+import google.generativeai as genai
 
 # ------------------ GOOGLE SHEETS ------------------
 from googleapiclient.discovery import build
@@ -47,7 +48,7 @@ from google.oauth2 import service_account
 # CONFIGURACIÓN
 # ==================================================
 
-SPREADSHEET_ID = "PEGA_AQUI_TU_SHEET_ID"
+SPREADSHEET_ID = os.getenv("SPREADSHEET_ID", "PEGA_AQUI_TU_SHEET_ID")
 SHEET_RANGE = "Sheet1!A:G"
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets"]
@@ -84,7 +85,7 @@ app.add_middleware(
 )
 
 # Gemini client
-gemini_client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Google Sheets client
 credentials = service_account.Credentials.from_service_account_file(
@@ -119,15 +120,27 @@ Devuelve EXCLUSIVAMENTE un JSON con este formato:
 # ==================================================
 
 def analyze_with_gemini(payload: dict) -> Metrics:
-    response = gemini_client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=[
-            {"role": "system", "parts": [{"text": SYSTEM_PROMPT}]},
-            {"role": "user", "parts": [{"text": json.dumps(payload)}]},
-        ],
-    )
-
-    data = json.loads(response.text)
+    model = genai.GenerativeModel("gemini-pro")
+    
+    # Construct the prompt with system instructions and user data
+    prompt = f"{SYSTEM_PROMPT}\n\nDatos del escaneo: {json.dumps(payload)}"
+    
+    response = model.generate_content(prompt)
+    
+    # Extract JSON from response text
+    response_text = response.text.strip()
+    
+    # Try to extract JSON if wrapped in markdown code blocks
+    if "```json" in response_text:
+        start = response_text.find("```json") + 7
+        end = response_text.find("```", start)
+        response_text = response_text[start:end].strip()
+    elif "```" in response_text:
+        start = response_text.find("```") + 3
+        end = response_text.find("```", start)
+        response_text = response_text[start:end].strip()
+    
+    data = json.loads(response_text)
     return Metrics(**data)
 
 
