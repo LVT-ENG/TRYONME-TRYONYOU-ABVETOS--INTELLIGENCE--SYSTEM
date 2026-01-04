@@ -22,6 +22,13 @@ git pull origin main || { echo "❌ Error al hacer pull"; exit 1; }
 
 # Limpieza previa (Destructiva)
 echo "🧹 Realizando limpieza previa..."
+# Remove old/obsolete directories that are no longer part of the project structure:
+# - node_modules: Will be reinstalled fresh to avoid dependency conflicts
+# - dist: Build output, will be regenerated
+# - legacy_old, temp_old: Old backup directories from previous migrations
+# - apps/web-old, tests-old, legacy: Deprecated code from repository consolidation
+# - integrations/duplicados: Duplicate integration code that was merged
+# WARNING: This is destructive. Only run if these directories are truly obsolete.
 rm -rf node_modules dist legacy_old temp_old apps/web-old tests-old legacy integrations/duplicados 2>/dev/null || true
 
 # Instalar dependencias
@@ -38,11 +45,11 @@ mkdir -p src/modules src/components src/pages
 echo "➕ Añadiendo archivos al staging area..."
 
 # Directorios principales (si existen)
-[ -d "apps" ] && git add apps/ || echo "ℹ️ apps/ no existe"
-[ -d "api" ] && git add api/ || echo "ℹ️ api/ no existe"
-[ -d "modules" ] && git add modules/ || echo "ℹ️ modules/ no existe"
-[ -d "integrations" ] && git add integrations/ || echo "ℹ️ integrations/ no existe"
-[ -d "tests" ] && git add tests/ || echo "ℹ️ tests/ no existe"
+[ -d "apps" ] && git add apps/ || echo "ℹ️  apps/ directory does not exist, skipping"
+[ -d "api" ] && git add api/ || echo "ℹ️  api/ directory does not exist, skipping"
+[ -d "modules" ] && git add modules/ || echo "ℹ️  modules/ directory does not exist, skipping"
+[ -d "integrations" ] && git add integrations/ || echo "ℹ️  integrations/ directory does not exist, skipping"
+[ -d "tests" ] && git add tests/ || echo "ℹ️  tests/ directory does not exist, skipping"
 
 # Directorios que siempre deben existir
 git add docs/ || echo "⚠️ No se pudo añadir docs/"
@@ -56,10 +63,14 @@ git add vite.config.js vercel.json index.html || echo "⚠️ No se pudieron añ
 git add .env.example README.md CHANGELOG.md 2>/dev/null || true
 
 # Archivos adicionales opcionales
-[ -f "Makefile" ] && git add Makefile || echo "ℹ️ Makefile no existe"
-[ -f "deploy.sh" ] && git add deploy.sh || echo "ℹ️ deploy.sh ya añadido"
+[ -f "Makefile" ] && git add Makefile || echo "ℹ️  Makefile does not exist, skipping"
+[ -f "deploy.sh" ] && git add deploy.sh || echo "ℹ️  deploy.sh already staged or does not exist"
 
 # Super-commit con firma y mensaje largo detallado
+# NOTE: This commit message is intentionally comprehensive and hardcoded for consistency
+# across TRYONYOU deployments. It documents all integrated modules and infrastructure.
+# To customize for specific deployments, modify this message or use git commit --amend
+# after the script runs. Some git tools may have length limits; test with your git version.
 echo "💎 Creando commit con mensaje detallado..."
 git commit -m "🔥 TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM
 
@@ -103,7 +114,7 @@ git commit -m "🔥 TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM
 - All assets properly configured
 - SSL: Cloudflare Strict mode
 
-This commit represents the final integration of all TRYONYOU subsystems into a unified, production-ready platform." || echo "ℹ️ No hay cambios nuevos para commitear"
+This commit represents the final integration of all TRYONYOU subsystems into a unified, production-ready platform." || echo "ℹ️  No changes to commit or commit succeeded"
 
 # Push final
 echo "🚀 Enviando cambios a origin main..."
@@ -112,10 +123,13 @@ git push origin main || { echo "❌ Error al hacer push"; exit 1; }
 # Despliegue en Vercel (opcional, solo si hay token)
 if [ -n "$VERCEL_TOKEN" ]; then
     echo "🌐 Desplegando en Vercel..."
-    npx vercel --prod --token=$VERCEL_TOKEN --yes --confirm --force || echo "⚠️ Error en deploy de Vercel"
+    # Note: Token is read from environment variable for security
+    # Pass via environment, not command line, to avoid exposure in process lists
+    npx vercel --prod --yes --confirm --force || echo "⚠️ Error en deploy de Vercel"
 else
-    echo "ℹ️ Variable VERCEL_TOKEN no definida, saltando deploy de Vercel"
-    echo "   Para desplegar automáticamente, exporta VERCEL_TOKEN antes de ejecutar este script"
+    echo "ℹ️  Variable VERCEL_TOKEN no definida, saltando deploy de Vercel"
+    echo "    Para desplegar automáticamente, exporta VERCEL_TOKEN antes de ejecutar este script"
+    echo "    Example: export VERCEL_TOKEN='your_token_here' && ./scripts/super-deploy.sh"
 fi
 
 echo ""

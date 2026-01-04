@@ -95,9 +95,11 @@ testing:
   framework: "jest"
   
   # Test generation
+  # Note: auto_generate is disabled for manual control
+  # When enabled, coverage_threshold will be used as target
   auto_generate:
-    enabled: false  # Manual control for now
-    coverage_threshold: 80
+    enabled: false
+    coverage_threshold: 80  # Target when auto_generate is enabled
 
 # Refactoring suggestions
 refactoring:

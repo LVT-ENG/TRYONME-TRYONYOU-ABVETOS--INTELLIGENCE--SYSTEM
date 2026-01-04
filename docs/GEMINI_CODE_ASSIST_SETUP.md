@@ -24,7 +24,7 @@ Para configurar Gemini Code Assist, necesitas solicitar a tu administrador los s
    - Permite administrar servicios de Google Cloud
    - Se puede otorgar desde la consola de Google Cloud
 
-2. **Gemini Code Assist Management - SCM Connection Admin** (`geminicodeassistmanagement.scmConnectionAdmin`)
+2. **Gemini Code Assist Management - SCM Connection Admin** (`roles/geminicodeassistmanagement.scmConnectionAdmin`)
    - Permite administrar conexiones entre Gemini Code Assist y sistemas de control de versiones
    - **IMPORTANTE**: Este rol NO se puede otorgar desde la consola de Google Cloud
    - Debe otorgarse usando Google Cloud CLI
