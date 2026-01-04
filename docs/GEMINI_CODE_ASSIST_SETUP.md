@@ -4,6 +4,16 @@
 
 Este documento describe los pasos necesarios para configurar Gemini Code Assist con GitHub para el proyecto TRYONYOU.
 
+## 📚 Documentation Suite
+
+This is part of a comprehensive documentation set:
+
+- **This Document (GEMINI_CODE_ASSIST_SETUP.md)**: Complete setup guide with detailed explanations
+- **[GEMINI_QUICK_START.md](./GEMINI_QUICK_START.md)**: Quick reference commands and common tasks
+- **[GEMINI_SETUP_CHECKLIST.md](./GEMINI_SETUP_CHECKLIST.md)**: Step-by-step checklist to track progress
+- **[../.gemini-config.yml](../.gemini-config.yml)**: Configuration file for the project
+- **[../scripts/README.md](../scripts/README.md)**: Deployment scripts documentation
+
 ## Requisitos Previos
 
 ### Permisos de IAM en Google Cloud
@@ -174,9 +184,21 @@ VERCEL_TOKEN=your_token ./scripts/super-deploy.sh
 
 ## Recursos Adicionales
 
+### Documentación del Proyecto
+- **[Quick Start Guide](./GEMINI_QUICK_START.md)** - Comandos rápidos y referencia
+- **[Setup Checklist](./GEMINI_SETUP_CHECKLIST.md)** - Lista de verificación paso a paso
+- **[Scripts Documentation](../scripts/README.md)** - Guía de scripts de deploy
+- **[Configuration File](../.gemini-config.yml)** - Configuración del proyecto
+
+### Documentación Oficial de Google
 - [Documentación oficial de Gemini Code Assist](https://cloud.google.com/gemini/docs/code-assist)
 - [Guía de integración con GitHub](https://cloud.google.com/gemini/docs/code-assist/github)
 - [Best practices para equipos](https://cloud.google.com/gemini/docs/code-assist/best-practices)
+
+### Recursos del Proyecto
+- [README Principal](../README.md)
+- [Deployment Checklist](../DEPLOYMENT_CHECKLIST.md)
+- [Architecture Documentation](./)
 
 ## Soporte
 
