@@ -1,0 +1,275 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "tryDemo": "Essayer la Démo",
+    "learnMore": "En Savoir Plus",
+    "getStarted": "Commencer",
+    "tryNow": "Essayer Maintenant",
+    "investors": "Investisseurs",
+    "verifiedBrands": "Marques Vérifiées",
+    "yourDigitalCloset": "Votre Garde-Robe Numérique",
+    "search": "Rechercher",
+    "searchPlaceholder": "Rechercher vêtements, marques...",
+    "filter": "Filtrer",
+    "all": "Tout",
+    "viewAll": "Voir Tout"
+  },
+  "nav": {
+    "home": "Accueil",
+    "demo": "Démo",
+    "brands": "Marques",
+    "myAvatar": "Mon Avatar",
+    "wardrobe": "Garde-Robe",
+    "showroom": "Showroom",
+    "glowUp": "Glow-Up",
+    "askPeacock": "Demander à Peacock",
+    "fit": "FIT",
+    "cap": "CAP",
+    "abvet": "ABVET",
+    "claims": "Garanties"
+  },
+  "home": {
+    "hero": {
+      "title": "Vous n'allez pas faire un TryOnYou.",
+      "titleHighlight": "TryOnYou le fera pour vous.",
+      "subtitle": "Nous mesurons votre corps pour que les vêtements s'adaptent parfaitement du premier coup.",
+      "tryNow": "Essayer Maintenant",
+      "investors": "Investisseurs"
+    },
+    "claims": {
+      "zeroReturns": {
+        "title": "Zéro Retours",
+        "description": "Ajustement parfait garanti. Plus de mauvaises tailles. Notre intelligence corporelle garantit que chaque vêtement vous va parfaitement."
+      },
+      "perfectFit": {
+        "title": "Ajustement Parfait par Intelligence Corporelle",
+        "description": "L'analyse biométrique alimentée par l'IA comprend vos proportions corporelles uniques et recommande des vêtements adaptés à vous."
+      },
+      "fabricAware": {
+        "title": "Élasticité et Tombé du Tissu",
+        "description": "Nous analysons les propriétés du tissu—élasticité, tombé, rigidité—pour prédire comment les vêtements bougeront et se sentiront sur votre corps."
+      },
+      "aiMeasurements": {
+        "title": "IA + Mesures Biométriques",
+        "description": "La vision par ordinateur avancée capture vos mesures corporelles avec précision. Pas de rubans manuels. Juste votre téléphone."
+      }
+    },
+    "tagline": "Technologie de Mode pour un Ajustement Parfait"
+  },
+  "brands": {
+    "title": "Marques",
+    "subtitle": "TRYONYOU se connecte aux catalogues, collections et données de tailles pour réduire les retours et augmenter la conversion.",
+    "featured": "Marques en Vedette",
+    "categories": {
+      "all": "Tout",
+      "luxury": "Luxe",
+      "streetwear": "Streetwear",
+      "sustainable": "Durable",
+      "sportswear": "Sportswear",
+      "vintage": "Vintage"
+    },
+    "rating": "note",
+    "items": "articles",
+    "viewCatalog": "Voir le Catalogue"
+  },
+  "myAvatar": {
+    "title": "Créer Votre Avatar",
+    "subtitle": "Construisez votre jumeau numérique pour des expériences d'essayage virtuel parfaites",
+    "steps": {
+      "bodyType": "Type de Corps",
+      "measurements": "Mesures",
+      "appearance": "Apparence",
+      "style": "Style"
+    },
+    "bodyTypes": {
+      "athletic": {
+        "name": "Athlétique",
+        "description": "Épaules larges, taille définie"
+      },
+      "slim": {
+        "name": "Mince",
+        "description": "Silhouette élancée et allongée"
+      },
+      "curvy": {
+        "name": "Pulpeux",
+        "description": "Courbes prononcées"
+      },
+      "regular": {
+        "name": "Régulier",
+        "description": "Proportions équilibrées"
+      },
+      "plus": {
+        "name": "Grande Taille",
+        "description": "Silhouette complète et harmonieuse"
+      }
+    },
+    "questions": {
+      "bodyType": "Quel est votre type de corps ?",
+      "bodyTypeSubtitle": "Sélectionnez celui qui correspond le mieux à votre silhouette"
+    },
+    "skinTones": {
+      "fair": "Clair",
+      "light": "Léger",
+      "medium": "Moyen",
+      "olive": "Olive",
+      "tan": "Bronzé",
+      "dark": "Foncé"
+    },
+    "hairColors": {
+      "black": "Noir",
+      "brown": "Marron",
+      "blonde": "Blond",
+      "red": "Roux",
+      "gray": "Gris",
+      "colored": "Fantaisie"
+    },
+    "styles": {
+      "casual": {
+        "name": "Décontracté",
+        "description": "Détendu et confortable"
+      },
+      "formal": {
+        "name": "Formel",
+        "description": "Élégant et professionnel"
+      },
+      "streetwear": {
+        "name": "Streetwear",
+        "description": "Urbain et moderne"
+      },
+      "minimalist": {
+        "name": "Minimaliste",
+        "description": "Simple et sophistiqué"
+      },
+      "bohemian": {
+        "name": "Bohème",
+        "description": "Libre et artistique"
+      },
+      "sporty": {
+        "name": "Sportif",
+        "description": "Actif et dynamique"
+      }
+    },
+    "next": "Suivant",
+    "back": "Retour",
+    "finish": "Terminer"
+  },
+  "wardrobe": {
+    "title": "Garde-Robe",
+    "subtitle": "Essayez des vêtements virtuellement et trouvez votre ajustement parfait. Enregistrez vos favoris et construisez la garde-robe de vos rêves.",
+    "categories": {
+      "all": "Tout",
+      "tops": "Hauts",
+      "bottoms": "Bas",
+      "dresses": "Robes",
+      "outerwear": "Manteaux",
+      "accessories": "Accessoires"
+    },
+    "viewMode": {
+      "grid": "Grille",
+      "list": "Liste"
+    },
+    "matchScore": "Ajustement",
+    "tryOn": "Essayer",
+    "addToCart": "Ajouter au Panier",
+    "viewDetails": "Voir les Détails"
+  },
+  "showroom": {
+    "title": "Showroom",
+    "subtitle": "Découvrez des looks complets qui correspondent à votre style. Suggestions de tenues alimentées par l'IA qui fonctionnent pour vous.",
+    "occasions": {
+      "all": "Tout",
+      "work": "Travail",
+      "casual": "Décontracté",
+      "night": "Soirée",
+      "party": "Fête",
+      "travel": "Voyage"
+    },
+    "moods": {
+      "all": "Tout",
+      "confident": "Confiant",
+      "relaxed": "Détendu",
+      "romantic": "Romantique",
+      "bold": "Audacieux",
+      "minimal": "Minimaliste"
+    },
+    "looks": {
+      "powerMeeting": "Réunion Importante",
+      "weekendVibes": "Ambiance Week-end",
+      "dateNight": "Soirée Rendez-vous",
+      "festivalReady": "Prêt pour le Festival",
+      "cityExplorer": "Explorateur Urbain",
+      "cleanSlate": "Ardoise Vierge"
+    },
+    "rating": "note",
+    "views": "vues",
+    "matchScore": "ajustement",
+    "tryLook": "Essayer le Look",
+    "saveToWardrobe": "Enregistrer dans la Garde-Robe"
+  },
+  "glowUp": {
+    "title": "Glow-Up",
+    "subtitle": "Découvrez votre meilleure version avec une analyse de style personnalisée et des conseils de transformation.",
+    "sections": {
+      "analyze": "Analyser",
+      "discover": "Découvrir",
+      "transform": "Transformer"
+    },
+    "goals": {
+      "styleUpgrade": "Mise à Niveau du Style",
+      "colorHarmony": "Harmonie des Couleurs",
+      "bodyConfidence": "Mettre en Valeur la Silhouette",
+      "hairAdvice": "Conseils Capillaires",
+      "signatureLook": "Look Signature",
+      "seasonalUpdate": "Mise à Jour Saisonnière"
+    },
+    "transformations": {
+      "before": "Style indéfini",
+      "after": "Look minimaliste sophistiqué",
+      "improvement": "amélioration",
+      "timeframe": "délai",
+      "steps": "étapes",
+      "rating": "note"
+    },
+    "tips": {
+      "color": {
+        "category": "Couleur",
+        "title": "Votre Palette Parfaite",
+        "description": "En fonction de votre teint et de vos cheveux, les couleurs terre chaudes mettent en valeur votre beauté naturelle."
+      },
+      "style": {
+        "category": "Style",
+        "title": "Silhouettes Flatteuses",
+        "description": "Les lignes épurées et les coupes structurées équilibrent parfaitement vos proportions."
+      },
+      "accessories": {
+        "category": "Accessoires",
+        "title": "Touches Finales",
+        "description": "Des bijoux minimalistes dans des tons dorés complètent votre style élégant."
+      }
+    },
+    "startAnalysis": "Commencer l'Analyse",
+    "viewTransformation": "Voir la Transformation"
+  },
+  "askPeacock": {
+    "title": "Demander à Peacock",
+    "subtitle": "Votre assistant personnel de mode",
+    "greeting": "Bonjour ! Je suis Peacock, votre assistant personnel de mode. 🦚 Je viens du monde entier pour vous aider à découvrir votre style parfait. Comment puis-je vous aider aujourd'hui ?",
+    "inputPlaceholder": "Posez-moi n'importe quelle question sur la mode...",
+    "send": "Envoyer",
+    "suggestedQuestions": {
+      "date": "Que dois-je porter pour un rendez-vous ?",
+      "colors": "Quelles couleurs me vont ?",
+      "office": "Aidez-moi avec mon look de bureau",
+      "refresh": "Comment puis-je rafraîchir mon style ?"
+    },
+    "responses": {
+      "date": "💕 Un rendez-vous ! Comme c'est excitant. Je recommande quelque chose qui vous fait vous sentir confiante mais confortable. Une robe midi dans un ton chaud ou un jean bien ajusté avec un chemisier en soie serait parfait. L'essentiel est que vous vous sentiez vous-même. Pouvez-vous m'en dire plus sur le lieu ?",
+      "colors": "🎨 Les couleurs sont ma spécialité ! Pour trouver votre palette parfaite, j'ai besoin de mieux vous connaître. En général, si votre peau a des sous-tons chauds, les tons terre, dorés et orangés vous flatteront. Si elle est froide, essayez les bleus, gris et argentés. Connaissez-vous vos sous-tons ?",
+      "office": "👔 Le style de bureau peut être très élégant sans être ennuyeux. Je suggère d'investir dans des pièces intemporelles : un bon blazer, des pantalons droits et des chemises de qualité. Ajoutez de la personnalité avec des accessoires. Quel est le code vestimentaire de votre lieu de travail ?",
+      "refresh": "✨ J'adore quand quelqu'un veut rafraîchir son style ! La première étape consiste à identifier ce qui ne fonctionne pas pour vous et pourquoi. Ensuite, nous explorons de nouvelles silhouettes, couleurs et textures. Y a-t-il quelque chose de spécifique dans votre style actuel que vous aimeriez changer ?",
+      "greeting": "🦚 Bonjour ! C'est un plaisir de vous rencontrer. Je suis là pour vous aider avec tout ce qui concerne votre style personnel. Du choix d'une tenue à la refonte complète de votre garde-robe. Que souhaiteriez-vous explorer aujourd'hui ?",
+      "default": "🦚 Question intéressante. Dans mon expérience de voyage dans le monde de la mode, j'ai appris que chaque personne a un style unique qui attend d'être découvert. Parlez-moi davantage de vous et de ce que vous recherchez, et je vous aiderai à trouver les meilleures options pour vous."
+    },
+    "typing": "Peacock est en train d'écrire..."
+  }
+}

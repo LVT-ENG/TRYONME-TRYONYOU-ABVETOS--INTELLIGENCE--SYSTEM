@@ -1,0 +1,275 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "tryDemo": "Try Demo",
+    "learnMore": "Learn More",
+    "getStarted": "Get Started",
+    "tryNow": "Try Now",
+    "investors": "Investors",
+    "verifiedBrands": "Verified Brands",
+    "yourDigitalCloset": "Your Digital Closet",
+    "search": "Search",
+    "searchPlaceholder": "Search clothes, brands...",
+    "filter": "Filter",
+    "all": "All",
+    "viewAll": "View All"
+  },
+  "nav": {
+    "home": "Home",
+    "demo": "Demo",
+    "brands": "Brands",
+    "myAvatar": "My Avatar",
+    "wardrobe": "Wardrobe",
+    "showroom": "Showroom",
+    "glowUp": "Glow-Up",
+    "askPeacock": "Ask Peacock",
+    "fit": "FIT",
+    "cap": "CAP",
+    "abvet": "ABVET",
+    "claims": "Claims"
+  },
+  "home": {
+    "hero": {
+      "title": "No vas a hacerte un TryOnYou.",
+      "titleHighlight": "TryOnYou lo hará por ti.",
+      "subtitle": "Medimos tu cuerpo para que la ropa encaje a la primera.",
+      "tryNow": "Probar Ahora",
+      "investors": "Inversores"
+    },
+    "claims": {
+      "zeroReturns": {
+        "title": "Zero Returns",
+        "description": "Perfect fit guaranteed. No more wrong sizes. Our body intelligence ensures every garment fits you perfectly."
+      },
+      "perfectFit": {
+        "title": "Perfect Fit by Body Intelligence",
+        "description": "AI-powered biometric analysis understands your unique body proportions and recommends garments tailored to you."
+      },
+      "fabricAware": {
+        "title": "Fabric Elasticity & Drape-Aware",
+        "description": "We analyze fabric properties—elasticity, drape, rigidity—to predict how garments will move and feel on your body."
+      },
+      "aiMeasurements": {
+        "title": "AI + Biometric Measurements",
+        "description": "Advanced computer vision captures your body measurements with precision. No manual tape measures. Just your phone."
+      }
+    },
+    "tagline": "Fashion Tech for Perfect Fit"
+  },
+  "brands": {
+    "title": "Brands",
+    "subtitle": "TRYONYOU connects with catalogs, collections, and sizing data to reduce returns and increase conversion.",
+    "featured": "Featured Brands",
+    "categories": {
+      "all": "All",
+      "luxury": "Luxury",
+      "streetwear": "Streetwear",
+      "sustainable": "Sustainable",
+      "sportswear": "Sportswear",
+      "vintage": "Vintage"
+    },
+    "rating": "rating",
+    "items": "items",
+    "viewCatalog": "View Catalog"
+  },
+  "myAvatar": {
+    "title": "Create Your Avatar",
+    "subtitle": "Build your digital twin for perfect virtual try-on experiences",
+    "steps": {
+      "bodyType": "Body Type",
+      "measurements": "Measurements",
+      "appearance": "Appearance",
+      "style": "Style"
+    },
+    "bodyTypes": {
+      "athletic": {
+        "name": "Athletic",
+        "description": "Broad shoulders, defined waist"
+      },
+      "slim": {
+        "name": "Slim",
+        "description": "Slender and elongated figure"
+      },
+      "curvy": {
+        "name": "Curvy",
+        "description": "Pronounced curves"
+      },
+      "regular": {
+        "name": "Regular",
+        "description": "Balanced proportions"
+      },
+      "plus": {
+        "name": "Plus Size",
+        "description": "Full and harmonious figure"
+      }
+    },
+    "questions": {
+      "bodyType": "What's your body type?",
+      "bodyTypeSubtitle": "Select the one that best matches your figure"
+    },
+    "skinTones": {
+      "fair": "Fair",
+      "light": "Light",
+      "medium": "Medium",
+      "olive": "Olive",
+      "tan": "Tan",
+      "dark": "Dark"
+    },
+    "hairColors": {
+      "black": "Black",
+      "brown": "Brown",
+      "blonde": "Blonde",
+      "red": "Red",
+      "gray": "Gray",
+      "colored": "Fantasy"
+    },
+    "styles": {
+      "casual": {
+        "name": "Casual",
+        "description": "Relaxed and comfortable"
+      },
+      "formal": {
+        "name": "Formal",
+        "description": "Elegant and professional"
+      },
+      "streetwear": {
+        "name": "Streetwear",
+        "description": "Urban and modern"
+      },
+      "minimalist": {
+        "name": "Minimalist",
+        "description": "Simple and sophisticated"
+      },
+      "bohemian": {
+        "name": "Bohemian",
+        "description": "Free and artistic"
+      },
+      "sporty": {
+        "name": "Sporty",
+        "description": "Active and dynamic"
+      }
+    },
+    "next": "Next",
+    "back": "Back",
+    "finish": "Finish"
+  },
+  "wardrobe": {
+    "title": "Wardrobe",
+    "subtitle": "Try on clothes virtually and find your perfect fit. Save favorites and build your dream wardrobe.",
+    "categories": {
+      "all": "All",
+      "tops": "Tops",
+      "bottoms": "Bottoms",
+      "dresses": "Dresses",
+      "outerwear": "Outerwear",
+      "accessories": "Accessories"
+    },
+    "viewMode": {
+      "grid": "Grid",
+      "list": "List"
+    },
+    "matchScore": "Match",
+    "tryOn": "Try On",
+    "addToCart": "Add to Cart",
+    "viewDetails": "View Details"
+  },
+  "showroom": {
+    "title": "Showroom",
+    "subtitle": "Discover complete looks that match your style. AI-powered outfit suggestions that work for you.",
+    "occasions": {
+      "all": "All",
+      "work": "Work",
+      "casual": "Casual",
+      "night": "Night",
+      "party": "Party",
+      "travel": "Travel"
+    },
+    "moods": {
+      "all": "All",
+      "confident": "Confident",
+      "relaxed": "Relaxed",
+      "romantic": "Romantic",
+      "bold": "Bold",
+      "minimal": "Minimalist"
+    },
+    "looks": {
+      "powerMeeting": "Power Meeting",
+      "weekendVibes": "Weekend Vibes",
+      "dateNight": "Date Night",
+      "festivalReady": "Festival Ready",
+      "cityExplorer": "City Explorer",
+      "cleanSlate": "Clean Slate"
+    },
+    "rating": "rating",
+    "views": "views",
+    "matchScore": "match",
+    "tryLook": "Try Look",
+    "saveToWardrobe": "Save to Wardrobe"
+  },
+  "glowUp": {
+    "title": "Glow-Up",
+    "subtitle": "Discover your best version with personalized style analysis and transformation tips.",
+    "sections": {
+      "analyze": "Analyze",
+      "discover": "Discover",
+      "transform": "Transform"
+    },
+    "goals": {
+      "styleUpgrade": "Style Upgrade",
+      "colorHarmony": "Color Harmony",
+      "bodyConfidence": "Highlight Figure",
+      "hairAdvice": "Hair Advice",
+      "signatureLook": "Signature Look",
+      "seasonalUpdate": "Seasonal Update"
+    },
+    "transformations": {
+      "before": "Undefined style",
+      "after": "Sophisticated minimalist look",
+      "improvement": "improvement",
+      "timeframe": "timeframe",
+      "steps": "steps",
+      "rating": "rating"
+    },
+    "tips": {
+      "color": {
+        "category": "Color",
+        "title": "Your Perfect Palette",
+        "description": "Based on your skin tone and hair, warm earth colors highlight your natural beauty."
+      },
+      "style": {
+        "category": "Style",
+        "title": "Flattering Silhouettes",
+        "description": "Clean lines and structured cuts balance your proportions perfectly."
+      },
+      "accessories": {
+        "category": "Accessories",
+        "title": "Finishing Touches",
+        "description": "Minimalist jewelry in gold tones complements your elegant style."
+      }
+    },
+    "startAnalysis": "Start Analysis",
+    "viewTransformation": "View Transformation"
+  },
+  "askPeacock": {
+    "title": "Ask Peacock",
+    "subtitle": "Your personal fashion assistant",
+    "greeting": "Hello! I'm Peacock, your personal fashion assistant. 🦚 I come from around the world to help you discover your perfect style. How can I help you today?",
+    "inputPlaceholder": "Ask me anything about fashion...",
+    "send": "Send",
+    "suggestedQuestions": {
+      "date": "What should I wear for a date?",
+      "colors": "What colors suit me?",
+      "office": "Help me with my office look",
+      "refresh": "How can I refresh my style?"
+    },
+    "responses": {
+      "date": "💕 A date! How exciting. I recommend something that makes you feel confident but comfortable. A midi dress in a warm tone or well-fitted jeans with a silk blouse would be perfect. The most important thing is that you feel like yourself. Can you tell me more about the location?",
+      "colors": "🎨 Colors are my specialty! To find your perfect palette, I need to know you better. Generally, if your skin has a warm undertone, earth tones, golds, and oranges will flatter you. If it's cool, try blues, grays, and silvers. Do you know your undertone?",
+      "office": "👔 Office style can be very elegant without being boring. I suggest investing in timeless pieces: a good blazer, straight-cut pants, and quality shirts. Add personality with accessories. What's your workplace dress code?",
+      "refresh": "✨ I love when someone wants to refresh their style! The first step is identifying what doesn't work for you and why. Then, we explore new silhouettes, colors, and textures. Is there something specific about your current style you'd like to change?",
+      "greeting": "🦚 Hello! It's a pleasure to meet you. I'm here to help you with everything related to your personal style. From choosing an outfit to redesigning your entire wardrobe. What would you like to explore today?",
+      "default": "🦚 Interesting question. In my experience traveling the world of fashion, I've learned that each person has a unique style waiting to be discovered. Tell me more about yourself and what you're looking for, and I'll help you find the best options for you."
+    },
+    "typing": "Peacock is typing..."
+  }
+}
