@@ -1,0 +1,290 @@
+# Gemini Code Assist Configuration
+# This file configures Gemini Code Assist behavior for the TRYONYOU project
+
+version: 1
+
+# Scanning configuration
+scan:
+  enabled: true
+  
+  # Languages to analyze
+  languages:
+    - javascript
+    - typescript
+    - python
+    - jsx
+    - tsx
+    - json
+    - yaml
+    - bash
+  
+  # Paths to scan
+  paths:
+    - src/
+    - public/
+    - scripts/
+    - docs/
+    - core/
+  
+  # Paths to exclude
+  exclude:
+    - node_modules/
+    - dist/
+    - build/
+    - .git/
+    - .github/
+    - "*.min.js"
+    - "*.min.css"
+    - package-lock.json
+
+# Suggestions and auto-completion
+suggestions:
+  enabled: true
+  auto_complete: true
+  context_aware: true
+  
+  # Project-specific context
+  context:
+    framework: "React"
+    build_tool: "Vite"
+    styling: "Tailwind CSS"
+    state_management: "React Hooks"
+    routing: "React Router"
+    
+  # Preferred patterns
+  patterns:
+    - "ES6+ modern JavaScript"
+    - "Functional components with hooks"
+    - "Tailwind utility classes"
+    - "Framer Motion animations"
+    - "Three.js for 3D"
+
+# Code review settings
+code_review:
+  enabled: true
+  security_scan: true
+  performance_check: true
+  best_practices: true
+  
+  # Review focus areas
+  focus:
+    - security
+    - performance
+    - accessibility
+    - code_quality
+    - documentation
+
+# Documentation generation
+documentation:
+  enabled: true
+  
+  # Auto-generate JSDoc
+  jsdoc:
+    enabled: true
+    style: "google"
+  
+  # Component documentation
+  components:
+    enabled: true
+    include_props: true
+    include_examples: true
+
+# Testing assistance
+testing:
+  enabled: true
+  framework: "jest"
+  
+  # Test generation
+  auto_generate:
+    enabled: false  # Manual control for now
+    coverage_threshold: 80
+
+# Refactoring suggestions
+refactoring:
+  enabled: true
+  
+  # Modernization patterns
+  modernize:
+    enabled: true
+    target: "ES2022"
+  
+  # Performance optimizations
+  optimize:
+    enabled: true
+    bundle_size: true
+    render_performance: true
+
+# Project-specific rules
+project:
+  name: "TRYONYOU"
+  description: "AI-Powered Fashion Intelligence Platform"
+  
+  # Module structure
+  modules:
+    - name: "Avatar3D"
+      description: "3D virtual try-on system"
+      path: "src/components/Avatar3D.jsx"
+      
+    - name: "TextileComparator"
+      description: "Fabric comparison engine"
+      path: "src/components/"
+      
+    - name: "PAU"
+      description: "Personal AI Unforgettable recommendations"
+      path: "src/agents/"
+      
+    - name: "CAP"
+      description: "Capsule Automation Platform"
+      path: "src/pages/CAP.jsx"
+      
+    - name: "ABVET"
+      description: "Advanced Biometric Verification"
+      path: "src/pages/ABVET.jsx"
+      
+    - name: "Wardrobe"
+      description: "Digital closet management"
+      path: "src/pages/Wardrobe.jsx"
+      
+    - name: "FTT"
+      description: "Fashion Trend Tracker"
+      path: "src/components/"
+
+# Coding standards
+standards:
+  javascript:
+    style: "airbnb"
+    semicolons: false
+    quotes: "single"
+    indent: 2
+    
+  react:
+    hooks_rules: "recommended"
+    prop_types: false  # Using TypeScript types
+    
+  css:
+    framework: "tailwind"
+    naming: "utility-first"
+
+# AI agent integration
+ai_agents:
+  enabled: true
+  
+  # Recognize agent patterns
+  patterns:
+    - "Intent-based routing"
+    - "Agent coordination"
+    - "Specialized AI tasks"
+  
+  # Agent files
+  paths:
+    - "src/agents/"
+    - "master_brain.py"
+    - "system_service.py"
+
+# Deployment awareness
+deployment:
+  platform: "vercel"
+  domain: "tryonyou.app"
+  
+  # Build configuration
+  build:
+    command: "npm run build"
+    output: "dist/"
+    
+  # Environment variables to recognize
+  env_vars:
+    - "VERCEL_TOKEN"
+    - "NODE_ENV"
+    - "VITE_API_URL"
+
+# Security settings
+security:
+  # Scan for vulnerabilities
+  vulnerability_scan: true
+  
+  # Detect secrets
+  secret_detection: true
+  
+  # Dependency audit
+  dependency_audit: true
+  
+  # Sensitive patterns to flag
+  sensitive_patterns:
+    - "API_KEY"
+    - "SECRET"
+    - "TOKEN"
+    - "PASSWORD"
+    - "PRIVATE_KEY"
+
+# Performance monitoring
+performance:
+  # Bundle size analysis
+  bundle_analysis: true
+  
+  # Render performance
+  render_optimization: true
+  
+  # Asset optimization
+  asset_optimization: true
+
+# Collaboration
+collaboration:
+  # PR review
+  pull_request_review: true
+  
+  # Commit message validation
+  commit_validation: true
+  commit_format: "conventional"
+  
+  # Issue triage
+  issue_triage: false  # Manual for now
+
+# Notification preferences
+notifications:
+  # Telegram integration
+  telegram:
+    enabled: true
+    bot: "@abvet_deploy_bot"
+  
+  # Alert on
+  alert_on:
+    - security_issues
+    - critical_bugs
+    - build_failures
+    - deployment_success
+
+# Custom commands
+custom_commands:
+  - name: "super-deploy"
+    description: "Run comprehensive deployment"
+    command: "./scripts/super-deploy.sh"
+    
+  - name: "dev"
+    description: "Start development server"
+    command: "npm run dev"
+    
+  - name: "build"
+    description: "Build for production"
+    command: "npm run build"
+
+# Learning preferences
+learning:
+  # Learn from codebase
+  learn_from_code: true
+  
+  # Adapt to team patterns
+  adapt_to_team: true
+  
+  # Suggest improvements based on usage
+  suggest_improvements: true
+
+# Experimental features
+experimental:
+  # Advanced refactoring
+  advanced_refactoring: false
+  
+  # Predictive suggestions
+  predictive_suggestions: false
+  
+  # Multi-file edits
+  multi_file_edits: false
