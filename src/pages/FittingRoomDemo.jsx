@@ -13,6 +13,25 @@ const FittingRoomDemo = () => {
     }
   });
 
+  // Validate hex color format to prevent CSS injection
+  const isValidHexColor = (color) => {
+    return /^#[0-9A-Fa-f]{6}$/.test(color);
+  };
+
+  // Handler for updating colors with validation
+  const handleColorChange = (field, value) => {
+    if (!isValidHexColor(value)) return;
+    
+    if (field === 'skin') {
+      setCustomizations({ ...customizations, skin: value });
+    } else {
+      setCustomizations({
+        ...customizations,
+        outfit: { ...customizations.outfit, [field]: value }
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-black via-[#0A0A0A] to-[#1A1A2E]">
       <div className="max-w-7xl mx-auto">
@@ -68,7 +87,7 @@ const FittingRoomDemo = () => {
                   <input
                     type="color"
                     value={customizations.skin}
-                    onChange={(e) => setCustomizations({ ...customizations, skin: e.target.value })}
+                    onChange={(e) => handleColorChange('skin', e.target.value)}
                     className="w-full h-12 rounded-lg cursor-pointer"
                   />
                 </div>
@@ -78,10 +97,7 @@ const FittingRoomDemo = () => {
                   <input
                     type="color"
                     value={customizations.outfit.top}
-                    onChange={(e) => setCustomizations({
-                      ...customizations,
-                      outfit: { ...customizations.outfit, top: e.target.value }
-                    })}
+                    onChange={(e) => handleColorChange('top', e.target.value)}
                     className="w-full h-12 rounded-lg cursor-pointer"
                   />
                 </div>
@@ -91,10 +107,7 @@ const FittingRoomDemo = () => {
                   <input
                     type="color"
                     value={customizations.outfit.bottom}
-                    onChange={(e) => setCustomizations({
-                      ...customizations,
-                      outfit: { ...customizations.outfit, bottom: e.target.value }
-                    })}
+                    onChange={(e) => handleColorChange('bottom', e.target.value)}
                     className="w-full h-12 rounded-lg cursor-pointer"
                   />
                 </div>
@@ -104,10 +117,7 @@ const FittingRoomDemo = () => {
                   <input
                     type="color"
                     value={customizations.outfit.shoes}
-                    onChange={(e) => setCustomizations({
-                      ...customizations,
-                      outfit: { ...customizations.outfit, shoes: e.target.value }
-                    })}
+                    onChange={(e) => handleColorChange('shoes', e.target.value)}
                     className="w-full h-12 rounded-lg cursor-pointer"
                   />
                 </div>

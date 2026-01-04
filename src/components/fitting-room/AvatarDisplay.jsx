@@ -2,6 +2,16 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Avatar3D from '../Avatar3D';
 
+// Validate hex color format to prevent CSS injection
+const isValidHexColor = (color) => {
+  return typeof color === 'string' && /^#[0-9A-Fa-f]{6}$/.test(color);
+};
+
+// Sanitize color value
+const sanitizeColor = (color, defaultColor = '#000000') => {
+  return isValidHexColor(color) ? color : defaultColor;
+};
+
 const AvatarDisplay = ({ 
   customizations = {},
   modelPath = '/models/avatar.glb',
@@ -48,7 +58,6 @@ const AvatarDisplay = ({
         {/* Optional overlay info */}
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
           <div className="flex items-center justify-between text-xs text-white/70">
-            <span>Drag to rotate • Scroll to zoom</span>
             {customizations?.outfit && (
               <span className="text-[#D4AF37]">Outfit Applied</span>
             )}
@@ -70,7 +79,7 @@ const AvatarDisplay = ({
               <div className="flex items-center gap-2">
                 <div 
                   className="w-4 h-4 rounded-full border border-white/20"
-                  style={{ backgroundColor: customizations.skin }}
+                  style={{ backgroundColor: sanitizeColor(customizations.skin, '#f5d0c5') }}
                 />
                 <span className="text-white/60">Skin Tone</span>
               </div>
@@ -79,7 +88,7 @@ const AvatarDisplay = ({
               <div className="flex items-center gap-2">
                 <div 
                   className="w-4 h-4 rounded-sm border border-white/20"
-                  style={{ backgroundColor: customizations.outfit.top }}
+                  style={{ backgroundColor: sanitizeColor(customizations.outfit.top, '#1a1a1a') }}
                 />
                 <span className="text-white/60">Top</span>
               </div>
@@ -88,7 +97,7 @@ const AvatarDisplay = ({
               <div className="flex items-center gap-2">
                 <div 
                   className="w-4 h-4 rounded-sm border border-white/20"
-                  style={{ backgroundColor: customizations.outfit.bottom }}
+                  style={{ backgroundColor: sanitizeColor(customizations.outfit.bottom, '#2d2d2d') }}
                 />
                 <span className="text-white/60">Bottom</span>
               </div>
@@ -97,7 +106,7 @@ const AvatarDisplay = ({
               <div className="flex items-center gap-2">
                 <div 
                   className="w-4 h-4 rounded-sm border border-white/20"
-                  style={{ backgroundColor: customizations.outfit.shoes }}
+                  style={{ backgroundColor: sanitizeColor(customizations.outfit.shoes, '#0a0a0a') }}
                 />
                 <span className="text-white/60">Shoes</span>
               </div>
