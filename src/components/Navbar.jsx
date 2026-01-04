@@ -2,8 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, ShoppingBag, User, Shirt, Sparkles, Wand2, Home, Play, Ruler, Package, CreditCard, ShieldCheck, MessageCircle } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
+import LanguageSwitcher from './LanguageSwitcher'
 
 const Navbar = () => {
+  const { t } = useTranslation()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const location = useLocation()
@@ -22,18 +25,18 @@ const Navbar = () => {
   }, [location.pathname])
 
   const navLinks = [
-    { path: '/', label: 'Home', icon: Home },
-    { path: '/demo', label: 'Demo', icon: Play },
-    { path: '/brands', label: 'Brands', icon: ShoppingBag },
-    { path: '/my-avatar', label: 'My Avatar', icon: User },
-    { path: '/wardrobe', label: 'Wardrobe', icon: Shirt },
-    { path: '/showroom', label: 'Showroom', icon: Sparkles },
-    { path: '/glow-up', label: 'Glow-Up', icon: Wand2 },
-    { path: '/ask-peacock', label: 'Ask Peacock', icon: MessageCircle },
-    { path: '/fit', label: 'FIT', icon: Ruler },
-    { path: '/cap', label: 'CAP', icon: Package },
-    { path: '/abvet', label: 'ABVET', icon: CreditCard },
-    { path: '/claims', label: 'Claims', icon: ShieldCheck },
+    { path: '/', label: t('nav.home'), icon: Home },
+    { path: '/demo', label: t('nav.demo'), icon: Play },
+    { path: '/brands', label: t('nav.brands'), icon: ShoppingBag },
+    { path: '/my-avatar', label: t('nav.myAvatar'), icon: User },
+    { path: '/wardrobe', label: t('nav.wardrobe'), icon: Shirt },
+    { path: '/showroom', label: t('nav.showroom'), icon: Sparkles },
+    { path: '/glow-up', label: t('nav.glowUp'), icon: Wand2 },
+    { path: '/ask-peacock', label: t('nav.askPeacock'), icon: MessageCircle },
+    { path: '/fit', label: t('nav.fit'), icon: Ruler },
+    { path: '/cap', label: t('nav.cap'), icon: Package },
+    { path: '/abvet', label: t('nav.abvet'), icon: CreditCard },
+    { path: '/claims', label: t('nav.claims'), icon: ShieldCheck },
   ]
 
   return (
@@ -102,6 +105,7 @@ const Navbar = () => {
 
           {/* CTA Button - Desktop */}
           <div className="hidden lg:flex items-center gap-3">
+            <LanguageSwitcher />
             <Link to="/demo" className="btn-primary text-sm px-4 py-2">
               Try Demo
             </Link>

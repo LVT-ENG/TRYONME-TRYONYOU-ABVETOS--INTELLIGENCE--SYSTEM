@@ -1,0 +1,287 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "search": "Search",
+    "filter": "Filter",
+    "all": "All",
+    "save": "Save",
+    "cancel": "Cancel",
+    "next": "Next",
+    "back": "Back",
+    "finish": "Finish",
+    "tryOn": "Try On",
+    "addToWardrobe": "Add to Wardrobe",
+    "viewDetails": "View Details"
+  },
+  "nav": {
+    "home": "Home",
+    "demo": "Demo",
+    "brands": "Brands",
+    "myAvatar": "My Avatar",
+    "wardrobe": "Wardrobe",
+    "showroom": "Showroom",
+    "glowUp": "Glow-Up",
+    "askPeacock": "Ask Peacock",
+    "fit": "FIT",
+    "cap": "CAP",
+    "abvet": "ABVET",
+    "claims": "Claims"
+  },
+  "home": {
+    "tagline": "Fashion Tech for Perfect Fit",
+    "heroTitle": "You won't do a TryOnYou.",
+    "heroSubtitle": "TryOnYou will do it for you.",
+    "heroDescription": "We measure your body so clothes fit the first time.",
+    "tryNow": "Try Now",
+    "investors": "Investors",
+    "claims": {
+      "zeroReturns": {
+        "title": "Zero Returns",
+        "description": "Perfect fit guaranteed. No more wrong sizes. Our body intelligence ensures every garment fits you perfectly."
+      },
+      "perfectFit": {
+        "title": "Perfect Fit by Body Intelligence",
+        "description": "AI-powered biometric analysis understands your unique body proportions and recommends garments tailored to you."
+      },
+      "fabricAware": {
+        "title": "Fabric Elasticity & Drape-Aware",
+        "description": "We analyze fabric properties—elasticity, drape, rigidity—to predict how garments will move and feel on your body."
+      },
+      "aiMeasurements": {
+        "title": "AI + Biometric Measurements",
+        "description": "Advanced computer vision captures your body measurements with precision. No manual tape measures. Just your phone."
+      }
+    }
+  },
+  "brands": {
+    "title": "Brands",
+    "subtitle": "TRYONYOU connects with catalogs, collections, and sizing data to reduce returns and increase conversion.",
+    "verifiedBrands": "Verified Brands",
+    "featuredBrands": "Featured Brands",
+    "featuredSubtitle": "Most popular among our users",
+    "searchPlaceholder": "Search brands...",
+    "categories": {
+      "all": "All",
+      "luxury": "Luxury",
+      "streetwear": "Streetwear",
+      "sustainable": "Sustainable",
+      "sportswear": "Sportswear",
+      "vintage": "Vintage"
+    },
+    "items": "items",
+    "rating": "rating"
+  },
+  "myAvatar": {
+    "title": "My Avatar",
+    "subtitle": "Create your digital twin for the most accurate virtual try-on experience",
+    "steps": {
+      "bodyType": "Body Type",
+      "measurements": "Measurements",
+      "appearance": "Appearance",
+      "style": "Style"
+    },
+    "bodyType": {
+      "title": "What's your body type?",
+      "subtitle": "Select the one that best matches your figure",
+      "athletic": {
+        "name": "Athletic",
+        "description": "Broad shoulders, defined waist"
+      },
+      "slim": {
+        "name": "Slim",
+        "description": "Slender and elongated figure"
+      },
+      "curvy": {
+        "name": "Curvy",
+        "description": "Pronounced curves"
+      },
+      "regular": {
+        "name": "Regular",
+        "description": "Balanced proportions"
+      },
+      "plus": {
+        "name": "Plus Size",
+        "description": "Full and harmonious figure"
+      }
+    },
+    "measurements": {
+      "title": "Your Measurements",
+      "subtitle": "This helps us find your perfect size",
+      "height": "Height (cm)",
+      "weight": "Weight (kg)",
+      "chest": "Chest (cm)",
+      "waist": "Waist (cm)",
+      "hips": "Hips (cm)"
+    },
+    "appearance": {
+      "skinTone": "Skin Tone",
+      "hairColor": "Hair Color",
+      "fair": "Fair",
+      "light": "Light",
+      "medium": "Medium",
+      "olive": "Olive",
+      "tan": "Tan",
+      "dark": "Dark",
+      "black": "Black",
+      "brown": "Brown",
+      "blonde": "Blonde",
+      "red": "Red",
+      "gray": "Gray",
+      "fantasy": "Fantasy"
+    },
+    "style": {
+      "title": "Your Style",
+      "subtitle": "Choose your preferred style",
+      "casual": {
+        "name": "Casual",
+        "description": "Relaxed and comfortable"
+      },
+      "formal": {
+        "name": "Formal",
+        "description": "Elegant and professional"
+      },
+      "streetwear": {
+        "name": "Streetwear",
+        "description": "Urban and modern"
+      },
+      "minimalist": {
+        "name": "Minimalist",
+        "description": "Simple and sophisticated"
+      },
+      "bohemian": {
+        "name": "Bohemian",
+        "description": "Free and artistic"
+      },
+      "sporty": {
+        "name": "Sporty",
+        "description": "Active and dynamic"
+      }
+    }
+  },
+  "wardrobe": {
+    "title": "Wardrobe",
+    "subtitle": "Try on clothes virtually and find your perfect fit. Save favorites and build your dream wardrobe.",
+    "digitalCloset": "Your Digital Closet",
+    "searchPlaceholder": "Search clothes, brands...",
+    "viewMode": "View Mode",
+    "categories": {
+      "all": "All",
+      "tops": "Tops",
+      "bottoms": "Bottoms",
+      "dresses": "Dresses",
+      "outerwear": "Outerwear",
+      "accessories": "Accessories"
+    },
+    "match": "Match",
+    "size": "Size",
+    "price": "Price",
+    "brand": "Brand",
+    "color": "Color"
+  },
+  "showroom": {
+    "title": "Showroom",
+    "subtitle": "Complete looks curated by AI, designed for every occasion and mood",
+    "curatedLooks": "Curated Looks",
+    "occasions": {
+      "all": "All",
+      "work": "Work",
+      "casual": "Casual",
+      "night": "Night",
+      "party": "Party",
+      "travel": "Travel"
+    },
+    "moods": {
+      "all": "All",
+      "confident": "Confident",
+      "relaxed": "Relaxed",
+      "romantic": "Romantic",
+      "bold": "Bold",
+      "minimal": "Minimalist"
+    },
+    "views": "views",
+    "rating": "rating",
+    "items": "items"
+  },
+  "glowUp": {
+    "title": "Glow-Up",
+    "subtitle": "AI-powered style transformation. Discover your best version.",
+    "transformYourStyle": "Transform Your Style",
+    "sections": {
+      "analyze": "Analyze",
+      "discover": "Discover",
+      "transform": "Transform"
+    },
+    "goals": {
+      "styleUpgrade": "Style Upgrade",
+      "colorHarmony": "Color Harmony",
+      "bodyConfidence": "Highlight Figure",
+      "hairAdvice": "Hair Advice",
+      "signatureLook": "Signature Look",
+      "seasonalUpdate": "Seasonal Update"
+    },
+    "transformations": {
+      "before": "Before",
+      "after": "After",
+      "improvement": "Improvement",
+      "timeframe": "Timeframe",
+      "steps": "steps",
+      "weeks": "weeks"
+    },
+    "tips": {
+      "color": {
+        "category": "Color",
+        "title": "Your Perfect Palette",
+        "description": "Based on your skin tone and hair, warm earth colors highlight your natural beauty."
+      },
+      "style": {
+        "category": "Style",
+        "title": "Flattering Silhouettes",
+        "description": "Clean lines and structured cuts balance your proportions perfectly."
+      },
+      "accessories": {
+        "category": "Accessories",
+        "title": "Finishing Touches",
+        "description": "Minimalist jewelry in gold tones complements your elegant style."
+      }
+    }
+  },
+  "askPeacock": {
+    "title": "Ask Peacock",
+    "subtitle": "Your personal AI fashion assistant available 24/7",
+    "greeting": "Hello! I'm Peacock, your personal fashion assistant. 🦚 I come from around the world to help you discover your perfect style. How can I help you today?",
+    "inputPlaceholder": "Ask me anything about fashion...",
+    "suggestedQuestions": {
+      "date": "What should I wear for a date?",
+      "colors": "What colors suit me?",
+      "office": "Help me with my office look",
+      "refresh": "How can I refresh my style?"
+    },
+    "typing": "Peacock is typing..."
+  },
+  "footer": {
+    "cta": {
+      "title": "Want to integrate TryOnYou with your brand?",
+      "subtitle": "Reduce returns by up to 75% with our technology",
+      "button": "Request a Demo"
+    },
+    "description": "Your trusted virtual fitting room. Find the perfect outfit without infinite returns.",
+    "sections": {
+      "product": "Product",
+      "company": "Company",
+      "legal": "Legal"
+    },
+    "company": {
+      "aboutUs": "About Us",
+      "forBrands": "For Brands",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "legal": {
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "cookies": "Cookies"
+    },
+    "copyright": "© {{year}} TRYONYOU. All rights reserved.",
+    "poweredBy": "Powered by"
+  }
+}
