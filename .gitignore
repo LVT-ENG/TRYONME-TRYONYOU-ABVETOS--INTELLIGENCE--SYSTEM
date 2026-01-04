@@ -4,3 +4,7 @@ dist/
 .env
 *.log
 .vercel
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
