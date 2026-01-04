@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Heart, Sparkles, Smile, Frown, Meh, Zap, TrendingUp, Activity } from 'lucide-react'
+import { Heart, Sparkles, Smile, Meh, Zap, TrendingUp, Activity } from 'lucide-react'
 import { AgentPAU } from '../agents'
 
 // Biometric simulation constants
@@ -87,7 +87,7 @@ const PAU_Assistant = () => {
       // Simulate biometric reading
       const simulatedBiometrics = {
         heartRate: Math.floor(MIN_HEART_RATE + Math.random() * HEART_RATE_RANGE),
-        skinTemp: (MIN_SKIN_TEMP + Math.random() * TEMP_RANGE).toFixed(1),
+        skinTemp: parseFloat((MIN_SKIN_TEMP + Math.random() * TEMP_RANGE).toFixed(1)),
         stressLevel: ['low', 'medium', 'high'][Math.floor(Math.random() * 3)]
       }
       setBiometrics(simulatedBiometrics)
