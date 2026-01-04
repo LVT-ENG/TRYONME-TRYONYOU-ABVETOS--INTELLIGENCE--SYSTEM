@@ -30,11 +30,11 @@
   },
   "home": {
     "hero": {
-      "title": "No vas a hacerte un TryOnYou.",
-      "titleHighlight": "TryOnYou lo hará por ti.",
-      "subtitle": "Medimos tu cuerpo para que la ropa encaje a la primera.",
-      "tryNow": "Probar Ahora",
-      "investors": "Inversores"
+      "title": "You're not going to make a TryOnYou.",
+      "titleHighlight": "TryOnYou will do it for you.",
+      "subtitle": "We measure your body so clothes fit right the first time.",
+      "tryNow": "Try Now",
+      "investors": "Investors"
     },
     "claims": {
       "zeroReturns": {
