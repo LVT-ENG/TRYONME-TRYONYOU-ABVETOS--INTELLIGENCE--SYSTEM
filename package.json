@@ -5,7 +5,7 @@
   "description": "TRYONYOU - Unified AI-Powered Fashion Intelligence Platform with Virtual Try-On, Biometric Systems, and Automated Production",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "CI=false vite build",
     "preview": "vite preview"
   },
   "dependencies": {
