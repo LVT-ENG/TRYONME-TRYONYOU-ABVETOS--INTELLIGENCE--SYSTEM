@@ -40,6 +40,11 @@ class handler(BaseHTTPRequestHandler):
 
             match = min(LAFAYETTE_ITEMS, key=lambda x: abs(x['ratio_ideal'] - ratio_reel))
 
+            # Validate drape factor for safe display
+            drape_factor = match.get('tombe_tissu', 0.5)
+            if not isinstance(drape_factor, (int, float)):
+                drape_factor = 0.5
+
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -50,9 +55,9 @@ class handler(BaseHTTPRequestHandler):
                 "produit": match['nom'],
                 "image_url": match['image'],
                 "explanation": {
-                    "fr": f"Cette pièce a été choisie pour sa fluidité ({match['tombe_tissu']}) qui sublime votre silhouette.",
-                    "es": f"Esta prenda fue elegida por su caída ({match['tombe_tissu']}) que realza tu silueta sin oprimir.",
-                    "en": f"This piece was selected for its fluid drape ({match['tombe_tissu']}) which complements your silhouette."
+                    "fr": f"Cette pièce a été choisie pour sa fluidité ({drape_factor}) qui sublime votre silhouette.",
+                    "es": f"Esta prenda fue elegida por su caída ({drape_factor}) que realza tu silueta sin oprimir.",
+                    "en": f"This piece was selected for its fluid drape ({drape_factor}) which complements your silhouette."
                 }
             }
             self.wfile.write(json.dumps(response).encode())
