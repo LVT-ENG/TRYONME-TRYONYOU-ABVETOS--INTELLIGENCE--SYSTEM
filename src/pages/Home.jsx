@@ -130,7 +130,7 @@ const Home = () => {
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute bottom-8 right-8 bg-blue-600 rounded-full p-4 shadow-lg border-2 border-blue-400"
+                className="absolute bottom-8 right-8 lg:bottom-12 lg:right-12 xl:bottom-16 xl:right-16 bg-blue-600 rounded-full p-4 shadow-lg border-2 border-blue-400"
               >
                 <div className="text-4xl">✨</div>
               </motion.div>
