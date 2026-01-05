@@ -76,18 +76,23 @@ export const BiometricScanner = () => {
         {/* Upload Button Fallback/Primary */}
         <div className="flex gap-4">
             <button
+                type="button"
                 onClick={() => fileInputRef.current?.click()}
                 className="flex items-center gap-2 px-6 py-2 border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black transition-all duration-300 font-mono text-xs tracking-widest uppercase"
+                aria-label="Upload a photo for biometric scanning"
+                aria-controls="photo-upload"
             >
                 <Upload size={14} />
                 Upload Photo
             </button>
             <input
+                id="photo-upload"
                 type="file"
                 ref={fileInputRef}
-                className="hidden"
+                className="sr-only"
                 accept="image/*"
                 onChange={handleFileUpload}
+                aria-label="Upload a photo for biometric scanning"
             />
         </div>
 
