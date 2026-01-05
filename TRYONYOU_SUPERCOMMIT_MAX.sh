@@ -113,7 +113,7 @@ git push origin main || { echo "❌ Error al hacer push"; exit 1; }
 # Despliegue en Vercel (opcional, solo si hay token)
 if [ -n "$VERCEL_TOKEN" ]; then
     echo "🌐 Desplegando en Vercel..."
-    npx vercel --prod --token=$VERCEL_TOKEN --yes --confirm --force || echo "⚠️ Error en deploy de Vercel"
+    npx vercel --prod --token=$VERCEL_TOKEN || echo "⚠️ Error en deploy de Vercel"
 else
     echo "ℹ️ Variable VERCEL_TOKEN no definida, saltando deploy de Vercel"
     echo " Para desplegar automáticamente, exporta VERCEL_TOKEN antes de ejecutar este script"
