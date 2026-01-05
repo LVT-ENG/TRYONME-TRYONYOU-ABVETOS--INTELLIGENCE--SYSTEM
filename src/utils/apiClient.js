@@ -64,3 +64,28 @@ export function getImageWithFallback(filename, fallbackType = 'avatar') {
   return getImagePath(filename)
 }
 
+// Matching service endpoint (FastAPI backend)
+const MATCH_API_URL = 'http://localhost:8000/api/match/best'
+
+/**
+ * Request the best match from the backend.
+ * Expects backend JSON response with a matchResult field.
+ */
+export async function fetchBestMatch(payload) {
+  const response = await fetch(MATCH_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+
+  if (!response.ok) {
+    const details = await response.text().catch(() => '')
+    throw new Error(`Match API request failed (${response.status}): ${details}`)
+  }
+
+  const data = await response.json()
+  return data?.matchResult ?? null
+}
+

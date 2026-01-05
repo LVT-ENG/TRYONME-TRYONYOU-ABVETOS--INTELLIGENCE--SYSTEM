@@ -14,6 +14,8 @@ const Wardrobe = lazy(() => import('./pages/Wardrobe'))
 const Showroom = lazy(() => import('./pages/Showroom'))
 const GlowUp = lazy(() => import('./pages/GlowUp'))
 const Demo = lazy(() => import('./pages/Demo'))
+const Pilot = lazy(() => import('./pages/Pilot.js'))
+const MontanaJeans = lazy(() => import('./pages/MontanaJeans'))
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
             <Route path="/showroom" element={<Showroom />} />
             <Route path="/glow-up" element={<GlowUp />} />
             <Route path="/demo" element={<Demo />} />
+            <Route path="/pilot" element={<Pilot />} />
+            <Route path="/montana-jeans" element={<MontanaJeans />} />
           </Routes>
         </Suspense>
       </main>
