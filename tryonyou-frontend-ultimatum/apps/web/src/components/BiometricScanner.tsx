@@ -59,6 +59,7 @@ export const BiometricScanner = () => {
         playsInline
         muted
         className="w-full h-full object-cover opacity-60 filter grayscale contrast-125"
+        aria-label="Live camera preview for biometric scanning"
       />
 
       {/* Scanning Animation */}
