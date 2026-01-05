@@ -40,18 +40,24 @@ class handler(BaseHTTPRequestHandler):
 
             match = min(LAFAYETTE_ITEMS, key=lambda x: abs(x['ratio_ideal'] - ratio_reel))
 
+            # Validate drape factor for safe display
+            drape_factor = match.get('tombe_tissu', 0.5)
+            if not isinstance(drape_factor, (int, float)):
+                drape_factor = 0.5
+
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
 
+            # Respuesta refinada con "toque final" multilingüe
             response = {
                 "bienvenue": f"Bienvenue aux Galeries Lafayette, {user_name}.",
                 "produit": match['nom'],
                 "image_url": match['image'],
-                "explications": {
-                    "fr": "Cette pièce a été choisie pour sa fluidité qui sublime votre silhouette.",
-                    "es": "Esta prenda fue elegida por su caída que realza tu silueta sin oprimir.",
-                    "en": "This piece was selected for its fluid drape which complements your silhouette."
+                "explanation": {
+                    "fr": f"Cette pièce a été choisie pour sa fluidité ({drape_factor}) qui sublime votre silhouette.",
+                    "es": f"Esta prenda fue elegida por su caída ({drape_factor}) que realza tu silueta sin oprimir.",
+                    "en": f"This piece was selected for its fluid drape ({drape_factor}) which complements your silhouette."
                 }
             }
             self.wfile.write(json.dumps(response).encode())
