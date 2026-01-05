@@ -8,7 +8,7 @@ cat <<REQ > requirements.txt
 psutil==5.9.8
 numpy==1.26.4
 requests==2.31.0
-google-generativeai==0.3.2
+google-generativeai==0.8.3
 REQ
 
 pip install -r requirements.txt --quiet
@@ -22,7 +22,7 @@ echo "🧠 Generando Manifiesto de Agentes..."
 cat <<JSON > core/ai_config/moe_prompts_manifest.json
 {
   "meta": {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "architecture": "MoE (Mixture of Experts)",
     "optimization": "Google AI Studio",
     "default_language_mode": "TRILINGUAL_PARALLEL"
@@ -30,14 +30,14 @@ cat <<JSON > core/ai_config/moe_prompts_manifest.json
   "agents": {
     "agent_01_pau_assistant": {
       "role": "Emotional Fashion Assistant",
-      "model": "gemini-1.5-pro",
+      "model": "gemini-3-pro",
       "temperature": 0.7,
       "system_instruction": "You are Pau, the Emotional Fashion Assistant. Your goal is to provide empathetic, style-conscious advice based on the user's emotional state and biometric data. \n\nCORE TASK: Generate a personalized, emotionally resonant message and a final outfit recommendation (outfit_id). \n\nCONSTRAINT: NEVER suggest an outfit with a biometric_fit_score below 0.95. NEVER provide medical advice.\n\nOUTPUT FORMAT (JSON): {\"outfit_id\": \"string\", \"message_en\": \"string\", \"message_fr\": \"string\", \"message_es\": \"string\"}",
       "input_schema": ["emotion", "style_preference", "biometric_fit_score", "language"]
     },
     "agent_02_drape_aware": {
       "role": "Drape-Aware AI Expert",
-      "model": "gemini-1.5-flash",
+      "model": "gemini-3-flash",
       "temperature": 0.2,
       "system_instruction": "You are the Drape-Aware AI Expert. Your function is to calculate the physical realism score of a virtual garment on a user's body based on millimetric biometrics and fabric properties. Output must be purely technical and numerical.\n\nCORE TASK: Calculate the final drape_score and mesh_correction_vector to achieve a Zero-Return Policy fit.\n\nCONSTRAINT: All calculations must be performed with a precision of at least 4 decimal places. Output JSON only.",
       "input_schema": ["user_biometrics_id", "garment_material_properties", "garment_mesh_id"]
