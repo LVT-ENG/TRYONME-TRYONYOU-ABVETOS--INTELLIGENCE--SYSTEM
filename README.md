@@ -196,7 +196,25 @@ dist/
 - **Railway**: Build command: `npm run build`, Output: `dist`
 - **AWS S3/CloudFront**: Upload `dist/` folder
 
-### Quick Deploy Script
+### Quick Deploy Scripts
+
+#### Super Deploy (Recommended)
+```bash
+./scripts/super-deploy.sh
+```
+
+Advanced deployment script with:
+1. Automatic branch management
+2. Clean install of dependencies
+3. Directory structure verification
+4. Smart file staging
+5. Detailed super-commit
+6. Push to GitHub
+7. Optional Vercel deployment
+
+See `scripts/README.md` for detailed usage.
+
+#### Legacy Deploy
 ```bash
 ./deploy.sh
 ```
@@ -225,6 +243,8 @@ This script will:
 - `ASSETS_GUIDE.md` - Asset requirements and naming conventions
 - `DEMO_READY.md` - Demo preparation guide
 - `docs/GOOGLE_PLATFORM_NEWS.md` - Google Platform integration news (Nov/Dec 2025)
+- `docs/GEMINI_CODE_ASSIST_SETUP.md` - Gemini Code Assist configuration guide
+- `scripts/README.md` - Deployment scripts documentation
 
 ## 🔒 Patent Protection
 
