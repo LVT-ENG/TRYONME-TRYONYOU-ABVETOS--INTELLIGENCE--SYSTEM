@@ -59,7 +59,7 @@ const HTML_PILOT = `<!DOCTYPE html><html><head><meta charset="UTF-8">
 <script>
 const v=document.getElementById('v'),canvas=document.getElementById('c'),ctx=canvas.getContext('2d');
 let done=false;
-const pose=new window.Pose({locateFile:(f)=>\\\`https://cdn.jsdelivr.net/npm/@mediapipe/pose/\\\${f}\\\`});
+const pose=new window.Pose({locateFile:(f)=>\`https://cdn.jsdelivr.net/npm/@mediapipe/pose/\${f}\`});
 pose.setOptions({modelComplexity:1,smoothLandmarks:true,minDetectionConfidence:0.6});
 
 function speak(t,cb){
