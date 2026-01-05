@@ -1,8 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import { Home, Ruler, Activity, CreditCard, ShieldCheck } from 'lucide-react';
 import { AgentRouter } from '@tryonyou/agents';
 import { BiometricScanner } from './components/BiometricScanner';
+import { SmartWardrobe } from './components/SmartWardrobe';
+import SolidarityWardrobe from './pages/SolidarityWardrobe';
 
 // Components
 const Navbar = () => (
@@ -71,15 +73,31 @@ const HomePage = () => {
 };
 
 const FitPage = () => {
+  const location = useLocation();
+  const metrics = location.state?.metrics;
+
   React.useEffect(() => {
     // Agent Interaction Stub
-    AgentRouter.route('FIT_SCORE', { garmentId: '123', biometrics: {} })
+    AgentRouter.route('FIT_SCORE', { garmentId: '123', biometrics: metrics || {} })
       .then((score: any) => console.log('Fit Score:', score));
-  }, []);
+  }, [metrics]);
 
   return (
     <div className="pt-24 px-8 min-h-screen">
       <h2 className="text-3xl text-[var(--gold)] tracking-widest mb-8">FIT INTELLIGENCE</h2>
+
+      {metrics && (
+        <div className="mb-8 p-4 border border-[var(--gold)] bg-[rgba(197,164,109,0.05)]">
+           <h3 className="text-[var(--gold)] text-xs mb-2 tracking-widest">LIVE BIOMETRICS</h3>
+           <div className="grid grid-cols-4 gap-4 text-xs font-mono">
+              <div>HEIGHT: {metrics.height}cm</div>
+              <div>CHEST: {metrics.chest}cm</div>
+              <div>WAIST: {metrics.waist}cm</div>
+              <div>SOURCE: {metrics.source_file}</div>
+           </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="glass-panel p-8 h-96 flex items-center justify-center">
           <p className="text-[var(--bone)]">3D Avatar Module (Agent 014)</p>
@@ -143,8 +161,10 @@ function App() {
           <Route path="/cap" element={<CAPPage />} />
           <Route path="/abvet" element={<ABVETPage />} />
           <Route path="/claims" element={<ClaimsPage />} />
+          <Route path="/solidarity" element={<SolidarityWardrobe />} />
         </Routes>
         <PauMascot />
+        <SmartWardrobe />
         <Footer />
       </div>
     </Router>

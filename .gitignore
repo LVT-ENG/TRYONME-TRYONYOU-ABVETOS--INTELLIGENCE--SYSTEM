@@ -4,3 +4,6 @@ dist/
 .env
 *.log
 .vercel
+tryonyou-frontend-ultimatum/backend/__pycache__
+tryonyou-frontend-ultimatum/backend/drive_sync_mock
+tryonyou-frontend-ultimatum/backend/venv

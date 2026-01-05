@@ -8,6 +8,9 @@ export const BiometricScanner = () => {
   const [status, setStatus] = useState("INITIALIZING BIOMETRICS...");
   const navigate = useNavigate();
 
+  // Use environment variable for backend URL, default to localhost
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
   useEffect(() => {
     let activeStream: MediaStream | null = null;
 
@@ -36,14 +39,39 @@ export const BiometricScanner = () => {
     };
   }, []);
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       setStatus(`PROCESSING FILE: ${file.name.toUpperCase()}`);
-      // Simulate processing time then navigate
-      setTimeout(() => {
-        navigate('/fit');
-      }, 2000);
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/scan/upload`, {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Metrics:", data.metrics);
+            // Simulate navigation delay for UX
+             setTimeout(() => {
+                navigate('/fit', { state: {
+                  metrics: data.metrics,
+                  mockup: data.mockup_url,
+                  product: data.product_url
+                } });
+              }, 1000);
+        } else {
+             setStatus("ERROR PROCESSING FILE");
+        }
+
+      } catch (error) {
+          console.error("Upload error:", error);
+          setStatus("CONNECTION ERROR");
+      }
     }
   };
 
@@ -59,7 +87,6 @@ export const BiometricScanner = () => {
         playsInline
         muted
         className="w-full h-full object-cover opacity-60 filter grayscale contrast-125"
-        aria-label="Live camera preview for biometric scanning"
       />
 
       {/* Scanning Animation */}
@@ -76,23 +103,18 @@ export const BiometricScanner = () => {
         {/* Upload Button Fallback/Primary */}
         <div className="flex gap-4">
             <button
-                type="button"
                 onClick={() => fileInputRef.current?.click()}
                 className="flex items-center gap-2 px-6 py-2 border border-[var(--gold)] text-[var(--gold)] hover:bg-[var(--gold)] hover:text-black transition-all duration-300 font-mono text-xs tracking-widest uppercase"
-                aria-label="Upload a photo for biometric scanning"
-                aria-controls="photo-upload"
             >
                 <Upload size={14} />
                 Upload Photo
             </button>
             <input
-                id="photo-upload"
                 type="file"
                 ref={fileInputRef}
-                className="sr-only"
+                className="hidden"
                 accept="image/*"
                 onChange={handleFileUpload}
-                aria-label="Upload a photo for biometric scanning"
             />
         </div>
 
