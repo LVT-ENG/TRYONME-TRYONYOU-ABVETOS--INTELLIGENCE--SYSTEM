@@ -224,6 +224,7 @@ This script will:
 - `DEPLOYMENT_CHECKLIST.md` - Comprehensive deployment guide
 - `ASSETS_GUIDE.md` - Asset requirements and naming conventions
 - `DEMO_READY.md` - Demo preparation guide
+- `docs/GOOGLE_PLATFORM_NEWS.md` - Google Platform integration news (Nov/Dec 2025)
 
 ## 🔒 Patent Protection
 
