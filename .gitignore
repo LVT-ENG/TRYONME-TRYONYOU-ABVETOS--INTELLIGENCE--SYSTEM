@@ -3,6 +3,7 @@ dist/
 .DS_Store
 .env
 *.log
+.vercel
 __pycache__/
 *.pyc
 *.pyo

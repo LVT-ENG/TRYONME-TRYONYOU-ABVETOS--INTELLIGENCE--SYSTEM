@@ -1,0 +1,19 @@
+name: Close Placeholder Issues
+on:
+  issues:
+    types: [opened]
+jobs:
+  close-placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Close Issue
+        if: contains(github.event.issue.body, 'placeholder')
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            })

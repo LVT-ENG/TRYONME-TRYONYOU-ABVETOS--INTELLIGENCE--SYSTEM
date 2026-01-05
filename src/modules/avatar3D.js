@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState, useEffect } from 'react'
+import { Suspense, useRef, memo } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls, Environment, ContactShadows, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
@@ -153,21 +153,14 @@ function Loader() {
   )
 }
 
-export default function Avatar3D({ 
+function Avatar3D({
   customizations = {},
   modelPath = '/models/avatar.glb', // Default path - will use procedural if not found
   className = '',
   showControls = true,
   height = '100%',
 }) {
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    // Check if model exists
-    fetch(modelPath, { method: 'HEAD' })
-      .then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false))
-  }, [modelPath])
+  // Optimization: Removed unused isLoading state and redundant HEAD request
 
   return (
     <div className={`avatar-canvas-container ${className}`} style={{ height }}>
@@ -221,6 +214,9 @@ export default function Avatar3D({
   )
 }
 
+// Optimization: Memoize Avatar3D to prevent expensive Canvas re-renders.
+// Note: Parent components must ensure prop stability (e.g., using useMemo for objects) to effectively prevent re-renders.
+export default memo(Avatar3D)
+
 // Note: Preload models in your main App or where needed
 // useGLTF.preload('/models/avatar.glb')
-
