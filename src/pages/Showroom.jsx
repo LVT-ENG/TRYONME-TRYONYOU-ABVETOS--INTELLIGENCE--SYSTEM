@@ -1,29 +1,31 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { getImageWithFallback } from '../utils/assets'
 
 const Showroom = () => {
+  const { t } = useTranslation()
   const [activeOccasion, setActiveOccasion] = useState('all')
   const [activeMood, setActiveMood] = useState('all')
   const [likedLooks, setLikedLooks] = useState([])
 
   const occasions = [
-    { id: 'all', name: 'All', icon: Sparkles },
-    { id: 'work', name: 'Work', icon: Briefcase },
-    { id: 'casual', name: 'Casual', icon: Sun },
-    { id: 'night', name: 'Night', icon: Moon },
-    { id: 'party', name: 'Party', icon: PartyPopper },
-    { id: 'travel', name: 'Travel', icon: Plane },
+    { id: 'all', name: t('showroom.occasions.all'), icon: Sparkles },
+    { id: 'work', name: t('showroom.occasions.work'), icon: Briefcase },
+    { id: 'casual', name: t('showroom.occasions.casual'), icon: Sun },
+    { id: 'night', name: t('showroom.occasions.night'), icon: Moon },
+    { id: 'party', name: t('showroom.occasions.party'), icon: PartyPopper },
+    { id: 'travel', name: t('showroom.occasions.travel'), icon: Plane },
   ]
 
   const moods = [
-    { id: 'all', name: 'All', emoji: '✨' },
-    { id: 'confident', name: 'Confident', emoji: '💪' },
-    { id: 'relaxed', name: 'Relaxed', emoji: '😌' },
-    { id: 'romantic', name: 'Romantic', emoji: '💕' },
-    { id: 'bold', name: 'Bold', emoji: '🔥' },
-    { id: 'minimal', name: 'Minimalist', emoji: '⬜' },
+    { id: 'all', name: t('showroom.moods.all'), emoji: '✨' },
+    { id: 'confident', name: t('showroom.moods.confident'), emoji: '💪' },
+    { id: 'relaxed', name: t('showroom.moods.relaxed'), emoji: '😌' },
+    { id: 'romantic', name: t('showroom.moods.romantic'), emoji: '💕' },
+    { id: 'bold', name: t('showroom.moods.bold'), emoji: '🔥' },
+    { id: 'minimal', name: t('showroom.moods.minimal'), emoji: '⬜' },
   ]
 
   const looks = [

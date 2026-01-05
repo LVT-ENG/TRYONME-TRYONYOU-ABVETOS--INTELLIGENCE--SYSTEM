@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, Send, Sparkles, Globe, Mic, Camera, Heart, Zap, RefreshCw, ThumbsUp, ThumbsDown } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const AskPeacock = () => {
+  const { t } = useTranslation()
   const [messages, setMessages] = useState([
     {
       id: 1,
       type: 'peacock',
-      content: 'Hello! I\'m Peacock, your personal fashion assistant. 🦚 I come from around the world to help you discover your perfect style. How can I help you today?',
+      content: t('askPeacock.greeting'),
       timestamp: new Date(),
     },
   ])
@@ -16,32 +18,32 @@ const AskPeacock = () => {
   const messagesEndRef = useRef(null)
 
   const suggestedQuestions = [
-    { icon: '👗', text: 'What should I wear for a date?' },
-    { icon: '🎨', text: 'What colors suit me?' },
-    { icon: '👔', text: 'Help me with my office look' },
-    { icon: '✨', text: 'How can I refresh my style?' },
+    { icon: '👗', text: t('askPeacock.suggestedQuestions.date') },
+    { icon: '🎨', text: t('askPeacock.suggestedQuestions.colors') },
+    { icon: '👔', text: t('askPeacock.suggestedQuestions.office') },
+    { icon: '✨', text: t('askPeacock.suggestedQuestions.refresh') },
   ]
 
   const peacockResponses = [
     {
       triggers: ['date', 'romantic', 'dinner', 'evening'],
-      response: '💕 A date! How exciting. I recommend something that makes you feel confident but comfortable. A midi dress in a warm tone or well-fitted jeans with a silk blouse would be perfect. The most important thing is that you feel like yourself. Can you tell me more about the location?',
+      response: t('askPeacock.responses.date'),
     },
     {
       triggers: ['color', 'colors', 'palette', 'tone'],
-      response: '🎨 Colors are my specialty! To find your perfect palette, I need to know you better. Generally, if your skin has a warm undertone, earth tones, golds, and oranges will flatter you. If it\'s cool, try blues, grays, and silvers. Do you know your undertone?',
+      response: t('askPeacock.responses.colors'),
     },
     {
       triggers: ['office', 'work', 'formal', 'professional'],
-      response: '👔 Office style can be very elegant without being boring. I suggest investing in timeless pieces: a good blazer, straight-cut pants, and quality shirts. Add personality with accessories. What\'s your workplace dress code?',
+      response: t('askPeacock.responses.office'),
     },
     {
       triggers: ['refresh', 'change', 'new', 'style', 'upgrade'],
-      response: '✨ I love when someone wants to refresh their style! The first step is identifying what doesn\'t work for you and why. Then, we explore new silhouettes, colors, and textures. Is there something specific about your current style you\'d like to change?',
+      response: t('askPeacock.responses.refresh'),
     },
     {
       triggers: ['hello', 'hey', 'hi', 'greetings'],
-      response: '🦚 Hello! It\'s a pleasure to meet you. I\'m here to help you with everything related to your personal style. From choosing an outfit to redesigning your entire wardrobe. What would you like to explore today?',
+      response: t('askPeacock.responses.greeting'),
     },
   ]
 
@@ -62,7 +64,7 @@ const AskPeacock = () => {
       }
     }
     
-    return '🦚 Interesting question. In my experience traveling the world of fashion, I\'ve learned that each person has a unique style waiting to be discovered. Tell me more about yourself and what you\'re looking for, and I\'ll help you find the best options for you.'
+    return t('askPeacock.responses.default')
   }
 
   const handleSendMessage = (text = inputValue) => {
@@ -130,10 +132,10 @@ const AskPeacock = () => {
             </motion.div>
             
             <div className="text-left">
-              <h1 className="text-2xl md:text-3xl font-bold gradient-text">Ask Peacock</h1>
+              <h1 className="text-2xl md:text-3xl font-bold gradient-text">{t('askPeacock.title')}</h1>
               <p className="text-white/60 text-sm flex items-center gap-2">
                 <Globe size={14} />
-                "I come from around the world to help you"
+                {t('askPeacock.subtitle')}
               </p>
             </div>
           </motion.div>
@@ -261,7 +263,7 @@ const AskPeacock = () => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Write your question..."
+              placeholder={t('askPeacock.inputPlaceholder')}
               rows={1}
               className="flex-1 bg-transparent resize-none focus:outline-none text-white placeholder-white/40 py-2"
             />

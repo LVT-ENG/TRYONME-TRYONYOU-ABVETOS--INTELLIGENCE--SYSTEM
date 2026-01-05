@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
@@ -20,13 +21,17 @@ const Investors = lazy(() => import('./pages/Investors'));
 const MagicMirror = lazy(() => import('./pages/MagicMirror'));
 
 // Simple loading fallback
-const Loading = () => (
-  <div className="flex h-screen w-full items-center justify-center bg-black text-[#D4AF37]">
-    <div className="text-xl font-bold uppercase tracking-widest animate-pulse">
-      Loading...
+const Loading = () => {
+  const { t } = useTranslation();
+  
+  return (
+    <div className="flex h-screen w-full items-center justify-center bg-black text-[#D4AF37]">
+      <div className="text-xl font-bold uppercase tracking-widest animate-pulse">
+        {t('common.loading')}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default function App() {
   return (

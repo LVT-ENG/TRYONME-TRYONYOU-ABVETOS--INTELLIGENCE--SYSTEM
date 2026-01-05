@@ -1,9 +1,11 @@
 import React, { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Camera, Ruler, Palette, Sparkles, Check, ArrowRight, ChevronRight, Scan, Wand2 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import Avatar3D from '../components/Avatar3D'
 
 const MyAvatar = () => {
+  const { t } = useTranslation()
   const [currentStep, setCurrentStep] = useState(0)
   const [avatarData, setAvatarData] = useState({
     bodyType: '',
@@ -14,45 +16,45 @@ const MyAvatar = () => {
   })
 
   const steps = [
-    { id: 0, title: 'Body Type', icon: User },
-    { id: 1, title: 'Measurements', icon: Ruler },
-    { id: 2, title: 'Appearance', icon: Palette },
-    { id: 3, title: 'Style', icon: Sparkles },
+    { id: 0, title: t('myAvatar.steps.bodyType'), icon: User },
+    { id: 1, title: t('myAvatar.steps.measurements'), icon: Ruler },
+    { id: 2, title: t('myAvatar.steps.appearance'), icon: Palette },
+    { id: 3, title: t('myAvatar.steps.style'), icon: Sparkles },
   ]
 
   const bodyTypes = [
-    { id: 'athletic', name: 'Athletic', icon: '🏃', description: 'Broad shoulders, defined waist' },
-    { id: 'slim', name: 'Slim', icon: '🧍', description: 'Slender and elongated figure' },
-    { id: 'curvy', name: 'Curvy', icon: '💃', description: 'Pronounced curves' },
-    { id: 'regular', name: 'Regular', icon: '👤', description: 'Balanced proportions' },
-    { id: 'plus', name: 'Plus Size', icon: '🌟', description: 'Full and harmonious figure' },
+    { id: 'athletic', name: t('myAvatar.bodyTypes.athletic.name'), icon: '🏃', description: t('myAvatar.bodyTypes.athletic.description') },
+    { id: 'slim', name: t('myAvatar.bodyTypes.slim.name'), icon: '🧍', description: t('myAvatar.bodyTypes.slim.description') },
+    { id: 'curvy', name: t('myAvatar.bodyTypes.curvy.name'), icon: '💃', description: t('myAvatar.bodyTypes.curvy.description') },
+    { id: 'regular', name: t('myAvatar.bodyTypes.regular.name'), icon: '👤', description: t('myAvatar.bodyTypes.regular.description') },
+    { id: 'plus', name: t('myAvatar.bodyTypes.plus.name'), icon: '🌟', description: t('myAvatar.bodyTypes.plus.description') },
   ]
 
   const skinTones = [
-    { id: 'fair', name: 'Fair', color: '#FDEBD0' },
-    { id: 'light', name: 'Light', color: '#F5CBA7' },
-    { id: 'medium', name: 'Medium', color: '#D7BDE2' },
-    { id: 'olive', name: 'Olive', color: '#ABEBC6' },
-    { id: 'tan', name: 'Tan', color: '#A04000' },
-    { id: 'dark', name: 'Dark', color: '#6E2C00' },
+    { id: 'fair', name: t('myAvatar.skinTones.fair'), color: '#FDEBD0' },
+    { id: 'light', name: t('myAvatar.skinTones.light'), color: '#F5CBA7' },
+    { id: 'medium', name: t('myAvatar.skinTones.medium'), color: '#D7BDE2' },
+    { id: 'olive', name: t('myAvatar.skinTones.olive'), color: '#ABEBC6' },
+    { id: 'tan', name: t('myAvatar.skinTones.tan'), color: '#A04000' },
+    { id: 'dark', name: t('myAvatar.skinTones.dark'), color: '#6E2C00' },
   ]
 
   const hairColors = [
-    { id: 'black', name: 'Black', color: '#1a1a1a' },
-    { id: 'brown', name: 'Brown', color: '#8B4513' },
-    { id: 'blonde', name: 'Blonde', color: '#FFD700' },
-    { id: 'red', name: 'Red', color: '#B22222' },
-    { id: 'gray', name: 'Gray', color: '#808080' },
-    { id: 'colored', name: 'Fantasy', color: 'linear-gradient(90deg, #ff6b6b, #4ecdc4, #a55eea)' },
+    { id: 'black', name: t('myAvatar.hairColors.black'), color: '#1a1a1a' },
+    { id: 'brown', name: t('myAvatar.hairColors.brown'), color: '#8B4513' },
+    { id: 'blonde', name: t('myAvatar.hairColors.blonde'), color: '#FFD700' },
+    { id: 'red', name: t('myAvatar.hairColors.red'), color: '#B22222' },
+    { id: 'gray', name: t('myAvatar.hairColors.gray'), color: '#808080' },
+    { id: 'colored', name: t('myAvatar.hairColors.colored'), color: 'linear-gradient(90deg, #ff6b6b, #4ecdc4, #a55eea)' },
   ]
 
   const styles = [
-    { id: 'casual', name: 'Casual', icon: '👕', description: 'Relaxed and comfortable' },
-    { id: 'formal', name: 'Formal', icon: '👔', description: 'Elegant and professional' },
-    { id: 'streetwear', name: 'Streetwear', icon: '🧢', description: 'Urban and modern' },
-    { id: 'minimalist', name: 'Minimalist', icon: '⬜', description: 'Simple and sophisticated' },
-    { id: 'bohemian', name: 'Bohemian', icon: '🌸', description: 'Free and artistic' },
-    { id: 'sporty', name: 'Sporty', icon: '⚡', description: 'Active and dynamic' },
+    { id: 'casual', name: t('myAvatar.styles.casual.name'), icon: '👕', description: t('myAvatar.styles.casual.description') },
+    { id: 'formal', name: t('myAvatar.styles.formal.name'), icon: '👔', description: t('myAvatar.styles.formal.description') },
+    { id: 'streetwear', name: t('myAvatar.styles.streetwear.name'), icon: '🧢', description: t('myAvatar.styles.streetwear.description') },
+    { id: 'minimalist', name: t('myAvatar.styles.minimalist.name'), icon: '⬜', description: t('myAvatar.styles.minimalist.description') },
+    { id: 'bohemian', name: t('myAvatar.styles.bohemian.name'), icon: '🌸', description: t('myAvatar.styles.bohemian.description') },
+    { id: 'sporty', name: t('myAvatar.styles.sporty.name'), icon: '⚡', description: t('myAvatar.styles.sporty.description') },
   ]
 
   // Optimization: Memoize customizations to prevent expensive Avatar3D re-renders
@@ -69,8 +71,8 @@ const MyAvatar = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold mb-2">What's your body type?</h3>
-              <p className="text-white/60">Select the one that best matches your figure</p>
+              <h3 className="text-2xl font-bold mb-2">{t('myAvatar.questions.bodyType')}</h3>
+              <p className="text-white/60">{t('myAvatar.questions.bodyTypeSubtitle')}</p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {bodyTypes.map((type) => (
