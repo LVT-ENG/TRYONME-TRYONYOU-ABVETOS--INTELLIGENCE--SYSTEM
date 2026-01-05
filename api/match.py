@@ -44,14 +44,15 @@ class handler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
 
+            # Respuesta refinada con "toque final" multilingüe
             response = {
                 "bienvenue": f"Bienvenue aux Galeries Lafayette, {user_name}.",
                 "produit": match['nom'],
                 "image_url": match['image'],
-                "explications": {
-                    "fr": "Cette pièce a été choisie pour sa fluidité qui sublime votre silhouette.",
-                    "es": "Esta prenda fue elegida por su caída que realza tu silueta sin oprimir.",
-                    "en": "This piece was selected for its fluid drape which complements your silhouette."
+                "explanation": {
+                    "fr": f"Cette pièce a été choisie pour sa fluidité ({match['tombe_tissu']}) qui sublime votre silhouette.",
+                    "es": f"Esta prenda fue elegida por su caída ({match['tombe_tissu']}) que realza tu silueta sin oprimir.",
+                    "en": f"This piece was selected for its fluid drape ({match['tombe_tissu']}) which complements your silhouette."
                 }
             }
             self.wfile.write(json.dumps(response).encode())
