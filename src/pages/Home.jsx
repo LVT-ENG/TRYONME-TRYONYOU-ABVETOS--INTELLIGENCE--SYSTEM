@@ -109,40 +109,70 @@ const Home = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="relative h-[600px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl overflow-hidden border border-gray-700 shadow-2xl"
+              className="relative h-[600px] bg-gradient-to-br from-blue-900/20 via-gray-800 to-gray-900 rounded-2xl overflow-hidden border-2 border-blue-500/30 shadow-2xl"
             >
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">👤</div>
-                  <p className="text-gray-400">ABVET Engine</p>
-                  <p className="text-sm text-gray-500 mt-2">Biometric Scanning Active</p>
-                </div>
+              {/* Grid background */}
+              <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
+              
+              {/* Animated gradient orbs */}
+              <div className="absolute top-20 right-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+              <div className="absolute bottom-20 left-10 w-40 h-40 bg-cyan-500 rounded-full blur-3xl opacity-20 animate-pulse" style={{animationDelay: '1s'}}></div>
+              
+              <div className="absolute inset-0 flex items-center justify-center flex-col">
+                {/* 3D Model Placeholder */}
+                <motion.div
+                  animate={{
+                    rotateY: [0, 360],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                  className="relative w-64 h-64 mb-6"
+                >
+                  {/* Simple 3D-like avatar shape */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full opacity-40 blur-md"></div>
+                  <div className="absolute inset-8 bg-gradient-to-br from-cyan-300 to-blue-500 rounded-3xl flex items-center justify-center shadow-2xl border-2 border-blue-300/50">
+                    <span className="text-8xl">👗</span>
+                  </div>
+                </motion.div>
+
+                <p className="text-gray-300 font-semibold text-lg">ABVET 3D Engine</p>
+                <p className="text-sm text-blue-400 mt-2">Virtual Try-On Active</p>
               </div>
 
               {/* Pau Assistant (Peacock) - Animated */}
               <motion.div
                 animate={{
-                  y: [0, -10, 0],
-                  rotate: [0, 2, -2, 0],
+                  y: [0, -15, 0],
+                  rotate: [0, 5, -5, 0],
                 }}
                 transition={{
                   duration: 4,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
-                className="absolute bottom-8 right-8 bg-blue-600 rounded-full p-4 shadow-lg border-2 border-blue-400"
+                className="absolute bottom-8 right-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full p-5 shadow-2xl border-3 border-yellow-300/50"
               >
-                <div className="text-4xl">✨</div>
+                <div className="text-5xl">🦚</div>
               </motion.div>
 
-              {/* Outfit Change Indicator */}
+              {/* Status indicator */}
               <motion.div
                 animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute top-8 left-8 bg-green-600/20 border border-green-500 rounded-lg px-4 py-2"
+                transition={{ duration: 2.5, repeat: Infinity }}
+                className="absolute top-8 left-8 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-2 border-green-500/50 rounded-lg px-6 py-3 backdrop-blur"
               >
-                <p className="text-sm text-green-400 font-semibold">AI Analyzing...</p>
+                <p className="text-sm text-green-300 font-semibold tracking-wide">● AI Analyzing...</p>
               </motion.div>
+              
+              {/* Tech stack indicators */}
+              <div className="absolute bottom-8 left-8 flex gap-2">
+                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse"></div>
+                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+              </div>
             </motion.div>
           </div>
         </div>
