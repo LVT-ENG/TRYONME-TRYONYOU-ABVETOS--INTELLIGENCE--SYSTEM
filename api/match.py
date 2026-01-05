@@ -42,11 +42,16 @@ class handler(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
 
+            # Respuesta refinada con "toque final" multilingüe
             response = {
                 "match_found": True,
                 "visual_asset": best_match['image_url'],
                 "product_name": best_match['name'],
-                "message": f"D'après vos proportions et le tombé du tissu, voici votre tenue idéale."
+                "explanation": {
+                    "fr": f"Cette pièce a été choisie pour sa fluidité ({best_match['drape_factor']}) qui sublime votre silhouette.",
+                    "es": f"Esta prenda fue elegida por su caída ({best_match['drape_factor']}) que realza tu silueta sin oprimir.",
+                    "en": f"This piece was selected for its fluid drape ({best_match['drape_factor']}) which complements your silhouette."
+                }
             }
             self.wfile.write(json.dumps(response).encode())
         except Exception as e:
@@ -62,9 +67,6 @@ class handler(BaseHTTPRequestHandler):
         best_match = LAFAYETTE_INVENTORY[0] # Default fallback
 
         for garment in LAFAYETTE_INVENTORY:
-            # Filter by category if possible, or just score everything
-            # The snippet implies we just find the best fit.
-
             # Calculamos la proporción real del cuerpo escaneado
             try:
                 chest = float(biometrics.get('chest', 90))
