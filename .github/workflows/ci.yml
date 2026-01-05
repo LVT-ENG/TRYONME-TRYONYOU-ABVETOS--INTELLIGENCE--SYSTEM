@@ -1,0 +1,26 @@
+name: CI - Architecture Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Validate Python syntax
+        run: |
+          echo "🔍 Validating Python syntax for architecture files..."
+          python -m compileall -q .
+          echo "✅ Python syntax validation complete"
