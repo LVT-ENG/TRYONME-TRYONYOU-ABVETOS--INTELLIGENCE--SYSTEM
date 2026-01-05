@@ -18,6 +18,8 @@ const ABVET = lazy(() => import('./pages/ABVET'));
 const Claims = lazy(() => import('./pages/Claims'));
 const Investors = lazy(() => import('./pages/Investors'));
 const MagicMirror = lazy(() => import('./pages/MagicMirror'));
+const ScannerView = lazy(() => import('./components/ScannerView'));
+const SmartWardrobe = lazy(() => import('./components/SmartWardrobe'));
 
 // Simple loading fallback
 const Loading = () => (
@@ -49,6 +51,8 @@ export default function App() {
             <Route path="/claims" element={<Claims />} />
             <Route path="/investors" element={<Investors />} />
             <Route path="/MagicMirror" element={<MagicMirror />} />
+            <Route path="/scan" element={<ScannerView />} />
+            <Route path="/wardrobe-match" element={<SmartWardrobe />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>

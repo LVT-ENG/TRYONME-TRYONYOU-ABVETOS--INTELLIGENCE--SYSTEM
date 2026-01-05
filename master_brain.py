@@ -46,6 +46,45 @@ class BrainHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self._set_headers(500)
                 self.wfile.write(json.dumps({"error": str(e)}).encode())
+
+        elif self.path == '/api/scan/process':
+            # Simulate processing of vision assets
+            try:
+                # In a real scenario, this would process images from public/assets/vision/
+                # returning deterministic values for the Pilot flow
+                measurements = {
+                    "height": 175,
+                    "shoulders": 45,
+                    "chest": 98,
+                    "waist": 82,
+                    "hips": 94,
+                    "status": "success",
+                    "message": "Biometric scan complete. synchronized with Lafayette Stock."
+                }
+                self._set_headers(200)
+                self.wfile.write(json.dumps(measurements).encode())
+            except Exception as e:
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"error": str(e)}).encode())
+
+        elif self.path == '/api/match/best':
+            # Returns the best match from Lafayette Stock
+            try:
+                match_data = {
+                    "garment_id": "Lafayette-001",
+                    "name": "Divineo Bespoke Blazer",
+                    "fit_score": 98.5,
+                    "fabric": "Midnight Wool",
+                    "description": "Perfectly calibrated for your shoulder width (45cm).",
+                    "measurements_used": ["shoulders", "chest"],
+                    "image_url": "/assets/images/blazer_match.jpg" # Placeholder
+                }
+                self._set_headers(200)
+                self.wfile.write(json.dumps(match_data).encode())
+            except Exception as e:
+                self._set_headers(500)
+                self.wfile.write(json.dumps({"error": str(e)}).encode())
+
         else:
             self._set_headers(404)
             self.wfile.write(json.dumps({"error": "Ruta no encontrada"}).encode())
