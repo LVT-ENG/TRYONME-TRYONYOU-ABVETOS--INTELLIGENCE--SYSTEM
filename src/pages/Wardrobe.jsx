@@ -411,17 +411,25 @@ const Wardrobe = () => {
                     </div>
                   </div>
 
-                  <div className="flex gap-2">
-                    <button className="btn-primary flex-1">
-                      <ShoppingBag size={18} className="mr-2" />
-                      Add to Cart
-                    </button>
-                    <button 
-                      onClick={() => toggleSaved(selectedItem.id)}
-                      className={`p-3 rounded-lg ${savedItems.includes(selectedItem.id) ? 'bg-rose-500' : 'glass'}`}
-                    >
-                      <Heart size={20} className={savedItems.includes(selectedItem.id) ? 'fill-white' : ''} />
-                    </button>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex gap-2">
+                        <button className="btn-primary flex-1">
+                        <ShoppingBag size={18} className="mr-2" />
+                        Add to Cart
+                        </button>
+                        <button
+                        onClick={() => toggleSaved(selectedItem.id)}
+                        className={`p-3 rounded-lg ${savedItems.includes(selectedItem.id) ? 'bg-rose-500' : 'glass'}`}
+                        >
+                        <Heart size={20} className={savedItems.includes(selectedItem.id) ? 'fill-white' : ''} />
+                        </button>
+                    </div>
+
+                    {/* LOOP CLOSURE: Pay with ABVET to Get Pattern */}
+                    <a href="/abvet" className="btn-metallic w-full text-center flex items-center justify-center gap-2">
+                        <Sparkles size={16} />
+                        Pay with ABVET & Generate Pattern
+                    </a>
                   </div>
                 </div>
               </div>

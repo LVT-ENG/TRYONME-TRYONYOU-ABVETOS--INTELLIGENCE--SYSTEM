@@ -1,0 +1,17 @@
+{
+  "001": {
+    "name": "PAU",
+    "role": "Emotional Assistant",
+    "status": "ACTIVE"
+  },
+  "015": {
+    "name": "DRAPE",
+    "role": "Physics Engine",
+    "status": "ACTIVE"
+  },
+  "070": {
+    "name": "JULES",
+    "role": "Orchestrator",
+    "status": "ACTIVE"
+  }
+}

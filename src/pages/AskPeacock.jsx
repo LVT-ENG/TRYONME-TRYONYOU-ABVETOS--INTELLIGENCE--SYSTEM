@@ -53,19 +53,49 @@ const AskPeacock = () => {
     scrollToBottom()
   }, [messages])
 
-  const generateResponse = (userMessage) => {
+  const generateResponse = async (userMessage) => {
+    // Try to connect to real Backend API (Agent 001 PAU)
+    // Fallback to local logic if backend is unreachable or returns error.
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
+
+      const response = await fetch('http://localhost:8080/api/ask-pau', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          emotion: "neutral", // Simplification for demo
+          style_preference: "adaptive",
+          biometric_fit_score: 0.98,
+          language: "en",
+          user_message: userMessage
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+
+      if (response.ok) {
+        const data = await response.json();
+        // Expecting { "message_en": "...", "outfit_id": "..." }
+        return data.message_en || data.message || "I received your request, but I am processing the data.";
+      }
+    } catch (error) {
+      console.warn("Backend unavailable, using fallback logic.", error);
+    }
+
+    // Fallback Logic
     const lowerMessage = userMessage.toLowerCase()
-    
-    for (const response of peacockResponses) {
-      if (response.triggers.some(trigger => lowerMessage.includes(trigger))) {
-        return response.response
+    for (const res of peacockResponses) {
+      if (res.triggers.some(trigger => lowerMessage.includes(trigger))) {
+        return res.response
       }
     }
-    
     return '🦚 Interesting question. In my experience traveling the world of fashion, I\'ve learned that each person has a unique style waiting to be discovered. Tell me more about yourself and what you\'re looking for, and I\'ll help you find the best options for you.'
   }
 
-  const handleSendMessage = (text = inputValue) => {
+  const handleSendMessage = async (text = inputValue) => {
     if (!text.trim()) return
 
     const userMessage = {
@@ -79,16 +109,17 @@ const AskPeacock = () => {
     setInputValue('')
     setIsTyping(true)
 
-    setTimeout(() => {
-      const peacockMessage = {
-        id: messages.length + 2,
-        type: 'peacock',
-        content: generateResponse(text),
-        timestamp: new Date(),
-      }
-      setMessages(prev => [...prev, peacockMessage])
-      setIsTyping(false)
-    }, 1500)
+    // Call async response generator
+    const responseText = await generateResponse(text);
+
+    const peacockMessage = {
+      id: messages.length + 2,
+      type: 'peacock',
+      content: responseText,
+      timestamp: new Date(),
+    }
+    setMessages(prev => [...prev, peacockMessage])
+    setIsTyping(false)
   }
 
   const handleKeyPress = (e) => {
@@ -357,4 +388,3 @@ const AskPeacock = () => {
 }
 
 export default AskPeacock
-

@@ -1,7 +1,22 @@
 import { motion } from 'framer-motion';
-import { Eye, Mic, Fingerprint, CreditCard } from 'lucide-react';
+import { Eye, Mic, Fingerprint, CreditCard, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const ABVET = () => {
+  const navigate = useNavigate();
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handlePaymentSimulation = () => {
+    setIsProcessing(true);
+    // Simulate biometric check duration
+    setTimeout(() => {
+        setIsProcessing(false);
+        // Successful payment redirects to CAP (Pattern Generation)
+        navigate('/cap');
+    }, 2000);
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -117,13 +132,21 @@ const ABVET = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="glass-panel p-12 rounded-2xl cursor-pointer hover:bg-[rgba(212,175,55,0.1)] transition-all duration-300"
+            className="glass-panel p-12 rounded-2xl cursor-pointer hover:bg-[rgba(212,175,55,0.1)] transition-all duration-300 relative overflow-hidden"
+            onClick={handlePaymentSimulation}
           >
+             {isProcessing && (
+                <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center z-50">
+                    <Sparkles className="animate-spin text-tryonyou-gold mb-4" size={48} />
+                    <span className="text-tryonyou-gold font-bold tracking-widest animate-pulse">VERIFYING BIOMETRICS...</span>
+                </div>
+            )}
+
             <div className="flex flex-col items-center">
               <CreditCard className="text-[#D4AF37] mb-6" size={64} />
-              <h2 className="text-2xl font-light tracking-widest text-white mb-3">SECURE PAY</h2>
+              <h2 className="text-2xl font-light tracking-widest text-white mb-3">SECURE PAY & GENERATE</h2>
               <p className="text-gray-400 text-center mb-6">
-                End-to-end encrypted payment processing
+                Click to authenticate and generate your CAP pattern.
               </p>
               <div className="w-full space-y-3">
                 <div className="flex justify-between text-sm">

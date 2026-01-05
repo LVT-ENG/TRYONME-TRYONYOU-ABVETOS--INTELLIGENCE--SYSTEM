@@ -22,22 +22,22 @@
 @layer components {
   /* Glass morphism effect */
   .glass {
-    @apply bg-white/10 backdrop-blur-lg border border-white/20;
+    @apply bg-tryonyou-anthracite/70 backdrop-blur-xl border border-tryonyou-gold/30 shadow-lg;
   }
   
   /* Metallic button */
   .btn-metallic {
-    @apply px-6 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-tryonyou-metallic to-tryonyou-silver hover:from-tryonyou-silver hover:to-tryonyou-gold transition-all duration-300 transform hover:scale-105;
+    @apply px-6 py-3 rounded-lg font-semibold text-tryonyou-anthracite bg-gradient-to-r from-tryonyou-bone to-tryonyou-gold hover:from-tryonyou-gold hover:to-white transition-all duration-300 transform hover:scale-105 border border-tryonyou-gold/50;
   }
   
   /* Primary button */
   .btn-primary {
-    @apply px-6 py-3 rounded-lg font-semibold text-white bg-tryonyou-blue hover:bg-amparo-light transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-tryonyou-blue/50;
+    @apply px-6 py-3 rounded-lg font-semibold text-white bg-tryonyou-peacock hover:bg-tryonyou-blue transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-tryonyou-peacock/50 border border-tryonyou-gold/30;
   }
   
   /* Card component */
   .card {
-    @apply bg-tryonyou-smoke/50 backdrop-blur-sm border border-tryonyou-metallic/30 rounded-xl p-6 transition-all duration-300 hover:border-tryonyou-blue/50 hover:shadow-lg hover:shadow-tryonyou-blue/20;
+    @apply bg-tryonyou-anthracite/60 backdrop-blur-md border border-tryonyou-gold/30 rounded-xl p-6 transition-all duration-300 hover:border-tryonyou-gold/60 hover:shadow-lg hover:shadow-tryonyou-gold/10;
   }
   
   /* Section container */
@@ -60,12 +60,12 @@
   
   /* Gradient text */
   .gradient-text {
-    @apply bg-gradient-to-r from-tryonyou-blue via-amparo-light to-tryonyou-blue bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-tryonyou-gold via-tryonyou-bone to-tryonyou-gold bg-clip-text text-transparent;
   }
   
   /* Glow effect */
   .glow-blue {
-    box-shadow: 0 0 20px rgba(0, 168, 232, 0.5), 0 0 40px rgba(0, 168, 232, 0.3);
+    box-shadow: 0 0 20px rgba(0, 109, 119, 0.5), 0 0 40px rgba(0, 109, 119, 0.3);
   }
   
   /* Animated gradient background */

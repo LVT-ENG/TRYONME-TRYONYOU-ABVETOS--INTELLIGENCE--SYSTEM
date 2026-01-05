@@ -1,0 +1,16 @@
+
+        :root {
+            --anthracite: #141619;
+            --gold: #C5A46D;
+            --peacock: #006D77;
+        }
+        /* Divineo V7 Overrides */
+        body { background-color: var(--anthracite); color: var(--bone, white); }
+
+        :root {
+            --anthracite: #141619;
+            --gold: #C5A46D;
+            --peacock: #006D77;
+        }
+        /* Divineo V7 Overrides */
+        body { background-color: var(--anthracite); color: var(--bone, white); }

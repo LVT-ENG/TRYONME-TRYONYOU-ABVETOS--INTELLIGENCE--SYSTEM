@@ -8,13 +8,17 @@ export default {
     extend: {
       colors: {
         tryonyou: {
-          blue: '#00A8E8',
-          darkblue: '#003459',
+          anthracite: '#141619',
+          gold: '#C5A46D',
+          peacock: '#006D77',
+          bone: '#F5EFE6',
+          // Legacy mappings for backward compatibility
+          blue: '#006D77', // Mapped to Peacock
+          darkblue: '#141619', // Mapped to Anthracite
           metallic: '#8B92A0',
-          gold: '#D4AF37',
           silver: '#C0C0C0',
-          black: '#0A0A0A',
-          smoke: '#1A1A2E',
+          black: '#141619', // Mapped to Anthracite
+          smoke: '#141619', // Mapped to Anthracite
         },
         amparo: {
           light: '#00D9FF',

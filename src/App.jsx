@@ -2,6 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import PauMascot from './components/PauMascot';
 
 // Lazy load pages for performance optimization
 const Home = lazy(() => import('./pages/Home'));
@@ -31,8 +32,9 @@ const Loading = () => (
 export default function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-black via-[#0A0A0A] to-[#1A1A2E]">
+      <div className="min-h-screen bg-gradient-to-br from-tryonyou-anthracite via-[#1a1c20] to-[#0d0e10]">
         <Navbar />
+        <PauMascot />
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
