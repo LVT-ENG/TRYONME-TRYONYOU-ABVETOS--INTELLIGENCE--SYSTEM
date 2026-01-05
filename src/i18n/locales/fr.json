@@ -1,0 +1,287 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "all": "Tout",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "next": "Suivant",
+    "back": "Retour",
+    "finish": "Terminer",
+    "tryOn": "Essayer",
+    "addToWardrobe": "Ajouter à la Garde-robe",
+    "viewDetails": "Voir les Détails"
+  },
+  "nav": {
+    "home": "Accueil",
+    "demo": "Démo",
+    "brands": "Marques",
+    "myAvatar": "Mon Avatar",
+    "wardrobe": "Garde-robe",
+    "showroom": "Showroom",
+    "glowUp": "Glow-Up",
+    "askPeacock": "Demander à Peacock",
+    "fit": "FIT",
+    "cap": "CAP",
+    "abvet": "ABVET",
+    "claims": "Réclamations"
+  },
+  "home": {
+    "tagline": "Technologie de Mode pour un Ajustement Parfait",
+    "heroTitle": "Vous ne ferez pas un TryOnYou.",
+    "heroSubtitle": "TryOnYou le fera pour vous.",
+    "heroDescription": "Nous mesurons votre corps pour que les vêtements s'ajustent du premier coup.",
+    "tryNow": "Essayer Maintenant",
+    "investors": "Investisseurs",
+    "claims": {
+      "zeroReturns": {
+        "title": "Zéro Retour",
+        "description": "Ajustement parfait garanti. Plus de mauvaises tailles. Notre intelligence corporelle garantit que chaque vêtement vous va parfaitement."
+      },
+      "perfectFit": {
+        "title": "Ajustement Parfait par Intelligence Corporelle",
+        "description": "L'analyse biométrique alimentée par l'IA comprend vos proportions corporelles uniques et recommande des vêtements adaptés à vous."
+      },
+      "fabricAware": {
+        "title": "Élasticité du Tissu et Conscience du Drapé",
+        "description": "Nous analysons les propriétés du tissu—élasticité, drapé, rigidité—pour prédire comment les vêtements bougeront et se sentiront sur votre corps."
+      },
+      "aiMeasurements": {
+        "title": "IA + Mesures Biométriques",
+        "description": "La vision par ordinateur avancée capture vos mesures corporelles avec précision. Pas de rubans à mesurer manuels. Juste votre téléphone."
+      }
+    }
+  },
+  "brands": {
+    "title": "Marques",
+    "subtitle": "TRYONYOU se connecte avec des catalogues, des collections et des données de taille pour réduire les retours et augmenter la conversion.",
+    "verifiedBrands": "Marques Vérifiées",
+    "featuredBrands": "Marques en Vedette",
+    "featuredSubtitle": "Les plus populaires parmi nos utilisateurs",
+    "searchPlaceholder": "Rechercher des marques...",
+    "categories": {
+      "all": "Tout",
+      "luxury": "Luxe",
+      "streetwear": "Streetwear",
+      "sustainable": "Durable",
+      "sportswear": "Vêtements de Sport",
+      "vintage": "Vintage"
+    },
+    "items": "articles",
+    "rating": "note"
+  },
+  "myAvatar": {
+    "title": "Mon Avatar",
+    "subtitle": "Créez votre jumeau numérique pour l'expérience d'essayage virtuel la plus précise",
+    "steps": {
+      "bodyType": "Type de Corps",
+      "measurements": "Mesures",
+      "appearance": "Apparence",
+      "style": "Style"
+    },
+    "bodyType": {
+      "title": "Quel est votre type de corps?",
+      "subtitle": "Sélectionnez celui qui correspond le mieux à votre silhouette",
+      "athletic": {
+        "name": "Athlétique",
+        "description": "Épaules larges, taille définie"
+      },
+      "slim": {
+        "name": "Mince",
+        "description": "Silhouette élancée et allongée"
+      },
+      "curvy": {
+        "name": "Pulpeux",
+        "description": "Courbes prononcées"
+      },
+      "regular": {
+        "name": "Régulier",
+        "description": "Proportions équilibrées"
+      },
+      "plus": {
+        "name": "Grande Taille",
+        "description": "Silhouette complète et harmonieuse"
+      }
+    },
+    "measurements": {
+      "title": "Vos Mesures",
+      "subtitle": "Cela nous aide à trouver votre taille parfaite",
+      "height": "Hauteur (cm)",
+      "weight": "Poids (kg)",
+      "chest": "Poitrine (cm)",
+      "waist": "Taille (cm)",
+      "hips": "Hanches (cm)"
+    },
+    "appearance": {
+      "skinTone": "Teint de Peau",
+      "hairColor": "Couleur de Cheveux",
+      "fair": "Clair",
+      "light": "Léger",
+      "medium": "Moyen",
+      "olive": "Olive",
+      "tan": "Bronzé",
+      "dark": "Foncé",
+      "black": "Noir",
+      "brown": "Brun",
+      "blonde": "Blond",
+      "red": "Roux",
+      "gray": "Gris",
+      "fantasy": "Fantaisie"
+    },
+    "style": {
+      "title": "Votre Style",
+      "subtitle": "Choisissez votre style préféré",
+      "casual": {
+        "name": "Décontracté",
+        "description": "Détendu et confortable"
+      },
+      "formal": {
+        "name": "Formel",
+        "description": "Élégant et professionnel"
+      },
+      "streetwear": {
+        "name": "Streetwear",
+        "description": "Urbain et moderne"
+      },
+      "minimalist": {
+        "name": "Minimaliste",
+        "description": "Simple et sophistiqué"
+      },
+      "bohemian": {
+        "name": "Bohème",
+        "description": "Libre et artistique"
+      },
+      "sporty": {
+        "name": "Sportif",
+        "description": "Actif et dynamique"
+      }
+    }
+  },
+  "wardrobe": {
+    "title": "Garde-robe",
+    "subtitle": "Essayez des vêtements virtuellement et trouvez votre ajustement parfait. Enregistrez vos favoris et construisez votre garde-robe de rêve.",
+    "digitalCloset": "Votre Dressing Numérique",
+    "searchPlaceholder": "Rechercher des vêtements, des marques...",
+    "viewMode": "Mode d'Affichage",
+    "categories": {
+      "all": "Tout",
+      "tops": "Hauts",
+      "bottoms": "Bas",
+      "dresses": "Robes",
+      "outerwear": "Manteaux",
+      "accessories": "Accessoires"
+    },
+    "match": "Correspondance",
+    "size": "Taille",
+    "price": "Prix",
+    "brand": "Marque",
+    "color": "Couleur"
+  },
+  "showroom": {
+    "title": "Showroom",
+    "subtitle": "Des looks complets sélectionnés par l'IA, conçus pour chaque occasion et humeur",
+    "curatedLooks": "Looks Sélectionnés",
+    "occasions": {
+      "all": "Tout",
+      "work": "Travail",
+      "casual": "Décontracté",
+      "night": "Nuit",
+      "party": "Fête",
+      "travel": "Voyage"
+    },
+    "moods": {
+      "all": "Tout",
+      "confident": "Confiant",
+      "relaxed": "Détendu",
+      "romantic": "Romantique",
+      "bold": "Audacieux",
+      "minimal": "Minimaliste"
+    },
+    "views": "vues",
+    "rating": "note",
+    "items": "articles"
+  },
+  "glowUp": {
+    "title": "Glow-Up",
+    "subtitle": "Transformation de style alimentée par l'IA. Découvrez votre meilleure version.",
+    "transformYourStyle": "Transformez Votre Style",
+    "sections": {
+      "analyze": "Analyser",
+      "discover": "Découvrir",
+      "transform": "Transformer"
+    },
+    "goals": {
+      "styleUpgrade": "Amélioration du Style",
+      "colorHarmony": "Harmonie des Couleurs",
+      "bodyConfidence": "Mettre en Valeur la Silhouette",
+      "hairAdvice": "Conseils Capillaires",
+      "signatureLook": "Look Signature",
+      "seasonalUpdate": "Mise à Jour Saisonnière"
+    },
+    "transformations": {
+      "before": "Avant",
+      "after": "Après",
+      "improvement": "Amélioration",
+      "timeframe": "Délai",
+      "steps": "étapes",
+      "weeks": "semaines"
+    },
+    "tips": {
+      "color": {
+        "category": "Couleur",
+        "title": "Votre Palette Parfaite",
+        "description": "Basé sur votre teint et vos cheveux, les couleurs terre chaudes mettent en valeur votre beauté naturelle."
+      },
+      "style": {
+        "category": "Style",
+        "title": "Silhouettes Flatteuses",
+        "description": "Les lignes épurées et les coupes structurées équilibrent parfaitement vos proportions."
+      },
+      "accessories": {
+        "category": "Accessoires",
+        "title": "Touches Finales",
+        "description": "Les bijoux minimalistes dans des tons dorés complètent votre style élégant."
+      }
+    }
+  },
+  "askPeacock": {
+    "title": "Demander à Peacock",
+    "subtitle": "Votre assistant personnel de mode IA disponible 24/7",
+    "greeting": "Bonjour! Je suis Peacock, votre assistant personnel de mode. 🦚 Je viens du monde entier pour vous aider à découvrir votre style parfait. Comment puis-je vous aider aujourd'hui?",
+    "inputPlaceholder": "Posez-moi n'importe quelle question sur la mode...",
+    "suggestedQuestions": {
+      "date": "Que dois-je porter pour un rendez-vous?",
+      "colors": "Quelles couleurs me vont bien?",
+      "office": "Aidez-moi avec mon look de bureau",
+      "refresh": "Comment puis-je rafraîchir mon style?"
+    },
+    "typing": "Peacock est en train d'écrire..."
+  },
+  "footer": {
+    "cta": {
+      "title": "Vous souhaitez intégrer TryOnYou à votre marque?",
+      "subtitle": "Réduisez les retours jusqu'à 75% avec notre technologie",
+      "button": "Demander une Démo"
+    },
+    "description": "Votre cabine d'essayage virtuelle de confiance. Trouvez la tenue parfaite sans retours infinis.",
+    "sections": {
+      "product": "Produit",
+      "company": "Entreprise",
+      "legal": "Légal"
+    },
+    "company": {
+      "aboutUs": "À Propos",
+      "forBrands": "Pour les Marques",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "legal": {
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "cookies": "Cookies"
+    },
+    "copyright": "© {{year}} TRYONYOU. Tous droits réservés.",
+    "poweredBy": "Propulsé par"
+  }
+}

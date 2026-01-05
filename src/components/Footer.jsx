@@ -1,29 +1,31 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Mail, Linkedin, Twitter, Instagram, ArrowRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 const Footer = () => {
+  const { t } = useTranslation()
   const currentYear = new Date().getFullYear()
 
   const footerLinks = {
     product: [
-      { label: 'Brands', path: '/brands' },
-      { label: 'My Avatar', path: '/my-avatar' },
-      { label: 'Wardrobe', path: '/wardrobe' },
-      { label: 'Showroom', path: '/showroom' },
-      { label: 'Glow-Up', path: '/glow-up' },
-      { label: 'Ask Peacock', path: '/ask-peacock' },
+      { label: t('nav.brands'), path: '/brands' },
+      { label: t('nav.myAvatar'), path: '/my-avatar' },
+      { label: t('nav.wardrobe'), path: '/wardrobe' },
+      { label: t('nav.showroom'), path: '/showroom' },
+      { label: t('nav.glowUp'), path: '/glow-up' },
+      { label: t('nav.askPeacock'), path: '/ask-peacock' },
     ],
     company: [
-      { label: 'About Us', path: '/about' },
-      { label: 'For Brands', path: '/for-brands' },
-      { label: 'Blog', path: '/blog' },
-      { label: 'Contact', path: '/contact' },
+      { label: t('footer.company.aboutUs'), path: '/about' },
+      { label: t('footer.company.forBrands'), path: '/for-brands' },
+      { label: t('footer.company.blog'), path: '/blog' },
+      { label: t('footer.company.contact'), path: '/contact' },
     ],
     legal: [
-      { label: 'Privacy', path: '/privacy' },
-      { label: 'Terms', path: '/terms' },
-      { label: 'Cookies', path: '/cookies' },
+      { label: t('footer.legal.privacy'), path: '/privacy' },
+      { label: t('footer.legal.terms'), path: '/terms' },
+      { label: t('footer.legal.cookies'), path: '/cookies' },
     ],
   }
 
@@ -41,14 +43,14 @@ const Footer = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div>
-              <h3 className="text-xl font-bold mb-1">Want to integrate TryOnYou with your brand?</h3>
-              <p className="text-white/60">Reduce returns by up to 75% with our technology</p>
+              <h3 className="text-xl font-bold mb-1">{t('footer.cta.title')}</h3>
+              <p className="text-white/60">{t('footer.cta.subtitle')}</p>
             </div>
             <a 
               href="mailto:hello@tryonyou.app" 
               className="btn-primary whitespace-nowrap group"
             >
-              Request a Demo
+              {t('footer.cta.button')}
               <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
             </a>
           </div>
@@ -77,7 +79,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-sm text-white/60 mb-4 max-w-xs">
-              Your trusted virtual fitting room. Find the perfect outfit without infinite returns.
+              {t('footer.description')}
             </p>
             <div className="flex space-x-3">
               {socialLinks.map((social) => (
@@ -97,7 +99,7 @@ const Footer = () => {
 
           {/* Product Links */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Product</h3>
+            <h3 className="font-semibold text-white mb-4">{t('footer.sections.product')}</h3>
             <ul className="space-y-2">
               {footerLinks.product.map((link) => (
                 <li key={link.path}>
@@ -114,7 +116,7 @@ const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Company</h3>
+            <h3 className="font-semibold text-white mb-4">{t('footer.sections.company')}</h3>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.path}>
@@ -131,7 +133,7 @@ const Footer = () => {
 
           {/* Legal Links */}
           <div>
-            <h3 className="font-semibold text-white mb-4">Legal</h3>
+            <h3 className="font-semibold text-white mb-4">{t('footer.sections.legal')}</h3>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.path}>
@@ -151,10 +153,10 @@ const Footer = () => {
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-white/60">
-              © {currentYear} TRYONYOU. All rights reserved.
+              {t('footer.copyright', { year: currentYear })}
             </p>
             <p className="text-sm text-white/60 flex items-center gap-2">
-              Powered by <span className="text-tryonyou-blue font-semibold">Agent70</span> 
+              {t('footer.poweredBy')} <span className="text-tryonyou-blue font-semibold">Agent70</span> 
               <span className="text-white/30">•</span>
               <span className="text-tryonyou-blue font-semibold">DSX Engine</span>
             </p>
