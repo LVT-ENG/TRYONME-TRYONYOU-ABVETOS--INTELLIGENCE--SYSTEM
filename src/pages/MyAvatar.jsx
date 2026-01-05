@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { User, Camera, Ruler, Palette, Sparkles, Check, ArrowRight, ChevronRight, Scan, Wand2 } from 'lucide-react'
 import Avatar3D from '../components/Avatar3D'
@@ -54,6 +54,14 @@ const MyAvatar = () => {
     { id: 'bohemian', name: 'Bohemian', icon: '🌸', description: 'Free and artistic' },
     { id: 'sporty', name: 'Sporty', icon: '⚡', description: 'Active and dynamic' },
   ]
+
+  // Optimization: Memoize customizations to prevent expensive Avatar3D re-renders
+  // This object reference will only change when skinTone or style actually changes,
+  // preventing re-renders when other inputs (like height) are typed.
+  const avatarCustomizations = useMemo(() => ({
+    skin: avatarData.skinTone ? skinTones.find(s => s.id === avatarData.skinTone)?.color : '#f5d0c5',
+    outfit: avatarData.style ? { top: '#1a1a1a', bottom: '#2d2d2d', shoes: '#0a0a0a' } : null,
+  }), [avatarData.skinTone, avatarData.style])
 
   const renderStepContent = () => {
     switch (currentStep) {
@@ -313,10 +321,7 @@ const MyAvatar = () => {
                 
                 <div className="aspect-[3/4] rounded-2xl bg-gradient-to-br from-violet-500/10 to-purple-500/10 relative overflow-hidden">
                   <Avatar3D 
-                    customizations={{
-                      skin: avatarData.skinTone ? skinTones.find(s => s.id === avatarData.skinTone)?.color : '#f5d0c5',
-                      outfit: avatarData.style ? { top: '#1a1a1a', bottom: '#2d2d2d', shoes: '#0a0a0a' } : null,
-                    }}
+                    customizations={avatarCustomizations}
                     modelPath="/models/avatar.glb"
                     showControls={true}
                     height="100%"
@@ -403,4 +408,3 @@ const MyAvatar = () => {
 }
 
 export default MyAvatar
-
