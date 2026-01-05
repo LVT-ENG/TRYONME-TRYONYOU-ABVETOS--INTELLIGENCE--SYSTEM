@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-05T17:27:55.641434",
+  "timestamp": "2026-01-05T17:40:52.357495+00:00",
   "assets": [
     {
       "source": "41C07010",
@@ -33,7 +33,12 @@
     "divineo": "applied"
   },
   "routes": {
-    "status": "App.tsx missing"
+    "/fit": "present",
+    "/cap": "present",
+    "/abvet": "present",
+    "/claims": "present"
   },
-  "deploy": {}
+  "deploy": {
+    "vercel": "configured"
+  }
 }

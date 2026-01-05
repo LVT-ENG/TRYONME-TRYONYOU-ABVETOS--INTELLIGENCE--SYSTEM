@@ -1,17 +1,28 @@
-
 :root {
   --anthracite: #141619;
   --gold: #C5A46D;
   --peacock: #006D77;
   --bone: #F5EFE6;
 }
+
 body {
-  background: var(--anthracite);
+  background-color: var(--anthracite);
   color: var(--bone);
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
+
+.glass {
+  background: rgba(20, 22, 25, 0.65);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+}
+
 #pau-mascot {
   position: fixed;
   bottom: 12px;
   left: 12px;
   width: 64px;
+  opacity: 0.9;
 }
