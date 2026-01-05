@@ -50,7 +50,7 @@ export default function MagicMirror() {
 
             <div style={{backgroundColor: '#1A1A1A', padding: '20px', borderRadius: '10px', border: '1px solid #333'}}>
                <p style={{fontSize: '1.1rem', fontStyle: 'italic', color: '#F5EFE6'}}>
-                 "{result.explanation ? result.explanation[lang] : result.message}"
+                 "{result.explanation[lang]}"
                </p>
             </div>
 
