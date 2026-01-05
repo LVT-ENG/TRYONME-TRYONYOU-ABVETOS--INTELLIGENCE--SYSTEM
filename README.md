@@ -196,17 +196,30 @@ dist/
 - **Railway**: Build command: `npm run build`, Output: `dist`
 - **AWS S3/CloudFront**: Upload `dist/` folder
 
-### Quick Deploy Script
+### Quick Deploy Scripts
+
+**Basic Deployment:**
 ```bash
 ./deploy.sh
 ```
 
-This script will:
-1. Install dependencies
-2. Build the application
-3. Commit changes
-4. Push to GitHub
-5. Deploy to Vercel
+**Comprehensive Deployment (Recommended):**
+```bash
+./deploy_comprehensive.sh
+```
+
+The comprehensive script includes:
+1. Directory verification and branch management
+2. Deep cleanup of obsolete files
+3. Install npm and Python dependencies
+4. Create/verify directory structure
+5. Smart file staging with error handling
+6. Detailed commit with module documentation
+7. Push to GitHub
+8. Optional Vercel deployment (if `VERCEL_TOKEN` is set)
+9. Comprehensive status reporting
+
+See [COMPREHENSIVE_DEPLOY.md](docs/COMPREHENSIVE_DEPLOY.md) for detailed documentation.
 
 ### Pre-Deployment Checklist
 - ✅ Platform fusion complete
@@ -222,6 +235,7 @@ This script will:
 
 - `FUSION_COMPLETE.md` - Details about platform fusion
 - `DEPLOYMENT_CHECKLIST.md` - Comprehensive deployment guide
+- `docs/COMPREHENSIVE_DEPLOY.md` - Comprehensive deployment script documentation
 - `ASSETS_GUIDE.md` - Asset requirements and naming conventions
 - `DEMO_READY.md` - Demo preparation guide
 - `docs/GOOGLE_PLATFORM_NEWS.md` - Google Platform integration news (Nov/Dec 2025)
