@@ -7,7 +7,7 @@ LAFAYETTE_DB = [
     {"id": "GL_02", "nom": "Blazer Structuré", "stretch": 0.4, "drape": 0.3, "ratio": 1.25, "img": "/assets/vision/blazer.png"}
 ]
 
-class Handler(BaseHTTPRequestHandler):
+class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             # 1. Leer datos de entrada
@@ -19,10 +19,7 @@ class Handler(BaseHTTPRequestHandler):
             scan = data.get("scan", {"poitrine": 90, "taille": 70})
 
             # 2. Lógica de Matching (Body Intelligence)
-            try:
-                user_ratio = scan['poitrine'] / scan['taille']
-            except (KeyError, ZeroDivisionError, TypeError):
-                user_ratio = 1.3 # Fallback to a safe default ratio
+            user_ratio = scan['poitrine'] / scan['taille']
             match = min(LAFAYETTE_DB, key=lambda x: abs(x['ratio'] - user_ratio))
 
             # 3. Respuesta Exitosa (Headers obligatorios para Vercel)
