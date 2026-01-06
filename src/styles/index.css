@@ -86,6 +86,19 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  /* Background utilities for premium button */
+  .bg-size-200 {
+    background-size: 200%;
+  }
+  
+  .bg-pos-0 {
+    background-position: 0%;
+  }
+  
+  .bg-pos-100 {
+    background-position: 100%;
+  }
 }
 
 /* Custom scrollbar */
