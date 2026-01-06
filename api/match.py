@@ -19,7 +19,10 @@ class handler(BaseHTTPRequestHandler):
             scan = data.get("scan", {"poitrine": 90, "taille": 70})
 
             # 2. Lógica de Matching (Body Intelligence)
-            user_ratio = scan['poitrine'] / scan['taille']
+            try:
+                user_ratio = scan['poitrine'] / scan['taille']
+            except (KeyError, ZeroDivisionError, TypeError):
+                user_ratio = 1.3 # Fallback to a safe default ratio
             match = min(LAFAYETTE_DB, key=lambda x: abs(x['ratio'] - user_ratio))
 
             # 3. Respuesta Exitosa (Headers obligatorios para Vercel)
