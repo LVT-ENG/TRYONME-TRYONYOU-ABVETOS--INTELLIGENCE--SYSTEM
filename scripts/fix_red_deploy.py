@@ -1,3 +1,16 @@
+import os
+
+def fix_red_deploy():
+    print("🛠️ [JULES] REPARANDO DESPLIEGUE ROJO...")
+
+    # 1. Crear la carpeta /api si no existe (Vital para Vercel)
+    if not os.path.exists("api"):
+        os.makedirs("api")
+        print("✅ Carpeta /api creada.")
+
+    # 2. Inyectar el motor de inteligencia (Sin tallas, Francés nativo)
+    # Este código sigue la nomenclatura técnica: poitrine, taille, tombe_tissu
+    python_logic = """
 import json
 from http.server import BaseHTTPRequestHandler
 
@@ -40,3 +53,16 @@ class handler(BaseHTTPRequestHandler):
             }
         }
         self.wfile.write(json.dumps(response).encode())
+"""
+    with open("api/match.py", "w") as f:
+        f.write(python_logic.strip())
+    print("✅ Motor api/match.py inyectado correctamente.")
+
+    # 3. Forzar limpieza de caché y despliegue
+    print("🚀 Forzando despliegue limpio...")
+    os.system("rm -rf dist node_modules package-lock.json")
+    # Usamos --force para ignorar el estado fallido anterior
+    os.system("npm install --legacy-peer-deps && npm run build && npx vercel --prod --force --yes")
+
+if __name__ == "__main__":
+    fix_red_deploy()
