@@ -68,6 +68,10 @@
     box-shadow: 0 0 20px rgba(0, 168, 232, 0.5), 0 0 40px rgba(0, 168, 232, 0.3);
   }
   
+  .glow-purple {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3);
+  }
+  
   /* Animated gradient background */
   .animated-gradient {
     background: linear-gradient(270deg, #00A8E8, #003459, #00D9FF, #003459);
