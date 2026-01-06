@@ -1,10 +1,20 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import SkeletonLoader from '../components/SkeletonLoader'
 
 const Home = () => {
   const navigate = useNavigate()
   const [activeClaimIndex, setActiveClaimIndex] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleStart = () => {
+    setIsLoading(true)
+    // Non-blocking navigation
+    setTimeout(() => {
+      navigate('/pilot')
+    }, 10)
+  }
 
   const claims = [
     {
@@ -235,14 +245,18 @@ const Home = () => {
             El flujo mínimo de usuario te llevará al resultado en segundos.
           </motion.p>
 
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/pilot')}
-            className="px-12 py-5 bg-blue-600 hover:bg-blue-500 rounded-full font-bold text-white text-lg transition-all shadow-xl shadow-blue-600/30 uppercase tracking-wider"
-          >
-            Empezar Ahora
-          </motion.button>
+          {isLoading ? (
+             <SkeletonLoader className="h-16 w-64 mx-auto rounded-full" />
+          ) : (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={handleStart}
+              className="px-12 py-5 bg-blue-600 hover:bg-blue-500 rounded-full font-bold text-white text-lg transition-all shadow-xl shadow-blue-600/30 uppercase tracking-wider"
+            >
+              Empezar Ahora
+            </motion.button>
+          )}
         </div>
       </section>
 
