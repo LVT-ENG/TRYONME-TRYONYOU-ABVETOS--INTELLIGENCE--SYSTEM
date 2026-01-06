@@ -55,7 +55,17 @@ const Home = () => {
       <nav className="fixed top-0 w-full z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold tracking-widest text-white">TRYONYOU</h1>
-          <div className="text-sm text-gray-400 hidden md:block">Fashion Tech for Perfect Fit</div>
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-gray-400 hidden md:block">Fashion Tech for Perfect Fit</div>
+            <div className="hidden lg:flex items-center gap-2">
+              <div className="px-3 py-1.5 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/30 rounded-lg text-xs font-semibold text-blue-300">
+                Powered by Gemini 3 Pro
+              </div>
+              <div className="px-3 py-1.5 bg-gradient-to-r from-purple-500/10 to-pink-500/10 border border-purple-500/30 rounded-lg text-xs font-semibold text-purple-300">
+                Powered by Veo 3.1
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
 
@@ -249,7 +259,10 @@ const Home = () => {
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-gray-800 bg-gray-900 text-center">
         <p className="text-gray-500 text-sm">
-          TRYONYOU Pilot © 2024 | Fashion Tech for Perfect Fit <br className="md:hidden"/> No Returns. No Guessing. Just Fit.
+          TRYONYOU © 2024-2025 | Fashion Tech for Perfect Fit <br className="md:hidden"/> No Returns. No Guessing. Just Fit.
+        </p>
+        <p className="text-gray-600 text-xs mt-2">
+          Powered by Google Platform: Gemini 3 Pro & Veo 3.1 | Built with Antigravity & Jules
         </p>
       </footer>
     </div>
