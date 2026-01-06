@@ -7,7 +7,7 @@ LAFAYETTE_DB = [
     {"id": "GL_02", "nom": "Blazer Structuré", "stretch": 0.4, "drape": 0.3, "ratio": 1.25, "img": "/assets/vision/blazer.png"}
 ]
 
-class handler(BaseHTTPRequestHandler):
+class Handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             # 1. Leer datos de entrada
