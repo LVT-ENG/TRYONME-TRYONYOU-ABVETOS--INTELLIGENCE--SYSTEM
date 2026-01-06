@@ -71,6 +71,16 @@ const Home = () => {
               animate="visible"
               className="space-y-8"
             >
+              {/* Google Platform Badges */}
+              <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-900/50 to-purple-900/50 border border-blue-500/30">
+                   <span className="text-xs font-bold text-blue-300 tracking-wider">POWERED BY GEMINI 3 PRO</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-900/50 to-teal-900/50 border border-emerald-500/30">
+                   <span className="text-xs font-bold text-emerald-300 tracking-wider">VEO 3.1</span>
+                </div>
+              </motion.div>
+
               <motion.div variants={itemVariants}>
                 <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white">
                   No vas a hacerte un TryOnYou.
@@ -139,7 +149,10 @@ const Home = () => {
                 </motion.div>
 
                 <p className="text-gray-300 font-semibold text-lg">ABVET 3D Engine</p>
-                <p className="text-sm text-blue-400 mt-2">Virtual Try-On Active</p>
+                <div className="mt-2 flex items-center gap-2">
+                   <span className="text-xs text-blue-400 bg-blue-900/30 px-2 py-1 rounded border border-blue-500/30">Antigravity Core</span>
+                   <span className="text-xs text-purple-400 bg-purple-900/30 px-2 py-1 rounded border border-purple-500/30">Jules Agent</span>
+                </div>
               </div>
 
               {/* Pau Assistant (Peacock) - Animated */}
@@ -166,13 +179,6 @@ const Home = () => {
               >
                 <p className="text-sm text-green-300 font-semibold tracking-wide">● AI Analyzing...</p>
               </motion.div>
-              
-              {/* Tech stack indicators */}
-              <div className="absolute bottom-8 left-8 flex gap-2">
-                <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-cyan-500 rounded-full animate-pulse"></div>
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
-              </div>
             </motion.div>
           </div>
         </div>
