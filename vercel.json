@@ -1,22 +1,10 @@
 {
-  "regions": [
-    "fra1",
-    "iad1",
-    "hnd1"
+  "builds": [
+    {"src": "api/match.py", "use": "@vercel/python"},
+    {"src": "package.json", "use": "@vercel/static-build"}
   ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000"
-        }
-      ]
-    }
+  "routes": [
+    {"src": "/api/(.*)", "dest": "api/match.py"},
+    {"src": "/(.*)", "dest": "/"}
   ]
 }
