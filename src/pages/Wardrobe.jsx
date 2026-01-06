@@ -1,8 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Shirt, ShoppingBag, Heart, Filter, Search, Grid, List, Plus, X, Sparkles, Eye, ArrowRight } from 'lucide-react'
 import { getImageWithFallback } from '../utils/assets'
 import Avatar3D from '../components/Avatar3D'
+
+// Static data moved outside component to prevent re-creation on every render
+const CATEGORIES = [
+  { id: 'all', name: 'All', icon: Grid, count: 48 },
+  { id: 'tops', name: 'Tops', icon: Shirt, count: 15 },
+  { id: 'bottoms', name: 'Bottoms', icon: Shirt, count: 12 },
+  { id: 'dresses', name: 'Dresses', icon: Shirt, count: 8 },
+  { id: 'outerwear', name: 'Outerwear', icon: Shirt, count: 6 },
+  { id: 'accessories', name: 'Accessories', icon: Shirt, count: 7 },
+]
+
+const CLOTHES = [
+  { id: 1, name: 'Silk Blouse', category: 'tops', price: 89, color: '#F5DEB3', brand: 'ZARA', size: 'M', match: 96, image: 'silk-blouse.jpg' },
+  { id: 2, name: 'High-Waist Jeans', category: 'bottoms', price: 69, color: '#4682B4', brand: 'Levi\'s', size: '28', match: 94, image: 'jeans.jpg' },
+  { id: 3, name: 'Midi Dress', category: 'dresses', price: 129, color: '#8B5A7D', brand: 'Mango', size: 'S', match: 92, image: 'midi-dress.jpg' },
+  { id: 4, name: 'Wool Blazer', category: 'outerwear', price: 199, color: '#2C2C2C', brand: 'COS', size: 'M', match: 98, image: 'blazer.jpg' },
+  { id: 5, name: 'Cashmere Sweater', category: 'tops', price: 149, color: '#D4A574', brand: 'Massimo Dutti', size: 'M', match: 95, image: 'sweater.jpg' },
+  { id: 6, name: 'Leather Belt', category: 'accessories', price: 45, color: '#8B4513', brand: 'Gucci', size: 'One Size', match: 100, image: 'belt.jpg' },
+  { id: 7, name: 'Pleated Skirt', category: 'bottoms', price: 79, color: '#1a1a1a', brand: 'H&M', size: 'S', match: 91, image: 'skirt.jpg' },
+  { id: 8, name: 'Cotton T-Shirt', category: 'tops', price: 29, color: '#FFFFFF', brand: 'Uniqlo', size: 'M', match: 97, image: 'tshirt.jpg' },
+  { id: 9, name: 'Trench Coat', category: 'outerwear', price: 249, color: '#C4A77D', brand: 'Burberry', size: 'M', match: 93, image: 'trench.jpg' },
+  { id: 10, name: 'Evening Dress', category: 'dresses', price: 299, color: '#800020', brand: 'Reformation', size: 'S', match: 89, image: 'dress.jpg' },
+  { id: 11, name: 'Wide Leg Pants', category: 'bottoms', price: 89, color: '#BDC3C7', brand: 'Arket', size: '38', match: 94, image: 'pants.jpg' },
+  { id: 12, name: 'Gold Necklace', category: 'accessories', price: 159, color: '#D4AF37', brand: 'Mejuri', size: 'One Size', match: 100, image: 'necklace.jpg' },
+]
 
 const Wardrobe = () => {
   const [activeCategory, setActiveCategory] = useState('all')
@@ -12,36 +37,25 @@ const Wardrobe = () => {
   const [showTryOnModal, setShowTryOnModal] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
 
-  const categories = [
-    { id: 'all', name: 'All', icon: Grid, count: 48 },
-    { id: 'tops', name: 'Tops', icon: Shirt, count: 15 },
-    { id: 'bottoms', name: 'Bottoms', icon: Shirt, count: 12 },
-    { id: 'dresses', name: 'Dresses', icon: Shirt, count: 8 },
-    { id: 'outerwear', name: 'Outerwear', icon: Shirt, count: 6 },
-    { id: 'accessories', name: 'Accessories', icon: Shirt, count: 7 },
-  ]
-
-  const clothes = [
-    { id: 1, name: 'Silk Blouse', category: 'tops', price: 89, color: '#F5DEB3', brand: 'ZARA', size: 'M', match: 96, image: 'silk-blouse.jpg' },
-    { id: 2, name: 'High-Waist Jeans', category: 'bottoms', price: 69, color: '#4682B4', brand: 'Levi\'s', size: '28', match: 94, image: 'jeans.jpg' },
-    { id: 3, name: 'Midi Dress', category: 'dresses', price: 129, color: '#8B5A7D', brand: 'Mango', size: 'S', match: 92, image: 'midi-dress.jpg' },
-    { id: 4, name: 'Wool Blazer', category: 'outerwear', price: 199, color: '#2C2C2C', brand: 'COS', size: 'M', match: 98, image: 'blazer.jpg' },
-    { id: 5, name: 'Cashmere Sweater', category: 'tops', price: 149, color: '#D4A574', brand: 'Massimo Dutti', size: 'M', match: 95, image: 'sweater.jpg' },
-    { id: 6, name: 'Leather Belt', category: 'accessories', price: 45, color: '#8B4513', brand: 'Gucci', size: 'One Size', match: 100, image: 'belt.jpg' },
-    { id: 7, name: 'Pleated Skirt', category: 'bottoms', price: 79, color: '#1a1a1a', brand: 'H&M', size: 'S', match: 91, image: 'skirt.jpg' },
-    { id: 8, name: 'Cotton T-Shirt', category: 'tops', price: 29, color: '#FFFFFF', brand: 'Uniqlo', size: 'M', match: 97, image: 'tshirt.jpg' },
-    { id: 9, name: 'Trench Coat', category: 'outerwear', price: 249, color: '#C4A77D', brand: 'Burberry', size: 'M', match: 93, image: 'trench.jpg' },
-    { id: 10, name: 'Evening Dress', category: 'dresses', price: 299, color: '#800020', brand: 'Reformation', size: 'S', match: 89, image: 'dress.jpg' },
-    { id: 11, name: 'Wide Leg Pants', category: 'bottoms', price: 89, color: '#BDC3C7', brand: 'Arket', size: '38', match: 94, image: 'pants.jpg' },
-    { id: 12, name: 'Gold Necklace', category: 'accessories', price: 159, color: '#D4AF37', brand: 'Mejuri', size: 'One Size', match: 100, image: 'necklace.jpg' },
-  ]
-
-  const filteredClothes = clothes.filter(item => {
+  // Optimization: Memoize filtering to avoid re-calculation on every render (e.g. typing, saving items)
+  const filteredClothes = useMemo(() => CLOTHES.filter(item => {
     const matchesCategory = activeCategory === 'all' || item.category === activeCategory
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           item.brand.toLowerCase().includes(searchQuery.toLowerCase())
     return matchesCategory && matchesSearch
-  })
+  }), [activeCategory, searchQuery])
+
+  // Optimization: Memoize avatar customizations to prevent unnecessary re-renders of the 3D component
+  const avatarCustomizations = useMemo(() => {
+    if (!selectedItem) return {};
+    return {
+      outfit: {
+        top: selectedItem.category === 'tops' || selectedItem.category === 'dresses' ? selectedItem.color : '#1a1a1a',
+        bottom: selectedItem.category === 'bottoms' || selectedItem.category === 'dresses' ? selectedItem.color : '#2d2d2d',
+        shoes: selectedItem.category === 'accessories' ? selectedItem.color : '#0a0a0a',
+      }
+    };
+  }, [selectedItem]);
 
   const toggleSaved = (id) => {
     setSavedItems(prev => 
@@ -103,7 +117,7 @@ const Wardrobe = () => {
 
             {/* Categories */}
             <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
-              {categories.map((cat) => (
+              {CATEGORIES.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.id)}
@@ -243,7 +257,7 @@ const Wardrobe = () => {
 
                     <div className="flex items-center gap-4 text-sm text-white/50">
                       <span>Size: {item.size}</span>
-                      <span className="capitalize">{categories.find(c => c.id === item.category)?.name}</span>
+                    <span className="capitalize">{CATEGORIES.find(c => c.id === item.category)?.name}</span>
                     </div>
 
                     {viewMode === 'list' && (
@@ -343,13 +357,7 @@ const Wardrobe = () => {
                 <div className="space-y-4">
                   <div className="aspect-square rounded-xl overflow-hidden relative bg-gradient-to-br from-gray-800 to-gray-900">
                     <Avatar3D 
-                      customizations={{
-                        outfit: {
-                          top: selectedItem.category === 'tops' || selectedItem.category === 'dresses' ? selectedItem.color : '#1a1a1a',
-                          bottom: selectedItem.category === 'bottoms' || selectedItem.category === 'dresses' ? selectedItem.color : '#2d2d2d',
-                          shoes: selectedItem.category === 'accessories' ? selectedItem.color : '#0a0a0a',
-                        }
-                      }}
+                      customizations={avatarCustomizations}
                       modelPath="/models/avatar.glb"
                       showControls={true}
                       height="100%"
