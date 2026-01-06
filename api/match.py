@@ -1,7 +1,7 @@
 import json
 from http.server import BaseHTTPRequestHandler
 
-# Inventario VIP - Galeries Lafayette
+# Inventario VIP - Galeries Lafayette (Física de telas, no tallas)
 LAFAYETTE_DB = [
     {"id": "GL_01", "nom": "Robe Soie Haussmann", "stretch": 0.1, "drape": 0.9, "ratio": 1.45, "img": "/assets/vision/silk.png"},
     {"id": "GL_02", "nom": "Blazer Structuré", "stretch": 0.4, "drape": 0.3, "ratio": 1.25, "img": "/assets/vision/blazer.png"}
@@ -10,18 +10,22 @@ LAFAYETTE_DB = [
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
+            # 1. Leer datos de entrada
             content_length = int(self.headers['Content-Length'])
-            data = json.loads(self.rfile.read(content_length))
+            post_data = self.rfile.read(content_length)
+            data = json.loads(post_data)
 
             user = data.get("user", "Elena Grandini")
             scan = data.get("scan", {"poitrine": 90, "taille": 70})
 
-            # Algoritmo de Física: Comparación de proporciones y caída de tela
+            # 2. Lógica de Matching (Body Intelligence)
             user_ratio = scan['poitrine'] / scan['taille']
             match = min(LAFAYETTE_DB, key=lambda x: abs(x['ratio'] - user_ratio))
 
+            # 3. Respuesta Exitosa (Headers obligatorios para Vercel)
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*') # Permitir acceso desde el frontend
             self.end_headers()
 
             response = {
@@ -36,8 +40,12 @@ class handler(BaseHTTPRequestHandler):
                     }
                 }
             }
-            self.wfile.write(json.dumps(response).encode())
+            self.wfile.write(json.dumps(response).encode('utf-8'))
+
         except Exception as e:
+            # 4. Manejo de errores para evitar el "Red Build"
             self.send_response(500)
+            self.send_header('Content-type', 'application/json')
             self.end_headers()
-            self.wfile.write(json.dumps({"error": str(e)}).encode())
+            error_response = {"error": str(e)}
+            self.wfile.write(json.dumps(error_response).encode('utf-8'))
