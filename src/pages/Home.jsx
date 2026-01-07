@@ -79,6 +79,9 @@ const Home = () => {
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-900/50 to-teal-900/50 border border-emerald-500/30">
                    <span className="text-xs font-bold text-emerald-300 tracking-wider">VEO 3.1</span>
                 </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-orange-900/50 to-amber-900/50 border border-orange-500/30">
+                   <span className="text-xs font-bold text-orange-300 tracking-wider">CONDUCTOR</span>
+                </div>
               </motion.div>
 
               <motion.div variants={itemVariants}>
@@ -149,9 +152,10 @@ const Home = () => {
                 </motion.div>
 
                 <p className="text-gray-300 font-semibold text-lg">ABVET 3D Engine</p>
-                <div className="mt-2 flex items-center gap-2">
+                <div className="mt-2 flex flex-wrap justify-center gap-2">
                    <span className="text-xs text-blue-400 bg-blue-900/30 px-2 py-1 rounded border border-blue-500/30">Antigravity Core</span>
                    <span className="text-xs text-purple-400 bg-purple-900/30 px-2 py-1 rounded border border-purple-500/30">Jules Agent</span>
+                   <span className="text-xs text-orange-400 bg-orange-900/30 px-2 py-1 rounded border border-orange-500/30">Conductor</span>
                 </div>
               </div>
 
