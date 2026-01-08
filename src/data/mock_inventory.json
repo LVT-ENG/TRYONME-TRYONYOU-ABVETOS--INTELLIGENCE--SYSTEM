@@ -1,0 +1,35 @@
+[
+  {
+    "id": "Laf-001",
+    "name": "Traje Slim Fit Lana Italiana",
+    "brand": "Lafayette Premium",
+    "category": "Formal",
+    "price": 850,
+    "sizes": ["48", "50", "52", "54"],
+    "colors": ["Azul Medianoche", "Gris Marengo"],
+    "image_url": "https://example.com/suit.jpg",
+    "link": "https://lafayette.com/shop/suit-001"
+  },
+  {
+    "id": "Laf-002",
+    "name": "Camisa Oxford Blanca Premium",
+    "brand": "Lafayette Heritage",
+    "category": "Camisas",
+    "price": 120,
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": ["Blanco"],
+    "image_url": "https://example.com/shirt.jpg",
+    "link": "https://lafayette.com/shop/shirt-002"
+  },
+  {
+    "id": "Laf-003",
+    "name": "Pantalón Chino Algodón Pima",
+    "brand": "Lafayette Casual",
+    "category": "Pantalones",
+    "price": 180,
+    "sizes": ["32", "34", "36"],
+    "colors": ["Beige", "Azul Marino"],
+    "image_url": "https://example.com/pants.jpg",
+    "link": "https://lafayette.com/shop/pants-003"
+  }
+]

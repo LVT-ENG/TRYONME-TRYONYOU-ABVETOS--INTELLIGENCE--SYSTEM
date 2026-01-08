@@ -1,0 +1,151 @@
+{
+  "garments": [
+    {
+      "id": "blazer_001",
+      "name": "Classic Business Blazer",
+      "brand": "Maison Prestige",
+      "category": "outerwear",
+      "occasion": ["work", "formal"],
+      "material": "wool blend",
+      "fabric_elasticity": 5,
+      "fabric_drape_score": 6,
+      "cut_type": "tailored",
+      "color": "charcoal grey",
+      "image_url": "/images/blazer_001.jpg",
+      "sizes": {
+        "XS": {"chest": 82, "waist": 68, "shoulder_width": 38, "arm_length": 58, "torso_length": 58},
+        "S": {"chest": 88, "waist": 74, "shoulder_width": 40, "arm_length": 60, "torso_length": 60},
+        "M": {"chest": 94, "waist": 80, "shoulder_width": 42, "arm_length": 62, "torso_length": 62},
+        "L": {"chest": 100, "waist": 86, "shoulder_width": 44, "arm_length": 64, "torso_length": 64},
+        "XL": {"chest": 106, "waist": 92, "shoulder_width": 46, "arm_length": 66, "torso_length": 66},
+        "XXL": {"chest": 112, "waist": 98, "shoulder_width": 48, "arm_length": 68, "torso_length": 68}
+      }
+    },
+    {
+      "id": "dress_001",
+      "name": "Elegant Evening Dress",
+      "brand": "Couture Elegance",
+      "category": "dress",
+      "occasion": ["event", "formal", "ceremony"],
+      "material": "silk charmeuse",
+      "fabric_elasticity": 8,
+      "fabric_drape_score": 9,
+      "cut_type": "fitted",
+      "color": "midnight black",
+      "image_url": "/images/dress_001.jpg",
+      "sizes": {
+        "XS": {"chest": 80, "waist": 62, "shoulder_width": 36, "arm_length": 56, "torso_length": 72},
+        "S": {"chest": 86, "waist": 68, "shoulder_width": 38, "arm_length": 58, "torso_length": 74},
+        "M": {"chest": 92, "waist": 74, "shoulder_width": 40, "arm_length": 60, "torso_length": 76},
+        "L": {"chest": 98, "waist": 80, "shoulder_width": 42, "arm_length": 62, "torso_length": 78},
+        "XL": {"chest": 104, "waist": 86, "shoulder_width": 44, "arm_length": 64, "torso_length": 80},
+        "XXL": {"chest": 110, "waist": 92, "shoulder_width": 46, "arm_length": 66, "torso_length": 82}
+      }
+    },
+    {
+      "id": "shirt_001",
+      "name": "Premium Cotton Shirt",
+      "brand": "Textile Masters",
+      "category": "top",
+      "occasion": ["work", "casual"],
+      "material": "100% cotton",
+      "fabric_elasticity": 3,
+      "fabric_drape_score": 5,
+      "cut_type": "regular",
+      "color": "white",
+      "image_url": "/images/shirt_001.jpg",
+      "sizes": {
+        "XS": {"chest": 84, "waist": 72, "shoulder_width": 38, "arm_length": 60, "torso_length": 62},
+        "S": {"chest": 90, "waist": 78, "shoulder_width": 40, "arm_length": 62, "torso_length": 64},
+        "M": {"chest": 96, "waist": 84, "shoulder_width": 42, "arm_length": 64, "torso_length": 66},
+        "L": {"chest": 102, "waist": 90, "shoulder_width": 44, "arm_length": 66, "torso_length": 68},
+        "XL": {"chest": 108, "waist": 96, "shoulder_width": 46, "arm_length": 68, "torso_length": 70},
+        "XXL": {"chest": 114, "waist": 102, "shoulder_width": 48, "arm_length": 70, "torso_length": 72}
+      }
+    },
+    {
+      "id": "trousers_001",
+      "name": "Tailored Wool Trousers",
+      "brand": "Heritage Tailors",
+      "category": "bottoms",
+      "occasion": ["work", "formal"],
+      "material": "wool",
+      "fabric_elasticity": 4,
+      "fabric_drape_score": 7,
+      "cut_type": "tailored",
+      "color": "navy",
+      "image_url": "/images/trousers_001.jpg",
+      "sizes": {
+        "XS": {"waist": 66, "hip": 88, "leg_length": 80, "torso_length": 98},
+        "S": {"waist": 72, "hip": 94, "leg_length": 82, "torso_length": 100},
+        "M": {"waist": 78, "hip": 100, "leg_length": 84, "torso_length": 102},
+        "L": {"waist": 84, "hip": 106, "leg_length": 86, "torso_length": 104},
+        "XL": {"waist": 90, "hip": 112, "leg_length": 88, "torso_length": 106},
+        "XXL": {"waist": 96, "hip": 118, "leg_length": 90, "torso_length": 108}
+      }
+    },
+    {
+      "id": "cardigan_001",
+      "name": "Cashmere Cardigan",
+      "brand": "Luxury Knits",
+      "category": "outerwear",
+      "occasion": ["casual", "work"],
+      "material": "cashmere",
+      "fabric_elasticity": 6,
+      "fabric_drape_score": 8,
+      "cut_type": "relaxed",
+      "color": "cream",
+      "image_url": "/images/cardigan_001.jpg",
+      "sizes": {
+        "XS": {"chest": 86, "waist": 70, "shoulder_width": 39, "arm_length": 59, "torso_length": 60},
+        "S": {"chest": 92, "waist": 76, "shoulder_width": 41, "arm_length": 61, "torso_length": 62},
+        "M": {"chest": 98, "waist": 82, "shoulder_width": 43, "arm_length": 63, "torso_length": 64},
+        "L": {"chest": 104, "waist": 88, "shoulder_width": 45, "arm_length": 65, "torso_length": 66},
+        "XL": {"chest": 110, "waist": 94, "shoulder_width": 47, "arm_length": 67, "torso_length": 68},
+        "XXL": {"chest": 116, "waist": 100, "shoulder_width": 49, "arm_length": 69, "torso_length": 70}
+      }
+    },
+    {
+      "id": "skirt_001",
+      "name": "Structured Midi Skirt",
+      "brand": "Silhouette Design",
+      "category": "bottoms",
+      "occasion": ["work", "event"],
+      "material": "wool blend",
+      "fabric_elasticity": 2,
+      "fabric_drape_score": 4,
+      "cut_type": "structured",
+      "color": "burgundy",
+      "image_url": "/images/skirt_001.jpg",
+      "sizes": {
+        "XS": {"waist": 62, "hip": 86, "torso_length": 65},
+        "S": {"waist": 68, "hip": 92, "torso_length": 67},
+        "M": {"waist": 74, "hip": 98, "torso_length": 69},
+        "L": {"waist": 80, "hip": 104, "torso_length": 71},
+        "XL": {"waist": 86, "hip": 110, "torso_length": 73},
+        "XXL": {"waist": 92, "hip": 116, "torso_length": 75}
+      }
+    },
+    {
+      "id": "sweater_001",
+      "name": "Fine Merino Sweater",
+      "brand": "Nordic Heritage",
+      "category": "top",
+      "occasion": ["casual", "work"],
+      "material": "merino wool",
+      "fabric_elasticity": 7,
+      "fabric_drape_score": 6,
+      "cut_type": "slim fit",
+      "color": "charcoal",
+      "image_url": "/images/sweater_001.jpg",
+      "sizes": {
+        "XS": {"chest": 82, "waist": 66, "shoulder_width": 37, "arm_length": 57, "torso_length": 58},
+        "S": {"chest": 88, "waist": 72, "shoulder_width": 39, "arm_length": 59, "torso_length": 60},
+        "M": {"chest": 94, "waist": 78, "shoulder_width": 41, "arm_length": 61, "torso_length": 62},
+        "L": {"chest": 100, "waist": 84, "shoulder_width": 43, "arm_length": 63, "torso_length": 64},
+        "XL": {"chest": 106, "waist": 90, "shoulder_width": 45, "arm_length": 65, "torso_length": 66},
+        "XXL": {"chest": 112, "waist": 96, "shoulder_width": 47, "arm_length": 67, "torso_length": 68}
+      }
+    }
+  ]
+}

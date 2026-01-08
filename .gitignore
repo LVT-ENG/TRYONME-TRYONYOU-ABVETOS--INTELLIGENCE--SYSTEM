@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -22,3 +23,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+=======
+node_modules/
+dist/
+.DS_Store
+.env
+*.log
+.vercel
+__pycache__/
+*.pyc
+*.pyo
+>>>>>>> 2044d54955b8c271b41f24b6e8e5ba7294c886d3
