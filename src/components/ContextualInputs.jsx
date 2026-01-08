@@ -30,7 +30,12 @@ const ContextualInputs = ({ onComplete, measurements }) => {
 
   const handleFitSelect = (fitPreference) => {
     setInputs(prev => ({ ...prev, fitPreference }));
-    setTimeout(() => setStep(3), 300);
+    // Skip measurements screen, go directly to recommendation
+    onComplete({
+      occasion: inputs.occasion,
+      fitPreference,
+      measurements
+    });
   };
 
   const handleComplete = () => {

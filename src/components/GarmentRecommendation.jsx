@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { getAIRecommendation, lafayetteDB } from '../lib/RecommendationEngine';
+import VirtualTryOn from './VirtualTryOn';
 
 const GarmentRecommendation = ({ userProfile }) => {
   const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showingAlternative, setShowingAlternative] = useState(false);
+  const [showVirtualTryOn, setShowVirtualTryOn] = useState(true); // Show by default
 
   useEffect(() => {
     findRecommendation();
@@ -131,6 +133,13 @@ const GarmentRecommendation = ({ userProfile }) => {
             {/* Actions (no prices) */}
             <div className="space-y-3">
               <button
+                onClick={() => setShowVirtualTryOn(!showVirtualTryOn)}
+                className="w-full px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-lg font-medium hover:from-amber-600 hover:to-orange-700 transition-all duration-300 shadow-lg hover:shadow-amber-500/50"
+              >
+                {showVirtualTryOn ? '📸 Hide Virtual Try-On' : '👗 Try it On (Live Camera)'}
+              </button>
+
+              <button
                 onClick={showAlternative}
                 className="w-full px-6 py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors border border-slate-700"
               >
@@ -155,6 +164,29 @@ const GarmentRecommendation = ({ userProfile }) => {
             </div>
           </div>
         </div>
+
+        {/* Virtual Try-On Modal */}
+        {showVirtualTryOn && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+          >
+            <div className="w-full max-w-4xl h-[90vh] relative">
+              <button
+                onClick={() => setShowVirtualTryOn(false)}
+                className="absolute top-4 right-4 z-10 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+              >
+                ✕ Close
+              </button>
+              <VirtualTryOn
+                garmentImage={recommendation.image}
+                garmentName={recommendation.name}
+              />
+            </div>
+          </motion.div>
+        )}
 
         {/* PAU message */}
         <motion.div

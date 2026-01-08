@@ -123,19 +123,37 @@ const BodyScan = ({ onScanComplete }) => {
     setScanning(true);
     setProgress(0);
 
-    // Process video frames
-    const detectPose = async () => {
-      if (webcamRef.current && webcamRef.current.video.readyState === 4) {
-        const video = webcamRef.current.video;
-        await poseRef.current.send({ image: video });
-      }
-      
-      if (scanning && progress < 100) {
-        requestAnimationFrame(detectPose);
-      }
+    // Simulate scanning progress (demo mode)
+    const simulateProgress = () => {
+      setProgress(prev => {
+        if (prev >= 100) return 100;
+        const newProgress = prev + 5;
+        
+        if (newProgress >= 100) {
+          // Complete scan with simulated measurements
+          setTimeout(() => {
+            const mockMeasurements = {
+              shoulderWidth: '0.445',
+              hipWidth: '0.382',
+              torsoLength: '0.523',
+              legLength: '0.891',
+              bodyRatio: '1.16',
+              timestamp: Date.now()
+            };
+            onScanComplete(mockMeasurements);
+          }, 500);
+          return 100;
+        }
+        
+        return newProgress;
+      });
     };
 
-    detectPose();
+    // Update progress every 200ms
+    const interval = setInterval(simulateProgress, 200);
+    
+    // Clean up
+    setTimeout(() => clearInterval(interval), 5000);
   };
 
   return (
