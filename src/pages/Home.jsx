@@ -86,15 +86,15 @@ const Home = () => {
 
               <motion.div variants={itemVariants}>
                 <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white">
-                  No vas a hacerte un TryOnYou.
+                  You won't make a TryOnYou.
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent block mt-2"> 
-                    TryOnYou lo hará por ti.
+                    TryOnYou will do it for you.
                   </span>
                 </h2>
               </motion.div>
 
               <motion.p variants={itemVariants} className="text-xl text-gray-300 leading-relaxed">
-                Medimos tu cuerpo para que la ropa encaje a la primera.
+                We measure your body so clothes fit perfectly the first time.
               </motion.p>
 
               <motion.div variants={itemVariants} className="flex gap-4">
@@ -102,18 +102,18 @@ const Home = () => {
                   onClick={() => navigate('/pilot')}
                   className="px-8 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold text-white transition-colors shadow-lg uppercase tracking-wider"
                 >
-                  Probar Ahora
+                  Try Now
                 </button>
                 <button
                   onClick={() => navigate('/investors')}
                   className="px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white transition-colors uppercase tracking-wider"
                 >
-                  Inversores
+                  Investors
                 </button>
               </motion.div>
 
               <motion.div variants={itemVariants} className="text-sm text-gray-400">
-                Cero fricción. Mensaje claro en menos de 5 segundos.
+                Zero friction. Clear message in less than 5 seconds.
               </motion.div>
             </motion.div>
 
@@ -233,7 +233,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
             className="text-4xl font-bold mb-6 text-white"
           >
-            ¿Listo para que TryOnYou lo haga por ti?
+            Ready for TryOnYou to do it for you?
           </motion.h2>
 
           <motion.p
@@ -242,7 +242,7 @@ const Home = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-xl text-gray-300 mb-8"
           >
-            El flujo mínimo de usuario te llevará al resultado en segundos.
+            Minimal user flow will get you results in seconds.
           </motion.p>
 
           <motion.button
@@ -251,7 +251,7 @@ const Home = () => {
             onClick={() => navigate('/pilot')}
             className="px-12 py-5 bg-blue-600 hover:bg-blue-500 rounded-full font-bold text-white text-lg transition-all shadow-xl shadow-blue-600/30 uppercase tracking-wider"
           >
-            Empezar Ahora
+            Start Now
           </motion.button>
         </div>
       </section>
