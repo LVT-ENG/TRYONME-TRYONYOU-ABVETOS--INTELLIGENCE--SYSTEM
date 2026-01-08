@@ -1,0 +1,98 @@
+# generate_styles.py
+
+"""
+Genera un archivo CSS con variables de color y estilos base
+para la paleta de TRYONYOU.
+"""
+
+# Definición de variables
+colors = {
+    "base_beige": "#EDE8D0",
+    "white": "#FFFFFF",
+    "gold": "#C7AF6B",
+    "charcoal": "#2D2D2D",
+    "sand_light": "#F8F5E9",
+    "beige_cool": "#D9D4C8",
+    "deep_taupe": "#A89F94",
+    "warm_amber": "#D4B55B",
+    "soft_grey": "#F4F4F4",
+    "text_light": "#6B6B6B",
+    "border": "#E0DDD7"
+}
+
+# Template básico de CSS
+css_template = """
+/* ==============================================
+   TRYONYOU Design Tokens & Base Styles
+   ============================================== */
+
+:root {{
+    /* Base Colors */
+{color_vars}
+}}
+
+/* ----------------------------------------------
+   Base Typography
+   ---------------------------------------------- */
+body {{
+    background-color: var(--color-white);
+    color: var(--color-charcoal);
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    padding: 0;
+}}
+
+h1, h2, h3, h4, h5 {{
+    color: var(--color-charcoal);
+    margin: 0;
+}}
+
+/* ----------------------------------------------
+   Buttons
+   ---------------------------------------------- */
+button.primary {{
+    background-color: var(--color-gold);
+    color: var(--color-charcoal);
+    padding: 0.75em 1.25em;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}}
+
+button.primary:hover {{
+    background-color: var(--color-warm-amber);
+}}
+
+/* ----------------------------------------------
+   Utility Classes
+   ---------------------------------------------- */
+.text-center {{
+    text-align: center;
+}}
+
+.mt-1 {{
+    margin-top: 1rem;
+}}
+"""
+
+def generate_css(colors_dict):
+    # Construye variables de CSS
+    color_lines = []
+    for name, hexcode in colors_dict.items():
+        var_name = f"  --color-{name.replace('_', '-')}: {hexcode};"
+        color_lines.append(var_name)
+
+    css = css_template.format(color_vars="\n".join(color_lines))
+    return css
+
+
+def save_to_file(css_content, filename="styles.css"):
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(css_content)
+    print(f"✔️ CSS generado y guardado en: {filename}")
+
+
+if __name__ == "__main__":
+    css_code = generate_css(colors)
+    save_to_file(css_code)
