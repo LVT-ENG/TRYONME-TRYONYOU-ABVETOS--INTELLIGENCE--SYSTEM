@@ -154,6 +154,15 @@ const VirtualTryOn = ({ garmentImage, garmentName }) => {
         style={{ maxHeight: '80vh' }}
       />
 
+      {/* Biometric Scan UI Overlay */}
+      {!isLoading && (
+        <img
+          src="/assets/ui/biometric_scan_ui.png"
+          alt="Biometric Scan Interface"
+          className="absolute inset-0 w-full h-full object-contain z-20 pointer-events-none"
+        />
+      )}
+
       {/* Garment info overlay */}
       <div className="absolute bottom-6 left-6 bg-black/70 backdrop-blur-sm px-4 py-2 rounded-lg">
         <p className="text-white text-sm font-medium">{garmentName}</p>
