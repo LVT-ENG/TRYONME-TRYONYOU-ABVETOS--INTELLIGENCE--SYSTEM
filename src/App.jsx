@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { Route, Switch } from "wouter";
-import LandingPage from "./pages/LandingPage";
-import DemoPilot from "./pages/DemoPilot";
-import AbvetCheckout from "./components/AbvetCheckout";
+import PageLoader from "./components/PageLoader";
+import { LanguageProvider } from "./contexts/LanguageContext";
 
-// Mock Contexts to satisfy component dependencies if any
-export const LanguageContext = React.createContext({ t: (key) => key, language: 'en' });
-export const useLanguage = () => React.useContext(LanguageContext);
+// Lazy imports for performance optimization
+const LandingPage = lazy(() => import("./pages/LandingPage"));
+const DemoPilot = lazy(() => import("./pages/DemoPilot"));
+const AbvetCheckout = lazy(() => import("./components/AbvetCheckout"));
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={LandingPage} />
-      <Route path="/demo" component={DemoPilot} />
-      <Route path="/checkout" component={AbvetCheckout} />
-      <Route>404: Page Not Found</Route>
-    </Switch>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/" component={LandingPage} />
+        <Route path="/demo" component={DemoPilot} />
+        <Route path="/checkout" component={AbvetCheckout} />
+        <Route>404: Page Not Found</Route>
+      </Switch>
+    </Suspense>
   );
 }
 
 function App() {
   return (
-    <LanguageContext.Provider value={{ t: (k) => k, language: 'en' }}>
+    <LanguageProvider>
       <Router />
-    </LanguageContext.Provider>
+    </LanguageProvider>
   );
 }
 
