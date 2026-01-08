@@ -46,6 +46,7 @@ class handler(BaseHTTPRequestHandler):
             # 4. Manejo de errores para evitar el "Red Build"
             self.send_response(500)
             self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
             error_response = {"error": str(e)}
             self.wfile.write(json.dumps(error_response).encode('utf-8'))
