@@ -1,0 +1,11 @@
+node_modules
+.git
+.env.local
+*.log
+*.md
+DEPLOYMENT_GUIDE.md
+FIXES_APPLIED.md
+supercommit.sh
+.DS_Store
+*.zip
+*.tar.gz
