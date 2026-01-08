@@ -18,3 +18,18 @@ Système unifié d'intelligence de la mode intégrant la **biométrie en temps r
 ---
 **Build ID:** Agente 70-Final-Sync-2026
 **Deployment:** https://tryonyou.app
+
+# TRYONYOU – INVESTOR BRIEF
+**Valuation:** €120M - €400M (Projected)
+
+## THE VILLAIN (The Problem)
+E-commerce return rates exceed **30%**, costing global retailers tens of billions annually. The environmental impact is severe, with unnecessary logistics and carbon emissions. No current solution addresses the issue end-to-end.
+
+## THE HERO (The Solution)
+TRYONYOU is a patent-protected fashion-technology ecosystem (PCT/EP2025/067317) that unifies hyper-real virtual fitting, a Smart Wardrobe, and an emotional avatar (Pau) with dual biometric payments (ABVET).
+
+## THE ASK (The Offer)
+We are raising **€200,000 for 7%** to execute our UAE plan:
+*   Establish our ADGM office.
+*   Hire a local team.
+*   Run pilots with regional partners.
