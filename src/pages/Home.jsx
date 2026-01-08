@@ -86,9 +86,9 @@ const Home = () => {
 
               <motion.div variants={itemVariants}>
                 <h2 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white">
-                  You won't make a TryOnYou.
+                  Future Imprint:
                   <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent block mt-2"> 
-                    TryOnYou will do it for you.
+                    Where Styles Meet Innovation
                   </span>
                 </h2>
               </motion.div>
