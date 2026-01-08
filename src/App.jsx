@@ -18,7 +18,7 @@ const ABVET = lazy(() => import('./pages/ABVET'));
 const Claims = lazy(() => import('./pages/Claims'));
 const Investors = lazy(() => import('./pages/Investors'));
 const MagicMirror = lazy(() => import('./pages/MagicMirror'));
-const SmartWardrobe = lazy(() => import('./pages/MagicMirror')); // Re-using MagicMirror as SmartWardrobe based on consolidation
+const SmartWardrobe = lazy(() => import('./pages/MagicMirror')); // Reusing MagicMirror component for the SmartWardrobe route
 
 // Simple loading fallback
 const Loading = () => (
