@@ -10,10 +10,8 @@ const Home = () => {
 
   const handleStart = () => {
     setIsLoading(true)
-    // Non-blocking navigation
-    setTimeout(() => {
-      navigate('/')
-    }, 10)
+    // Navigate immediately without artificial delay
+    navigate('/pilot')
   }
 
   const claims = [
