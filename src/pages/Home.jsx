@@ -12,7 +12,7 @@ const Home = () => {
     setIsLoading(true)
     // Non-blocking navigation
     setTimeout(() => {
-      navigate('/pilot')
+      navigate('/')
     }, 10)
   }
 
