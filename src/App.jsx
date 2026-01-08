@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from "wouter";
 import LandingPage from "./pages/LandingPage";
-import PilotExperience from "./components/PilotExperience";
+import DemoPilot from "./pages/DemoPilot";
 import AbvetCheckout from "./components/AbvetCheckout";
 
 // Mock Contexts to satisfy component dependencies if any
@@ -12,7 +12,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={LandingPage} />
-      <Route path="/demo" component={PilotExperience} />
+      <Route path="/demo" component={DemoPilot} />
       <Route path="/checkout" component={AbvetCheckout} />
       <Route>404: Page Not Found</Route>
     </Switch>

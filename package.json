@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@mediapipe/drawing_utils": "^0.3.1675466124",
+    "@mediapipe/pose": "^0.5.1675469404",
     "@tailwindcss/postcss": "^4.1.18",
     "framer-motion": "^12.24.10",
     "lucide-react": "^0.562.0",
