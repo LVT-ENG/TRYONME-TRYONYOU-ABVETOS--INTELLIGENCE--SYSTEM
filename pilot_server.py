@@ -93,4 +93,12 @@ class PilotHandler(BaseHTTPRequestHandler):
 if __name__ == "__main__":
     print(f"🚀 TRYONYOU PILOT ONLINE | Valuation: {VALORACION_PILOTO}")
     server = HTTPServer(('', 8080), PilotHandler)
-    server.serve_forever()
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\n🔻 TRYONYOU PILOT SHUTDOWN REQUESTED (KeyboardInterrupt)")
+    except Exception as e:
+        print(f"\n❗ TRYONYOU PILOT SERVER ERROR: {e}")
+    finally:
+        server.server_close()
+        print("✅ TRYONYOU PILOT SERVER STOPPED CLEANLY")
