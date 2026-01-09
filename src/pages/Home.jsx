@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useLocation } from 'wouter'
+import SmartWardrobe from '../modules/SmartWardrobe'
 
 const Home = () => {
   const [location, navigate] = useLocation()
@@ -102,72 +103,14 @@ const Home = () => {
               </motion.div>
             </motion.div>
 
-            {/* Right: Hero Image (Realistic Model) */}
+            {/* Right: Smart Wardrobe Integration (Magic Mirror) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="relative h-[600px] bg-gradient-to-br from-blue-900/20 via-gray-800 to-gray-900 rounded-2xl overflow-hidden border-2 border-blue-500/30 shadow-2xl"
+              className="relative h-[600px] w-full rounded-2xl overflow-hidden border-2 border-blue-500/30 shadow-2xl"
             >
-              {/* Grid background */}
-              <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-              
-              {/* Animated gradient orbs */}
-              <div className="absolute top-20 right-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
-              <div className="absolute bottom-20 left-10 w-40 h-40 bg-cyan-500 rounded-full blur-3xl opacity-20 animate-pulse" style={{animationDelay: '1s'}}></div>
-              
-              <div className="absolute inset-0 flex items-center justify-center flex-col">
-                {/* 3D Model Placeholder */}
-                <motion.div
-                  animate={{
-                    rotateY: [0, 360],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="relative w-64 h-64 mb-6"
-                >
-                  {/* Simple 3D-like avatar shape */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-blue-400 to-blue-600 rounded-full opacity-40 blur-md"></div>
-                  <div className="absolute inset-8 bg-gradient-to-br from-cyan-300 to-blue-500 rounded-3xl flex items-center justify-center shadow-2xl border-2 border-blue-300/50">
-                    <span className="text-8xl">👗</span>
-                  </div>
-                </motion.div>
-
-                <p className="text-gray-300 font-semibold text-lg">ABVET 3D Engine</p>
-                <div className="mt-2 flex flex-wrap justify-center gap-2">
-                   <span className="text-xs text-blue-400 bg-blue-900/30 px-2 py-1 rounded border border-blue-500/30">Antigravity Core</span>
-                   <span className="text-xs text-purple-400 bg-purple-900/30 px-2 py-1 rounded border border-purple-500/30">Jules Agent</span>
-                   <span className="text-xs text-orange-400 bg-orange-900/30 px-2 py-1 rounded border border-orange-500/30">Conductor</span>
-                </div>
-              </div>
-
-              {/* Pau Assistant (Peacock) - Animated */}
-              <motion.div
-                animate={{
-                  y: [0, -15, 0],
-                  rotate: [0, 5, -5, 0],
-                }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute bottom-8 right-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full p-5 shadow-2xl border-3 border-yellow-300/50"
-              >
-                <div className="text-5xl">🦚</div>
-              </motion.div>
-
-              {/* Status indicator */}
-              <motion.div
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
-                className="absolute top-8 left-8 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border-2 border-green-500/50 rounded-lg px-6 py-3 backdrop-blur"
-              >
-                <p className="text-sm text-green-300 font-semibold tracking-wide">● AI Analyzing...</p>
-              </motion.div>
+               <SmartWardrobe />
             </motion.div>
           </div>
         </div>
