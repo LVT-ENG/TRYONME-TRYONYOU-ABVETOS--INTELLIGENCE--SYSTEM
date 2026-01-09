@@ -130,7 +130,12 @@ git push origin main || { echo "❌ Error pushing to origin"; exit 1; }
 # Vercel Deployment (Optional)
 if [ -n "$VERCEL_TOKEN" ]; then
     echo "🌐 Deploying to Vercel..."
-    npx vercel --prod --yes --confirm --force || echo "⚠️ Error in Vercel deploy"
+    FORCE_FLAG=""
+    if [ "$VERCEL_ALLOW_FORCE" = "true" ]; then
+        echo "⚠️ VERCEL_ALLOW_FORCE=true, enabling --force for Vercel deployment"
+        FORCE_FLAG="--force"
+    fi
+    npx vercel --prod --yes $FORCE_FLAG || echo "⚠️ Error in Vercel deploy"
 else
     echo "ℹ️ VERCEL_TOKEN variable not defined, skipping Vercel deploy"
     echo " To deploy automatically, export VERCEL_TOKEN before running this script"
