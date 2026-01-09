@@ -1,5 +1,4 @@
 import json
-import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 # --- ESTRUCTURA DE DATOS PROFESIONAL ---
