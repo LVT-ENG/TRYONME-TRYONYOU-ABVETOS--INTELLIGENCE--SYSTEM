@@ -1,0 +1,12 @@
+[
+    {
+        "id": "GL_H",
+        "nombre": "Galeries Lafayette Haussmann",
+        "status": "Priority 1"
+    },
+    {
+        "id": "PH_H",
+        "nombre": "Printemps Haussmann",
+        "status": "Priority 1"
+    }
+]
