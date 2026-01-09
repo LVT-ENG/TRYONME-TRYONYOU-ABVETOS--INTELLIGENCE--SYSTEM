@@ -70,6 +70,12 @@ const Home = () => {
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-orange-900/50 to-amber-900/50 border border-orange-500/30">
                    <span className="text-xs font-bold text-orange-300 tracking-wider">CONDUCTOR</span>
                 </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-violet-900/50 to-fuchsia-900/50 border border-violet-500/30">
+                   <span className="text-xs font-bold text-violet-300 tracking-wider">ANTIGRAVITY</span>
+                </div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-900/50 to-rose-900/50 border border-pink-500/30">
+                   <span className="text-xs font-bold text-pink-300 tracking-wider">JULES</span>
+                </div>
               </motion.div>
 
               <motion.div variants={itemVariants}>
