@@ -63,10 +63,10 @@ echo "➕ Adding files to staging area..."
 [ -d "tests" ] && git add tests/ || echo "ℹ️ tests/ does not exist"
 
 # Mandatory directories
-git add docs/ || echo "⚠️ Could not add docs/"
-git add src/ || echo "⚠️ Could not add src/"
-git add public/ || echo "⚠️ Could not add public/"
-git add scripts/ || echo "⚠️ Could not add scripts/"
+git add docs/ || { echo "❌ Error: Could not add docs/. Aborting."; exit 1; }
+git add src/ || { echo "❌ Error: Could not add src/. Aborting."; exit 1; }
+git add public/ || { echo "❌ Error: Could not add public/. Aborting."; exit 1; }
+git add scripts/ || { echo "❌ Error: Could not add scripts/. Aborting."; exit 1; }
 
 # Configuration files
 git add package.json package-lock.json || echo "⚠️ Could not add config files"
