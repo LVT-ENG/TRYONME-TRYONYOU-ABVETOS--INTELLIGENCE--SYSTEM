@@ -119,7 +119,7 @@ class PilotHandler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     print(f"🚀 TRYONYOU PILOT ONLINE | Valuation: {VALORACION_PILOTO}")
-    server = HTTPServer(('', 8080), PilotHandler)
+    server = HTTPServer(('127.0.0.1', 8080), PilotHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
