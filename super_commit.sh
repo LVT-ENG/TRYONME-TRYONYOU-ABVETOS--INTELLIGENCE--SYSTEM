@@ -44,7 +44,7 @@ else
 fi
 # Install dependencies
 echo "📦 Installing dependencies..."
-npm install
+npm ci
 
 # Create directory structure if missing
 echo "📁 Verifying directory structure..."
