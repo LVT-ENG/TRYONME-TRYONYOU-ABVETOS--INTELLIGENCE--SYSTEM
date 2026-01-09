@@ -103,26 +103,7 @@ git commit -m "🔥 TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM
 - AutoDonate: Automated clothing donation
 - FTT (Fashion Trend Tracker): Trend analysis engine
 
-## Infrastructure
-- Frontend: Vite 7.1.2 + React 18.3.1
-- Deployment: Vercel + Cloudflare SSL
-- CI/CD: GitHub Actions
-- Monitoring: Telegram notifications (@abvet_deploy_bot)
-
-## Documentation
-- Architecture: docs/arquitectura_empresa.md
-- Patent: docs/patent_EPCT/
-- Investor Edition: docs/investor_edition/
-- User Flow: docs/flujo_usuario.md
-
-## Deployment
-- Production URL: https://tryonyou.app
-- Build verified and optimized
-- All assets properly configured
-- SSL: Cloudflare Strict mode
-
-This commit represents the final integration of all TRYONYOU subsystems into a unified, production-ready platform." || echo "⚠️ No new changes to commit"
-
+Summary: Final integration of all TRYONYOU subsystems into a unified, production-ready platform." || echo "⚠️ No new changes to commit"
 # Final Push
 echo "🚀 Preparing to send changes to origin main..."
 
