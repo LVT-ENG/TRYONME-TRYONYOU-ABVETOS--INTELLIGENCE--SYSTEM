@@ -64,8 +64,29 @@ CONTENT = """<div id='app' class='min-h-[80vh] flex flex-col items-center justif
 </div>"""
 
 JS = """<script>
-async function st(){document.getElementById('w').classList.add('hidden');document.getElementById('sc').classList.remove('hidden');const s=await navigator.mediaDevices.getUserMedia({video:true});document.getElementById('v').srcObject=s;}
-function pr(){document.getElementById('sc').innerHTML='<div class=\"text-5xl font-black animate-pulse text-[#C5A46D] italic tracking-tighter uppercase\">Analyzing Drape & Biometrics...</div>';setTimeout(()=>{document.getElementById('sc').classList.add('hidden');document.getElementById('r').classList.remove('hidden');},3000);}
+async function st() {
+    const waitingSection = document.getElementById('w');
+    const scanningSection = document.getElementById('sc');
+    const videoElement = document.getElementById('v');
+
+    waitingSection.classList.add('hidden');
+    scanningSection.classList.remove('hidden');
+
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    videoElement.srcObject = stream;
+}
+
+function pr() {
+    const scanningSection = document.getElementById('sc');
+    const resultSection = document.getElementById('r');
+
+    scanningSection.innerHTML = '<div class="text-5xl font-black animate-pulse text-[#C5A46D] italic tracking-tighter uppercase">Analyzing Drape & Biometrics...</div>';
+
+    setTimeout(() => {
+        scanningSection.classList.add('hidden');
+        resultSection.classList.remove('hidden');
+    }, 3000);
+}
 </script></body></html>"""
 
 class PilotHandler(BaseHTTPRequestHandler):
