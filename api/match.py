@@ -1,50 +1,94 @@
 import json
+import os
+import time
+import requests
 from http.server import BaseHTTPRequestHandler
 
-# BASE DE DATOS TÉCNICA - GALERIES LAFAYETTE
-# Sin tallas. Basado en el comportamiento físico del tejido.
-INVENTAIRE_GL = [
-    {
-        "id": "GL_SOIE_01", "nom": "Robe en Soie Légère",
-        "proprietes": {"elasticite": 0.1, "tombe": 0.9},
-        "ratio_ideal": 1.45, "img": "/assets/vision/silk_dress.png"
-    },
-    {
-        "id": "GL_VESTE_02", "nom": "Veste Structurée Premium",
-        "proprietes": {"elasticite": 0.4, "tombe": 0.3},
-        "ratio_ideal": 1.25, "img": "/assets/vision/blazer.png"
-    }
-]
+# --- USER PROVIDED CLASS ---
+class LafayetteIntelligence:
+    def __init__(self):
+        # Configuración de entorno y seguridad
+        self.token = os.environ.get("VITE_TELEGRAM_TOKEN")
+        self.chat_id = os.environ.get("LAFAYETTE_CHAT_ID")
 
-class handler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        data = json.loads(self.rfile.read(content_length))
-        
-        # Elena Grandini es reconocida por el CRM
-        user = data.get("user", "Elena Grandini")
-        scan = data.get("scan", {"poitrine": 90, "taille": 70})
-        
-        # Algoritmo de Inteligencia Corporal (Body Intelligence)
-        user_ratio = scan['poitrine'] / scan['taille']
-        match = min(INVENTAIRE_GL, key=lambda x: abs(x['ratio_ideal'] - user_ratio))
+        # Base de datos de la Colección Divineo '26
+        self.catalog = [
+            {
+                "id": "burberry_trench",
+                "name": "Burberry Trench Haussmann",
+                "match": "98.5%",
+                "asset": "trench_haussmann.glb",
+                "msg_fr": "Cette pièce souligne l'élégance de votre silhouette."
+            }
+        ]
 
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
+    def run_biometric_scan(self, user_data):
+        """
+        Ejecuta el escaneo invisible sin mostrar números ni tallas.
+        """
+        print("LAFAYETTE JIT PROTOCOL // LIVE: ANALYSING BIOMETRICS...")
         
-        # Respuesta optimizada para evitar latencia
-        response = {
-            "bienvenue": f"Bienvenue aux Galeries Lafayette, {user}.",
-            "match": {
-                "nom": match['nom'],
-                "image": match['img'],
-                "physique": match['proprietes'],
-                "explications": {
-                    "fr": f"Choisie pour sa fluidité ({match['proprietes']['tombe']}) qui sublime votre silhouette.",
-                    "es": f"Elegida por su caída ({match['proprietes']['tombe']}) que realza tu silueta sin oprimir.",
-                    "en": f"Selected for its drape ({match['proprietes']['tombe']}) to complement your silhouette."
-                }
+        # Simulación de 'Slow Tech' (1.5s) para visualización progresiva
+        time.sleep(1.5)
+        
+        recommendation = self.catalog[0]
+        self._notify_store(recommendation)
+        
+        return {
+            "type": "SCAN_COMPLETE",
+            "payload": {
+                "fit_score": recommendation["match"],
+                "pau_message": recommendation["msg_fr"],
+                "asset_url": recommendation["asset"],
+                "status": "SYSTEM_ONLINE"
             }
         }
-        self.wfile.write(json.dumps(response).encode())
+
+    def _notify_store(self, item):
+        """Envía notificación al equipo de tienda vía Telegram."""
+        url = f"https://api.telegram.org/bot{self.token}/sendMessage"
+        text = f"🌟 **Nouveau Match Haussmann**\nProduit: {item['name']}\nAjustement: {item['match']}"
+        try:
+            if self.chat_id:
+                requests.post(url, json={"chat_id": self.chat_id, "text": text, "parse_mode": "Markdown"})
+            else:
+                print("LAFAYETTE LOG: No chat_id provided, skipping Telegram notification.")
+        except Exception as e:
+            print(f"Error Sync: {e}")
+
+# --- VERCEL HANDLER ---
+class handler(BaseHTTPRequestHandler):
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()
+
+    def do_POST(self):
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length)
+            user_data = json.loads(body) if body else {}
+
+            core = LafayetteIntelligence()
+            result = core.run_biometric_scan(user_data)
+
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps(result).encode('utf-8'))
+        except Exception as e:
+            self.send_response(500)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps({"error": str(e)}).encode('utf-8'))
+
+# --- LOCAL TEST BLOCK ---
+if __name__ == "__main__":
+    core = LafayetteIntelligence()
+    # Simulación de entrada desde el espejo tm.manus.space
+    result = core.run_biometric_scan({"height": 175, "weight": 70})
+    print(json.dumps(result, indent=2, ensure_ascii=False))
