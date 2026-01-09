@@ -7,6 +7,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 const Home = lazy(() => import("./pages/Home"));
 const DemoPilot = lazy(() => import("./pages/DemoPilot"));
 const AbvetCheckout = lazy(() => import("./components/AbvetCheckout"));
+const RegisterPartner = lazy(() => import("./pages/RegisterPartner"));
 
 function Router() {
   return (
@@ -15,6 +16,7 @@ function Router() {
         <Route path="/" component={Home} />
         <Route path="/demo" component={DemoPilot} />
         <Route path="/checkout" component={AbvetCheckout} />
+        <Route path="/register-partner" component={RegisterPartner} />
         <Route>404: Page Not Found</Route>
       </Switch>
     </Suspense>
