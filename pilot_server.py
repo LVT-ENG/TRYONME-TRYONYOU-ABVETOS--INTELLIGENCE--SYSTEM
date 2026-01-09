@@ -89,6 +89,11 @@ class PilotHandler(BaseHTTPRequestHandler):
             # Endpoint para auditoría de inversores
             invest_data = {"valuation": VALORACION_PILOTO, "patent": PATENTE_ID, "status": "Ready for Pilot"}
             self.wfile.write(json.dumps(invest_data).encode())
+        else:
+            # Respuesta 404 para rutas no definidas
+            self._set_headers(404, "text/plain")
+            message = f"404 Not Found: {self.path}\n"
+            self.wfile.write(message.encode())
 
 if __name__ == "__main__":
     print(f"🚀 TRYONYOU PILOT ONLINE | Valuation: {VALORACION_PILOTO}")
