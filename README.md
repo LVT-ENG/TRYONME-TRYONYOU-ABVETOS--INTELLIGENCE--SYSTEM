@@ -1,12 +1,56 @@
-# React + Vite
+# TRYONYOU: Fashion Tech for Perfect Fit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**TRYONYOU** is a next-generation fashion technology platform that leverages advanced AI to provide accurate virtual try-on experiences, minimizing returns and maximizing fit confidence.
 
-Currently, two official plugins are available:
+## 🚀 Powered by Google Platform (Nov/Dec 2025)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This project integrates the latest breakthroughs from the Google Platform ecosystem to deliver autonomous engineering, hyper-realistic media generation, and scalable infrastructure.
 
-## Expanding the ESLint configuration
+### Core Technologies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+*   **Gemini 3 Pro**: The foundational large language model (LLM) serving as the "Master Brain" of the system, enabling advanced reasoning and multimodal understanding.
+*   **Veo 3.1**: Cutting-edge generative video technology for dynamic content creation and fabric physics simulation.
+*   **Antigravity**: High-performance serverless infrastructure ensuring low-latency biometric processing and 3D rendering.
+*   **Jules**: Our autonomous coding agent (powered by Gemini 3 Pro) that maintains, evolves, and optimizes this codebase in real-time.
+*   **Conductor**: The orchestration layer managing 53 specialized AI agents (including PAU, Drape-Aware Physics, and more).
+
+> ℹ️ **See [Google Platform News](docs/GOOGLE_PLATFORM_NEWS.md) for detailed release notes and integration specifics.**
+
+## 🛠️ Project Setup
+
+### Prerequisites
+
+*   Node.js (v18+)
+*   npm
+
+### Installation
+
+```bash
+npm install
+```
+
+### Development
+
+Start the local development server:
+
+```bash
+npm run dev
+```
+
+### Build
+
+Build for production:
+
+```bash
+npm run build
+```
+
+## 📂 Documentation
+
+*   [Google Platform News](docs/GOOGLE_PLATFORM_NEWS.md)
+*   [Patent Claims](docs/PATENT_CLAIMS.md)
+
+## ⚖️ Legal
+
+Protected under Patent PCT/EP2025/067317.
+Operated by Rubén Espinar Rodríguez (SIREN: 943 610 196).
