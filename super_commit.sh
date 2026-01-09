@@ -75,7 +75,7 @@ git add .env.example README.md CHANGELOG.md || echo "⚠️ Could not add docume
 
 # Optional additional files
 [ -f "Makefile" ] && git add Makefile || echo "ℹ️ Makefile does not exist"
-[ -f "deploy.sh" ] && git add deploy.sh || echo "ℹ️ deploy.sh already exists"
+[ -f "deploy.sh" ] && git add deploy.sh || echo "ℹ️ deploy.sh does not exist"
 
 # Super-commit with detailed message
 echo "💎 Creating commit with detailed message..."
