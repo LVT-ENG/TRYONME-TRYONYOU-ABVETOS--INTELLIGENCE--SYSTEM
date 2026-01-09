@@ -124,9 +124,35 @@ git commit -m "🔥 TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM
 This commit represents the final integration of all TRYONYOU subsystems into a unified, production-ready platform." || echo "⚠️ No new changes to commit"
 
 # Final Push
-echo "🚀 Sending changes to origin main..."
-git push origin main || { echo "❌ Error pushing to origin"; exit 1; }
+echo "🚀 Preparing to send changes to origin main..."
 
+# Safety check: ensure local main is in sync with origin/main
+echo "🔍 Verifying branch status against origin/main..."
+git fetch origin main > /dev/null 2>&1 || { echo "❌ Error fetching from origin"; exit 1; }
+
+LOCAL_MAIN=$(git rev-parse main)
+REMOTE_MAIN=$(git rev-parse origin/main)
+
+if [ "$LOCAL_MAIN" != "$REMOTE_MAIN" ]; then
+    echo "⚠️ Local 'main' is not in sync with 'origin/main'."
+    echo "   Local:  $LOCAL_MAIN"
+    echo "   Remote: $REMOTE_MAIN"
+    echo "   Push aborted to avoid overwriting remote changes."
+    echo "   Please pull/rebase and resolve any differences, then re-run this script."
+    exit 1
+fi
+
+# Confirmation prompt before pushing
+read -r -p "❓ Do you want to push these changes to 'origin main'? [y/N]: " CONFIRM_PUSH
+case "$CONFIRM_PUSH" in
+    [yY][eE][sS]|[yY])
+        echo "🚀 Sending changes to origin main..."
+        git push origin main || { echo "❌ Error pushing to origin"; exit 1; }
+        ;;
+    *)
+        echo "⏹ Push to origin main canceled by user."
+        ;;
+esac
 # Vercel Deployment (Optional)
 if [ -n "$VERCEL_TOKEN" ]; then
     echo "🌐 Deploying to Vercel..."
