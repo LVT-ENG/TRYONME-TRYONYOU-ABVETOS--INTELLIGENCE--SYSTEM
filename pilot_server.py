@@ -72,7 +72,7 @@ class PilotHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-type", c_type)
         self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("bypass-tunnel-reminder", "true") # Bypass para Looker Studio
+        self.send_header("bypass-tunnel-reminder", "true")  # Suppress tunnel reminder banners for dev tunnels (e.g., ngrok/localtunnel)
         self.end_headers()
 
     def do_GET(self):
