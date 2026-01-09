@@ -20,8 +20,28 @@ git pull origin main || { echo "❌ Error pulling from origin"; exit 1; }
 
 # Pre-cleanup (Destructive)
 echo "🧹 Performing pre-cleanup..."
-rm -rf node_modules dist legacy_old temp_old apps/web-old tests-old legacy integrations/duplicados 2>/dev/null || true
+CLEANUP_TARGETS="node_modules dist legacy_old temp_old apps/web-old tests-old legacy integrations/duplicados"
 
+# Only perform destructive cleanup if explicitly confirmed or forced.
+if [ -t 0 ]; then
+    # Interactive shell: ask for confirmation.
+    echo "⚠️  The following directories will be permanently deleted (if they exist):"
+    echo "    $CLEANUP_TARGETS"
+    read -r -p "Proceed with deletion? [y/N]: " CONFIRM_CLEAN
+    if [ "$CONFIRM_CLEAN" = "y" ] || [ "$CONFIRM_CLEAN" = "Y" ]; then
+        rm -rf $CLEANUP_TARGETS 2>/dev/null || true
+    else
+        echo "ℹ️  Skipping destructive pre-cleanup."
+    fi
+else
+    # Non-interactive (e.g., CI): require explicit opt-in via environment variable.
+    if [ "${SUPER_COMMIT_FORCE_CLEAN:-0}" = "1" ]; then
+        echo "⚠️  Running destructive pre-cleanup (forced by SUPER_COMMIT_FORCE_CLEAN=1)..."
+        rm -rf $CLEANUP_TARGETS 2>/dev/null || true
+    else
+        echo "ℹ️  Non-interactive shell detected and SUPER_COMMIT_FORCE_CLEAN!=1; skipping destructive pre-cleanup."
+    fi
+fi
 # Install dependencies
 echo "📦 Installing dependencies..."
 npm install
