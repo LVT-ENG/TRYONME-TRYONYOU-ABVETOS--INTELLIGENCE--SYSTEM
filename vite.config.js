@@ -23,5 +23,16 @@ export default defineConfig({
       clientPort: 443,
       protocol: 'wss'
     }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'wouter'],
+          'animation-vendor': ['framer-motion'],
+          'ui-vendor': ['lucide-react']
+        }
+      }
+    }
   }
 })
