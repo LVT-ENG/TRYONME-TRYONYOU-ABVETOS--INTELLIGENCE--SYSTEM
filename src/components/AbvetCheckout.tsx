@@ -78,8 +78,8 @@ const AbvetCheckout: React.FC = () => {
                 <div className="w-20 h-20 mx-auto mb-6 bg-[#C5A46D] rounded-full flex items-center justify-center">
                   <svg className="w-10 h-10 text-[#141619]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
                 </div>
-                <h4 className="text-xl text-[#F0F0F0] mb-2">Listo</h4>
-                <p className="text-gray-400 text-sm max-w-md mx-auto">Tu pedido está en camino. Gracias por elegir la excelencia.</p>
+                <h4 className="text-xl text-[#F0F0F0] mb-2">Verificación Biométrica Dual</h4>
+                <p className="text-gray-400 text-sm max-w-md mx-auto">Iris + Voz Confirmados. Pago completado de forma segura.</p>
               </motion.div>
             )}
           </div>
@@ -89,7 +89,12 @@ const AbvetCheckout: React.FC = () => {
             <button 
               onClick={() => {
                 if (step === 3) {
-                  setShowBusinessModal(true);
+                    // Trigger mock biometric check before showing final modal
+                    console.log("🔒 Executing Patent Claim 11: Dual Biometric Check (Iris/Voice)...");
+                    setTimeout(() => {
+                        console.log("✅ Biometric Verification Success. Payment Cleared.");
+                        setShowBusinessModal(true);
+                    }, 800);
                 } else {
                   setStep(prev => prev + 1);
                 }
