@@ -113,9 +113,9 @@ body {{
     REPORT["ui"]["divineo"] = "applied"
 
 def validate_routes():
-    app = PROJECT_ROOT / "src" / "App.tsx"
+    app = PROJECT_ROOT / "src" / "App.jsx"
     if not app.exists():
-        REPORT["routes"]["status"] = "App.tsx missing"
+        REPORT["routes"]["status"] = "App.jsx missing"
         return
     content = app.read_text()
     for r in ROUTES_REQUIRED:
@@ -124,6 +124,10 @@ def validate_routes():
 def generate_vercel_config():
     vercel = {
         "regions": ["fra1", "iad1", "hnd1"],
+        "rewrites": [
+            {"source": "/api/(.*)", "destination": "/api/$1"},
+            {"source": "/(.*)", "destination": "/index.html"}
+        ],
         "headers": [{
             "source": "/(.*)",
             "headers": [
