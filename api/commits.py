@@ -14,24 +14,29 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         """Retrieve all git commits"""
         try:
-            # Execute git log to get all commits
-            result = subprocess.run(
-                ['git', 'log', '--all', '--pretty=format:%H|%an|%ae|%ad|%s', '--date=iso'],
-                capture_output=True,
-                text=True,
-                cwd='/var/task'  # Vercel's task directory
-            )
+            import os
+            # Try to determine the repository root directory
+            # First try the Vercel task directory, then LAMBDA_TASK_ROOT (AWS), then current directory
+            repo_paths = [
+                os.environ.get('LAMBDA_TASK_ROOT', '/var/task'),
+                os.getcwd(),
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            ]
             
-            # If git command fails, try from current directory
-            if result.returncode != 0:
-                result = subprocess.run(
-                    ['git', 'log', '--all', '--pretty=format:%H|%an|%ae|%ad|%s', '--date=iso'],
-                    capture_output=True,
-                    text=True
-                )
+            result = None
+            for repo_path in repo_paths:
+                if os.path.exists(repo_path):
+                    result = subprocess.run(
+                        ['git', 'log', '--all', '--pretty=format:%H|%an|%ae|%ad|%s', '--date=iso'],
+                        capture_output=True,
+                        text=True,
+                        cwd=repo_path
+                    )
+                    if result.returncode == 0:
+                        break
             
-            if result.returncode != 0:
-                raise Exception(f"Git command failed: {result.stderr}")
+            if result is None or result.returncode != 0:
+                raise Exception(f"Git command failed: {result.stderr if result else 'No valid repository path found'}")
             
             # Parse the output into structured data
             commits = []

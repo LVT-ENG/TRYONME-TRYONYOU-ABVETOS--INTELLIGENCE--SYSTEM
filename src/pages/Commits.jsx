@@ -109,7 +109,7 @@ const Commits = () => {
               <p className="text-gray-500 text-lg">No commits found matching your search.</p>
             </div>
           ) : (
-            filteredCommits.map((commit, index) => (
+            filteredCommits.map((commit) => (
               <div 
                 key={commit.hash}
                 className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border-l-4 border-purple-500 transform hover:-translate-y-1"
