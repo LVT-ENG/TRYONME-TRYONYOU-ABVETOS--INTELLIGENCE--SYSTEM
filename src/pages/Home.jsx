@@ -1,41 +1,58 @@
-import React, { useState } from 'react'
+import React, { memo } from 'react'
 import { motion } from 'framer-motion'
 import { useLocation } from 'wouter'
 import SmartWardrobe from '../modules/SmartWardrobe'
 
+// Static data defined outside component to prevent recreation
+const SUPER_CLAIMS = [
+  "Avatar 3D Paramétrico + calibración automática",
+  "Comparador Objetivo: Métricas de fit-score, strain y contacto real",
+  "Simulación Física Textil: Propiedades reales de caída y peso",
+  "PAU Recommender: Gustos + Emociones + Tendencias (FTT)",
+  "CAP (Creative Auto-Production): Generación automática de patrón/print",
+  "Pago Dual ABVET: Seguridad biométrica (Iris + Voz + Liveness)",
+  "Orquestación JIT: Trazabilidad end-to-end desde la fábrica",
+  "Sistema Embebible: Actualización en tiempo real vía Git"
+];
+
+// Animation variants defined outside component
+const CONTAINER_VARIANTS = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+}
+
+const ITEM_VARIANTS = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+}
+
+// Memoized component for individual claims to prevent unnecessary re-renders
+const ClaimCard = memo(({ claim, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5, delay: index * 0.1 }}
+    className="bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.18)] p-6 rounded-xl backdrop-blur-md hover:bg-[rgba(255,255,255,0.1)] transition"
+  >
+    <div className="text-[#006D77] font-bold mb-2">0{index + 1}</div>
+    <p className="text-sm font-medium text-white">{claim}</p>
+  </motion.div>
+));
+
+ClaimCard.displayName = 'ClaimCard';
+
 const Home = () => {
-  const [location, navigate] = useLocation()
-
-  const superClaims = [
-    "Avatar 3D Paramétrico + calibración automática",
-    "Comparador Objetivo: Métricas de fit-score, strain y contacto real",
-    "Simulación Física Textil: Propiedades reales de caída y peso",
-    "PAU Recommender: Gustos + Emociones + Tendencias (FTT)",
-    "CAP (Creative Auto-Production): Generación automática de patrón/print",
-    "Pago Dual ABVET: Seguridad biométrica (Iris + Voz + Liveness)",
-    "Orquestación JIT: Trazabilidad end-to-end desde la fábrica",
-    "Sistema Embebible: Actualización en tiempo real vía Git"
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5 },
-    },
-  }
+  const [, navigate] = useLocation()
 
   return (
     <div className="min-h-screen bg-[#141619] text-[#EEF0F3] overflow-hidden font-sans">
@@ -54,13 +71,13 @@ const Home = () => {
             
             {/* Left: Text Content */}
             <motion.div
-              variants={containerVariants}
+              variants={CONTAINER_VARIANTS}
               initial="hidden"
               animate="visible"
               className="space-y-8"
             >
               {/* Google Platform Badges */}
-              <motion.div variants={itemVariants} className="flex flex-wrap gap-2">
+              <motion.div variants={ITEM_VARIANTS} className="flex flex-wrap gap-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-900/50 to-purple-900/50 border border-blue-500/30">
                    <span className="text-xs font-bold text-blue-300 tracking-wider">POWERED BY GEMINI 3 PRO</span>
                 </div>
@@ -72,18 +89,18 @@ const Home = () => {
                 </div>
               </motion.div>
 
-              <motion.div variants={itemVariants}>
+              <motion.div variants={ITEM_VARIANTS}>
                 <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-[#D3B26A]">
                   Future Imprint: <br />
                   <span className="text-white">Where Styles Meet Innovation.</span>
                 </h1>
               </motion.div>
 
-              <motion.p variants={itemVariants} className="text-xl text-gray-300 leading-relaxed">
+              <motion.p variants={ITEM_VARIANTS} className="text-xl text-gray-300 leading-relaxed">
                 Discover curated collections powered by our patented generative AI fitting technology.
               </motion.p>
 
-              <motion.div variants={itemVariants} className="flex gap-4">
+              <motion.div variants={ITEM_VARIANTS} className="flex gap-4">
                 <button
                   onClick={() => navigate('/pilot')}
                   className="px-8 py-4 bg-[#D3B26A] hover:bg-[#b09050] rounded-lg font-bold text-[#141619] transition-colors shadow-lg uppercase tracking-wider"
@@ -98,7 +115,7 @@ const Home = () => {
                 </button>
               </motion.div>
 
-              <motion.div variants={itemVariants} className="text-sm text-gray-400">
+              <motion.div variants={ITEM_VARIANTS} className="text-sm text-gray-400">
                 Zero friction. Clear message in less than 5 seconds.
               </motion.div>
             </motion.div>
@@ -130,17 +147,8 @@ const Home = () => {
 
           {/* Claims Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            {superClaims.map((claim, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.18)] p-6 rounded-xl backdrop-blur-md hover:bg-[rgba(255,255,255,0.1)] transition"
-              >
-                <div className="text-[#006D77] font-bold mb-2">0{index + 1}</div>
-                <p className="text-sm font-medium text-white">{claim}</p>
-              </motion.div>
+            {SUPER_CLAIMS.map((claim, index) => (
+              <ClaimCard key={index} claim={claim} index={index} />
             ))}
           </div>
         </div>
