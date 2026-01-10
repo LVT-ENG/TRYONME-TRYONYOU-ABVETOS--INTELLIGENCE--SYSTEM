@@ -9,7 +9,7 @@ export default function SyncControl() {
       // Aquí simulamos la mezcla pesada de proyectos
       console.log("Hijas unificadas con éxito");
       setStatus('completed');
-    }, 500); 
+    }, 500);
   };
 
   return (

@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -11,17 +10,22 @@ export default defineConfig({
     },
   },
   server: {
-    host: '0.0.0.0',
     port: 5173,
-    strictPort: false,
-    allowedHosts: [
-      '.manus.computer',
-      'localhost',
-      '127.0.0.1'
-    ],
-    hmr: {
-      clientPort: 443,
-      protocol: 'wss'
+    host: true
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+    copyPublicDir: true, // Ensure public folder is copied to dist
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'animation-vendor': ['framer-motion', 'gsap'],
+          'three-vendor': ['three', '@react-three/fiber', '@react-three/drei']
+        }
+      }
     }
-  }
+  },
+  publicDir: 'public' // Explicitly set public directory
 })
