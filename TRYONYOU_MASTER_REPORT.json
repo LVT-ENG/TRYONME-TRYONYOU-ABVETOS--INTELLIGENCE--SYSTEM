@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-01-05T16:53:52.431694",
+  "timestamp": "2026-01-10T15:31:49.431528",
   "assets": [
     {
       "source": "41C07010",
@@ -33,7 +33,10 @@
     "divineo": "applied"
   },
   "routes": {
-    "status": "App.tsx missing"
+    "/fit": "missing",
+    "/cap": "missing",
+    "/abvet": "missing",
+    "/claims": "missing"
   },
   "deploy": {}
 }
