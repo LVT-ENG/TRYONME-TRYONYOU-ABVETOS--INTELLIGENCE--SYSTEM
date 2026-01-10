@@ -30,7 +30,7 @@ pose.onResults((r)=>{if(!r.poseLandmarks||done)return;
 const head=r.poseLandmarks[0], ankles=(r.poseLandmarks[27].y+r.poseLandmarks[28].y)/2;
 const rawHeight = Math.abs(ankles - head.y);
 // AJUSTE DE CALIBRACIÓN: Factor de 175 para medidas humanas reales
-const h = Math.round(rawHeight * 175); 
+const h = Math.round(rawHeight * 175);
 const s = Math.round(Math.abs(r.poseLandmarks[12].x-r.poseLandmarks[11].x)*90);
 if(h > 150 && h < 210){ // Solo dispara si la medida es humana y lógica
 document.getElementById('rh').innerText=h+" cm";document.getElementById('rs').innerText=s+" cm";

@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useLocation } from 'wouter'
+import { useNavigate } from 'react-router-dom'
 import SmartWardrobe from '../modules/SmartWardrobe'
 
 const Home = () => {
-  const [location, navigate] = useLocation()
+  const navigate = useNavigate()
+  // eslint-disable-next-line no-unused-vars
+  const [activeClaimIndex, setActiveClaimIndex] = useState(0)
 
   const superClaims = [
     "Avatar 3D Paramétrico + calibración automática",

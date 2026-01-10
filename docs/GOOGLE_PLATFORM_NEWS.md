@@ -21,7 +21,7 @@ This document outlines the latest Google technologies integrated or referenced w
 ### Jules
 *   **Role**: Autonomous Coding Agent.
 *   **Description**: An always-on autonomous engineer powered by Gemini 3 Pro. "Jules" is responsible for maintaining the codebase, implementing features, and solving bugs autonomously.
-*   **Identity**: Defines the persona of the current active maintainer of this repository.
+*   **Identity**: Defines the persona of the current active maintainer of this repository (that's me!).
 
 ### Conductor
 *   **Role**: AI Agent Orchestration Layer.
