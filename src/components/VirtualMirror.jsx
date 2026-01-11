@@ -27,6 +27,7 @@ export default function VirtualMirror() {
     return () => {
       stopWebcam();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startWebcam = async () => {
