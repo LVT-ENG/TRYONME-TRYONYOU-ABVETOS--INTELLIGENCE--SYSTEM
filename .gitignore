@@ -37,3 +37,6 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Generated content
+TRYONYOU_OUTPUT/
+
