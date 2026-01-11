@@ -1,7 +1,5 @@
-export VERCEL_TOKEN=u4XcN6WldM0h7V5jdCvujjkU
-
-TRYONYOU_SUPERCOMMIT_MAX.sh
 #!/bin/bash
+export VERCEL_TOKEN=u4XcN6WldM0h7V5jdCvujjkU
 
 set -e
 
