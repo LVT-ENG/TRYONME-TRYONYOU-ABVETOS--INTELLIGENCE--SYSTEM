@@ -5,14 +5,23 @@ export default function VirtualMirror() {
   const videoRef = useRef(null);
 
   useEffect(() => {
-    let stream = null;
+    let streamRef = null;
+    let isMounted = true;
     
     // Activar cámara cuando el componente se monta
     const startCamera = async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({ 
+        const stream = await navigator.mediaDevices.getUserMedia({ 
           video: { facingMode: 'user' } 
         });
+        
+        if (!isMounted) {
+          // Si el componente se desmontó durante la petición, limpiar inmediatamente
+          stream.getTracks().forEach(track => track.stop());
+          return;
+        }
+        
+        streamRef = stream;
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
@@ -25,8 +34,9 @@ export default function VirtualMirror() {
 
     // Cleanup: detener la cámara cuando el componente se desmonta
     return () => {
-      if (stream) {
-        const tracks = stream.getTracks();
+      isMounted = false;
+      if (streamRef) {
+        const tracks = streamRef.getTracks();
         tracks.forEach(track => track.stop());
       }
     };
