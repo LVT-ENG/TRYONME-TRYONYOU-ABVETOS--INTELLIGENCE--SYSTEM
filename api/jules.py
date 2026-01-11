@@ -2,9 +2,10 @@ import json
 import os
 import sys
 from http.server import BaseHTTPRequestHandler
+from pathlib import Path
 
 # Add parent directory to path to import jules_ultimatum_v7
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 # Import Jules agent functionality
 try:

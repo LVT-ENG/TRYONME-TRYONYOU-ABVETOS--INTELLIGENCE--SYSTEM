@@ -1,19 +1,5 @@
 import json
-import os
-import sys
 from http.server import BaseHTTPRequestHandler
-
-# Add parent directory to path to import jules_ultimatum_v7
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-# Import Jules agent functionality
-try:
-    from jules_ultimatum_v7 import main as jules_main, analyze_email_intent, send_telegram
-except ImportError as e:
-    jules_main = None
-    analyze_email_intent = None
-    send_telegram = None
-    import_error = str(e)
 
 class handler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
