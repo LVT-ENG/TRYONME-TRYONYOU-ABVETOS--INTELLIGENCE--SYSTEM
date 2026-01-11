@@ -11,8 +11,8 @@ echo "🚀 INICIANDO PROTOCOLO SUPERCOMMIT MAX..."
 # 1. VERIFICACIÓN DE SEGURIDAD
 # ------------------------------------------------------------------------------
 if [ ! -f "package.json" ]; then
- echo "❌ Error: Debes estar en la raíz del repositorio (donde está package.json)."
- exit 1
+    echo "❌ Error: Debes estar en la raíz del repositorio (donde está package.json)."
+    exit 1
 fi
 
 # 2. LIMPIEZA NUCLEAR (Eliminación de conflictos y basura legacy)
