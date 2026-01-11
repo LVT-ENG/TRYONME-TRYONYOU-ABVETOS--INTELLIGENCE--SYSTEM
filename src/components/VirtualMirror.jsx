@@ -12,6 +12,7 @@ export default function VirtualMirror() {
   const [error, setError] = useState(null);
   const [overlayOpacity, setOverlayOpacity] = useState(0.7);
   const garmentImage = useRef(null);
+  const animationFrameId = useRef(null);
 
   useEffect(() => {
     // Load the garment overlay image
@@ -20,14 +21,19 @@ export default function VirtualMirror() {
     img.onload = () => {
       garmentImage.current = img;
     };
+    img.onerror = () => {
+      console.error('Failed to load garment image');
+    };
 
     // Start webcam
     startWebcam();
 
     return () => {
       stopWebcam();
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const startWebcam = async () => {
@@ -63,7 +69,10 @@ export default function VirtualMirror() {
   };
 
   const renderFrame = () => {
-    if (!videoRef.current || !canvasRef.current || !isStreaming) return;
+    if (!videoRef.current || !canvasRef.current || !isStreaming) {
+      animationFrameId.current = null;
+      return;
+    }
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -92,7 +101,7 @@ export default function VirtualMirror() {
     }
 
     // Continue rendering
-    requestAnimationFrame(renderFrame);
+    animationFrameId.current = requestAnimationFrame(renderFrame);
   };
 
   return (
