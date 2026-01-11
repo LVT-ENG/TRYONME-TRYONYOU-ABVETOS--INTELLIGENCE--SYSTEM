@@ -47,8 +47,13 @@ npm run build
 
 ## 📂 Documentation
 
+### Technical Documentation
 *   [Google Platform News](docs/GOOGLE_PLATFORM_NEWS.md)
 *   [Patent Claims](docs/PATENT_CLAIMS.md)
+*   [Complete Documentation](docs/README.md)
+
+### Narrative & Storytelling
+*   [El Superhéroe de la Fashion Tech](docs/EL_SUPERHEROE_FASHION_TECH.md) - First-person narrative showcasing the problem TRYONYOU solves
 
 ## ⚖️ Legal
 

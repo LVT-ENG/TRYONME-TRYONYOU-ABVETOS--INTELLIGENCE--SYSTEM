@@ -221,11 +221,15 @@ This script will:
 
 ## 📚 Documentation
 
+### Technical Documentation
 - `FUSION_COMPLETE.md` - Details about platform fusion
 - `DEPLOYMENT_CHECKLIST.md` - Comprehensive deployment guide
 - `ASSETS_GUIDE.md` - Asset requirements and naming conventions
 - `DEMO_READY.md` - Demo preparation guide
 - `docs/GOOGLE_PLATFORM_NEWS.md` - Google Platform integration news (Nov/Dec 2025)
+
+### Narrative & Storytelling
+- `docs/EL_SUPERHEROE_FASHION_TECH.md` - First-person narrative: "El Superhéroe de la Fashion Tech" - A vivid story showcasing the problem TRYONYOU solves through the eyes of a frustrated fashion shopper
 
 ## 🔒 Patent Protection
 
