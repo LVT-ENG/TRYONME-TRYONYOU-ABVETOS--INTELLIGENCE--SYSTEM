@@ -6,8 +6,20 @@
   ],
   "rewrites": [
     {
+      "source": "/api/match",
+      "destination": "/api/match.py"
+    },
+    {
+      "source": "/api/commits",
+      "destination": "/api/commits.py"
+    },
+    {
+      "source": "/api",
+      "destination": "/api/index.py"
+    },
+    {
       "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "destination": "/api/index.py"
     },
     {
       "source": "/(.*)",
