@@ -1,17 +1,20 @@
 {
-  "regions": [
-    "fra1",
-    "iad1",
-    "hnd1"
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/$1"
-    },
+      "destination": "/api/index.py"
+    }
+  ],
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 10,
+      "runtime": "python3.9"
+    }
+  },
+  "crons": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "path": "/api/index.py",
+      "schedule": "*/5 * * * *"
     }
   ],
   "headers": [
@@ -25,6 +28,10 @@
         {
           "key": "Strict-Transport-Security",
           "value": "max-age=63072000"
+        },
+        {
+          "key": "X-Patent-ID",
+          "value": "PCT/EP2025/067317"
         }
       ]
     }

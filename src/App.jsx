@@ -9,6 +9,7 @@ const DemoPilot = lazy(() => import("./pages/DemoPilot"));
 const AbvetCheckout = lazy(() => import("./components/AbvetCheckout"));
 const RegisterPartner = lazy(() => import("./pages/RegisterPartner"));
 const Commits = lazy(() => import("./pages/Commits"));
+const VirtualMirror = lazy(() => import("./components/VirtualMirror"));
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/checkout" component={AbvetCheckout} />
         <Route path="/register-partner" component={RegisterPartner} />
         <Route path="/commits" component={Commits} />
+        <Route path="/scan" component={VirtualMirror} />
         <Route>404: Page Not Found</Route>
       </Switch>
     </Suspense>

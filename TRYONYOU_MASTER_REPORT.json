@@ -1,15 +1,15 @@
 {
-  "timestamp": "2026-01-11T15:31:37.585036",
+  "timestamp": "2026-01-11T18:27:08.374933",
   "assets": [
     {
       "source": "41C07010",
-      "destination": "assets/catalog/red_dress_minimal.png",
-      "status": "missing"
+      "destination": "/app/public/assets/catalog/red_dress_minimal.png",
+      "status": "present"
     },
     {
       "source": "8762992B",
-      "destination": "assets/catalog/burberry_trench.png",
-      "status": "missing"
+      "destination": "/app/public/assets/catalog/burberry_trench.png",
+      "status": "present"
     },
     {
       "source": "IMG_6206",
@@ -38,5 +38,10 @@
     "/abvet": "missing",
     "/claims": "missing"
   },
-  "deploy": {}
+  "deploy": {
+    "legacy_old": "not_found",
+    "temp_old": "not_found",
+    "apps/web-old": "not_found",
+    "tests-old": "not_found"
+  }
 }

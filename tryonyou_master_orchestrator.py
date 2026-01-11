@@ -51,26 +51,53 @@ def ensure_dir(path: Path):
 def organize_assets():
     ensure_dir(ASSETS_DIR)
     ensure_dir(DOCS_DIR)
+
+    # Check if Downloads exists (dev environment vs CI)
+    downloads_available = DOWNLOADS_DIR.exists()
+
     for prefix, target in ASSET_MAPPING.items():
+        dest = PUBLIC_DIR / target
+
+        # 1. Check if already exists in target
+        if dest.exists():
+            REPORT["assets"].append({
+                "source": prefix,
+                "destination": str(dest),
+                "status": "present"
+            })
+            continue
+
+        # 2. Try to find in Downloads if available
         found = False
-        for file in DOWNLOADS_DIR.glob("*"):
-            if file.name.startswith(prefix):
-                dest = PUBLIC_DIR / target
-                ensure_dir(dest.parent)
-                shutil.copy(file, dest)
-                REPORT["assets"].append({
-                    "source": file.name,
-                    "destination": str(dest),
-                    "status": "mapped"
-                })
-                found = True
-                break
+        if downloads_available:
+            for file in DOWNLOADS_DIR.glob("*"):
+                if file.name.startswith(prefix):
+                    ensure_dir(dest.parent)
+                    shutil.copy(file, dest)
+                    REPORT["assets"].append({
+                        "source": file.name,
+                        "destination": str(dest),
+                        "status": "mapped_from_downloads"
+                    })
+                    found = True
+                    break
+
         if not found:
             REPORT["assets"].append({
                 "source": prefix,
                 "destination": target,
                 "status": "missing"
             })
+
+def clean_legacy_structure():
+    legacy_dirs = ["legacy_old", "temp_old", "apps/web-old", "tests-old"]
+    for d in legacy_dirs:
+        path = PROJECT_ROOT / d
+        if path.exists():
+            shutil.rmtree(path)
+            REPORT["deploy"][d] = "removed"
+        else:
+            REPORT["deploy"][d] = "not_found"
 
 def validate_env():
     with open(PROJECT_ROOT / ".env.example", "w") as f:
@@ -123,16 +150,27 @@ def validate_routes():
 
 def generate_vercel_config():
     vercel = {
-        "regions": ["fra1", "iad1", "hnd1"],
         "rewrites": [
-            {"source": "/api/(.*)", "destination": "/api/$1"},
-            {"source": "/(.*)", "destination": "/index.html"}
+            { "source": "/api/(.*)", "destination": "/api/index.py" }
+        ],
+        "functions": {
+            "api/index.py": {
+                "maxDuration": 10,
+                "runtime": "python3.9"
+            }
+        },
+        "crons": [
+            {
+                "path": "/api/index.py",
+                "schedule": "*/5 * * * *"
+            }
         ],
         "headers": [{
             "source": "/(.*)",
             "headers": [
                 {"key": "X-Content-Type-Options", "value": "nosniff"},
-                {"key": "Strict-Transport-Security", "value": "max-age=63072000"}
+                {"key": "Strict-Transport-Security", "value": "max-age=63072000"},
+                {"key": "X-Patent-ID", "value": "PCT/EP2025/067317"}
             ]
         }]
     }
@@ -140,6 +178,7 @@ def generate_vercel_config():
         json.dump(vercel, f, indent=2)
 
 if __name__ == "__main__":
+    clean_legacy_structure()
     organize_assets()
     validate_env()
     validate_stack()
