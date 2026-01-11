@@ -53,7 +53,23 @@ class handler(BaseHTTPRequestHandler):
         try:
             content_length = int(self.headers.get('Content-Length', 0))
             body = self.rfile.read(content_length)
-            data = json.loads(body) if body else {}
+            
+            # Validate and parse JSON with error handling
+            data = {}
+            if body:
+                try:
+                    data = json.loads(body)
+                except json.JSONDecodeError:
+                    error_response = {
+                        'success': False,
+                        'error': 'Invalid JSON format'
+                    }
+                    self.send_response(400)
+                    self.send_header('Content-type', 'application/json')
+                    self.send_header('Access-Control-Allow-Origin', '*')
+                    self.end_headers()
+                    self.wfile.write(json.dumps(error_response).encode('utf-8'))
+                    return
             
             response = {
                 'success': True,

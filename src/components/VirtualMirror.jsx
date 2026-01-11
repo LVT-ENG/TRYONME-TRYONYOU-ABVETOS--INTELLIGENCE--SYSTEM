@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Webcam from 'react-webcam';
 
 /**
@@ -8,14 +8,25 @@ import Webcam from 'react-webcam';
 export default function VirtualMirror() {
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
   const webcamRef = useRef(null);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    // Cleanup timeout on unmount
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const startScan = async () => {
     setIsScanning(true);
     setScanResult(null);
 
-    // Simulate biometric scan
-    setTimeout(() => {
+    // Simulate biometric scan with cleanup
+    timeoutRef.current = setTimeout(() => {
       setScanResult({
         fit_score: "98.5%",
         status: "MATCH_FOUND",
@@ -134,6 +145,8 @@ export default function VirtualMirror() {
         {!scanResult && !isScanning && (
           <button
             onClick={startScan}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
             style={{
               padding: '15px 40px',
               backgroundColor: '#C5A46D',
@@ -143,10 +156,9 @@ export default function VirtualMirror() {
               cursor: 'pointer',
               borderRadius: '8px',
               fontSize: '1.2rem',
+              transform: isHovered ? 'scale(1.05)' : 'scale(1)',
               transition: 'transform 0.2s'
             }}
-            onMouseOver={(e) => e.target.style.transform = 'scale(1.05)'}
-            onMouseOut={(e) => e.target.style.transform = 'scale(1)'}
           >
             🎯 START BIOMETRIC SCAN
           </button>
