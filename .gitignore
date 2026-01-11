@@ -13,6 +13,17 @@ node_modules/
 # Build outputs
 dist/
 dist-ssr
+build/
+.next/
+coverage/
+
+# Legacy and obsolete files (cleaned by SuperCommit MAX)
+legacy_old/
+temp_old/
+apps/web-old/
+tests-old/
+legacy/
+integrations/duplicados/
 
 # Environment variables
 .env
@@ -36,4 +47,7 @@ dist-ssr
 __pycache__/
 *.pyc
 *.pyo
+
+# Backups
+*.bak
 

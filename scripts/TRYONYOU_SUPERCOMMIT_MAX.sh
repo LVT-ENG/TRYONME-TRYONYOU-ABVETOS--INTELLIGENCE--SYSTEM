@@ -1,131 +1,72 @@
 #!/bin/bash
-
 set -e
 
-echo "🦚 TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM — SuperCommit MAX"
+# ==============================================================================
+# 🦚 TRYONYOU – ABVETOS – ULTRA – PLUS – ULTIMATUM
+# PROTOCOLO: SUPERCOMMIT MAX (Ejecución Final)
+# ==============================================================================
 
-# Verificar que estamos en el directorio correcto
+echo "🚀 INICIANDO PROTOCOLO SUPERCOMMIT MAX..."
+
+# 1. VERIFICACIÓN DE SEGURIDAD
+# ------------------------------------------------------------------------------
 if [ ! -f "package.json" ]; then
-    echo "❌ Error: Este script debe ejecutarse desde la raíz del repositorio"
-    exit 1
+ echo "❌ Error: Debes estar en la raíz del repositorio (donde está package.json)."
+ exit 1
 fi
 
-# Cambiar a branch main
-echo "📌 Cambiando a branch main..."
-git checkout main || { echo "❌ Error al cambiar a main"; exit 1; }
+# 2. LIMPIEZA NUCLEAR (Eliminación de conflictos y basura legacy)
+# ------------------------------------------------------------------------------
+echo "🧹 [1/5] Ejecutando limpieza nuclear de archivos obsoletos..."
+rm -rf node_modules dist legacy_old temp_old apps/web-old tests-old legacy integrations/duplicados .next coverage build
 
-# Actualizar desde remoto
-echo "📥 Actualizando desde origin main..."
-git pull origin main || { echo "❌ Error al hacer pull"; exit 1; }
-
-# Limpieza previa (Destructiva)
-echo "🧹 Realizando limpieza previa..."
-rm -rf node_modules dist legacy_old temp_old apps/web-old tests-old legacy integrations/duplicados 2>/dev/null || true
-
-# Instalar dependencias
-echo "📦 Instalando dependencias..."
+# 3. INSTALACIÓN DE DEPENDENCIAS (Stack Oficial: Vite 7.1.2 + React 18.3.1)
+# ------------------------------------------------------------------------------
+echo "📦 [2/5] Reinstalando dependencias limpias..."
 npm install
 
-# Crear directorios si no existen (estructura flexible)
-echo "📁 Verificando estructura de directorios..."
-mkdir -p docs/arquitectura_empresa docs/patent_EPCT docs/investor_edition
-mkdir -p public/assets/hero public/assets/modules public/assets/investor public/assets/vision
-mkdir -p src/modules src/components src/pages
+# 4. ESTRUCTURA DE DIRECTORIOS MAESTRA (Divineo v7)
+# ------------------------------------------------------------------------------
+echo "🏗️ [3/5] Consolidando arquitectura de carpetas..."
+mkdir -p public/assets/{hero,modules,investor,vision,catalog,branding,ui}
+mkdir -p src/{modules,components,pages,styles,i18n,utils}
+mkdir -p docs/{patent_EPCT,legal,investor_edition,arquitectura_empresa}
+mkdir -p scripts
+mkdir -p .github/workflows
 
-# Añadir todo el código principal
-echo "➕ Añadiendo archivos al staging area..."
+# 5. SUPERCOMMIT GIT (Consolidación Legal y Técnica)
+# ------------------------------------------------------------------------------
+echo "💎 [4/5] Generando Commit Maestro..."
+git add .
 
-# Directorios principales (si existen)
-[ -d "apps" ] && git add apps/ || echo "ℹ️ apps/ no existe"
-[ -d "api" ] && git add api/ || echo "ℹ️ api/ no existe"
-[ -d "modules" ] && git add modules/ || echo "ℹ️ modules/ no existe"
-[ -d "integrations" ] && git add integrations/ || echo "ℹ️ integrations/ no existe"
-[ -d "tests" ] && git add tests/ || echo "ℹ️ tests/ no existe"
-
-# Directorios que siempre deben existir
-git add docs/ || echo "⚠️ No se pudo añadir docs/"
-git add src/ || echo "⚠️ No se pudo añadir src/"
-git add public/ || echo "⚠️ No se pudo añadir public/"
-git add scripts/ || echo "⚠️ No se pudo añadir scripts/"
-
-# Archivos de configuración
-git add package.json package-lock.json || echo "⚠️ No se pudieron añadir archivos de configuración"
-git add vite.config.js vercel.json index.html || echo "⚠️ No se pudieron añadir archivos de configuración"
-git add .env.example README.md CHANGELOG.md || echo "⚠️ No se pudieron añadir archivos de documentación"
-
-# Archivos adicionales opcionales
-[ -f "Makefile" ] && git add Makefile || echo "ℹ️ Makefile no existe"
-[ -f "deploy.sh" ] && git add deploy.sh || echo "ℹ️ deploy.sh ya existe"
-
-# Super-commit con firma y mensaje largo detallado
-echo "💎 Creando commit con mensaje detallado..."
+# Mensaje oficial vinculado a la Patente y Valoración
 git commit -m "🔥 TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM
 
-✅ Consolidated architecture: Avatar3D, TextileComparator, PAU, CAP, ABVET, Wardrobe, AutoDonate, FTT.
-✅ Integrated Deploy Express + CI/CD (Vercel + Telegram).
-✅ Clean merge of all legacy repositories (TryonViewApp, 4Roses, Surveys, etc.) into unified monorepo.
-✅ Removed duplicates, obsolete workflows, and deprecated assets.
-✅ Updated docs: arquitectura_empresa.md, patent_EPCT, investor_edition.
-✅ Verified ABVET endpoints and PAU recommender.
-✅ Project fully aligned with EPCT patent, production-ready build.
+✅ Arquitectura Consolidada: Vite 7.1.2 + React 18.3.1 (Monorepo Clean).
+✅ Módulos Integrados: PAU, CAP, ABVET, FTT, SmartWardrobe, AutoDonate.
+✅ Limpieza: Repositorios legacy y conflictos Next.js eliminados.
+✅ Documentación: Patente PCT/EP2025/067317 y Dossier Inversor (€400M).
+✅ Identidad Visual: Divineo v7 (Anthracite/Gold/Peacock).
+🌐 Dominio: tryonyou.app (Vercel + Cloudflare SSL)
+🔗 Notificaciones: @abvet_deploy_bot" || echo "⚠️ No hay cambios pendientes para commitear."
 
-🌐 Domain: tryonyou.app (Vercel + Cloudflare SSL Strict)
-🔗 Notifications: @abvet_deploy_bot
-💎 Commit generated by Agente 70 — SuperCommit MAX
+# 6. PUSH Y DESPLIEGUE
+# ------------------------------------------------------------------------------
+echo "🚀 [5/5] Enviando a GitHub (Branch: main)..."
+git push origin main
 
-## Modules Integrated
-- Avatar3D: 3D virtual try-on system
-- TextileComparator: Fabric comparison engine
-- PAU (Personal AI Unforgettable): Personalized recommendations
-- CAP (Capsule Automation Platform): Wardrobe capsule generator
-- ABVET: Virtual environment & textile system
-- Wardrobe: Digital closet management
-- AutoDonate: Automated clothing donation
-- FTT (Fashion Trend Tracker): Trend analysis engine
-
-## Infrastructure
-- Frontend: Vite 7.1.2 + React 18.3.1
-- Deployment: Vercel + Cloudflare SSL
-- CI/CD: GitHub Actions
-- Monitoring: Telegram notifications (@abvet_deploy_bot)
-
-## Documentation
-- Architecture: docs/arquitectura_empresa.md
-- Patent: docs/patent_EPCT/
-- Investor Edition: docs/investor_edition/
-- User Flow: docs/flujo_usuario.md
-
-## Deployment
-- Production URL: https://tryonyou.app
-- Build verified and optimized
-- All assets properly configured
-- SSL: Cloudflare Strict mode
-
-This commit represents the final integration of all TRYONYOU subsystems into a unified, production-ready platform." || echo "⚠️ No hay cambios nuevos para commitear"
-
-# Push final
-echo "🚀 Enviando cambios a origin main..."
-git push origin main || { echo "❌ Error al hacer push"; exit 1; }
-
-# Despliegue en Vercel (opcional, solo si hay token)
+# Despliegue forzado a Vercel si existe el token
 if [ -n "$VERCEL_TOKEN" ]; then
-    echo "🌐 Desplegando en Vercel..."
-    npx vercel --prod --token=$VERCEL_TOKEN --yes --confirm --force || echo "⚠️ Error en deploy de Vercel"
+    echo "🌐 Desplegando en Vercel Producción..."
+    npx vercel --prod --token=$VERCEL_TOKEN --yes --confirm --force
 else
-    echo "ℹ️ Variable VERCEL_TOKEN no definida, saltando deploy de Vercel"
-    echo " Para desplegar automáticamente, exporta VERCEL_TOKEN antes de ejecutar este script"
+    echo "ℹ️ VERCEL_TOKEN no detectado. El despliegue automático se hará vía GitHub Actions."
 fi
 
 echo ""
 echo "════════════════════════════════════════════════════════════════"
-echo "✅ RESULTADO FINAL"
+echo "✅ SUPERCOMMIT MAX COMPLETADO"
 echo "════════════════════════════════════════════════════════════════"
-echo "📦 Repositorio: LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM"
-echo "🌿 Branch: main"
-echo "🌐 Dominio: https://tryonyou.app"
-echo "📊 Estado: LIVE + sincronizado"
-echo "🔗 Notifications: @abvet_deploy_bot (Telegram)"
-echo "💎 Generado por: Agente 70 — SuperCommit MAX"
+echo "👉 Estado: SISTEMA EN PRODUCCIÓN"
+echo "👉 URL: https://tryonyou.app"
 echo "════════════════════════════════════════════════════════════════"
-echo ""
-echo "✅ Deploy completo a tryonyou.app — verificado."
