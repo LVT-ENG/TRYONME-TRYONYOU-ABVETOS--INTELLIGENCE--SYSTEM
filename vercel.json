@@ -7,7 +7,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/$1"
+      "destination": "/api/index.py"
     },
     {
       "source": "/(.*)",
@@ -25,6 +25,10 @@
         {
           "key": "Strict-Transport-Security",
           "value": "max-age=63072000"
+        },
+        {
+          "key": "X-Patent-ID",
+          "value": "PCT/EP2025/067317"
         }
       ]
     }

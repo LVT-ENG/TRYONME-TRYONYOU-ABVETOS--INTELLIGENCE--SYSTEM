@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "description": "TRYONYOU - Fashion Tech Platform powered by Google Gemini 3 Pro, Veo 3.1, and Antigravity. Patent PCT/EP2025/067317.",
+  "patent": "PCT/EP2025/067317",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
