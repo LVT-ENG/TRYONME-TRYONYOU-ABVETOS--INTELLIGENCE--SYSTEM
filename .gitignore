@@ -37,3 +37,10 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Legacy and temp folders (as per ULTIMATUM cleanup)
+.next
+legacy_old
+temp_old
+apps/web-old
+tests-old
+
