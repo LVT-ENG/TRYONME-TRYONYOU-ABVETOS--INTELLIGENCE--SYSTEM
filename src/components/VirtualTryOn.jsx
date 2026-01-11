@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { Pose } from '@mediapipe/pose';
-import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
+import { drawConnectors } from '@mediapipe/drawing_utils';
 import { POSE_CONNECTIONS } from '@mediapipe/pose';
 
 const VirtualTryOn = ({ garmentImage, garmentName }) => {
@@ -10,6 +10,9 @@ const VirtualTryOn = ({ garmentImage, garmentName }) => {
   const poseRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
   const garmentImgRef = useRef(null);
+  const latestResultsRef = useRef(null);
+  const requestRef = useRef();
+  const activeRef = useRef(true);
 
   useEffect(() => {
     // Initialize MediaPipe Pose
@@ -38,90 +41,139 @@ const VirtualTryOn = ({ garmentImage, garmentName }) => {
     };
 
     return () => {
+      activeRef.current = false;
       if (poseRef.current) {
         poseRef.current.close();
+      }
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
       }
     };
   }, [garmentImage]);
 
+  const onResults = (results) => {
+    latestResultsRef.current = results;
+  };
+
+  const drawOverlay = (ctx, results, width, height) => {
+    if (!results.poseLandmarks || !garmentImgRef.current) return;
+
+    // Get key body landmarks
+    const leftShoulder = results.poseLandmarks[11];
+    const rightShoulder = results.poseLandmarks[12];
+    const leftHip = results.poseLandmarks[23];
+    const rightHip = results.poseLandmarks[24];
+
+    // Calculate garment position and size
+    const shoulderWidth = Math.abs(rightShoulder.x - leftShoulder.x) * width;
+    const shoulderCenterX = ((leftShoulder.x + rightShoulder.x) / 2) * width;
+    const shoulderCenterY = ((leftShoulder.y + rightShoulder.y) / 2) * height;
+    
+    const hipCenterY = ((leftHip.y + rightHip.y) / 2) * height;
+    const torsoLength = hipCenterY - shoulderCenterY;
+
+    // Draw garment overlay
+    const garmentWidth = shoulderWidth * 2.2; // Adjust multiplier for fit
+    const garmentHeight = torsoLength * 1.8; // Adjust for garment length
+    const garmentX = shoulderCenterX - garmentWidth / 2;
+    const garmentY = shoulderCenterY - garmentHeight * 0.15; // Adjust vertical position
+
+    // Apply blend mode for realistic overlay
+    ctx.globalAlpha = 0.85;
+    ctx.globalCompositeOperation = 'multiply';
+
+    ctx.drawImage(
+      garmentImgRef.current,
+      garmentX,
+      garmentY,
+      garmentWidth,
+      garmentHeight
+    );
+
+    ctx.globalAlpha = 1.0;
+    ctx.globalCompositeOperation = 'source-over';
+
+    // Draw subtle body outline (aura effect)
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#C5A46D'; // Gold accent
+    ctx.strokeStyle = '#C5A46D';
+    ctx.lineWidth = 1;
+
+    drawConnectors(ctx, results.poseLandmarks, POSE_CONNECTIONS, {
+      color: '#C5A46D',
+      lineWidth: 1
+    });
+  };
+
+  // Memoize render function to avoid useEffect dependency issues
+  // But actually, it relies on refs which are stable, so it's fine.
+  // The linter complained because it was defined outside.
+  // I will move the render logic inside useEffect to be safe and clean.
+
   useEffect(() => {
     if (!isLoading && webcamRef.current) {
+      activeRef.current = true;
+
+      const render = () => {
+        const canvas = canvasRef.current;
+        const video = webcamRef.current?.video;
+
+        if (canvas && video && video.readyState === 4) {
+          const ctx = canvas.getContext('2d');
+
+          if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+          }
+
+          const width = canvas.width;
+          const height = canvas.height;
+
+          ctx.save();
+          ctx.clearRect(0, 0, width, height);
+
+          // 1. Draw webcam video (Always smooth 60fps)
+          ctx.drawImage(video, 0, 0, width, height);
+
+          // 2. Draw latest AI results (Updates at AI speed)
+          if (latestResultsRef.current) {
+            drawOverlay(ctx, latestResultsRef.current, width, height);
+          }
+
+          ctx.restore();
+        }
+
+        if (activeRef.current) {
+          requestRef.current = requestAnimationFrame(render);
+        }
+      };
+
+      // Start the Render Loop
+      requestRef.current = requestAnimationFrame(render);
+
+      // Start the AI Processing Loop
       const detectPose = async () => {
+        if (!activeRef.current) return;
+
         if (webcamRef.current && webcamRef.current.video.readyState === 4) {
           const video = webcamRef.current.video;
+          // This await ensures we don't flood the AI pipeline
           await poseRef.current.send({ image: video });
         }
-        requestAnimationFrame(detectPose);
+
+        if (activeRef.current) {
+           requestAnimationFrame(detectPose);
+        }
       };
+
       detectPose();
+
+      return () => {
+        activeRef.current = false;
+        cancelAnimationFrame(requestRef.current);
+      };
     }
   }, [isLoading]);
-
-  const onResults = (results) => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
-    if (!canvas || !ctx || !garmentImgRef.current) return;
-
-    canvas.width = webcamRef.current.video.videoWidth;
-    canvas.height = webcamRef.current.video.videoHeight;
-
-    ctx.save();
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Draw webcam video
-    ctx.drawImage(webcamRef.current.video, 0, 0, canvas.width, canvas.height);
-
-    if (results.poseLandmarks) {
-      // Get key body landmarks
-      const leftShoulder = results.poseLandmarks[11];
-      const rightShoulder = results.poseLandmarks[12];
-      const leftHip = results.poseLandmarks[23];
-      const rightHip = results.poseLandmarks[24];
-
-      // Calculate garment position and size
-      const shoulderWidth = Math.abs(rightShoulder.x - leftShoulder.x) * canvas.width;
-      const shoulderCenterX = ((leftShoulder.x + rightShoulder.x) / 2) * canvas.width;
-      const shoulderCenterY = ((leftShoulder.y + rightShoulder.y) / 2) * canvas.height;
-      
-      const hipCenterY = ((leftHip.y + rightHip.y) / 2) * canvas.height;
-      const torsoLength = hipCenterY - shoulderCenterY;
-
-      // Draw garment overlay
-      const garmentWidth = shoulderWidth * 2.2; // Adjust multiplier for fit
-      const garmentHeight = torsoLength * 1.8; // Adjust for garment length
-      const garmentX = shoulderCenterX - garmentWidth / 2;
-      const garmentY = shoulderCenterY - garmentHeight * 0.15; // Adjust vertical position
-
-      // Apply blend mode for realistic overlay
-      ctx.globalAlpha = 0.85;
-      ctx.globalCompositeOperation = 'multiply';
-      
-      ctx.drawImage(
-        garmentImgRef.current,
-        garmentX,
-        garmentY,
-        garmentWidth,
-        garmentHeight
-      );
-
-      ctx.globalAlpha = 1.0;
-      ctx.globalCompositeOperation = 'source-over';
-
-      // Draw subtle body outline (aura effect)
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = '#C5A46D'; // Gold accent
-      ctx.strokeStyle = '#C5A46D';
-      ctx.lineWidth = 1;
-
-      drawConnectors(ctx, results.poseLandmarks, POSE_CONNECTIONS, {
-        color: '#C5A46D',
-        lineWidth: 1
-      });
-    }
-
-    ctx.restore();
-  };
 
   return (
     <div className="relative w-full h-full flex items-center justify-center bg-black">
