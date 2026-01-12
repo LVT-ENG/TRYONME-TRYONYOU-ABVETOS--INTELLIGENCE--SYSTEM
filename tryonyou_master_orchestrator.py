@@ -107,10 +107,29 @@ def organize_assets():
 def validate_env():
     env_example = PROJECT_ROOT / ".env.example"
 
-    with open(env_example, "w", encoding="utf-8") as f:
-        for key in ENV_KEYS_REQUIRED:
-            f.write(f"{key}=\n")
+    existing_keys = set()
+    existing_lines = []
 
+    if env_example.exists():
+        with open(env_example, "r", encoding="utf-8") as f:
+            existing_lines = f.readlines()
+        for line in existing_lines:
+            stripped = line.lstrip()
+            if stripped.startswith("#"):
+                continue
+            if "=" in line:
+                key_name = line.split("=", 1)[0].strip()
+                if key_name:
+                    existing_keys.add(key_name)
+
+    missing_keys = [key for key in ENV_KEYS_REQUIRED if key not in existing_keys]
+
+    if missing_keys:
+        with open(env_example, "a", encoding="utf-8") as f:
+            if existing_lines and not existing_lines[-1].endswith("\n"):
+                f.write("\n")
+            for key in missing_keys:
+                f.write(f"{key}=\n")
     for key in ENV_KEYS_REQUIRED:
         REPORT["env"][key] = "present" if os.getenv(key) else "missing"
 
