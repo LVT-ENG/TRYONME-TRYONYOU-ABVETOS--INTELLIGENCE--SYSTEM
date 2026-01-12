@@ -1,10 +1,10 @@
 #!/bin/bash
 # ABVETOS INFINITE HEARTBEAT - 24/7 ORCHESTRATION
-# Frequency: Every 3 Hours
+# Frequency: Every 5 Minutes
 # Objective: Continuous Integration of Biometrics & Production
 
 echo "🦚 STARTING ABVETOS INFINITE LOOP..."
-echo "🕒 Interval: 3 Hours (10800 seconds)"
+echo "🕒 Interval: 5 Minutes (300 seconds)"
 
 ONCE_MODE=false
 if [ "$1" == "--once" ]; then
@@ -55,6 +55,6 @@ do
         break
     fi
 
-    # Sleep for 3 hours
-    sleep 10800
+    # Sleep for 5 minutes
+    sleep 300
 done
