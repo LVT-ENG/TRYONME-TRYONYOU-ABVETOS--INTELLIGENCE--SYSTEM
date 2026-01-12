@@ -4,19 +4,19 @@
 - **src/modules/**: Módulos principales de negocio (Avatar3D, comparador textil, bots, PAU, AutoDonate, etc.)
 - **src/assets/** y **public/assets/**: Imágenes, videos, modelos 3D y otros recursos visuales.
 - **docs/**: Documentación técnica, arquitectura, investor edition, patent_EPCT y flujo de usuario.
-- **scripts/TRYONYOU_SUPERCOMMIT_MAX.sh**: Script maestro para limpieza, commit, push y despliegue.
+- **TRYONYOU_SUPERCOMMIT_MAX.sh**: Script maestro para limpieza, commit, push y despliegue.
 
 ## 2. Flujo de desarrollo y despliegue
 1. Desarrolla o actualiza módulos en `src/modules/`.
 2. Añade o actualiza assets en `src/assets/` o `public/assets/`.
 3. Documenta cambios y arquitectura en `docs/`.
-4. Ejecuta `scripts/TRYONYOU_SUPERCOMMIT_MAX.sh`:
+4. Ejecuta `./TRYONYOU_SUPERCOMMIT_MAX.sh`:
    - Limpia archivos y carpetas obsoletos.
    - Instala dependencias.
    - Añade todos los cambios relevantes al staging de git.
    - Realiza un commit firmado y detallado.
    - Hace push a la rama `main`.
-   - Despliega automáticamente en Vercel (si hay token).
+   - Despliega automáticamente en Vercel (si hay token definido en VERCEL_TOKEN).
 5. El sistema queda sincronizado y desplegado en https://tryonyou.app.
 
 ## 3. Control de versiones y despliegue
