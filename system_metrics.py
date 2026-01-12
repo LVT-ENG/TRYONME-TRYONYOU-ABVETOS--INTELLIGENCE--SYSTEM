@@ -1,6 +1,6 @@
 def get_status():
     """
-    Retorna métricas reales o seguras. 
+    Retorna métricas reales o seguras.
     Elimina la dependencia de valores aleatorios que rompen el CI.
     """
     try:
