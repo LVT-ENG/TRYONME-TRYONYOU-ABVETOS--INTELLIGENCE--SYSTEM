@@ -33,11 +33,11 @@ Agent 39 executes four critical backup operations:
 - Supports multiple file formats (MD, JSON, PDF)
 - Simulates cloud storage integration (extensible for production APIs)
 
-### 4. 🔐 MD5 Checksum Generation
-- Generates cryptographic checksums for all backed-up files
-- Ensures data integrity and tamper detection
-- Provides verification mechanisms for backup validation
-- Creates comprehensive checksum catalog
+### 4. 🔐 Integrity Checksum Generation
+- Generates strong cryptographic checksums (for example, SHA-256) for all backed-up files
+- Supports integrity verification and optional tamper-detection mechanisms
+- Provides verification workflows for backup validation
+- Creates a comprehensive checksum catalog for all backup artifacts
 
 ## 🚀 Quick Start
 
