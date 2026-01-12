@@ -133,7 +133,9 @@ class BackupManager:
                 else:
                     dest_dir = self.session_backup_dir / "technical"
                 
-                dest_path = dest_dir / file_path.name
+                # Preserve the relative directory structure to avoid filename collisions
+                dest_path = dest_dir / file_path
+                dest_path.parent.mkdir(parents=True, exist_ok=True)
                 
                 try:
                     shutil.copy2(file_path, dest_path)
