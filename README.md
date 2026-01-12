@@ -45,8 +45,25 @@ Build for production:
 npm run build
 ```
 
+### Deployment
+
+Deploy the complete system with automated cleanup, commit, and deployment:
+
+```bash
+npm run supercommit
+```
+
+This runs the [Supercommit MAX](docs/SUPERCOMMIT_MAX.md) script that handles:
+- Code cleanup and dependency updates
+- Automated git operations
+- Vercel deployment (if token configured)
+
+> 📖 **See [Supercommit MAX Documentation](docs/SUPERCOMMIT_MAX.md) for detailed usage**
+
 ## 📂 Documentation
 
+*   [Supercommit MAX - Automated Deployment](docs/SUPERCOMMIT_MAX.md)
+*   [Repository Workflow](docs/flujo_repositorio.md)
 *   [Google Platform News](docs/GOOGLE_PLATFORM_NEWS.md)
 *   [Patent Claims](docs/PATENT_CLAIMS.md)
 

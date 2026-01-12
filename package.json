@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npx vercel --prod"
+    "deploy": "npx vercel --prod",
+    "supercommit": "bash scripts/TRYONYOU_SUPERCOMMIT_MAX.sh"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

@@ -10,7 +10,12 @@
 1. Desarrolla o actualiza módulos en `src/modules/`.
 2. Añade o actualiza assets en `src/assets/` o `public/assets/`.
 3. Documenta cambios y arquitectura en `docs/`.
-4. Ejecuta `scripts/TRYONYOU_SUPERCOMMIT_MAX.sh`:
+4. Ejecuta el Supercommit MAX usando cualquiera de estos métodos:
+   - `npm run supercommit` (recomendado)
+   - `bash scripts/TRYONYOU_SUPERCOMMIT_MAX.sh`
+   - `./scripts/TRYONYOU_SUPERCOMMIT_MAX.sh`
+   
+   El script realiza las siguientes acciones:
    - Limpia archivos y carpetas obsoletos.
    - Instala dependencias.
    - Añade todos los cambios relevantes al staging de git.
