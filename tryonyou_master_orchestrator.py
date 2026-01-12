@@ -190,7 +190,7 @@ def validate_routes():
     content = app_file.read_text(encoding="utf-8")
 
     for route in ROUTES_REQUIRED:
-        REPORT["routes"][route] = "present" if route in content else "missing"
+        REPORT["routes"][route] = "present" if re.search(f'path\\s*=\\s*["\']{route}["\']', content) else "missing"
 
 # =========================
 # 6. DEPLOY PREP (VERCEL)
