@@ -8,6 +8,7 @@ Security: NO secrets embedded in source; sensitive values (e.g., API keys) are e
 """
 
 import os
+import re
 import shutil
 import json
 from pathlib import Path
@@ -230,10 +231,6 @@ def validate_routes():
 # =========================
 
 def generate_vercel_config():
-    vercel_config = {
-        "framework": "vite",
-        "regions": ["fra1", "iad1", "hnd1"],
-        "headers": [
     """
     Generate or update vercel.json without discarding existing configuration.
 
