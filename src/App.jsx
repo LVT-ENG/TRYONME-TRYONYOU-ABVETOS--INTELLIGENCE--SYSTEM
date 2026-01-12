@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 // --- IMPORTACIÓN DE COMPONENTES ---
 // Aseguramos que los componentes críticos estén conectados
-import VirtualMirror from './components/VirtualMirror';
-import SmartWardrobe from './components/SmartWardrobe'; 
+import VirtualMirror from './components/VirtualTryOn';
+import SmartWardrobe from './modules/SmartWardrobe';
 
 // --- COMPONENTE LANDING (Placeholder temporal si no tienes uno) ---
 const Home = () => (
