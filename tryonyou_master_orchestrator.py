@@ -22,7 +22,11 @@ PUBLIC_DIR = PROJECT_ROOT / "public"
 ASSETS_DIR = PUBLIC_DIR / "assets"
 DOCS_DIR = PUBLIC_DIR / "docs"
 
-DOWNLOADS_DIR = Path.home() / "Downloads"
+_downloads_dir_env = os.getenv("TRYONYOU_DOWNLOADS_DIR")
+if _downloads_dir_env:
+    DOWNLOADS_DIR = Path(_downloads_dir_env).expanduser()
+else:
+    DOWNLOADS_DIR = Path.home() / "Downloads"
 
 ENV_KEYS_REQUIRED = [
     "GOOGLE_API_KEY",
