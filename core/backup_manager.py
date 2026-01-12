@@ -52,14 +52,14 @@ class BackupManager:
         # Load agent configurations
         config_path = Path("core/ai_config/moe_prompts_manifest.json")
         if config_path.exists():
-            with open(config_path, 'r') as f:
+            with open(config_path, 'r', encoding='utf-8') as f:
                 config_data = json.load(f)
                 snapshot_data["agents"] = config_data.get("agents", {})
                 snapshot_data["meta"] = config_data.get("meta", {})
         
         # Save snapshot
         snapshot_file = self.session_backup_dir / "database" / f"agent_states_{self.current_session}.json"
-        with open(snapshot_file, 'w') as f:
+        with open(snapshot_file, 'w', encoding='utf-8') as f:
             json.dump(snapshot_data, f, indent=2)
         
         checksum = self.calculate_md5(snapshot_file)
