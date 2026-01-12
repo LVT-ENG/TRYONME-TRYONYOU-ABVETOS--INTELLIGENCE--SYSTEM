@@ -1,6 +1,6 @@
 import React, { memo } from 'react'
 import { motion } from 'framer-motion'
-import { useLocation } from 'wouter'
+import { useNavigate } from 'react-router-dom'
 import SmartWardrobe from '../modules/SmartWardrobe'
 
 // Static data defined outside component to prevent recreation
@@ -52,7 +52,7 @@ const ClaimCard = memo(({ claim, index }) => (
 ClaimCard.displayName = 'ClaimCard';
 
 const Home = () => {
-  const [, navigate] = useLocation()
+  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen bg-[#141619] text-[#EEF0F3] overflow-hidden font-sans">
@@ -77,7 +77,7 @@ const Home = () => {
               className="space-y-8"
             >
               {/* Google Platform Badges */}
-              <motion.div variants={ITEM_VARIANTS} className="flex flex-wrap gap-2">
+              <motion.div variants={ITEM_VARIANTS} className="flex flex-wrap items-center gap-2">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-900/50 to-purple-900/50 border border-blue-500/30">
                    <span className="text-xs font-bold text-blue-300 tracking-wider">POWERED BY GEMINI 3 PRO</span>
                 </div>
@@ -93,6 +93,12 @@ const Home = () => {
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-orange-900/50 to-amber-900/50 border border-orange-500/30">
                    <span className="text-xs font-bold text-orange-300 tracking-wider">CONDUCTOR</span>
                 </div>
+                <button
+                  onClick={() => navigate('/google-news')}
+                  className="ml-2 text-xs text-blue-400 hover:text-blue-300 underline decoration-dotted underline-offset-4 cursor-pointer"
+                >
+                  See Platform News
+                </button>
               </motion.div>
 
               <motion.div variants={ITEM_VARIANTS}>
@@ -108,14 +114,14 @@ const Home = () => {
 
               <motion.div variants={ITEM_VARIANTS} className="flex gap-4">
                 <button
-                  onClick={() => navigate('/pilot')}
-                  className="px-8 py-4 bg-[#D3B26A] hover:bg-[#b09050] rounded-lg font-bold text-[#141619] transition-colors shadow-lg uppercase tracking-wider"
+                  onClick={() => navigate('/demo')}
+                  className="px-8 py-4 bg-[#D3B26A] hover:bg-[#b09050] rounded-lg font-bold text-[#141619] transition-colors shadow-lg uppercase tracking-wider cursor-pointer"
                 >
                   Explore Pilot
                 </button>
                 <button
                   onClick={() => navigate('/investors')}
-                  className="px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white transition-colors uppercase tracking-wider"
+                  className="px-8 py-4 bg-gray-700 hover:bg-gray-600 rounded-lg font-bold text-white transition-colors uppercase tracking-wider cursor-pointer"
                 >
                   Investor Dossier
                 </button>
@@ -184,8 +190,8 @@ const Home = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/pilot')}
-            className="px-12 py-5 bg-[#D3B26A] hover:bg-[#b09050] rounded-full font-bold text-[#141619] text-lg transition-all shadow-xl shadow-blue-600/30 uppercase tracking-wider"
+            onClick={() => navigate('/demo')}
+            className="px-12 py-5 bg-[#D3B26A] hover:bg-[#b09050] rounded-full font-bold text-[#141619] text-lg transition-all shadow-xl shadow-blue-600/30 uppercase tracking-wider cursor-pointer"
           >
             Start Now
           </motion.button>
