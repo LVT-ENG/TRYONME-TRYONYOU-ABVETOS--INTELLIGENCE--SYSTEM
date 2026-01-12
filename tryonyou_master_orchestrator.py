@@ -3,7 +3,8 @@ TRYONYOU – MASTER ORCHESTRATOR
 
 Role: Lead Architect & DevOps Brain
 Scope: Infra + Frontend + Assets + Legal + Deploy Prep
-Security: NO secrets embedded (env-only)
+Security: NO secrets embedded in source; sensitive values (e.g., API keys) are env-only,
+          validated for presence, and never logged or written to reports.
 """
 
 import os
