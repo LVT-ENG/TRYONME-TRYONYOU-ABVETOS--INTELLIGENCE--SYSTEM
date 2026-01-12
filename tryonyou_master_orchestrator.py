@@ -201,25 +201,51 @@ def generate_vercel_config():
         "framework": "vite",
         "regions": ["fra1", "iad1", "hnd1"],
         "headers": [
-            {
-                "source": "/(.*)",
-                "headers": [
-                    {"key": "X-Content-Type-Options", "value": "nosniff"},
-                    {
-                        "key": "Strict-Transport-Security",
-                        "value": "max-age=63072000; includeSubDomains; preload",
-                    },
-                ],
-            }
-        ],
-        "rewrites": [
-            { "source": "/(.*)", "destination": "/index.html" }
-        ]
-    }
+    """
+    Generate or update vercel.json without discarding existing configuration.
 
-    with open(PROJECT_ROOT / "vercel.json", "w", encoding="utf-8") as f:
-        json.dump(vercel_config, f, indent=2)
+    - Preserves any existing keys (e.g., framework, rewrites).
+    - Adds default regions and security headers only if they are not already set.
+    """
+    vercel_path = PROJECT_ROOT / "vercel.json"
 
+    # Load any existing configuration so we don't wipe important settings
+    existing_config = {}
+    if vercel_path.exists():
+        try:
+            with open(vercel_path, "r", encoding="utf-8") as f:
+                existing_config = json.load(f)
+                if not isinstance(existing_config, dict):
+                    # If the existing file is not a JSON object, ignore it
+                    existing_config = {}
+        except json.JSONDecodeError:
+            # Malformed JSON: fall back to a fresh config instead of crashing
+            existing_config = {}
+
+    # Defaults this orchestrator wants to ensure
+    required_regions = ["fra1", "iad1", "hnd1"]
+    required_headers = [
+        {
+            "source": "/(.*)",
+            "headers": [
+                {"key": "X-Content-Type-Options", "value": "nosniff"},
+                {
+                    "key": "Strict-Transport-Security",
+                    "value": "max-age=63072000; includeSubDomains; preload",
+                },
+            ],
+        }
+    ]
+
+    # Merge: preserve existing fields and only add defaults when missing
+    merged_config = dict(existing_config)
+    if "regions" not in merged_config:
+        merged_config["regions"] = required_regions
+    if "headers" not in merged_config:
+        merged_config["headers"] = required_headers
+
+    with open(vercel_path, "w", encoding="utf-8") as f:
+        json.dump(merged_config, f, indent=2)
     REPORT["deploy"]["vercel"] = "configured"
 
 # =========================
