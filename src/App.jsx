@@ -9,10 +9,10 @@ import SmartWardrobe from './components/SmartWardrobe';
 // --- COMPONENTE LANDING (Placeholder temporal si no tienes uno) ---
 const Home = () => (
   <div className="min-h-screen bg-[#1A1A1A] text-white flex flex-col items-center justify-center p-4">
-    <h1 className="text-5xl font-serif text-[#D4AF37] mb-8">DIVINEO</h1>
+    <h1 className="text-5xl font-serif text-green-500 mb-8">DIVINEO</h1>
     <p className="text-xl mb-12 tracking-widest uppercase">Lafayette Pilot Experience</p>
     <div className="flex gap-8">
-      <Link to="/demo" className="px-8 py-4 border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black transition-all uppercase tracking-widest">
+      <Link to="/demo" className="px-8 py-4 border border-green-500 hover:bg-green-500 hover:text-black transition-all uppercase tracking-widest">
         Iniciar Experiencia (Espejo)
       </Link>
       <Link to="/wardrobe" className="px-8 py-4 border border-gray-500 hover:border-white transition-all uppercase tracking-widest">
