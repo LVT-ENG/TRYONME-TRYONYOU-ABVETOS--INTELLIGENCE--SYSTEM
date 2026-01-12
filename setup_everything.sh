@@ -24,17 +24,18 @@ echo -e "\n${YELLOW}📝 STEP 1: Configuring Environment Variables... ${NC}"
 if [ !  -f .env ]; then
     cat > .env <<'EOF'
 # --- CORE INFRASTRUCTURE (VERCEL & PORKBUN) ---
-VERCEL_TOKEN=t9mc4kHGRS0VTWBR6qtJmvOw
-VERCEL_ORG_ID=team_SDhjSkxLVE7oJ3S5KPkwG9uC
-VERCEL_PROJECT_ID=prj_Wkq9QCEn6RJr3x7AMpNkbIZ2Z2AX4
+# TODO: Set these environment variables with your actual credentials
+VERCEL_TOKEN=your_vercel_token_here
+VERCEL_ORG_ID=your_vercel_org_id_here
+VERCEL_PROJECT_ID=your_vercel_project_id_here
 
-PORKBUN_API_KEY=pk1_a9500f30e15d4e48cde89418d500
-PORKBUN_API=pk1_a9500f30e15d4e48cde89418d500
-VITE_PORKBUN_API=pk1_a9500f30e15d4e48cde89418d500
+PORKBUN_API_KEY=your_porkbun_api_key_here
+PORKBUN_API=your_porkbun_api_here
+VITE_PORKBUN_API=your_porkbun_api_here
 
 # --- ARTIFICIAL INTELLIGENCE (GEMINI VISION) ---
-GOOGLE_API_KEY=AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM
-VITE_GOOGLE_API_KEY=AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM
+GOOGLE_API_KEY=your_google_api_key_here
+VITE_GOOGLE_API_KEY=your_google_api_key_here
 
 # --- EMAIL SERVICES (PORKBUN INFRASTRUCTURE) ---
 SMTP_HOST=smtp.porkbun.com

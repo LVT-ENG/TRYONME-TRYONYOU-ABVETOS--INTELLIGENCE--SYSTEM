@@ -1,6 +1,7 @@
 #!/bin/bash
 
-export VERCEL_TOKEN=AEaR9FH3U28b2yW6uZNLKF2F
+# VERCEL_TOKEN should be set as an environment variable
+# export VERCEL_TOKEN=your_token_here
 
 echo "🦚 TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM — SuperCommit MAX"
 
