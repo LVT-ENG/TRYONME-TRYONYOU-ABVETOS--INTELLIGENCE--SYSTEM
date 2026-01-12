@@ -77,29 +77,38 @@ def organize_assets():
     ensure_dir(DOCS_DIR)
 
     for prefix, target in ASSET_MAPPING.items():
-        found = False
+        # Collect all files in Downloads that start with the given prefix
+        matches = [file for file in DOWNLOADS_DIR.glob("*") if file.name.startswith(prefix)]
 
-        for file in DOWNLOADS_DIR.glob("*"):
-            if file.name.startswith(prefix):
-                dest = PUBLIC_DIR / target
-                ensure_dir(dest.parent)
-                shutil.copy(file, dest)
-
-                REPORT["assets"].append({
-                    "source": file.name,
-                    "destination": str(dest),
-                    "status": "mapped",
-                })
-                found = True
-                break
-
-        if not found:
+        if not matches:
             REPORT["assets"].append({
                 "source": prefix,
                 "destination": target,
                 "status": "missing",
             })
+            continue
 
+        # Default behavior for a single match remains unchanged.
+        # If multiple matches are found, pick the most recently modified file
+        # and record the ambiguity in the report.
+        if len(matches) > 1:
+            matches.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+
+        chosen = matches[0]
+        dest = PUBLIC_DIR / target
+        ensure_dir(dest.parent)
+        shutil.copy(chosen, dest)
+
+        asset_entry = {
+            "source": chosen.name,
+            "destination": str(dest),
+            "status": "mapped" if len(matches) == 1 else "mapped_with_ambiguity",
+        }
+
+        if len(matches) > 1:
+            asset_entry["alternate_sources"] = [file.name for file in matches[1:]]
+
+        REPORT["assets"].append(asset_entry)
 # =========================
 # 2. ENV VALIDATION
 # =========================
