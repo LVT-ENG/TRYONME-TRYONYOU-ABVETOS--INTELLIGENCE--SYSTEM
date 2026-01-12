@@ -192,10 +192,11 @@ const VirtualTryOn = ({ garmentImage, garmentName }) => {
         audio={false}
         className="hidden"
         screenshotFormat="image/jpeg"
+        playsInline={true}
         videoConstraints={{
           facingMode: 'user',
-          width: 1280,
-          height: 720
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
         }}
       />
 
