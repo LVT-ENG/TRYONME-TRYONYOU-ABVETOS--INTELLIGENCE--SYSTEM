@@ -191,7 +191,7 @@ const Supercommit = () => {
                     </span>
                   )}
                 </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-2 break-all">
+                <h3 className="text-lg font-bold text-gray-800 mb-2 break-words">
                   {script.name}
                 </h3>
                 <div className="text-sm text-gray-600 space-y-1">

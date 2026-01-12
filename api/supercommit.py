@@ -88,7 +88,7 @@ class handler(BaseHTTPRequestHandler):
                     })
             
             # Count uncommitted changes
-            uncommitted_files = len([line for line in git_status.stdout.strip().split('\n') if line])
+            uncommitted_files = len([line for line in git_status.stdout.strip().splitlines() if line])
             
             response = {
                 'success': True,
@@ -141,7 +141,7 @@ if __name__ == "__main__":
         
         print("✅ Supercommit API test successful!")
         print(f"Current branch: {git_branch.stdout.strip()}")
-        print(f"Uncommitted changes: {len([line for line in git_status.stdout.strip().split('\n') if line])}")
+        print(f"Uncommitted changes: {len([line for line in git_status.stdout.strip().splitlines() if line])}")
         
         # Check for scripts
         script_files = ['supercommit.sh', 'SUPERCOMMIT_MAX.sh', 'TRYONYOU_SUPERCOMMIT_MAX.sh']
