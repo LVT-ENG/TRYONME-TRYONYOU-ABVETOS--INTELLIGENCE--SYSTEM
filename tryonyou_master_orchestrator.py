@@ -198,6 +198,7 @@ def validate_routes():
 
 def generate_vercel_config():
     vercel_config = {
+        "framework": "vite",
         "regions": ["fra1", "iad1", "hnd1"],
         "headers": [
             {
@@ -211,6 +212,9 @@ def generate_vercel_config():
                 ],
             }
         ],
+        "rewrites": [
+            { "source": "/(.*)", "destination": "/index.html" }
+        ]
     }
 
     with open(PROJECT_ROOT / "vercel.json", "w", encoding="utf-8") as f:
