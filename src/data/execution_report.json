@@ -1,0 +1,42 @@
+{
+  "request_id": "MNS-20251213-001A",
+  "status": "COMPLETED",
+  "timestamp": "2025-12-13T10:05:00Z",
+  "system_target": "MailChimp_API",
+  "execution_log": [
+    {
+      "step": 1,
+      "action": "Filtrar lista de emails",
+      "parameters": {
+        "segment_criteria": "status='subscribed' AND membership_level='Gold'"
+      },
+      "result": "SUCCESS",
+      "details": "Segmento 'Gold Members' identificado. Total destinatarios: 1,250."
+    },
+    {
+      "step": 2,
+      "action": "Crear campaña y asignar contenido",
+      "parameters": {
+        "campaign_type": "regular",
+        "subject_line": "❄️ ¡Exclusivo para ti! Descubre la calidez de Winter Chill",
+        "content_source": "generated_markdown"
+      },
+      "result": "SUCCESS",
+      "details": "Campaña creada (ID: mc-88291). Contenido HTML renderizado e insertado."
+    },
+    {
+      "step": 3,
+      "action": "Programar envío",
+      "parameters": {
+        "schedule_time": "2025-12-14T10:00:00+01:00"
+      },
+      "result": "SUCCESS",
+      "details": "Envío programado exitosamente para el 14 de Diciembre a las 10:00 AM CET."
+    }
+  ],
+  "final_output": {
+    "campaign_id": "mc-88291",
+    "campaign_url": "https://admin.mailchimp.com/campaigns/show?id=mc-88291",
+    "status": "SCHEDULED"
+  }
+}

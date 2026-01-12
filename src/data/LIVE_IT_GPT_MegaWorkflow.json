@@ -1,0 +1,94 @@
+{
+  "name": "LIVE_IT_GPT_MegaWorkflow",
+  "description": "Interacciona con todos los agentes GPT creados para LIVE \u2018IT y ejecuta sus comandos clave.",
+  "trigger": {
+    "type": "manual"
+  },
+  "drawflow": {
+    "Home": {
+      "data": {
+        "1": {
+          "id": 1,
+          "name": "open-website",
+          "data": {
+            "url": "https://chat.openai.com/gpts/look-engine",
+            "newTab": false,
+            "waitForSelector": "textarea",
+            "waitForSelectorType": "cssSelector"
+          },
+          "class": "open-website",
+          "inputs": {},
+          "outputs": {
+            "output_1": {
+              "connections": [
+                {
+                  "node": "2",
+                  "output": "input_1"
+                }
+              ]
+            }
+          },
+          "pos_x": 50,
+          "pos_y": 80
+        },
+        "2": {
+          "id": 2,
+          "name": "insert-text",
+          "data": {
+            "selector": "textarea",
+            "text": "/sync cat\u00e1logo",
+            "delay": 500,
+            "type": "cssSelector"
+          },
+          "class": "insert-text",
+          "inputs": {
+            "input_1": {
+              "connections": [
+                {
+                  "node": "1",
+                  "input": "output_1"
+                }
+              ]
+            }
+          },
+          "outputs": {
+            "output_1": {
+              "connections": [
+                {
+                  "node": "3",
+                  "output": "input_1"
+                }
+              ]
+            }
+          },
+          "pos_x": 300,
+          "pos_y": 80
+        },
+        "3": {
+          "id": 3,
+          "name": "press-key",
+          "data": {
+            "key": "Enter",
+            "selector": "textarea",
+            "type": "cssSelector",
+            "delay": 100
+          },
+          "class": "press-key",
+          "inputs": {
+            "input_1": {
+              "connections": [
+                {
+                  "node": "2",
+                  "input": "output_1"
+                }
+              ]
+            }
+          },
+          "outputs": {},
+          "pos_x": 550,
+          "pos_y": 80
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "hosting": {
+    "project_name": "TRYONYOU — ABVETOS — ULTRA PLUS ULTIMATUM",
+    "target_directory": "dist/public",
+    "deployment_framework": "static_site_spa",
+    "domain_name": "TRYONyou.app",
+    "ssl_certificate": "auto_provision",
+    "fallback_rules": [
+      {
+        "description": "SPA Catch-all/Rewrite Rule",
+        "source": "/(.*)",
+        "destination": "/index.html",
+        "type": "rewrite"
+      }
+    ],
+    "build_configuration": {
+      "install_command": "npm install --ignore-scripts --legacy-peer-deps",
+      "build_command": "npm run build",
+      "node_version": "20.x"
+    },
+    "build_output": {
+      "html": "dist/public/index.html",
+      "css": "dist/public/assets/index-BtV2uub7.css",
+      "javascript": "dist/public/assets/index-EhDGVBAM.js",
+      "total_size_uncompressed": "1.15 MB",
+      "total_size_gzipped": "318 kB"
+    },
+    "identity": {
+      "title": "TRYONYOU — ABVETOS — ULTRA PLUS ULTIMATUM",
+      "logo": "SVG dorado sin placeholders",
+      "theme": "Dark mode con acentos dorados (#D4AF37)",
+      "typography": "Playfair Display + Inter"
+    },
+    "components": [
+      "Landing Page con hero",
+      "Intelligent System (4 módulos: PAU, Smart Wardrobe, Solidarity Wardrobe, ABVETOS Payment)",
+      "Demo for Brands page",
+      "Navegación con OAuth",
+      "Responsive design (mobile-first)"
+    ],
+    "dns_configuration": {
+      "domain": "TRYONyou.app",
+      "records": [
+        {
+          "type": "A/CNAME",
+          "value": "Manus IA Infrastructure",
+          "description": "Point to Manus IA hosting"
+        }
+      ]
+    }
+  }
+}

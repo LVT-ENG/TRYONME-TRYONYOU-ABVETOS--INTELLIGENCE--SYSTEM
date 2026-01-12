@@ -1,0 +1,50 @@
+[
+  {
+    "id": "sku-001",
+    "name": "Vestido de Noche Negro",
+    "category": "dress",
+    "price": 129.99,
+    "fabric": "Seda",
+    "elasticity": "Baja",
+    "sizes": ["XS", "S", "M", "L"],
+    "image": "/assets/garments/dress-black-cocktail.png",
+    "texture": "/assets/textures/silk_black.jpg",
+    "fit": "Slim"
+  },
+  {
+    "id": "sku-002",
+    "name": "Blazer Ejecutivo Blanco",
+    "category": "outerwear",
+    "price": 189.50,
+    "fabric": "Lino",
+    "elasticity": "Nula",
+    "sizes": ["S", "M", "L", "XL"],
+    "image": "/assets/garments/white-blazer-hyperrealistic.jpg",
+    "texture": "/assets/textures/linen_white.jpg",
+    "fit": "Regular"
+  },
+  {
+    "id": "sku-003",
+    "name": "Jeans Denim Clásicos",
+    "category": "bottom",
+    "price": 89.00,
+    "fabric": "Denim",
+    "elasticity": "Media",
+    "sizes": ["28", "30", "32", "34"],
+    "image": "/assets/garments/bottom-blue-jeans.png",
+    "texture": "/assets/textures/denim_blue.jpg",
+    "fit": "Straight"
+  },
+  {
+    "id": "sku-004",
+    "name": "Camisa Oxford Azul",
+    "category": "top",
+    "price": 59.99,
+    "fabric": "Algodón",
+    "elasticity": "Baja",
+    "sizes": ["S", "M", "L", "XL"],
+    "image": "/assets/garments/blue-shirt-hyperrealistic.jpg",
+    "texture": "/assets/textures/cotton_blue.jpg",
+    "fit": "Regular"
+  }
+]

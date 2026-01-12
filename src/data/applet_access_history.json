@@ -1,0 +1,145 @@
+{
+  "applets": [{
+    "lastAccessTime": "2026-01-01T13:06:12.158289Z",
+    "firstAccessTime": "2025-12-16T15:36:36.806244Z",
+    "source": {
+      "drive": {
+        "resourceId": "1Pz9VlCaOeB6eP8dKPtHXmYq5xArMsxGn",
+        "revisionId": "0B2C7DOrG5M-jdldIYTVVQWdWek40N1ZuTVovclBQOUlaVEZnPQ"
+      }
+    },
+    "name": "TryOnYou.App"
+  }, {
+    "lastAccessTime": "2025-12-31T20:45:13.563453Z",
+    "firstAccessTime": "2025-12-14T02:46:06.832104Z",
+    "source": {
+      "drive": {
+        "resourceId": "1na0_Hb7pwRUWWr3BBiwue0bJBaIc-Vdr",
+        "revisionId": "0B2C7DOrG5M-jcUg2WXVjUkwzZ0ttSEhPMFRxNGtLcmtqdG9zPQ"
+      }
+    },
+    "name": "Copy of TRYONYOU | ABVETOS Enterprise",
+    "description": "Enterprise Virtual Try-On and Fashion Intelligence System. Patent-aligned anthropometric inference and digital styling."
+  }, {
+    "lastAccessTime": "2025-12-30T15:10:59.742033Z",
+    "firstAccessTime": "2025-12-27T04:10:57.370397Z",
+    "source": {
+      "drive": {
+        "resourceId": "1rMvs9UN1WuYq2Y0DuzBrKAMuNwam-PAQ",
+        "revisionId": "0B2C7DOrG5M-jcXdqaTBISUZsaXlmaG1aVzdPMVJEYmxQaUxRPQ"
+      }
+    },
+    "name": "TryOnYou | Ultimatum Patent Ecosystem",
+    "description": "Fashion Intelligence \u0026 Biometrics System. Neural Link \u0026 Live JIT Production."
+  }, {
+    "lastAccessTime": "2025-12-30T15:10:40.015317Z",
+    "firstAccessTime": "2025-12-16T20:46:39.728616Z",
+    "source": {
+      "drive": {
+        "resourceId": "1hSSj9KSNx8iYx2EOdE9ez80hJTSmEZBy",
+        "revisionId": "0B2C7DOrG5M-jblM4TURaTnFaUDdRRW1ZOUlGNVE1YTNjNHBZPQ"
+      }
+    },
+    "name": "TryOnYou",
+    "description": "Your personal AI stylist and virtual fitting room."
+  }, {
+    "lastAccessTime": "2025-12-22T14:06:31.651399Z",
+    "firstAccessTime": "2025-12-22T14:06:25.763803Z",
+    "source": {
+      "drive": {
+        "resourceId": "1O7zgqhc3IeXMzL8np11AJ8jN1dP4zvo3",
+        "revisionId": "0B2C7DOrG5M-jd1MxSTFaQXlhVTJ5TlFsbW5MTm81VjJUR2IwPQ"
+      }
+    },
+    "name": "Copy of TryOnYou.App",
+    "description": "Fashion Intelligence \u0026 Biometrics System. Ultimatum Patent Ecosystem."
+  }, {
+    "lastAccessTime": "2025-12-21T10:03:05.949780Z",
+    "firstAccessTime": "2025-12-20T12:10:26.969271Z",
+    "source": {
+      "drive": {
+        "resourceId": "1pOSdprO0kBdXMcaTypcoOYreYnPAEVJB",
+        "revisionId": "0B2C7DOrG5M-jSmViOFdETmJ0ZVFpRlRsanVqSzhwSUpJbnQ4PQ"
+      }
+    },
+    "name": "Copy of Aura Quiet Living",
+    "description": "A serene e-commerce sample experience with an AI concierge."
+  }, {
+    "lastAccessTime": "2025-12-21T10:00:56.722427Z",
+    "firstAccessTime": "2025-12-20T12:10:11.563726Z",
+    "source": {
+      "sourceType": "BUNDLED",
+      "bundled": {
+        "id": "aura_quiet_living"
+      }
+    },
+    "name": "Aura Quiet Living",
+    "description": "A serene e-commerce sample experience with an AI concierge."
+  }, {
+    "lastAccessTime": "2025-12-20T08:41:53.386840Z",
+    "firstAccessTime": "2025-12-20T08:41:53.386840Z",
+    "source": {
+      "drive": {
+        "resourceId": "1eGZq-KqJ2IT1jQM5vzKruuE42S9_E0oX",
+        "revisionId": "0B2C7DOrG5M-jaUlUakdmZE13cDB0eHlJaW9jL0dmNys3cnc0PQ"
+      }
+    },
+    "name": "Copy of Copy of TryOnYou.App",
+    "description": "Fashion Intelligence \u0026 Biometrics System. Ultimatum Patent Ecosystem."
+  }, {
+    "lastAccessTime": "2025-12-20T08:40:50.372144Z",
+    "firstAccessTime": "2025-12-20T08:40:01.237299Z",
+    "source": {
+      "drive": {
+        "resourceId": "1RfIxHzIPsE678Mm9Ksm8iXlpO4W5NkWl",
+        "revisionId": "0B2C7DOrG5M-jTWhQMlFWa3NOa2t1bmdjTGF5ZUlPbHV0ZTVjPQ"
+      }
+    },
+    "name": "Copy of TryOnYou.App",
+    "description": "Fashion Intelligence \u0026 Biometrics System. Ultimatum Patent Ecosystem."
+  }, {
+    "lastAccessTime": "2025-12-20T07:44:00.311426Z",
+    "firstAccessTime": "2025-12-20T07:43:27.634291Z",
+    "source": {
+      "drive": {
+        "resourceId": "1xq8qRlO6q7Zhm-4pNwI96PSW4OaRuTSI",
+        "revisionId": "0B2C7DOrG5M-jek9TcUNmSDYyMHhMbk9KWFl0VG5FaWJJTGNrPQ"
+      }
+    },
+    "name": "Gemini OmniStudio",
+    "description": "A comprehensive multi-modal playground featuring text generation, high-quality image editing, Veo video generation, and real-time audio conversations powered by the latest Gemini models."
+  }, {
+    "lastAccessTime": "2025-12-16T20:39:07.086710Z",
+    "firstAccessTime": "2025-12-14T00:27:55.496673Z",
+    "source": {
+      "sourceType": "BUNDLED",
+      "bundled": {
+        "id": "product_mockup"
+      }
+    },
+    "name": "Product Mockup Visualization",
+    "description": "A professional design studio that generates photo realistic product mock-ups from uploaded or AI created assets."
+  }, {
+    "lastAccessTime": "2025-12-14T02:22:41.630979Z",
+    "firstAccessTime": "2025-12-14T00:39:27.538081Z",
+    "source": {
+      "drive": {
+        "resourceId": "1Weyp1iPJAH-yvMV13op6gH-HLPMEPitK",
+        "revisionId": "0B2C7DOrG5M-jeDUyUk5BeFUzT0xqQVNXeS90Y1NNYnRFbXBzPQ"
+      }
+    },
+    "name": "TRYONYOU | ABVETOS Enterprise",
+    "description": "Enterprise Virtual Try-On and Fashion Intelligence System. Patent-aligned anthropometric inference and digital styling."
+  }, {
+    "lastAccessTime": "2025-10-21T11:45:55.409119Z",
+    "firstAccessTime": "2025-10-21T11:45:55.409119Z",
+    "source": {
+      "sourceType": "BUNDLED",
+      "bundled": {
+        "id": "veo_studio"
+      }
+    },
+    "name": "Veo Studio",
+    "description": "Describe any scene and get a stunning video in seconds. An effortless video generator powered by Veo."
+  }]
+}

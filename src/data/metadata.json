@@ -1,0 +1,8 @@
+{
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "name": "TryOnYou",
+  "description": "Your personal AI stylist and virtual fitting room."
+}

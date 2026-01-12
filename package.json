@@ -1,0 +1,25 @@
+{
+  "name": "tryonyou-production",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo 'Build estático listo'",
+    "dev": "vite --host --port 5173",
+    "deploy:final": "npm run build && python3 generate_final_product.py"
+  },
+  "description": "import { motion } from \"framer-motion\";",
+  "main": "derRadius:\"18px\",",
+  "repository": {
+    "type": "git",
+    "url": "y:0 }}"
+  },
+  "author": "espinar",
+  "license": "ISC",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.1.2",
+    "vite": "^7.2.6"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

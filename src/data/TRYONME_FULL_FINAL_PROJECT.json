@@ -1,0 +1,111 @@
+{
+  "project": "TRYONME_FULL_STACK",
+  "version": "2.0 FINAL",
+  "owner": "Rub\u00e9n Espinar Rodr\u00edguez",
+  "description": "Sistema integral para la web de TRYONME, con frontend en Framer, cat\u00e1logo Shopify, avatar inteligente, AutoDonate, JSON din\u00e1mico y notificaciones.",
+  "domain": "https://tryonme.com",
+  "status": "Online & Connected",
+  "languages": [
+    "en",
+    "es",
+    "fr"
+  ],
+  "stack": [
+    "Framer",
+    "Shopify",
+    "Make.com",
+    "UltraMsg",
+    "OpenAI GPT-4",
+    "Render",
+    "GitHub"
+  ],
+  "modules": [
+    {
+      "id": "frontend",
+      "name": "Framer Website",
+      "description": "Multilingual, responsive site with video background, embedded store and avatar CTA.",
+      "assets": [
+        "estructura.html",
+        "logo.webp",
+        "video_portada.mp4",
+        "textos_home.txt"
+      ],
+      "features": [
+        "Hero with CTA",
+        "About section",
+        "Shopify embed",
+        "Footer with links"
+      ]
+    },
+    {
+      "id": "shopify",
+      "name": "Shopify Product System",
+      "files": [
+        "productos.csv",
+        "precios.txt"
+      ],
+      "catalog_status": "por_encargo",
+      "shop_url": "https://tryonme.myshopify.com"
+    },
+    {
+      "id": "avatar",
+      "name": "Smart Avatar Recommendation",
+      "endpoint": "https://tu-servidor.onrender.com/upload",
+      "action": "Discover Your Fit"
+    },
+    {
+      "id": "autodonate",
+      "name": "AutoDonate Module",
+      "rule": "fit_score < 30 triggers donation suggestion",
+      "platform": "Make.com"
+    },
+    {
+      "id": "dynamic_json",
+      "name": "Live JSON Sync",
+      "source": "https://raw.githubusercontent.com/tuusuario/tryonme-framer-assets/main/tryonme_data.json",
+      "agents": [
+        "FetchAssetAgent",
+        "FramerDataInjector",
+        "DynamicContentWatcher"
+      ]
+    },
+    {
+      "id": "notifications",
+      "name": "CEO Alerts",
+      "channels": {
+        "email": "rub\u00e9n.espinar.10@icloud.com",
+        "whatsapp": "+33699469479"
+      },
+      "tools": [
+        "UltraMsg",
+        "Make"
+      ]
+    }
+  ],
+  "agents": [
+    "WixBuilder",
+    "ShopifyConnector",
+    "HeroVideoAgent",
+    "AvatarGPTConnector",
+    "ResponsivenessChecker",
+    "WixSEOTuner",
+    "WixPublisherFinal",
+    "Confirmacion_Publicacion_WhatsApp",
+    "EmailNotifier",
+    "FetchAssetAgent",
+    "FramerDataInjector",
+    "DynamicContentWatcher"
+  ],
+  "automations": [
+    "MAKE_TRYONME_WIX_PUBLISH_FULL_SCENARIO.json",
+    "MAKE_TRYONME_WHATSAPP_CONFIRMACION_ULTRAMSG.json",
+    "MAKE_TRYONME_HOOK_CONFIRMACION.json"
+  ],
+  "next_steps": [
+    "Integrate Stripe for payments",
+    "Automate factory production",
+    "Activate CRM tracking and loyalty system",
+    "Create clones for future sub-brands"
+  ],
+  "created_at": "2025-07-06T20:45:00Z"
+}
