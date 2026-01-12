@@ -9,6 +9,7 @@ const DemoPilot = lazy(() => import("./pages/DemoPilot"));
 const AbvetCheckout = lazy(() => import("./components/AbvetCheckout"));
 const RegisterPartner = lazy(() => import("./pages/RegisterPartner"));
 const Commits = lazy(() => import("./pages/Commits"));
+const Supercommit = lazy(() => import("./pages/Supercommit"));
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function Router() {
         <Route path="/checkout" component={AbvetCheckout} />
         <Route path="/register-partner" component={RegisterPartner} />
         <Route path="/commits" component={Commits} />
+        <Route path="/supercommit" component={Supercommit} />
         <Route>404: Page Not Found</Route>
       </Switch>
     </Suspense>
