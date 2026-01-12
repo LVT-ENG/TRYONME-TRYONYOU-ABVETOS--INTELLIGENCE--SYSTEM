@@ -2,6 +2,7 @@ import os
 import imaplib
 import smtplib
 import email
+import json
 import gspread
 import requests
 import google.generativeai as genai
@@ -24,7 +25,8 @@ EMAIL_PASS = os.getenv("EMAIL_PASS")
 # --- INTELLIGENCE & DATA ---
 SHEET_ID = os.getenv("SHEET_ID")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-GOOGLE_CREDS = os.getenv("GOOGLE_CREDS_JSON", "service_account.json")
+GOOGLE_CREDENTIALS_JSON = os.getenv("GOOGLE_CREDENTIALS_JSON", os.getenv("GOOGLE_CREDS_JSON", "service_account.json"))
+SHEET_NAME = os.getenv("SHEET_NAME", os.getenv("WORKSHEET_NAME", "Startup Follow-Up"))
 
 # --- NOTIFICATION ---
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -92,12 +94,24 @@ def main():
 
     # 1. Connect to Sheets (Graceful Fallback)
     worksheet = None
-    if os.path.exists(GOOGLE_CREDS) and SHEET_ID:
+    gc = None
+
+    if GOOGLE_CREDENTIALS_JSON and SHEET_ID:
         try:
-            gc = gspread.service_account(filename=GOOGLE_CREDS)
-            sh = gc.open_by_key(SHEET_ID)
-            worksheet = sh.worksheet(os.getenv("WORKSHEET_NAME", "Startup Follow-Up"))
-            print("✅ Connected to Google Sheets.")
+            # Check if GOOGLE_CREDENTIALS_JSON is JSON content or filepath
+            if GOOGLE_CREDENTIALS_JSON.strip().startswith("{"):
+                creds_dict = json.loads(GOOGLE_CREDENTIALS_JSON)
+                gc = gspread.service_account_from_dict(creds_dict)
+            elif os.path.exists(GOOGLE_CREDENTIALS_JSON):
+                 gc = gspread.service_account(filename=GOOGLE_CREDENTIALS_JSON)
+
+            if gc:
+                sh = gc.open_by_key(SHEET_ID)
+                worksheet = sh.worksheet(SHEET_NAME)
+                print("✅ Connected to Google Sheets.")
+            else:
+                print("⚠️ Sheets Warning: Credentials invalid or file not found.")
+
         except Exception as e:
             print(f"⚠️ Sheets Error: {e}")
     else:
