@@ -3,7 +3,14 @@
   "public": true,
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/jules",
+      "schedule": "*/15 * * * *"
+    }
   ],
   "ignore": [
     "node_modules",
