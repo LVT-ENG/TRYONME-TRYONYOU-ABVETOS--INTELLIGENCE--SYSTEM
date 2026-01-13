@@ -34,7 +34,7 @@ TRYONYOU is an advanced fashion technology platform that combines computer visio
 
 ## 📋 Prerequisites
 
-- Node.js (v16 or higher)
+- Node.js (v18 or higher) - Required for Vite 7.x
 - Python 3.8+
 - npm or yarn
 
@@ -55,28 +55,27 @@ The application will be available at `http://localhost:5173`
 ### Backend Setup
 
 ```bash
-# Install Python dependencies
+# Install Python dependencies from requirements.txt
 pip install -r requirements.txt
 
-# Run the FastAPI server
-python main.py
-```
+# Install additional dependencies for computer vision features
+pip install opencv-python mediapipe numpy
 
-Or use uvicorn directly:
-```bash
+# Run the FastAPI server with uvicorn
 uvicorn main:app --reload
 ```
+
+The backend server will be available at `http://localhost:8000`
 
 ## 📜 Available Scripts
 
 ### Frontend
-- `npm run dev` - Start Vite development server
+- `npm run dev` - Start Vite development server on port 5173
 - `npm run build` - Build static production files
-- `npm run deploy:final` - Build and generate final product
 
 ### Backend
-- `python main.py` - Start FastAPI server
-- `python tryonyou_master_orchestrator.py` - Generate CSS and system reports
+- `uvicorn main:app --reload` - Start FastAPI development server with hot reload
+- `python tryonyou_master_orchestrator.py` - Generate global.css and system status report
 
 ## 🌐 Deployment
 
@@ -126,6 +125,8 @@ Advanced body measurement system using MediaPipe and OpenCV to provide accurate 
 - Chest, waist, hips measurements
 - Shoulder width analysis
 - Automatic size recommendation (XS, S, M, L, XL)
+
+**Note**: The biometric features require additional dependencies (opencv-python, mediapipe, numpy) beyond those in requirements.txt. Install them separately as shown in the Backend Setup section.
 
 ### Smart Wardrobe
 Digital wardrobe management system for organizing and styling virtual fashion items.
