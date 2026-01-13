@@ -85,6 +85,12 @@ if [ "$HAS_CHANGES" = true ]; then
     CURRENT_BRANCH=$(git branch --show-current)
     jules_heartbeat "Rama actual: $CURRENT_BRANCH"
     
+    # Check if origin remote exists
+    if ! git remote get-url origin >/dev/null 2>&1; then
+        jules_error "Remote 'origin' no encontrado. Configura el remote primero."
+        exit 1
+    fi
+    
     if git push origin "$CURRENT_BRANCH"; then
         jules_success "Push a GitHub completado exitosamente"
         PUSH_SUCCESS=true
@@ -110,10 +116,12 @@ else
 fi
 
 # 6. Environment Check
+echo ""
+jules_heartbeat "Verificando configuración del entorno..."
 if [ -f ".env" ]; then
     jules_success "Variables de entorno detectadas (.env)"
 else
-    jules_warning "No se encontró archivo .env"
+    jules_warning "Archivo .env no encontrado - crear si necesitas variables de entorno locales"
 fi
 
 # 7. Final Jules Heartbeat
