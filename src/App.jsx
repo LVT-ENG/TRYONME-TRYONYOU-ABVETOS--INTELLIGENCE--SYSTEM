@@ -1,49 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-function App() {
+export default function App() {
+  const [session, setSession] = useState("LAFAYETTE_READY");
+
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
-      
-      {/* Fondo con degradado sutil */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--panel)_0%,_var(--ink)_100%)] -z-10"></div>
-
-      {/* Cabecera */}
-      <header className="absolute top-0 w-full p-8 flex justify-between items-center opacity-80">
-        <div className="text-xl font-bold tracking-[0.3em]">TRYONYOU</div>
-        <div className="text-xs font-mono text-gold border border-gold px-2 py-1">V4.5 PILOT</div>
-      </header>
-
-      {/* Contenido Principal */}
-      <main className="max-w-4xl z-10 space-y-8">
-        <h1 className="text-5xl md:text-7xl font-light tracking-tighter text-white mb-4">
-          NOT JUST A MIRROR.<br />
-          <span className="text-gold font-serif italic">It's Intelligent Fit.</span>
-        </h1>
-        
-        <p className="text-gray-400 text-sm md:text-base max-w-lg mx-auto tracking-widest leading-loose">
-          EXPERIENCE THE FIRST JIT PROTOCOL FOR RETAIL.<br/>
-          NO AVATARS. REAL BIOMETRICS.
-        </p>
-
-        <div className="pt-10 flex flex-col md:flex-row gap-6 justify-center items-center">
-          <button className="btn-luxury w-64">
-            ENTER PILOT
-          </button>
-          
-          <button className="text-xs text-gray-500 hover:text-white transition tracking-widest border-b border-transparent hover:border-gray-500 pb-1">
-            VIEW PATENT DOCS
-          </button>
+    <div style={{ background: '#050505', color: '#fff', minHeight: '100vh', fontFamily: 'monospace' }}>
+      {/* HERO SECTION CON TU VÍDEO */}
+      <section style={{ height: '100vh', position: 'relative', overflow: 'hidden' }}>
+        <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }}>
+          <source src="/assets/hero/hero_main.mp4" type="video/mp4" />
+        </video>
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
+          <h1 style={{ fontSize: '4rem', color: '#D3B26A', letterSpacing: '15px' }}>TRYONYOU</h1>
+          <p>PATENT: PCT/EP2025/067317 | SESSION: {session}</p>
         </div>
-      </main>
+      </section>
 
-      {/* Pie de página Técnico */}
-      <footer className="absolute bottom-0 w-full p-6 text-[10px] text-gray-600 font-mono flex justify-between uppercase">
-        <span>Powered by Jules Engine</span>
-        <span>Lafayette Retail Tech</span>
-      </footer>
-
+      {/* EL ESPEJO MÁGICO (FORCED VISIBILITY) */}
+      <section style={{ padding: '100px 20px', textAlign: 'center', background: '#0a0a0a' }}>
+        <h2 style={{ color: '#D3B26A' }}>PAU LE PAON: BIOMETRIC MIRROR</h2>
+        <div style={{ border: '1px solid #333', padding: '50px', display: 'inline-block', borderRadius: '5px' }}>
+          <img src="/assets/vision/mi_foto_v7.png" alt="Avatar Biométrico" style={{ maxWidth: '300px' }} />
+          <p style={{ marginTop: '20px', opacity: 0.7 }}>Ajuste detectado: 99.7% Precisión</p>
+        </div>
+      </section>
     </div>
   );
 }
-
-export default App;
