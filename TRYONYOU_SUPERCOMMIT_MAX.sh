@@ -141,15 +141,23 @@ commit_changes() {
 }
 
 push_to_production() {
-    print_step "Pushing to production branch: ${MAIN_BRANCH}..."
+    local target_branch="${MAIN_BRANCH}"
+    
+    # If not on main branch, push to current branch
+    if [ "${CURRENT_BRANCH}" != "${MAIN_BRANCH}" ]; then
+        print_warning "Not on ${MAIN_BRANCH} branch. Pushing to current branch: ${CURRENT_BRANCH}"
+        target_branch="${CURRENT_BRANCH}"
+    fi
+    
+    print_step "Pushing to branch: ${target_branch}..."
     print_jules "Synchronizing with remote repository"
     
     # Try to push
-    if git push origin "${MAIN_BRANCH}"; then
-        print_success "Successfully pushed to origin/${MAIN_BRANCH}"
+    if git push origin "${target_branch}"; then
+        print_success "Successfully pushed to origin/${target_branch}"
         return 0
     else
-        print_error "Failed to push to origin/${MAIN_BRANCH}"
+        print_error "Failed to push to origin/${target_branch}"
         print_warning "You may need to pull first or check permissions"
         return 1
     fi
@@ -178,16 +186,22 @@ run_build() {
 }
 
 trigger_vercel_deployment() {
+    local deploy_branch="${1:-${MAIN_BRANCH}}"
+    
     print_step "Triggering Vercel deployment..."
-    print_jules "Vercel will automatically deploy from ${MAIN_BRANCH} branch"
+    print_jules "Vercel will automatically deploy from ${deploy_branch} branch"
     
     echo ""
     echo -e "${CYAN}📦 Deployment Targets:${NC}"
-    echo "  • https://tryonyou.app"
-    echo "  • https://www.tryonyou.app"
+    if [ "${deploy_branch}" = "${MAIN_BRANCH}" ]; then
+        echo "  • https://tryonyou.app (Production)"
+        echo "  • https://www.tryonyou.app (Production)"
+    else
+        echo "  • Preview deployment for branch: ${deploy_branch}"
+    fi
     echo ""
     
-    print_success "Push to ${MAIN_BRANCH} will trigger Vercel deployment"
+    print_success "Push to ${deploy_branch} will trigger Vercel deployment"
     print_jules "Vercel CI/CD pipeline activated"
 }
 
@@ -241,9 +255,14 @@ main() {
     
     # Step 6: Push to production
     print_jules "Initiating production deployment sequence..."
+    local deployed_branch="${MAIN_BRANCH}"
+    if [ "${CURRENT_BRANCH}" != "${MAIN_BRANCH}" ]; then
+        deployed_branch="${CURRENT_BRANCH}"
+    fi
+    
     if push_to_production; then
         # Step 7: Trigger Vercel
-        trigger_vercel_deployment
+        trigger_vercel_deployment "${deployed_branch}"
         
         # Step 8: Activate Bots
         activate_bots_express_deploy
@@ -257,9 +276,14 @@ main() {
         print_jules "TryOnYou Ecosystem synchronized successfully!"
         print_jules "Latido de Jules activado! 💜"
         echo ""
-        echo -e "${CYAN}🌐 Your application is being deployed to:${NC}"
-        echo "  • https://tryonyou.app"
-        echo "  • https://www.tryonyou.app"
+        
+        if [ "${deployed_branch}" = "${MAIN_BRANCH}" ]; then
+            echo -e "${CYAN}🌐 Your application is being deployed to:${NC}"
+            echo "  • https://tryonyou.app"
+            echo "  • https://www.tryonyou.app"
+        else
+            echo -e "${CYAN}🌐 Preview deployment for branch: ${deployed_branch}${NC}"
+        fi
         echo ""
         echo -e "${YELLOW}Monitor deployment at: https://vercel.com/dashboard${NC}"
         echo ""
