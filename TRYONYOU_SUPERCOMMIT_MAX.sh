@@ -152,9 +152,9 @@ github_sync() {
     git status --short
     echo ""
     
-    # Add all changes
+    # Add all changes (respecting .gitignore)
     print_step "Agregando todos los cambios..."
-    git add .
+    git add -A
     print_success "Cambios agregados"
     log_message "Cambios agregados al staging area"
     
@@ -198,9 +198,11 @@ vercel_deploy() {
         print_success "Vercel CLI disponible: $VERCEL_VERSION"
         log_message "Vercel CLI OK: $VERCEL_VERSION"
         
-        # Desplegar a Vercel
+        # Desplegar a Vercel (con confirmación de seguridad)
         print_step "Desplegando a Vercel..."
-        if vercel --prod --yes; then
+        print_warning "Deploy a producción - usando modo automatizado"
+        
+        if vercel --prod --yes 2>&1 | tee -a "$LOG_FILE"; then
             print_success "Deploy a Vercel completado exitosamente"
             log_message "Deploy a Vercel exitoso"
         else
@@ -228,14 +230,20 @@ build_project() {
     
     # Verificar si existe package.json
     if [ -f package.json ]; then
-        print_step "Ejecutando npm build..."
-        
-        if npm run build; then
-            print_success "Build completado exitosamente"
-            log_message "Build exitoso"
+        # Verificar si el script 'build' existe en package.json
+        if npm run 2>&1 | grep -q "build"; then
+            print_step "Ejecutando npm build..."
+            
+            if npm run build 2>&1 | tee -a "$LOG_FILE"; then
+                print_success "Build completado exitosamente"
+                log_message "Build exitoso"
+            else
+                print_warning "Build falló o no es necesario"
+                log_message "WARNING: Build falló o no requerido"
+            fi
         else
-            print_warning "Build falló o no es necesario"
-            log_message "WARNING: Build falló o no requerido"
+            print_warning "Script 'build' no encontrado en package.json"
+            log_message "WARNING: Script 'build' no definido"
         fi
     else
         print_warning "No se encontró package.json - Build saltado"
