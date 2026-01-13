@@ -2,8 +2,9 @@
   "name": "tryonyou-production",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo 'Build estático listo'",
+    "build": "vite build",
     "dev": "vite --host --port 5173",
+    "preview": "vite preview",
     "deploy:final": "npm run build && python3 generate_final_product.py"
   },
   "description": "import { motion } from \"framer-motion\";",
