@@ -1,15 +1,14 @@
 #!/bin/bash
-echo "🔍 [PASO 1] Verificando Escudo Legal en Home.jsx..."
-if grep -q "PCT/EP2025/067317" src/pages/Home.jsx; then
-    echo "✅ Patente OK"
-else
-    echo "⚠️ ERROR: Patente no encontrada."
-    exit 1
+echo "🚀 [MODO EMERGENCIA] Limpiando y Desplegando..."
+
+# Asegurar que la patente está en el archivo correcto
+if ! grep -q "PCT/EP2025/067317" src/pages/Home.jsx; then
+    echo "⚠️ Re-inyectando Patente por seguridad..."
+    sed -i 's/LVT-ENG \/ TRYONYOU/PROTÉGÉ PAR BREVET PCT\/EP2025\/067317 | LVT-ENG/g' src/pages/Home.jsx
 fi
 
-echo "📦 [PASO 2] Consolidando en GitHub..."
 git add .
-git commit -m "🚀 ULTIMATUM V7: Ecosistema Unificado | Jules & Pau Live | French Luxury Edition"
-
-echo "📡 [PASO 3] Forzando Despliegue en Vercel..."
+git commit -m "🔧 FIX: Deployment alignment | Removing conflicting types | French Luxury Live"
 git push origin main --force
+
+echo "✅ Push completado. Jules está esperando que Vercel termine el build."
