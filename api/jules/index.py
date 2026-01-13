@@ -4,30 +4,23 @@ import os, requests
 
 app = FastAPI()
 
-BUSINESS_CORE = {
-    "client": "Galeries Lafayette / Hub71",
-    "price_per_pilot": "4,900€ / mes",
-    "patent": "PCT/EP2025/067317",
-    "target": "Reducción de devoluciones al 0%",
-    "demo_url": "https://tryonyou.app/demo"
-}
-
-def notify_telegram(msg):
+@app.get("/api/jules")
+async def jules_master():
+    # Notificación de Éxito Comercial
     token = os.getenv("TELEGRAM_TOKEN")
     chat_id = os.getenv("TELEGRAM_CHAT_ID")
     if token and chat_id:
-        try:
-            requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
-                          json={"chat_id": chat_id, "text": f"💎 JULES V7:\n{msg}"})
-        except:
-            pass
+        msg = "🚀 JULES V7: Acceso detectado. Ecosistema de Inteligencia TryOnYou ONLINE."
+        requests.post(f"https://api.telegram.org/bot{token}/sendMessage",
+                      json={"chat_id": chat_id, "text": msg})
 
-@app.get("/api/jules")
-async def jules_master():
-    notify_telegram("✅ Ecosistema Consolidado: Acceso de cliente detectado.")
     return JSONResponse(content={
         "status": "🤖 JULES V7 MASTER ACTIVE",
-        "business": BUSINESS_CORE,
-        "narrative": "Pau le Paon confirmando dignidad y ajuste.",
-        "technical": "All Assets Merged Successfully"
+        "vision": "Dignidad humana en el retail de lujo",
+        "legal_shield": "Patent PCT/EP2025/067317",
+        "commercial_proposal": {
+            "target": "Galeries Lafayette",
+            "pilot_fee": "4,900€ / month",
+            "guarantee": "99.7% fit accuracy"
+        }
     })
