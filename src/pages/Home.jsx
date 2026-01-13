@@ -1,43 +1,39 @@
 import React from 'react';
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function Home() {
   const [, setLocation] = useLocation();
 
+  const s = {
+    hero: { position: 'relative', height: '100vh', width: '100vw', backgroundColor: '#000', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' },
+    video: { position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.4, zIndex: 1, filter: 'grayscale(100%)' },
+    overlay: { position: 'relative', zIndex: 10, textAlign: 'center', color: '#fff', fontFamily: 'serif', padding: '20px' },
+    nav: { position: 'absolute', top: 0, width: '100%', display: 'flex', justifyContent: 'space-between', padding: '40px 60px', zIndex: 100, boxSizing: 'border-box', letterSpacing: '4px' },
+    btn: { background: '#fff', color: '#000', border: 'none', padding: '20px 50px', fontSize: '0.8rem', fontWeight: 'bold', letterSpacing: '4px', cursor: 'pointer', marginTop: '30px', textTransform: 'uppercase' },
+    footer: { position: 'absolute', bottom: 30, width: '100%', display: 'flex', justifyContent: 'space-between', padding: '0 60px', fontSize: '10px', color: '#666', zIndex: 10, boxSizing: 'border-box', letterSpacing: '2px' }
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden font-sans">
-      <nav className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference">
-        <div className="text-2xl font-serif font-bold tracking-widest uppercase">Galeries Lafayette</div>
-        <div className="hidden md:flex gap-8 text-sm tracking-widest uppercase font-medium">
-          <a href="#" className="hover:text-red-500 transition-colors">Haute Couture</a>
-          <a href="#" className="hover:text-red-500 transition-colors">Beauté</a>
-        </div>
+    <div style={s.hero}>
+      <nav style={s.nav}>
+        <div style={{fontWeight:'bold'}}>GALERIES LAFAYETTE</div>
+        <div style={{fontSize:'10px'}}>HAUTE COUTURE BIOMÉTRIQUE</div>
       </nav>
 
-      <section className="relative h-screen flex items-center justify-center pt-20">
-        <div className="absolute inset-0 z-0">
-          <video autoPlay loop muted playsInline className="w-full h-full object-cover opacity-40 grayscale">
-            <source src="/assets/hero/hero_main.mp4" type="video/mp4" />
-          </video>
-        </div>
-        <div className="relative z-10 text-center px-4 max-w-5xl">
-          <motion.h1 initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-6xl md:text-8xl font-serif font-light mb-8">
-            L'Intelligence <br/> <span className="italic font-normal">Sur Mesure</span>
-          </motion.h1>
-          <p className="text-lg md:text-xl font-light text-gray-300 mb-12 max-w-2xl mx-auto">
-            Découvrez la perfection biométrique. Sans chiffres, sans tailles, juste votre silhouette magnifiée par Pau le Paon.
-          </p>
-          <button onClick={() => setLocation('/demo')} className="bg-white text-black px-12 py-6 text-sm tracking-widest uppercase hover:bg-red-600 hover:text-white transition-all flex items-center mx-auto">
-            Lancer l'Expérience <ArrowRight className="ml-4 w-4 h-4" />
-          </button>
-        </div>
-      </section>
+      <video autoPlay loop muted playsInline style={s.video}>
+        <source src="/assets/hero/hero_main.mp4" type="video/mp4" />
+      </video>
 
-      <footer className="py-8 px-8 border-t border-white/10 text-[10px] tracking-widest text-gray-500 flex justify-between uppercase">
-        <div>© 2026 LVT-ENG / TRYONYOU</div>
-        <div>Protégé par Brevet PCT/EP2025/067317</div>
+      <div style={s.overlay}>
+        <h1 style={{fontSize:'clamp(3rem, 8vw, 5rem)', fontWeight:'200', margin:0}}>L'Intelligence</h1>
+        <h1 style={{fontSize:'clamp(3rem, 8vw, 5rem)', fontWeight:'200', fontStyle:'italic', marginTop:'-10px'}}>Sur Mesure</h1>
+        <p style={{opacity:0.7, maxWidth:'500px', margin:'20px auto', lineHeight:'1.6'}}>Découvrez la perfection biométrique. Sans chiffres, sans tailles, juste votre silhouette magnifiée.</p>
+        <button style={s.btn} onClick={() => setLocation('/demo')}>Lancer l'Expérience</button>
+      </div>
+
+      <footer style={s.footer}>
+        <div>LVT-ENG / TRYONYOU © 2026</div>
+        <div>BREVET PCT/EP2025/067317</div>
       </footer>
     </div>
   );
