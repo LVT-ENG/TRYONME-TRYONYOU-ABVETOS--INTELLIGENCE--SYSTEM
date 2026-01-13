@@ -43,7 +43,7 @@ La landing debe ser **simple, limpia y enfocada a la conversión**. Se recomiend
 | :--- | :--- | :--- |
 | **Título de Sección** | Demo Interactiva | Usar `demo_title` de `translations.txt`. |
 | **Contenido** | "La demo estará disponible pronto. Mientras tanto, puedes ver un vídeo de demostración." | **Implementación Clave:** Insertar un **iframe seguro** (HTML Embed) en esta sección. El `src` inicial debe ser un placeholder de vídeo (Ej: YouTube de la demo). Este iframe será el que se reemplazará con la demo del informático. |
-| **ID del Iframe** | Asignar un ID único y fácil de identificar al iframe, por ejemplo: `tryonyou_demo_iframe`. | Esto es crucial para la integración futura. |
+| **ID del Iframe** | Asignar el ID único `tryonyou_demo_iframe` al iframe. | Esto es crucial para la integración futura. |
 
 ### 5. Plan Piloto 30 Días
 
