@@ -29,7 +29,6 @@ NC='\033[0m' # No Color
 
 # Configuration
 MAIN_BRANCH="main"
-REPO_DIR=$(pwd)
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 
 ################################################################################
