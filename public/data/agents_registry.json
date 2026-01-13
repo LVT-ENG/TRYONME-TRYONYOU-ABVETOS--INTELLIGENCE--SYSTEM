@@ -1,0 +1,30 @@
+{
+  "31": {
+    "id": "31",
+    "name": "Video Curator",
+    "status": "ACTIVE",
+    "currentTask": "Processing Hero Video (hero_main.mp4)",
+    "lastActive": "2026-01-13T13:52:20Z"
+  },
+  "02": {
+    "id": "02",
+    "name": "Content Pro",
+    "status": "ACTIVE",
+    "currentTask": "Generating Product Descriptions",
+    "lastActive": "2026-01-13T13:52:20Z"
+  },
+  "25": {
+    "id": "25",
+    "name": "Image Curator",
+    "status": "ACTIVE",
+    "currentTask": "Rendering Avatar Textures",
+    "lastActive": "2026-01-13T13:52:20Z"
+  },
+  "70": {
+    "id": "70",
+    "name": "Orchestrator",
+    "status": "ACTIVE",
+    "currentTask": "System Monitoring",
+    "lastActive": "2026-01-13T13:52:20Z"
+  }
+}
