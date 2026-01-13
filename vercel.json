@@ -3,6 +3,7 @@
   "public": true,
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/api/jules", "destination": "/api/jules/index.py" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "ignore": [
