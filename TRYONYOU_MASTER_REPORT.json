@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-01-14T14:51:02.677873+00:00",
+  "assets": [
+    {
+      "source": "41C07010",
+      "destination": "assets/catalog/red_dress_minimal.png",
+      "status": "missing"
+    },
+    {
+      "source": "8762992B",
+      "destination": "assets/catalog/burberry_trench.png",
+      "status": "missing"
+    },
+    {
+      "source": "IMG_6206",
+      "destination": "assets/branding/pau_tuxedo.png",
+      "status": "missing"
+    },
+    {
+      "source": "TRYONYOU_Investor_Dossier",
+      "destination": "docs/investor_dossier.pdf",
+      "status": "missing"
+    }
+  ],
+  "env": {
+    "GOOGLE_API_KEY": "missing",
+    "PORKBUN_API": "missing"
+  },
+  "stack": {
+    "forbidden": []
+  },
+  "ui": {
+    "divineo": "applied"
+  },
+  "routes": {
+    "/fit": "missing",
+    "/cap": "missing",
+    "/abvet": "missing",
+    "/claims": "missing"
+  },
+  "deploy": {
+    "vercel": "configured"
+  }
+}
