@@ -57,6 +57,8 @@ import ssl
 import smtplib
 import imaplib
 import email
+import urllib.request
+import json
 from email.header import decode_header, make_header
 from email.message import EmailMessage
 from datetime import datetime, timedelta, timezone
@@ -70,7 +72,7 @@ from openpyxl.workbook.workbook import Workbook
 try:
     from dotenv import load_dotenv
     load_dotenv()
-except Exception:
+except (ImportError, ModuleNotFoundError):
     pass
 
 DATE_FMT = "%Y-%m-%d"
@@ -220,8 +222,6 @@ def clean_reply_text(txt: str) -> str:
 
 def send_telegram(token: str, chat_id: str, text: str) -> None:
     """Send a message to Telegram using bot API."""
-    import urllib.request
-    import json
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     data = json.dumps({"chat_id": chat_id, "text": text, "parse_mode": "Markdown"}).encode()
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
@@ -532,8 +532,11 @@ def main():
     print(summary)
     
     if telegram_token and telegram_chat:
-        send_telegram(telegram_token, telegram_chat, summary)
-        print("✅ Telegram notification sent")
+        try:
+            send_telegram(telegram_token, telegram_chat, summary)
+            print("✅ Telegram notification sent")
+        except Exception as e:
+            print(f"⚠️  Telegram notification failed: {e}")
     
     print("\n✨ JULES completed!")
 
