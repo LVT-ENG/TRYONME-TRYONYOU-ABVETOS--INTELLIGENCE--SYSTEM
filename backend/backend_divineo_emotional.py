@@ -26,12 +26,15 @@ app.add_middleware(
 
 # 2. Configure Gemini (The Muse)
 GENAI_API_KEY = os.getenv("GEMINI_API_KEY")
+model = None
 if not GENAI_API_KEY:
     print("⚠️ WARNING: GEMINI_API_KEY is missing.")
 else:
-    genai.configure(api_key=GENAI_API_KEY)
-
-model = genai.GenerativeModel('gemini-1.5-flash') 
+    try:
+        genai.configure(api_key=GENAI_API_KEY)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+    except Exception as e:
+        print(f"⚠️ WARNING: Failed to initialize Gemini: {e}") 
 
 # --- EMOTIONAL DATA STRUCTURE ---
 class EmotionalResponse(BaseModel):
@@ -76,6 +79,9 @@ async def analyze_feeling(file: UploadFile = File(...), occasion: str = "special
     EMOTIONAL RESONANCE rather than just geometry.
     """
     try:
+        if not model:
+            raise HTTPException(status_code=503, detail="Gemini API not configured. Please set GEMINI_API_KEY environment variable.")
+        
         contents = await file.read()
         image = Image.open(io.BytesIO(contents))
 
@@ -84,20 +90,33 @@ async def analyze_feeling(file: UploadFile = File(...), occasion: str = "special
 
         response = model.generate_content([full_prompt, image])
         
-        # Fallback for safety
-        text_response = response.text if response.text else "You look ready to shine."
+        # Fallback for safety - return default structured response
+        if not response.text:
+            return EmotionalResponse(
+                emotional_hook="You look ready to shine.",
+                outfit_id="DRESS_RED_POWER",
+                confidence_boost=95
+            )
         
         # Clean up Markdown JSON if Gemini adds it
-        clean_text = text_response.replace("```json", "").replace("```", "").strip()
+        clean_text = response.text.replace("```json", "").replace("```", "").strip()
         
-        # In a real scenario, we parse the JSON here. 
-        # For the pilot code, we ensure the 'emotional_hook' is the key deliverable.
-        
-        return EmotionalResponse(
-            emotional_hook=clean_text, # Gemini llenará esto con la frase inspiradora
-            outfit_id="DRESS_RED_POWER",
-            confidence_boost=99
-        )
+        # Parse the JSON response from Gemini
+        import json
+        try:
+            parsed_response = json.loads(clean_text)
+            return EmotionalResponse(
+                emotional_hook=parsed_response.get("emotional_hook", "You look ready to shine."),
+                outfit_id=parsed_response.get("outfit_id", "DRESS_RED_POWER"),
+                confidence_boost=parsed_response.get("confidence_boost", 95)
+            )
+        except json.JSONDecodeError:
+            # If Gemini returns non-JSON text, use it as the emotional hook
+            return EmotionalResponse(
+                emotional_hook=clean_text[:200] if len(clean_text) > 200 else clean_text,
+                outfit_id="DRESS_RED_POWER",
+                confidence_boost=95
+            )
 
     except Exception as e:
         print(f"Emotional Core Error: {e}")
