@@ -47,7 +47,7 @@ ASSET_MAPPING = {
 }
 
 REPORT = {
-    "timestamp": datetime.now(timezone.utc).isoformat(),
+    "timestamp": None,  # Set at runtime
     "assets": [],
     "env": {},
     "stack": {},
@@ -225,6 +225,9 @@ def generate_vercel_config():
 # =========================
 
 if __name__ == "__main__":
+    # Set timestamp at runtime
+    REPORT["timestamp"] = datetime.now(timezone.utc).isoformat()
+    
     organize_assets()
     validate_env()
     validate_stack()
