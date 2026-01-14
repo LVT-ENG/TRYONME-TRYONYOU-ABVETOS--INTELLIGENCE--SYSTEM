@@ -130,7 +130,13 @@ def validate_stack():
         log("STACK", "package.json not found")
         return
 
-    data = json.loads(pkg.read_text(encoding="utf-8"))
+    try:
+        data = json.loads(pkg.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as e:
+        REPORT["stack"]["status"] = f"package.json parse error: {str(e)}"
+        log("STACK", f"ERROR: Failed to parse package.json - {e}")
+        return
+
     deps = {**data.get("dependencies", {}), **data.get("devDependencies", {})}
 
     REPORT["stack"]["vite"] = VITE_REQUIRED in deps
@@ -197,7 +203,13 @@ def validate_routes():
             REPORT["routes"]["status"] = "App.tsx/App.jsx missing"
             return
 
-    content = app.read_text(encoding="utf-8")
+    try:
+        content = app.read_text(encoding="utf-8")
+    except (UnicodeDecodeError, IOError) as e:
+        REPORT["routes"]["status"] = f"App file read error: {str(e)}"
+        log("ROUTES", f"ERROR: Failed to read App file - {e}")
+        return
+
     for r in ROUTES_REQUIRED:
         REPORT["routes"][r] = "present" if r in content else "missing"
 
@@ -232,10 +244,12 @@ def generate_vercel_config():
 
 def write_report():
     report_path = PROJECT_ROOT / "TRYONYOU_MASTER_REPORT.json"
-    with open(report_path, "w", encoding="utf-8") as f:
-        json.dump(REPORT, f, indent=2)
-
-    log("REPORT", f"Written to {report_path}")
+    try:
+        with open(report_path, "w", encoding="utf-8") as f:
+            json.dump(REPORT, f, indent=2)
+        log("REPORT", f"Written to {report_path}")
+    except (IOError, OSError) as e:
+        log("REPORT", f"ERROR: Failed to write report - {e}")
 
 # =========================
 # ENTRYPOINT
