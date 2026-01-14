@@ -10,7 +10,7 @@ const ContextualInputs = ({ onContextComplete }) => {
     setData(newData);
 
     if (step === 1) {
-      // Pequeño delay para que se sienta conversacional
+      // Small delay for a conversational feel
       setTimeout(() => setStep(2), 400); 
     } else {
       setTimeout(() => onContextComplete(newData), 400);
@@ -92,7 +92,7 @@ const ContextualInputs = ({ onContextComplete }) => {
   );
 };
 
-// Manus: Si puedes mejorar el CSS de estos botones para que parezcan cristal, adelante.
+// Glass-morphism styled button component with shimmer effects
 const SelectionButton = ({ label, onClick, selected }) => (
   <motion.button
     onClick={onClick}
