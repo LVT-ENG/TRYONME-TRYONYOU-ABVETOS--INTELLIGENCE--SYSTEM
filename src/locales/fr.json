@@ -1,0 +1,24 @@
+{
+  "pau": {
+    "welcome": "L'élégance n'a pas de taille. Elle a une âme.",
+    "scan_instruction": "Restez immobile un instant. Je lis votre silhouette...",
+    "scan_complete": "Aura capturée.",
+    "question_occasion": "Pour quelle occasion habillons-nous votre journée ?",
+    "question_sensation": "Et quelle sensation recherchez-vous sur la peau ?",
+    "analyzing": "Tissage des données...",
+    "match_found": "Ce modèle respecte votre mouvement.",
+    "options": {
+      "work": "Travail",
+      "event": "Soirée",
+      "daily": "Quotidien",
+      "fitted": "Ajusté",
+      "fluid": "Fluide",
+      "comfort": "Confort Absolu"
+    }
+  },
+  "ui": {
+    "btn_activate": "ACTIVER LE MIROIR",
+    "fit_analysis": "Analyse du Tombé",
+    "fabric_id": "ID Tissu"
+  }
+}
