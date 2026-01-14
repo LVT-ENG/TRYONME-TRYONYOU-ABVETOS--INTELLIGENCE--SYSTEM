@@ -134,7 +134,7 @@ Each interaction is logged to Google Sheets with:
 See `requirements.txt` for full list:
 - `requests` - HTTP client for Telegram API
 - `gspread` - Google Sheets integration
-- `oauth2client` - Google OAuth authentication
+- `oauth2client` - Google OAuth authentication (Note: deprecated, consider migrating to `google-auth` in future)
 - Python built-ins: `imaplib`, `smtplib`, `email`
 
 ## Troubleshooting

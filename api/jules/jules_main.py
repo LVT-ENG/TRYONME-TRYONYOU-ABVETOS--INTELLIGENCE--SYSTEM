@@ -48,9 +48,13 @@ class JulesAgent:
         """Envía alertas a tu móvil"""
         if not self.telegram_token or not self.telegram_chat_id:
             return
-        url = f"https://api.telegram.org/bot{self.telegram_token}/sendMessage"
-        data = {"chat_id": self.telegram_chat_id, "text": f"🦅 JULES: {message}"}
-        requests.post(url, data=data)
+        try:
+            url = f"https://api.telegram.org/bot{self.telegram_token}/sendMessage"
+            data = {"chat_id": self.telegram_chat_id, "text": f"🦅 JULES: {message}"}
+            response = requests.post(url, data=data, timeout=10)
+            response.raise_for_status()
+        except Exception as e:
+            print(f"⚠️ Error enviando notificación Telegram: {e}")
 
     def get_unread_emails(self):
         """Descarga correos no leídos"""
@@ -174,8 +178,9 @@ class JulesAgent:
         if match:
             return match.group(1)
         
-        # Si no hay < >, buscar un patrón de email
-        match = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', sender_string)
+        # Si no hay < >, buscar un patrón de email más robusto
+        # Pattern supports most common email formats
+        match = re.search(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', sender_string)
         if match:
             return match.group(0)
         
