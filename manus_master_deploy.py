@@ -1,17 +1,30 @@
 import subprocess
-import json
-import os
+import sys
 
-def execute_step(description, command):
+def execute_step(description, command, critical=True):
+    """Execute a shell command with output capture.
+    
+    Args:
+        description: Human-readable description of the step
+        command: Shell command to execute
+        critical: If True, exit on failure; if False, continue
+    
+    Returns:
+        subprocess.CompletedProcess: The result of the command execution
+    """
     print(f"🚀 Manus Action: {description}")
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
     if result.returncode == 0:
         print(f"✅ {description} completado con éxito.")
     else:
         print(f"❌ Error en {description}: {result.stderr}")
+        if critical:
+            print(f"⚠️ Error crítico detectado. Abortando despliegue.")
+            sys.exit(1)
     return result
 
 def main():
+    # Branch específica para el despliegue de Galeries Lafayette
     rama_news = "update-google-platform-news-648450526279271204"
     
     print("--- 🧠 Manus 1.6 Max: Iniciando Deploy Maestro ---")
@@ -25,6 +38,8 @@ def main():
                  "npm install --platform=linux --arch=x64 sharp")
 
     # 3. Limpieza de historial (Squash de los 7 fallos previos)
+    # El número 7 representa los intentos fallidos de despliegue anteriores
+    # que necesitan ser consolidados en un solo commit limpio
     execute_step("Consolidando commits para un historial limpio", 
                  "git reset --soft HEAD~7")
 
@@ -36,7 +51,9 @@ def main():
     # 5. Despliegue a Producción via Vercel CLI
     # Manus usará su token interno para finalizar el proceso
     print("📡 Iniciando subida final a Vercel...")
-    res = execute_step("Deploy forzado a producción", f"git push origin {rama_news} --force")
+    res = execute_step("Deploy forzado a producción", 
+                      f"git push origin {rama_news} --force",
+                      critical=False)
 
     if res.returncode == 0:
         print("\n✨ DESPLIEGUE FINALIZADO: El espejo mágico está en vivo.")
