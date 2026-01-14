@@ -431,9 +431,13 @@
 
   <script>
     // Configuration Constants
-    const API_BASE_URL = window.location.origin.includes('localhost') ? 'http://127.0.0.1:5000' : window.location.origin;
+    const LOCAL_API_PORT = 5000;
+    const API_BASE_URL = window.location.origin.includes('localhost') ? `http://127.0.0.1:${LOCAL_API_PORT}` : window.location.origin;
     const DEFAULT_HEIGHT_CM = 170;
+    // Approximate multiplier to convert body width measurements to circumference
+    // Based on elliptical body shape approximation (circumference ≈ width × π × 0.9)
     const CIRCUMFERENCE_MULTIPLIER = 2.8;
+    const WAIST_WIDTH_ADJUSTMENT_FACTOR = 0.85; // Waist is narrower than hip measurement point
     const CAPTURE_TIMEOUT_MS = 3000;
     const BUTTON_RENABLE_DELAY_MS = 3500;
     const VIDEO_WIDTH = 1280;
@@ -441,6 +445,25 @@
     const MIN_DETECTION_CONFIDENCE = 0.5;
     const MIN_TRACKING_CONFIDENCE = 0.5;
     const MODEL_COMPLEXITY = 1;
+
+    // MediaPipe Pose Landmark Indices
+    const POSE_LANDMARK = {
+      NOSE: 0,
+      LEFT_EYE: 7,
+      RIGHT_EYE: 8,
+      LEFT_SHOULDER: 11,
+      RIGHT_SHOULDER: 12,
+      LEFT_ELBOW: 13,
+      RIGHT_ELBOW: 14,
+      LEFT_WRIST: 15,
+      RIGHT_WRIST: 16,
+      LEFT_HIP: 23,
+      RIGHT_HIP: 24,
+      LEFT_KNEE: 25,
+      RIGHT_KNEE: 26,
+      LEFT_ANKLE: 27,
+      RIGHT_ANKLE: 28
+    };
 
     // DOM Elements
     const videoElement = document.getElementById('videoElement');
@@ -479,58 +502,77 @@
       const realHeight = parseFloat(heightInput.value) || DEFAULT_HEIGHT_CM;
 
       // Calculate pixel height (head to ankle)
-      const headY = Math.min(landmarks[0].y, landmarks[7].y, landmarks[8].y);
-      const ankleY = Math.max(landmarks[27].y, landmarks[28].y);
+      const headY = Math.min(
+        landmarks[POSE_LANDMARK.NOSE].y,
+        landmarks[POSE_LANDMARK.LEFT_EYE].y,
+        landmarks[POSE_LANDMARK.RIGHT_EYE].y
+      );
+      const ankleY = Math.max(
+        landmarks[POSE_LANDMARK.LEFT_ANKLE].y,
+        landmarks[POSE_LANDMARK.RIGHT_ANKLE].y
+      );
       const pixelHeight = (ankleY - headY) * imageHeight;
 
       // Calculate conversion factor (cm per pixel)
       const cmPerPixel = realHeight / pixelHeight;
 
       // Shoulder width (left shoulder to right shoulder)
-      const shoulderWidth = calculateDistance(landmarks[11], landmarks[12]) * imageWidth * cmPerPixel;
+      const shoulderWidth = calculateDistance(
+        landmarks[POSE_LANDMARK.LEFT_SHOULDER],
+        landmarks[POSE_LANDMARK.RIGHT_SHOULDER]
+      ) * imageWidth * cmPerPixel;
 
       // Chest circumference (approximate from shoulder and torso width)
-      const chestWidth = calculateDistance(landmarks[11], landmarks[12]) * imageWidth * cmPerPixel;
+      const chestWidth = calculateDistance(
+        landmarks[POSE_LANDMARK.LEFT_SHOULDER],
+        landmarks[POSE_LANDMARK.RIGHT_SHOULDER]
+      ) * imageWidth * cmPerPixel;
       const chest = chestWidth * CIRCUMFERENCE_MULTIPLIER;
 
       // Waist circumference (approximate from hip width at waist level)
-      const waistWidth = calculateDistance(landmarks[23], landmarks[24]) * imageWidth * cmPerPixel * 0.85;
+      const waistWidth = calculateDistance(
+        landmarks[POSE_LANDMARK.LEFT_HIP],
+        landmarks[POSE_LANDMARK.RIGHT_HIP]
+      ) * imageWidth * cmPerPixel * WAIST_WIDTH_ADJUSTMENT_FACTOR;
       const waist = waistWidth * CIRCUMFERENCE_MULTIPLIER;
 
       // Hip circumference
-      const hipWidth = calculateDistance(landmarks[23], landmarks[24]) * imageWidth * cmPerPixel;
+      const hipWidth = calculateDistance(
+        landmarks[POSE_LANDMARK.LEFT_HIP],
+        landmarks[POSE_LANDMARK.RIGHT_HIP]
+      ) * imageWidth * cmPerPixel;
       const hip = hipWidth * CIRCUMFERENCE_MULTIPLIER;
 
       // Arm length (shoulder to wrist)
       const leftArmLength = (
-        calculateDistance(landmarks[11], landmarks[13]) +
-        calculateDistance(landmarks[13], landmarks[15])
+        calculateDistance(landmarks[POSE_LANDMARK.LEFT_SHOULDER], landmarks[POSE_LANDMARK.LEFT_ELBOW]) +
+        calculateDistance(landmarks[POSE_LANDMARK.LEFT_ELBOW], landmarks[POSE_LANDMARK.LEFT_WRIST])
       ) * imageWidth * cmPerPixel;
 
       const rightArmLength = (
-        calculateDistance(landmarks[12], landmarks[14]) +
-        calculateDistance(landmarks[14], landmarks[16])
+        calculateDistance(landmarks[POSE_LANDMARK.RIGHT_SHOULDER], landmarks[POSE_LANDMARK.RIGHT_ELBOW]) +
+        calculateDistance(landmarks[POSE_LANDMARK.RIGHT_ELBOW], landmarks[POSE_LANDMARK.RIGHT_WRIST])
       ) * imageWidth * cmPerPixel;
 
       const armLength = (leftArmLength + rightArmLength) / 2;
 
       // Leg length (hip to ankle)
       const leftLegLength = (
-        calculateDistance(landmarks[23], landmarks[25]) +
-        calculateDistance(landmarks[25], landmarks[27])
+        calculateDistance(landmarks[POSE_LANDMARK.LEFT_HIP], landmarks[POSE_LANDMARK.LEFT_KNEE]) +
+        calculateDistance(landmarks[POSE_LANDMARK.LEFT_KNEE], landmarks[POSE_LANDMARK.LEFT_ANKLE])
       ) * imageHeight * cmPerPixel;
 
       const rightLegLength = (
-        calculateDistance(landmarks[24], landmarks[26]) +
-        calculateDistance(landmarks[26], landmarks[28])
+        calculateDistance(landmarks[POSE_LANDMARK.RIGHT_HIP], landmarks[POSE_LANDMARK.RIGHT_KNEE]) +
+        calculateDistance(landmarks[POSE_LANDMARK.RIGHT_KNEE], landmarks[POSE_LANDMARK.RIGHT_ANKLE])
       ) * imageHeight * cmPerPixel;
 
       const legLength = (leftLegLength + rightLegLength) / 2;
 
       // Torso length (shoulder to hip)
       const torsoLength = (
-        calculateDistance(landmarks[11], landmarks[23]) +
-        calculateDistance(landmarks[12], landmarks[24])
+        calculateDistance(landmarks[POSE_LANDMARK.LEFT_SHOULDER], landmarks[POSE_LANDMARK.LEFT_HIP]) +
+        calculateDistance(landmarks[POSE_LANDMARK.RIGHT_SHOULDER], landmarks[POSE_LANDMARK.RIGHT_HIP])
       ) / 2 * imageHeight * cmPerPixel;
 
       return {
