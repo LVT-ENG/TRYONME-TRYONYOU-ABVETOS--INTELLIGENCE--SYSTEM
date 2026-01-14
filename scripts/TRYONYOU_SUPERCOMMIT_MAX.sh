@@ -53,9 +53,11 @@ echo "🚀 Pushing changes to origin main..."
 git push origin main
 
 # 7. Optional Direct Deploy
+# Note: VERCEL_TOKEN should be set as environment variable for security
+# Example: export VERCEL_TOKEN=your_token or use Vercel CLI login
 if [ -n "$VERCEL_TOKEN" ]; then
     echo "🚀 Triggering Vercel Production Deploy..."
-    npx vercel --prod --token=$VERCEL_TOKEN --yes --force
+    npx vercel --prod --token="$VERCEL_TOKEN" --yes --force
 fi
 
 echo ""
