@@ -21,8 +21,8 @@ export default {
       },
       fontFamily: {
         mono: ['Courier New', 'monospace'],
-        display: ['serif'],
-        sans: ['system-ui', '-apple-system', 'sans-serif'],
+        display: ['Georgia', 'Times New Roman', 'serif'],
+        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'sans-serif'],
       }
     },
   },
