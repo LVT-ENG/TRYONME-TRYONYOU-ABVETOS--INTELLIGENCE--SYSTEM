@@ -188,11 +188,16 @@ export const performHealthCheck = async () => {
 };
 
 /**
+ * Version information
+ */
+const PILOT_VERSION = '2.1.0';
+
+/**
  * Initialize pilot system
  * Called on app startup to verify configuration
  */
 export const initializePilot = () => {
-  console.log('[Pilot] Initializing TRYONYOU Pilot System v2.1.0...');
+  console.log(`[Pilot] Initializing TRYONYOU Pilot System v${PILOT_VERSION}...`);
   
   if (!config.enableAIFeatures) {
     console.warn('[Pilot] AI features are disabled');

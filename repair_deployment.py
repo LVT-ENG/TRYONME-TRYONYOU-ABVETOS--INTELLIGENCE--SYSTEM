@@ -289,7 +289,13 @@ def main():
                 line = line.strip()
                 if line and not line.startswith("#") and "=" in line:
                     key, value = line.split("=", 1)
-                    os.environ[key.strip()] = value.strip()
+                    # Strip quotes and whitespace
+                    key = key.strip()
+                    value = value.strip()
+                    # Remove surrounding quotes if present
+                    if value and value[0] in ('"', "'") and value[-1] == value[0]:
+                        value = value[1:-1]
+                    os.environ[key] = value
     else:
         print("⚠️  No .env file found. Using environment variables only.")
         print("💡 Tip: Copy .env.example to .env and fill in your values.")

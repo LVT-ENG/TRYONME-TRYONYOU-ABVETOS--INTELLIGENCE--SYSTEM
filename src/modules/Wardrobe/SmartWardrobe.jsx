@@ -67,7 +67,7 @@ const SmartWardrobe = ({ items = [], onItemSelect, userId }) => {
   /**
    * Get AI-powered outfit recommendations
    */
-  const getSmartRecommendations = async () => {
+  const getSmartRecommendations = async (occasion = 'casual') => {
     if (!aiEnabled || !userId) {
       return;
     }
@@ -75,7 +75,7 @@ const SmartWardrobe = ({ items = [], onItemSelect, userId }) => {
     try {
       const result = await getOutfitRecommendations(userId, {
         selectedItems: selectedForOutfit,
-        occasion: 'casual',
+        occasion,
       });
 
       if (result.success) {
