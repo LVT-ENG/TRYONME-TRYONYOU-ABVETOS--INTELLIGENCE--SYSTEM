@@ -71,7 +71,7 @@ git push origin main
 # 9. Optional Vercel Deploy
 if [ -n "$VERCEL_TOKEN" ]; then
     echo "🌐 Deploying to Vercel Production..."
-    npx vercel --prod --token=$VERCEL_TOKEN --yes --confirm --force
+    npx vercel --prod --token="$VERCEL_TOKEN" --yes --confirm --force
 else
     echo "ℹ️ VERCEL_TOKEN not found. Skipping direct deploy."
 fi
