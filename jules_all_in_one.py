@@ -112,6 +112,8 @@ KEYWORDS_INTERESTED = [
     "me interesa", "hablemos", "llamada", "reunión", "reunion", "info", "más info", "mas info"
 ]
 
+MAX_REPLY_TEXT_LENGTH = 1000  # Maximum characters to store from reply text
+
 def env(name: str, default: Optional[str] = None) -> str:
     v = os.getenv(name, default)
     if v is None or str(v).strip() == "":
@@ -214,7 +216,7 @@ def clean_reply_text(txt: str) -> str:
         out.append(line)
     txt = "\n".join(out).strip()
     txt = re.sub(r"\n{3,}", "\n\n", txt)
-    return txt[:1000]  # limit size
+    return txt[:MAX_REPLY_TEXT_LENGTH]  # limit size
 
 def send_telegram(token: str, chat_id: str, text: str) -> None:
     """Send a message to Telegram using bot API."""
@@ -315,7 +317,7 @@ Would you be interested in a quick call to discuss how we can help?
 
 Best regards,
 {from_name}
-contact@tryonyou.app
+{from_email}
 """
     
     msg.set_content(body)
@@ -409,6 +411,9 @@ def main():
     from_email = opt_env("FROM_EMAIL", smtp_user)
     from_name = opt_env("FROM_NAME", "TRYONYOU")
     
+    patent_number = opt_env("PATENT_NUMBER", "PCT/EP2025/067317")
+    pricing = opt_env("PRICING", "€4,900/month")
+    
     telegram_token = opt_env("TELEGRAM_BOT_TOKEN")
     telegram_chat = opt_env("TELEGRAM_CHAT_ID")
     
@@ -494,7 +499,8 @@ def main():
                         try:
                             send_followup_email(
                                 smtp_host, smtp_port, smtp_user, smtp_pass,
-                                from_email, from_name, email_addr, name, company
+                                from_email, from_name, email_addr, name, company,
+                                patent_number, pricing
                             )
                             ws.cell(row_num, col_map["Status"], "Follow-up sent")
                             ws.cell(row_num, col_map["Last Action Date"], now_utc().strftime(DT_FMT))
