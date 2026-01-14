@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from PIL import Image
 import google.generativeai as genai
 
-# --- CONFIGURACIÓN DIVINEO V7 (English Base) ---
+# --- CONFIGURATION DIVINEO V7 (English Base) ---
 app = FastAPI(
     title="TryOnYou Divineo API",
     description="AI Backend for Lafayette Pilot - English Base",
