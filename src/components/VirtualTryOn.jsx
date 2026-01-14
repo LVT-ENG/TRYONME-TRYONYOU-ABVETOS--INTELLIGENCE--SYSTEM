@@ -3,8 +3,8 @@ import { motion } from 'framer-motion';
 import { Sparkles, Check, Info } from 'lucide-react';
 
 const VirtualTryOn = ({ userContext }) => {
-  // Manus: Aquí recibiríamos la prenda del backend (Divineo Red Dress)
-  // Por ahora hardcodeamos el "Perfect Match"
+  // TODO: This garment data will come from the backend (Divineo Red Dress)
+  // Currently hardcoded as "Perfect Match"
   const garment = {
     name: "Robe Divineo Rouge",
     matchScore: 98.5,
@@ -13,11 +13,11 @@ const VirtualTryOn = ({ userContext }) => {
 
   // Function to get match score label and color
   const getMatchLabel = (score) => {
-    if (score >= 95) return { text: 'Perfect Match', color: 'text-green-400', bgColor: 'bg-green-500/20', borderColor: 'border-green-500' };
-    if (score >= 90) return { text: 'Excellent Match', color: 'text-green-400', bgColor: 'bg-green-500/20', borderColor: 'border-green-500' };
-    if (score >= 85) return { text: 'Great Match', color: 'text-blue-400', bgColor: 'bg-blue-500/20', borderColor: 'border-blue-500' };
-    if (score >= 80) return { text: 'Good Match', color: 'text-yellow-400', bgColor: 'bg-yellow-500/20', borderColor: 'border-yellow-500' };
-    return { text: 'Fair Match', color: 'text-orange-400', bgColor: 'bg-orange-500/20', borderColor: 'border-orange-500' };
+    if (score >= 95) return { text: 'Perfect Match', color: 'text-green-400', bgColor: 'bg-green-500/20', borderColor: 'border-green-500', progressColor: 'bg-green-500' };
+    if (score >= 90) return { text: 'Excellent Match', color: 'text-green-400', bgColor: 'bg-green-500/20', borderColor: 'border-green-500', progressColor: 'bg-green-500' };
+    if (score >= 85) return { text: 'Great Match', color: 'text-blue-400', bgColor: 'bg-blue-500/20', borderColor: 'border-blue-500', progressColor: 'bg-blue-500' };
+    if (score >= 80) return { text: 'Good Match', color: 'text-yellow-400', bgColor: 'bg-yellow-500/20', borderColor: 'border-yellow-500', progressColor: 'bg-yellow-500' };
+    return { text: 'Fair Match', color: 'text-orange-400', bgColor: 'bg-orange-500/20', borderColor: 'border-orange-500', progressColor: 'bg-orange-500' };
   };
 
   const matchLabel = getMatchLabel(garment.matchScore);
@@ -85,7 +85,7 @@ const VirtualTryOn = ({ userContext }) => {
                 initial={{ width: 0 }}
                 animate={{ width: `${garment.matchScore}%` }}
                 transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                className={`h-full ${matchLabel.borderColor.replace('border-', 'bg-')} rounded-full`}
+                className={`h-full ${matchLabel.progressColor} rounded-full`}
               />
             </div>
           </motion.div>
