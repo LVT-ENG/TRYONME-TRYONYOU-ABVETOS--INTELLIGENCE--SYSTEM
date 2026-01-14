@@ -27,6 +27,10 @@ src/
 ├── components/       # Reusable UI components
 │   ├── Navbar.jsx    # Navigation with mobile menu
 │   └── Footer.jsx    # Site footer with links
+├── modules/          # System modules & integrations
+│   ├── pilot.js      # AI system coordinator
+│   └── Wardrobe/
+│       └── SmartWardrobe.jsx  # AI-enhanced wardrobe
 ├── pages/            # Route pages (7 total)
 │   ├── Home.jsx      # Landing page with hero
 │   ├── Brands.jsx    # Brand selection & filtering
@@ -125,6 +129,25 @@ public/
 3. **Videos**: Place in `/public/assets/videos/`
 
 See `ASSETS_GUIDE.md` for detailed asset requirements and naming conventions.
+
+## 🔧 Deployment Repair
+
+If you encounter deployment issues, use the secure deployment repair script:
+
+```bash
+# Basic repair (build only)
+python repair_deployment.py
+
+# Full repair with deployment
+python repair_deployment.py --deploy
+```
+
+**Setup Required:**
+1. Copy `.env.example` to `.env`
+2. Fill in your API keys and tokens
+3. Run the repair script
+
+See `DEPLOYMENT_REPAIR_GUIDE.md` for detailed instructions.
 
 ## 🚀 Deployment
 
