@@ -24,6 +24,8 @@ def main():
             data = json.load(f)
         
         # Corregimos el script de build para Vercel
+        if "scripts" not in data:
+            data["scripts"] = {}
         data["scripts"]["build"] = "vite build"
         
         with open("package.json", "w") as f:
