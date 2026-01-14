@@ -51,8 +51,9 @@ def main():
     # 5. Despliegue a Producción via Vercel CLI
     # Manus usará su token interno para finalizar el proceso
     print("📡 Iniciando subida final a Vercel...")
+    # Nota: Se usa --force-with-lease en lugar de --force para mayor seguridad
     res = execute_step("Deploy forzado a producción", 
-                      f"git push origin {rama_news} --force",
+                      f"git push origin {rama_news} --force-with-lease",
                       critical=False)
 
     if res.returncode == 0:
