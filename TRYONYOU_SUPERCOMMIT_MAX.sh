@@ -40,7 +40,9 @@ echo "➕ Staging files..."
 git add docs/ src/ public/ scripts/
 # Config files
 git add package.json package-lock.json vite.config.js vercel.json index.html
-git add .env.example README.md CHANGELOG.md
+[ -f ".env.example" ] && git add .env.example
+[ -f "README.md" ] && git add README.md
+[ -f "CHANGELOG.md" ] && git add CHANGELOG.md
 
 # 7. The SuperCommit
 echo "💎 Creating comprehensive commit..."
@@ -71,7 +73,7 @@ git push origin main
 # 9. Optional Vercel Deploy
 if [ -n "$VERCEL_TOKEN" ]; then
     echo "🌐 Deploying to Vercel Production..."
-    npx vercel --prod --token=$VERCEL_TOKEN --yes --confirm --force
+    npx vercel --prod --token="${VERCEL_TOKEN}" --yes --confirm --force
 else
     echo "ℹ️ VERCEL_TOKEN not found. Skipping direct deploy."
 fi
