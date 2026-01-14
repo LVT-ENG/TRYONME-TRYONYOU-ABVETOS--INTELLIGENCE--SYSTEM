@@ -430,8 +430,17 @@
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
 
   <script>
-    // Configuration
+    // Configuration Constants
     const API_BASE_URL = window.location.origin.includes('localhost') ? 'http://127.0.0.1:5000' : window.location.origin;
+    const DEFAULT_HEIGHT_CM = 170;
+    const CIRCUMFERENCE_MULTIPLIER = 2.8;
+    const CAPTURE_TIMEOUT_MS = 3000;
+    const BUTTON_RENABLE_DELAY_MS = 3500;
+    const VIDEO_WIDTH = 1280;
+    const VIDEO_HEIGHT = 720;
+    const MIN_DETECTION_CONFIDENCE = 0.5;
+    const MIN_TRACKING_CONFIDENCE = 0.5;
+    const MODEL_COMPLEXITY = 1;
 
     // DOM Elements
     const videoElement = document.getElementById('videoElement');
@@ -467,7 +476,7 @@
     // Calculate body measurements from pose landmarks
     function calculateMeasurements(landmarks, imageWidth, imageHeight) {
       // Get real height from input or use default
-      const realHeight = parseFloat(heightInput.value) || 170;
+      const realHeight = parseFloat(heightInput.value) || DEFAULT_HEIGHT_CM;
 
       // Calculate pixel height (head to ankle)
       const headY = Math.min(landmarks[0].y, landmarks[7].y, landmarks[8].y);
@@ -482,15 +491,15 @@
 
       // Chest circumference (approximate from shoulder and torso width)
       const chestWidth = calculateDistance(landmarks[11], landmarks[12]) * imageWidth * cmPerPixel;
-      const chest = chestWidth * 2.8; // Approximation for circumference
+      const chest = chestWidth * CIRCUMFERENCE_MULTIPLIER;
 
       // Waist circumference (approximate from hip width at waist level)
       const waistWidth = calculateDistance(landmarks[23], landmarks[24]) * imageWidth * cmPerPixel * 0.85;
-      const waist = waistWidth * 2.8;
+      const waist = waistWidth * CIRCUMFERENCE_MULTIPLIER;
 
       // Hip circumference
       const hipWidth = calculateDistance(landmarks[23], landmarks[24]) * imageWidth * cmPerPixel;
-      const hip = hipWidth * 2.8;
+      const hip = hipWidth * CIRCUMFERENCE_MULTIPLIER;
 
       // Arm length (shoulder to wrist)
       const leftArmLength = (
@@ -606,12 +615,12 @@
       });
 
       pose.setOptions({
-        modelComplexity: 1,
+        modelComplexity: MODEL_COMPLEXITY,
         smoothLandmarks: true,
         enableSegmentation: false,
         smoothSegmentation: false,
-        minDetectionConfidence: 0.5,
-        minTrackingConfidence: 0.5
+        minDetectionConfidence: MIN_DETECTION_CONFIDENCE,
+        minTrackingConfidence: MIN_TRACKING_CONFIDENCE
       });
 
       pose.onResults(onPoseResults);
@@ -628,8 +637,8 @@
 
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            width: { ideal: 1280 },
-            height: { ideal: 720 },
+            width: { ideal: VIDEO_WIDTH },
+            height: { ideal: VIDEO_HEIGHT },
             facingMode: 'user'
           }
         });
@@ -640,8 +649,8 @@
           onFrame: async () => {
             await pose.send({ image: videoElement });
           },
-          width: 1280,
-          height: 720
+          width: VIDEO_WIDTH,
+          height: VIDEO_HEIGHT
         });
 
         await camera.start();
@@ -694,11 +703,11 @@
           isCapturing = false;
           captureButton.disabled = false;
         }
-      }, 3000);
+      }, CAPTURE_TIMEOUT_MS);
 
       setTimeout(() => {
         captureButton.disabled = false;
-      }, 3500);
+      }, BUTTON_RENABLE_DELAY_MS);
     }
 
     // Send measurements to API
