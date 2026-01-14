@@ -19,6 +19,8 @@ class handler(BaseHTTPRequestHandler):
             scan = data.get("scan", {"poitrine": 90, "taille": 70})
             
             # Algoritmo de Física: No tallas, solo proporciones y caída de tela
+            if scan['taille'] == 0:
+                raise ValueError("Taille cannot be zero")
             user_ratio = scan['poitrine'] / scan['taille']
             match = min(LAFAYETTE_DB, key=lambda x: abs(x['ratio'] - user_ratio))
 
