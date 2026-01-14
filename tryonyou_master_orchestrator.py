@@ -95,7 +95,7 @@ def organize_assets():
                 "destination": target,
                 "status": f"error: {str(e)}",
             })
-            found = True
+            continue
 
         if not found:
             REPORT["assets"].append({
@@ -211,15 +211,19 @@ def validate_routes():
 # =========================
 
 def generate_vercel_config():
+    # Read existing config if it exists
+    vercel_file = PROJECT_ROOT / "vercel.json"
+    existing_config = {}
+    
+    if vercel_file.exists():
+        try:
+            existing_config = json.loads(vercel_file.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            pass  # Start fresh if existing config is invalid
+
+    # Merge with new configuration
     vercel_config = {
-        "version": 2,
-        "name": "tryonyou-master",
-        "builds": [
-            {"src": "package.json", "use": "@vercel/static-build"}
-        ],
-        "rewrites": [
-            {"source": "/(.*)", "destination": "/index.html"}
-        ],
+        **existing_config,  # Preserve existing settings
         "regions": ["fra1", "iad1", "hnd1"],
         "headers": [
             {
@@ -235,7 +239,7 @@ def generate_vercel_config():
         ],
     }
 
-    with open(PROJECT_ROOT / "vercel.json", "w", encoding="utf-8") as f:
+    with open(vercel_file, "w", encoding="utf-8") as f:
         json.dump(vercel_config, f, indent=2)
 
     REPORT["deploy"]["vercel"] = "configured"
