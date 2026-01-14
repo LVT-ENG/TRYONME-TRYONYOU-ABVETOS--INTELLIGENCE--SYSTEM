@@ -1,0 +1,28 @@
+
+:root {
+  --anthracite: #141619;
+  --gold: #C5A46D;
+  --peacock: #006D77;
+  --bone: #F5EFE6;
+}
+
+body {
+  background: var(--anthracite);
+  color: var(--bone);
+  font-family: system-ui, sans-serif;
+}
+
+.glass {
+  background: rgba(20,22,25,0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+}
+
+#pau-mascot {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  width: 64px;
+  opacity: 0.9;
+}
