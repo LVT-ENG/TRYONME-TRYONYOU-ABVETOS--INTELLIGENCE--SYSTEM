@@ -1,29 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import PageLoader from './components/PageLoader';
+
+// Lazy load pages for performance
+const Home = lazy(() => import('./pages/Home'));
+const Demo = lazy(() => import('./pages/Demo'));
+const MyAvatar = lazy(() => import('./pages/MyAvatar'));
+const Wardrobe = lazy(() => import('./pages/Wardrobe'));
+const Showroom = lazy(() => import('./pages/Showroom'));
+const GlowUp = lazy(() => import('./pages/GlowUp'));
+const Brands = lazy(() => import('./pages/Brands'));
+const AskPeacock = lazy(() => import('./pages/AskPeacock'));
 
 export default function App() {
-  const [session, setSession] = useState("LAFAYETTE_READY");
+  const location = useLocation();
 
   return (
-    <div style={{ background: '#050505', color: '#fff', minHeight: '100vh', fontFamily: 'monospace' }}>
-      {/* HERO SECTION CON TU VÍDEO */}
-      <section style={{ height: '100vh', position: 'relative', overflow: 'hidden' }}>
-        <video autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }}>
-          <source src="/assets/hero/hero_main.mp4" type="video/mp4" />
-        </video>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
-          <h1 style={{ fontSize: '4rem', color: '#D3B26A', letterSpacing: '15px' }}>TRYONYOU</h1>
-          <p>PATENT: PCT/EP2025/067317 | SESSION: {session}</p>
-        </div>
-      </section>
+    <div className="flex flex-col min-h-screen bg-tryonyou-black text-white overflow-x-hidden">
+      <Navbar />
 
-      {/* EL ESPEJO MÁGICO (FORCED VISIBILITY) */}
-      <section style={{ padding: '100px 20px', textAlign: 'center', background: '#0a0a0a' }}>
-        <h2 style={{ color: '#D3B26A' }}>PAU LE PAON: BIOMETRIC MIRROR</h2>
-        <div style={{ border: '1px solid #333', padding: '50px', display: 'inline-block', borderRadius: '5px' }}>
-          <img src="/assets/vision/mi_foto_v7.png" alt="Avatar Biométrico" style={{ maxWidth: '300px' }} />
-          <p style={{ marginTop: '20px', opacity: 0.7 }}>Ajuste detectado: 99.7% Precisión</p>
-        </div>
-      </section>
+      <main className="flex-grow">
+        <Suspense fallback={<PageLoader />}>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/demo" element={<Demo />} />
+              <Route path="/my-avatar" element={<MyAvatar />} />
+              <Route path="/wardrobe" element={<Wardrobe />} />
+              <Route path="/showroom" element={<Showroom />} />
+              <Route path="/glow-up" element={<GlowUp />} />
+              <Route path="/brands" element={<Brands />} />
+              <Route path="/ask" element={<AskPeacock />} />
+              {/* Fallback route */}
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
+      </main>
+
+      <Footer />
     </div>
   );
 }
