@@ -47,7 +47,7 @@ ASSET_MAPPING = {
 }
 
 REPORT = {
-    "timestamp": datetime.now(timezone.utc).isoformat(),
+    "timestamp": None,  # Will be set at runtime
     "assets": [],
     "env": {},
     "stack": {},
@@ -99,9 +99,18 @@ def organize_assets():
 
 def validate_env():
     env_example = PROJECT_ROOT / ".env.example"
-    with open(env_example, "w", encoding="utf-8") as f:
-        for key in ENV_KEYS_REQUIRED:
-            f.write(f"{key}=\n")
+    
+    # Only create or update if file doesn't exist or is missing keys
+    existing_keys = set()
+    if env_example.exists():
+        existing_keys = {line.split('=')[0] for line in env_example.read_text(encoding="utf-8").splitlines() if '=' in line}
+    
+    missing_keys = [key for key in ENV_KEYS_REQUIRED if key not in existing_keys]
+    
+    if missing_keys or not env_example.exists():
+        with open(env_example, "a" if env_example.exists() else "w", encoding="utf-8") as f:
+            for key in missing_keys if env_example.exists() else ENV_KEYS_REQUIRED:
+                f.write(f"{key}=\n")
 
     for key in ENV_KEYS_REQUIRED:
         REPORT["env"][key] = "present" if os.getenv(key) else "missing"
@@ -195,10 +204,11 @@ def generate_vercel_config():
     if vercel_file.exists():
         try:
             existing_config = json.loads(vercel_file.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
-            pass
+        except json.JSONDecodeError as e:
+            REPORT["deploy"]["vercel_error"] = f"Invalid JSON in vercel.json: {str(e)}"
+            return
     
-    # Merge with new config
+    # Merge with new config, preserving existing keys
     vercel_config = {
         **existing_config,
         "regions": ["fra1", "iad1", "hnd1"],
@@ -226,6 +236,9 @@ def generate_vercel_config():
 # =========================
 
 if __name__ == "__main__":
+    # Set timestamp at runtime
+    REPORT["timestamp"] = datetime.now(timezone.utc).isoformat()
+    
     organize_assets()
     validate_env()
     validate_stack()
