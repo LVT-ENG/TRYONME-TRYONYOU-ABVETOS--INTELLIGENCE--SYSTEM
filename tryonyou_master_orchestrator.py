@@ -75,19 +75,27 @@ def organize_assets():
     for prefix, target in ASSET_MAPPING.items():
         found = False
 
-        for file in DOWNLOADS_DIR.glob("*"):
-            if file.name.startswith(prefix):
-                dest = PUBLIC_DIR / target
-                ensure_dir(dest.parent)
-                shutil.copy(file, dest)
+        try:
+            for file in DOWNLOADS_DIR.glob("*"):
+                if file.name.startswith(prefix):
+                    dest = PUBLIC_DIR / target
+                    ensure_dir(dest.parent)
+                    shutil.copy(file, dest)
 
-                REPORT["assets"].append({
-                    "source": file.name,
-                    "destination": str(dest),
-                    "status": "mapped",
-                })
-                found = True
-                break
+                    REPORT["assets"].append({
+                        "source": file.name,
+                        "destination": str(dest),
+                        "status": "mapped",
+                    })
+                    found = True
+                    break
+        except (OSError, PermissionError) as e:
+            REPORT["assets"].append({
+                "source": prefix,
+                "destination": target,
+                "status": f"error: {str(e)}",
+            })
+            found = True
 
         if not found:
             REPORT["assets"].append({
@@ -121,13 +129,16 @@ def validate_stack():
         REPORT["stack"]["status"] = "package.json missing"
         return
 
-    data = json.loads(pkg.read_text(encoding="utf-8"))
-    deps = {
-        **data.get("dependencies", {}),
-        **data.get("devDependencies", {}),
-    }
+    try:
+        data = json.loads(pkg.read_text(encoding="utf-8"))
+        deps = {
+            **data.get("dependencies", {}),
+            **data.get("devDependencies", {}),
+        }
 
-    REPORT["stack"]["forbidden"] = [d for d in deps if d in FORBIDDEN_STACK]
+        REPORT["stack"]["forbidden"] = [d for d in deps if d in FORBIDDEN_STACK]
+    except (json.JSONDecodeError, OSError) as e:
+        REPORT["stack"]["status"] = f"error: {str(e)}"
 
 # =========================
 # 4. UI – DIVINEO V7
@@ -187,10 +198,13 @@ def validate_routes():
         REPORT["routes"]["status"] = "App component missing"
         return
 
-    content = app_file.read_text(encoding="utf-8")
+    try:
+        content = app_file.read_text(encoding="utf-8")
 
-    for route in ROUTES_REQUIRED:
-        REPORT["routes"][route] = "present" if route in content else "missing"
+        for route in ROUTES_REQUIRED:
+            REPORT["routes"][route] = "present" if route in content else "missing"
+    except (OSError, UnicodeDecodeError) as e:
+        REPORT["routes"]["status"] = f"error: {str(e)}"
 
 # =========================
 # 6. DEPLOY PREP (VERCEL)
@@ -198,6 +212,14 @@ def validate_routes():
 
 def generate_vercel_config():
     vercel_config = {
+        "version": 2,
+        "name": "tryonyou-master",
+        "builds": [
+            {"src": "package.json", "use": "@vercel/static-build"}
+        ],
+        "rewrites": [
+            {"source": "/(.*)", "destination": "/index.html"}
+        ],
         "regions": ["fra1", "iad1", "hnd1"],
         "headers": [
             {

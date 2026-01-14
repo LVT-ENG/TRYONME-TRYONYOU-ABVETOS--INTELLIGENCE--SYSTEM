@@ -1,4 +1,18 @@
 {
+  "version": 2,
+  "name": "tryonyou-master",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build"
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
   "regions": [
     "fra1",
     "iad1",
