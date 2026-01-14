@@ -1,6 +1,17 @@
 import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
+import VirtualTryOnDemo from './pages/VirtualTryOnDemo';
 
 function App() {
+  return (
+    <Routes>
+      <Route path="/virtual-tryon" element={<VirtualTryOnDemo />} />
+      <Route path="/" element={<HomePage />} />
+    </Routes>
+  );
+}
+
+function HomePage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center text-center px-4 relative overflow-hidden">
       
@@ -26,9 +37,9 @@ function App() {
         </p>
 
         <div className="pt-10 flex flex-col md:flex-row gap-6 justify-center items-center">
-          <button className="btn-luxury w-64">
+          <Link to="/virtual-tryon" className="btn-luxury w-64">
             ENTER PILOT
-          </button>
+          </Link>
           
           <button className="text-xs text-gray-500 hover:text-white transition tracking-widest border-b border-transparent hover:border-gray-500 pb-1">
             VIEW PATENT DOCS
