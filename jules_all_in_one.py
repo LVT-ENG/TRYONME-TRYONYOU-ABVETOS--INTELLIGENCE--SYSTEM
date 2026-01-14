@@ -60,9 +60,12 @@ import email
 from email.header import decode_header, make_header
 from email.message import EmailMessage
 from datetime import datetime, timedelta, timezone
+from typing import Optional, List, Dict, Tuple, Any
 
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
+from openpyxl.worksheet.worksheet import Worksheet
+from openpyxl.workbook.workbook import Workbook
 
 try:
     from dotenv import load_dotenv
@@ -109,7 +112,7 @@ KEYWORDS_INTERESTED = [
     "me interesa", "hablemos", "llamada", "reunión", "reunion", "info", "más info", "mas info"
 ]
 
-def env(name: str, default: str | None = None) -> str:
+def env(name: str, default: Optional[str] = None) -> str:
     v = os.getenv(name, default)
     if v is None or str(v).strip() == "":
         raise SystemExit(f"Missing env var: {name}")
@@ -125,7 +128,7 @@ def now_utc() -> datetime:
 def today_str() -> str:
     return now_utc().strftime(DATE_FMT)
 
-def parse_date_safe(s: str) -> datetime | None:
+def parse_date_safe(s: str) -> Optional[datetime]:
     s = (s or "").strip()
     if not s:
         return None
@@ -213,7 +216,8 @@ def clean_reply_text(txt: str) -> str:
     txt = re.sub(r"\n{3,}", "\n\n", txt)
     return txt[:1000]  # limit size
 
-def send_telegram(token: str, chat_id: str, text: str):
+def send_telegram(token: str, chat_id: str, text: str) -> None:
+    """Send a message to Telegram using bot API."""
     import urllib.request
     import json
     url = f"https://api.telegram.org/bot{token}/sendMessage"
@@ -225,7 +229,8 @@ def send_telegram(token: str, chat_id: str, text: str):
     except Exception as e:
         print(f"[WARN] Telegram failed: {e}")
 
-def ensure_columns(ws, cols: list[str]):
+def ensure_columns(ws: Worksheet, cols: List[str]) -> None:
+    """Ensure all required columns exist in the worksheet header row."""
     header_row = ws[1]
     existing = [str(c.value or "").strip() for c in header_row]
     for col in cols:
@@ -235,13 +240,15 @@ def ensure_columns(ws, cols: list[str]):
             ws.cell(1, next_col, col)
             existing.append(col)
 
-def get_col_index(ws, col_name: str) -> int | None:
+def get_col_index(ws: Worksheet, col_name: str) -> Optional[int]:
+    """Get the column index for a given column name."""
     for idx, cell in enumerate(ws[1], start=1):
         if str(cell.value or "").strip() == col_name:
             return idx
     return None
 
-def load_excel_data(path: str, sheet_name: str = "Sheet1"):
+def load_excel_data(path: str, sheet_name: str = "Sheet1") -> Tuple[Workbook, Worksheet, Dict[str, int], List[Dict[str, Any]]]:
+    """Load Excel data and return workbook, worksheet, column mapping, and row data."""
     wb = load_workbook(path)
     if sheet_name not in wb.sheetnames:
         sheet_name = wb.sheetnames[0]
@@ -265,10 +272,29 @@ def load_excel_data(path: str, sheet_name: str = "Sheet1"):
     
     return wb, ws, col_map, rows
 
-def save_excel(wb, path: str):
+def save_excel(wb: Workbook, path: str) -> None:
+    """Save the workbook to the specified path."""
     wb.save(path)
 
-def send_followup_email(smtp_host, smtp_port, smtp_user, smtp_pass, from_email, from_name, to_email, to_name, company):
+def send_followup_email(smtp_host: str, smtp_port: int, smtp_user: str, smtp_pass: str, 
+                       from_email: str, from_name: str, to_email: str, to_name: str, company: str,
+                       patent_number: str = "PCT/EP2025/067317", pricing: str = "€4,900/month") -> None:
+    """
+    Send a follow-up email to a contact.
+    
+    Args:
+        smtp_host: SMTP server hostname
+        smtp_port: SMTP server port
+        smtp_user: SMTP username
+        smtp_pass: SMTP password
+        from_email: Sender email address
+        from_name: Sender name
+        to_email: Recipient email address
+        to_name: Recipient name
+        company: Recipient company name
+        patent_number: Patent number to include in email (default: PCT/EP2025/067317)
+        pricing: Pricing information to include (default: €4,900/month)
+    """
     msg = EmailMessage()
     msg["Subject"] = "Follow-up: TRYONYOU Exclusive Pilot Opportunity"
     msg["From"] = f"{from_name} <{from_email}>"
@@ -281,9 +307,9 @@ I wanted to follow up on my previous message regarding TRYONYOU.
 We're offering an exclusive pilot program for {company or 'your company'} to eliminate returns with our AI-powered virtual try-on technology.
 
 ✅ Reduce returns to 0%
-✅ Patent-protected technology (PCT/EP2025/067317)
+✅ Patent-protected technology ({patent_number})
 ✅ Proven results with Galeries Lafayette & Hub71
-✅ €4,900/month pilot pricing
+✅ {pricing} pilot pricing
 
 Would you be interested in a quick call to discuss how we can help?
 
@@ -300,7 +326,20 @@ contact@tryonyou.app
         server.login(smtp_user, smtp_pass)
         server.send_message(msg)
 
-def fetch_imap_replies(imap_host, imap_port, imap_user, imap_pass, since_days=7):
+def fetch_imap_replies(imap_host: str, imap_port: int, imap_user: str, imap_pass: str, since_days: int = 7) -> List[Dict[str, Any]]:
+    """
+    Fetch email replies from IMAP server.
+    
+    Args:
+        imap_host: IMAP server hostname
+        imap_port: IMAP server port
+        imap_user: IMAP username
+        imap_pass: IMAP password
+        since_days: Number of days to look back for emails (default: 7)
+    
+    Returns:
+        List of reply dictionaries with keys: from, subject, date, body, message_id
+    """
     context = ssl.create_default_context()
     mail = imaplib.IMAP4_SSL(imap_host, imap_port, ssl_context=context)
     mail.login(imap_user, imap_pass)
