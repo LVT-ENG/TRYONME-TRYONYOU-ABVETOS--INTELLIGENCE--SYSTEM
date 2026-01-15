@@ -18,6 +18,9 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Run SuperCommit (automated deployment workflow)
+npm run supercommit
 ```
 
 ## 📁 Project Structure

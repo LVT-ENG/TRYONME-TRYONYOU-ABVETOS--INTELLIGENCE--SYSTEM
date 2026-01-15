@@ -30,6 +30,16 @@ This script automates the complete deployment workflow for the TRYONYOU platform
 
 ### How to Execute
 
+#### Using npm (Recommended)
+
+```bash
+# Simple execution (without Vercel deploy)
+npm run supercommit
+
+# With Vercel deploy
+VERCEL_TOKEN=your_token npm run supercommit
+```
+
 #### Standard Execution (without Vercel deploy)
 
 ```bash

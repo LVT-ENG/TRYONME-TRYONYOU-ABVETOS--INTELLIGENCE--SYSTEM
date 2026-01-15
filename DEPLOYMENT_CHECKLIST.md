@@ -52,10 +52,15 @@ The repository includes a comprehensive deployment script `TRYONYOU_SUPERCOMMIT_
 **How to Execute:**
 
 ```bash
-# From repository root
+# Using npm (recommended)
+npm run supercommit
+
+# Or from repository root directly
 ./TRYONYOU_SUPERCOMMIT_MAX.sh
 
-# Or with Vercel deploy
+# With Vercel deploy
+VERCEL_TOKEN=your_token npm run supercommit
+# or
 VERCEL_TOKEN=your_token ./TRYONYOU_SUPERCOMMIT_MAX.sh
 ```
 
