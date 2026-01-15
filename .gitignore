@@ -6,3 +6,4 @@ dist/
 __pycache__/
 *.pyc
 *.pyo
+TRYONYOU_MASTER_REPORT.json

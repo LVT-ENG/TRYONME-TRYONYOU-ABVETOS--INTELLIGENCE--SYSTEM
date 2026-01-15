@@ -1,0 +1,19 @@
+
+:root {
+  --anthracite: #141619;
+  --gold: #C5A46D;
+  --peacock: #006D77;
+  --bone: #F5EFE6;
+}
+
+body {
+  background: var(--anthracite);
+  color: var(--bone);
+}
+
+#pau-mascot {
+  position: fixed;
+  bottom: 12px;
+  left: 12px;
+  width: 64px;
+}
