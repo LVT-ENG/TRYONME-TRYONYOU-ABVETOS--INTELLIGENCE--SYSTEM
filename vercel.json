@@ -1,0 +1,8 @@
+{
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/demo", "destination": "/index.html" },
+    { "source": "/checkout", "destination": "/index.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
