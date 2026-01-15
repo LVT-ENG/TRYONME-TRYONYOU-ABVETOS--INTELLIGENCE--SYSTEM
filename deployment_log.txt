@@ -1,0 +1,24 @@
+node:internal/modules/cjs/loader:1210
+  throw err;
+  ^
+
+Error: Cannot find module 'update-notifier'
+Require stack:
+- /Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1207:15)
+    at Module._load (node:internal/modules/cjs/loader:1038:27)
+    at Module.require (node:internal/modules/cjs/loader:1289:19)
+    at require (node:internal/modules/helpers:182:18)
+    at 734 (/Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js:252764:18)
+    at __webpack_require__ (/Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js:252821:43)
+    at 2855 (/Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js:237760:43)
+    at __webpack_require__ (/Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js:252821:43)
+    at /Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js:252879:18
+    at Object.<anonymous> (/Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js:252880:12) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    '/Users/mac/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/node_modules/vercel/dist/index.js'
+  ]
+}
+
+Node.js v20.19.5
