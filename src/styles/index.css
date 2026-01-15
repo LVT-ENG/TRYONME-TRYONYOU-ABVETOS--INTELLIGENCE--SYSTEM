@@ -1,6 +1,21 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-tryon-beige: #F5F5DC;
+  --color-tryon-white: #FFFFFF;
+  --color-tryon-gold: #D3B26A;
+  --color-tryon-anthracite: #2F4F4F;
+  --color-tryonyou-black: #000000;
+  --color-tryonyou-blue: #00A8E8;
+  --color-tryonyou-metallic: #B0C4DE;
+  --color-tryonyou-silver: #C0C0C0;
+  --color-tryonyou-gold: #D4AF37;
+  --color-tryonyou-smoke: #F5F5F5;
+  --color-amparo-light: #89CFF0;
+
+  --font-luxury: 'Cinzel', serif;
+  --font-sans: 'Inter', sans-serif;
+}
 
 @layer base {
   * {
@@ -47,15 +62,15 @@
   
   /* Heading styles */
   .heading-xl {
-    @apply font-display text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight;
+    @apply font-luxury text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight;
   }
   
   .heading-lg {
-    @apply font-display text-3xl md:text-5xl font-bold tracking-tight;
+    @apply font-luxury text-3xl md:text-5xl font-bold tracking-tight;
   }
   
   .heading-md {
-    @apply font-display text-2xl md:text-4xl font-bold tracking-tight;
+    @apply font-luxury text-2xl md:text-4xl font-bold tracking-tight;
   }
   
   /* Gradient text */
@@ -105,4 +120,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #00D9FF 0%, #00A8E8 100%);
 }
-
