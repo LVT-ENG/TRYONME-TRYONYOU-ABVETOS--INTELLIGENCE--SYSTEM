@@ -30,7 +30,8 @@ git add scripts/ || echo "⚠️ scripts/ not found"
 git add api/ || echo "⚠️ api/ not found"
 
 # Config Files
-git add package.json package-lock.json vite.config.js vercel.json index.html .env.example .gitignore README.md CHANGELOG.md
+git add package.json package-lock.json vite.config.js vercel.json index.html .env.example .gitignore README.md 2>/dev/null || true
+git add CHANGELOG.md 2>/dev/null || true
 
 # 5. The Ultimatum Commit
 echo "💎 Creating Consolidated SuperCommit..."
