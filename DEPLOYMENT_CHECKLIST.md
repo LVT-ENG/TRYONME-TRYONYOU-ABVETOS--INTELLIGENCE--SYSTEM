@@ -39,6 +39,41 @@
 
 ## 🚀 Deployment Steps
 
+### SuperCommit MAX Script (Ultimatum V7)
+
+The repository includes a comprehensive deployment script `TRYONYOU_SUPERCOMMIT_MAX.sh` that automates the entire deployment process.
+
+**⚠️ WARNING**: This script is destructive and will:
+- Delete `node_modules`, `dist`, and legacy folders
+- Force clean installation of dependencies
+- Commit and push to main branch
+- Optionally trigger Vercel production deploy
+
+**How to Execute:**
+
+```bash
+# From repository root
+./TRYONYOU_SUPERCOMMIT_MAX.sh
+
+# Or with Vercel deploy
+VERCEL_TOKEN=your_token ./TRYONYOU_SUPERCOMMIT_MAX.sh
+```
+
+**What it does:**
+1. Verifies you're in the repository root (checks for package.json)
+2. Switches to main branch and pulls latest changes
+3. Cleans obsolete files and reinstalls dependencies
+4. Stages all project files (docs/, src/, public/, scripts/, api/, configs)
+5. Creates consolidated commit with detailed message
+6. Pushes changes to origin main
+7. Optionally triggers Vercel production deployment
+
+**Script Location:**
+- Root: `/TRYONYOU_SUPERCOMMIT_MAX.sh`
+- Scripts: `/scripts/TRYONYOU_SUPERCOMMIT_MAX.sh`
+
+---
+
 ### 1. Build Production Version
 ```bash
 npm run build
