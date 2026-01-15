@@ -157,6 +157,8 @@ const Footer = () => {
               Powered by <span className="text-tryonyou-blue font-semibold">Agent70</span> 
               <span className="text-white/30">•</span>
               <span className="text-tryonyou-blue font-semibold">DSX Engine</span>
+              <span className="text-white/30">•</span>
+              <span className="text-xs text-white/40">Patent PCT/EP2025/067317</span>
             </p>
           </div>
         </div>

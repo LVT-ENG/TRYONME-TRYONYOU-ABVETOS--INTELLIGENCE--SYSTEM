@@ -48,6 +48,7 @@ const LandingPilot = () => {
       {/* Pie de página Técnico */}
       <footer className="absolute bottom-0 w-full p-6 text-[10px] text-gray-600 font-mono flex justify-between uppercase">
         <span>Powered by Jules Engine</span>
+        <span>Patent PCT/EP2025/067317</span>
         <span>Lafayette Retail Tech</span>
       </footer>
 
