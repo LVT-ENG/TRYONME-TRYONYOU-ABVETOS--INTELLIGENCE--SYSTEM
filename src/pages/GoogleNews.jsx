@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, Sparkles, Terminal, Video, Code, Box, Layers } from 'lucide-react';
+import { ArrowLeft, Sparkles, Terminal, Video, Code, Box, Layers, Clapperboard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const Section = ({ title, icon: Icon, children }) => (
@@ -120,6 +120,25 @@ const GoogleNews = () => {
               { title: "Scene Extension", desc: "Create longer videos by generating new clips based on the final second of the previous clip." },
               { title: "First and Last Frame", desc: "Generate smooth transitions between a specific starting and ending image." }
             ]} />
+          </div>
+        </Section>
+
+        <Section title="Flow" icon={Clapperboard}>
+          <p>
+            Flow is an AI-powered filmmaking tool built with and for creatives, allowing seamless creation of cinematic clips, scenes, and stories using Google's most capable generative models.
+          </p>
+          <div className="mt-4">
+            <h3 className="text-white font-medium mb-2">Capabilities</h3>
+             <FeatureList items={[
+              { title: "Text-to-Video & Frame-to-Video", desc: "Create videos from text prompts or uploaded images." },
+              { title: "Scene Builder", desc: "Build coherent scenes with multiple clips." },
+              { title: "Audio Generation", desc: "Add sound effects, background noise, and dialogue." },
+              { title: "Control", desc: "Detailed control over scene, camera movements, and angles." }
+            ]} />
+            <div className="mt-4 flex items-center gap-2 text-sm text-gray-400">
+               <span className="px-2 py-0.5 border border-white/20 rounded text-xs font-mono">VEO INTEGRATION</span>
+               <span className="px-2 py-0.5 border border-white/20 rounded text-xs font-mono">GOOGLE AI PRO/ULTRA</span>
+            </div>
           </div>
         </Section>
 

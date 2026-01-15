@@ -45,6 +45,20 @@ Veo 3.1 introduces significant upgrades in video quality, audio generation, and 
     *   **First and Last Frame**: Generate smooth transitions between a specific starting and ending image.
 *   **Availability**: Paid preview in Gemini API (Google AI Studio and Vertex AI).
 
+## Flow
+
+**AI Filmmaking Tool**
+
+Flow is an AI-powered filmmaking tool built with and for creatives, allowing seamless creation of cinematic clips, scenes, and stories using Google's most capable generative models.
+
+*   **Capabilities**:
+    *   **Text-to-Video & Frame-to-Video**: Create videos from text prompts or uploaded images.
+    *   **Scene Builder**: Build coherent scenes with multiple clips.
+    *   **Audio Generation**: Add sound effects, background noise, and dialogue.
+    *   **Control**: Detailed control over scene, camera movements, and angles.
+*   **Integration**: Custom-designed for Veo (Veo 2 and Veo 3 models).
+*   **Availability**: Available with Google AI Pro and Ultra subscriptions.
+
 ## Antigravity
 
 **Agentic IDE**
