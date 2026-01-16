@@ -1,24 +1,35 @@
-import React, { Suspense, lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import PageLoader from './components/PageLoader';
+import React from 'react'
+import { Routes, Route } from 'react-router-dom'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
-// Lazy load pages for performance optimization
-const LandingPilot = lazy(() => import('./pages/LandingPilot'));
-const GoogleNews = lazy(() => import('./pages/GoogleNews'));
-const Demo = lazy(() => import('./pages/Demo'));
+// Pages
+import Home from './pages/Home'
+import Brands from './pages/Brands'
+import MyAvatar from './pages/MyAvatar'
+import Wardrobe from './pages/Wardrobe'
+import Showroom from './pages/Showroom'
+import GlowUp from './pages/GlowUp'
+import Demo from './pages/Demo'
 
 function App() {
   return (
-    <Suspense fallback={<PageLoader />}>
-      <Routes>
-        <Route path="/" element={<LandingPilot />} />
-        <Route path="/google-news" element={<GoogleNews />} />
-        <Route path="/demo" element={<Demo />} />
-        {/* Fallback route to LandingPilot */}
-        <Route path="*" element={<LandingPilot />} />
-      </Routes>
-    </Suspense>
-  );
+    <div className="min-h-screen bg-tryonyou-black">
+      <Navbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/brands" element={<Brands />} />
+          <Route path="/my-avatar" element={<MyAvatar />} />
+          <Route path="/wardrobe" element={<Wardrobe />} />
+          <Route path="/showroom" element={<Showroom />} />
+          <Route path="/glow-up" element={<GlowUp />} />
+          <Route path="/demo" element={<Demo />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  )
 }
 
-export default App;
+export default App

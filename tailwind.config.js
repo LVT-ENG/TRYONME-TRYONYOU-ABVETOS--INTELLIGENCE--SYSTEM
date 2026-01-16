@@ -10,6 +10,7 @@ export default {
         'tryon-anthracite': '#2F4F4F',
         'tryonyou-black': '#000000',
         'tryonyou-blue': '#00A8E8',
+        'tryonyou-darkblue': '#003459',
         'tryonyou-metallic': '#B0C4DE',
         'tryonyou-silver': '#C0C0C0',
         'tryonyou-gold': '#D4AF37',
@@ -19,6 +20,15 @@ export default {
       fontFamily: {
         'luxury': ['Cinzel', 'serif'],
         'sans': ['Inter', 'sans-serif'],
+      },
+      animation: {
+        'float': 'float 6s ease-in-out infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
       },
     },
   },
