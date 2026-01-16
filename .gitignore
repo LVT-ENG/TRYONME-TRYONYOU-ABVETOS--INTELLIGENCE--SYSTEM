@@ -3,3 +3,4 @@ node_modules
 dist
 *.log
 codigo_backend/venv
+package-lock.json
