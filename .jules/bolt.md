@@ -1,3 +1,0 @@
-## 2024-03-05 - Conflicting Configurations and Dead Code
-**Learning:** The repository contained two separate project structures (`src/` and `client/src/`) and two Vite configs (`vite.config.js` and `vite.config.ts`), leading to confusion about which code was active. The `package.json` had dependencies for the `client/` project (like `wouter`) but the root `src/` used `react-router-dom` which was missing from `package.json`.
-**Action:** Always verify the entry point (`index.html`, `vite.config.js`) and the actual imported files to determine the active codebase. Don't trust `package.json` blindly if there are conflicting signals. When optimizing, focus on the active code path (`src/App.jsx` in this case).

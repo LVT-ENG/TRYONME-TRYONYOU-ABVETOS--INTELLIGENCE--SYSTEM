@@ -1,23 +1,14 @@
 #!/bin/bash
+echo "🚀 [MODO EMERGENCIA] Limpiando y Desplegando..."
 
-echo "💎 INICIANDO PROTOCOLO ULTIMATUM V7 - LIMPIEZA DE ARQUITECTURA"
+# Asegurar que la patente está en el archivo correcto
+if ! grep -q "PCT/EP2025/067317" src/pages/Home.jsx; then
+    echo "⚠️ Re-inyectando Patente por seguridad..."
+    sed -i 's/LVT-ENG \/ TRYONYOU/PROTÉGÉ PAR BREVET PCT\/EP2025\/067317 | LVT-ENG/g' src/pages/Home.jsx
+fi
 
-# 1. Eliminar carpetas legacy y de frameworks no deseados
-echo "🧹 Eliminando rastros de Next.js y carpetas temporales..."
-rm -rf .next out build dist node_modules
-rm -f next.config.js next-env.d.ts
+git add .
+git commit -m "🔧 FIX: Deployment alignment | Removing conflicting types | French Luxury Live"
+git push origin main --force
 
-# 2. Asegurar estructura de directorios VITE SPA
-echo "📂 Asegurando estructura de directorios..."
-mkdir -p client/public/assets/catalog
-mkdir -p client/public/assets/branding
-mkdir -p client/public/assets/ui
-mkdir -p client/src/pages
-mkdir -p client/src/components
-
-# 3. Limpiar package.json de dependencias de Next.js (si existen)
-# Esto es preventivo, ya que estamos en un proyecto Vite, pero aseguramos.
-echo "📦 Verificando package.json..."
-# (Aquí normalmente usaríamos jq o sed para limpiar, pero asumiremos que el package.json base de Vite está bien y solo añadiremos lo necesario)
-
-echo "✅ LIMPIEZA COMPLETADA. LISTO PARA INSTALACIÓN DE DEPENDENCIAS."
+echo "✅ Push completado. Jules está esperando que Vercel termine el build."
