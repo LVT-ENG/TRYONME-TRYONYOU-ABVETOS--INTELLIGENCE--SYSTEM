@@ -1,0 +1,68 @@
+Last login: Fri Dec 12 04:09:37 on ttys000
+You have new mail.
+mac@MacBook-Air-de-mac ~ % cd ~/Desktop
+
+python3 -m pip install pillow
+
+python3 fiesta.py
+Defaulting to user installation because normal site-packages is not writeable
+Requirement already satisfied: pillow in /Users/mac/Library/Python/3.9/lib/python/site-packages (11.3.0)
+
+[notice] A new release of pip is available: 25.2 -> 25.3
+[notice] To update, run: /Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip
+/Library/Developer/CommandLineTools/usr/bin/python3: can't open file '/Users/mac/Desktop/fiesta.py': [Errno 2] No such file or directory
+mac@MacBook-Air-de-mac Desktop % cd ~/Desktop
+nano fiesta.py
+
+mac@MacBook-Air-de-mac Desktop % python3 -m pip install fastapi uvicorn
+
+Defaulting to user installation because normal site-packages is not writeable
+Collecting fastapi
+  Downloading fastapi-0.124.2-py3-none-any.whl.metadata (30 kB)
+Collecting uvicorn
+  Downloading uvicorn-0.38.0-py3-none-any.whl.metadata (6.8 kB)
+Collecting starlette<0.51.0,>=0.40.0 (from fastapi)
+  Downloading starlette-0.49.3-py3-none-any.whl.metadata (6.4 kB)
+Collecting pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4 (from fastapi)
+  Downloading pydantic-2.12.5-py3-none-any.whl.metadata (90 kB)
+Requirement already satisfied: typing-extensions>=4.8.0 in /Users/mac/Library/Python/3.9/lib/python/site-packages (from fastapi) (4.14.1)
+Collecting annotated-doc>=0.0.2 (from fastapi)
+  Downloading annotated_doc-0.0.4-py3-none-any.whl.metadata (6.6 kB)
+Collecting annotated-types>=0.6.0 (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi)
+  Downloading annotated_types-0.7.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.41.5 (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi)
+  Downloading pydantic_core-2.41.5-cp39-cp39-macosx_10_12_x86_64.whl.metadata (7.3 kB)
+Collecting typing-inspection>=0.4.2 (from pydantic!=1.8,!=1.8.1,!=2.0.0,!=2.0.1,!=2.1.0,<3.0.0,>=1.7.4->fastapi)
+  Downloading typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting anyio<5,>=3.6.2 (from starlette<0.51.0,>=0.40.0->fastapi)
+  Downloading anyio-4.12.0-py3-none-any.whl.metadata (4.3 kB)
+Collecting exceptiongroup>=1.0.2 (from anyio<5,>=3.6.2->starlette<0.51.0,>=0.40.0->fastapi)
+  Downloading exceptiongroup-1.3.1-py3-none-any.whl.metadata (6.7 kB)
+Requirement already satisfied: idna>=2.8 in /Users/mac/Library/Python/3.9/lib/python/site-packages (from anyio<5,>=3.6.2->starlette<0.51.0,>=0.40.0->fastapi) (3.10)
+Collecting click>=7.0 (from uvicorn)
+  Downloading click-8.1.8-py3-none-any.whl.metadata (2.3 kB)
+Collecting h11>=0.8 (from uvicorn)
+  Downloading h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Downloading fastapi-0.124.2-py3-none-any.whl (112 kB)
+Downloading pydantic-2.12.5-py3-none-any.whl (463 kB)
+Downloading pydantic_core-2.41.5-cp39-cp39-macosx_10_12_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 32.8 MB/s  0:00:00
+Downloading starlette-0.49.3-py3-none-any.whl (74 kB)
+Downloading anyio-4.12.0-py3-none-any.whl (113 kB)
+Downloading uvicorn-0.38.0-py3-none-any.whl (68 kB)
+Downloading annotated_doc-0.0.4-py3-none-any.whl (5.3 kB)
+Downloading annotated_types-0.7.0-py3-none-any.whl (13 kB)
+Downloading click-8.1.8-py3-none-any.whl (98 kB)
+Downloading exceptiongroup-1.3.1-py3-none-any.whl (16 kB)
+Downloading h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Installing collected packages: typing-inspection, pydantic-core, h11, exceptiongroup, click, annotated-types, annotated-doc, uvicorn, pydantic, anyio, starlette, fastapi
+   ━━━━━━━━━━━━━━━━━━━━━━━╺━━━━━━━━━━━━━━━━  7/12 [uvicorn]  WARNING: The script uvicorn is installed in '/Users/mac/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸━━━ 11/12 [fastapi]  WARNING: The script fastapi is installed in '/Users/mac/Library/Python/3.9/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+Successfully installed annotated-doc-0.0.4 annotated-types-0.7.0 anyio-4.12.0 click-8.1.8 exceptiongroup-1.3.1 fastapi-0.124.2 h11-0.16.0 pydantic-2.12.5 pydantic-core-2.41.5 starlette-0.49.3 typing-inspection-0.4.2 uvicorn-0.38.0
+
+[notice] A new release of pip is available: 25.2 -> 25.3
+[notice] To update, run: /Library/Developer/CommandLineTools/usr/bin/python3 -m pip install --upgrade pip
+mac@MacBook-Air-de-mac Desktop % 
