@@ -2,8 +2,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Send, Sparkles } from "lucide-react";
 import { Link } from "wouter";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "./button";
+import { Input } from "./input";
 
 export default function PauAgent() {
   const [messages, setMessages] = useState([
