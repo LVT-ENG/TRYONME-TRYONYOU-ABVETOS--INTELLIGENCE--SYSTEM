@@ -91,6 +91,11 @@ export default function Home() {
           <span className="text-[10px] tracking-[0.3em] uppercase text-white/50">Scroll</span>
           <div className="w-[1px] h-12 bg-gradient-to-b from-white/50 to-transparent" />
         </motion.div>
+
+        {/* Patent Verification */}
+        <div className="absolute bottom-4 right-4 text-[8px] text-white/10 pointer-events-none">
+          PCT/EP2025/067317
+        </div>
       </section>
 
       {/* Features Section */}
