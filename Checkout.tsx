@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "./button";
 import { motion } from "framer-motion";
 import { ArrowLeft, ShoppingBag, Star } from "lucide-react";
 import { useLocation } from "wouter";

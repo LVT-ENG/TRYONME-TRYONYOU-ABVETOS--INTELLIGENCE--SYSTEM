@@ -1,27 +1,39 @@
-import { Toaster } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import NotFound from "@/pages/NotFound";
+import { Suspense, lazy } from "react";
+import { Toaster } from "./sonner";
+import { TooltipProvider } from "./tooltip";
 import { Route, Switch } from "wouter";
-import ErrorBoundary from "./components/ErrorBoundary";
-import { ThemeProvider } from "./contexts/ThemeContext";
-import Home from "./pages/Home";
-import BiometricCapture from "./components/BiometricCapture";
-import Checkout from "./pages/Checkout";
-import Wardrobe from "./pages/Wardrobe";
-import PauAgent from "./pages/PauAgent";
+import ErrorBoundary from "./ErrorBoundary";
+import { ThemeProvider } from "./ThemeContext";
+import Home from "./Home";
+import { Spinner } from "./spinner";
+
+// Bolt Optimization: Lazy load heavy routes to improve initial load time
+const NotFound = lazy(() => import("./NotFound"));
+const BiometricCapture = lazy(() => import("./BiometricCapture"));
+const Checkout = lazy(() => import("./Checkout"));
+const Wardrobe = lazy(() => import("./Wardrobe"));
+const PauAgent = lazy(() => import("./PauAgent"));
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/tryon" component={BiometricCapture} />
-      <Route path="/wardrobe" component={Wardrobe} />
-      <Route path="/pau" component={PauAgent} />
-      <Route path="/checkout" component={Checkout} />
-      <Route path="/404" component={NotFound} />
-      {/* Final fallback route */}
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen bg-black">
+          <Spinner className="w-8 h-8 text-white" />
+        </div>
+      }
+    >
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/tryon" component={BiometricCapture} />
+        <Route path="/wardrobe" component={Wardrobe} />
+        <Route path="/pau" component={PauAgent} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/404" component={NotFound} />
+        {/* Final fallback route */}
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 

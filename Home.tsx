@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "./button";
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Scan } from "lucide-react";
 import { useLocation } from "wouter";

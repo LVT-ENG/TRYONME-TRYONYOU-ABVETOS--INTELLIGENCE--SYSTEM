@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PoseLandmarker, FilesetResolver, DrawingUtils } from "@mediapipe/tasks-vision";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
+import { Button } from "./button";
 import { Loader2, Scan, CheckCircle2, AlertCircle } from "lucide-react";
 import { useLocation } from "wouter";
 
