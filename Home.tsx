@@ -30,10 +30,12 @@ export default function Home() {
         {/* Background Video/Image Placeholder */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black z-10" />
+          {/* Bolt Optimization: Add fetchPriority="high" for LCP improvement */}
           <img 
             src="/images/hero-bg.jpg" 
             alt="Galeries Lafayette Interior" 
             className="w-full h-full object-cover opacity-60"
+            fetchPriority="high"
           />
         </div>
 
