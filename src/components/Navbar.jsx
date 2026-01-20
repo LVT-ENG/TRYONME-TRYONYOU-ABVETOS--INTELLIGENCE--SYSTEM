@@ -1,0 +1,1 @@
+import { Link } from 'react-router-dom'; export default function Navbar() { return <nav className='p-4 bg-black/50 text-white flex justify-between fixed w-full z-50'><Link to='/'>TRYONYOU</Link></nav> }
