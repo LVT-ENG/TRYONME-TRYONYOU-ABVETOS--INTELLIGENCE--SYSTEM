@@ -66,7 +66,7 @@ export default function Home() {
             className="flex flex-col md:flex-row gap-6 mt-8"
           >
             <Button 
-              onClick={() => setLocation("/demo")}
+              onClick={() => setLocation("/pilot")}
               className="group relative overflow-hidden bg-white text-black hover:bg-gray-200 rounded-none px-10 py-8 text-sm tracking-[0.2em] uppercase transition-all duration-500"
             >
               <span className="relative z-10 flex items-center gap-3">
