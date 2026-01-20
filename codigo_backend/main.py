@@ -62,6 +62,54 @@ class TryOnResponse(BaseModel):
     processing_time_ms: Optional[int] = None
     error: Optional[str] = None
 
+class UserMeasurements(BaseModel):
+    height: float
+    weight: float
+    chest: float
+    waist: float
+    hips: float
+    shoulder_width: float
+    arm_length: float
+    leg_length: float
+    torso_length: float
+    occasion: Optional[str] = None
+    category: Optional[str] = None
+    size_preference: str = "M"
+
+class MeasurementDetail(BaseModel):
+    measurement: str
+    user_value: float
+    garment_value: float
+    deviation: float
+    tolerance: float
+    fit_quality: str
+    fit_score: float
+
+class ResultDetails(BaseModel):
+    overall_fit_score: float
+    tolerance: float
+    fabric_elasticity: float
+    fabric_drape: float
+    measurement_details: list[MeasurementDetail]
+
+class Garment(BaseModel):
+    id: str
+    name: str
+    brand: str
+    category: str
+    price: float
+    image_url: str
+    description: str
+    size: str
+
+class MatchingResponse(BaseModel):
+    success: bool
+    best_garment: Optional[Garment] = None
+    fit_score: Optional[float] = None
+    explanation: Optional[str] = None
+    details: Optional[ResultDetails] = None
+    error: Optional[str] = None
+
 # ---------- Event logging ----------
 async def log_event(event_type: str, data: dict):
     """Log event to NDJSON file for metrics"""
@@ -185,6 +233,123 @@ async def try_on(request: TryOnRequest):
             "error": str(e)
         })
         return TryOnResponse(
+            success=False,
+            error=str(e)
+        )
+
+@app.post("/api/matching", response_model=MatchingResponse)
+async def find_matching_garment(measurements: UserMeasurements):
+    """
+    Find the best matching garment based on user measurements
+    
+    This endpoint analyzes user body measurements and finds the best fitting
+    garment from the catalog, providing detailed fit analysis.
+    """
+    try:
+        # Log the matching request
+        await log_event("matching_request", {
+            "size_preference": measurements.size_preference,
+            "occasion": measurements.occasion,
+            "category": measurements.category
+        })
+        
+        # For pilot phase, return a well-structured mock response
+        # In production, this would:
+        # 1. Load catalog from database
+        # 2. Apply ML-based size matching algorithm
+        # 3. Consider fabric properties and body measurements
+        # 4. Return personalized fit recommendations
+        
+        # Mock garment data
+        best_garment = Garment(
+            id="laf_blazer_001",
+            name="Heritage Navy Blazer",
+            brand="Lafayette Couture",
+            category="blazer",
+            price=1890.00,
+            image_url="/images/blazer_navy.jpg",
+            description="Classic navy blazer with modern tailoring, perfect for formal occasions. Made from 100% virgin wool with a structured silhouette.",
+            size=measurements.size_preference
+        )
+        
+        # Calculate fit metrics based on measurements
+        # This is simplified for the pilot - production would use actual garment specs
+        chest_deviation = abs(measurements.chest - 96)
+        shoulder_deviation = abs(measurements.shoulder_width - 42)
+        waist_deviation = abs(measurements.waist - 86)
+        
+        # Calculate fit scores (100 - deviation penalty)
+        chest_score = max(0, 100 - (chest_deviation * 5))
+        shoulder_score = max(0, 100 - (shoulder_deviation * 5))
+        waist_score = max(0, 100 - (waist_deviation * 5))
+        
+        # Overall fit score
+        overall_score = (chest_score + shoulder_score + waist_score) / 3
+        
+        # Create measurement details
+        measurement_details = [
+            MeasurementDetail(
+                measurement="Chest",
+                user_value=measurements.chest,
+                garment_value=96.0,
+                deviation=chest_deviation,
+                tolerance=4.5,
+                fit_quality="Perfect" if chest_score >= 95 else "Excellent" if chest_score >= 85 else "Good",
+                fit_score=chest_score
+            ),
+            MeasurementDetail(
+                measurement="Shoulder",
+                user_value=measurements.shoulder_width,
+                garment_value=42.0,
+                deviation=shoulder_deviation,
+                tolerance=4.5,
+                fit_quality="Perfect" if shoulder_score >= 95 else "Excellent" if shoulder_score >= 85 else "Good",
+                fit_score=shoulder_score
+            ),
+            MeasurementDetail(
+                measurement="Waist",
+                user_value=measurements.waist,
+                garment_value=86.0,
+                deviation=waist_deviation,
+                tolerance=4.5,
+                fit_quality="Perfect" if waist_score >= 95 else "Excellent" if waist_score >= 85 else "Good",
+                fit_score=waist_score
+            )
+        ]
+        
+        details = ResultDetails(
+            overall_fit_score=round(overall_score, 1),
+            tolerance=4.5,
+            fabric_elasticity=5.0,
+            fabric_drape=7.0,
+            measurement_details=measurement_details
+        )
+        
+        # Generate explanation
+        explanation = (
+            f"This {best_garment.name} is a great fit for you ({round(overall_score, 0)}% match). "
+            f"The 100% virgin wool fabric has moderate stretch (5%), providing comfort with structure. "
+            f"Your measurements align well with this {measurements.size_preference} size garment."
+        )
+        
+        await log_event("matching_success", {
+            "fit_score": overall_score,
+            "garment_id": best_garment.id,
+            "size": measurements.size_preference
+        })
+        
+        return MatchingResponse(
+            success=True,
+            best_garment=best_garment,
+            fit_score=round(overall_score, 1),
+            explanation=explanation,
+            details=details
+        )
+    
+    except Exception as e:
+        logger.error(f"Matching error: {e}")
+        await log_event("matching_error", {"error": str(e)})
+        return MatchingResponse(
             success=False,
             error=str(e)
         )

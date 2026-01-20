@@ -1,0 +1,245 @@
+{
+  "catalog_version": "1.0.0-pilot",
+  "client": "galeries_lafayette",
+  "last_updated": "2026-01-20T00:00:00Z",
+  "items": [
+    {
+      "sku": "laf_blazer_001",
+      "name": "Heritage Navy Blazer",
+      "brand": "Lafayette Couture",
+      "category": "blazer",
+      "price": 1890.00,
+      "currency": "EUR",
+      "description": "Classic navy blazer with modern tailoring, perfect for formal occasions. Made from 100% virgin wool with a structured silhouette.",
+      "fabric": {
+        "composition": "100% Virgin Wool",
+        "elasticity": 5,
+        "drape": 7,
+        "weight": "medium"
+      },
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "measurements": {
+        "S": {
+          "chest": 92,
+          "shoulder": 40,
+          "waist": 82,
+          "length": 72
+        },
+        "M": {
+          "chest": 96,
+          "shoulder": 42,
+          "waist": 86,
+          "length": 74
+        },
+        "L": {
+          "chest": 100,
+          "shoulder": 44,
+          "waist": 90,
+          "length": 76
+        },
+        "XL": {
+          "chest": 104,
+          "shoulder": 46,
+          "waist": 94,
+          "length": 78
+        }
+      },
+      "image_url": "/images/blazer_navy.jpg",
+      "images": [
+        "/images/blazer_navy_front.jpg",
+        "/images/blazer_navy_back.jpg",
+        "/images/blazer_navy_detail.jpg"
+      ],
+      "occasions": ["work", "formal", "ceremony"],
+      "try_on_enabled": true,
+      "stock_status": "in_stock",
+      "tags": ["classic", "wool", "tailored", "formal"]
+    },
+    {
+      "sku": "laf_dress_002",
+      "name": "Silk Evening Dress",
+      "brand": "Lafayette Collection",
+      "category": "dress",
+      "price": 2450.00,
+      "currency": "EUR",
+      "description": "Elegant silk evening dress with a flowing silhouette. Perfect for special occasions and evening events.",
+      "fabric": {
+        "composition": "100% Silk",
+        "elasticity": 8,
+        "drape": 10,
+        "weight": "light"
+      },
+      "sizes": ["XS", "S", "M", "L", "XL"],
+      "measurements": {
+        "S": {
+          "chest": 84,
+          "waist": 68,
+          "hips": 92,
+          "length": 118
+        },
+        "M": {
+          "chest": 88,
+          "waist": 72,
+          "hips": 96,
+          "length": 120
+        },
+        "L": {
+          "chest": 92,
+          "waist": 76,
+          "hips": 100,
+          "length": 122
+        }
+      },
+      "image_url": "/images/dress_evening_silk.jpg",
+      "images": [
+        "/images/dress_evening_front.jpg",
+        "/images/dress_evening_back.jpg"
+      ],
+      "occasions": ["event", "ceremony", "formal"],
+      "try_on_enabled": true,
+      "stock_status": "in_stock",
+      "tags": ["silk", "elegant", "evening", "luxury"]
+    },
+    {
+      "sku": "laf_trousers_003",
+      "name": "Classic Wool Trousers",
+      "brand": "Lafayette Essentials",
+      "category": "trousers",
+      "price": 890.00,
+      "currency": "EUR",
+      "description": "Tailored wool trousers with a modern fit. Versatile piece for business and casual occasions.",
+      "fabric": {
+        "composition": "95% Wool, 5% Elastane",
+        "elasticity": 10,
+        "drape": 8,
+        "weight": "medium"
+      },
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "measurements": {
+        "S": {
+          "waist": 78,
+          "hips": 94,
+          "leg_length": 102,
+          "inseam": 79
+        },
+        "M": {
+          "waist": 82,
+          "hips": 98,
+          "leg_length": 104,
+          "inseam": 81
+        },
+        "L": {
+          "waist": 86,
+          "hips": 102,
+          "leg_length": 106,
+          "inseam": 83
+        },
+        "XL": {
+          "waist": 90,
+          "hips": 106,
+          "leg_length": 108,
+          "inseam": 85
+        }
+      },
+      "image_url": "/images/trousers_wool.jpg",
+      "images": [
+        "/images/trousers_wool_front.jpg",
+        "/images/trousers_wool_side.jpg"
+      ],
+      "occasions": ["work", "casual", "formal"],
+      "try_on_enabled": true,
+      "stock_status": "in_stock",
+      "tags": ["wool", "tailored", "versatile", "business"]
+    },
+    {
+      "sku": "laf_shirt_004",
+      "name": "Cotton Oxford Shirt",
+      "brand": "Lafayette Basics",
+      "category": "shirt",
+      "price": 495.00,
+      "currency": "EUR",
+      "description": "Premium cotton Oxford shirt with classic fit. Essential wardrobe piece for any occasion.",
+      "fabric": {
+        "composition": "100% Cotton",
+        "elasticity": 3,
+        "drape": 6,
+        "weight": "medium"
+      },
+      "sizes": ["XS", "S", "M", "L", "XL", "XXL"],
+      "measurements": {
+        "S": {
+          "chest": 94,
+          "shoulder": 42,
+          "arm_length": 60,
+          "length": 74
+        },
+        "M": {
+          "chest": 98,
+          "shoulder": 44,
+          "arm_length": 62,
+          "length": 76
+        },
+        "L": {
+          "chest": 102,
+          "shoulder": 46,
+          "arm_length": 64,
+          "length": 78
+        },
+        "XL": {
+          "chest": 106,
+          "shoulder": 48,
+          "arm_length": 66,
+          "length": 80
+        }
+      },
+      "image_url": "/images/shirt_oxford.jpg",
+      "images": [
+        "/images/shirt_oxford_front.jpg",
+        "/images/shirt_oxford_detail.jpg"
+      ],
+      "occasions": ["work", "casual", "formal"],
+      "try_on_enabled": true,
+      "stock_status": "in_stock",
+      "tags": ["cotton", "classic", "oxford", "essential"]
+    },
+    {
+      "sku": "laf_coat_005",
+      "name": "Cashmere Overcoat",
+      "brand": "Lafayette Luxe",
+      "category": "coat",
+      "price": 3200.00,
+      "currency": "EUR",
+      "description": "Luxurious cashmere overcoat with timeless design. The ultimate in comfort and sophistication.",
+      "fabric": {
+        "composition": "100% Cashmere",
+        "elasticity": 2,
+        "drape": 9,
+        "weight": "heavy"
+      },
+      "sizes": ["S", "M", "L", "XL"],
+      "measurements": {
+        "M": {
+          "chest": 100,
+          "shoulder": 44,
+          "arm_length": 64,
+          "length": 100
+        },
+        "L": {
+          "chest": 104,
+          "shoulder": 46,
+          "arm_length": 66,
+          "length": 102
+        }
+      },
+      "image_url": "/images/coat_cashmere.jpg",
+      "images": [
+        "/images/coat_cashmere_front.jpg",
+        "/images/coat_cashmere_side.jpg"
+      ],
+      "occasions": ["formal", "ceremony"],
+      "try_on_enabled": true,
+      "stock_status": "limited",
+      "tags": ["cashmere", "luxury", "timeless", "premium"]
+    }
+  ]
+}
