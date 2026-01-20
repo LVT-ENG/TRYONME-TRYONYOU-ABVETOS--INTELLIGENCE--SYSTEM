@@ -26,6 +26,15 @@ CATALOG_PATH = os.getenv("PILOT_CATALOG_PATH", "pilot_assets/catalog.sample.json
 EVENTS_FILE = os.getenv("EVENTS_FILE", "pilot_data/events.ndjson")
 LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 
+# Matching Algorithm Constants
+DEFAULT_TOLERANCE = 4.5  # cm
+DEVIATION_PENALTY_MULTIPLIER = 5
+# Reference garment measurements for M size (pilot placeholder)
+# In production, these would come from the catalog database
+REFERENCE_CHEST_M = 96.0  # cm
+REFERENCE_SHOULDER_M = 42.0  # cm
+REFERENCE_WAIST_M = 86.0  # cm
+
 # Logging setup
 logging.basicConfig(
     level=getattr(logging, LOG_LEVEL),
@@ -274,14 +283,14 @@ async def find_matching_garment(measurements: UserMeasurements):
         
         # Calculate fit metrics based on measurements
         # This is simplified for the pilot - production would use actual garment specs
-        chest_deviation = abs(measurements.chest - 96)
-        shoulder_deviation = abs(measurements.shoulder_width - 42)
-        waist_deviation = abs(measurements.waist - 86)
+        chest_deviation = abs(measurements.chest - REFERENCE_CHEST_M)
+        shoulder_deviation = abs(measurements.shoulder_width - REFERENCE_SHOULDER_M)
+        waist_deviation = abs(measurements.waist - REFERENCE_WAIST_M)
         
         # Calculate fit scores (100 - deviation penalty)
-        chest_score = max(0, 100 - (chest_deviation * 5))
-        shoulder_score = max(0, 100 - (shoulder_deviation * 5))
-        waist_score = max(0, 100 - (waist_deviation * 5))
+        chest_score = max(0, 100 - (chest_deviation * DEVIATION_PENALTY_MULTIPLIER))
+        shoulder_score = max(0, 100 - (shoulder_deviation * DEVIATION_PENALTY_MULTIPLIER))
+        waist_score = max(0, 100 - (waist_deviation * DEVIATION_PENALTY_MULTIPLIER))
         
         # Overall fit score
         overall_score = (chest_score + shoulder_score + waist_score) / 3
@@ -291,27 +300,27 @@ async def find_matching_garment(measurements: UserMeasurements):
             MeasurementDetail(
                 measurement="Chest",
                 user_value=measurements.chest,
-                garment_value=96.0,
+                garment_value=REFERENCE_CHEST_M,
                 deviation=chest_deviation,
-                tolerance=4.5,
+                tolerance=DEFAULT_TOLERANCE,
                 fit_quality="Perfect" if chest_score >= 95 else "Excellent" if chest_score >= 85 else "Good",
                 fit_score=chest_score
             ),
             MeasurementDetail(
                 measurement="Shoulder",
                 user_value=measurements.shoulder_width,
-                garment_value=42.0,
+                garment_value=REFERENCE_SHOULDER_M,
                 deviation=shoulder_deviation,
-                tolerance=4.5,
+                tolerance=DEFAULT_TOLERANCE,
                 fit_quality="Perfect" if shoulder_score >= 95 else "Excellent" if shoulder_score >= 85 else "Good",
                 fit_score=shoulder_score
             ),
             MeasurementDetail(
                 measurement="Waist",
                 user_value=measurements.waist,
-                garment_value=86.0,
+                garment_value=REFERENCE_WAIST_M,
                 deviation=waist_deviation,
-                tolerance=4.5,
+                tolerance=DEFAULT_TOLERANCE,
                 fit_quality="Perfect" if waist_score >= 95 else "Excellent" if waist_score >= 85 else "Good",
                 fit_score=waist_score
             )
@@ -319,7 +328,7 @@ async def find_matching_garment(measurements: UserMeasurements):
         
         details = ResultDetails(
             overall_fit_score=round(overall_score, 1),
-            tolerance=4.5,
+            tolerance=DEFAULT_TOLERANCE,
             fabric_elasticity=5.0,
             fabric_drape=7.0,
             measurement_details=measurement_details
