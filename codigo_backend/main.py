@@ -10,7 +10,7 @@ import json
 import logging
 from datetime import datetime
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Depends
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,7 +30,11 @@ LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
 DEFAULT_TOLERANCE = 4.5  # cm
 DEVIATION_PENALTY_MULTIPLIER = 5
 # Reference garment measurements for M size (pilot placeholder)
-# In production, these would come from the catalog database
+# NOTE: In production, these should be loaded from catalog.json based on:
+#   1. User's size_preference (not just M)
+#   2. Actual garment being matched
+#   3. Category-specific sizing (dresses vs blazers)
+# For pilot phase, we use fixed M size measurements for demonstration
 REFERENCE_CHEST_M = 96.0  # cm
 REFERENCE_SHOULDER_M = 42.0  # cm
 REFERENCE_WAIST_M = 86.0  # cm
@@ -99,7 +103,7 @@ class ResultDetails(BaseModel):
     tolerance: float
     fabric_elasticity: float
     fabric_drape: float
-    measurement_details: list[MeasurementDetail]
+    measurement_details: List[MeasurementDetail]
 
 class Garment(BaseModel):
     id: str
@@ -262,12 +266,16 @@ async def find_matching_garment(measurements: UserMeasurements):
             "category": measurements.category
         })
         
-        # For pilot phase, return a well-structured mock response
-        # In production, this would:
-        # 1. Load catalog from database
-        # 2. Apply ML-based size matching algorithm
-        # 3. Consider fabric properties and body measurements
-        # 4. Return personalized fit recommendations
+        # PILOT IMPLEMENTATION NOTE:
+        # This is a simplified matching algorithm for demonstration purposes.
+        # Production implementation should:
+        # 1. Query catalog database with filters (category, occasion)
+        # 2. Load actual garment measurements for user's size_preference
+        # 3. Use ML model for advanced fit prediction
+        # 4. Consider fabric elasticity, drape, and stretch
+        # 5. Compare against multiple garments and rank results
+        # 6. Return top N matches with detailed analysis
+        # Current implementation uses fixed M-size measurements for demo
         
         # Mock garment data
         best_garment = Garment(
