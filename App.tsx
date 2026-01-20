@@ -13,6 +13,9 @@ const BiometricCapture = lazy(() => import("./BiometricCapture"));
 const Checkout = lazy(() => import("./Checkout"));
 const Wardrobe = lazy(() => import("./Wardrobe"));
 const PauAgent = lazy(() => import("./PauAgent"));
+// New routes from Google News update (MVP)
+const Pilot = lazy(() => import("./Pilot"));
+const Result = lazy(() => import("./Result"));
 
 function Router() {
   return (
@@ -29,6 +32,11 @@ function Router() {
         <Route path="/wardrobe" component={Wardrobe} />
         <Route path="/pau" component={PauAgent} />
         <Route path="/checkout" component={Checkout} />
+
+        {/* MVP Routes */}
+        <Route path="/pilot" component={Pilot} />
+        <Route path="/result" component={Result} />
+
         <Route path="/404" component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />
