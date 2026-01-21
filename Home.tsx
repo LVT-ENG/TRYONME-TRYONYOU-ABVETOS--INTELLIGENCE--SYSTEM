@@ -6,11 +6,6 @@ import { useLocation } from "wouter";
 export default function Home() {
   const [, setLocation] = useLocation();
 
-  const preloadPilot = () => {
-    // Bolt Optimization: Preload the Pilot chunk on hover to reduce perceived latency
-    import("./Pilot");
-  };
-
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden font-sans selection:bg-red-900 selection:text-white">
       {/* Navigation Bar */}
@@ -84,7 +79,6 @@ export default function Home() {
             className="flex flex-col md:flex-row gap-6 mt-8"
           >
             <Button
-              onMouseEnter={preloadPilot}
               onClick={() => setLocation("/pilot")}
               className="group relative overflow-hidden bg-white text-black hover:bg-gray-200 rounded-none px-10 py-8 text-sm tracking-[0.2em] uppercase transition-all duration-500"
             >
