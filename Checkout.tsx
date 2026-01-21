@@ -13,7 +13,7 @@ export default function Checkout() {
       brand: "Valentino",
       price: "€4,200",
       match: "98%",
-      image: "/images/model-scan.jpg", // Placeholder
+      image: "/images/model-scan.jpg" // Placeholder
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ export default function Checkout() {
       brand: "Saint Laurent",
       price: "€2,890",
       match: "95%",
-      image: "/images/texture-glass.jpg", // Placeholder
+      image: "/images/texture-glass.jpg" // Placeholder
     },
     {
       id: 3,
@@ -29,12 +29,13 @@ export default function Checkout() {
       brand: "Givenchy",
       price: "€3,450",
       match: "92%",
-      image: "/images/hero-bg.jpg", // Placeholder
-    },
+      image: "/images/hero-bg.jpg" // Placeholder
+    }
   ];
 
   return (
     <div className="min-h-screen bg-black text-white font-sans selection:bg-red-900 selection:text-white">
+
       {/* Header */}
       <header className="fixed top-0 w-full z-50 px-8 py-6 flex justify-between items-center bg-black/80 backdrop-blur-md border-b border-white/5">
         <Button
@@ -42,10 +43,7 @@ export default function Checkout() {
           onClick={() => setLocation("/")}
           className="text-white hover:text-red-500 hover:bg-transparent gap-2 pl-0"
         >
-          <ArrowLeft className="w-4 h-4" />{" "}
-          <span className="tracking-widest uppercase text-xs">
-            Back to Home
-          </span>
+          <ArrowLeft className="w-4 h-4" /> <span className="tracking-widest uppercase text-xs">Back to Home</span>
         </Button>
         <div className="text-xl font-serif font-bold tracking-widest">
           YOUR CURATED SELECTION
@@ -56,22 +54,17 @@ export default function Checkout() {
       </header>
 
       <main className="pt-32 pb-20 container mx-auto px-4">
+
         {/* Intro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <p className="text-red-500 text-xs tracking-[0.3em] uppercase mb-4">
-            Biometric Analysis Complete
-          </p>
-          <h1 className="text-4xl md:text-5xl font-serif mb-6">
-            Perfectly Tailored For You
-          </h1>
+          <p className="text-red-500 text-xs tracking-[0.3em] uppercase mb-4">Biometric Analysis Complete</p>
+          <h1 className="text-4xl md:text-5xl font-serif mb-6">Perfectly Tailored For You</h1>
           <p className="text-gray-400 max-w-2xl mx-auto font-light">
-            Based on your unique skeletal structure and body geometry, our AI
-            has selected these exclusive pieces from the Galeries Lafayette
-            collection.
+            Based on your unique skeletal structure and body geometry, our AI has selected these exclusive pieces from the Galeries Lafayette collection.
           </p>
         </motion.div>
 
@@ -94,23 +87,19 @@ export default function Checkout() {
                 />
                 <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 flex items-center gap-1 border border-white/10">
                   <Star className="w-3 h-3 text-red-500 fill-red-500" />
-                  <span className="text-xs font-mono text-white">
-                    {item.match} Match
-                  </span>
+                  <span className="text-xs font-mono text-white">{item.match} Match</span>
                 </div>
               </div>
 
               {/* Info Area */}
               <div className="p-6">
-                <div className="text-xs text-gray-400 uppercase tracking-widest mb-2">
-                  {item.brand}
-                </div>
-                <h3 className="text-xl font-serif text-white mb-4">
-                  {item.name}
-                </h3>
+                <div className="text-xs text-gray-400 uppercase tracking-widest mb-2">{item.brand}</div>
+                <h3 className="text-xl font-serif text-white mb-4">{item.name}</h3>
                 <div className="flex justify-between items-end border-t border-white/10 pt-4">
                   <span className="text-lg font-medium">{item.price}</span>
-                  <Button className="bg-white text-black hover:bg-red-600 hover:text-white rounded-none text-xs uppercase tracking-widest px-6 transition-colors duration-300">
+                  <Button
+                    className="bg-white text-black hover:bg-red-600 hover:text-white rounded-none text-xs uppercase tracking-widest px-6 transition-colors duration-300"
+                  >
                     Add to Bag
                   </Button>
                 </div>
@@ -118,6 +107,7 @@ export default function Checkout() {
             </motion.div>
           ))}
         </div>
+
       </main>
     </div>
   );

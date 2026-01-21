@@ -8,7 +8,7 @@
       "name": "Heritage Navy Blazer",
       "brand": "Lafayette Couture",
       "category": "blazer",
-      "price": 1890.0,
+      "price": 1890.00,
       "currency": "EUR",
       "description": "Classic navy blazer with modern tailoring, perfect for formal occasions. Made from 100% virgin wool with a structured silhouette.",
       "fabric": {
@@ -60,7 +60,7 @@
       "name": "Silk Evening Dress",
       "brand": "Lafayette Collection",
       "category": "dress",
-      "price": 2450.0,
+      "price": 2450.00,
       "currency": "EUR",
       "description": "Elegant silk evening dress with a flowing silhouette. Perfect for special occasions and evening events.",
       "fabric": {
@@ -105,7 +105,7 @@
       "name": "Classic Wool Trousers",
       "brand": "Lafayette Essentials",
       "category": "trousers",
-      "price": 890.0,
+      "price": 890.00,
       "currency": "EUR",
       "description": "Tailored wool trousers with a modern fit. Versatile piece for business and casual occasions.",
       "fabric": {
@@ -156,7 +156,7 @@
       "name": "Cotton Oxford Shirt",
       "brand": "Lafayette Basics",
       "category": "shirt",
-      "price": 495.0,
+      "price": 495.00,
       "currency": "EUR",
       "description": "Premium cotton Oxford shirt with classic fit. Essential wardrobe piece for any occasion.",
       "fabric": {
@@ -207,7 +207,7 @@
       "name": "Cashmere Overcoat",
       "brand": "Lafayette Luxe",
       "category": "coat",
-      "price": 3200.0,
+      "price": 3200.00,
       "currency": "EUR",
       "description": "Luxurious cashmere overcoat with timeless design. The ultimate in comfort and sophistication.",
       "fabric": {
