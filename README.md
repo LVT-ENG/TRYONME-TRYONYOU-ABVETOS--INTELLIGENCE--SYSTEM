@@ -14,6 +14,7 @@
 ## 🏗️ System Architecture
 
 ### Frontend (React + TypeScript + Vite)
+
 - **Technology Stack**: React 18, TypeScript, Vite, TailwindCSS, Framer Motion
 - **Key Components**:
   - `Home.tsx` - Landing page with brand presentation
@@ -26,6 +27,7 @@
   - Detailed measurement analysis
 
 ### Backend (Python + FastAPI)
+
 - **Technology Stack**: Python 3.9+, FastAPI, Uvicorn, Pydantic
 - **Location**: `codigo_backend/`
 - **Key Endpoints**:
@@ -46,7 +48,8 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js**: 18+ 
+
+- **Node.js**: 18+
 - **Python**: 3.9+
 - **npm** or **pnpm**: Latest version
 - **Git**: For version control
@@ -54,12 +57,14 @@
 ### Installation
 
 #### 1. Clone the Repository
+
 ```bash
 git clone <repository-url>
 cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
 ```
 
 #### 2. Frontend Setup
+
 ```bash
 # Install dependencies
 npm install
@@ -75,6 +80,7 @@ pnpm dev
 The frontend will be available at: `http://localhost:3000`
 
 #### 3. Backend Setup
+
 ```bash
 # Navigate to backend directory
 cd codigo_backend
@@ -105,11 +111,12 @@ API Documentation: `http://localhost:8000/docs`
 ## 📦 What's Included in the Pilot
 
 ### ✅ Completed Features
+
 1. **User Measurement Input**: Complete form with 9 body measurements
 2. **Size Preferences**: XS to XL size selection
 3. **Occasion Selection**: Work, casual, formal, event, ceremony
 4. **Matching Algorithm**: Intelligent fit scoring based on measurements
-5. **Result Visualization**: 
+5. **Result Visualization**:
    - Overall fit score (percentage)
    - Individual measurement analysis
    - Fabric properties display
@@ -120,6 +127,7 @@ API Documentation: `http://localhost:8000/docs`
 9. **API Documentation**: Interactive Swagger UI
 
 ### 📊 Sample Catalog
+
 - Heritage Navy Blazer (€1,890)
 - Silk Evening Dress (€2,450)
 - Classic Wool Trousers (€890)
@@ -127,6 +135,7 @@ API Documentation: `http://localhost:8000/docs`
 - Cashmere Overcoat (€3,200)
 
 Each item includes:
+
 - Detailed measurements for each size
 - Fabric composition and properties
 - Multiple image URLs (placeholder)
@@ -183,6 +192,7 @@ vercel --prod
 ### Option 2: Traditional Hosting
 
 #### Frontend (Static)
+
 ```bash
 # Build for production
 npm run build
@@ -195,6 +205,7 @@ npm run build
 ```
 
 #### Backend (Python Server)
+
 ```bash
 # Using Docker (Dockerfile included)
 cd codigo_backend
@@ -211,11 +222,13 @@ docker run -p 8000:8000 tryonyou-backend
 ### Option 3: All-in-One Script
 
 Use the included activation script:
+
 ```bash
 bash activar_piloto.sh
 ```
 
 This script:
+
 1. Installs frontend dependencies
 2. Sets up Python virtual environment
 3. Installs backend dependencies
@@ -229,7 +242,7 @@ This script:
 
 1. **Start Application**: Open `http://localhost:3000`
 2. **Navigate to Pilot**: Click "Try Pilot" button
-3. **Enter Measurements**: 
+3. **Enter Measurements**:
    - Sample values are pre-filled
    - Modify as needed
 4. **Select Preferences**:
@@ -244,11 +257,13 @@ This script:
 ### API Testing
 
 Use the interactive API documentation:
+
 ```
 http://localhost:8000/docs
 ```
 
 Example request to `/api/matching`:
+
 ```json
 {
   "height": 170,
@@ -271,6 +286,7 @@ Example request to `/api/matching`:
 ## 📋 Checklist for Lafallet Review
 
 ### Technical Deliverables
+
 - [x] Frontend application (React)
 - [x] Backend API (FastAPI)
 - [x] Sample product catalog (5 items)
@@ -282,6 +298,7 @@ Example request to `/api/matching`:
 - [x] This README
 
 ### Business Requirements
+
 - [x] User measurement input
 - [x] Size recommendation engine
 - [x] Fit quality scoring
@@ -290,10 +307,12 @@ Example request to `/api/matching`:
 - [x] Brand customization (Galeries Lafayette)
 
 ### Ready for Production?
+
 **Current Status**: Pilot/MVP ready  
 **Production Readiness**: 70%
 
 **To make production-ready:**
+
 1. Replace mock data with real catalog database
 2. Integrate actual ML model for try-on visualization
 3. Add user authentication
@@ -329,6 +348,7 @@ View metrics at: `http://localhost:8000/api/metrics`
 **Pilot Phase**: January 2026
 
 For questions or issues:
+
 1. Check API documentation: `/docs`
 2. Review this README
 3. Check code comments in source files
@@ -346,12 +366,14 @@ Proprietary - All rights reserved
 ## 🎯 Next Steps for Lafallet
 
 ### Immediate Actions:
+
 1. **Review**: Test the pilot application thoroughly
 2. **Feedback**: Provide feedback on UX/UI
 3. **Data**: Share real product catalog data
 4. **Integration**: Discuss integration with existing systems
 
 ### Phase 2 Planning:
+
 1. Real product catalog integration
 2. User account system
 3. Order management
@@ -364,6 +386,7 @@ Proprietary - All rights reserved
 ## 🏆 Success Metrics for Pilot
 
 Track these KPIs during pilot phase:
+
 - User engagement rate
 - Completion rate (measurement → results)
 - Average fit score
