@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Toaster } from "./sonner";
+import { Toaster } from "./ui-sonner";
 import { TooltipProvider } from "./tooltip";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./ErrorBoundary";
