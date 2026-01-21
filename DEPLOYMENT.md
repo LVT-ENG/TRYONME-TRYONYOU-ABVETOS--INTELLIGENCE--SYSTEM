@@ -3,6 +3,7 @@
 ## Quick Deployment Checklist
 
 ### Before Deployment
+
 - [ ] Test application locally (frontend + backend)
 - [ ] Review product catalog data
 - [ ] Verify all environment variables
@@ -11,6 +12,7 @@
 - [ ] Review analytics/logging
 
 ### Deployment Steps
+
 - [ ] Choose deployment platform
 - [ ] Configure environment variables
 - [ ] Deploy backend API
@@ -41,6 +43,7 @@ This is the simplest and fastest deployment option.
    - Start command: `uvicorn main:app --host 0.0.0.0 --port $PORT`
 
 4. **Add Environment Variables**:
+
    ```
    APP_MODE=production
    PILOT_NAME=galeries_lafayette
@@ -68,12 +71,14 @@ This is the simplest and fastest deployment option.
    - Install Command: `npm install`
 
 4. **Environment Variables**:
+
    ```
    VITE_API_URL=https://tryonyou-backend.railway.app
    ```
 
 5. **Update Result.tsx**:
    Before deploying, update the API URL in `Result.tsx`:
+
    ```typescript
    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/matching`, {
    ```
@@ -88,6 +93,7 @@ This is the simplest and fastest deployment option.
 ### Backend Dockerfile
 
 Create `codigo_backend/Dockerfile`:
+
 ```dockerfile
 FROM python:3.11-slim
 
@@ -104,6 +110,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
 ```
 
 ### Build and Run:
+
 ```bash
 # Backend
 cd codigo_backend
@@ -127,22 +134,26 @@ npm run build
 ### Backend (AWS Elastic Beanstalk)
 
 1. **Install EB CLI**:
+
    ```bash
    pip install awsebcli
    ```
 
 2. **Initialize**:
+
    ```bash
    cd codigo_backend
    eb init -p python-3.9 tryonyou-backend
    ```
 
 3. **Create Environment**:
+
    ```bash
    eb create production-env
    ```
 
 4. **Set Environment Variables**:
+
    ```bash
    eb setenv APP_MODE=production PILOT_CLIENT=lafallet
    ```
@@ -155,16 +166,19 @@ npm run build
 ### Frontend (AWS S3 + CloudFront)
 
 1. **Build**:
+
    ```bash
    npm run build
    ```
 
 2. **Create S3 Bucket**:
+
    ```bash
    aws s3 mb s3://tryonyou-frontend
    ```
 
 3. **Upload Files**:
+
    ```bash
    aws s3 sync dist/ s3://tryonyou-frontend --delete
    ```
@@ -183,6 +197,7 @@ npm run build
 ## 🔧 Environment Configuration by Stage
 
 ### Development
+
 ```bash
 APP_MODE=dev
 PILOT_NAME=dev_test
@@ -192,6 +207,7 @@ LOG_LEVEL=DEBUG
 ```
 
 ### Staging
+
 ```bash
 APP_MODE=staging
 PILOT_NAME=galeries_lafayette_staging
@@ -201,6 +217,7 @@ LOG_LEVEL=INFO
 ```
 
 ### Production
+
 ```bash
 APP_MODE=production
 PILOT_NAME=galeries_lafayette
@@ -253,12 +270,14 @@ LOG_LEVEL=WARNING
    - StatusCake
 
 ### Basic Health Check:
+
 ```bash
 # Add to your monitoring
 curl https://your-api.com/status
 ```
 
 Expected response:
+
 ```json
 {
   "ok": true,
@@ -293,7 +312,7 @@ jobs:
         run: |
           npm i -g @railway/cli
           railway up
-  
+
   deploy-frontend:
     runs-on: ubuntu-latest
     steps:
@@ -374,15 +393,19 @@ Before handoff to Lafallet:
 ### Common Issues:
 
 **Issue**: CORS errors in browser
+
 - **Solution**: Update `CORS_ORIGINS` in backend environment variables
 
 **Issue**: API not connecting
+
 - **Solution**: Check backend URL in frontend environment variables
 
 **Issue**: 500 errors on backend
+
 - **Solution**: Check logs, verify catalog file exists
 
 **Issue**: Styling broken
+
 - **Solution**: Ensure Tailwind CSS is properly built
 
 ---
@@ -390,12 +413,14 @@ Before handoff to Lafallet:
 ## 📝 Deployment Success Criteria
 
 ✅ **Backend**:
+
 - `/status` endpoint returns 200 OK
 - `/api/catalog` returns product list
 - `/api/matching` successfully processes requests
 - No 500 errors in logs
 
 ✅ **Frontend**:
+
 - Homepage loads in < 3 seconds
 - Pilot form works correctly
 - Results page displays properly
@@ -403,6 +428,7 @@ Before handoff to Lafallet:
 - Mobile responsive
 
 ✅ **Integration**:
+
 - Frontend can call backend APIs
 - CORS configured correctly
 - SSL/HTTPS working
