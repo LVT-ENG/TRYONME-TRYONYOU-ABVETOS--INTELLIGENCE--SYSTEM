@@ -110,8 +110,8 @@ export default function BiometricCapture() {
 
     // Stop camera stream immediately to freeze frame or just stop processing
     if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach((track) => track.stop());
+       const stream = videoRef.current.srcObject as MediaStream;
+       stream.getTracks().forEach((track) => track.stop());
     }
 
     setIsScanning(false);
@@ -119,32 +119,29 @@ export default function BiometricCapture() {
     setCameraError("CONNECTING TO DIVINEO DOMAINS...");
 
     try {
-      const response = await fetch("/api/dominions", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ landmarks }),
+      const response = await fetch('/api/dominions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ landmarks })
       });
 
       const data = await response.json();
 
-      if (data.status === "success") {
-        console.log("Prenda sugerida:", data.garment);
+      if (data.status === 'success') {
+          console.log("Prenda sugerida:", data.garment);
 
-        // Save measurements for result page
-        localStorage.setItem(
-          "userMeasurements",
-          JSON.stringify({
-            ...data.measurements,
-            occasion: "work", // Default context
-            size_preference: data.size,
-          }),
-        );
+          // Save measurements for result page
+          localStorage.setItem('userMeasurements', JSON.stringify({
+              ...data.measurements,
+              occasion: 'work', // Default context
+              size_preference: data.size
+          }));
 
-        setCameraError(null); // Clear status message
-        setScanComplete(true);
+          setCameraError(null); // Clear status message
+          setScanComplete(true);
       } else {
-        console.error("Divineo Error:", data.error);
-        setCameraError("ERROR DE CONEXIÓN CON EL PILOTO");
+          console.error("Divineo Error:", data.error);
+          setCameraError("ERROR DE CONEXIÓN CON EL PILOTO");
       }
     } catch (error) {
       console.error("Connection Error:", error);
@@ -245,7 +242,7 @@ export default function BiometricCapture() {
               if (progressRef.current >= 100) {
                 // Trigger Divineo Domains analysis
                 if (!scanCompleteRef.current) {
-                  analyzePose(result.landmarks[0]);
+                   analyzePose(result.landmarks[0]);
                 }
 
                 // Completion state (handled in analyzePose, but setting ref here to stop loop)

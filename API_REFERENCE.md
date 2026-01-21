@@ -1,12 +1,10 @@
 # 📚 API REFERENCE
 
 ## Base URL
-
 - **Development**: `http://localhost:8000`
 - **Production**: `https://your-domain.com`
 
 ## Authentication
-
 Currently no authentication required for pilot phase.
 
 ---
@@ -20,7 +18,6 @@ Currently no authentication required for pilot phase.
 Check if the API is running and get service information.
 
 **Response:**
-
 ```json
 {
   "ok": true,
@@ -34,7 +31,6 @@ Check if the API is running and get service information.
 ```
 
 **Status Codes:**
-
 - `200 OK` - Service is healthy
 
 ---
@@ -46,7 +42,6 @@ Check if the API is running and get service information.
 Find the best fitting garment based on user body measurements.
 
 **Request Body:**
-
 ```json
 {
   "height": 170,
@@ -65,7 +60,6 @@ Find the best fitting garment based on user body measurements.
 ```
 
 **Parameters:**
-
 - `height` (float, required): Height in cm
 - `weight` (float, required): Weight in kg
 - `chest` (float, required): Chest measurement in cm
@@ -80,7 +74,6 @@ Find the best fitting garment based on user body measurements.
 - `size_preference` (string, required): Preferred size (XS, S, M, L, XL)
 
 **Response:**
-
 ```json
 {
   "success": true,
@@ -118,7 +111,6 @@ Find the best fitting garment based on user body measurements.
 ```
 
 **Status Codes:**
-
 - `200 OK` - Matching successful
 - `400 Bad Request` - Invalid input
 - `500 Internal Server Error` - Server error
@@ -132,7 +124,6 @@ Find the best fitting garment based on user body measurements.
 Retrieve the complete product catalog.
 
 **Response:**
-
 ```json
 {
   "catalog_version": "1.0.0-pilot",
@@ -171,7 +162,6 @@ Retrieve the complete product catalog.
 ```
 
 **Status Codes:**
-
 - `200 OK` - Catalog retrieved successfully
 - `404 Not Found` - Catalog file not found
 - `500 Internal Server Error` - Invalid catalog format
@@ -185,11 +175,9 @@ Retrieve the complete product catalog.
 Retrieve a single product by its SKU.
 
 **Parameters:**
-
 - `product_id` (string, path): Product SKU (e.g., "laf_blazer_001")
 
 **Response:**
-
 ```json
 {
   "sku": "laf_blazer_001",
@@ -223,7 +211,6 @@ Retrieve a single product by its SKU.
 ```
 
 **Status Codes:**
-
 - `200 OK` - Product found
 - `404 Not Found` - Product not found
 
@@ -236,7 +223,6 @@ Retrieve a single product by its SKU.
 Virtual try-on endpoint for ML model integration (placeholder in pilot).
 
 **Request Body:**
-
 ```json
 {
   "user_image": "base64_encoded_image_or_url",
@@ -248,7 +234,6 @@ Virtual try-on endpoint for ML model integration (placeholder in pilot).
 ```
 
 **Response:**
-
 ```json
 {
   "success": true,
@@ -259,7 +244,6 @@ Virtual try-on endpoint for ML model integration (placeholder in pilot).
 ```
 
 **Status Codes:**
-
 - `200 OK` - Try-on processed
 - `400 Bad Request` - Try-on not enabled for product
 - `404 Not Found` - Product not found
@@ -274,7 +258,6 @@ Virtual try-on endpoint for ML model integration (placeholder in pilot).
 Get usage analytics and event counts.
 
 **Response:**
-
 ```json
 {
   "total_events": 42,
@@ -293,7 +276,6 @@ Get usage analytics and event counts.
 ```
 
 **Status Codes:**
-
 - `200 OK` - Metrics retrieved
 - `500 Internal Server Error` - Error reading metrics
 
@@ -310,7 +292,6 @@ All endpoints return errors in this format:
 ```
 
 Common error codes:
-
 - `400 Bad Request` - Invalid input parameters
 - `404 Not Found` - Resource not found
 - `500 Internal Server Error` - Server-side error
@@ -320,7 +301,6 @@ Common error codes:
 ## Data Models
 
 ### UserMeasurements
-
 ```typescript
 {
   height: number          // cm
@@ -339,36 +319,33 @@ Common error codes:
 ```
 
 ### Garment
-
 ```typescript
 {
-  id: string;
-  name: string;
-  brand: string;
-  category: string;
-  price: number;
-  image_url: string;
-  description: string;
-  size: string;
+  id: string
+  name: string
+  brand: string
+  category: string
+  price: number
+  image_url: string
+  description: string
+  size: string
 }
 ```
 
 ### MeasurementDetail
-
 ```typescript
 {
-  measurement: string; // e.g., "Chest"
-  user_value: number; // User's measurement in cm
-  garment_value: number; // Garment's measurement in cm
-  deviation: number; // Difference in cm
-  tolerance: number; // Acceptable tolerance in cm
-  fit_quality: string; // Perfect|Excellent|Good|Fair|Poor
-  fit_score: number; // 0-100
+  measurement: string       // e.g., "Chest"
+  user_value: number        // User's measurement in cm
+  garment_value: number     // Garment's measurement in cm
+  deviation: number         // Difference in cm
+  tolerance: number         // Acceptable tolerance in cm
+  fit_quality: string       // Perfect|Excellent|Good|Fair|Poor
+  fit_score: number         // 0-100
 }
 ```
 
 ### ResultDetails
-
 ```typescript
 {
   overall_fit_score: number
@@ -386,7 +363,6 @@ Common error codes:
 Currently no rate limits in pilot phase.
 
 Production recommendations:
-
 - 100 requests per minute per IP
 - 1000 requests per hour per IP
 
@@ -397,7 +373,6 @@ Production recommendations:
 Current configuration allows all origins (`*`).
 
 For production, update `CORS_ORIGINS` environment variable:
-
 ```bash
 CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 ```
@@ -407,7 +382,6 @@ CORS_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
 ## Interactive Documentation
 
 When running the API, visit:
-
 - **Swagger UI**: `http://localhost:8000/docs`
 - **ReDoc**: `http://localhost:8000/redoc`
 
@@ -418,13 +392,11 @@ When running the API, visit:
 ### cURL Examples
 
 **Check API Status:**
-
 ```bash
 curl http://localhost:8000/status
 ```
 
 **Find Matching Garment:**
-
 ```bash
 curl -X POST http://localhost:8000/api/matching \
   -H "Content-Type: application/json" \
@@ -443,7 +415,6 @@ curl -X POST http://localhost:8000/api/matching \
 ```
 
 **Get Catalog:**
-
 ```bash
 curl http://localhost:8000/api/catalog
 ```
@@ -452,10 +423,10 @@ curl http://localhost:8000/api/catalog
 
 ```javascript
 // Find matching garment
-const response = await fetch("http://localhost:8000/api/matching", {
-  method: "POST",
+const response = await fetch('http://localhost:8000/api/matching', {
+  method: 'POST',
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
   body: JSON.stringify({
     height: 170,
@@ -467,13 +438,13 @@ const response = await fetch("http://localhost:8000/api/matching", {
     arm_length: 62,
     leg_length: 84,
     torso_length: 66,
-    size_preference: "M",
+    size_preference: 'M',
   }),
 });
 
 const data = await response.json();
-console.log("Fit score:", data.fit_score);
-console.log("Best garment:", data.best_garment.name);
+console.log('Fit score:', data.fit_score);
+console.log('Best garment:', data.best_garment.name);
 ```
 
 ### Python Examples
@@ -505,7 +476,6 @@ print(f"Best garment: {data['best_garment']['name']}")
 ## Support
 
 For issues or questions:
-
 1. Check this API reference
 2. Review interactive docs at `/docs`
 3. Contact development team
