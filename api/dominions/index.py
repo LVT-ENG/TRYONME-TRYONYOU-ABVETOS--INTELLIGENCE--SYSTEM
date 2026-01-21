@@ -7,7 +7,7 @@ import math
 # Add the root directory to sys.path so we can import api modules
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 
-from api.matching.engine import MatchingEngine, UserMeasurements
+from api.matching.engine import BiometricEngine
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -58,51 +58,33 @@ class handler(BaseHTTPRequestHandler):
                 waist = round(waist_width_px * 100 * 1.1)
                 height = round(height_px * 100 * 1.7)
 
-            # Estimate other measurements based on these core values
-            # These are rough anthropological approximations
-            chest = shoulder_width * 2.1
-            hips = waist * 1.15
-            arm_length = height * 0.35
-            leg_length = height * 0.48
-            torso_length = height * 0.38
+            # Weight estimation
             weight = (height - 100) * 0.9 # Very rough estimate
 
-            user_measurements = UserMeasurements(
-                height=height,
-                weight=weight,
-                chest=chest,
-                waist=waist,
-                hips=hips,
-                shoulder_width=shoulder_width,
-                arm_length=arm_length,
-                leg_length=leg_length,
-                torso_length=torso_length,
-            )
+            # Initialize BiometricEngine
+            engine = BiometricEngine()
 
-            # Find best fit using MatchingEngine
-            result = MatchingEngine.find_best_fit(
-                user_measurements=user_measurements,
-                occasion="work", # Default
-                category=None,
-                size_preference="M" # Default
-            )
+            # Prepare data for calculate_fit
+            fit_data = {
+                "height": height,
+                "weight": weight,
+                "shoulderWidth": shoulder_width,
+                "eventType": "trabajo" # Defaulting to work/blazer preference
+            }
 
-            if result.get("success"):
-                garment = result.get("best_garment")
-                response = {
-                    "status": "success",
-                    "garment": garment.get("name"),
-                    "size": garment.get("size"),
-                    "match_score": result.get("fit_score") / 100.0,
-                    "measurements": user_measurements.to_dict(),
-                    "full_result": result
+            result = engine.calculate_fit(fit_data)
+
+            response = {
+                "status": "success",
+                "garment": result["label"],
+                "image_url": result["image_url"],
+                "message": result["message"],
+                "measurements": {
+                    "shoulder": f"{shoulder_width} cm",
+                    "waist": f"{waist} cm",
+                    "height": f"{height} cm"
                 }
-            else:
-                 response = {
-                    "status": "error",
-                    "error": result.get("error"),
-                    "measurements": user_measurements.to_dict()
-                }
+            }
 
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
