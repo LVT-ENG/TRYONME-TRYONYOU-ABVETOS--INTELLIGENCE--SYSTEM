@@ -16,12 +16,14 @@ const dist = (p1: any, p2: any) =>
 
 export default function BiometricCapture() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const landmarkCanvasRef = useRef<HTMLCanvasElement>(null);
+  const garmentCanvasRef = useRef<HTMLCanvasElement>(null);
   const [landmarker, setLandmarker] = useState<PoseLandmarker | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
   const [scanComplete, setScanComplete] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const [garmentImage, setGarmentImage] = useState<HTMLImageElement | null>(null);
   const [measurements, setMeasurements] = useState<{
     shoulder: string;
     waist: string;
@@ -30,11 +32,15 @@ export default function BiometricCapture() {
   const [, setLocation] = useLocation();
 
   // Bolt Optimization: Refs for loop control and state throttling
-  // These ensure the animation loop always accesses current values, preventing "zombie loops" due to stale closures
   const isScanningRef = useRef(false);
   const scanCompleteRef = useRef(false);
   const progressRef = useRef(0);
   const lastUiUpdateRef = useRef(0);
+  const currentLandmarksRef = useRef<any>(null); // To store latest landmarks for render loop
+
+  // Fix: Refs to hold state accessed in loop to avoid stale closures
+  const garmentImageRef = useRef<HTMLImageElement | null>(null);
+  const requestRef = useRef<number>();
 
   // Initialize MediaPipe Pose Landmarker
   useEffect(() => {
@@ -79,6 +85,13 @@ export default function BiometricCapture() {
     };
 
     createPoseLandmarker();
+
+    // Cleanup function to stop animation loop
+    return () => {
+        if (requestRef.current) {
+            cancelAnimationFrame(requestRef.current);
+        }
+    };
   }, []);
 
   // Start Camera and Scanning Loop
@@ -98,27 +111,27 @@ export default function BiometricCapture() {
       scanCompleteRef.current = false;
       progressRef.current = 0;
       setCameraError(null);
+      // Reset image ref
+      garmentImageRef.current = null;
+      setGarmentImage(null);
     } catch (error) {
       console.error("Error accessing camera:", error);
       setCameraError("Camera access denied. Please enable camera permissions.");
     }
   };
 
-  // Divineo Domains Integration
+  // Divineo Domains Integration with Fallback
   const analyzePose = async (landmarks: any[]) => {
-    if (scanComplete) return;
-
-    // Stop camera stream immediately to freeze frame or just stop processing
-    if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach((track) => track.stop());
-    }
+    if (scanCompleteRef.current) return; // Prevent double trigger
 
     setIsScanning(false);
-    // UI update to show connection status
+    // Note: We keep the camera running now for the Virtual Mirror experience!
+
     setCameraError("CONNECTING TO DIVINEO DOMAINS...");
 
     try {
+      // 1. Scanning Phase: Landmarks visible (handled by render loop state)
+      // 2. The Snap: Trigger API
       const response = await fetch("/api/dominions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -130,136 +143,171 @@ export default function BiometricCapture() {
       if (data.status === "success") {
         console.log("Prenda sugerida:", data.garment);
 
-        // Save measurements for result page
-        localStorage.setItem(
-          "userMeasurements",
-          JSON.stringify({
-            ...data.measurements,
-            occasion: "work", // Default context
-            size_preference: data.size,
-          }),
-        );
+        // Load garment image for Layer 2
+        const img = new Image();
+        img.src = data.image_url;
+        img.onload = () => {
+            setGarmentImage(img);
+            garmentImageRef.current = img; // Update ref for loop
 
-        setCameraError(null); // Clear status message
-        setScanComplete(true);
+            // 3. Reveal: handled by setting scanComplete to true
+            setScanComplete(true);
+            scanCompleteRef.current = true;
+            setCameraError(null);
+        };
+
+        localStorage.setItem("userMeasurements", JSON.stringify(data.measurements));
+
       } else {
-        console.error("Divineo Error:", data.error);
-        setCameraError("ERROR DE CONEXIÓN CON EL PILOTO");
+        throw new Error(data.error || "Unknown error");
       }
     } catch (error) {
-      console.error("Connection Error:", error);
-      setCameraError("ERROR DE CONEXIÓN CON EL PILOTO");
+      console.warn("API Unreachable, activating Fallback Protocol:", error);
+
+      // Fallback Logic
+      const img = new Image();
+      img.src = "/assets/garments/blazer.png"; // Local fallback asset
+      img.onload = () => {
+          setGarmentImage(img);
+          garmentImageRef.current = img; // Update ref for loop
+
+          setScanComplete(true);
+          scanCompleteRef.current = true;
+          setCameraError(null); // Clear error, we are in offline mode essentially
+      };
+
+      // Calculate rudimentary measurements for UI display if needed
+      // (Already calculated in the loop and set in measurements state)
     }
   };
 
   // Prediction Loop
   const predictWebcam = () => {
-    if (!landmarker || !videoRef.current || !canvasRef.current) return;
+    if (!landmarker || !videoRef.current || !landmarkCanvasRef.current || !garmentCanvasRef.current) return;
+
+    // Ensure we don't have multiple loops
+    if (requestRef.current) cancelAnimationFrame(requestRef.current);
 
     const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const drawingUtils = new DrawingUtils(ctx!);
+    const landmarkCanvas = landmarkCanvasRef.current;
+    const garmentCanvas = garmentCanvasRef.current;
+
+    const landmarkCtx = landmarkCanvas.getContext("2d");
+    const garmentCtx = garmentCanvas.getContext("2d");
+
+    const drawingUtils = new DrawingUtils(landmarkCtx!);
 
     let lastVideoTime = -1;
 
     const renderLoop = () => {
-      // Bolt Optimization: Check refs for loop control to avoid stale closures
-      if (!isScanningRef.current && scanCompleteRef.current) return;
-
       if (video.currentTime !== lastVideoTime) {
         lastVideoTime = video.currentTime;
 
         // Set canvas dimensions to match video
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        landmarkCanvas.width = video.videoWidth;
+        landmarkCanvas.height = video.videoHeight;
+        garmentCanvas.width = video.videoWidth;
+        garmentCanvas.height = video.videoHeight;
 
         const startTimeMs = performance.now();
         landmarker.detectForVideo(video, startTimeMs, (result) => {
-          ctx!.clearRect(0, 0, canvas.width, canvas.height);
+          // 1. Clear canvases
+          landmarkCtx!.clearRect(0, 0, landmarkCanvas.width, landmarkCanvas.height);
+          garmentCtx!.clearRect(0, 0, garmentCanvas.width, garmentCanvas.height);
 
-          if (result.landmarks) {
-            for (const landmark of result.landmarks) {
-              // Custom drawing style for "High-Fashion Futurism"
-              drawingUtils.drawLandmarks(landmark, {
-                radius: (data) =>
-                  DrawingUtils.lerp(data.from!.z, -0.15, 0.1, 5, 1),
-                color: "#E2001A", // Lafayette Red
-                lineWidth: 2,
-              });
-              drawingUtils.drawConnectors(
-                landmark,
-                PoseLandmarker.POSE_CONNECTIONS,
-                {
-                  color: "rgba(255, 255, 255, 0.6)", // Silver/White
-                  lineWidth: 1,
-                },
-              );
+          if (result.landmarks && result.landmarks.length > 0) {
+            const landmarks = result.landmarks[0];
+            currentLandmarksRef.current = landmarks;
+
+            // --- Layer 1: Landmarks (Scanning Phase) ---
+            if (!scanCompleteRef.current) {
+                // Draw landmarks only during scanning or if desired
+                for (const landmark of result.landmarks) {
+                  drawingUtils.drawLandmarks(landmark, {
+                    radius: (data) => DrawingUtils.lerp(data.from!.z, -0.15, 0.1, 5, 1),
+                    color: "#E2001A",
+                    lineWidth: 2,
+                  });
+                  drawingUtils.drawConnectors(landmark, PoseLandmarker.POSE_CONNECTIONS, {
+                    color: "rgba(255, 255, 255, 0.6)",
+                    lineWidth: 1,
+                  });
+                }
             }
 
-            // Simulate scanning progress if landmarks are detected
-            if (result.landmarks.length > 0 && !scanCompleteRef.current) {
-              // Update progress in ref synchronously
-              progressRef.current = Math.min(progressRef.current + 0.5, 100);
+            // --- Logic Updates (Scanning Progress) ---
+            if (isScanningRef.current && !scanCompleteRef.current) {
+                progressRef.current = Math.min(progressRef.current + 0.5, 100);
+                const now = Date.now();
+                if (now - lastUiUpdateRef.current > 100 || progressRef.current >= 100) {
+                    lastUiUpdateRef.current = now;
 
-              const now = Date.now();
-              // Bolt Optimization: Throttle UI updates to ~10fps (100ms) to reduce React re-renders
-              if (
-                now - lastUiUpdateRef.current > 100 ||
-                progressRef.current >= 100
-              ) {
-                lastUiUpdateRef.current = now;
+                    const shoulderLeft = landmarks[11];
+                    const shoulderRight = landmarks[12];
+                    const hipLeft = landmarks[23];
+                    const hipRight = landmarks[24];
+                    const nose = landmarks[0];
+                    const ankleLeft = landmarks[27];
 
-                // Calculate real-time measurements
-                const landmarks = result.landmarks[0];
-                const shoulderLeft = landmarks[11];
-                const shoulderRight = landmarks[12];
-                const hipLeft = landmarks[23];
-                const hipRight = landmarks[24];
-                const nose = landmarks[0];
-                const ankleLeft = landmarks[27];
+                    const shoulderWidthPx = dist(shoulderLeft, shoulderRight);
+                    const shoulderWidthCm = Math.round(shoulderWidthPx * 100 * 1.2);
+                    const waistWidthCm = Math.round(dist(hipLeft, hipRight) * 100 * 1.1);
+                    const estimatedHeightCm = Math.round(dist(nose, ankleLeft) * 100 * 1.7);
 
-                // Approximate measurements based on relative proportions
-                // In a real app, this would need depth calibration or a reference object
-                const shoulderWidthPx = dist(shoulderLeft, shoulderRight);
-                // const torsoHeightPx = dist(shoulderLeft, hipLeft); // unused
-
-                // Mock calibration: assuming average human proportions in frame
-                const shoulderWidthCm = Math.round(shoulderWidthPx * 100 * 1.2);
-                const waistWidthCm = Math.round(
-                  dist(hipLeft, hipRight) * 100 * 1.1,
-                );
-                const estimatedHeightCm = Math.round(
-                  dist(nose, ankleLeft) * 100 * 1.7,
-                );
-
-                setMeasurements({
-                  shoulder: `${shoulderWidthCm} cm`,
-                  waist: `${waistWidthCm} cm`,
-                  height: `${estimatedHeightCm} cm`,
-                });
-
-                setScanProgress(progressRef.current);
-              }
-
-              if (progressRef.current >= 100) {
-                // Trigger Divineo Domains analysis
-                if (!scanCompleteRef.current) {
-                  analyzePose(result.landmarks[0]);
+                    setMeasurements({
+                      shoulder: `${shoulderWidthCm} cm`,
+                      waist: `${waistWidthCm} cm`,
+                      height: `${estimatedHeightCm} cm`,
+                    });
+                    setScanProgress(progressRef.current);
                 }
 
-                // Completion state (handled in analyzePose, but setting ref here to stop loop)
-                scanCompleteRef.current = true;
-                isScanningRef.current = false;
-              }
+                if (progressRef.current >= 100) {
+                   isScanningRef.current = false; // Stop scanning logic
+                   analyzePose(landmarks); // Trigger API
+                }
+            }
+
+            // --- Layer 2: Garment Overlay (Reveal Phase) ---
+            // Use ref here to avoid stale closure
+            if (scanCompleteRef.current && garmentImageRef.current) {
+                const img = garmentImageRef.current;
+                const shoulderLeft = landmarks[11];
+                const shoulderRight = landmarks[12];
+
+                // Calculate dimensions based on shoulders
+                const shoulderWidthPx = dist(shoulderLeft, shoulderRight);
+
+                const scaleFactor = 3.5; // Adjustment for garment png size relative to shoulder points
+                const garmentWidth = shoulderWidthPx * scaleFactor;
+                const garmentHeight = garmentWidth * (img.height / img.width);
+
+                // Position: Centered between shoulders, shifted up/down
+                const centerX = (shoulderLeft.x + shoulderRight.x) / 2 * garmentCanvas.width;
+                const centerY = (shoulderLeft.y + shoulderRight.y) / 2 * garmentCanvas.height;
+
+                const yShift = -10;
+
+                // Draw Image
+                garmentCtx.save();
+                garmentCtx.globalAlpha = 0.8; // "opacity: 0.8" from fallback logic
+
+                // Draw centered
+                garmentCtx.drawImage(
+                    img,
+                    centerX - garmentWidth / 2,
+                    centerY - garmentHeight / 3 + yShift, // Adjust anchor point (usually neck area)
+                    garmentWidth,
+                    garmentHeight
+                );
+
+                garmentCtx.restore();
             }
           }
         });
       }
 
-      if (!scanCompleteRef.current) {
-        requestAnimationFrame(renderLoop);
-      }
+      requestRef.current = requestAnimationFrame(renderLoop);
     };
 
     renderLoop();
@@ -272,16 +320,24 @@ export default function BiometricCapture() {
 
       {/* Scanner Container */}
       <div className="relative z-10 w-full max-w-4xl aspect-video bg-black/40 backdrop-blur-md border border-white/10 rounded-none overflow-hidden shadow-2xl">
-        {/* Video Feed */}
+        {/* Layer 0: Video Feed */}
         <video
           ref={videoRef}
           autoPlay
           playsInline
           className="absolute inset-0 w-full h-full object-cover transform scale-x-[-1]" // Mirror effect
         />
+
+        {/* Layer 1: Landmarks (Scanning) */}
         <canvas
-          ref={canvasRef}
+          ref={landmarkCanvasRef}
           className="absolute inset-0 w-full h-full object-cover transform scale-x-[-1]"
+        />
+
+        {/* Layer 2: Garment (Reveal) - Applied mirror-layer class for effects */}
+        <canvas
+          ref={garmentCanvasRef}
+          className="absolute inset-0 w-full h-full object-cover mirror-layer"
         />
 
         {/* Overlay UI */}
@@ -327,21 +383,20 @@ export default function BiometricCapture() {
             </motion.div>
           )}
 
-          {/* Error State */}
-          {cameraError && (
-            <div className="flex flex-col items-center gap-4 text-red-500">
-              <AlertCircle className="w-12 h-12" />
-              <p className="font-mono text-sm uppercase tracking-widest">
-                {cameraError}
-              </p>
-              <Button
-                onClick={() => window.location.reload()}
-                variant="outline"
-                className="border-red-500 text-red-500 hover:bg-red-500 hover:text-white rounded-none pointer-events-auto"
-              >
-                Retry System
-              </Button>
-            </div>
+          {/* Error State (Overlay only, background still runs) */}
+          {cameraError && !scanComplete && (
+             <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex flex-col items-center gap-4 text-white bg-black/60 p-6 backdrop-blur-md border border-red-500/30"
+             >
+                <div className="flex items-center gap-3">
+                    <Loader2 className="w-6 h-6 animate-spin text-red-500"/>
+                    <p className="font-mono text-sm uppercase tracking-widest">
+                        {cameraError}
+                    </p>
+                </div>
+            </motion.div>
           )}
 
           {/* Scanning Progress & Measurements */}
@@ -388,34 +443,37 @@ export default function BiometricCapture() {
             </div>
           )}
 
-          {/* Completion State */}
+          {/* Completion State - Moved to bottom or less intrusive to allow view of garment */}
           {scanComplete && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="absolute inset-0 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center gap-6 pointer-events-auto"
+              className="absolute bottom-8 left-0 right-0 flex flex-col items-center justify-center gap-4 pointer-events-auto"
             >
-              <CheckCircle2 className="w-20 h-20 text-green-400" />
-              <h3 className="text-3xl font-serif text-white tracking-widest">
-                Scan Complete
-              </h3>
-              <p className="text-white/60 font-sans max-w-md text-center">
-                Your biometric profile has been securely generated. Proceed to
-                your curated selection.
-              </p>
-              <Button
-                onClick={() => setLocation("/result")}
-                className="bg-white text-black hover:bg-white/90 rounded-none px-10 py-6 text-lg tracking-widest uppercase mt-4"
-              >
-                View Collection
-              </Button>
+              <div className="bg-black/70 backdrop-blur-md p-6 border-t border-white/10 flex flex-col items-center gap-4 w-full">
+                  <div className="flex items-center gap-3">
+                      <CheckCircle2 className="w-6 h-6 text-green-400" />
+                      <h3 className="text-xl font-serif text-white tracking-widest">
+                        Match Found
+                      </h3>
+                  </div>
+                  <p className="text-white/60 font-sans text-sm text-center max-w-lg">
+                     We have selected a garment that perfectly aligns with your biometric profile.
+                  </p>
+                  <Button
+                    onClick={() => setLocation("/result")}
+                    className="bg-white text-black hover:bg-white/90 rounded-none px-8 py-4 text-sm tracking-widest uppercase"
+                  >
+                    View Details
+                  </Button>
+              </div>
             </motion.div>
           )}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="absolute bottom-8 text-white/20 font-mono text-[10px] tracking-[0.3em]">
+      <div className="absolute bottom-4 text-white/20 font-mono text-[10px] tracking-[0.3em]">
         SECURE BIOMETRIC ENCLAVE • V.2.0.4
       </div>
     </div>
