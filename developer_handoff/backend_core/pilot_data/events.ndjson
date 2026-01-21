@@ -1,0 +1,5 @@
+{"event": "service_start", "ts": "2026-01-16T16:07:51.207301Z", "pilot": "default", "client": "demo", "mode": "dev"}
+{"event": "service_start", "ts": "2026-01-20T08:40:01.491319Z", "pilot": "default", "client": "demo", "mode": "dev"}
+{"event": "matching_request", "ts": "2026-01-20T08:40:24.441908Z", "pilot": "default", "client": "demo", "size_preference": "M", "occasion": "work", "category": null}
+{"event": "matching_success", "ts": "2026-01-20T08:40:24.442497Z", "pilot": "default", "client": "demo", "fit_score": 100.0, "garment_id": "laf_blazer_001", "size": "M"}
+{"event": "catalog_view", "ts": "2026-01-20T08:40:31.552946Z", "pilot": "default", "client": "demo", "items_count": 5}
