@@ -1,0 +1,21 @@
+{
+  "catalog": [
+    "assets/catalog/red_dress_minimal.png",
+    "assets/catalog/burberry_trench.png",
+    "assets/catalog/black_gown_avant.png",
+    "assets/catalog/pink_tweed_suit.png"
+  ],
+  "branding": [
+    "assets/branding/pau_tuxedo_agent.png"
+  ],
+  "ui": [
+    "assets/ui/lafayette_hero_banner.png",
+    "assets/ui/biometric_scan_ui.png",
+    "assets/ui/future_imprint_hero.png"
+  ],
+  "docs": [
+    "docs/TryOnYou_Presentation_Commerciale.pdf",
+    "docs/consolidated_patent.pdf",
+    "docs/investor_dossier_2025.pdf"
+  ]
+}

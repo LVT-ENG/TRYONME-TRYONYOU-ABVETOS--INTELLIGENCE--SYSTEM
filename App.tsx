@@ -1,5 +1,4 @@
-import { Suspense, lazy, useState } from "react";
-import EpiphanyProtocol from "./src/components/EpiphanyProtocol";
+import { Suspense, lazy } from "react";
 import { Toaster } from "./sonner";
 import { TooltipProvider } from "./tooltip";
 import { Route, Switch } from "wouter";
@@ -52,8 +51,6 @@ function Router() {
 // - If you want to make theme switchable, pass `switchable` ThemeProvider and use `useTheme` hook
 
 function App() {
-  const [showEpiphany, setShowEpiphany] = useState(false);
-
   return (
     <ErrorBoundary>
       <ThemeProvider
@@ -62,15 +59,6 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
-          <button
-            onClick={() => setShowEpiphany(true)}
-            style={{ position: 'fixed', top: 10, right: 10, zIndex: 9999, background: '#C5A46D', color: 'black', padding: '10px' }}
-          >
-            🎄 Play Epiphany
-          </button>
-          {showEpiphany && (
-            <EpiphanyProtocol onClose={() => setShowEpiphany(false)} />
-          )}
           <Router />
         </TooltipProvider>
       </ThemeProvider>
