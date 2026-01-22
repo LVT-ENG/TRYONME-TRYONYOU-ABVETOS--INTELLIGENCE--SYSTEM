@@ -261,7 +261,7 @@ const Showroom = () => {
               </div>
               <div className="flex gap-2 overflow-x-auto pb-2">
                 {moods
-                  .filter(mood => mood.id !== 'all' || !showCommitteeMode) // Hide 'All' in committee mode
+                  .filter(mood => mood.id === 'all' ? !showCommitteeMode : true) // Hide 'All' in committee mode
                   .map((mood) => {
                     const isActive = showCommitteeMode 
                       ? styleCommittee.includes(mood.id)
@@ -271,7 +271,7 @@ const Showroom = () => {
                       <button
                         key={mood.id}
                         onClick={() => {
-                          if (showCommitteeMode && mood.id !== 'all') {
+                          if (showCommitteeMode) {
                             toggleCommitteeMood(mood.id)
                           } else {
                             setActiveMood(mood.id)
