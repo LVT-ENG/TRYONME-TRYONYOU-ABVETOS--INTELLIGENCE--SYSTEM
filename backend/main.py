@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, List
 import numpy as np
-from matching_engine import MatchingEngine
+from .matching_engine import MatchingEngine
 import json
 import os
 
@@ -29,7 +29,7 @@ app.add_middleware(
 )
 
 # Initialize matching engine
-matching_engine = MatchingEngine("garment_database.json")
+matching_engine = MatchingEngine(os.path.join(os.path.dirname(__file__), "garment_database.json"))
 
 
 # ============================================================================
