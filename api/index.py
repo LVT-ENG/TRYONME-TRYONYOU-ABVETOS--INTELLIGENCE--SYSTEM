@@ -8,7 +8,6 @@ from fastapi import FastAPI, HTTPException, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, List
-import numpy as np
 from matching_engine import MatchingEngine
 import json
 import os
@@ -310,8 +309,3 @@ async def process_conversation(
 async def health_check():
     """Health check endpoint."""
     return {"status": "healthy", "service": "TRYONYOU Pilot API"}
-
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=5000)

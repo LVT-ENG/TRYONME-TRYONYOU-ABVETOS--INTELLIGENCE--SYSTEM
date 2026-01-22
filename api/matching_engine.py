@@ -7,6 +7,7 @@ No random AI output - pure measurement-based scoring.
 import json
 from typing import Dict, List, Tuple
 from pathlib import Path
+import os
 
 
 class MatchingEngine:
@@ -17,7 +18,11 @@ class MatchingEngine:
 
     def __init__(self, garment_db_path: str = "garment_database.json"):
         """Initialize matching engine with garment database."""
-        with open(garment_db_path, 'r') as f:
+        # Use absolute path relative to this file for Vercel compatibility
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(base_dir, garment_db_path)
+
+        with open(db_path, 'r') as f:
             self.garment_db = json.load(f)
         self.garments = self.garment_db["garments"]
 
