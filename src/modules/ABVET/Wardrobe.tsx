@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, ShoppingBag } from "lucide-react";
 import { Link } from "wouter";
-import { Button } from "./button";
+import { Button } from "@/button";
 
 export default function Wardrobe() {
   const items = [

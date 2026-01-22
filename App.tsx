@@ -9,10 +9,10 @@ import { Spinner } from "./spinner";
 
 // Bolt Optimization: Lazy load heavy routes to improve initial load time
 const NotFound = lazy(() => import("./NotFound"));
-const BiometricCapture = lazy(() => import("./BiometricCapture"));
+const BiometricCapture = lazy(() => import("./src/modules/CAP/BiometricCapture"));
 const Checkout = lazy(() => import("./Checkout"));
-const Wardrobe = lazy(() => import("./Wardrobe"));
-const PauAgent = lazy(() => import("./PauAgent"));
+const Wardrobe = lazy(() => import("./src/modules/ABVET/Wardrobe"));
+const PauAgent = lazy(() => import("./src/modules/PAU/PauAgent"));
 // New routes from Google News update (MVP)
 const Pilot = lazy(() => import("./Pilot"));
 const Result = lazy(() => import("./Result"));
