@@ -8,3 +8,4 @@ __pycache__/
 *.pyo
 .vercel
 .env*.local
+generar_informe.py.
