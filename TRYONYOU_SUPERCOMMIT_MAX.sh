@@ -1,18 +1,47 @@
 #!/bin/bash
 # PROTOCOLO ULTIMATUM V7 - JULES PILOT
+# USAGE: ./TRYONYOU_SUPERCOMMIT_MAX.sh [VERCEL_TOKEN]
+
 VERCEL_TOKEN=$1
 
-if [ -z "$VERCEL_TOKEN" ]; then
-    echo "❌ Error: Vercel Token missing. Usage: ./TRYONYOU_SUPERCOMMIT_MAX.sh <TOKEN>"
+echo "🚀 Preparing Jules Pilot for Galeries Lafayette (SuperCommit MAX)..."
+
+# 1. Install Dependencies
+echo "📦 Installing dependencies..."
+npm install
+if [ $? -ne 0 ]; then
+    echo "❌ npm install failed."
     exit 1
 fi
 
-echo "🚀 Preparing Jules Pilot for Galeries Lafayette..."
+# 2. Build Project
+echo "🔨 Building project..."
+npm run build
+if [ $? -ne 0 ]; then
+    echo "❌ npm run build failed."
+    exit 1
+fi
 
-# 1. Sync Project Name
+# 3. Verify Build
+echo "🔍 Verifying build artifacts..."
+python3 verification/verify_pilot_build.py
+if [ $? -ne 0 ]; then
+    echo "❌ Build verification failed."
+    exit 1
+fi
+
+echo "✅ Build & Verification Complete."
+
+# 4. Deploy (if token provided)
+if [ -z "$VERCEL_TOKEN" ]; then
+    echo "⚠️  No Vercel Token provided. Skipping deployment."
+    echo "To deploy, run: ./TRYONYOU_SUPERCOMMIT_MAX.sh <TOKEN>"
+    exit 0
+fi
+
+echo "🚀 Deploying to Vercel..."
 PROJECT_NAME="jules-pilot-galeries-lafayette"
 
-# 2. Deploy
 vercel deploy --name $PROJECT_NAME \
                --token $VERCEL_TOKEN \
                --prod \
