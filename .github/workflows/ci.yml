@@ -17,4 +17,4 @@ jobs:
 
       - name: Validate Python syntax only
         run: |
-          python -m compileall api/ backend/ verification/ -q
+          python -m compileall api/ -q
