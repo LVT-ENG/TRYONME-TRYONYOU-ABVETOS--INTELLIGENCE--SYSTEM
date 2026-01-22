@@ -23,7 +23,7 @@ rm -rf .vercel
 # 3. Environment Variable Sync
 # Ensuring the biometric engine knows it is in production
 echo "⚙️  Configuring environment variables..."
-export VERCEL_PROJECT_ID=$PROJECT_NAME
+# export VERCEL_PROJECT_ID=$PROJECT_NAME
 export NODE_ENV="production"
 
 # 4. Build & Deployment (The "SuperCommit")
@@ -33,6 +33,7 @@ echo "📤 Deploying to Vercel (Production)..."
 vercel deploy --name $PROJECT_NAME \
                --token $VERCEL_TOKEN \
                --prod \
+               --force \
                --yes \
                --build-env NODE_ENV=production \
                --build-env BACKEND_URL=http://localhost:8000
