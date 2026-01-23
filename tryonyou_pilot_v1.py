@@ -22,7 +22,7 @@ class TryOnYouPiloto:
         print("\n[MÓDULO] Ejecutando Genesis Commander...")
         if MODULOS_DISPONIBLES:
             # Aquí llamamos a la función principal de tu archivo genesis_commander.py
-            # genesis.main() 
+            # genesis.main()
             print("> Ejecutando lógica real de Genesis...")
         else:
             print("> [AVISO] Archivo genesis_commander.py no encontrado. Usando modo simulación.")
@@ -65,6 +65,7 @@ class TryOnYouPiloto:
                 break
             else:
                 print("Opción no válida.")
+                input("\nPresiona Enter para continuar...")
 
 def ejecutar():
     """Función principal para ejecutar el piloto TryOnYou."""
