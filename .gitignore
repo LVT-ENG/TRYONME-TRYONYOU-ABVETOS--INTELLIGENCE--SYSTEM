@@ -10,3 +10,4 @@ __pycache__/
 dist/
 generar_informe.py.
 node_modules/
+_TEMP_ANALYSIS_ZONE/
