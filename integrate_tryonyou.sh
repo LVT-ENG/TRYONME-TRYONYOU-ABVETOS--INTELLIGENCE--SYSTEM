@@ -30,6 +30,15 @@ safe_copy_dir() {
   
   [[ -d "$src" ]] || die "Directorio fuente no existe: $src"
   
+  # Safety check for overwrite mode before any operations
+  if [[ "$mode" == "overwrite" ]]; then
+    if [[ -n "${WORKDIR:-}" ]]; then
+      if [[ ! "$dest" =~ ^${WORKDIR} ]] && [[ ! "$dest" =~ ^/tmp/ ]]; then
+        die "Por seguridad, overwrite solo funciona dentro de WORKDIR o /tmp"
+      fi
+    fi
+  fi
+  
   if [[ ! -d "$dest" ]]; then
     log "Creando directorio destino: $dest"
     mkdir -p "$dest"
@@ -38,7 +47,9 @@ safe_copy_dir() {
   case "$mode" in
     merge)
       log "Copiando (merge) $src -> $dest"
-      cp -r "$src"/* "$dest/" 2>/dev/null || true
+      if ! cp -r "$src"/* "$dest/" 2>/dev/null; then
+        warn "Algunos archivos no pudieron copiarse desde $src (puede que el directorio esté vacío)"
+      fi
       ;;
     overwrite)
       log "Copiando (overwrite) $src -> $dest"
@@ -91,7 +102,7 @@ main() {
   for zip_file in "$MAIN_ZIP" "$CLEAN_ZIP" "$ENGINE_ZIP"; do
     zip_full_path="${ASSETS_DIR}/${zip_file}"
     if [[ ! -f "$zip_full_path" ]]; then
-      warn "No se encuentra: $zip_full_path (se omitirá si existe)"
+      warn "No se encuentra: $zip_full_path (se saltará durante la integración)"
     else
       log "Encontrado: $zip_full_path"
     fi
