@@ -457,12 +457,15 @@ def launch_everything():
                 with zipfile.ZipFile(z, 'r') as ref: ref.extractall(TEMP_EXTRACT_DIR)
                 for r, d, f in os.walk(TEMP_EXTRACT_DIR):
                     for file in f: files_to_check.append({"path": os.path.join(r, file), "name": file})
-            except: pass
+            except (zipfile.BadZipFile, PermissionError, OSError) as e:
+                print(f"⚠️  Error procesando {z}: {e}")
+                pass
 
     # Mover Assets
     found_vid = False
     for item in files_to_check:
-        ext = item["name"].lower().split('.')[-1]
+        _, ext = os.path.splitext(item["name"].lower())
+        ext = ext.lstrip('.')  # Remove leading dot
         if ext in ['mp4', 'mov'] and not found_vid:
             shutil.copy2(item["path"], os.path.join(DIRS["assets_vid"], "hero_gold_dust.mp4"))
             found_vid = True
