@@ -7,5 +7,11 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "api/index.py" },
     { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/index",
+      "schedule": "*/5 * * * *"
+    }
   ]
 }
