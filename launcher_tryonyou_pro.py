@@ -300,6 +300,15 @@ HTML_CODE = """<!DOCTYPE html>
 # 3. LÓGICA DE CLASIFICACIÓN INTELIGENTE
 # ==============================================================================
 
+def safe_copy_file(src, dest, description=""):
+    """Safely copy a file with error handling."""
+    try:
+        shutil.copy2(src, dest)
+        return True
+    except (IOError, OSError) as e:
+        print(f"⚠️ Error copiando {description if description else os.path.basename(src)}: {str(e)}")
+        return False
+
 def analyze_and_organize():
     print("🧠 ACTIVANDO IA DE ORGANIZACIÓN (TRYONYOU PRO)...")
     
@@ -330,7 +339,10 @@ def analyze_and_organize():
                 with zipfile.ZipFile(z, 'r') as ref: ref.extractall(TEMP_EXTRACT_DIR)
                 for r, d, f in os.walk(TEMP_EXTRACT_DIR):
                     for file in f: all_files.append({"path": os.path.join(r, file), "name": file})
-            except: pass
+            except zipfile.BadZipFile:
+                print(f"⚠️ Archivo ZIP corrupto: {z}")
+            except Exception as e:
+                print(f"⚠️ Error al extraer {z}: {str(e)}")
 
     # 4. CLASIFICACIÓN POR TIPO Y CONTENIDO
     hero_video_set = False
@@ -340,6 +352,10 @@ def analyze_and_organize():
 
     for item in all_files:
         name_lower = item["name"].lower()
+        # Validate file has an extension
+        if '.' not in name_lower:
+            print(f"⚠️ Archivo sin extensión ignorado: {item['name']}")
+            continue
         ext = name_lower.split('.')[-1]
         src = item["path"]
         
@@ -347,48 +363,48 @@ def analyze_and_organize():
         if ext in ['mp4', 'mov', 'avi']:
             # El primero se convierte en el HERO de la web
             if not hero_video_set:
-                shutil.copy2(src, os.path.join(DIRS["web_vid"], "hero_gold_dust.mp4"))
-                hero_video_set = True
-                print(f"🎬 Web Hero Video: {item['name']}")
+                if safe_copy_file(src, os.path.join(DIRS["web_vid"], "hero_gold_dust.mp4"), item['name']):
+                    hero_video_set = True
+                    print(f"🎬 Web Hero Video: {item['name']}")
             
             # TODOS se guardan también en Marketing/Footage
-            shutil.copy2(src, os.path.join(DIRS["brand_footage"], item["name"]))
+            safe_copy_file(src, os.path.join(DIRS["brand_footage"], item["name"]), item['name'])
         
         # B. IMÁGENES (JPG, PNG)
         elif ext in ['jpg', 'png', 'jpeg', 'webp']:
             # Si parece una prenda -> Activo Web
             if "dress" in name_lower or "vestido" in name_lower or "garment" in name_lower or "match" in name_lower:
                 if not hero_img_set:
-                    shutil.copy2(src, os.path.join(DIRS["web_img"], "garment_match.jpg"))
-                    hero_img_set = True
-                    print(f"👗 Web Garment Image: {item['name']}")
+                    if safe_copy_file(src, os.path.join(DIRS["web_img"], "garment_match.jpg"), item['name']):
+                        hero_img_set = True
+                        print(f"👗 Web Garment Image: {item['name']}")
                 else:
                     # Si sobran vestidos, a marketing
-                    shutil.copy2(src, os.path.join(DIRS["brand_photos"], item["name"]))
+                    safe_copy_file(src, os.path.join(DIRS["brand_photos"], item["name"]), item['name'])
             else:
                 # Resto de fotos -> Inspiración de Marca
-                shutil.copy2(src, os.path.join(DIRS["brand_photos"], item["name"]))
+                safe_copy_file(src, os.path.join(DIRS["brand_photos"], item["name"]), item['name'])
                 print(f"📸 Foto a Marketing: {item['name']}")
 
         # C. DOCUMENTOS DE TEXTO / PDF
         elif ext in ['pdf', 'doc', 'docx', 'txt', 'md']:
             # Palabras clave de seguridad
             if "patent" in name_lower or "patente" in name_lower or "contrato" in name_lower or "agreement" in name_lower or "nda" in name_lower:
-                shutil.copy2(src, os.path.join(DIRS["vault"], item["name"]))
+                safe_copy_file(src, os.path.join(DIRS["vault"], item["name"]), item['name'])
                 print(f"🔐 DOC SENSIBLE a Caja Fuerte: {item['name']}")
             
             # Palabras clave de marketing
             elif "copy" in name_lower or "guion" in name_lower or "script" in name_lower or "brand" in name_lower:
-                shutil.copy2(src, os.path.join(DIRS["brand_copy"], item["name"]))
+                safe_copy_file(src, os.path.join(DIRS["brand_copy"], item["name"]), item['name'])
             
             # Resto -> Documentación Técnica
             else:
-                shutil.copy2(src, os.path.join(DIRS["engine_docs"], item["name"]))
+                safe_copy_file(src, os.path.join(DIRS["engine_docs"], item["name"]), item['name'])
                 print(f"📄 Doc a Engine: {item['name']}")
 
         # D. CÓDIGO FUENTE
         elif ext in ['py', 'js', 'html', 'css', 'json']:
-            shutil.copy2(src, os.path.join(DIRS["engine_code"], item["name"]))
+            safe_copy_file(src, os.path.join(DIRS["engine_code"], item["name"]), item['name'])
             print(f"💻 Código archivado: {item['name']}")
 
     # Limpieza
@@ -407,7 +423,7 @@ def analyze_and_organize():
     
     try:
         Handler = SimpleHTTPRequestHandler
-        with socketserver.TCPServer(("", PORT), Handler) as httpd:
+        with socketserver.TCPServer(("127.0.0.1", PORT), Handler) as httpd:
             print(f"🚀 Servidor activo en http://localhost:{PORT}")
             httpd.serve_forever()
     except KeyboardInterrupt:

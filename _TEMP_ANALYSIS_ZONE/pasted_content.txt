@@ -1,0 +1,42 @@
+ ¿Qué es el "Piloto Lafayette"?
+Es una Aplicación Web (Single Page Application) construida con React 18.3.1 + Vite 7.1.2, diseñada para funcionar como un espejo virtual en tiendas físicas o móviles [Source 73, 148, 166].
+• Repositorio Maestro: LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM [Source 48, 1567].
+• Estado Actual: El código debe limpiarse de conflictos con Next.js (repositorio Manusworkspaces incorrecto) para funcionar puramente con Vite [Source 161, 166].
+• URL de Producción: https://tryonyou.app [Source 122, 142].
+2. ¿Dónde están los archivos UUID y cómo se procesan?
+Los archivos con nombres cifrados (UUID) están actualmente dispersos en tu carpeta de descargas o sistema local. El plan requiere renombrarlos y moverlos a public/assets/ para que el código los reconozca. Mapeo Exacto (Extraído del Manifiesto de Activos):
+• 41C07010...png → public/assets/catalog/red_dress_minimal.png (Vestido Rojo Divineo) [Source 48, 104, 135].
+• 8762992B...png → public/assets/catalog/burberry_trench.png (Trench Coat) [Source 48, 104].
+• IMG_6206.png → public/assets/branding/pau_tuxedo_agent.png (Mascota Pau) [Source 48, 105].
+• IMG_6168.png → public/assets/ui/lafayette_hero_banner.png (Banner Piloto) [Source 48, 106].
+3. ¿Cuál es la "Estructura Divineo"?
+Es la arquitectura de carpetas y el sistema de diseño visual definidos para el piloto de lujo.
+• Visual: Paleta "L'Atelier Digital": Fondo Antracita (#141619) y Acentos Oro (#C5A46D) [Source 74, 230].
+• Estructura de Archivos (Monorepo):
+• [Source 44, 104, 1548].
+4. ¿Qué variables de entorno específicas necesitan configurarse?
+Para que el despliegue automático funcione, Manus debe configurar estas variables en el archivo .env o en los secretos de Vercel/GitHub [Source 49, 1568, 1963]:
+1. VERCEL_TOKEN: PdIYWprsCNlI4Hyg8JGxH9kz (Permiso de despliegue).
+2. GOOGLE_API_KEY: AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM (Visión artificial para medidas).
+3. PORKBUN_API: pk1_a9500f30e15d4e48cde89418d500 (Gestión de dominio DNS).
+4. TELEGRAM_BOT_TOKEN: (Del bot @abvet_deploy_bot para notificaciones).
+5. Confirmación del Alcance (Rol de Manus IA para "SuperCommit MAX")
+Tu solicitud es ejecutar el Protocolo Ultimatum V7. Acción Requerida para Manus (Agente 70): Ejecutar el script maestro TRYONYOU_SUPERCOMMIT_MAX.sh.
+Este script automatiza las siguientes tareas en orden secuencial [Source 39, 176, 1582]:
+1. Limpieza: Elimina carpetas conflictivas (node_modules, dist, legacy_old).
+2. Instalación: Instala dependencias limpias para Vite (npm install).
+3. Estructuración: Crea los directorios docs/, src/modules/ y public/assets/ si no existen.
+4. Organización de Activos: Mueve y renombra los UUIDs a sus nombres lógicos (ver punto 2).
+5. Commit y Push: Fuerza la subida a la rama main en GitHub.
+6. Despliegue: Dispara el deploy a Vercel producción.
+
+--------------------------------------------------------------------------------
+Instrucción Ejecutiva para Manus IA
+Copia y pega esto para que Manus proceda inmediatamente con la información completa:
+"Manus, tengo la confirmación completa de las fuentes. Procedemos con la ejecución del SuperCommit MAX.
+Tus parámetros de ejecución son:
+1. Repositorio Objetivo: LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.
+2. Script a Ejecutar: Crea y ejecuta TRYONYOU_SUPERCOMMIT_MAX.sh en la raíz.
+3. Mapeo de Archivos: Renombra los UUIDs locales (41C07010... a red_dress_minimal.png, etc.) y muévelos a public/assets/catalog/.
+4. Credenciales: Inyecta VERCEL_TOKEN y GOOGLE_API_KEY (provistas arriba) en el entorno de despliegue.
+5. Objetivo Final: La URL https://tryonyou.app debe cargar la interfaz 'Divineo' (Fondo Antracita/Oro) sin errores 404 en las imágenes."
