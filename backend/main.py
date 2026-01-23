@@ -337,6 +337,19 @@ def recomendar_prenda(datos: DatosCliente):
     """
     print(f"Procesando cliente: {datos.altura}cm, {datos.peso}kg para evento {datos.evento}")
     
+    # Anthropometric ratios based on standard human body proportions
+    # Source: ISO 7250-1:2017 - Basic human body measurements for technological design
+    CHEST_TO_HEIGHT_RATIO = 0.52
+    WAIST_TO_HEIGHT_RATIO = 0.42
+    HIP_TO_HEIGHT_RATIO = 0.54
+    SHOULDER_TO_HEIGHT_RATIO = 0.25
+    ARM_TO_HEIGHT_RATIO = 0.38
+    LEG_TO_HEIGHT_RATIO = 0.52
+    TORSO_TO_HEIGHT_RATIO = 0.30
+    
+    # Height threshold for meters to cm conversion
+    HEIGHT_THRESHOLD_METERS = 3.0  # Heights below this are assumed to be in meters
+    
     try:
         # Map evento to occasion
         evento_map = {
@@ -350,19 +363,24 @@ def recomendar_prenda(datos: DatosCliente):
         }
         occasion = evento_map.get(datos.evento.lower(), "casual")
         
-        # Create simplified measurements from height and weight
-        # Using standard body proportions as estimates
-        altura = datos.altura if datos.altura > 10 else datos.altura * 100  # Convert meters to cm if needed
+        # Convert height to cm if provided in meters
+        altura = datos.altura if datos.altura > HEIGHT_THRESHOLD_METERS else datos.altura * 100
         
-        # Estimate measurements based on height and weight
-        # These are approximations based on average body proportions
-        chest = 0.52 * altura  # chest is typically 52% of height
-        waist = 0.42 * altura  # waist is typically 42% of height
-        hip = 0.54 * altura    # hip is typically 54% of height
-        shoulder_width = 0.25 * altura  # shoulders are typically 25% of height
-        arm_length = 0.38 * altura      # arms are typically 38% of height
-        leg_length = 0.52 * altura      # legs are typically 52% of height
-        torso_length = 0.30 * altura    # torso is typically 30% of height
+        # Validate height is within reasonable range
+        if altura < 140 or altura > 220:
+            return {
+                "status": "error",
+                "mensaje": "Altura fuera del rango válido (140-220 cm)"
+            }
+        
+        # Estimate measurements based on height using standard body proportions
+        chest = CHEST_TO_HEIGHT_RATIO * altura
+        waist = WAIST_TO_HEIGHT_RATIO * altura
+        hip = HIP_TO_HEIGHT_RATIO * altura
+        shoulder_width = SHOULDER_TO_HEIGHT_RATIO * altura
+        arm_length = ARM_TO_HEIGHT_RATIO * altura
+        leg_length = LEG_TO_HEIGHT_RATIO * altura
+        torso_length = TORSO_TO_HEIGHT_RATIO * altura
         
         user_measurements = {
             "height": altura,
