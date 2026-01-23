@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ConnectionStatus from './ConnectionStatus';
 
 export default function PilotSystem() {
   const [view, setView] = useState('landing'); 
@@ -12,7 +13,8 @@ export default function PilotSystem() {
         {/* 1. LANDING: PAU & ESPEJO (EL CHASQUIDO) */}
         {view === 'landing' && (
           <motion.div key="v1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <nav style={{ padding: '20px', display: 'flex', justifyContent: 'flex-end' }}>
+            <nav style={{ padding: '20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <button onClick={() => setView('status')} style={{ background: 'none', border: `1px solid ${gold}`, color: gold, padding: '10px 20px', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.8rem' }}>SYSTEM STATUS</button>
               <button onClick={() => setView('scanner')} style={{ background: gold, color: '#000', border: 'none', padding: '10px 30px', fontWeight: 'bold', cursor: 'pointer' }}>ACCÉDER À LA DEMO</button>
             </nav>
             <div style={{ padding: '5vh 0' }}>
@@ -54,6 +56,16 @@ export default function PilotSystem() {
               </select>
               <button onClick={() => setView('result')} style={{ background: gold, color: '#000', padding: '20px', border: 'none', fontWeight: 'bold', cursor: 'pointer' }}>COMPARER AVEC LA BASE DE DONNÉES</button>
             </div>
+          </motion.div>
+        )}
+
+        {/* CONNECTION STATUS VIEW */}
+        {view === 'status' && (
+          <motion.div key="vStatus" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 100 }}>
+              <button onClick={() => setView('landing')} style={{ background: 'none', border: `1px solid ${gold}`, color: gold, padding: '8px 20px', cursor: 'pointer', fontSize: '0.8rem' }}>← RETOUR</button>
+            </div>
+            <ConnectionStatus />
           </motion.div>
         )}
 
