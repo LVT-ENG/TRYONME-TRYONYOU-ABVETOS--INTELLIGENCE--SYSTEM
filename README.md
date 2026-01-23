@@ -157,6 +157,17 @@ dist/
 - ✅ Check all images load correctly
 - ✅ Test on mobile devices
 
+## 🧠 Development Workflow
+
+We have adopted the **Conductor** context-driven development workflow to align with the latest Google Platform updates (Gemini 3 Pro, Jules).
+
+*   **Platform News**: See [`docs/GOOGLE_PLATFORM_NEWS.md`](docs/GOOGLE_PLATFORM_NEWS.md) for details on the latest integrations.
+*   **Context Files**:
+    *   [`product.md`](product.md): Project goals and features.
+    *   [`techstack.md`](techstack.md): Technology constraints.
+    *   [`tracks.md`](tracks.md): Work history and active tasks.
+    *   [`plan.md`](plan.md): Current execution plan.
+
 ## 📄 License
 
 Private - TRYONYOU © 2025
