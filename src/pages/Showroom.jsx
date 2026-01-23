@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane } from 'lucide-react'
+import { Sparkles, Filter, Heart, ShoppingBag, Eye, ArrowRight, Star, Zap, Sun, Moon, Briefcase, PartyPopper, Plane, Users } from 'lucide-react'
 import { getImageWithFallback } from '../utils/assets'
 
 const Showroom = () => {
   const [activeOccasion, setActiveOccasion] = useState('all')
   const [activeMood, setActiveMood] = useState('all')
   const [likedLooks, setLikedLooks] = useState([])
+  const [styleCommittee, setStyleCommittee] = useState([])
+  const [showCommitteeMode, setShowCommitteeMode] = useState(false)
 
   const occasions = [
     { id: 'all', name: 'All', icon: Sparkles },
@@ -125,8 +127,23 @@ const Showroom = () => {
     },
   ]
 
+  const toggleCommitteeMood = (moodId) => {
+    setStyleCommittee(prev => 
+      prev.includes(moodId) 
+        ? prev.filter(m => m !== moodId) 
+        : [...prev, moodId]
+    )
+  }
+
   const filteredLooks = looks.filter(look => {
     const matchesOccasion = activeOccasion === 'all' || look.occasion === activeOccasion
+    
+    // If committee mode is active and committee has selections, match any mood in committee
+    if (showCommitteeMode && styleCommittee.length > 0) {
+      return matchesOccasion && styleCommittee.includes(look.mood)
+    }
+    
+    // Otherwise use single mood filter
     const matchesMood = activeMood === 'all' || look.mood === activeMood
     return matchesOccasion && matchesMood
   })
@@ -172,6 +189,37 @@ const Showroom = () => {
       <section className="py-8 bg-tryonyou-smoke/30 sticky top-20 z-30">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex flex-col gap-4">
+            {/* Style Committee Toggle */}
+            <div className="flex items-center justify-between">
+              <div className="text-sm text-white/60 flex items-center gap-2">
+                <Filter size={14} />
+                Filters
+              </div>
+              <button
+                onClick={() => {
+                  setShowCommitteeMode(!showCommitteeMode)
+                  if (!showCommitteeMode) {
+                    setActiveMood('all') // Reset single mood when entering committee mode
+                  } else {
+                    setStyleCommittee([]) // Clear committee when exiting
+                  }
+                }}
+                className={`px-4 py-2 rounded-xl font-medium transition-all flex items-center gap-2 ${
+                  showCommitteeMode
+                    ? 'bg-gradient-to-r from-amber-500/30 to-orange-500/30 text-amber-300 border border-amber-500/50'
+                    : 'glass text-white/70 hover:text-white'
+                }`}
+              >
+                <Users size={16} />
+                Style Committee
+                {styleCommittee.length > 0 && (
+                  <span className="ml-1 px-2 py-0.5 rounded-full bg-amber-500/40 text-xs font-bold">
+                    {styleCommittee.length}
+                  </span>
+                )}
+              </button>
+            </div>
+
             {/* Occasion Filter */}
             <div>
               <div className="text-sm text-white/60 mb-2 flex items-center gap-2">
@@ -198,22 +246,53 @@ const Showroom = () => {
 
             {/* Mood Filter */}
             <div>
-              <div className="text-sm text-white/60 mb-2">Mood</div>
-              <div className="flex gap-2 overflow-x-auto pb-2">
-                {moods.map((mood) => (
+              <div className="text-sm text-white/60 mb-2 flex items-center justify-between">
+                <span>
+                  {showCommitteeMode ? 'Select Committee Moods (Choose Multiple)' : 'Mood'}
+                </span>
+                {showCommitteeMode && styleCommittee.length > 0 && (
                   <button
-                    key={mood.id}
-                    onClick={() => setActiveMood(mood.id)}
-                    className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-2 ${
-                      activeMood === mood.id
-                        ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
-                        : 'glass text-white/70 hover:text-white'
-                    }`}
+                    onClick={() => setStyleCommittee([])}
+                    className="text-xs text-amber-400 hover:text-amber-300 transition-colors"
                   >
-                    <span>{mood.emoji}</span>
-                    {mood.name}
+                    Clear Committee
                   </button>
-                ))}
+                )}
+              </div>
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {moods
+                  .filter(mood => mood.id === 'all' ? !showCommitteeMode : true) // Hide 'All' in committee mode
+                  .map((mood) => {
+                    const isActive = showCommitteeMode 
+                      ? styleCommittee.includes(mood.id)
+                      : activeMood === mood.id
+                    
+                    return (
+                      <button
+                        key={mood.id}
+                        onClick={() => {
+                          if (showCommitteeMode) {
+                            toggleCommitteeMood(mood.id)
+                          } else {
+                            setActiveMood(mood.id)
+                          }
+                        }}
+                        className={`px-4 py-2 rounded-xl font-medium whitespace-nowrap transition-all flex items-center gap-2 relative ${
+                          isActive
+                            ? 'bg-amber-500/30 text-amber-300 border border-amber-500/50'
+                            : 'glass text-white/70 hover:text-white'
+                        }`}
+                      >
+                        <span>{mood.emoji}</span>
+                        {mood.name}
+                        {showCommitteeMode && isActive && (
+                          <span className="absolute -top-1 -right-1 w-5 h-5 bg-amber-500 text-white text-xs rounded-full flex items-center justify-center font-bold">
+                            ✓
+                          </span>
+                        )}
+                      </button>
+                    )
+                  })}
               </div>
             </div>
           </div>
@@ -232,7 +311,12 @@ const Showroom = () => {
               <h2 className="text-2xl font-bold">
                 {filteredLooks.length} looks found
               </h2>
-              <p className="text-white/60">Personalized for you</p>
+              <p className="text-white/60">
+                {showCommitteeMode && styleCommittee.length > 0 
+                  ? `Filtered by your Style Committee (${styleCommittee.length} mood${styleCommittee.length > 1 ? 's' : ''})`
+                  : 'Personalized for you'
+                }
+              </p>
             </div>
             
             {likedLooks.length > 0 && (
@@ -364,10 +448,25 @@ const Showroom = () => {
               className="text-center py-16"
             >
               <Sparkles size={64} className="text-white/20 mx-auto mb-4" />
-              <h3 className="text-xl font-bold mb-2">No looks found for this combination</h3>
-              <p className="text-white/60 mb-6">Try changing the filters</p>
+              <h3 className="text-xl font-bold mb-2">
+                {showCommitteeMode && styleCommittee.length === 0
+                  ? 'Select moods for your Style Committee'
+                  : 'No looks found for this combination'
+                }
+              </h3>
+              <p className="text-white/60 mb-6">
+                {showCommitteeMode && styleCommittee.length === 0
+                  ? 'Choose multiple moods to build your personalized style committee'
+                  : 'Try changing the filters'
+                }
+              </p>
               <button 
-                onClick={() => { setActiveOccasion('all'); setActiveMood('all'); }}
+                onClick={() => { 
+                  setActiveOccasion('all')
+                  setActiveMood('all')
+                  setStyleCommittee([])
+                  setShowCommitteeMode(false)
+                }}
                 className="btn-metallic"
               >
                 View All Looks
