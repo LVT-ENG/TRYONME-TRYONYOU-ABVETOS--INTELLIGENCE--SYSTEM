@@ -9,7 +9,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, List
 import numpy as np
-from .matching_engine import MatchingEngine
+try:
+    from .matching_engine import MatchingEngine
+except ImportError:
+    from matching_engine import MatchingEngine
 import json
 import os
 
