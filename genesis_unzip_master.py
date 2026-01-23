@@ -1,7 +1,6 @@
 import os
 import shutil
 import zipfile
-import time
 
 # ==============================================================================
 # 1. CONFIGURACIÓN
@@ -249,11 +248,13 @@ def genesis_unzip_master():
         for zip_file in zips:
             print(f"📦 Descomprimiendo: {zip_file}...")
             try:
+                # Crear subdirectorio único para cada ZIP para evitar conflictos
+                zip_extract_subdir = os.path.join(TEMP_EXTRACT_DIR, os.path.splitext(zip_file)[0])
                 with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-                    zip_ref.extractall(TEMP_EXTRACT_DIR)
+                    zip_ref.extractall(zip_extract_subdir)
                 
-                # Escanear recursivamente la carpeta temporal
-                for root, dirs, files in os.walk(TEMP_EXTRACT_DIR):
+                # Escanear recursivamente la carpeta temporal del ZIP específico
+                for root, dirs, files in os.walk(zip_extract_subdir):
                     for file in files:
                         full_path = os.path.join(root, file)
                         files_to_check.append({"path": full_path, "name": file})
@@ -263,13 +264,16 @@ def genesis_unzip_master():
     # 4. PROCESAR ASSETS (BUSCAR EL VIDEO Y LA IMAGEN)
     hero_video_found = False
     garment_img_found = False
+    first_image_path = None
 
     print(f"🔍 Analizando {len(files_to_check)} archivos en total...")
 
     for item in files_to_check:
         full_path = item["path"]
         filename = item["name"]
-        ext = filename.lower().split('.')[-1]
+        # Usar os.path.splitext para manejar archivos sin extensión correctamente
+        _, ext = os.path.splitext(filename.lower())
+        ext = ext.lstrip('.')  # Remover el punto inicial
 
         # VIDEO HERO
         if ext in ['mp4', 'mov', 'avi'] and not hero_video_found:
@@ -280,12 +284,23 @@ def genesis_unzip_master():
         
         # IMAGEN PRENDA
         elif ext in ['jpg', 'png', 'jpeg', 'webp'] and not garment_img_found:
+            # Guardar la primera imagen como fallback
+            if first_image_path is None:
+                first_image_path = full_path
+            
             # Preferencia por archivos con nombres relevantes
             if "dress" in filename.lower() or "vestido" in filename.lower() or "garment" in filename.lower():
                 dest = os.path.join(DIRS["assets_img"], "garment_match.jpg")
                 shutil.copy2(full_path, dest)
                 print(f"👗 IMAGEN PRENDA: {filename} -> Configurada.")
                 garment_img_found = True
+    
+    # Usar primera imagen encontrada si no hay coincidencia con keywords
+    if not garment_img_found and first_image_path:
+        dest = os.path.join(DIRS["assets_img"], "garment_match.jpg")
+        shutil.copy2(first_image_path, dest)
+        print(f"👗 IMAGEN PRENDA: {os.path.basename(first_image_path)} -> Configurada (primera imagen disponible).")
+        garment_img_found = True
     
     # 5. LIMPIEZA
     if os.path.exists(TEMP_EXTRACT_DIR):
@@ -296,7 +311,9 @@ def genesis_unzip_master():
     print(f"👉 Tu piloto está listo en el Escritorio: TRYONYOU_PILOT_V7_MASTER")
     
     if not hero_video_found:
-        print("⚠️ AVISO: No encontré ningún video .mp4 (ni suelto ni en los zips).")
+        print("⚠️ AVISO: No encontré ningún video (.mp4, .mov, .avi) ni suelto ni en los zips.")
+    if not garment_img_found:
+        print("⚠️ AVISO: No encontré ninguna imagen (.jpg, .png, .jpeg, .webp) ni suelto ni en los zips.")
     
 if __name__ == "__main__":
     genesis_unzip_master()
