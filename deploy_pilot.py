@@ -410,7 +410,13 @@ html_content = """<!DOCTYPE html>
                 videoElement.srcObject = stream;
                 
                 logToConsole('> CÁMARA ACTIVA: Stream iniciado correctamente');
-                logToConsole('> Resolución: ' + stream.getVideoTracks()[0].getSettings().width + 'x' + stream.getVideoTracks()[0].getSettings().height + 'px');
+                
+                // Get video settings safely
+                const settings = stream.getVideoTracks()[0].getSettings();
+                if (settings.width && settings.height) {
+                    logToConsole('> Resolución: ' + settings.width + 'x' + settings.height + 'px');
+                }
+                
                 logToConsole('> Listo para captura biométrica');
             } catch (err) {
                 console.error('Error accessing camera:', err);
