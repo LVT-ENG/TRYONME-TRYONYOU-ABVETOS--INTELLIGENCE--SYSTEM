@@ -168,6 +168,48 @@ We have adopted the **Conductor** context-driven development workflow to align w
     *   [`tracks.md`](tracks.md): Work history and active tasks.
     *   [`plan.md`](plan.md): Current execution plan.
 
+## 🎪 Lafayette Pilot Demo
+
+A standalone pilot demonstration showcasing TRYONYOU's AI-powered virtual try-on technology for the Lafayette partnership.
+
+### Quick Deploy
+
+```bash
+# Run the deploy script
+python3 deploy_pilot.py
+```
+
+This will:
+1. Create a `TRYONYOU_Lafayette_Pilot` directory
+2. Generate a complete HTML landing page with:
+   - Luxury brand presentation
+   - PAU Avatar technology showcase
+   - Interactive body scanner demo
+   - Neural console logging
+   - 3D model viewer integration
+3. Start a local HTTP server on port 8080
+4. Automatically open your browser to the demo
+
+### Features
+
+- 🎨 **Premium UI/UX**: Glass morphism design with gold accents
+- 📸 **Camera Integration**: Real-time body scanning simulation
+- 🤖 **AI Processing**: Biometric analysis visualization
+- 📐 **Smart Fitting**: Deterministic size matching algorithm
+- 🎭 **3D Visualization**: model-viewer integration for avatar display
+- 📊 **Analytics Ready**: Google Looker Studio compatible
+
+### Manual Access
+
+After running the script, you can also access the demo manually:
+
+```bash
+cd TRYONYOU_Lafayette_Pilot
+python3 -m http.server 8080
+```
+
+Then open `http://localhost:8080` in your browser.
+
 ## 📄 License
 
 Private - TRYONYOU © 2025
