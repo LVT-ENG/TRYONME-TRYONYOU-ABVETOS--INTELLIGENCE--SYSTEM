@@ -309,14 +309,19 @@ def execute_construction():
     # Descomprimir ZIPs
     zips = [f for f in os.listdir(os.getcwd()) if f.endswith(".zip")]
     if zips:
-        if not os.path.exists(TEMP_EXTRACT_DIR): os.makedirs(TEMP_EXTRACT_DIR)
         print("📦 Descomprimiendo archivos...")
         for z in zips:
             try:
-                with zipfile.ZipFile(z, 'r') as ref: ref.extractall(TEMP_EXTRACT_DIR)
-                for r, d, f in os.walk(TEMP_EXTRACT_DIR):
+                # Create unique temp directory for each ZIP to avoid conflicts
+                zip_temp_dir = os.path.join(TEMP_EXTRACT_DIR, os.path.splitext(z)[0])
+                if not os.path.exists(zip_temp_dir): os.makedirs(zip_temp_dir)
+                
+                with zipfile.ZipFile(z, 'r') as ref: ref.extractall(zip_temp_dir)
+                for r, d, f in os.walk(zip_temp_dir):
                     for file in f: all_files.append({"path": os.path.join(r, file), "name": file})
-            except: pass
+            except (zipfile.BadZipFile, PermissionError, OSError) as e:
+                print(f"⚠️ Error procesando {z}: {e}")
+                continue
 
     # Clasificar Inteligente
     hero_vid_set = False
@@ -325,7 +330,9 @@ def execute_construction():
     print(f"🧠 Clasificando {len(all_files)} activos...")
     for item in all_files:
         name_lower = item["name"].lower()
-        ext = name_lower.split('.')[-1]
+        # Use os.path.splitext for safer extension extraction
+        _, ext = os.path.splitext(name_lower)
+        ext = ext.lstrip('.') if ext else ''
         src = item["path"]
 
         # VIDEO
@@ -366,8 +373,8 @@ def execute_supercommit():
     
     # Verificar si Git está instalado
     try:
-        subprocess.run(["git", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    except FileNotFoundError:
+        subprocess.run(["git", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+    except (FileNotFoundError, subprocess.CalledProcessError):
         print("⚠️ GIT NO DETECTADO. Saltando fase de commit.")
         return
 
@@ -384,7 +391,7 @@ def execute_supercommit():
         
         # Commit
         commit_msg = f"🚀 RELEASE: TRYONYOU Pilot v7 Pro - Full Deployment {time.strftime('%Y-%m-%d %H:%M')}"
-        subprocess.run(["git", "commit", "-m", commit_msg], cwd=PROJECT_ROOT)
+        subprocess.run(["git", "commit", "-m", commit_msg], cwd=PROJECT_ROOT, check=True)
         print(f"✅ SUPER-COMMIT REALIZADO: '{commit_msg}'")
         
     except Exception as e:
