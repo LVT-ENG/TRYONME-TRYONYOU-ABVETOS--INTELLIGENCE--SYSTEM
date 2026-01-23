@@ -8,47 +8,79 @@ const VirtualTryOn = ({ selectedGarment, onMeasurementsDetected }) => {
   const canvasRef = useRef(null);
   const [landmarks, setLandmarks] = useState(null);
   const [isPoseReady, setIsPoseReady] = useState(false);
+  const [cameraError, setCameraError] = useState(null);
+  const [simulatedMeasurements, setSimulatedMeasurements] = useState(null);
 
+  // Simulate measurements when camera is not available
   useEffect(() => {
-    // Initialize MediaPipe Pose
-    const pose = new Pose({
-      locateFile: (file) => {
-        return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
-      },
-    });
-
-    pose.setOptions({
-      modelComplexity: 1,
-      smoothLandmarks: true,
-      enableSegmentation: false,
-      smoothSegmentation: false,
-      minDetectionConfidence: 0.5,
-      minTrackingConfidence: 0.5,
-    });
-
-    pose.onResults(onResults);
-
-    // Setup camera if webcam is ready
-    if (webcamRef.current && webcamRef.current.video) {
-      const camera = new Camera(webcamRef.current.video, {
-        onFrame: async () => {
-          if (webcamRef.current && webcamRef.current.video) {
-            await pose.send({ image: webcamRef.current.video });
-          }
-        },
-        width: 640,
-        height: 480,
-      });
-      camera.start();
+    if (cameraError && !simulatedMeasurements) {
+      // Simulate biometric data for demo purposes
+      const mockMeasurements = {
+        shoulderWidth: 150,
+        torsoLength: 280,
+        shoulderY: 100,
+        hipY: 380,
+        centerX: 320,
+      };
+      setSimulatedMeasurements(mockMeasurements);
+      if (onMeasurementsDetected) {
+        onMeasurementsDetected(mockMeasurements);
+      }
       setIsPoseReady(true);
     }
+  }, [cameraError, simulatedMeasurements, onMeasurementsDetected]);
 
-    return () => {
-      if (pose) {
-        pose.close();
+  const handleUserMediaError = (error) => {
+    console.error('Camera error:', error);
+    setCameraError(error.message || 'Camera not available');
+  };
+
+  useEffect(() => {
+    // Only initialize MediaPipe if webcam is available
+    if (!cameraError && webcamRef.current && webcamRef.current.video) {
+      try {
+        // Initialize MediaPipe Pose
+        const pose = new Pose({
+          locateFile: (file) => {
+            return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`;
+          },
+        });
+
+        pose.setOptions({
+          modelComplexity: 1,
+          smoothLandmarks: true,
+          enableSegmentation: false,
+          smoothSegmentation: false,
+          minDetectionConfidence: 0.5,
+          minTrackingConfidence: 0.5,
+        });
+
+        pose.onResults(onResults);
+
+        // Setup camera
+        const camera = new Camera(webcamRef.current.video, {
+          onFrame: async () => {
+            if (webcamRef.current && webcamRef.current.video) {
+              await pose.send({ image: webcamRef.current.video });
+            }
+          },
+          width: 640,
+          height: 480,
+        });
+        camera.start();
+        setIsPoseReady(true);
+
+        return () => {
+          if (pose) {
+            pose.close();
+          }
+        };
+      } catch (error) {
+        console.error('Error initializing pose detection:', error);
+        setCameraError('Pose detection unavailable');
       }
-    };
-  }, []);
+    }
+  }, [cameraError]);
 
   const onResults = (results) => {
     if (!results.poseLandmarks) return;
@@ -166,46 +198,75 @@ const VirtualTryOn = ({ selectedGarment, onMeasurementsDetected }) => {
   return (
     <div className="relative w-full max-w-2xl mx-auto">
       <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-        {/* Webcam */}
-        <Webcam
-          ref={webcamRef}
-          audio={false}
-          screenshotFormat="image/jpeg"
-          videoConstraints={{
-            width: 640,
-            height: 480,
-            facingMode: 'user',
-          }}
-          className="w-full h-auto"
-          mirrored={true}
-        />
-        
-        {/* Overlay Canvas for garment and landmarks */}
-        <canvas
-          ref={canvasRef}
-          width={640}
-          height={480}
-          className="absolute top-0 left-0 w-full h-full"
-        />
+        {cameraError ? (
+          // Simulated view when camera is not available
+          <div className="w-full bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl">
+            <div className="aspect-[4/3] flex flex-col items-center justify-center p-8">
+              <div className="text-center space-y-6">
+                <div className="text-6xl">📹</div>
+                <h3 className="text-2xl font-bold text-white">Demo Mode</h3>
+                <p className="text-white/60 max-w-md">
+                  Camera not available. Using simulated biometric data for demonstration.
+                </p>
+                <div className="bg-green-500/20 border border-green-500 rounded-lg p-4 mt-4">
+                  <p className="text-green-400 text-sm font-semibold">
+                    ✓ Biometric data captured (simulated)
+                  </p>
+                  <div className="text-white/40 text-xs mt-2">
+                    Shoulder width: {simulatedMeasurements?.shoulderWidth}px • 
+                    Torso length: {simulatedMeasurements?.torsoLength}px
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <>
+            {/* Webcam */}
+            <Webcam
+              ref={webcamRef}
+              audio={false}
+              screenshotFormat="image/jpeg"
+              videoConstraints={{
+                width: 640,
+                height: 480,
+                facingMode: 'user',
+              }}
+              className="w-full h-auto"
+              mirrored={true}
+              onUserMediaError={handleUserMediaError}
+            />
+            
+            {/* Overlay Canvas for garment and landmarks */}
+            <canvas
+              ref={canvasRef}
+              width={640}
+              height={480}
+              className="absolute top-0 left-0 w-full h-full"
+            />
+          </>
+        )}
         
         {/* Status indicator */}
         <div className="absolute top-4 right-4 flex items-center gap-2 bg-black/50 px-3 py-2 rounded-full">
           <div className={`w-2 h-2 rounded-full ${isPoseReady ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
           <span className="text-white text-sm font-medium">
-            {isPoseReady ? 'Tracking Active' : 'Initializing...'}
+            {isPoseReady ? (cameraError ? 'Demo Mode' : 'Tracking Active') : 'Initializing...'}
           </span>
         </div>
 
         {/* Instructions */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 px-6 py-3 rounded-full">
-          <p className="text-white text-sm text-center">
-            Stand in frame for real-time fitting
-          </p>
-        </div>
+        {!cameraError && (
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 px-6 py-3 rounded-full">
+            <p className="text-white text-sm text-center">
+              Stand in frame for real-time fitting
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Measurement Info */}
-      {landmarks && (
+      {(landmarks || simulatedMeasurements) && (
         <div className="mt-4 p-4 bg-white/5 rounded-lg backdrop-blur-sm">
           <p className="text-white/60 text-sm">
             ✓ Body landmarks detected • Real-time tracking active
