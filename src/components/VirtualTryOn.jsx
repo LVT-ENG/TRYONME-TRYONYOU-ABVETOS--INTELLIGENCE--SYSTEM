@@ -20,7 +20,7 @@ const VirtualTryOn = ({ selectedGarment, onMeasurementsDetected }) => {
         torsoLength: 280,
         shoulderY: 100,
         hipY: 380,
-        centerX: 320,
+        centerX: 320,  // Half of standard 640px video width
       };
       setSimulatedMeasurements(mockMeasurements);
       if (onMeasurementsDetected) {
@@ -142,8 +142,14 @@ const VirtualTryOn = ({ selectedGarment, onMeasurementsDetected }) => {
           garmentX, 
           garmentY + garmentHeight
         );
-        gradient.addColorStop(0, selectedGarment.color || '#4A90E2');
-        gradient.addColorStop(1, selectedGarment.color ? selectedGarment.color + 'AA' : '#2E5C8A');
+        // Use RGBA format for proper transparency handling
+        const baseColor = selectedGarment.color || '#4A90E2';
+        const isHexColor = baseColor.startsWith('#');
+        const color1 = baseColor;
+        const color2 = isHexColor ? baseColor + 'AA' : 'rgba(46, 92, 138, 0.67)';
+        
+        gradient.addColorStop(0, color1);
+        gradient.addColorStop(1, color2);
         
         canvasCtx.fillStyle = gradient;
         canvasCtx.fillRect(garmentX, garmentY, garmentWidth, garmentHeight);

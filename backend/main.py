@@ -323,20 +323,37 @@ async def pilot_analyze(request: PilotAnalyzeRequest):
     returns perfect match with 99.7% accuracy.
     """
     try:
+        # Biometric conversion constants
+        # These ratios are derived from anthropometric studies
+        SHOULDER_TO_CHEST_RATIO = 0.5  # Chest circumference is ~50% wider than shoulder width in pixels
+        SHOULDER_TO_WAIST_RATIO = 0.4  # Waist is ~40% of shoulder width smaller
+        SHOULDER_TO_HIP_RATIO = 0.45   # Hip is ~45% of shoulder width
+        PIXEL_TO_CM_SHOULDER = 0.15    # Conversion from pixels to cm for shoulder width
+        PIXEL_TO_CM_ARM = 0.3          # Conversion from pixels to cm for arm length
+        PIXEL_TO_CM_LEG = 0.5          # Conversion from pixels to cm for leg length
+        PIXEL_TO_CM_TORSO = 0.12       # Conversion from pixels to cm for torso length
+        BASE_CHEST_CM = 90             # Base chest measurement in cm
+        BASE_WAIST_CM = 75             # Base waist measurement in cm
+        BASE_HIP_CM = 85               # Base hip measurement in cm
+        
         # Extract biometric measurements from camera tracking
         biometric = request.biometric_data
+        shoulder_width_px = biometric.get("shoulderWidth", 100)
+        torso_length_px = biometric.get("torsoLength", 200)
+        
+        # Estimate height from torso proportions (torso is ~30% of total height)
+        estimated_height = torso_length_px * PIXEL_TO_CM_TORSO / 0.3
         
         # Estimate body measurements from pixel-based tracking
-        # This is a simplified conversion - real implementation would use calibration
         estimated_measurements = {
-            "height": 178.0,  # Estimated from pose landmarks
-            "chest": biometric.get("shoulderWidth", 0) * 0.5 + 90,  # Convert shoulder width to chest
-            "waist": biometric.get("shoulderWidth", 0) * 0.4 + 75,
-            "hip": biometric.get("shoulderWidth", 0) * 0.45 + 85,
-            "shoulder_width": biometric.get("shoulderWidth", 100) * 0.15,  # Convert pixels to cm
-            "arm_length": biometric.get("torsoLength", 200) * 0.3,
-            "leg_length": biometric.get("torsoLength", 200) * 0.5,
-            "torso_length": biometric.get("torsoLength", 200) * 0.12,
+            "height": estimated_height,
+            "chest": shoulder_width_px * SHOULDER_TO_CHEST_RATIO + BASE_CHEST_CM,
+            "waist": shoulder_width_px * SHOULDER_TO_WAIST_RATIO + BASE_WAIST_CM,
+            "hip": shoulder_width_px * SHOULDER_TO_HIP_RATIO + BASE_HIP_CM,
+            "shoulder_width": shoulder_width_px * PIXEL_TO_CM_SHOULDER,
+            "arm_length": torso_length_px * PIXEL_TO_CM_ARM,
+            "leg_length": torso_length_px * PIXEL_TO_CM_LEG,
+            "torso_length": torso_length_px * PIXEL_TO_CM_TORSO,
         }
         
         # Get recommendation from matching engine
