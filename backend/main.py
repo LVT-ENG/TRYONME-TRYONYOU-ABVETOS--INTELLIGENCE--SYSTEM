@@ -348,7 +348,9 @@ def recomendar_prenda(datos: DatosCliente):
     TORSO_TO_HEIGHT_RATIO = 0.30
     
     # Height threshold for meters to cm conversion
-    HEIGHT_THRESHOLD_METERS = 3.0  # Heights below this are assumed to be in meters
+    # Heights at or below 2.5 meters are assumed to be in meters and converted to cm
+    # Heights above 2.5 are assumed to already be in cm
+    HEIGHT_THRESHOLD_METERS = 2.5
     
     try:
         # Map evento to occasion
@@ -363,8 +365,8 @@ def recomendar_prenda(datos: DatosCliente):
         }
         occasion = evento_map.get(datos.evento.lower(), "casual")
         
-        # Convert height to cm if provided in meters
-        altura = datos.altura if datos.altura > HEIGHT_THRESHOLD_METERS else datos.altura * 100
+        # Convert height to cm if provided in meters (values <= 2.5 are in meters)
+        altura = datos.altura * 100 if datos.altura <= HEIGHT_THRESHOLD_METERS else datos.altura
         
         # Validate height is within reasonable range
         if altura < 140 or altura > 220:
