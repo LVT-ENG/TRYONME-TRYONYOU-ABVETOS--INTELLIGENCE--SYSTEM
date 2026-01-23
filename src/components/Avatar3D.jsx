@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState, useEffect } from 'react'
+import { Suspense, useRef } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { OrbitControls, Environment, ContactShadows, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
@@ -154,14 +154,9 @@ export default function Avatar3D({
   showControls = true,
   height = '100%',
 }) {
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    // Check if model exists
-    fetch(modelPath, { method: 'HEAD' })
-      .then(() => setIsLoading(false))
-      .catch(() => setIsLoading(false))
-  }, [modelPath])
+  // BOLT OPTIMIZATION: Removed redundant isLoading state and fetch(HEAD) request.
+  // The Canvas handles loading via Suspense/useLoader internally.
+  // This saves one network request and one re-render per mount.
 
   return (
     <div className={`avatar-canvas-container ${className}`} style={{ height }}>
