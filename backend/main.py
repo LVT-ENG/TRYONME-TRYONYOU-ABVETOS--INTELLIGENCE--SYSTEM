@@ -9,7 +9,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, List
 import numpy as np
-from .matching_engine import MatchingEngine
+import logging
+
+# Configure logging
+logger = logging.getLogger(__name__)
+
+# Import matching engine with compatibility for both module and direct execution
+# Try relative import first (when run as module), fall back to direct import
+try:
+    from .matching_engine import MatchingEngine
+except ImportError:
+    from matching_engine import MatchingEngine
 import json
 import os
 
@@ -79,6 +89,14 @@ class RecommendationResponse(BaseModel):
     fabric_drape_score: int
     occasion_tags: List[str]
     cut_type: str
+
+
+class DatosCliente(BaseModel):
+    """Datos simplificados del cliente para recomendación."""
+    altura: float   # En cm o metros
+    peso: float     # En kg
+    tipo_cuerpo: Optional[str] = None  # Ej: "triangulo", "reloj_arena"
+    evento: str     # Ej: "gala", "sport", "trabajo"
 
 
 # ============================================================================
@@ -310,6 +328,112 @@ async def process_conversation(
 async def health_check():
     """Health check endpoint."""
     return {"status": "healthy", "service": "TRYONYOU Pilot API"}
+
+
+@app.post("/recomendar-look")
+def recomendar_prenda(datos: DatosCliente):
+    """
+    Endpoint simplificado para recomendar prendas.
+    Recibe datos básicos del cliente y retorna recomendación.
+    
+    Este endpoint proporciona una interfaz simplificada en español
+    para obtener recomendaciones de prendas basadas en:
+    - Altura y peso del cliente
+    - Tipo de cuerpo (opcional)
+    - Tipo de evento
+    """
+    logger.info(f"Procesando cliente: altura={datos.altura}, peso={datos.peso}, evento={datos.evento}")
+    
+    # Anthropometric ratios based on standard human body proportions
+    # Source: ISO 7250-1:2017 - Basic human body measurements for technological design
+    CHEST_TO_HEIGHT_RATIO = 0.52
+    WAIST_TO_HEIGHT_RATIO = 0.42
+    HIP_TO_HEIGHT_RATIO = 0.54
+    SHOULDER_TO_HEIGHT_RATIO = 0.25
+    ARM_TO_HEIGHT_RATIO = 0.38
+    LEG_TO_HEIGHT_RATIO = 0.52
+    TORSO_TO_HEIGHT_RATIO = 0.30
+    
+    # Height threshold for meters to cm conversion
+    # Heights at or below 2.5 meters are assumed to be in meters and converted to cm
+    # Heights above 2.5 are assumed to already be in cm
+    HEIGHT_THRESHOLD_METERS = 2.5
+    
+    try:
+        # Map evento to occasion
+        evento_map = {
+            "gala": "event",
+            "sport": "casual",
+            "trabajo": "work",
+            "ceremony": "ceremony",
+            "event": "event",
+            "casual": "casual",
+            "work": "work"
+        }
+        occasion = evento_map.get(datos.evento.lower(), "casual")
+        
+        # Convert height to cm if provided in meters (values <= 2.5 are in meters)
+        altura = datos.altura * 100 if datos.altura <= HEIGHT_THRESHOLD_METERS else datos.altura
+        
+        # Validate height is within reasonable range
+        if altura < 140 or altura > 220:
+            return {
+                "status": "error",
+                "mensaje": "Altura fuera del rango válido (140-220 cm)"
+            }
+        
+        # Estimate measurements based on height using standard body proportions
+        chest = CHEST_TO_HEIGHT_RATIO * altura
+        waist = WAIST_TO_HEIGHT_RATIO * altura
+        hip = HIP_TO_HEIGHT_RATIO * altura
+        shoulder_width = SHOULDER_TO_HEIGHT_RATIO * altura
+        arm_length = ARM_TO_HEIGHT_RATIO * altura
+        leg_length = LEG_TO_HEIGHT_RATIO * altura
+        torso_length = TORSO_TO_HEIGHT_RATIO * altura
+        
+        user_measurements = {
+            "height": altura,
+            "chest": chest,
+            "waist": waist,
+            "hip": hip,
+            "shoulder_width": shoulder_width,
+            "arm_length": arm_length,
+            "leg_length": leg_length,
+            "torso_length": torso_length,
+        }
+        
+        # Get recommendation from matching engine
+        recommendation = matching_engine.recommend_best_fit(
+            user_measurements=user_measurements,
+            occasion=occasion,
+            fit_preference="regular"
+        )
+        
+        if "error" in recommendation:
+            return {
+                "status": "error",
+                "mensaje": recommendation["error"]
+            }
+        
+        # Return response in Spanish format
+        return {
+            "status": "success",
+            "prenda_recomendada": recommendation["garment_name"],
+            "marca": recommendation["brand"],
+            "talla": recommendation["size"],
+            "imagen_url": recommendation["image_url"],
+            "mensaje_ajuste": recommendation["explanation"],
+            "puntuacion_ajuste": recommendation["fit_score"],
+            "material": recommendation["material"],
+            "color": recommendation["color"]
+        }
+        
+    except Exception as e:
+        logger.error(f"Error en recomendación: {str(e)}", exc_info=True)
+        return {
+            "status": "error",
+            "mensaje": f"Error al procesar la recomendación: {str(e)}"
+        }
 
 
 if __name__ == "__main__":
