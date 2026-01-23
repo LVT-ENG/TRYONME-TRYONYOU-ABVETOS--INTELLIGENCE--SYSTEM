@@ -49,7 +49,13 @@ def test_api_endpoints():
     """Test that API endpoints are defined"""
     try:
         from backend.main import app
-        routes = [route.path for route in app.routes]
+        
+        # FastAPI routes can be accessed via app.routes
+        routes = []
+        for route in app.routes:
+            # Handle different route types
+            if hasattr(route, 'path'):
+                routes.append(route.path)
         
         required_endpoints = [
             '/',

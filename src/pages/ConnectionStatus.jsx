@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, XCircle, Loader2, Activity } from 'lucide-react';
 import api from '../utils/api';
+import { SYSTEM_CONFIG } from '../config';
 
 /**
  * System Connection Status Page
@@ -32,11 +33,12 @@ function ConnectionStatus() {
       // Check garments database
       try {
         const garments = await api.listGarments();
+        const total = garments.total || (Array.isArray(garments) ? garments.length : 0);
         setStatus(prev => ({
           ...prev,
           garments: { 
             status: 'success', 
-            message: `${garments.total || 0} garments loaded` 
+            message: `${total} garments loaded` 
           }
         }));
       } catch (error) {
@@ -171,7 +173,7 @@ function ConnectionStatus() {
 
         {/* Technical Info */}
         <div className="mt-12 text-center text-xs text-gray-600 font-mono">
-          <p>TRYONYOU v3.0.0 | Patent: PCT/EP2025/067317</p>
+          <p>TRYONYOU v{SYSTEM_CONFIG.version} | Patent: {SYSTEM_CONFIG.patent}</p>
           <p className="mt-1">Jules Engine Active | Lafayette Pilot System</p>
         </div>
       </div>
