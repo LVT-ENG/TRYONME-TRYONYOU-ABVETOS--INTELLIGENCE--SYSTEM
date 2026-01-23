@@ -9,7 +9,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, List
 import numpy as np
-from .matching_engine import MatchingEngine
+try:
+    from .matching_engine import MatchingEngine
+except ImportError:
+    from matching_engine import MatchingEngine
 import json
 import os
 
@@ -79,6 +82,14 @@ class RecommendationResponse(BaseModel):
     fabric_drape_score: int
     occasion_tags: List[str]
     cut_type: str
+
+
+class DatosCliente(BaseModel):
+    """Datos simplificados del cliente para recomendación."""
+    altura: float   # En cm o metros
+    peso: float     # En kg
+    tipo_cuerpo: Optional[str] = None  # Ej: "triangulo", "reloj_arena"
+    evento: str     # Ej: "gala", "sport", "trabajo"
 
 
 # ============================================================================
@@ -310,6 +321,92 @@ async def process_conversation(
 async def health_check():
     """Health check endpoint."""
     return {"status": "healthy", "service": "TRYONYOU Pilot API"}
+
+
+@app.post("/recomendar-look")
+def recomendar_prenda(datos: DatosCliente):
+    """
+    Endpoint simplificado para recomendar prendas.
+    Recibe datos básicos del cliente y retorna recomendación.
+    
+    Este endpoint proporciona una interfaz simplificada en español
+    para obtener recomendaciones de prendas basadas en:
+    - Altura y peso del cliente
+    - Tipo de cuerpo (opcional)
+    - Tipo de evento
+    """
+    print(f"Procesando cliente: {datos.altura}cm, {datos.peso}kg para evento {datos.evento}")
+    
+    try:
+        # Map evento to occasion
+        evento_map = {
+            "gala": "event",
+            "sport": "casual",
+            "trabajo": "work",
+            "ceremony": "ceremony",
+            "event": "event",
+            "casual": "casual",
+            "work": "work"
+        }
+        occasion = evento_map.get(datos.evento.lower(), "casual")
+        
+        # Create simplified measurements from height and weight
+        # Using standard body proportions as estimates
+        altura = datos.altura if datos.altura > 10 else datos.altura * 100  # Convert meters to cm if needed
+        
+        # Estimate measurements based on height and weight
+        # These are approximations based on average body proportions
+        chest = 0.52 * altura  # chest is typically 52% of height
+        waist = 0.42 * altura  # waist is typically 42% of height
+        hip = 0.54 * altura    # hip is typically 54% of height
+        shoulder_width = 0.25 * altura  # shoulders are typically 25% of height
+        arm_length = 0.38 * altura      # arms are typically 38% of height
+        leg_length = 0.52 * altura      # legs are typically 52% of height
+        torso_length = 0.30 * altura    # torso is typically 30% of height
+        
+        user_measurements = {
+            "height": altura,
+            "chest": chest,
+            "waist": waist,
+            "hip": hip,
+            "shoulder_width": shoulder_width,
+            "arm_length": arm_length,
+            "leg_length": leg_length,
+            "torso_length": torso_length,
+        }
+        
+        # Get recommendation from matching engine
+        recommendation = matching_engine.recommend_best_fit(
+            user_measurements=user_measurements,
+            occasion=occasion,
+            fit_preference="regular"
+        )
+        
+        if "error" in recommendation:
+            return {
+                "status": "error",
+                "mensaje": recommendation["error"]
+            }
+        
+        # Return response in Spanish format
+        return {
+            "status": "success",
+            "prenda_recomendada": recommendation["garment_name"],
+            "marca": recommendation["brand"],
+            "talla": recommendation["size"],
+            "imagen_url": recommendation["image_url"],
+            "mensaje_ajuste": recommendation["explanation"],
+            "puntuacion_ajuste": recommendation["fit_score"],
+            "material": recommendation["material"],
+            "color": recommendation["color"]
+        }
+        
+    except Exception as e:
+        print(f"Error en recomendación: {str(e)}")
+        return {
+            "status": "error",
+            "mensaje": f"Error al procesar la recomendación: {str(e)}"
+        }
 
 
 if __name__ == "__main__":
