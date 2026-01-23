@@ -19,12 +19,6 @@ function AvatarModel({ modelPath, customizations = {} }) {
     console.log('Model not found, using procedural avatar')
   }
 
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.3) * 0.1
-    }
-  })
-
   // If model loaded, use it
   if (model) {
     return (
@@ -209,11 +203,8 @@ export default function Avatar3D({
           <OrbitControls
             enablePan={false}
             enableZoom={true}
-            minDistance={3}
-            maxDistance={8}
-            minPolarAngle={Math.PI / 4}
-            maxPolarAngle={Math.PI / 1.8}
-            autoRotate={false}
+            minPolarAngle={Math.PI / 2}
+            maxPolarAngle={Math.PI / 2}
           />
         )}
       </Canvas>

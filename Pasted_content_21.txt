@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Piloto Espejo - Detección de Gesto</title>
+  <style>
+    body { font-family: sans-serif; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+    .container { position: relative; width: 640px; height: 480px; border: 4px solid #fff; border-radius: 20px; overflow: hidden; }
+    
+    /* El video y el canvas se superponen */
+    #input_video { position: absolute; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); /* Efecto Espejo */ }
+    #output_canvas { position: absolute; width: 100%; height: 100%; transform: scaleX(-1); /* Efecto Espejo */ }
+    
+    #status { margin-top: 20px; font-size: 24px; font-weight: bold; color: #00ffaa; }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <h1>Piloto: Gesto para Cambiar Ropa</h1>
+  
+  <div class="container">
+    <video id="input_video"></video>
+    <canvas id="output_canvas" width="640" height="480"></canvas>
+  </div>
+  
+  <div id="status">Esperando gesto...</div>
+
+  <script>
+    const videoElement = document.getElementById('input_video');
+    const canvasElement = document.getElementById('output_canvas');
+    const canvasCtx = canvasElement.getContext('2d');
+    const statusDiv = document.getElementById('status');
+    
+    // Estado para evitar múltiples disparos seguidos
+    let gestoActivo = false; 
+
+    // Función para calcular distancia entre dos puntos (Pitagoras)
+    function calcularDistancia(p1, p2) {
+      return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+    }
+
+    // Esta función se ejecuta cada vez que el sistema detecta manos
+    function onResults(results) {
+      // Limpiar el canvas
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+      if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+          // Dibujar los puntos de la mano (opcional, para ver que funciona)
+          drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 5});
+          drawLandmarks(canvasCtx, landmarks, {color: '#FF0000', lineWidth: 2});
+
+          // LÓGICA DEL "CHASQUIDO" O SELECCIÓN
+          // Punto 4 = Punta del Pulgar
+          // Punto 8 = Punta del Índice
+          const pulgar = landmarks[4];
+          const indice = landmarks[8];
+
+          // Calculamos la distancia entre pulgar e índice
+          const distancia = calcularDistancia(pulgar, indice);
+
+          // Si están muy cerca (menos de 0.05 unidades relativas)
+          if (distancia < 0.05) {
+            if (!gestoActivo) {
+              gestoActivo = true;
+              ejecutarAccion(); // <--- AQUÍ OCURRE LA MAGIA
+            }
+            // Dibujar un círculo visual cuando se tocan
+            const x = indice.x * canvasElement.width;
+            const y = indice.y * canvasElement.height;
+            canvasCtx.beginPath();
+            canvasCtx.arc(x, y, 20, 0, 2 * Math.PI);
+            canvasCtx.fillStyle = "yellow";
+            canvasCtx.fill();
+          } else {
+            gestoActivo = false;
+          }
+        }
+      }
+      canvasCtx.restore();
+    }
+
+    // Función que simula el cambio de prenda
+    function ejecutarAccion() {
+      statusDiv.innerText = "¡CAMBIO DE ROPA DETECTADO!";
+      statusDiv.style.color = "yellow";
+      
+      // Simulación de efecto visual
+      document.body.style.backgroundColor = document.body.style.backgroundColor === 'rgb(51, 51, 51)' ? '#000' : '#333';
+      
+      console.log("Acción disparada: Cambiar modelo en el carrusel");
+      
+      // Resetear texto después de 1 segundo
+      setTimeout(() => {
+        statusDiv.innerText = "Esperando gesto...";
+        statusDiv.style.color = "#00ffaa";
+      }, 1000);
+    }
+
+    // Configuración de MediaPipe Hands
+    const hands = new Hands({locateFile: (file) => {
+      return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+    }});
+    
+    hands.setOptions({
+      maxNumHands: 1, // Solo detectamos una mano para evitar caos
+      modelComplexity: 1,
+      minDetectionConfidence: 0.7,
+      minTrackingConfidence: 0.5
+    });
+    
+    hands.onResults(onResults);
+
+    // Activar la cámara
+    const camera = new Camera(videoElement, {
+      onFrame: async () => {
+        await hands.send({image: videoElement});
+      },
+      width: 640,
+      height: 480
+    });
+    camera.start();
+  </script>
+</body>
+</html>

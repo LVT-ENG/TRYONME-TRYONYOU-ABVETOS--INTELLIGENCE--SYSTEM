@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TRYONYOU – Luxury Virtual Mirror</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .header {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 100;
+    }
+
+    .header h1 {
+      font-size: 32px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: #d4af37;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: #aaa;
+      letter-spacing: 1px;
+    }
+
+    .mirror-container {
+      position: relative;
+      width: 720px;
+      height: 960px;
+      border: 3px solid #d4af37;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(212, 175, 55, 0.3), inset 0 0 40px rgba(212, 175, 55, 0.1);
+      background: #000;
+    }
+
+    /* Video and Canvas Overlay */
+    #input_video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scaleX(-1);
+      display: block;
+    }
+
+    #output_canvas {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform: scaleX(-1);
+      display: block;
+    }
+
+    /* Garment Display */
+    .garment-display {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .garment-image {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        filter: blur(10px) drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+      }
+      to {
+        opacity: 1;
+        filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+      }
+    }
+
+    /* Gesture Indicator */
+    .gesture-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      text-align: center;
+    }
+
+    .gesture-dot {
+      width: 12px;
+      height: 12px;
+      background: #d4af37;
+      border-radius: 50%;
+      margin: 0 auto 10px;
+      opacity: 0.5;
+      animation: pulse 2s infinite;
+    }
+
+    .gesture-dot.active {
+      opacity: 1;
+      animation: pulseBright 0.3s ease-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes pulseBright {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .gesture-text {
+      font-size: 12px;
+      color: #d4af37;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* Info Panel */
+    .info-panel {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #d4af37;
+      border-radius: 10px;
+      padding: 15px 20px;
+      font-size: 12px;
+      color: #aaa;
+      z-index: 20;
+      max-width: 200px;
+    }
+
+    .info-panel .label {
+      color: #d4af37;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .info-panel .value {
+      color: #fff;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    /* Status Display */
+    .status-display {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border: 1px solid #d4af37;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 12px;
+      color: #aaa;
+      z-index: 20;
+      letter-spacing: 1px;
+    }
+
+    .status-display.active {
+      color: #d4af37;
+      border-color: #d4af37;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+    }
+
+    /* Pau le Paon Message */
+    .pau-message {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid #d4af37;
+      border-radius: 15px;
+      padding: 20px 30px;
+      max-width: 400px;
+      text-align: center;
+      z-index: 20;
+      animation: slideUp 0.5s ease-out;
+      opacity: 0;
+    }
+
+    .pau-message.visible {
+      opacity: 1;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateX(-50%) translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .pau-message .peacock {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .pau-message .text {
+      font-size: 14px;
+      color: #d4af37;
+      font-style: italic;
+    }
+
+    /* Controls */
+    .controls {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 20;
+    }
+
+    .btn {
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid #d4af37;
+      color: #d4af37;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .mirror-container {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+      }
+      .header {
+        top: 15px;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+
+  <!-- MediaPipe Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <div class="header">
+    <h1>TRYONYOU</h1>
+    <p>Luxury Virtual Mirror – Gesture Control</p>
+  </div>
+
+  <div class="mirror-container">
+    <video id="input_video"></video>
+    <canvas id="output_canvas" width="720" height="960"></canvas>
+    
+    <div class="garment-display">
+      <img id="garment_image" class="garment-image" src="" alt="Garment">
+    </div>
+
+    <div class="status-display" id="status_display">
+      Initializing...
+    </div>
+
+    <div class="pau-message" id="pau_message">
+      <div class="peacock">🦚</div>
+      <div class="text" id="pau_text">Scanning your silhouette...</div>
+    </div>
+
+    <div class="gesture-indicator">
+      <div class="gesture-dot" id="gesture_dot"></div>
+      <div class="gesture-text" id="gesture_text">Tap thumb & index to change</div>
+    </div>
+
+    <div class="info-panel">
+      <div class="label">Fit Score</div>
+      <div class="value" id="fit_score">99.7%</div>
+      <div class="label">Confidence</div>
+      <div class="value" id="confidence">98.2%</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" id="prev_btn">← Previous</button>
+      <button class="btn" id="next_btn">Next →</button>
+    </div>
+  </div>
+
+  <script>
+    // ============ INVENTORY ============
+    const INVENTORY = [
+      {
+        name: "Red Evening Dress",
+        image: "https://images.unsplash.com/photo-1595777707802-221b02a948e5?w=400&h=600&fit=crop",
+        fit_score: 99.7,
+        confidence: 98.2,
+        message: "This dress was made for you. Perfect fit, infinite confidence."
+      },
+      {
+        name: "Burberry Trench Coat",
+        image: "https://images.unsplash.com/photo-1539533057440-7bf6b1c91c5f?w=400&h=600&fit=crop",
+        fit_score: 97.3,
+        confidence: 96.1,
+        message: "Timeless elegance meets modern precision."
+      },
+      {
+        name: "Black Gala Dress",
+        image: "https://images.unsplash.com/photo-1595777707802-221b02a948e5?w=400&h=600&fit=crop",
+        fit_score: 96.8,
+        confidence: 95.5,
+        message: "Sophistication redefined. Ready for any occasion."
+      },
+      {
+        name: "Lime Green Leather Suit",
+        image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&h=600&fit=crop",
+        fit_score: 94.2,
+        confidence: 92.8,
+        message: "Bold. Confident. Unmistakably you."
+      },
+      {
+        name: "Pink Chanel Suit",
+        image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400&h=600&fit=crop",
+        fit_score: 93.5,
+        confidence: 91.2,
+        message: "Luxury refined. Tailored to perfection."
+      }
+    ];
+
+    // ============ STATE ============
+    let currentIndex = 0;
+    let gestureActive = false;
+    let cameraReady = false;
+
+    const videoElement = document.getElementById('input_video');
+    const canvasElement = document.getElementById('output_canvas');
+    const canvasCtx = canvasElement.getContext('2d');
+    const garmentImage = document.getElementById('garment_image');
+    const statusDisplay = document.getElementById('status_display');
+    const pauMessage = document.getElementById('pau_message');
+    const pauText = document.getElementById('pau_text');
+    const gestureDot = document.getElementById('gesture_dot');
+    const gestureText = document.getElementById('gesture_text');
+    const fitScoreDisplay = document.getElementById('fit_score');
+    const confidenceDisplay = document.getElementById('confidence');
+    const prevBtn = document.getElementById('prev_btn');
+    const nextBtn = document.getElementById('next_btn');
+
+    // ============ UTILITIES ============
+    function calculateDistance(p1, p2) {
+      return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+    }
+
+    function updateGarmentDisplay() {
+      const garment = INVENTORY[currentIndex];
+      garmentImage.src = garment.image;
+      fitScoreDisplay.textContent = garment.fit_score.toFixed(1) + '%';
+      confidenceDisplay.textContent = garment.confidence.toFixed(1) + '%';
+      showPauMessage(garment.message);
+    }
+
+    function showPauMessage(message) {
+      pauText.textContent = message;
+      pauMessage.classList.add('visible');
+      setTimeout(() => {
+        pauMessage.classList.remove('visible');
+      }, 3000);
+    }
+
+    function changeGarment(direction) {
+      if (direction === 'next') {
+        currentIndex = (currentIndex + 1) % INVENTORY.length;
+      } else {
+        currentIndex = (currentIndex - 1 + INVENTORY.length) % INVENTORY.length;
+      }
+      updateGarmentDisplay();
+      statusDisplay.textContent = `Showing: ${INVENTORY[currentIndex].name}`;
+      statusDisplay.classList.add('active');
+      setTimeout(() => {
+        statusDisplay.classList.remove('active');
+      }, 2000);
+    }
+
+    // ============ GESTURE DETECTION ============
+    function onResults(results) {
+      canvasCtx.save();
+      canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+      canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+
+      if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+          // Draw hand landmarks
+          drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
+            color: '#d4af37',
+            lineWidth: 2
+          });
+          drawLandmarks(canvasCtx, landmarks, {
+            color: '#d4af37',
+            lineWidth: 1
+          });
+
+          // Gesture detection: Thumb (4) and Index (8)
+          const thumb = landmarks[4];
+          const index = landmarks[8];
+          const distance = calculateDistance(thumb, index);
+
+          if (distance < 0.05) {
+            if (!gestureActive) {
+              gestureActive = true;
+              gestureDot.classList.add('active');
+              changeGarment('next');
+              setTimeout(() => {
+                gestureDot.classList.remove('active');
+              }, 300);
+            }
+          } else {
+            gestureActive = false;
+          }
+        }
+      }
+      canvasCtx.restore();
+    }
+
+    // ============ MEDIAPIPE SETUP ============
+    const hands = new Hands({
+      locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
+      }
+    });
+
+    hands.setOptions({
+      maxNumHands: 1,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.7,
+      minTrackingConfidence: 0.5
+    });
+
+    hands.onResults(onResults);
+
+    const camera = new Camera(videoElement, {
+      onFrame: async () => {
+        await hands.send({ image: videoElement });
+      },
+      width: 720,
+      height: 960
+    });
+
+    camera.start();
+    cameraReady = true;
+    statusDisplay.textContent = 'Ready – Gesture Control Active';
+    statusDisplay.classList.add('active');
+
+    // ============ BUTTON CONTROLS ============
+    prevBtn.addEventListener('click', () => changeGarment('prev'));
+    nextBtn.addEventListener('click', () => changeGarment('next'));
+
+    // ============ INITIALIZE ============
+    updateGarmentDisplay();
+  </script>
+</body>
+</html>
