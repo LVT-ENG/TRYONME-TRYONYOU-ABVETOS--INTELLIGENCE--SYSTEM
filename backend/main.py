@@ -9,6 +9,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, List
 import numpy as np
+import logging
+
+# Configure logging
+logger = logging.getLogger(__name__)
+
+# Import matching engine with compatibility for both module and direct execution
+# Try relative import first (when run as module), fall back to direct import
 try:
     from .matching_engine import MatchingEngine
 except ImportError:
@@ -335,7 +342,7 @@ def recomendar_prenda(datos: DatosCliente):
     - Tipo de cuerpo (opcional)
     - Tipo de evento
     """
-    print(f"Procesando cliente: {datos.altura}cm, {datos.peso}kg para evento {datos.evento}")
+    logger.info(f"Procesando cliente: altura={datos.altura}, peso={datos.peso}, evento={datos.evento}")
     
     # Anthropometric ratios based on standard human body proportions
     # Source: ISO 7250-1:2017 - Basic human body measurements for technological design
@@ -422,7 +429,7 @@ def recomendar_prenda(datos: DatosCliente):
         }
         
     except Exception as e:
-        print(f"Error en recomendación: {str(e)}")
+        logger.error(f"Error en recomendación: {str(e)}", exc_info=True)
         return {
             "status": "error",
             "mensaje": f"Error al procesar la recomendación: {str(e)}"
