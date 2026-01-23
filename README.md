@@ -161,7 +161,7 @@ dist/
 
 We have adopted the **Conductor** context-driven development workflow to align with the latest Google Platform updates (Gemini 3 Pro, Jules).
 
-*   **Platform News**: See [`docs/GOOGLE_PLATFORM_NEWS.md`](docs/GOOGLE_PLATFORM_NEWS.md) for details on the latest integrations.
+*   **Platform News**: See [`docs/GOOGLE_PLATFORM_NEWS.md`](docs/GOOGLE_PLATFORM_NEWS.md) for details on the latest Google Platform integrations.
 *   **Context Files**:
     *   [`product.md`](product.md): Project goals and features.
     *   [`techstack.md`](techstack.md): Technology constraints.
