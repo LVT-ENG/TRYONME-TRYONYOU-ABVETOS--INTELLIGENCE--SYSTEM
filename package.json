@@ -17,6 +17,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0",
+    "react-webcam": "^7.2.0",
     "three": "^0.160.0",
     "vercel": "^50.4.5",
     "wouter": "^3.9.0"

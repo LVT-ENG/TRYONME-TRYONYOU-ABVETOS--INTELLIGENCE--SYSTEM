@@ -10,3 +10,5 @@ __pycache__/
 dist/
 generar_informe.py.
 node_modules/
+temp_extract
+temp_extract_project

@@ -6,6 +6,13 @@ VERCEL_TOKEN=$1
 
 echo "🚀 Preparing Jules Pilot for Galeries Lafayette (SuperCommit MAX)..."
 
+# 0. Asset Rescue
+echo "🧹 Executing Asset Rescue..."
+python3 organize_assets.py
+if [ $? -ne 0 ]; then
+    echo "⚠️  Asset rescue encountered issues (check logs), proceeding..."
+fi
+
 # 1. Install Dependencies
 echo "📦 Installing dependencies..."
 npm install
