@@ -7,13 +7,6 @@
 export const API_CONFIG = {
   // Base URL - automatically determined based on environment
   baseUrl: import.meta.env.PROD ? '/api' : 'http://localhost:5000/api',
-  
-  // Timeout settings
-  timeout: 30000, // 30 seconds
-  
-  // Retry configuration
-  retries: 3,
-  retryDelay: 1000, // 1 second
 };
 
 // System Configuration
