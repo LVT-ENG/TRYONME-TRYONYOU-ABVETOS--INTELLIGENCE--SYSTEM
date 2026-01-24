@@ -5,8 +5,6 @@ Tests the TRYONYOU system connections and API endpoints
 """
 
 import sys
-import json
-
 def test_backend_import():
     """Test that backend module imports correctly"""
     try:
