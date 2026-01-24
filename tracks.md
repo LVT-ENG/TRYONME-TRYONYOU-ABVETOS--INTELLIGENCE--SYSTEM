@@ -1,6 +1,12 @@
 # Tracks
 
-## Active Track: Google Platform Integration
+## Active Track
+
+*   (None)
+
+## History
+
+### Google Platform Integration
 
 **Goal**: Update repository with the news of Google Platforms (Conductor adoption).
 

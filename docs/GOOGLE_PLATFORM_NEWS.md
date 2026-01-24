@@ -1,5 +1,7 @@
 # Google Platform News
 
+> **Last Updated:** December 2025
+
 Recent updates and roadmap integration plans for Google Platforms, highlighting key advancements in AI models, developer tools, and creative generation.
 
 ## Gemini 3 Pro
