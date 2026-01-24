@@ -3,11 +3,10 @@
  * Connects frontend with backend API
  */
 
-// Determine API base URL based on environment
-const API_BASE_URL = import.meta.env.PROD 
-  ? '/api'  // Production: use relative path for Vercel serverless
-  : 'http://localhost:5000/api';  // Development: local backend
+import { API_CONFIG } from '../config';
 
+// Use centralized API base URL from configuration
+const API_BASE_URL = API_CONFIG.baseUrl;
 /**
  * Fetch wrapper with error handling
  */
