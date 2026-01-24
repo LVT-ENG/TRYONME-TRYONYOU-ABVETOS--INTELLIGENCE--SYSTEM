@@ -5,6 +5,7 @@ import { PoseLandmarker, FilesetResolver, DrawingUtils } from '@mediapipe/tasks-
 const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
+  const contextRef = useRef(null);
   const [poseLandmarker, setPoseLandmarker] = useState(null);
   const [cameraReady, setCameraReady] = useState(false);
   const requestRef = useRef(null);
@@ -52,7 +53,12 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
     ) {
       const video = webcamRef.current.video;
       const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
+
+      // BOLT OPTIMIZATION: Cache 2D context to avoid overhead in animation loop
+      if (!contextRef.current || contextRef.current.canvas !== canvas) {
+        contextRef.current = canvas.getContext('2d');
+      }
+      const ctx = contextRef.current;
 
       // Set canvas dimensions to match video
       if (canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
