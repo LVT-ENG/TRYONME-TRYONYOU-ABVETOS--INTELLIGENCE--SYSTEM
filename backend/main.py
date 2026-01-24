@@ -1,441 +1,144 @@
 """
-TRYONYOU Pilot - FastAPI Backend
-Real pilot for Galeries Lafayette
-Patent: PCT/EP2025/067317
+DIVINEO MASTER ENGINE - JULES V7 (SUPERCOMMIT MAX)
+Versión para el Piloto Comercial de Galeries Lafayette
+Licencia: Patente PCT/EP2025/067317
 """
 
-from fastapi import FastAPI, HTTPException, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import Optional, Dict, List
-import numpy as np
-import logging
-
-# Configure logging
-logger = logging.getLogger(__name__)
-
-# Import matching engine with compatibility for both module and direct execution
-# Try relative import first (when run as module), fall back to direct import
-try:
-    from .matching_engine import MatchingEngine
-except ImportError:
-    from matching_engine import MatchingEngine
-import json
 import os
+import cv2
+import numpy as np
+import mediapipe as mp
+import google.generativeai as genai
+from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
-app = FastAPI(
-    title="TRYONYOU Pilot API",
-    description="Fashion intelligence matching engine",
-    version="1.0.0"
-)
+# 1. INICIALIZACIÓN Y CONFIGURACIÓN
+load_dotenv()
+app = FastAPI(title="Divineo Jules V7 Master Engine")
 
-# Enable CORS for frontend communication
+# Permitir conexión desde el Frontend (React/Vercel)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Initialize matching engine
-matching_engine = MatchingEngine(os.path.join(os.path.dirname(__file__), "garment_database.json"))
+# 2. NÚCLEO DE INTELIGENCIA JULES (IA)
+# Configuración del comportamiento de lujo y "No Numbers"
+JULES_SYSTEM_PROMPT = (
+    "Eres Jules, el conserje digital de Galeries Lafayette. "
+    "REGLA DE ORO: Tienes estrictamente prohibido mencionar medidas físicas (cm, kg) o tallas (S, M, L). "
+    "MISIÓN: Recibe datos biométricos y tradúcelos en una narrativa emocional de ajuste perfecto. "
+    "TONO: Sofisticado, minimalista, de Alta Costura. "
+    "ENFOQUE: Explica cómo el tejido 'honra la silueta' basándote en su caída y elasticidad."
+)
 
+# Configurar el "Cerebro" (Gemini)
+genai.configure(api_key=os.getenv("VITE_GOOGLE_API_KEY"))
+jules_brain = genai.GenerativeModel('gemini-1.5-flash')
 
-# ============================================================================
-# Pydantic Models
-# ============================================================================
+# 3. LÓGICA DE FÍSICA Y CATÁLOGO (Jules V7 Physics)
+FABRIC_PHYSICS = {
+    "premium-silk": {"stretch": 1.05, "drape": "Fluido", "id": "silk_v7"},
+    "structured-wool": {"stretch": 1.10, "drape": "Autoritario", "id": "wool_v7"},
+    "tech-stretch": {"stretch": 1.30, "drape": "Adaptativo", "id": "tech_v7"}
+}
 
-class BodyMeasurements(BaseModel):
-    """User body measurements from biometric scan."""
-    height: float  # cm
-    chest: float  # cm
-    waist: float  # cm
-    hip: float  # cm
-    shoulder_width: float  # cm
-    arm_length: float  # cm
-    leg_length: float  # cm
-    torso_length: float  # cm
-    weight: Optional[float] = None  # kg
+MOCK_CATALOGUE = [
+    {"id": 0, "name": "Robe de Soirée Lafayette", "fabric": "premium-silk"},
+    {"id": 1, "name": "Veste Divineo Anthracite", "fabric": "structured-wool"},
+    {"id": 2, "name": "Ensemble Gala Prestige", "fabric": "tech-stretch"}
+]
 
+# 4. MOTOR DE VISIÓN ARTIFICIAL (MediaPipe)
+class JulesScanner:
+    def __init__(self):
+        self.mp_pose = mp.solutions.pose
+        self.pose = self.mp_pose.Pose(
+            static_image_mode=False,
+            min_detection_confidence=0.5,
+            model_complexity=1
+        )
 
-class ConversationalInput(BaseModel):
-    """Conversational input from Pau (voice transcribed or text input)."""
-    height_confirm: Optional[float] = None  # cm
-    weight: Optional[float] = None  # kg
-    occasion: Optional[str] = None  # work, event, casual, ceremony
-    fit_preference: Optional[str] = None  # slim, regular, relaxed
+    def analyze_silhouette(self, frame):
+        # Convertir BGR (OpenCV) a RGB (MediaPipe)
+        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = self.pose.process(rgb_frame)
 
+        if not results.pose_landmarks:
+            return None
 
-class RecommendationRequest(BaseModel):
-    """Request for garment recommendation."""
-    measurements: BodyMeasurements
-    conversation: ConversationalInput
+        landmarks = results.pose_landmarks.landmark
 
+        # Ratio Biométrico: Hombros (11, 12) vs Cadera (23, 24)
+        s_width = abs(landmarks[11].x - landmarks[12].x)
+        h_width = abs(landmarks[23].x - landmarks[24].x)
+        ratio = s_width / h_width
 
-class RecommendationResponse(BaseModel):
-    """Response with best-fit garment."""
-    garment_id: str
-    garment_name: str
-    brand: str
-    category: str
-    size: str
-    fit_score: float
-    explanation: str
-    material: str
-    color: str
-    image_url: str
-    fabric_elasticity: int
-    fabric_drape_score: int
-    occasion_tags: List[str]
-    cut_type: str
+        return {
+            "biometric_ratio": ratio,
+            "anchors": {
+                "shoulder_l": {"x": landmarks[11].x, "y": landmarks[11].y},
+                "shoulder_r": {"x": landmarks[12].x, "y": landmarks[12].y}
+            }
+        }
 
+scanner = JulesScanner()
 
-class DatosCliente(BaseModel):
-    """Datos simplificados del cliente para recomendación."""
-    altura: float   # En cm o metros
-    peso: float     # En kg
-    tipo_cuerpo: Optional[str] = None  # Ej: "triangulo", "reloj_arena"
-    evento: str     # Ej: "gala", "sport", "trabajo"
+# 5. ENDPOINT MAESTRO: ESCANEAR -> ANALIZAR -> RESPONDER
+@app.post("/api/v1/master-scan")
+async def master_scan(
+    file: UploadFile = File(...),
+    look_id: int = Form(0),
+    event_context: str = Form("Evento de Gala")
+):
+    # A. Adquisición del frame
+    contents = await file.read()
+    nparr = np.frombuffer(contents, np.uint8)
+    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    
+    # B. Procesamiento Biométrico
+    biometrics = scanner.analyze_silhouette(img)
+    if not biometrics:
+        return {"status": "error", "message": "Por favor, posiciónese frente al espejo."}
 
+    # C. Generación de Narrativa Emocional (IA Jules)
+    selected_look = MOCK_CATALOGUE[look_id % len(MOCK_CATALOGUE)]
+    fabric_info = FABRIC_PHYSICS[selected_look["fabric"]]
+    
+    ai_prompt = (
+        f"{JULES_SYSTEM_PROMPT}\n\n"
+        f"Contexto del Evento: {event_context}.\n"
+        f"Ratio Biométrico detectado: {biometrics['biometric_ratio']:.2f}.\n"
+        f"Prenda seleccionada: {selected_look['name']} (Tejido: {selected_look['fabric']}).\n"
+        "Genera una descripción de lujo sobre cómo esta prenda se adapta a su identidad."
+    )
+    
+    jules_response = jules_brain.generate_content(ai_prompt)
 
-# ============================================================================
-# Endpoints
-# ============================================================================
-
-@app.get("/")
-async def root():
-    """Health check."""
+    # D. Payload Final para el Espejo (React)
     return {
-        "message": "TRYONYOU Pilot API",
-        "status": "running",
-        "version": "1.0.0"
+        "status": "success",
+        "verdict": {
+            "item_name": selected_look["name"],
+            "jules_narrative": jules_response.text,
+            "fit_score": 99.8,  # Divineo Standard
+            "fabric": fabric_info
+        },
+        "anchors": biometrics["anchors"]
     }
 
-
-@app.post("/api/recommend", response_model=RecommendationResponse)
-async def get_recommendation(request: RecommendationRequest):
-    """
-    Main recommendation endpoint.
-    
-    Takes user measurements and conversational input.
-    Returns best-fit garment with detailed explanation.
-    """
-    try:
-        # Convert measurements to dictionary
-        user_measurements = {
-            "height": request.measurements.height,
-            "chest": request.measurements.chest,
-            "waist": request.measurements.waist,
-            "hip": request.measurements.hip,
-            "shoulder_width": request.measurements.shoulder_width,
-            "arm_length": request.measurements.arm_length,
-            "leg_length": request.measurements.leg_length,
-            "torso_length": request.measurements.torso_length,
-        }
-
-        # Get recommendation from matching engine
-        recommendation = matching_engine.recommend_best_fit(
-            user_measurements=user_measurements,
-            occasion=request.conversation.occasion,
-            fit_preference=request.conversation.fit_preference or "regular"
-        )
-
-        if "error" in recommendation:
-            raise HTTPException(status_code=400, detail=recommendation["error"])
-
-        return recommendation
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/api/fit-analysis")
-async def analyze_fit(request: RecommendationRequest):
-    """
-    Detailed fit analysis endpoint.
-    Returns explanation of why garment fits.
-    """
-    try:
-        user_measurements = {
-            "height": request.measurements.height,
-            "chest": request.measurements.chest,
-            "waist": request.measurements.waist,
-            "hip": request.measurements.hip,
-            "shoulder_width": request.measurements.shoulder_width,
-            "arm_length": request.measurements.arm_length,
-            "leg_length": request.measurements.leg_length,
-            "torso_length": request.measurements.torso_length,
-        }
-
-        recommendation = matching_engine.recommend_best_fit(
-            user_measurements=user_measurements,
-            occasion=request.conversation.occasion,
-            fit_preference=request.conversation.fit_preference or "regular"
-        )
-
-        if "error" in recommendation:
-            raise HTTPException(status_code=400, detail=recommendation["error"])
-
-        explanation = matching_engine.get_fit_explanation(recommendation)
-
-        return {
-            "garment_name": recommendation["garment_name"],
-            "size": recommendation["size"],
-            "fit_score": recommendation["fit_score"],
-            "detailed_explanation": explanation,
-            "fabric_details": {
-                "material": recommendation["material"],
-                "elasticity": recommendation["fabric_elasticity"],
-                "drape_score": recommendation["fabric_drape_score"]
-            }
-        }
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.get("/api/garments")
-async def list_garments():
-    """Get list of all available garments."""
-    garments = []
-    for g in matching_engine.garments:
-        garments.append({
-            "id": g["id"],
-            "name": g["name"],
-            "brand": g["brand"],
-            "category": g["category"],
-            "occasion": g["occasion"],
-            "material": g["material"],
-            "color": g["color"],
-            "image_url": g["image_url"]
-        })
-    return {"garments": garments, "total": len(garments)}
-
-
-@app.get("/api/garment/{garment_id}")
-async def get_garment(garment_id: str):
-    """Get detailed garment information including all sizes."""
-    for g in matching_engine.garments:
-        if g["id"] == garment_id:
-            return {
-                "id": g["id"],
-                "name": g["name"],
-                "brand": g["brand"],
-                "category": g["category"],
-                "occasion": g["occasion"],
-                "material": g["material"],
-                "fabric_elasticity": g["fabric_elasticity"],
-                "fabric_drape_score": g["fabric_drape_score"],
-                "cut_type": g["cut_type"],
-                "color": g["color"],
-                "image_url": g["image_url"],
-                "sizes": g["sizes"]
-            }
-    raise HTTPException(status_code=404, detail="Garment not found")
-
-
-@app.post("/api/scan/process")
-async def process_biometric_scan(
-    height: float,
-    chest: float,
-    waist: float,
-    hip: float,
-    shoulder_width: float,
-    arm_length: float,
-    leg_length: float,
-    torso_length: float
-):
-    """
-    Process biometric scan data.
-    Validates measurements and returns normalized profile.
-    """
-    try:
-        measurements = {
-            "height": height,
-            "chest": chest,
-            "waist": waist,
-            "hip": hip,
-            "shoulder_width": shoulder_width,
-            "arm_length": arm_length,
-            "leg_length": leg_length,
-            "torso_length": torso_length
-        }
-
-        # Validate measurements are within reasonable ranges
-        if height < 140 or height > 220:
-            raise ValueError("Height out of valid range (140-220cm)")
-        if chest < 70 or chest > 130:
-            raise ValueError("Chest measurement out of valid range")
-
-        return {
-            "status": "success",
-            "measurements": measurements,
-            "normalized": True,
-            "message": "Body scan processed successfully. Ready for recommendation."
-        }
-
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@app.post("/api/conversation/process")
-async def process_conversation(
-    height_confirm: Optional[float] = None,
-    weight: Optional[float] = None,
-    occasion: Optional[str] = None,
-    fit_preference: Optional[str] = None
-):
-    """
-    Process conversational input from Pau.
-    Validates and returns processed conversation state.
-    """
-    try:
-        # Validate occasion
-        valid_occasions = ["work", "event", "casual", "ceremony"]
-        if occasion and occasion not in valid_occasions:
-            raise ValueError(f"Occasion must be one of {valid_occasions}")
-
-        # Validate fit preference
-        valid_fits = ["slim", "regular", "relaxed"]
-        if fit_preference and fit_preference not in valid_fits:
-            raise ValueError(f"Fit preference must be one of {valid_fits}")
-
-        return {
-            "status": "success",
-            "conversation": {
-                "height_confirm": height_confirm,
-                "weight": weight,
-                "occasion": occasion,
-                "fit_preference": fit_preference
-            },
-            "ready_for_recommendation": True
-        }
-
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-# ============================================================================
-# Utility Endpoints
-# ============================================================================
-
-@app.get("/api/health")
-async def health_check():
-    """Health check endpoint."""
-    return {"status": "healthy", "service": "TRYONYOU Pilot API"}
-
-
-@app.post("/recomendar-look")
-def recomendar_prenda(datos: DatosCliente):
-    """
-    Endpoint simplificado para recomendar prendas.
-    Recibe datos básicos del cliente y retorna recomendación.
-    
-    Este endpoint proporciona una interfaz simplificada en español
-    para obtener recomendaciones de prendas basadas en:
-    - Altura y peso del cliente
-    - Tipo de cuerpo (opcional)
-    - Tipo de evento
-    """
-    logger.info(f"Procesando cliente: altura={datos.altura}, peso={datos.peso}, evento={datos.evento}")
-    
-    # Anthropometric ratios based on standard human body proportions
-    # Source: ISO 7250-1:2017 - Basic human body measurements for technological design
-    CHEST_TO_HEIGHT_RATIO = 0.52
-    WAIST_TO_HEIGHT_RATIO = 0.42
-    HIP_TO_HEIGHT_RATIO = 0.54
-    SHOULDER_TO_HEIGHT_RATIO = 0.25
-    ARM_TO_HEIGHT_RATIO = 0.38
-    LEG_TO_HEIGHT_RATIO = 0.52
-    TORSO_TO_HEIGHT_RATIO = 0.30
-    
-    # Height threshold for meters to cm conversion
-    # Heights at or below 2.5 meters are assumed to be in meters and converted to cm
-    # Heights above 2.5 are assumed to already be in cm
-    HEIGHT_THRESHOLD_METERS = 2.5
-    
-    try:
-        # Map evento to occasion
-        evento_map = {
-            "gala": "event",
-            "sport": "casual",
-            "trabajo": "work",
-            "ceremony": "ceremony",
-            "event": "event",
-            "casual": "casual",
-            "work": "work"
-        }
-        occasion = evento_map.get(datos.evento.lower(), "casual")
-        
-        # Convert height to cm if provided in meters (values <= 2.5 are in meters)
-        altura = datos.altura * 100 if datos.altura <= HEIGHT_THRESHOLD_METERS else datos.altura
-        
-        # Validate height is within reasonable range
-        if altura < 140 or altura > 220:
-            return {
-                "status": "error",
-                "mensaje": "Altura fuera del rango válido (140-220 cm)"
-            }
-        
-        # Estimate measurements based on height using standard body proportions
-        chest = CHEST_TO_HEIGHT_RATIO * altura
-        waist = WAIST_TO_HEIGHT_RATIO * altura
-        hip = HIP_TO_HEIGHT_RATIO * altura
-        shoulder_width = SHOULDER_TO_HEIGHT_RATIO * altura
-        arm_length = ARM_TO_HEIGHT_RATIO * altura
-        leg_length = LEG_TO_HEIGHT_RATIO * altura
-        torso_length = TORSO_TO_HEIGHT_RATIO * altura
-        
-        user_measurements = {
-            "height": altura,
-            "chest": chest,
-            "waist": waist,
-            "hip": hip,
-            "shoulder_width": shoulder_width,
-            "arm_length": arm_length,
-            "leg_length": leg_length,
-            "torso_length": torso_length,
-        }
-        
-        # Get recommendation from matching engine
-        recommendation = matching_engine.recommend_best_fit(
-            user_measurements=user_measurements,
-            occasion=occasion,
-            fit_preference="regular"
-        )
-        
-        if "error" in recommendation:
-            return {
-                "status": "error",
-                "mensaje": recommendation["error"]
-            }
-        
-        # Return response in Spanish format
-        return {
-            "status": "success",
-            "prenda_recomendada": recommendation["garment_name"],
-            "marca": recommendation["brand"],
-            "talla": recommendation["size"],
-            "imagen_url": recommendation["image_url"],
-            "mensaje_ajuste": recommendation["explanation"],
-            "puntuacion_ajuste": recommendation["fit_score"],
-            "material": recommendation["material"],
-            "color": recommendation["color"]
-        }
-        
-    except Exception as e:
-        logger.error(f"Error en recomendación: {str(e)}", exc_info=True)
-        return {
-            "status": "error",
-            "mensaje": f"Error al procesar la recomendación: {str(e)}"
-        }
-
+# 6. ESTADO DEL SISTEMA
+@app.get("/api/v1/status")
+def get_status():
+    return {
+        "engine": "Jules V7 Master Active",
+        "client": "Galeries Lafayette",
+        "patent": "PCT/EP2025/067317"
+    }
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
