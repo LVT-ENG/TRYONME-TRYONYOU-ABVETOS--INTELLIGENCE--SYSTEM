@@ -10,15 +10,21 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
   const requestRef = useRef(null);
   const garmentImageRef = useRef(null);
 
+  // Refs for Master Scan Logic
+  const apiAnchorsRef = useRef(null);
+  const hiddenCanvasRef = useRef(document.createElement('canvas'));
+
   const gold = '#D3B26A';
 
   useEffect(() => {
-    // Load the garment image
+    // Load initial garment
     const img = new Image();
-    img.src = '/assets/garments/blazer.png';
+    img.src = '/assets/garments/look_0.png'; // Default start
     img.onload = () => {
       garmentImageRef.current = img;
     };
+    // Fallback if look_0 doesn't exist yet (though we created it)
+    img.onerror = () => { img.src = '/assets/garments/blazer.png'; };
 
     // Initialize MediaPipe Pose Landmarker
     const createPoseLandmarker = async () => {
@@ -43,6 +49,80 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
     };
   }, []);
 
+  // --- SUPERCOMMIT MAX: Master Scan Loop ---
+  useEffect(() => {
+    if (!cameraReady || mode !== 'result') return;
+
+    const performMasterScan = async () => {
+      if (!webcamRef.current || !webcamRef.current.video) return;
+
+      const video = webcamRef.current.video;
+      if (video.readyState !== 4) return;
+
+      // 1. OPTIMIZATION: Downscale Frame
+      const hiddenCanvas = hiddenCanvasRef.current;
+      const ctx = hiddenCanvas.getContext('2d');
+      const targetWidth = 640; // Reduced width for performance
+      const scale = targetWidth / video.videoWidth;
+      const targetHeight = video.videoHeight * scale;
+
+      hiddenCanvas.width = targetWidth;
+      hiddenCanvas.height = targetHeight;
+      ctx.drawImage(video, 0, 0, targetWidth, targetHeight);
+
+      // 2. Convert to Blob
+      hiddenCanvas.toBlob(async (blob) => {
+        if (!blob) return;
+        const formData = new FormData();
+        formData.append('file', blob, 'scan.jpg');
+
+        try {
+          // 3. POST to API
+          const response = await fetch('/api/v1/master-scan', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+
+            // 4. Update Assets & Narrative
+            if (data.image_url) {
+                // Ensure URL is absolute/correct relative to public
+                const url = data.image_url.startsWith('http') ? data.image_url : data.image_url;
+                if(garmentImageRef.current && garmentImageRef.current.src !== window.location.origin + url) {
+                     const newImg = new Image();
+                     newImg.src = url;
+                     newImg.onload = () => { garmentImageRef.current = newImg; };
+                }
+            }
+
+            // "Fire Test": Log Narrative
+            console.log(`%c[JULES NARRATIVE]: ${data.jules_narrative}`, `color: ${gold}; font-weight: bold; font-size: 12px;`);
+
+            // Update Anchors
+            if (data.anchors) {
+                apiAnchorsRef.current = data.anchors;
+            }
+
+          } else {
+            console.warn("Master Scan failed:", response.statusText);
+          }
+        } catch (error) {
+          console.error("Master Scan error:", error);
+        }
+      }, 'image/jpeg', 0.8); // 80% quality JPEG
+    };
+
+    const intervalId = setInterval(performMasterScan, 3000); // Every 3 seconds
+
+    // Run once immediately
+    performMasterScan();
+
+    return () => clearInterval(intervalId);
+  }, [cameraReady, mode]);
+
+
   const predictWebcam = () => {
     if (
       poseLandmarker &&
@@ -65,14 +145,15 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // --- RENDERING STRATEGY ---
+      // We prioritize Local MediaPipe for smooth tracking (60fps).
+      // API Anchors are used for "Master Scan" validation or fallback.
+      // If we wanted to STRICTLY use API anchors (which are 3s delayed), it would stutter.
+      // So we use local landmarks but render the garment provided by the API.
+
       if (results.landmarks && results.landmarks.length > 0) {
         const landmarks = results.landmarks[0];
 
-        // Draw Golden Aura (Optional visual flair)
-        // const drawingUtils = new DrawingUtils(ctx);
-        // drawingUtils.drawConnectors(landmarks, PoseLandmarker.POSE_CONNECTIONS, { color: gold, lineWidth: 1 });
-
-        // Logic for AR Garment Overlay
         // Landmarks: 11 (left shoulder), 12 (right shoulder)
         const leftShoulder = landmarks[11];
         const rightShoulder = landmarks[12];
@@ -94,6 +175,22 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
           ctx.globalAlpha = 0.9;
           ctx.drawImage(garmentImageRef.current, x, y, garmentWidth, garmentHeight);
           ctx.restore();
+
+          // Debug: Visualize API Anchors if they differ significantly (Validation)
+          if (apiAnchorsRef.current) {
+             // API returns normalized 0-1 coords
+             const ax1 = apiAnchorsRef.current.left_shoulder.x * canvas.width;
+             const ay1 = apiAnchorsRef.current.left_shoulder.y * canvas.height;
+             const ax2 = apiAnchorsRef.current.right_shoulder.x * canvas.width;
+             const ay2 = apiAnchorsRef.current.right_shoulder.y * canvas.height;
+
+             // Draw faint debug markers for API "truth"
+             /*
+             ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+             ctx.beginPath(); ctx.arc(ax1, ay1, 5, 0, 2*Math.PI); ctx.fill();
+             ctx.beginPath(); ctx.arc(ax2, ay2, 5, 0, 2*Math.PI); ctx.fill();
+             */
+          }
         }
 
         // In Scan mode, just show tracking dots or a scanning effect

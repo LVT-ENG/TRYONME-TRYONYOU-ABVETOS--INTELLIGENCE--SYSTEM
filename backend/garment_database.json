@@ -1,7 +1,7 @@
 {
   "garments": [
     {
-      "id": "blazer_001",
+      "id": "look_0",
       "name": "Classic Business Blazer",
       "brand": "Maison Prestige",
       "category": "outerwear",
@@ -11,7 +11,7 @@
       "fabric_drape_score": 6,
       "cut_type": "tailored",
       "color": "charcoal grey",
-      "image_url": "/images/blazer_001.jpg",
+      "image_url": "/assets/garments/look_0.png",
       "sizes": {
         "XS": {"chest": 82, "waist": 68, "shoulder_width": 38, "arm_length": 58, "torso_length": 58},
         "S": {"chest": 88, "waist": 74, "shoulder_width": 40, "arm_length": 60, "torso_length": 60},
@@ -22,7 +22,7 @@
       }
     },
     {
-      "id": "dress_001",
+      "id": "look_1",
       "name": "Elegant Evening Dress",
       "brand": "Couture Elegance",
       "category": "dress",
@@ -32,7 +32,7 @@
       "fabric_drape_score": 9,
       "cut_type": "fitted",
       "color": "midnight black",
-      "image_url": "/images/dress_001.jpg",
+      "image_url": "/assets/garments/look_1.png",
       "sizes": {
         "XS": {"chest": 80, "waist": 62, "shoulder_width": 36, "arm_length": 56, "torso_length": 72},
         "S": {"chest": 86, "waist": 68, "shoulder_width": 38, "arm_length": 58, "torso_length": 74},
@@ -43,7 +43,7 @@
       }
     },
     {
-      "id": "shirt_001",
+      "id": "look_2",
       "name": "Premium Cotton Shirt",
       "brand": "Textile Masters",
       "category": "top",
@@ -53,7 +53,7 @@
       "fabric_drape_score": 5,
       "cut_type": "regular",
       "color": "white",
-      "image_url": "/images/shirt_001.jpg",
+      "image_url": "/assets/garments/look_2.png",
       "sizes": {
         "XS": {"chest": 84, "waist": 72, "shoulder_width": 38, "arm_length": 60, "torso_length": 62},
         "S": {"chest": 90, "waist": 78, "shoulder_width": 40, "arm_length": 62, "torso_length": 64},
@@ -64,7 +64,7 @@
       }
     },
     {
-      "id": "trousers_001",
+      "id": "look_3",
       "name": "Tailored Wool Trousers",
       "brand": "Heritage Tailors",
       "category": "bottoms",
@@ -74,7 +74,7 @@
       "fabric_drape_score": 7,
       "cut_type": "tailored",
       "color": "navy",
-      "image_url": "/images/trousers_001.jpg",
+      "image_url": "/assets/garments/look_3.png",
       "sizes": {
         "XS": {"waist": 66, "hip": 88, "leg_length": 80, "torso_length": 98},
         "S": {"waist": 72, "hip": 94, "leg_length": 82, "torso_length": 100},
@@ -85,7 +85,7 @@
       }
     },
     {
-      "id": "cardigan_001",
+      "id": "look_4",
       "name": "Cashmere Cardigan",
       "brand": "Luxury Knits",
       "category": "outerwear",
@@ -95,7 +95,7 @@
       "fabric_drape_score": 8,
       "cut_type": "relaxed",
       "color": "cream",
-      "image_url": "/images/cardigan_001.jpg",
+      "image_url": "/assets/garments/look_4.png",
       "sizes": {
         "XS": {"chest": 86, "waist": 70, "shoulder_width": 39, "arm_length": 59, "torso_length": 60},
         "S": {"chest": 92, "waist": 76, "shoulder_width": 41, "arm_length": 61, "torso_length": 62},
@@ -106,7 +106,7 @@
       }
     },
     {
-      "id": "skirt_001",
+      "id": "look_5",
       "name": "Structured Midi Skirt",
       "brand": "Silhouette Design",
       "category": "bottoms",
@@ -116,7 +116,7 @@
       "fabric_drape_score": 4,
       "cut_type": "structured",
       "color": "burgundy",
-      "image_url": "/images/skirt_001.jpg",
+      "image_url": "/assets/garments/look_5.png",
       "sizes": {
         "XS": {"waist": 62, "hip": 86, "torso_length": 65},
         "S": {"waist": 68, "hip": 92, "torso_length": 67},
@@ -127,7 +127,7 @@
       }
     },
     {
-      "id": "sweater_001",
+      "id": "look_6",
       "name": "Fine Merino Sweater",
       "brand": "Nordic Heritage",
       "category": "top",
@@ -137,7 +137,7 @@
       "fabric_drape_score": 6,
       "cut_type": "slim fit",
       "color": "charcoal",
-      "image_url": "/images/sweater_001.jpg",
+      "image_url": "/assets/garments/look_6.png",
       "sizes": {
         "XS": {"chest": 82, "waist": 66, "shoulder_width": 37, "arm_length": 57, "torso_length": 58},
         "S": {"chest": 88, "waist": 72, "shoulder_width": 39, "arm_length": 59, "torso_length": 60},

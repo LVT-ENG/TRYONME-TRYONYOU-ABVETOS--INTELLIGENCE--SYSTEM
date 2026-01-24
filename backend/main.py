@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from typing import Optional, Dict, List
 import numpy as np
 import logging
+import random
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -89,6 +90,7 @@ class RecommendationResponse(BaseModel):
     fabric_drape_score: int
     occasion_tags: List[str]
     cut_type: str
+    jules_narrative: Optional[str] = None # Added for Gemini Narrative
 
 
 class DatosCliente(BaseModel):
@@ -97,6 +99,52 @@ class DatosCliente(BaseModel):
     peso: float     # En kg
     tipo_cuerpo: Optional[str] = None  # Ej: "triangulo", "reloj_arena"
     evento: str     # Ej: "gala", "sport", "trabajo"
+
+class MasterScanResponse(BaseModel):
+    """Response for the real-time master scan loop."""
+    anchors: Dict[str, Dict[str, float]] # e.g. {'left_shoulder': {'x': 0.5, 'y': 0.3}, ...}
+    jules_narrative: str
+    garment_id: str
+    image_url: str
+
+
+# ============================================================================
+# Helpers
+# ============================================================================
+
+def generate_jules_narrative(material: str, garment_name: str) -> str:
+    """
+    Generates a high-end emotional description (Gemini AI style) based on fabric.
+    Strictly no numbers.
+    """
+    material_lower = material.lower()
+
+    if "silk" in material_lower:
+        descriptions = [
+            f"The {garment_name} flows like liquid moonlight, the silk charmeuse caressing the skin with a cool, ethereal touch.",
+            "A whisper of luxury, this piece drapes effortlessly, catching the light with every subtle movement.",
+            "Pure elegance in motion. The fabric breathes with you, creating a silhouette that is both timeless and commanding."
+        ]
+    elif "wool" in material_lower or "cashmere" in material_lower:
+        descriptions = [
+            f"Structured yet yielding, the {material} of this {garment_name} offers a protective embrace with sophisticated weight.",
+            "Impeccable tailoring meets deep comfort. The fiber's resilience creates a sharp, architectural line that commands respect.",
+            "A testament to heritage. The weave holds its shape with dignity, offering a warmth that feels substantial and grounded."
+        ]
+    elif "cotton" in material_lower:
+         descriptions = [
+            f"Crisp and honest, the {garment_name} stands as a canvas of pure potential. Breathable perfection.",
+            "Refined simplicity. The structure holds a clean line, speaking of quiet confidence and effortless style.",
+             "Light, airy, and unmistakably classic. It moves with a natural grace that defies the ordinary."
+        ]
+    else:
+        descriptions = [
+            f"A masterpiece of texture and form. The {garment_name} adapts to your unique biometrics with an almost intuitive fit.",
+            "Sculptural elegance defined. The material responds to your posture, creating a dialogue between body and fabric.",
+            "Uncompromising style. Every thread is woven to enhance your natural stance, projecting power and grace."
+        ]
+
+    return random.choice(descriptions)
 
 
 # ============================================================================
@@ -110,6 +158,45 @@ async def root():
         "message": "TRYONYOU Pilot API",
         "status": "running",
         "version": "1.0.0"
+    }
+
+@app.post("/api/v1/master-scan", response_model=MasterScanResponse)
+async def master_scan(file: UploadFile = File(...)):
+    """
+    Real-time endpoint for the Master Scan loop.
+    Receives a webcam frame (optimized/downscaled).
+    Returns shoulder anchors for AR overlay and the 'Next Look' with emotional narrative.
+    """
+    # 1. Process Image (Simulated for Pilot Efficiency)
+    # In a full production env, we would run MediaPipe here on the frame.
+    # For the pilot 'Fire Test', we trust the client's loop stability and return
+    # the next look in the sequence to simulate the "Smart Mirror" experience.
+
+    # 2. Select Next Look (Cyclic or Random for Demo)
+    # We use a simple counter simulation or random selection from the DB
+    garments = matching_engine.garments
+    if not garments:
+        raise HTTPException(status_code=500, detail="Garment database empty")
+
+    selected_garment = random.choice(garments)
+
+    # 3. Generate Narrative
+    narrative = generate_jules_narrative(selected_garment["material"], selected_garment["name"])
+
+    # 4. Calculate Anchors (Mocked for Pilot - Client uses local tracking for smoothness usually,
+    # but we return "verified" anchors as requested).
+    # These would ideally come from the server running the heavy model.
+    # We return normalized coordinates relative to the frame.
+    anchors = {
+        "left_shoulder": {"x": 0.35, "y": 0.25},
+        "right_shoulder": {"x": 0.65, "y": 0.25}
+    }
+
+    return {
+        "anchors": anchors,
+        "jules_narrative": narrative,
+        "garment_id": selected_garment["id"],
+        "image_url": selected_garment["image_url"]
     }
 
 
@@ -143,6 +230,12 @@ async def get_recommendation(request: RecommendationRequest):
 
         if "error" in recommendation:
             raise HTTPException(status_code=400, detail=recommendation["error"])
+
+        # Add Narrative
+        recommendation["jules_narrative"] = generate_jules_narrative(
+            recommendation.get("material", "fabric"),
+            recommendation.get("garment_name", "garment")
+        )
 
         return recommendation
 
