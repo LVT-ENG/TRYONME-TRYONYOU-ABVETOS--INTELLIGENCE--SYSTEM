@@ -1,7 +1,7 @@
 {
   "garments": [
     {
-      "id": "blazer_001",
+      "id": "look_0",
       "name": "Classic Business Blazer",
       "brand": "Maison Prestige",
       "category": "outerwear",
@@ -22,7 +22,7 @@
       }
     },
     {
-      "id": "dress_001",
+      "id": "look_1",
       "name": "Elegant Evening Dress",
       "brand": "Couture Elegance",
       "category": "dress",
@@ -43,7 +43,7 @@
       }
     },
     {
-      "id": "shirt_001",
+      "id": "look_2",
       "name": "Premium Cotton Shirt",
       "brand": "Textile Masters",
       "category": "top",
@@ -64,7 +64,7 @@
       }
     },
     {
-      "id": "trousers_001",
+      "id": "look_3",
       "name": "Tailored Wool Trousers",
       "brand": "Heritage Tailors",
       "category": "bottoms",
@@ -85,7 +85,7 @@
       }
     },
     {
-      "id": "cardigan_001",
+      "id": "look_4",
       "name": "Cashmere Cardigan",
       "brand": "Luxury Knits",
       "category": "outerwear",
@@ -106,7 +106,7 @@
       }
     },
     {
-      "id": "skirt_001",
+      "id": "look_5",
       "name": "Structured Midi Skirt",
       "brand": "Silhouette Design",
       "category": "bottoms",
@@ -127,7 +127,7 @@
       }
     },
     {
-      "id": "sweater_001",
+      "id": "look_6",
       "name": "Fine Merino Sweater",
       "brand": "Nordic Heritage",
       "category": "top",

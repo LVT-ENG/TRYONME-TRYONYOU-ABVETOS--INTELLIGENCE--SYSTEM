@@ -5,8 +5,24 @@ No random AI output - pure measurement-based scoring.
 """
 
 import json
+import os
 from typing import Dict, List, Tuple
 from pathlib import Path
+
+# Bolt Optimization: Memoized Database Loader
+_db_cache = None
+
+def get_garment_database(db_path: str = None):
+    global _db_cache
+    if _db_cache is None:
+        # If path not provided, resolve relative to this file
+        if db_path is None:
+            db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "garment_database.json")
+
+        # Only loads once per serverless instance lifecycle
+        with open(db_path, "r") as f:
+            _db_cache = json.load(f)
+    return _db_cache
 
 
 class MatchingEngine:
@@ -15,10 +31,10 @@ class MatchingEngine:
     Adjusts fit calculation using fabric elasticity and drape scores.
     """
 
-    def __init__(self, garment_db_path: str = "garment_database.json"):
+    def __init__(self, garment_db_path: str = None):
         """Initialize matching engine with garment database."""
-        with open(garment_db_path, 'r') as f:
-            self.garment_db = json.load(f)
+        # Use singleton loader
+        self.garment_db = get_garment_database(garment_db_path)
         self.garments = self.garment_db["garments"]
 
     def calculate_fit_score(
@@ -158,6 +174,15 @@ class MatchingEngine:
 
                 if score > best_score:
                     best_score = score
+
+                    # Generate Jules Narrative (High-end description)
+                    narrative = (
+                        f"The {garment['name']} from {garment['brand']} is an exquisite match. "
+                        f"Crafted from {garment['material']}, it features a {garment['cut_type']} cut "
+                        f"that complements your silhouette perfectly. The {garment['color']} tone "
+                        f"is ideal for {occasion or 'any'} occasions."
+                    )
+
                     best_recommendation = {
                         "garment_id": garment["id"],
                         "garment_name": garment["name"],
@@ -166,6 +191,7 @@ class MatchingEngine:
                         "size": size,
                         "fit_score": score,
                         "explanation": explanation,
+                        "jules_narrative": narrative,  # Added field
                         "material": garment["material"],
                         "color": garment["color"],
                         "image_url": garment["image_url"],
@@ -179,7 +205,8 @@ class MatchingEngine:
             return {
                 "error": "No suitable garment found",
                 "fit_score": 0,
-                "explanation": "Could not match measurements to any available garment"
+                "explanation": "Could not match measurements to any available garment",
+                "jules_narrative": "I couldn't find a perfect match in our current collection, but I'm constantly learning your style."
             }
 
         return best_recommendation

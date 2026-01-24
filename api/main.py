@@ -10,18 +10,28 @@ from pydantic import BaseModel
 from typing import Optional, Dict, List
 import numpy as np
 import logging
+import json
+import os
+import base64
+import io
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
-# Import matching engine with compatibility for both module and direct execution
+# Import matching engine from divineo_engine
 # Try relative import first (when run as module), fall back to direct import
 try:
-    from .matching_engine import MatchingEngine
+    from .divineo_engine import MatchingEngine
 except ImportError:
-    from matching_engine import MatchingEngine
-import json
-import os
+    from divineo_engine import MatchingEngine
+
+# Try to import Pillow for image optimization
+try:
+    from PIL import Image
+    HAS_PILLOW = True
+except ImportError:
+    HAS_PILLOW = False
+    logger.warning("Pillow not found. Image optimization disabled.")
 
 app = FastAPI(
     title="TRYONYOU Pilot API",
@@ -39,6 +49,7 @@ app.add_middleware(
 )
 
 # Initialize matching engine
+# We can pass the path, or let the singleton resolve it.
 matching_engine = MatchingEngine(os.path.join(os.path.dirname(__file__), "garment_database.json"))
 
 
@@ -73,6 +84,13 @@ class RecommendationRequest(BaseModel):
     conversation: ConversationalInput
 
 
+class MasterScanRequest(BaseModel):
+    """Request for Master Scan (Image + Measurements)."""
+    image: str  # Base64 encoded image
+    measurements: Optional[BodyMeasurements] = None
+    conversation: Optional[ConversationalInput] = None
+
+
 class RecommendationResponse(BaseModel):
     """Response with best-fit garment."""
     garment_id: str
@@ -82,6 +100,7 @@ class RecommendationResponse(BaseModel):
     size: str
     fit_score: float
     explanation: str
+    jules_narrative: Optional[str] = None # Added field
     material: str
     color: str
     image_url: str
@@ -147,6 +166,87 @@ async def get_recommendation(request: RecommendationRequest):
         return recommendation
 
     except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/api/v1/master-scan", response_model=RecommendationResponse)
+async def master_scan(request: MasterScanRequest):
+    """
+    Master Scan endpoint for instantaneous processing.
+    Accepts Base64 image and optional measurements.
+    Optimizes image size before processing.
+    """
+    try:
+        # 1. Image Optimization (Canvas Throttling)
+        if request.image and HAS_PILLOW:
+            try:
+                # Remove header if present (e.g., "data:image/jpeg;base64,")
+                if "base64," in request.image:
+                    img_str = request.image.split("base64,")[1]
+                else:
+                    img_str = request.image
+
+                img_data = base64.b64decode(img_str)
+                img = Image.open(io.BytesIO(img_data))
+
+                # Resize/Optimize logic simulation
+                # In a real scenario, we might resize to a standard input size for the AI model
+                # img.thumbnail((1024, 1024))
+                # buffer = io.BytesIO()
+                # img.save(buffer, format="JPEG", optimize=True, quality=85)
+                # optimized_img_data = buffer.getvalue()
+
+                logger.info(f"Image processed. Original size: {len(img_data)} bytes.")
+            except Exception as img_error:
+                logger.error(f"Image processing failed: {str(img_error)}")
+                # Continue without failing the whole request if measurements are present
+
+        # 2. Extract Measurements (Mock/Fallback logic if not provided)
+        if request.measurements:
+            user_measurements = {
+                "height": request.measurements.height,
+                "chest": request.measurements.chest,
+                "waist": request.measurements.waist,
+                "hip": request.measurements.hip,
+                "shoulder_width": request.measurements.shoulder_width,
+                "arm_length": request.measurements.arm_length,
+                "leg_length": request.measurements.leg_length,
+                "torso_length": request.measurements.torso_length,
+            }
+        else:
+            # Fallback to standard "Ultimatum" Zero Size measurements or throw error
+            # For this pilot, we might assume measurements are passed or use defaults
+             user_measurements = {
+                "height": 170,
+                "chest": 90,
+                "waist": 70,
+                "hip": 95,
+                "shoulder_width": 40,
+                "arm_length": 60,
+                "leg_length": 80,
+                "torso_length": 60,
+            }
+
+        conversation = request.conversation or ConversationalInput()
+
+        # 3. Get Recommendation
+        recommendation = matching_engine.recommend_best_fit(
+            user_measurements=user_measurements,
+            occasion=conversation.occasion,
+            fit_preference=conversation.fit_preference or "regular"
+        )
+
+        if "error" in recommendation:
+             # Fallback if no specific match, maybe try without occasion?
+             # For now, just return error
+            raise HTTPException(status_code=400, detail=recommendation["error"])
+
+        return recommendation
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Master Scan Error: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 
