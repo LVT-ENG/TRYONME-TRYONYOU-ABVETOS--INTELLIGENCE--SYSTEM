@@ -136,7 +136,8 @@ class PilotRebuilder:
                     ["git", "branch", "--show-current"],
                     capture_output=True,
                     text=True,
-                    cwd=self.root_dir
+                    cwd=self.root_dir,
+                    timeout=5
                 )
                 if result.returncode == 0:
                     branch = result.stdout.strip()
