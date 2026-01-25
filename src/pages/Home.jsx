@@ -16,7 +16,7 @@ export default function PilotSystem() {
               <button onClick={() => setView('scanner')} style={{ background: gold, color: '#000', border: 'none', padding: '10px 30px', fontWeight: 'bold', cursor: 'pointer' }}>ACCÉDER À LA DEMO</button>
             </nav>
             <div style={{ padding: '5vh 0' }}>
-              <h1 style={{ letterSpacing: '12px', fontSize: '3rem', fontWeight: '200' }}>GALERIES LAFAYETTE</h1>
+              <h1 style={{ letterSpacing: '12px', fontSize: '3rem', fontWeight: '200' }}>TRYONYOU</h1>
               <div style={{ margin: '40px auto', width: '320px', height: '480px', border: '1px solid #222', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <p style={{ color: gold, padding: '20px' }}>[VÍDEO PAU: CHASQUIDO Y CAMBIO DE MODELO EN EL ESPEJO]</p>
               </div>
@@ -44,7 +44,7 @@ export default function PilotSystem() {
         {/* 3. QUESTIONNAIRE: TALLA, PESO, EVENTO */}
         {view === 'form' && (
           <motion.div key="v3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ paddingTop: '15vh' }}>
-            <h2 style={{ color: gold, letterSpacing: '3px' }}>CONFIGURER JULES V7</h2>
+            <h2 style={{ color: gold, letterSpacing: '3px' }}>CONFIGURER TRYONYOU</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '350px', margin: '40px auto' }}>
               <input type="number" placeholder="Taille (cm)" style={{ background: 'none', border: '1px solid #333', padding: '20px', color: '#fff' }} />
               <input type="number" placeholder="Poids (kg)" style={{ background: 'none', border: '1px solid #333', padding: '20px', color: '#fff' }} />
@@ -66,9 +66,9 @@ export default function PilotSystem() {
               <div style={{ position: 'absolute', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{ color: gold, fontSize: '0.8rem', marginBottom: '200px', opacity: 0.5 }}>[SILHOUETTE ADAPTÉE À LA PIÈCE]</div>
                 <div style={{ position: 'absolute', bottom: '40px', background: 'rgba(0,0,0,0.8)', padding: '20px', width: '100%' }}>
-                  <h3 style={{ margin: 0, fontSize: '1rem' }}>ROBE DE SOIRÉE LAFAYETTE</h3>
+                  <h3 style={{ margin: 0, fontSize: '1rem' }}>ROBE DE SOIRÉE</h3>
                   <p style={{ color: gold, fontSize: '0.9rem', margin: '5px 0' }}>Ajustement : 99.8%</p>
-                  <p style={{ fontSize: '0.7rem', opacity: 0.6 }}>Analyse Jules V7 : Élasticité et chute optimales</p>
+                  <p style={{ fontSize: '0.7rem', opacity: 0.6 }}>Analyse TRYONYOU : Élasticité et chute optimales</p>
                 </div>
               </div>
             </div>
