@@ -8,6 +8,7 @@ Versión: 1.0.0
 import os
 import sys
 import json
+import subprocess
 from pathlib import Path
 
 class PilotRebuilder:
@@ -131,7 +132,6 @@ class PilotRebuilder:
             
             # Intentar obtener información de git
             try:
-                import subprocess
                 result = subprocess.run(
                     ["git", "branch", "--show-current"],
                     capture_output=True,
@@ -165,7 +165,7 @@ class PilotRebuilder:
         status_file = self.root_dir / "pilot_status.json"
         try:
             with open(status_file, 'w', encoding='utf-8') as f:
-                json.dump(status, f, indent=2)
+                json.dump(status, f, indent=2, ensure_ascii=False)
             print(f"  ✓ Estado guardado en: pilot_status.json")
             self.success_count += 1
         except Exception as e:
