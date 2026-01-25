@@ -10,7 +10,6 @@ const PilotJourney = () => {
   const [contextualData, setContextualData] = useState(null);
   const [recommendation, setRecommendation] = useState(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [selectedGarment, setSelectedGarment] = useState(null);
 
   // Handle biometric measurements from VirtualTryOn
   const handleMeasurementsDetected = (measurements) => {
