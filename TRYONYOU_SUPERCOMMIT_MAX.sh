@@ -55,10 +55,10 @@ if [ -z "$SKIP_CONFIRM" ]; then
     echo "⚠️  WARNING: This will deploy directly to PRODUCTION."
     echo "⚠️  This will overwrite the current deployment."
     echo ""
-    read -p "🤔 Do you want to proceed? (yes/no): " -r
+    read -p "🤔 Type 'yes' to confirm and proceed: " -r
     echo ""
     if [[ ! $REPLY =~ ^[Yy][Ee][Ss]$ ]]; then
-        echo "❌ Deployment cancelled by user."
+        echo "❌ Deployment cancelled."
         exit 0
     fi
     echo "✅ Confirmed. Proceeding with deployment..."
