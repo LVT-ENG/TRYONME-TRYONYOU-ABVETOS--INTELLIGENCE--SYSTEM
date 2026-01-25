@@ -31,7 +31,7 @@ const PilotJourney = () => {
         body: JSON.stringify({
           biometric_data: biometricData || {},
           occasion: data.occasion,
-          fit_preference: data.fit_preference,
+          fit_preference: data.fitPreference ?? data.fit_preference,
         }),
       });
 
