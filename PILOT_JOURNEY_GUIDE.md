@@ -161,8 +161,8 @@ PIXEL_TO_CM_TORSO = 0.12        # Pixels to cm for torso
 
 ```json
 {
-  "@mediapipe/pose": "^0.5.1675469404",
-  "@mediapipe/camera_utils": "^0.3.1675469404",
+  "@mediapipe/pose": "^0.5.1675466862",
+  "@mediapipe/camera_utils": "^0.3.1675466862",
   "react-webcam": "^7.2.0"
 }
 ```
