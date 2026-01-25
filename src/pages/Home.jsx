@@ -1,187 +1,103 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import MagicMirror from '../components/MagicMirror';
+import React, { useState } from 'react';
 
-export default function PilotSystem() {
-  const [view, setView] = useState('landing'); 
-  const [occasion, setOccasion] = useState('event');
-  const [preference, setPreference] = useState('regular');
-  const [recommendation, setRecommendation] = useState(null);
+export default function LafayettePilot() {
+  const [step, setStep] = useState('landing');
   const [loading, setLoading] = useState(false);
 
-  const gold = '#D3B26A';
-
-  // Mock measurements for the "Zero Size" experience
-  const mockMeasurements = {
-    height: 170,
-    chest: 90,
-    waist: 75,
-    hip: 100,
-    shoulder_width: 42,
-    arm_length: 60,
-    leg_length: 85,
-    torso_length: 50,
-    weight: 60
-  };
-
-  const handleAnalysis = async () => {
+  const handleCalculate = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/recommend', {
+      // Use the token from environment variables
+      const token = import.meta.env.REACT_APP_DIVINEO_TOKEN;
+
+      // Mock Biometric Data (Zero Size Protocol)
+      const payload = {
+        h: 170.0,
+        w: 60.0,
+        e: "gala",
+        m: [
+          { x: 0.5, y: 0.2, z: -0.15 }, // Mock Landmark 1
+          { x: 0.52, y: 0.22, z: -0.14 }, // Mock Landmark 2
+          { x: 0.54, y: 0.22, z: -0.14 }, // Mock Landmark 3
+          { x: 0.56, y: 0.22, z: -0.14 }, // Mock Landmark 4
+          { x: 0.48, y: 0.22, z: -0.14 }  // Mock Landmark 5
+        ]
+      };
+
+      const response = await fetch('/api/v1/internal/calculate', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          measurements: mockMeasurements,
-          conversation: {
-            occasion: occasion,
-            fit_preference: preference
-          }
-        })
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Divineo-Token': token || ''
+        },
+        body: JSON.stringify(payload)
       });
 
-      if (!response.ok) throw new Error('Network response was not ok');
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(`API Error: ${response.status} ${errText}`);
+      }
 
       const data = await response.json();
-      setRecommendation(data);
-      setView('result');
+      alert(`SÉLECTION DIVINEO:\n\nModèle: ${data.match}\nPhysique: ${data.physics}\n\n${data.narrative}`);
+
     } catch (error) {
-      console.error("Analysis failed:", error);
-      // Fallback for demo if API fails
-      setRecommendation({
-        garment_name: "Divineo Signature Blazer",
-        fit_score: 99.8,
-        explanation: "Perfect structural match for shoulder alignment.",
-        material: "Silk Blend"
-      });
-      setView('result');
+      console.error(error);
+      alert('Erreur de calcul biométrique: ' + error.message + '\n\nEnsure env vars are set.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="notranslate" style={{ backgroundColor: '#050505', color: '#fff', minHeight: '100vh', fontFamily: 'serif', textAlign: 'center', overflowX: 'hidden', position: 'relative' }}>
+    <div style={{ backgroundColor: '#001A33', color: '#D4AF37', minHeight: '100vh', fontFamily: 'serif', textAlign: 'center' }}>
+      {/* HEADER DE LUJO */}
+      <header style={{ padding: '40px 0', borderBottom: '1px solid rgba(212, 175, 55, 0.2)' }}>
+        <h1 style={{ letterSpacing: '8px', margin: 0 }}>GALERIES LAFAYETTE</h1>
+        <p style={{ fontSize: '0.8rem', marginTop: '10px' }}>DIVINEO EXPERIENCE • PARIS</p>
+      </header>
 
-      {/* BACKGROUND: MAGIC MIRROR (Active from Scanner onwards) */}
-      {view !== 'landing' && (
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-          <MagicMirror mode={view === 'result' ? 'result' : 'scan'} />
-        </div>
+      {step === 'landing' ? (
+        <main style={{ padding: '10vh 20px' }}>
+          <div onClick={() => setStep('scan')} style={{ cursor: 'pointer' }}>
+            <div style={{ margin: '0 auto', width: '300px', height: '400px', border: '1px solid #D4AF37', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+               <p style={{ position: 'absolute', top: '10px' }}>[ VIDEO PAU SNAP ]</p>
+               <span style={{ fontSize: '3rem' }}>✨</span>
+            </div>
+            <h2 style={{ marginTop: '40px', fontWeight: '300' }}>RÉVÉLEZ VOTRE SILHOUETTE</h2>
+            <p style={{ color: 'rgba(212, 175, 55, 0.7)' }}>Cliquez pour activer le miroir biométrique</p>
+          </div>
+        </main>
+      ) : (
+        <main style={{ padding: '40px 20px' }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            <div style={{ width: '100%', height: '60vh', background: '#000', borderRadius: '150px 150px 0 0', border: '2px solid #D4AF37', position: 'relative', overflow: 'hidden' }}>
+               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
+                  <div className="pulse" style={{ width: '100px', height: '100px', border: '2px solid #D4AF37', borderRadius: '50%', animation: 'pulse 2s infinite' }}></div>
+                  <p style={{ marginTop: '20px', letterSpacing: '2px' }}>
+                    {loading ? 'CALCUL DU FIT...' : 'ANALYSE EN COURS...'}
+                  </p>
+               </div>
+            </div>
+            <div style={{ background: 'rgba(212, 175, 55, 0.1)', padding: '30px', border: '2px solid #D4AF37', borderTop: 'none' }}>
+               <button
+                 onClick={handleCalculate}
+                 disabled={loading}
+                 style={{ background: '#D4AF37', color: '#001A33', border: 'none', padding: '15px 40px', fontSize: '1rem', fontWeight: 'bold', cursor: 'pointer', width: '100%', opacity: loading ? 0.7 : 1 }}>
+                 {loading ? 'TRAITEMENT...' : 'DÉCOUVRIR MA SÉLECTION PERSONNALISÉE'}
+               </button>
+            </div>
+          </div>
+        </main>
       )}
 
-      {/* FOREGROUND: UI */}
-      <div style={{ position: 'relative', zIndex: 10, pointerEvents: 'none', height: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <AnimatePresence mode="wait">
-
-          {/* 1. LANDING */}
-          {view === 'landing' && (
-            <motion.div key="v1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ pointerEvents: 'auto', width: '100%' }}>
-              <nav style={{ padding: '20px', display: 'flex', justifyContent: 'flex-end' }}>
-                <button onClick={() => setView('scanner')} style={{ background: gold, color: '#000', border: 'none', padding: '10px 30px', fontWeight: 'bold', cursor: 'pointer' }}>ACCÉDER À LA DEMO</button>
-              </nav>
-              <div style={{ padding: '5vh 0' }}>
-                <h1 style={{ letterSpacing: '12px', fontSize: '3rem', fontWeight: '200' }}>GALERIES LAFAYETTE</h1>
-                <div style={{ margin: '40px auto', width: '320px', height: '480px', border: '1px solid #222', background: '#111', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <p style={{ color: gold, padding: '20px' }}>[VÍDEO PAU: CHASQUIDO Y CAMBIO DE MODELO EN EL ESPEJO]</p>
-                </div>
-                <div style={{ background: '#111', padding: '25px', marginTop: '20px' }}>
-                  <p style={{ letterSpacing: '4px', fontSize: '0.9rem', opacity: 0.8 }}>BIOMÉTRIE • ÉLASTICITÉ • ZÉRO TAILLE</p>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* 2. SCANNER CORPORAL (Overlay) */}
-          {view === 'scanner' && (
-            <motion.div key="v2" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ pointerEvents: 'auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ width: '280px', height: '550px', border: `2px solid ${gold}`, borderRadius: '140px 140px 0 0', position: 'relative', overflow: 'hidden' }}>
-                <motion.div animate={{ top: ['0%', '100%', '0%'] }} transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-                  style={{ width: '100%', height: '3px', background: gold, boxShadow: `0 0 20px ${gold}`, position: 'absolute' }}
-                />
-                <p style={{ marginTop: '200px', opacity: 0.8, textShadow: '0 2px 4px #000' }}>[CAPTURE BIOMÉTRIQUE...]</p>
-              </div>
-              <h2 style={{ color: gold, marginTop: '20px', letterSpacing: '5px', textShadow: '0 2px 10px #000' }}>SCAN EN COURS...</h2>
-              <button onClick={() => setView('form')} style={{ marginTop: '20px', border: `1px solid ${gold}`, background: 'rgba(0,0,0,0.5)', color: gold, padding: '10px 30px', cursor: 'pointer', backdropFilter: 'blur(5px)' }}>SUIVANT</button>
-            </motion.div>
-          )}
-
-          {/* 3. CONTEXTUAL INPUTS (Zero Size) */}
-          {view === 'form' && (
-            <motion.div key="v3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{ pointerEvents: 'auto', width: '100%', paddingTop: '15vh', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <h2 style={{ color: gold, letterSpacing: '3px', textShadow: '0 2px 10px #000' }}>VOTRE STYLE</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '300px', margin: '40px auto' }}>
-
-                {/* Occasion Selector */}
-                <div style={{ background: 'rgba(0,0,0,0.7)', padding: '20px', border: '1px solid #333' }}>
-                  <label style={{ display: 'block', marginBottom: '10px', color: gold }}>OCCASION</label>
-                  <select
-                    value={occasion}
-                    onChange={(e) => setOccasion(e.target.value)}
-                    style={{ width: '100%', background: 'none', border: '1px solid #555', padding: '10px', color: '#fff' }}
-                  >
-                    <option value="event">Gala / Soirée</option>
-                    <option value="work">Business / Pro</option>
-                    <option value="casual">Quotidien / Chic</option>
-                    <option value="ceremony">Cérémonie</option>
-                  </select>
-                </div>
-
-                {/* Preference Selector */}
-                <div style={{ background: 'rgba(0,0,0,0.7)', padding: '20px', border: '1px solid #333' }}>
-                  <label style={{ display: 'block', marginBottom: '10px', color: gold }}>PRÉFÉRENCE</label>
-                  <select
-                    value={preference}
-                    onChange={(e) => setPreference(e.target.value)}
-                    style={{ width: '100%', background: 'none', border: '1px solid #555', padding: '10px', color: '#fff' }}
-                  >
-                    <option value="slim">Ajusté (Fitted)</option>
-                    <option value="regular">Confortable (Regular)</option>
-                    <option value="relaxed">Fluide (Relaxed)</option>
-                  </select>
-                </div>
-
-                <button onClick={handleAnalysis} disabled={loading} style={{ background: gold, color: '#000', padding: '20px', border: 'none', fontWeight: 'bold', cursor: 'pointer', marginTop: '10px' }}>
-                  {loading ? 'ANALYSE...' : 'DÉCOUVRIR MA SÉLECTION'}
-                </button>
-              </div>
-            </motion.div>
-          )}
-
-          {/* 4. RESULT (Magic Mirror + Overlay) */}
-          {view === 'result' && recommendation && (
-            <motion.div key="v4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ pointerEvents: 'auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: '40px' }}>
-
-              <div style={{ margin: '0 auto', width: '90%', maxWidth: '400px', background: 'rgba(5,5,5,0.8)', borderTop: `4px solid ${gold}`, padding: '20px', backdropFilter: 'blur(10px)' }}>
-                <div style={{ color: gold, fontSize: '0.8rem', letterSpacing: '2px', marginBottom: '10px' }}>CURATED SELECTION</div>
-                <h3 style={{ margin: '0 0 10px 0', fontSize: '1.5rem' }}>{recommendation.garment_name || "Signature Piece"}</h3>
-
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', margin: '15px 0', borderTop: '1px solid #333', borderBottom: '1px solid #333', padding: '10px 0' }}>
-                  <div style={{ textAlign: 'left' }}>
-                    <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>VIRTUAL FIT</div>
-                    <div style={{ color: gold, fontSize: '1.2rem', fontWeight: 'bold' }}>PERFECT</div>
-                  </div>
-                  <div style={{ textAlign: 'right' }}>
-                     <div style={{ fontSize: '0.7rem', opacity: 0.6 }}>MATERIAL</div>
-                     <div>{recommendation.material || "Premium Fabric"}</div>
-                  </div>
-                </div>
-
-                <p style={{ fontSize: '0.8rem', opacity: 0.8, fontStyle: 'italic' }}>
-                  "{recommendation.explanation || "Selected for your unique biometrics."}"
-                </p>
-
-                <button onClick={() => setView('landing')} style={{ background: 'none', border: '1px solid #555', color: '#fff', padding: '10px 20px', marginTop: '15px', fontSize: '0.8rem', cursor: 'pointer' }}>NOUVEAU SCAN</button>
-              </div>
-
-            </motion.div>
-          )}
-
-        </AnimatePresence>
-      </div>
-
-      <footer style={{ position: 'fixed', bottom: '15px', width: '100%', fontSize: '10px', opacity: 0.5, zIndex: 20 }}>
-        PATENT PCT/EP2025/067317 | LVT-ENG © 2026
-      </footer>
+      <style>{`
+        @keyframes pulse {
+          0% { transform: scale(0.95); opacity: 0.5; }
+          70% { transform: scale(1.1); opacity: 1; }
+          100% { transform: scale(0.95); opacity: 0.5; }
+        }
+      `}</style>
     </div>
   );
 }

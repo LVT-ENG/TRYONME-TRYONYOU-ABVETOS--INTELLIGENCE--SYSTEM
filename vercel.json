@@ -4,14 +4,19 @@
     { "src": "package.json", "use": "@vercel/static-build" },
     { "src": "api/index.py", "use": "@vercel/python" }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "api/index.py" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ],
-  "crons": [
+  "headers": [
     {
-      "path": "/api/index",
-      "schedule": "*/5 * * * *"
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "https://divineo-lafayette-pilot.vercel.app" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "DENY" }
+      ]
     }
+  ],
+  "rewrites": [
+    { "source": "/miroir-secret", "destination": "/api/index.py" },
+    { "source": "/api/(.*)", "destination": "/api/index.py" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
