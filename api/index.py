@@ -27,6 +27,11 @@ async def get_recommendation(data: RecommendRequest, x_divineo_token: str = Head
 
     # Lógica de Jules: El "Tombé" Perfecto
     # Basamos la recomendación en el IMC y la elasticidad del catálogo de 510 items
+    if data.height <= 0:
+        raise HTTPException(
+            status_code=400,
+            detail="La taille doit être un nombre positif (en centimètres).",
+        )
     bmi = data.weight / ((data.height / 100) ** 2)
 
     # Simulación de selección de catálogo (Lógica de valor)
