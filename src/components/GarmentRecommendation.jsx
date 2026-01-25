@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingBag, Mail, Check, Share2 } from 'lucide-react';
 
 const GarmentRecommendation = ({ recommendation, onShopNow, onSendEmail }) => {
   const [emailSent, setEmailSent] = useState(false);
   const [showShareOptions, setShowShareOptions] = useState(false);
+  const emailTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (emailTimeoutRef.current) {
+        clearTimeout(emailTimeoutRef.current);
+        emailTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   const handleSendEmail = async () => {
     if (onSendEmail) {
       await onSendEmail(recommendation);
       setEmailSent(true);
-      setTimeout(() => setEmailSent(false), 3000);
+      emailTimeoutRef.current = setTimeout(() => {
+        setEmailSent(false);
+        emailTimeoutRef.current = null;
+      }, 3000);
     }
   };
 
