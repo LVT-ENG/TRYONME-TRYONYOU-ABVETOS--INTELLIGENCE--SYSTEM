@@ -10,6 +10,7 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
   const [cameraReady, setCameraReady] = useState(false);
   const requestRef = useRef(null);
   const garmentImageRef = useRef(null);
+  const lastPredictionTimeRef = useRef(0);
 
   const gold = '#D3B26A';
 
@@ -45,12 +46,20 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
   }, []);
 
   const predictWebcam = () => {
+    // BOLT OPTIMIZATION: Throttle detection to ~30 FPS to reduce CPU usage
+    const now = performance.now();
+    if (now - lastPredictionTimeRef.current < 33) {
+      requestRef.current = requestAnimationFrame(predictWebcam);
+      return;
+    }
+
     if (
       poseLandmarker &&
       webcamRef.current &&
       webcamRef.current.video &&
       webcamRef.current.video.readyState === 4
     ) {
+      lastPredictionTimeRef.current = now;
       const video = webcamRef.current.video;
       const canvas = canvasRef.current;
 
