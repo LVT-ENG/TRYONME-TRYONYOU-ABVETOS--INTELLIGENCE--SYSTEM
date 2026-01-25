@@ -30,21 +30,21 @@ export NODE_ENV="production"
 echo "📤 Deploying to Vercel (Production)..."
 
 # Note: We use --prod to bypass staging and force the commercial pilot live
-vercel deploy --name $PROJECT_NAME \
-               --token $VERCEL_TOKEN \
+DEPLOYMENT_URL=$(vercel deploy --name "$PROJECT_NAME" \
+               --token "$VERCEL_TOKEN" \
                --prod \
                --force \
                --yes \
                --build-env NODE_ENV=production \
-               --build-env BACKEND_URL=http://localhost:8000
+               --build-env BACKEND_URL=http://localhost:8000)
 
 # 5. Post-Deployment Validation
 if [ $? -eq 0 ]; then
     echo "✅ PROTOCOLO ULTIMATUM SUCCESSFUL."
-    echo "🌐 Project is live at Galeries Lafayette Pilot URL."
+    echo "🌐 Project is live at: $DEPLOYMENT_URL"
 else
-    echo "⚠️  Deployment failed. Checking logs..."
-    vercel logs $PROJECT_NAME --token $VERCEL_TOKEN
+    echo "⚠️  Deployment failed. Checking logs for $DEPLOYMENT_URL ..."
+    vercel logs "$DEPLOYMENT_URL" --token "$VERCEL_TOKEN"
     exit 1
 fi
 
