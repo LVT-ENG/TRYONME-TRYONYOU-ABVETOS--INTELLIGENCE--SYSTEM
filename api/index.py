@@ -18,7 +18,6 @@ async def get_recommendation(data: RecommendRequest, x_divineo_token: str = Head
     expected_token = os.environ.get("INTERNAL_SECRET_KEY", "dev_token_70")
 
     # Simple check: match either the strict env token OR the hardcoded dev token if env is missing
-    # In the user's snippet: if x_divineo_token != os.environ.get("INTERNAL_SECRET_KEY", "dev_token_70"):
 
     if x_divineo_token != expected_token:
         # Fallback for the case where the user runs locally without the env var set to the alpha key
