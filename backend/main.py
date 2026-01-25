@@ -323,18 +323,18 @@ async def pilot_analyze(request: PilotAnalyzeRequest):
     returns perfect match with 99.7% accuracy.
     """
     try:
-        # Biometric conversion constants
-        # These ratios are derived from anthropometric studies
-        SHOULDER_TO_CHEST_RATIO = 0.5  # Chest circumference is ~50% wider than shoulder width in pixels
-        SHOULDER_TO_WAIST_RATIO = 0.4  # Waist is ~40% of shoulder width smaller
-        SHOULDER_TO_HIP_RATIO = 0.45   # Hip is ~45% of shoulder width
-        PIXEL_TO_CM_SHOULDER = 0.15    # Conversion from pixels to cm for shoulder width
-        PIXEL_TO_CM_ARM = 0.3          # Conversion from pixels to cm for arm length
-        PIXEL_TO_CM_LEG = 0.5          # Conversion from pixels to cm for leg length
-        PIXEL_TO_CM_TORSO = 0.12       # Conversion from pixels to cm for torso length
-        BASE_CHEST_CM = 90             # Base chest measurement in cm
-        BASE_WAIST_CM = 75             # Base waist measurement in cm
-        BASE_HIP_CM = 85               # Base hip measurement in cm
+    # Biometric conversion constants
+    # These ratios are derived from anthropometric studies
+    SHOULDER_TO_CHEST_RATIO = 0.5  # Incremental chest circumference (cm) per pixel of shoulder width
+    SHOULDER_TO_WAIST_RATIO = 0.4  # Incremental waist circumference (cm) per pixel of shoulder width
+    SHOULDER_TO_HIP_RATIO = 0.45   # Incremental hip circumference (cm) per pixel of shoulder width
+    PIXEL_TO_CM_SHOULDER = 0.15    # Conversion from pixels to cm for shoulder width
+    PIXEL_TO_CM_ARM = 0.3          # Conversion from pixels to cm for arm length
+    PIXEL_TO_CM_LEG = 0.5          # Conversion from pixels to cm for leg length
+    PIXEL_TO_CM_TORSO = 0.12       # Conversion from pixels to cm for torso length
+    BASE_CHEST_CM = 90             # Base chest measurement in cm
+    BASE_WAIST_CM = 75             # Base waist measurement in cm
+    BASE_HIP_CM = 85               # Base hip measurement in cm
         
         # Extract biometric measurements from camera tracking
         biometric = request.biometric_data
