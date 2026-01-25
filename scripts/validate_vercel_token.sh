@@ -35,7 +35,7 @@ if [[ "$VERCEL_TOKEN" == *"."* ]]; then
 fi
 
 # Check if token is empty or contains only whitespace
-if [[ -z "${VERCEL_TOKEN// }" ]]; then
+if [[ "$VERCEL_TOKEN" =~ ^[[:space:]]*$ ]]; then
     echo "❌ ERROR: VERCEL_TOKEN is empty or contains only whitespace"
     exit 1
 fi
