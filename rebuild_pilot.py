@@ -88,7 +88,7 @@ class PilotRebuilder:
                 # Mostrar información adicional
                 if req_file == "package.json":
                     try:
-                        with open(file_path, 'r') as f:
+                        with open(file_path, 'r', encoding='utf-8') as f:
                             pkg_data = json.load(f)
                             if "scripts" in pkg_data:
                                 print(f"    → Scripts disponibles: {', '.join(pkg_data['scripts'].keys())}")
@@ -164,8 +164,8 @@ class PilotRebuilder:
         
         status_file = self.root_dir / "pilot_status.json"
         try:
-            with open(status_file, 'w') as f:
-                json.dump(status, indent=2, fp=f)
+            with open(status_file, 'w', encoding='utf-8') as f:
+                json.dump(status, f, indent=2)
             print(f"  ✓ Estado guardado en: pilot_status.json")
             self.success_count += 1
         except Exception as e:
