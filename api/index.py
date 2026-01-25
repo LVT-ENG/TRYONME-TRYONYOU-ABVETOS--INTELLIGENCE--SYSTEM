@@ -1,23 +1,13 @@
-"""
-DIVINEO MASTER ENGINE - JULES V7 (SUPERCOMMIT MAX)
-Versión Consolidada para el Piloto Comercial de Galeries Lafayette
-Licencia: Patente PCT/EP2025/067317
-"""
-
 import os
-import cv2
-import numpy as np
-import mediapipe as mp
-import google.generativeai as genai
-from fastapi import FastAPI, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
+from fastapi.security.api_key import API_KeyHeader
+from pydantic import BaseModel
+from typing import List, Optional, Dict, Any
 
-# 1. CONFIGURACIÓN DE ENTORNO
-load_dotenv()
-app = FastAPI(title="Divineo Jules V7 Master Engine")
+app = FastAPI(docs_url=None, redoc_url=None)
 
-# Habilitar CORS para comunicación con el Frontend (React/Vercel)
+# CORS Configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,122 +15,76 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 2. NÚCLEO DE INTELIGENCIA EMOCIONAL (Jules AI)
-# Definición del comportamiento de lujo y política "Sin Números"
-JULES_SYSTEM_PROMPT = (
-    "Eres Jules, el conserje digital de Galeries Lafayette. "
-    "REGLA DE ORO: Tienes estrictamente prohibido mencionar medidas físicas (cm, kg) o tallas (S, M, L). "
-    "MISIÓN: Recibe datos biométricos y transfórmalos en una narrativa emocional de ajuste perfecto. "
-    "TONO: Sofisticado, minimalista, de Alta Costura. "
-    "ENFOQUE: Explica cómo el tejido 'honra la silueta' basándote en su caída y elasticidad."
-)
+# SEGURIDAD CRÍTICA
+API_KEY_NAME = "X-Divineo-Token"
+api_key_header = API_KeyHeader(name=API_KEY_NAME, auto_error=True)
 
-# Configuración del "Cerebro" (Gemini 1.5 Flash)
-genai.configure(api_key=os.getenv("VITE_GOOGLE_API_KEY"))
-jules_brain = genai.GenerativeModel('gemini-1.5-flash')
+def verify_token(api_key: str = Depends(api_key_header)):
+    # Fallback for local development or if env var is missing, though strictly requested to fail.
+    # The user said: "El servidor rechazará cualquier petición que no coincida con la INTERNAL_SECRET_KEY."
+    secret = os.environ.get("INTERNAL_SECRET_KEY")
+    if not secret or api_key != secret:
+        raise HTTPException(status_code=403, detail="Accès non autorisé")
+    return api_key
 
-# 3. MATRIZ DE FÍSICA Y CATÁLOGO (Jules V7 Physics)
-FABRIC_LOGIC = {
-    "premium-silk": {"stretch": 1.05, "drape": "Fluido", "id": "silk_v7"},
-    "structured-wool": {"stretch": 1.10, "drape": "Autoritario", "id": "wool_v7"},
-    "tech-stretch": {"stretch": 1.30, "drape": "Adaptativo", "id": "tech_v7"}
-}
+class BiometricPayload(BaseModel):
+    h: float = 170.0 # Default height if not provided (though user requested these fields)
+    w: float = 65.0  # Default weight
+    e: str = "Gala"  # Default event
+    m: List[Any]     # Landmarks list
 
-MOCK_CATALOGUE = [
-    {"id": 0, "name": "Robe de Soirée Lafayette", "fabric": "premium-silk"},
-    {"id": 1, "name": "Veste Divineo Anthracite", "fabric": "structured-wool"},
-    {"id": 2, "name": "Ensemble Gala Prestige", "fabric": "tech-stretch"}
+STOCK = [
+    {"id": "GL-001", "name": "Manteau Impérial Heritage", "stretch": 0.05},
+    {"id": "GL-042", "name": "Veste Fluide Lafayette", "stretch": 0.18},
+    {"id": "GL-105", "name": "Pantalon Flow Silvestre", "stretch": 0.25}
 ]
 
-# 4. MOTOR DE VISIÓN BIOMÉTRICA (MediaPipe)
-class JulesScanner:
-    def __init__(self):
-        self.mp_pose = mp.solutions.pose
-        self.pose = self.mp_pose.Pose(
-            static_image_mode=False,
-            min_detection_confidence=0.5,
-            model_complexity=1
-        )
+@app.post("/api/v1/internal/calculate")
+async def process_biometry(payload: BiometricPayload, token: str = Depends(verify_token)):
+    # Basic BMI Calc
+    # Protect against division by zero
+    height_m = payload.h / 100.0
+    if height_m <= 0:
+        height_m = 1.70
 
-    def analyze_silhouette(self, frame):
-        # Conversión de color para procesamiento de IA
-        rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = self.pose.process(rgb_frame)
+    bmi = payload.w / (height_m ** 2)
 
-        if not results.pose_landmarks:
-            return None
+    tension_index = 1.0
 
-        landmarks = results.pose_landmarks.landmark
+    # Tension Logic (Factor 3.14)
+    # Expecting MediaPipe landmarks. 11=Left Shoulder, 12=Right Shoulder.
+    # Format expected: [{'x': ..., 'y': ...}, ...]
+    if payload.m and len(payload.m) > 12:
+        try:
+            # Check if items are dicts or objects. Pydantic 'List[Any]' allows flexibility.
+            # Assuming dict access as per user snippet.
+            p11 = payload.m[11]
+            p12 = payload.m[12]
 
-        # Cálculo de Proporciones (Hombros 11-12 vs Cadera 23-24)
-        s_width = abs(landmarks[11].x - landmarks[12].x)
-        h_width = abs(landmarks[23].x - landmarks[24].x)
-        ratio = s_width / h_width
+            # handle if they are objects (though over JSON they come as dicts)
+            x11 = p11.get('x') if isinstance(p11, dict) else p11.x
+            x12 = p12.get('x') if isinstance(p12, dict) else p12.x
 
-        return {
-            "biometric_ratio": ratio,
-            "anchors": {
-                "shoulder_l": {"x": landmarks[11].x, "y": landmarks[11].y},
-                "shoulder_r": {"x": landmarks[12].x, "y": landmarks[12].y},
-                "hip_l": {"x": landmarks[23].x, "y": landmarks[23].y},
-                "hip_r": {"x": landmarks[24].x, "y": landmarks[24].y}
-            }
-        }
+            if x11 is not None and x12 is not None:
+                shoulder_dist = abs(x11 - x12)
+                tension_index = shoulder_dist * 3.14
+        except Exception as e:
+            # Fallback silently to default tension
+            print(f"Error calculating tension: {e}")
+            pass
 
-scanner = JulesScanner()
+    # Lógica de recomendación de lujo
+    # If BMI < 24 -> Index 0, else Index 1 (simplification from user)
+    pick = STOCK[0] if bmi < 24 else STOCK[1]
 
-# 5. ENDPOINT MAESTRO: SCAN -> THINK -> RESPOND
-@app.post("/api/v1/master-scan")
-async def master_scan(
-    file: UploadFile = File(...),
-    look_id: int = Form(0),
-    event_context: str = Form("Gala de Prestige")
-):
-    # A. Recepción y decodificación de imagen
-    contents = await file.read()
-    nparr = np.frombuffer(contents, np.uint8)
-    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-
-    # B. Análisis Biométrico Real
-    biometrics = scanner.analyze_silhouette(img)
-    if not biometrics:
-        return {"status": "error", "message": "Silueta no detectada. Por favor, posiciónese frente al espejo."}
-
-    # C. Generación de Veredicto Jules AI
-    selected_look = MOCK_CATALOGUE[look_id % len(MOCK_CATALOGUE)]
-    fabric_info = FABRIC_LOGIC[selected_look["fabric"]]
-
-    ai_prompt = (
-        f"{JULES_SYSTEM_PROMPT}\n\n"
-        f"Contexto: {event_context}.\n"
-        f"Ratio Biométrico: {biometrics['biometric_ratio']:.2f}.\n"
-        f"Prenda: {selected_look['name']} ({fabric_info['drape']}).\n"
-        "Describe cómo el tejido respeta la dignidad de la silueta sin usar números."
-    )
-
-    jules_response = jules_brain.generate_content(ai_prompt)
-
-    # D. Respuesta Sincronizada para el Espejo (Frontend)
     return {
-        "status": "success",
-        "verdict": {
-            "item_name": selected_look["name"],
-            "jules_narrative": jules_response.text,
-            "fit_score": 99.8,
-            "physics": fabric_info
-        },
-        "anchors": biometrics["anchors"]
+        "status": "VOTRE COUPE PARFAITE DÉTECTÉE",
+        "product_name": pick["name"],
+        "jules_narrative": f"D'après votre silhouette, ce {pick['name']} assure un tomber impeccable. La structure respecte l'amplitude de vos mouvements sans compromis."
     }
 
-# 6. VERIFICACIÓN DE SALUD DEL SISTEMA
+# Keep the health check for good measure, or Vercel might complain if root is empty?
+# Actually, Vercel just needs the entry point.
 @app.get("/api/v1/status")
 def get_status():
-    return {
-        "engine": "Jules V7 Master Active",
-        "client": "Galeries Lafayette",
-        "patent": "PCT/EP2025/067317"
-    }
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    return {"status": "System Operational", "mode": "Secure Commercial Pilot"}

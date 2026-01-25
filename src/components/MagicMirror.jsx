@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { PoseLandmarker, FilesetResolver, DrawingUtils } from '@mediapipe/tasks-vision';
 
-const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
+const MagicMirror = ({ mode = 'scan', onScanComplete, onLandmarksDetected }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
@@ -82,6 +82,11 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
 
       if (results.landmarks && results.landmarks.length > 0) {
         const landmarks = results.landmarks[0];
+
+        // Pass landmarks to parent if callback provided
+        if (onLandmarksDetected) {
+            onLandmarksDetected(landmarks);
+        }
 
         // Draw Golden Aura (Optional visual flair)
         // const drawingUtils = new DrawingUtils(ctx);
