@@ -55,7 +55,7 @@ import ContextualInputs from './components/ContextualInputs';
 <ContextualInputs
   onSubmit={(data) => {
     console.log('Occasion:', data.occasion);
-    console.log('Fit:', data.fitPreference);
+    console.log('Fit:', data.fit_preference);
   }}
 />
 ```
