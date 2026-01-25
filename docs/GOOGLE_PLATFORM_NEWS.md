@@ -1,8 +1,30 @@
 # Google Platform News
 
-> **Last Updated:** January 2026
+> **Last Updated:** January 26, 2026
 
 Recent updates and roadmap integration plans for Google Platforms, highlighting key advancements in AI models, developer tools, and creative generation.
+
+## January 2026 Updates
+
+### Gemini API & Models
+*   **Alias Updates (Jan 21)**: `gemini-pro-latest` has been switched to `gemini-3-pro-preview`, and `gemini-flash-latest` to `gemini-3-flash-preview`.
+*   **Model Lifecycle (Jan 12)**: New lifecycle stages launched to clearly indicate deprecation timelines.
+*   **Data Input (Jan 8)**: Support for Cloud Storage buckets and public/private DB pre-signed URLs as data input sources. File size limit increased from 20MB to 100MB.
+
+### Veo
+*   **4k Resolution (Jan 13)**: Veo now supports 4k output resolutions and improved portrait video generation.
+
+## Late 2025 Highlights
+
+### Interactions API
+*   **Thought Tokens (Dec 19)**: The `total_reasoning_tokens` field has been renamed to `total_thought_tokens` in the v1beta API to align with the concept of "thoughts" in thinking models.
+
+### Audio & Media
+*   **Native Audio (Dec 12)**: Released `gemini-2.5-flash-native-audio-preview` for improved complex audio handling in the Live API.
+*   **Lyria**: Integration into Vertex AI for generative music and speech.
+
+### Infrastructure
+*   **Ironwood TPU**: Google's 7th-generation TPU built for inference is rolling out, offering 5x peak compute capacity compared to the previous generation.
 
 ## Gemini 3 Pro
 
