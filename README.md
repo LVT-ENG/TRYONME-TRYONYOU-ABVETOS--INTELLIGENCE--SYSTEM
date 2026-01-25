@@ -157,6 +157,26 @@ dist/
 - ✅ Check all images load correctly
 - ✅ Test on mobile devices
 
+### GitHub Actions Deployment
+
+This repository includes automated deployment to Vercel via GitHub Actions:
+- **Workflow**: `.github/workflows/schedule_deploy.yml` (runs every 5 minutes)
+- **Manual trigger**: Actions tab → Deploy Every 5 Minutes → Run workflow
+
+#### Troubleshooting Deployment Failures
+
+If you see the error: `"--token, but its contents are invalid. Must not contain: ."`
+
+This means the `VERCEL_TOKEN` GitHub secret has an invalid format. See the comprehensive setup guide:
+
+📖 **[Vercel Token Setup Guide](docs/VERCEL_TOKEN_SETUP.md)**
+
+The guide includes:
+- How to generate a valid Vercel CLI token
+- Updating GitHub secrets correctly
+- Common troubleshooting steps
+- Security best practices
+
 ## 🧠 Development Workflow
 
 We have adopted the **Conductor** context-driven development workflow to align with the latest Google Platform updates (Gemini 3 Pro, Jules).
