@@ -33,14 +33,19 @@ fi
 echo "✅ Build & Verification Complete."
 
 # 4. Deploy (if token provided)
+PROJECT_NAME="jules-pilot-galeries-lafayette"
+
 if [ -z "$VERCEL_TOKEN" ]; then
-    echo "⚠️  No Vercel Token provided. Skipping deployment."
-    echo "To deploy, run: ./TRYONYOU_SUPERCOMMIT_MAX.sh <TOKEN>"
+    echo "⚠️  No Vercel Token provided. Deployment paused."
+    echo ""
+    echo "👉  READY FOR PRODUCTION. Run this command to go live:"
+    echo "    vercel deploy --prod"
+    echo ""
+    echo "    (Ensure you are logged in with 'vercel login' first)"
     exit 0
 fi
 
 echo "🚀 Deploying to Vercel..."
-PROJECT_NAME="jules-pilot-galeries-lafayette"
 
 vercel deploy --name $PROJECT_NAME \
                --token $VERCEL_TOKEN \
