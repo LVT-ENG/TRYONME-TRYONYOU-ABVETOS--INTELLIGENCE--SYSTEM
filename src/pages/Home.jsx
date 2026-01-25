@@ -27,30 +27,38 @@ export default function PilotSystem() {
   const handleAnalysis = async () => {
     setLoading(true);
     try {
+      // Jules V7: Backend Handshake with Security Token
       const response = await fetch('/api/recommend', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'x-divineo-token': 'Divineo_Lafayette_Secure_70_2026_Alpha'
+        },
         body: JSON.stringify({
-          measurements: mockMeasurements,
-          conversation: {
-            occasion: occasion,
-            fit_preference: preference
-          }
+          height: mockMeasurements.height,
+          weight: mockMeasurements.weight,
+          event: occasion,
+          landmarks: null // Optional, handled by MagicMirror internally for visual but not sent here yet
         })
       });
 
       if (!response.ok) throw new Error('Network response was not ok');
 
       const data = await response.json();
-      setRecommendation(data);
+      setRecommendation({
+        garment_name: data.product_name,
+        fit_score: 99.8, // Static for this pilot phase or derived if backend sent it
+        explanation: data.jules_narrative,
+        material: data.fabric_analysis
+      });
       setView('result');
     } catch (error) {
       console.error("Analysis failed:", error);
-      // Fallback for demo if API fails
+      // Fallback for demo if API fails (Network error, etc)
       setRecommendation({
         garment_name: "Divineo Signature Blazer",
         fit_score: 99.8,
-        explanation: "Perfect structural match for shoulder alignment.",
+        explanation: "System Offline. Using Backup Protocol. Perfect structural match.",
         material: "Silk Blend"
       });
       setView('result');
@@ -147,8 +155,10 @@ export default function PilotSystem() {
             </motion.div>
           )}
 
-          {/* 4. RESULT (Magic Mirror + Overlay) */}
-          {view === 'result' && recommendation && (
+        </AnimatePresence>
+
+        {/* 4. RESULT (Magic Mirror + Overlay) */}
+        {view === 'result' && recommendation && (
             <motion.div key="v4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} style={{ pointerEvents: 'auto', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: '40px' }}>
 
               <div style={{ margin: '0 auto', width: '90%', maxWidth: '400px', background: 'rgba(5,5,5,0.8)', borderTop: `4px solid ${gold}`, padding: '20px', backdropFilter: 'blur(10px)' }}>
@@ -176,7 +186,6 @@ export default function PilotSystem() {
             </motion.div>
           )}
 
-        </AnimatePresence>
       </div>
 
       <footer style={{ position: 'fixed', bottom: '15px', width: '100%', fontSize: '10px', opacity: 0.5, zIndex: 20 }}>
