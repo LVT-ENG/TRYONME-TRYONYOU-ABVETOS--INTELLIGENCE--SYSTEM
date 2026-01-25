@@ -21,7 +21,7 @@ const ContextualInputs = ({ onSubmit }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (occasion && fitPreference) {
-      onSubmit({ occasion, fitPreference });
+      onSubmit({ occasion, fit_preference: fitPreference });
     }
   };
 
