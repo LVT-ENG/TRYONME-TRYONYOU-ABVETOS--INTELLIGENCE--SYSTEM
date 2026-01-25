@@ -115,10 +115,8 @@ Based on the problem statement and validation report from January 8, 2026:
 ```
 
 ### CodeQL Analysis
-```
-✅ JavaScript: 0 alerts
-✅ Python: 0 alerts
-```
+CodeQL analysis is enforced via CI status checks for all relevant repositories and pull requests.
+Refer to the latest successful `CodeQL` (or equivalent) workflow run in the CI system for the current alert status.
 
 ### Code Review
 ```
