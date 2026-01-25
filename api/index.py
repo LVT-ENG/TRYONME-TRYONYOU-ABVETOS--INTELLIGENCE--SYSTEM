@@ -18,6 +18,7 @@ async def get_recommendation(data: RecommendRequest, x_divineo_token: str = Head
     expected_token = os.environ.get("INTERNAL_SECRET_KEY", "dev_token_70")
 
     # Simple check: match either the strict env token OR the hardcoded dev token if env is missing
+    # In the user's snippet: if x_divineo_token != os.environ.get("INTERNAL_SECRET_KEY", "dev_token_70"):
 
     if x_divineo_token != expected_token:
         # Fallback for the case where the user runs locally without the env var set to the alpha key
@@ -26,11 +27,6 @@ async def get_recommendation(data: RecommendRequest, x_divineo_token: str = Head
 
     # Lógica de Jules: El "Tombé" Perfecto
     # Basamos la recomendación en el IMC y la elasticidad del catálogo de 510 items
-    if data.height <= 0:
-        raise HTTPException(
-            status_code=400,
-            detail="La taille doit être un nombre positif (en centimètres).",
-        )
     bmi = data.weight / ((data.height / 100) ** 2)
 
     # Simulación de selección de catálogo (Lógica de valor)
