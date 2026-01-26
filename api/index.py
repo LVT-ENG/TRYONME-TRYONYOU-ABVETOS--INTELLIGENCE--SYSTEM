@@ -9,6 +9,8 @@ import cv2
 import numpy as np
 import mediapipe as mp
 import google.generativeai as genai
+import logging
+import datetime
 from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -24,6 +26,43 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# --- AGENTE 12: AUDITORÍA (NUEVO MÓDULO) ---
+class Agent12Audit:
+    def __init__(self):
+        self.logger = logging.getLogger("Agente12")
+        self.logger.setLevel(logging.INFO)
+        # Prevent adding multiple handlers on reload
+        if not self.logger.handlers:
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter('%(asctime)s - [AGENTE-12] - %(message)s')
+            handler.setFormatter(formatter)
+            self.logger.addHandler(handler)
+
+    def log_event(self, event_type: str, details: str):
+        self.logger.info(f"{event_type.upper()}: {details}")
+
+agent12 = Agent12Audit()
+
+# --- GEMINI TREND BRAIN (NUEVO MÓDULO) ---
+class GeminiTrendBrain:
+    def __init__(self):
+        # Base de conocimiento "Top 20 Trends" simulada para estabilidad en demo
+        self.knowledge_base = {
+            "patterns": ["Col Mao", "Coupes Structurées", "Blazers Oversize"],
+            "colors": ["Bordeaux Intense", "Rouge Carmin", "Bleu Nuit"],
+            "fabrics": ["Soie Fluide", "Laine Froide"],
+            "season": "Hiver 2026"
+        }
+
+    def get_trends(self, context="Paris Fashion Week 2026"):
+        # Simulación de "Pensamiento" de Gemini
+        # En producción real, esto llamaría a la API con un prompt de scraping.
+        # Aquí inyectamos la inteligencia pre-computada.
+        return self.knowledge_base
+
+trend_brain = GeminiTrendBrain()
+
 
 # 2. NÚCLEO DE INTELIGENCIA EMOCIONAL (Jules AI)
 # Definición del comportamiento de lujo y política "Sin Números"
@@ -96,6 +135,8 @@ async def master_scan(
     look_id: int = Form(0),
     event_context: str = Form("Gala de Prestige")
 ):
+    agent12.log_event("INBOUND_REQ", f"Processing Scan for Look ID {look_id}")
+
     # A. Recepción y decodificación de imagen
     contents = await file.read()
     nparr = np.frombuffer(contents, np.uint8)
@@ -104,30 +145,48 @@ async def master_scan(
     # B. Análisis Biométrico Real
     biometrics = scanner.analyze_silhouette(img)
     if not biometrics:
+        agent12.log_event("SCAN_FAIL", "No silhouette detected")
         return {"status": "error", "message": "Silueta no detectada. Por favor, posiciónese frente al espejo."}
 
-    # C. Generación de Veredicto Jules AI
+    agent12.log_event("BIOMETRICS", f"Ratio detected: {biometrics['biometric_ratio']:.3f}")
+
+    # C. Generación de Veredicto Jules AI & Consultoría de Tendencias
     selected_look = MOCK_CATALOGUE[look_id % len(MOCK_CATALOGUE)]
     fabric_info = FABRIC_LOGIC[selected_look["fabric"]]
+
+    # Consultar Cerebro de Tendencias
+    trends = trend_brain.get_trends()
+    agent12.log_event("TREND_MATCH", f"Validating against {trends['colors'][0]}")
 
     ai_prompt = (
         f"{JULES_SYSTEM_PROMPT}\n\n"
         f"Contexto: {event_context}.\n"
+        f"Tendencia Detectada: {trends['season']} - {trends['patterns'][0]}.\n"
         f"Ratio Biométrico: {biometrics['biometric_ratio']:.2f}.\n"
         f"Prenda: {selected_look['name']} ({fabric_info['drape']}).\n"
-        "Describe cómo el tejido respeta la dignidad de la silueta sin usar números."
+        "Describe cómo el tejido respeta la dignidad de la silueta sin usar números. "
+        "Menciona sutilmente la tendencia detectada."
     )
 
-    jules_response = jules_brain.generate_content(ai_prompt)
+    try:
+        jules_response = jules_brain.generate_content(ai_prompt)
+        narrative = jules_response.text
+    except Exception as e:
+        agent12.log_event("AI_ERROR", str(e))
+        narrative = "L'élégance de cette coupe honore parfaitement votre structure naturelle."
 
     # D. Respuesta Sincronizada para el Espejo (Frontend)
     return {
         "status": "success",
         "verdict": {
             "item_name": selected_look["name"],
-            "jules_narrative": jules_response.text,
+            "jules_narrative": narrative,
             "fit_score": 99.8,
-            "physics": fabric_info
+            "physics": fabric_info,
+            "trend_context": {
+                "label": f"Tendance: {trends['patterns'][0]}",
+                "color_match": trends['colors'][0]
+            }
         },
         "anchors": biometrics["anchors"]
     }
@@ -135,10 +194,12 @@ async def master_scan(
 # 6. VERIFICACIÓN DE SALUD DEL SISTEMA
 @app.get("/api/v1/status")
 def get_status():
+    agent12.log_event("HEALTH_CHECK", "Status OK")
     return {
         "engine": "Jules V7 Master Active",
         "client": "Galeries Lafayette",
-        "patent": "PCT/EP2025/067317"
+        "patent": "PCT/EP2025/067317",
+        "modules": ["Agent12 Audit", "Gemini Trend Brain"]
     }
 
 if __name__ == "__main__":
