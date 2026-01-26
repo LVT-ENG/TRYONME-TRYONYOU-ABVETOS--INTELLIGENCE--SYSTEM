@@ -53,24 +53,41 @@ MOCK_CATALOGUE = [
 ]
 
 # 4. MOTOR DE VISIÓN BIOMÉTRICA (MediaPipe)
+# BOLT OPTIMIZATION: Migrated to MediaPipe Tasks API for stateless efficiency (IMAGE mode)
+# and modern compatibility. Legacy 'solutions' API is deprecated/broken in newer versions.
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
+
 class JulesScanner:
     def __init__(self):
-        self.mp_pose = mp.solutions.pose
-        self.pose = self.mp_pose.Pose(
-            static_image_mode=False,
-            min_detection_confidence=0.5,
-            model_complexity=1
+        # Load local model file to ensure compatibility and performance
+        model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pose_landmarker.task")
+
+        base_options = python.BaseOptions(model_asset_path=model_path)
+        options = vision.PoseLandmarkerOptions(
+            base_options=base_options,
+            running_mode=vision.RunningMode.IMAGE, # Optimized for stateless requests
+            num_poses=1,
+            min_pose_detection_confidence=0.5,
+            min_pose_presence_confidence=0.5,
+            min_tracking_confidence=0.5,
         )
+        self.detector = vision.PoseLandmarker.create_from_options(options)
 
     def analyze_silhouette(self, frame):
         # Conversión de color para procesamiento de IA
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        results = self.pose.process(rgb_frame)
 
-        if not results.pose_landmarks:
+        # Convert to mp.Image (Required for Tasks API)
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_frame)
+
+        detection_result = self.detector.detect(mp_image)
+
+        if not detection_result.pose_landmarks:
             return None
 
-        landmarks = results.pose_landmarks.landmark
+        # Tasks API returns a list of landmarks per detected pose
+        landmarks = detection_result.pose_landmarks[0]
 
         # Cálculo de Proporciones (Hombros 11-12 vs Cadera 23-24)
         s_width = abs(landmarks[11].x - landmarks[12].x)
