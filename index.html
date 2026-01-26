@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeries Lafayette - Experience Divineo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #050505; color: #D4AF37; font-family: 'serif'; overflow: hidden; }
+        .gold-border { border: 1px solid rgba(212, 175, 55, 0.4); }
+        #output_canvas { transform: scaleX(-1); filter: contrast(1.1) brightness(1.1); }
+        .loading-ring { border: 2px solid #1a1a1a; border-top: 2px solid #D4AF37; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen">
+    <div class="relative w-[90vw] h-[90vh] gold-border rounded-xl overflow-hidden bg-black shadow-2xl">
+        <video id="input_video" class="hidden"></video>
+        <canvas id="output_canvas" class="w-full h-full object-cover"></canvas>
+        <div class="absolute top-10 w-full text-center">
+            <h1 class="text-3xl tracking-[0.5em] font-light">GALERIES LAFAYETTE</h1>
+            <p class="text-[10px] tracking-[0.3em] uppercase mt-2 opacity-60">Experience de Luxe - Powered by TryOnYou</p>
+        </div>
+        <div id="scan-overlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black/40">
+            <div id="loader" class="loading-ring mb-4"></div>
+            <p id="status-text" class="tracking-widest italic">ANALYSE BIOMÉTRIQUE EN COURS...</p>
+        </div>
+        <div id="result-card" class="absolute bottom-10 left-10 right-10 bg-black/80 p-6 gold-border translate-y-[200%] transition-transform duration-1000 flex items-center gap-6">
+            <div class="w-24 h-32 bg-zinc-900 border border-gold/30 flex items-center justify-center text-[8px] text-center p-2">
+                [PIÈCE SÉLECTIONNÉE]
+            </div>
+            <div>
+                <h2 class="text-xl uppercase tracking-tighter">Coupe Parfaite Détectée</h2>
+                <p class="text-sm text-zinc-400 font-sans mt-1">Notre IA a sélectionné le <b>Manteau Impérial</b> basé sur votre morphologie et le tombé du tissu.</p>
+                <button class="mt-4 px-6 py-1 bg-[#D4AF37] text-black text-xs font-bold uppercase tracking-widest hover:bg-white transition">Demander en cabine</button>
+            </div>
+        </div>
+    </div>
+    <script type="module">
+        const videoElement = document.getElementById('input_video');
+        const canvasElement = document.getElementById('output_canvas');
+        const canvasCtx = canvasElement.getContext('2d');
+        const statusText = document.getElementById('status-text');
+        const resultCard = document.getElementById('result-card');
+
+        const pose = new Pose({locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`});
+        pose.setOptions({ modelComplexity: 1, smoothLandmarks: true, minDetectionConfidence: 0.6 });
+
+        pose.onResults((results) => {
+            canvasCtx.save();
+            canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+            canvasCtx.drawImage(results.image, 0, 0, canvasElement.width, canvasElement.height);
+            if (results.poseLandmarks) {
+                canvasCtx.fillStyle = "#D4AF37";
+                results.poseLandmarks.forEach(point => {
+                    if (point.visibility > 0.6) {
+                        canvasCtx.beginPath();
+                        canvasCtx.arc(point.x * canvasElement.width, point.y * canvasElement.height, 2, 0, 2 * Math.PI);
+                        canvasCtx.fill();
+                    }
+                });
+                triggerFlow();
+            }
+            canvasCtx.restore();
+        });
+
+        let flowStarted = false;
+        function triggerFlow() {
+            if (flowStarted) return;
+            flowStarted = true;
+            setTimeout(() => {
+                statusText.innerText = "ANALYSE DE LA SILHOUETTE...";
+                setTimeout(() => {
+                    statusText.innerText = "DÉTERMINATION DU TOMBÉ...";
+                    setTimeout(() => {
+                        document.getElementById('scan-overlay').style.display = 'none';
+                        resultCard.style.transform = 'translateY(0)';
+                    }, 3000);
+                }, 2000);
+            }, 2000);
+        }
+
+        const camera = new Camera(videoElement, {
+            onFrame: async () => { await pose.send({image: videoElement}); },
+            width: 1280, height: 720
+        });
+        camera.start();
+    </script>
+</body>
+</html>
