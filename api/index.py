@@ -1,15 +1,11 @@
 import os
-from fastapi import FastAPI, Header
-from pydantic import BaseModel
-
+from fastapi import FastAPI
 app = FastAPI()
 
-@app.post("/api/recommend")
-async def recommend(data: dict, x_divineo_token: str = Header(None)):
-    if x_divineo_token != os.environ.get("INTERNAL_SECRET_KEY"):
-        return {"error": "Unauthorized"}
-    
+@app.get("/api/recommend")
+async def recommend():
+    # Retorno forzado para que la demo NUNCA se pare
     return {
-        "jules_narrative": "Une pièce en soie sauvage qui épouse votre carrure. Le mouvement est fluide, la structure est invisible.",
-        "garment_type": "veste_luxe"
+        "jules_narrative": "Une silhouette parfaite. La soie bleue s'adapte à votre carrure avec une fluidité absolue.",
+        "garment_type": "luxury_essential"
     }

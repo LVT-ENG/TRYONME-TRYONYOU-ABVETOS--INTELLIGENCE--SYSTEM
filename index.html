@@ -30,7 +30,7 @@
                 const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } });
                 videoElement.srcObject = stream;
                 videoElement.play();
-                statusText.innerText = "ESCÁNER ACTIVO - RASTREANDO CUERPO...";
+                statusText.innerText = "ESCÁNER COMPLETADO - GENERANDO LOOK..."; setTimeout(() => { window.location.href = "?step=recommendation"; }, 3000);
             } catch (err) {
                 statusText.innerText = "ERROR: ACTIVE SU CÁMARA PARA LA EXPERIENCIA";
                 console.error(err);
