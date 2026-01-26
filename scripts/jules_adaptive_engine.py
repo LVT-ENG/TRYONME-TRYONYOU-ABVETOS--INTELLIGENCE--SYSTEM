@@ -6,3 +6,6 @@ def aplicar_estilismo_dinamico(genero, evento):
     seleccion = perfiles.get(genero.lower())
     print(f"SIMULACIÓN: Proyectando {seleccion['prenda']} con física {seleccion['fisica']} sobre el usuario.")
     return seleccion
+
+def optimizar_latencia():
+    return {"buffer": "low", "tracking_precision": "high", "ar_sync": True}
