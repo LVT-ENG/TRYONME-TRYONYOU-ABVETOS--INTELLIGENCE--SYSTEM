@@ -55,7 +55,12 @@ export default function App() {
                   'Content-Type': 'application/json',
                   'X-Divineo-Token': 'Divineo_Lafayette_Secure_70_2026_Alpha' 
               },
-              body: JSON.stringify({ landmarks: lm })
+              body: JSON.stringify({
+                  landmarks: lm,
+                  height: 170,
+                  weight: 60,
+                  event: "cocktail"
+              })
           }).then(res => res.json()).then(setRecommendation);
       }
     });
