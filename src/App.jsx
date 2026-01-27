@@ -5,6 +5,7 @@ import { Camera } from '@mediapipe/camera_utils';
 export default function App() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const hasFetched = useRef(false);
   const [recommendation, setRecommendation] = useState(null);
 
   useEffect(() => {
@@ -48,7 +49,8 @@ export default function App() {
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      if (!recommendation && lm[11].visibility > 0.8) {
+      if (!hasFetched.current && !recommendation && lm[11].visibility > 0.8) {
+          hasFetched.current = true;
           fetch('/api/recommend', {
               method: 'POST',
               headers: { 
@@ -56,7 +58,13 @@ export default function App() {
                   'X-Divineo-Token': 'Divineo_Lafayette_Secure_70_2026_Alpha' 
               },
               body: JSON.stringify({ landmarks: lm })
-          }).then(res => res.json()).then(setRecommendation);
+          })
+          .then(res => res.json())
+          .then(setRecommendation)
+          .catch(err => {
+              console.error("Fetch error:", err);
+              hasFetched.current = false;
+          });
       }
     });
 
