@@ -6,6 +6,9 @@ export default function App() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [recommendation, setRecommendation] = useState(null);
+  // Optimization: Refs to track fetch state and prevent stale closure infinite loops
+  const hasFetched = useRef(false);
+  const isFetching = useRef(false);
 
   useEffect(() => {
     const pose = new Pose({
@@ -48,7 +51,9 @@ export default function App() {
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      if (!recommendation && lm[11].visibility > 0.8) {
+      // Performance Fix: Check refs to prevent thundering herd and stale closure loops
+      if (!hasFetched.current && !isFetching.current && lm[11].visibility > 0.8) {
+          isFetching.current = true;
           fetch('/api/recommend', {
               method: 'POST',
               headers: { 
@@ -56,7 +61,17 @@ export default function App() {
                   'X-Divineo-Token': 'Divineo_Lafayette_Secure_70_2026_Alpha' 
               },
               body: JSON.stringify({ landmarks: lm })
-          }).then(res => res.json()).then(setRecommendation);
+          })
+          .then(res => res.json())
+          .then(data => {
+            setRecommendation(data);
+            hasFetched.current = true;
+            isFetching.current = false;
+          })
+          .catch(err => {
+            console.error(err);
+            isFetching.current = false;
+          });
       }
     });
 
