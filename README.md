@@ -54,8 +54,8 @@ El script ejecuta automáticamente las siguientes operaciones:
 Para habilitar el despliegue automático a Vercel, se recomienda configurar el token de forma segura usando un archivo `.env`:
 
 ```bash
-# Crear/editar archivo .env en la raíz del proyecto
-echo "VERCEL_TOKEN=tu_token_aqui" >> .env
+# Crear/editar archivo .env en la raíz del proyecto (sobrescribe si existe)
+echo "VERCEL_TOKEN=tu_token_aqui" > .env
 ```
 
 O alternativamente, exportar la variable en la sesión actual (menos seguro, quedará en el historial):
@@ -64,7 +64,7 @@ O alternativamente, exportar la variable en la sesión actual (menos seguro, que
 export VERCEL_TOKEN="tu_token_aqui"
 ```
 
-**Nota**: Asegúrate de que `.env` esté incluido en `.gitignore` para evitar comprometer credenciales.
+**Nota de Seguridad**: El archivo `.env` está incluido en `.gitignore` para evitar comprometer credenciales en el repositorio.
 
 ### Módulos Integrados
 
