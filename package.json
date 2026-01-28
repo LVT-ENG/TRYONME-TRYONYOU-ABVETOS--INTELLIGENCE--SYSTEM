@@ -1,1 +1,9 @@
-{"name":"lafayette-pilot","version":"1.0.0","scripts":{"build":"echo done"}}
+{
+  "name": "lafayette-pilot",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo done",
+    "supercommit": "./TRYONYOU_SUPERCOMMIT_MAX.sh",
+    "commit:pro": "./TRYONYOU_SUPERCOMMIT_MAX.sh"
+  }
+}
