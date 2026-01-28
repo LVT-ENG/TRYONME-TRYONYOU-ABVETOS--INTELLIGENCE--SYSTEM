@@ -51,11 +51,20 @@ El script ejecuta automáticamente las siguientes operaciones:
 
 ### Variables de Entorno
 
-Para habilitar el despliegue automático a Vercel, configura:
+Para habilitar el despliegue automático a Vercel, se recomienda configurar el token de forma segura usando un archivo `.env`:
+
+```bash
+# Crear/editar archivo .env en la raíz del proyecto
+echo "VERCEL_TOKEN=tu_token_aqui" >> .env
+```
+
+O alternativamente, exportar la variable en la sesión actual (menos seguro, quedará en el historial):
 
 ```bash
 export VERCEL_TOKEN="tu_token_aqui"
 ```
+
+**Nota**: Asegúrate de que `.env` esté incluido en `.gitignore` para evitar comprometer credenciales.
 
 ### Módulos Integrados
 
