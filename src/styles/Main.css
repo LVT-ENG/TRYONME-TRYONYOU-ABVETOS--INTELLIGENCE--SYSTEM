@@ -1,0 +1,8 @@
+@keyframes golden-flash {
+  0% { filter: brightness(1) gold(0); }
+  50% { filter: brightness(2) contrast(1.2) drop-shadow(0 0 20px gold); }
+  100% { filter: brightness(1); }
+}
+.snap-active {
+  animation: golden-flash 0.8s ease-in-out;
+}
