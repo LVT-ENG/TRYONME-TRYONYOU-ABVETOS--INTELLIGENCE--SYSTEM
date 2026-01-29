@@ -93,7 +93,7 @@ async def generate_jules_response(height: float, weight: float, event: str, lang
 
     # Fallback logic if API key missing or failure
     # Ensure fallback also tries to respect "No Numbers" if possible, or at least doesn't break.
-    if not GOOGLE_API_KEY:
+    if not GOOGLE_API_KEY or (product == "Veste Fluide Lafayette" and narrative == "D'après votre silhouette, ce produit assure un confort absolu."):
         bmi = weight / ((height / 100) ** 2)
         if bmi < 23:
             product = "Manteau Impérial Heritage"
