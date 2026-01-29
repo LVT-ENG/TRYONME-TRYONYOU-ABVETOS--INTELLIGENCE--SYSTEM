@@ -57,8 +57,7 @@ export default function App() {
           fetch('/api/scan', {
               method: 'POST',
               headers: { 
-                  'Content-Type': 'application/json',
-                  'X-Divineo-Token': 'Divineo_Lafayette_Secure_70_2026_Alpha' 
+                  'Content-Type': 'application/json'
               },
               body: JSON.stringify({
                 landmarks: lm,
