@@ -70,5 +70,3 @@ class TestCeroTallasNarrative(unittest.TestCase):
             msg="Narrative is too brief for a premium experience.",
         )
 
-
-FOLLOWUPS: Imports: None beyond those already added. Code edits: None. Methods: None. Definitions: None.
