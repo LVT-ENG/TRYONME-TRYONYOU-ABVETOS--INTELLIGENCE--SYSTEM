@@ -8,7 +8,7 @@ app = FastAPI(docs_url=None, redoc_url=None) # Blindaje total
 # --- SEGURIDAD AGENTE 70 ---
 def verify_token(x_divineo_token: str = Header(None)):
     # Fallback for demo/local testing if env var is not set
-    secret = os.environ.get("INTERNAL_SECRET_KEY")
+    secret = os.environ.get("INTERNAL_SECRET_KEY", "Divineo_Lafayette_Secure_70_2026_Alpha")
 
     if not x_divineo_token or x_divineo_token != secret:
         raise HTTPException(status_code=403, detail="Accès Interdit")
