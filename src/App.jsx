@@ -54,13 +54,19 @@ export default function App() {
       // Performance Fix: Check refs to prevent thundering herd and stale closure loops
       if (!hasFetched.current && !isFetching.current && lm[11].visibility > 0.8) {
           isFetching.current = true;
-          fetch('/api/recommend', {
+          fetch('/api/scan', {
               method: 'POST',
               headers: { 
                   'Content-Type': 'application/json',
                   'X-Divineo-Token': 'Divineo_Lafayette_Secure_70_2026_Alpha' 
               },
-              body: JSON.stringify({ landmarks: lm })
+              body: JSON.stringify({
+                landmarks: lm,
+                height: 175, // Default for demo
+                weight: 65,  // Default for demo
+                language: 'fr',
+                event_type: 'gala'
+              })
           })
           .then(res => res.json())
           .then(data => {
