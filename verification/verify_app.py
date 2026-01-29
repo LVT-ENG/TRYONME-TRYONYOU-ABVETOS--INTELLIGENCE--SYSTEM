@@ -12,7 +12,7 @@ def verify_landing(page: Page):
 
     # Take screenshot
     print("Taking screenshot...")
-    page.screenshot(path="/home/jules/verification/verification.png")
+    page.screenshot(path="verification/verification.png")
     print("Screenshot taken.")
 
 if __name__ == "__main__":
