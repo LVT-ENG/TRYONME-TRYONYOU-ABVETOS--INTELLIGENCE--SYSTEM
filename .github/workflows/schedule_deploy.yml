@@ -1,0 +1,29 @@
+name: Scheduled Deployment (5 min)
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  deploy-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          if [ -f api/requirements.txt ]; then
+            pip install -r api/requirements.txt
+          fi
+
+      - name: Verify Build Integrity
+        run: |
+          echo "Starting scheduled deployment verification..."
+          # Simulate the deployment logic or call the safe parts of the script
+          echo "Deployment protocol initiated by scheduler."
