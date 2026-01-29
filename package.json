@@ -2,8 +2,13 @@
   "name": "lafayette-pilot",
   "version": "1.0.0",
   "scripts": {
-    "build": "echo done",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "supercommit": "./TRYONYOU_SUPERCOMMIT_MAX.sh",
     "commit:pro": "./TRYONYOU_SUPERCOMMIT_MAX.sh"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
   }
 }
