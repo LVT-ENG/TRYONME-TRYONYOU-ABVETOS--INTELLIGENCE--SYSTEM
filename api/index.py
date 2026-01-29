@@ -10,8 +10,33 @@ app = FastAPI()
 # --- CONFIGURATION ---
 # Use VITE_GOOGLE_API_KEY as required by the backend environment for Gemini
 GOOGLE_API_KEY = os.environ.get("VITE_GOOGLE_API_KEY")
+
+# Optimization: Singleton pattern for GenerativeModel
+_model = None
+
 if GOOGLE_API_KEY:
     genai.configure(api_key=GOOGLE_API_KEY)
+
+def get_gemini_model():
+    global _model
+    if _model is None and GOOGLE_API_KEY:
+        # Using Gemini 3 Flash as per platform news (Low latency)
+        _model = genai.GenerativeModel('gemini-3-flash')
+    return _model
+
+# Optimization: Constant prompt template
+JULES_PROMPT_TEMPLATE = (
+    "Act as Jules, a high-end fashion AI consultant. "
+    "Context: Galeries Lafayette. "
+    "User stats: Height {height}cm, Weight {weight}kg, Event: {event}. "
+    "Language: {language}. "
+    "Task: Recommend a product and write a narrative. "
+    "CRITICAL 'ZERO TALLAS' POLICY (STRICT ENFORCEMENT): "
+    "1. NO NUMBERS: Do not output any digits (0-9). Translate ratios to emotions. "
+    "2. NO SIZES: Do not use terms like 'size', 'talla', 'taille', 'cm', 'kg', 'S', 'M', 'L', 'XL'. "
+    "3. TONE: Elegant, qualitative, hyper-luxury. "
+    "4. Output strictly valid JSON with keys: 'product_name', 'jules_narrative', 'fabric_analysis'."
+)
 
 # --- SECURITY AGENT 70 ---
 def verify_token(x_divineo_token: str = Header(None)):
@@ -49,45 +74,39 @@ async def generate_jules_response(height: float, weight: float, event: str, lang
 
     if GOOGLE_API_KEY:
         try:
-            # Using Gemini 3 Flash as per platform news (Low latency)
-            model = genai.GenerativeModel('gemini-3-flash')
+            model = get_gemini_model()
 
-            # Strict "Zero Tallas" Prompt
-            prompt = (
-                f"Act as Jules, a high-end fashion AI consultant. "
-                f"Context: Galeries Lafayette. "
-                f"User stats: Height {height}cm, Weight {weight}kg, Event: {event}. "
-                f"Language: {language}. "
-                f"Task: Recommend a product and write a narrative. "
-                f"CRITICAL 'ZERO TALLAS' POLICY (STRICT ENFORCEMENT): "
-                f"1. NO NUMBERS: Do not output any digits (0-9). Translate ratios to emotions. "
-                f"2. NO SIZES: Do not use terms like 'size', 'talla', 'taille', 'cm', 'kg', 'S', 'M', 'L', 'XL'. "
-                f"3. TONE: Elegant, qualitative, hyper-luxury. "
-                f"4. Output strictly valid JSON with keys: 'product_name', 'jules_narrative', 'fabric_analysis'."
+            # Strict "Zero Tallas" Prompt using template
+            prompt = JULES_PROMPT_TEMPLATE.format(
+                height=height,
+                weight=weight,
+                event=event,
+                language=language
             )
 
-            response = model.generate_content(prompt)
+            if model:
+                response = model.generate_content(prompt)
 
-            # --- COMPLIANCE: Interactions API Changes ---
-            if hasattr(response, 'usage_metadata'):
-                thought_tokens = getattr(response.usage_metadata, 'total_thought_tokens', 0)
-                print(f"[Jules] Thought Tokens Used: {thought_tokens}")
+                # --- COMPLIANCE: Interactions API Changes ---
+                if hasattr(response, 'usage_metadata'):
+                    thought_tokens = getattr(response.usage_metadata, 'total_thought_tokens', 0)
+                    print(f"[Jules] Thought Tokens Used: {thought_tokens}")
 
-            text = response.text
-            # Clean up markdown code blocks if present
-            if text.startswith("```json"):
-                text = text[7:]
-            if text.endswith("```"):
-                text = text[:-3]
+                text = response.text
+                # Clean up markdown code blocks if present
+                if text.startswith("```json"):
+                    text = text[7:]
+                if text.endswith("```"):
+                    text = text[:-3]
 
-            if "{" in text and "}" in text:
-                start = text.find("{")
-                end = text.rfind("}") + 1
-                json_str = text[start:end]
-                parsed = json.loads(json_str)
-                product = parsed.get("product_name", product)
-                narrative = parsed.get("jules_narrative", narrative)
-                analysis = parsed.get("fabric_analysis", analysis)
+                if "{" in text and "}" in text:
+                    start = text.find("{")
+                    end = text.rfind("}") + 1
+                    json_str = text[start:end]
+                    parsed = json.loads(json_str)
+                    product = parsed.get("product_name", product)
+                    narrative = parsed.get("jules_narrative", narrative)
+                    analysis = parsed.get("fabric_analysis", analysis)
         except Exception as e:
             print(f"Gemini Error: {e}")
 
