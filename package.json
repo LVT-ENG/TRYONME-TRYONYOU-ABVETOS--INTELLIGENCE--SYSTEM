@@ -5,5 +5,19 @@
     "build": "echo done",
     "supercommit": "./TRYONYOU_SUPERCOMMIT_MAX.sh",
     "commit:pro": "./TRYONYOU_SUPERCOMMIT_MAX.sh"
+  },
+  "dependencies": {
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/pose": "^0.5.1675469404",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.29.2",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17"
   }
 }
