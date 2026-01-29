@@ -22,8 +22,8 @@ jobs:
             pip install -r api/requirements.txt
           fi
 
-      - name: Verify Build Integrity
+      - name: Placeholder: Verify Build Integrity (no-op)
         run: |
-          echo "Starting scheduled deployment verification..."
-          # Simulate the deployment logic or call the safe parts of the script
-          echo "Deployment protocol initiated by scheduler."
+          echo "Starting scheduled deployment verification placeholder (no real checks run)..."
+          # Placeholder: simulate the deployment logic or call the safe parts of the script only.
+          echo "Deployment protocol placeholder step completed by scheduler (no-op)."
