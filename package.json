@@ -8,7 +8,17 @@
     "supercommit": "./TRYONYOU_SUPERCOMMIT_MAX.sh",
     "commit:pro": "./TRYONYOU_SUPERCOMMIT_MAX.sh"
   },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "axios": "^1.7.7",
+    "@mediapipe/camera_utils": "^0.4.1646424915",
+    "@mediapipe/control_utils": "^0.4.1646424915",
+    "@mediapipe/drawing_utils": "^0.4.1646424915",
+    "@mediapipe/face_mesh": "^0.4.1633559617"
+  },
   "devDependencies": {
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "@vitejs/plugin-react": "^4.3.4"
   }
 }
