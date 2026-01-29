@@ -19,7 +19,7 @@ const PilotExperience = () => {
          method: 'POST',
          headers: {
              'Content-Type': 'application/json',
-             'X-Divineo-Token': 'Divineo_Lafayette_Secure_70_2026_Alpha'
+             'X-Divineo-Token': import.meta.env.VITE_INTERNAL_SECRET_KEY
          },
          body: JSON.stringify(payload)
      })
