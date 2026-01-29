@@ -77,7 +77,7 @@ export VERCEL_TOKEN="tu_token_aqui"
 
 ### Infraestructura
 
-- **Frontend**: Vite 7.1.2 + React 18.3.1
+- **Frontend**: Vite ^7.3.1 + React 18.3.1
 - **Deploy**: Vercel Production
 - **SSL**: Modo estricto
 - **Legal**: Alineado con Patente PCT/EP2025/067317
