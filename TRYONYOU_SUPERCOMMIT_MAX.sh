@@ -1,12 +1,13 @@
 #!/bin/bash
 # PROTOCOLO AGENTE 70 - V7 COMMERCIAL
 
-# ⚠️ JULES: TU TOKEN ES EL QUE ESTÁ ABAJO. NO LO CAMBIES SI YA ES EL CORRECTO.
-VERCEL_TOKEN="2gAYLsQtsFdgoLw8zsDgiZ94"
+# Recuperar el token del primer argumento
+VERCEL_TOKEN="$1"
 
 # Validación de seguridad
-if [ "$VERCEL_TOKEN" == "TU_TOKEN_AQUI" ] || [ -z "$VERCEL_TOKEN" ]; then
-    echo "❌ ERROR: Jules, el token no es válido o está vacío."
+if [ -z "$VERCEL_TOKEN" ]; then
+    echo "❌ ERROR: Jules, debes proporcionar el token como argumento."
+    echo "Uso: ./TRYONYOU_SUPERCOMMIT_MAX.sh <TOKEN>"
     exit 1
 fi
 

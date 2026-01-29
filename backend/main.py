@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from typing import Optional
 from .main_orchestrator import BiometricEngine
 
 app = FastAPI()
@@ -10,6 +11,7 @@ class ScanData(BaseModel):
     weight: float
     shoulderWidth: float
     eventType: str
+    language: Optional[str] = "en"
 
 @app.post("/api/recommend")
 async def recommend(data: ScanData):
