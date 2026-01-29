@@ -1,0 +1,1 @@
+export default [{files: ["js/**/*.js"], rules: {"no-console": "off", "eqeqeq": "error"}}];
