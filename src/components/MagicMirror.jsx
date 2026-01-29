@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { PoseLandmarker, FilesetResolver, DrawingUtils } from '@mediapipe/tasks-vision';
 
-const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
+const MagicMirror = ({ mode = 'scan', onScanComplete, overlayText }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
@@ -124,6 +124,25 @@ const MagicMirror = ({ mode = 'scan', onScanComplete }) => {
                  }
              });
         }
+      }
+
+      // DRAW OVERLAY TEXT (Mirrored correction handled by context scale or manually)
+      if (overlayText) {
+        ctx.save();
+        // Undo the scaleX(-1) for text, OR draw text in a way that it reads correctly
+        // Since the canvas is CSS transformed scaleX(-1), drawing normal text will look backwards.
+        // We need to draw it "backwards" so the CSS flip makes it readable.
+
+        ctx.translate(canvas.width, 0);
+        ctx.scale(-1, 1);
+
+        ctx.font = 'bold 24px Serif';
+        ctx.fillStyle = gold;
+        ctx.textAlign = 'center';
+        ctx.shadowColor = 'black';
+        ctx.shadowBlur = 4;
+        ctx.fillText(overlayText, canvas.width / 2, canvas.height - 50);
+        ctx.restore();
       }
     }
     requestRef.current = requestAnimationFrame(predictWebcam);

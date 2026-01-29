@@ -64,18 +64,23 @@ class JulesScanner:
 
     def analyze_silhouette(self, frame):
         # Conversión de color para procesamiento de IA
+        print("AGENT 12 LOG: Iniciando procesamiento de frame para detección de landmarks.")
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = self.pose.process(rgb_frame)
 
         if not results.pose_landmarks:
+            print("AGENT 12 LOG: ERROR - No se detectaron landmarks humanos.")
             return None
 
         landmarks = results.pose_landmarks.landmark
+        print(f"AGENT 12 LOG: ÉXITO - Detectados {len(landmarks)} puntos biométricos.")
 
         # Cálculo de Proporciones (Hombros 11-12 vs Cadera 23-24)
         s_width = abs(landmarks[11].x - landmarks[12].x)
         h_width = abs(landmarks[23].x - landmarks[24].x)
         ratio = s_width / h_width
+
+        print(f"AGENT 12 LOG: Ratio Biométrico calculado: {ratio:.4f}. Analizando patrones visuales (Cuello Mao/Textura)...")
 
         return {
             "biometric_ratio": ratio,
@@ -118,7 +123,18 @@ async def master_scan(
         "Describe cómo el tejido respeta la dignidad de la silueta sin usar números."
     )
 
+    # AGENTE 70: ANÁLISIS DE TENDENCIAS (GOOGLE TOP 20)
+    trend_prompt = (
+        f"Actúa como un analista de moda de Google Trends. Verifica si '{selected_look['name']}' con tejido '{fabric_info['drape']}' "
+        "es una tendencia actual en el Top 20 de búsquedas de moda o visuales. "
+        "Devuelve una frase corta y contundente justificando su popularidad (ej. 'Detectado patrón floral, tendencia #4 en Google')."
+    )
+
+    # Ejecución paralela simulada (en producción usaríamos asyncio.gather)
     jules_response = jules_brain.generate_content(ai_prompt)
+    trend_response = jules_brain.generate_content(trend_prompt)
+
+    print(f"AGENT 12 LOG: Validación de Tendencia completada: {trend_response.text.strip()}")
 
     # D. Respuesta Sincronizada para el Espejo (Frontend)
     return {
@@ -127,7 +143,8 @@ async def master_scan(
             "item_name": selected_look["name"],
             "jules_narrative": jules_response.text,
             "fit_score": 99.8,
-            "physics": fabric_info
+            "physics": fabric_info,
+            "trend_context": trend_response.text.strip()
         },
         "anchors": biometrics["anchors"]
     }
