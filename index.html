@@ -1,42 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Galeries Lafayette - Divineo Pilot</title>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
-    <style>
-        body { background: #141619; color: #C5A46D; font-family: serif; text-align: center; }
-        #mirror-container { position: relative; width: 800px; margin: 0 auto; border: 4px solid #C5A46D; border-radius: 50px; overflow: hidden; }
-        video { width: 100%; transform: scaleX(-1); }
-        #status-overlay { position: absolute; top: 20px; width: 100%; font-size: 1.2rem; background: rgba(0,0,0,0.5); }
-    </style>
-</head>
-<body>
-    <header>
-        <h1 style="letter-spacing: 10px;">GALERIES LAFAYETTE</h1>
-        <p>SISTEMA AUDITADO - JULES V7 ONLINE</p>
-    </header>
-    <div id="mirror-container">
-        <div id="status-overlay">CONECTANDO CÁMARA...</div>
-        <video id="input_video" playsinline></video>
-    </div>
-    <script>
-        const videoElement = document.getElementById('input_video');
-        const statusText = document.getElementById('status-overlay');
-
-        async function startCamera() {
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 1280, height: 720 } });
-                videoElement.srcObject = stream;
-                videoElement.play();
-                statusText.innerText = "ESCÁNER COMPLETADO - GENERANDO LOOK..."; setTimeout(() => { window.location.href = "?step=recommendation"; }, 3000);
-            } catch (err) {
-                statusText.innerText = "ERROR: ACTIVE SU CÁMARA PARA LA EXPERIENCIA";
-                console.error(err);
-            }
-        }
-        startCamera();
-    </script>
-</body>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

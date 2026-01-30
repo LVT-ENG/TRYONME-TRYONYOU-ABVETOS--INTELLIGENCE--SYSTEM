@@ -6,6 +6,7 @@ export default function App() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [recommendation, setRecommendation] = useState(null);
+  const hasFetched = useRef(false);
 
   useEffect(() => {
     const pose = new Pose({
@@ -48,7 +49,9 @@ export default function App() {
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      if (!recommendation && lm[11].visibility > 0.8) {
+      // Bolt: Prevent API spam due to stale closure
+      if (!hasFetched.current && !recommendation && lm[11].visibility > 0.8) {
+          hasFetched.current = true;
           fetch('/api/recommend', {
               method: 'POST',
               headers: { 
