@@ -17,7 +17,7 @@ class RecommendationRequest(BaseModel):
 
 async def verify_token(x_divineo_token: str = Header(None)):
     if not INTERNAL_SECRET_KEY:
-         raise HTTPException(status_code=500, detail="Server misconfiguration: Missing INTERNAL_SECRET_KEY")
+        raise HTTPException(status_code=500, detail="Server misconfiguration: Missing INTERNAL_SECRET_KEY")
     if not x_divineo_token or x_divineo_token != INTERNAL_SECRET_KEY:
         raise HTTPException(status_code=403, detail="Unauthorized")
     return x_divineo_token
