@@ -47,7 +47,7 @@ async def recommend(data: RecommendationRequest, token: str = Depends(verify_tok
             if response.text:
                 narrative = response.text.strip()
         except Exception as e:
-            print(f"Gemini Error: {e}")
+            logging.error(f"Gemini Error: {e}")
             # Fallback to default narrative
 
     return {"jules_narrative": narrative, "status": "success"}
