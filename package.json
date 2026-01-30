@@ -1,1 +1,25 @@
-{"name":"lafayette-pilot","version":"1.0.0","scripts":{"build":"echo done"},"devDependencies":{"eslint":"^9.39.2"},"dependencies":{"axios":"^1.13.4"}}
+{
+  "name": "lafayette-pilot",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.13.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@mediapipe/pose": "^0.5.1675469404",
+    "@mediapipe/camera_utils": "^0.3.1675466862"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.2",
+    "vite": "^5.0.0",
+    "@vitejs/plugin-react": "^4.2.0",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  }
+}
