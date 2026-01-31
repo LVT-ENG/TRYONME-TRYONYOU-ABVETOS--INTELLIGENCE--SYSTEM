@@ -1,5 +1,6 @@
 import json, qrcode, os
 import pandas as pd
+import google.generativeai as genai
 
 class JulesAgent:
     def sanitize(self, raw_data):
@@ -15,6 +16,33 @@ class JulesAgent:
         }
 
 class Agent70:
+    def __init__(self):
+        api_key = os.getenv("GOOGLE_API_KEY")
+        if api_key:
+            genai.configure(api_key=api_key)
+            self.model = genai.GenerativeModel('gemini-pro')
+        else:
+            self.model = None
+
+    def generate_ai_narrative(self, user_vector, recommendations):
+        if not self.model:
+            return "Agent 70: Análisis completado. Selección basada en métricas de elasticidad."
+
+        try:
+            # Construct a prompt
+            items_desc = ", ".join([f"{item.get('Title', 'Item')} ({item.get('Variant Price', 'N/A')} EUR)" for item in recommendations[:3]])
+            prompt = (
+                f"Actúa como un estilista de alta costura personal (Agent 70) para Galeries Lafayette. "
+                f"El usuario tiene una silueta con vector: {user_vector['vector']}. "
+                f"Recomienda brevemente por qué estos artículos son ideales: {items_desc}. "
+                f"Usa un tono sofisticado, exclusivo y técnico. Máximo 2 frases."
+            )
+            response = self.model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            print(f"GenAI Error: {e}")
+            return "Agent 70: Análisis completado. Selección óptima generada."
+
     def match(self, vector, inventory):
         # Algoritmo de matching basado en la elasticidad y medidas
         # El Agent 70 ya no solo resta números; ahora calcula cómo se adapta la prenda
@@ -26,7 +54,14 @@ class Agent70:
             recommendations.append({**item, "match_score": score})
         
         recommendations.sort(key=lambda x: x['match_score'])
-        return recommendations[:6]
+        top_picks = recommendations[:6]
+
+        narrative = self.generate_ai_narrative(vector, top_picks)
+
+        return {
+            "recommendations": top_picks,
+            "narrative": narrative
+        }
 
 class PauAgent:
     def generate_qr(self, product_id):

@@ -6,6 +6,7 @@ export default function App() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [recommendations, setRecommendations] = useState([]);
+  const [narrative, setNarrative] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
   const [qrUrl, setQrUrl] = useState(null);
   const hasFetched = useRef(false);
@@ -65,8 +66,10 @@ export default function App() {
           })
           .then(res => res.json())
           .then(data => {
-              setRecommendations(Array.isArray(data) ? data : []);
-              if (data.length > 0) setSelectedItem(data[0]);
+              const recs = data.recommendations || (Array.isArray(data) ? data : []);
+              setRecommendations(recs);
+              if (data.narrative) setNarrative(data.narrative);
+              if (recs.length > 0) setSelectedItem(recs[0]);
           });
       }
     });
@@ -115,6 +118,12 @@ export default function App() {
               <h2 className="text-[#C5A46D] font-serif text-2xl uppercase tracking-wider mb-1">Curated Selection</h2>
               <p className="text-xs text-white/50 uppercase tracking-widest">Basado en tu fisionomía</p>
             </div>
+
+            {narrative && (
+              <div className="p-4 bg-white/5 border border-[#C5A46D]/20 rounded-sm">
+                <p className="text-[#C5A46D] text-sm font-serif italic leading-relaxed">"{narrative}"</p>
+              </div>
+            )}
 
             <div className="flex flex-col gap-4">
               {recommendations.map((item, idx) => (
