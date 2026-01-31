@@ -1,6 +1,10 @@
 import json, qrcode, os
 import pandas as pd
-import google.generativeai as genai
+
+try:
+    import google.generativeai as genai
+except ImportError:
+    genai = None
 
 class JulesAgent:
     def sanitize(self, raw_data):
@@ -18,7 +22,7 @@ class JulesAgent:
 class Agent70:
     def __init__(self):
         api_key = os.getenv("GOOGLE_API_KEY")
-        if api_key:
+        if api_key and genai:
             genai.configure(api_key=api_key)
             self.model = genai.GenerativeModel('gemini-pro')
         else:
