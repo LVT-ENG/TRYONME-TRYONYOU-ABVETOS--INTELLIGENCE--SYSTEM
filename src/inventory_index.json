@@ -1,5 +1,65 @@
 [
-  {"id": "V-001", "name": "Robe Lafayette Silk", "measure": 90, "event": "Gala"},
-  {"id": "V-002", "name": "Costume Slim Fit", "measure": 95, "event": "Business"},
-  {"id": "V-003", "name": "Veste Casual", "measure": 85, "event": "Casual"}
+  {
+    "id": "black_gala_dress",
+    "Handle": "black_gala_dress",
+    "Title": "Black Gala Dress",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/black_gala_dress.png"
+  },
+  {
+    "id": "brown_blazer_360_views",
+    "Handle": "brown_blazer_360_views",
+    "Title": "Brown Blazer 360 Views",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/brown_blazer_360_views.png"
+  },
+  {
+    "id": "burberry_trench",
+    "Handle": "burberry_trench",
+    "Title": "Burberry Trench",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/burberry_trench.png"
+  },
+  {
+    "id": "burberry_trench_complete",
+    "Handle": "burberry_trench_complete",
+    "Title": "Burberry Trench Complete",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/burberry_trench_complete.png"
+  },
+  {
+    "id": "lime_green_leather_suit",
+    "Handle": "lime_green_leather_suit",
+    "Title": "Lime Green Leather Suit",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/lime_green_leather_suit.png"
+  },
+  {
+    "id": "pink_chanel_suit",
+    "Handle": "pink_chanel_suit",
+    "Title": "Pink Chanel Suit",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/pink_chanel_suit.png"
+  },
+  {
+    "id": "red_dress_clean",
+    "Handle": "red_dress_clean",
+    "Title": "Red Dress Clean",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/red_dress_clean.png"
+  },
+  {
+    "id": "red_dress_minimal",
+    "Handle": "red_dress_minimal",
+    "Title": "Red Dress Minimal",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/red_dress_minimal.png"
+  },
+  {
+    "id": "urban_male_model_app_demo",
+    "Handle": "urban_male_model_app_demo",
+    "Title": "Urban Male Model App Demo",
+    "Variant Price": "0",
+    "Image Src": "/assets/catalog/urban_male_model_app_demo.jpg"
+  }
 ]
