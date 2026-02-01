@@ -32,14 +32,8 @@ export function useBiometrics() {
     setProgress(0);
 
     try {
-      // Simulated progress for better UX
-      const progressInterval = setInterval(() => {
-        setProgress(prev => Math.min(prev + 10, 90));
-      }, 200);
-
-      const result = await api.processBiometricScan(imageData);
-      
-      clearInterval(progressInterval);
+      // Delegate progress tracking to API service
+      const result = await api.processBiometricScan(imageData, setProgress);
       setProgress(100);
 
       // Enrich with computed data

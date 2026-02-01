@@ -16,7 +16,21 @@ class AbvetosAPI {
     // If mock mode is on, bypass fetch and return mock data
     if (this.mockMode) {
       console.log(`🎭 MOCK API Request: ${endpoint}`);
-      await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network latency
+
+      const { onProgress } = options;
+
+      if (onProgress && typeof onProgress === 'function') {
+        // Simulate progress steps
+        const steps = [10, 30, 50, 75, 90];
+        for (const progress of steps) {
+          await new Promise(resolve => setTimeout(resolve, 200));
+          onProgress(progress);
+        }
+        await new Promise(resolve => setTimeout(resolve, 200));
+      } else {
+        await new Promise(resolve => setTimeout(resolve, 800)); // Simulate network latency
+      }
+
       return this.getMockData(endpoint, options);
     }
 
@@ -62,7 +76,7 @@ class AbvetosAPI {
   }
 
   // ... keep existing methods signatures acting as proxies to request ...
-  async processBiometricScan(imageData) { return this.request('/biometric_scan', { method: 'POST', body: JSON.stringify({ image: imageData }) }); }
+  async processBiometricScan(imageData, onProgress) { return this.request('/biometric_scan', { method: 'POST', body: JSON.stringify({ image: imageData }), onProgress }); }
   async getRecommendations(userId) { return this.request('/recommendations?user_id=' + userId); }
   async getDigitalTwin(userId) { return this.request('/digital_twin/' + userId); }
 }
