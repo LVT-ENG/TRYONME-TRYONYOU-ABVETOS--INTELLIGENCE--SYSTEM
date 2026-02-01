@@ -49,18 +49,48 @@ class Agent70:
 
     def match(self, vector, inventory):
         # Algoritmo de matching basado en la elasticidad y medidas
-        # El Agent 70 ya no solo resta números; ahora calcula cómo se adapta la prenda
         recommendations = []
-        for item in inventory:
-            # Simulamos una lógica de matching real basada en el precio o categoría si no hay medidas exactas
-            price = float(item.get('Variant Price', 0))
-            score = abs(price / 10 - vector['vector'][0])
-            recommendations.append({**item, "match_score": score})
-        
-        recommendations.sort(key=lambda x: x['match_score'])
-        top_picks = recommendations[:6]
+        user_measure = vector['vector'][0]
 
-        narrative = self.generate_ai_narrative(vector, top_picks)
+        for item in inventory:
+            # Simulamos FitScore real (0.0 a 1.0)
+            # Asumimos que Variant Price es un proxy de medida para la demo
+            price = float(item.get('Variant Price', 0))
+            diff = abs((price / 10) - user_measure)
+            fit_score = 1.0 / (1.0 + (diff / 10.0)) # Normalización
+
+            recommendations.append({**item, "match_score": fit_score, "measure": fit_score})
+
+        # Ordenar por mejor FitScore (descendente)
+        recommendations.sort(key=lambda x: x['match_score'], reverse=True)
+        best_fit = recommendations[0]['match_score'] if recommendations else 0
+
+        top_picks = []
+        
+        # Lógica de Selección Dinámica
+        if best_fit > 0.95:
+            # Divineo: Perfect Match
+            top_picks = [r for r in recommendations if r['match_score'] > 0.95][:6]
+            narrative_prefix = "DIVINEO MATCH: Ajuste perfecto detectado. "
+        elif 0.85 <= best_fit <= 0.95:
+            # Lafayette: Catálogo Estándar
+            top_picks = recommendations[:6]
+            narrative_prefix = "LAFAYETTE SELECTION: Colección curada para tu silueta. "
+        else:
+            # CAP: Generación Automática (Just-in-Time)
+            # Inyectamos item CAP
+            cap_item = {
+                "id": "CAP-GEN-001",
+                "Title": "CAP Bespoke Creation",
+                "Variant Price": "0",
+                "Image Src": "/assets/catalog/cap_generation.png", # Placeholder
+                "match_score": 0.99, # Artificialmente alto para CAP
+                "measure": 0.99
+            }
+            top_picks = [cap_item] + recommendations[:5]
+            narrative_prefix = "CAP ACTIVATED: Iniciando producción a medida. "
+
+        narrative = narrative_prefix + self.generate_ai_narrative(vector, top_picks)
 
         return {
             "recommendations": top_picks,
@@ -69,12 +99,17 @@ class Agent70:
 
 class PauAgent:
     def generate_qr(self, product_id):
-        if not os.path.exists("static"): os.makedirs("static")
-        qr_path = f"static/qr_{product_id}.png"
+        # Asegurar directorio público para assets
+        output_dir = "public/assets"
+        if not os.path.exists(output_dir): os.makedirs(output_dir)
+
+        qr_filename = f"qr_{product_id}.png"
+        qr_path = os.path.join(output_dir, qr_filename)
+
         # Generamos un QR real para la reserva VIP
         img = qrcode.make(f"https://tryonyou.app/reserve/{product_id}")
         img.save(qr_path)
-        return f"/static/qr_{product_id}.png"
+        return f"/assets/{qr_filename}"
 
 class FISOrchestrator:
     def __init__(self):
@@ -92,20 +127,18 @@ class FISOrchestrator:
             # Sustituimos URLs de imágenes locales si existen en nuestro catálogo descargado
             for item in inv:
                 handle = item.get('Handle', '')
-                local_img = f"/static/catalog/{handle}.png"
+                # Actualización de rutas a /assets/catalog/
+                local_img = f"/assets/catalog/{handle}.png"
                 
-                # Verificamos si el archivo existe en el sistema de archivos
-                if not os.path.exists(f"/home/ubuntu/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM{local_img}"):
-                    # Mapeo manual basado en activos conocidos
-                    title = str(item.get('Title', '')).lower()
-                    if "dress" in title:
-                        item['Image Src'] = "/static/catalog/red_dress_clean.png"
-                    elif "blazer" in title or "suit" in title or "trench" in title:
-                        item['Image Src'] = "/static/catalog/brown_blazer_360_views.png"
-                    else:
-                        item['Image Src'] = "/static/catalog/urban_male_model_app_demo.jpg"
+                # Para la demo, usamos mapeo determinista si no tenemos el archivo real checkeado
+                # (Simplificado para evitar checks de sistema de archivos complejos en Vercel)
+                title = str(item.get('Title', '')).lower()
+                if "dress" in title:
+                    item['Image Src'] = "/assets/catalog/red_dress_clean.png"
+                elif "blazer" in title or "suit" in title or "trench" in title:
+                    item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
                 else:
-                    item['Image Src'] = local_img
+                    item['Image Src'] = "/assets/catalog/urban_male_model_app_demo.jpg"
 
             return self.a70.match(self.jules.sanitize(user_data), inv)
         except Exception as e: 
