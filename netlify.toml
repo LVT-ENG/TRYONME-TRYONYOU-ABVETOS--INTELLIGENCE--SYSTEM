@@ -1,8 +1,18 @@
 [build]
+  # El comando real que genera la app
   command = "npm run build"
+  # La carpeta que Netlify debe publicar (Vite usa 'dist' por defecto)
   publish = "dist"
 
 [[redirects]]
+  # Esto arregla el error de 'Redirect rules' y permite que React maneje las rutas
   from = "/*"
   to = "/index.html"
   status = 200
+
+[[headers]]
+  # Esto arregla el error de 'Header rules'
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
