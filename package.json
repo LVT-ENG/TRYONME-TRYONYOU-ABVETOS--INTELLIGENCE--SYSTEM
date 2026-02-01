@@ -1,11 +1,18 @@
 {
   "name": "lafayette-pilot",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
-    "build": "rm -rf dist && mkdir -p dist && cp index.html dist/ && cp -r assets dist/ && cp -r public/* dist/ 2>/dev/null || true"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.24",
     "eslint": "^9.39.2",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.1",
     "vite": "^7.1.2"
   },
   "dependencies": {
