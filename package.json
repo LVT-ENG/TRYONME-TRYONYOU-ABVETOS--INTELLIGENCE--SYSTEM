@@ -1,1 +1,1 @@
-{"name":"lafayette-pilot","version":"1.0.0","scripts":{"build":"echo done"},"devDependencies":{"eslint":"^9.39.2"},"dependencies":{"axios":"^1.13.4"}}
+{"name":"lafayette-pilot","version":"1.0.0","scripts":{"build":"node scripts/build_dist.js"},"devDependencies":{"eslint":"^9.39.2"},"dependencies":{"axios":"^1.13.4"}}
