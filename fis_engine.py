@@ -114,31 +114,38 @@ class PauAgent:
 class FISOrchestrator:
     def __init__(self):
         self.jules, self.a70, self.pau = JulesAgent(), Agent70(), PauAgent()
+        # In-memory cache for parsed inventory files to avoid repeated I/O
+        self._inventory_cache = {}
 
     def run_experience(self, user_data, inventory_file):
         try:
-            if inventory_file.endswith(".csv"):
-                inv = pd.read_csv(inventory_file).to_dict('records')
-            elif inventory_file.endswith(".xlsx"):
-                inv = pd.read_excel(inventory_file).to_dict('records')
+            if inventory_file in self._inventory_cache:
+                inv = self._inventory_cache[inventory_file]
             else:
-                inv = json.load(open(inventory_file))
-            
-            # Sustituimos URLs de imágenes locales si existen en nuestro catálogo descargado
-            for item in inv:
-                handle = item.get('Handle', '')
-                # Actualización de rutas a /assets/catalog/
-                local_img = f"/assets/catalog/{handle}.png"
-                
-                # Para la demo, usamos mapeo determinista si no tenemos el archivo real checkeado
-                # (Simplificado para evitar checks de sistema de archivos complejos en Vercel)
-                title = str(item.get('Title', '')).lower()
-                if "dress" in title:
-                    item['Image Src'] = "/assets/catalog/red_dress_clean.png"
-                elif "blazer" in title or "suit" in title or "trench" in title:
-                    item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
+                if inventory_file.endswith(".csv"):
+                    inv = pd.read_csv(inventory_file).to_dict('records')
+                elif inventory_file.endswith(".xlsx"):
+                    inv = pd.read_excel(inventory_file).to_dict('records')
                 else:
-                    item['Image Src'] = "/assets/catalog/urban_male_model_app_demo.jpg"
+                    inv = json.load(open(inventory_file))
+
+                # Sustituimos URLs de imágenes locales si existen en nuestro catálogo descargado
+                for item in inv:
+                    handle = item.get('Handle', '')
+                    # Actualización de rutas a /assets/catalog/
+                    local_img = f"/assets/catalog/{handle}.png"
+
+                    # Para la demo, usamos mapeo determinista si no tenemos el archivo real checkeado
+                    # (Simplificado para evitar checks de sistema de archivos complejos en Vercel)
+                    title = str(item.get('Title', '')).lower()
+                    if "dress" in title:
+                        item['Image Src'] = "/assets/catalog/red_dress_clean.png"
+                    elif "blazer" in title or "suit" in title or "trench" in title:
+                        item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
+                    else:
+                        item['Image Src'] = "/assets/catalog/urban_male_model_app_demo.jpg"
+
+                self._inventory_cache[inventory_file] = inv
 
             return self.a70.match(self.jules.sanitize(user_data), inv)
         except Exception as e: 
