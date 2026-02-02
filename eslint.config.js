@@ -1,1 +1,9 @@
-export default [{files: ["js/**/*.js"], rules: {"no-console": "off", "eqeqeq": "error"}}];
+export default [
+  {
+    files: ["src/**/*.{js,jsx}"],
+    rules: {
+      "no-console": "off",
+      "eqeqeq": "error"
+    }
+  }
+];

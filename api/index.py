@@ -5,6 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from fastapi import FastAPI, Body
+from fastapi.concurrency import run_in_threadpool
 from fis_engine import FISOrchestrator
 
 app = FastAPI()
@@ -21,9 +22,12 @@ async def recommend(data: dict = Body(...)):
     if not os.path.exists(inventory_path):
         inventory_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src/inventory_index.json")
     
-    return orchestrator.run_experience(data, inventory_path)
+    # ⚡ Bolt Optimization: Offload synchronous blocking call (GenAI + File I/O) to threadpool
+    # This prevents blocking the main asyncio event loop
+    return await run_in_threadpool(orchestrator.run_experience, data, inventory_path)
 
 @app.get("/api/reserve/{product_id}")
 async def reserve(product_id: str):
-    qr_url = orchestrator.pau.generate_qr(product_id)
+    # ⚡ Bolt Optimization: Offload synchronous QR generation (Image I/O) to threadpool
+    qr_url = await run_in_threadpool(orchestrator.pau.generate_qr, product_id)
     return {"qr_url": qr_url}
