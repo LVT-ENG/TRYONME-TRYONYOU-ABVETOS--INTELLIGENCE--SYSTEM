@@ -9,7 +9,7 @@ set -e  # Exit on error
 
 # --- CONFIGURACIÓN DE SEGURIDAD ---
 # Asegúrate de tener GITHUB_TOKEN y VERCEL_TOKEN definidos en el entorno
-export REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/tryonme-tryonyou-abvetos-intelligen.git"
+export REPO_URL="https://x-access-token:${GITHUB_TOKEN}@github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git"
 
 # --- 1. SINCRONIZACIÓN 'MAX PRO' (REBASE) ---
 echo "🚀 Iniciando Sincronización Pro..."
@@ -23,8 +23,8 @@ git rebase origin/main
 # --- 2. INYECCIÓN DE VARIABLES (ULTIMATUM) ---
 echo "🔑 Inyectando secretos en Vercel..."
 # Configura las keys en la nube para el piloto comercial
-echo -n $GOOGLE_GENAI_KEY | vercel env add GOOGLE_GENAI_KEY production --token $VERCEL_TOKEN
-echo -n $STRIPE_SECRET_KEY | vercel env add STRIPE_SECRET_KEY production --token $VERCEL_TOKEN
+echo -n "$GOOGLE_GENAI_KEY" | vercel env add GOOGLE_GENAI_KEY production --token "$VERCEL_TOKEN"
+echo -n "$STRIPE_SECRET_KEY" | vercel env add STRIPE_SECRET_KEY production --token "$VERCEL_TOKEN"
 
 # Genera el .env local para respaldo
 cat << EOF > .env
@@ -32,9 +32,12 @@ GOOGLE_GENAI_KEY=$GOOGLE_GENAI_KEY
 STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY
 EOF
 
+# Set restrictive permissions on .env file (owner read/write only)
+chmod 600 .env
+
 # --- 3. DESPLIEGUE FINAL ---
 echo "📦 Ejecutando deploy_ultimatum.sh..."
 chmod +x ./deploy_ultimatum.sh
-./deploy_ultimatum.sh --token $VERCEL_TOKEN
+./deploy_ultimatum.sh --token "$VERCEL_TOKEN"
 
 echo "✅ Proceso completado: Piloto desplegado y actualizado."

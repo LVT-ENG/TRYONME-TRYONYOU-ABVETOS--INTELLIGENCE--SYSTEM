@@ -65,12 +65,18 @@ echo -e "${GREEN}✅ Pre-deployment checks passed${NC}"
 # --- PASO 2: Safety Lint (Protocolo Zero Tallas) ---
 echo ""
 echo "🛡️  PASO 2: Safety Lint (Zero Tallas Protocol)"
-if grep -rE "peso|talla|weight|size" src/ > /dev/null 2>&1; then
-  echo -e "${RED}❌ ERROR CRÍTICO: Se detectaron términos prohibidos (peso, talla, weight, size) en src/${NC}"
-  grep -rE "peso|talla|weight|size" src/
-  exit 1
+
+# Check if src/ directory exists
+if [ ! -d "src/" ]; then
+  echo -e "${YELLOW}⚠️  WARNING: src/ directory not found, skipping safety lint${NC}"
 else
-  echo -e "${GREEN}✅ Safety Lint Aprobado: Sin términos prohibidos.${NC}"
+  if grep -rE "peso|talla|weight|size" src/ > /dev/null 2>&1; then
+    echo -e "${RED}❌ ERROR CRÍTICO: Se detectaron términos prohibidos (peso, talla, weight, size) en src/${NC}"
+    grep -rE "peso|talla|weight|size" src/
+    exit 1
+  else
+    echo -e "${GREEN}✅ Safety Lint Aprobado: Sin términos prohibidos.${NC}"
+  fi
 fi
 
 # --- PASO 3: Build Verification ---
