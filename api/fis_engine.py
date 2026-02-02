@@ -41,7 +41,7 @@ class Agent70:
                 f"Usa un tono sofisticado, exclusivo y técnico. Máximo 2 frases."
             )
             response = self.client.models.generate_content(
-                model='gemini-1.5-flash',
+                model='gemini-2.0-flash',
                 contents=prompt
             )
             return response.text
