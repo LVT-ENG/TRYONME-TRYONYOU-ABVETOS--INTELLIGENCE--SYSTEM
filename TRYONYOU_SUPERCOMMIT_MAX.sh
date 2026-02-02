@@ -68,7 +68,7 @@ rm -rf dist/ 2>/dev/null || true
 rm -rf .next/ 2>/dev/null || true
 rm -rf legacy_old/ 2>/dev/null || true
 rm -f .DS_Store 2>/dev/null || true
-rm -f package-lock.json 2>/dev/null || true
+# rm -f package-lock.json 2>/dev/null || true
 echo "✅ Limpieza completada"
 
 # PASO 4: Verificar estructura de directorios

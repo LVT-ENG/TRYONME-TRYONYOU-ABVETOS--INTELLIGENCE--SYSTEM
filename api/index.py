@@ -1,12 +1,7 @@
-import sys
 import os
-
-# Añadir el directorio raíz al path para importar fis_engine
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from fastapi import FastAPI, Body
 from fastapi.concurrency import run_in_threadpool
-from fis_engine import FISOrchestrator
+from .fis_engine import FISOrchestrator
 
 app = FastAPI()
 orchestrator = FISOrchestrator()
