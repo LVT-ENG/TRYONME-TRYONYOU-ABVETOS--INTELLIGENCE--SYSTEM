@@ -8,10 +8,35 @@
   to = "/index.html"
   status = 200
 
+# Headers de seguridad y CORS
 [[headers]]
   for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    Permissions-Policy = "camera=*, microphone=*"
+    [headers.values]
+      X-Frame-Options = "DENY"
+      X-XSS-Protection = "1; mode=block"
+      X-Content-Type-Options = "nosniff"
+      Referrer-Policy = "strict-origin-when-cross-origin"
+      Content-Security-Policy = "upgrade-insecure-requests"
+      Permissions-Policy = "camera=*, microphone=*"
+      Access-Control-Allow-Origin = "*"
+      Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+      Access-Control-Allow-Headers = "Content-Type, Authorization"
+
+# Cache para assets estáticos
+[[headers]]
+  for = "/assets/*"
+    [headers.values]
+      Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache para imágenes
+[[headers]]
+  for = "/public/*"
+    [headers.values]
+      Cache-Control = "public, max-age=31536000, immutable"
+
+# Variables de entorno (configurar en Netlify UI)
+# VITE_GOOGLE_API_KEY
+# VITE_PILOT_MODE
+# VITE_ENVIRONMENT
+# VITE_STRIPE_PUBLIC_KEY
+# VITE_ANALYTICS_ID

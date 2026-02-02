@@ -1,0 +1,90 @@
+{
+  "project": "TRYONYOU_ULTRA_V7",
+  "version": "7.0.0",
+  "environment": "production",
+  "monetization": {
+    "enabled": true,
+    "stripe_mode": "sandbox",
+    "features": [
+      "ai_prompt_selling",
+      "consulting_booking",
+      "subscription_plans",
+      "one_time_purchases"
+    ],
+    "pricing": {
+      "pilot_access": {
+        "type": "subscription",
+        "price_monthly": 29.99,
+        "price_yearly": 299.99,
+        "currency": "EUR",
+        "description": "Acceso completo al piloto Lafayette v7"
+      },
+      "enterprise_license": {
+        "type": "one_time",
+        "price": 9999.99,
+        "currency": "EUR",
+        "description": "Licencia empresarial con soporte dedicado"
+      },
+      "consulting_session": {
+        "type": "booking",
+        "price_per_hour": 150.00,
+        "currency": "EUR",
+        "description": "Sesión de consultoría personalizada"
+      }
+    }
+  },
+  "analytics": {
+    "enabled": true,
+    "providers": [
+      "google_analytics",
+      "vercel_analytics",
+      "custom_metrics"
+    ],
+    "metrics_to_track": [
+      "session_duration",
+      "scan_completion_rate",
+      "recommendation_acceptance",
+      "conversion_rate",
+      "user_retention",
+      "fit_score_distribution"
+    ]
+  },
+  "integrations": {
+    "stripe": {
+      "public_key_sandbox": "pk_test_PLACEHOLDER",
+      "webhook_endpoint": "/api/stripe/webhook"
+    },
+    "google_analytics": {
+      "tracking_id": "G-PLACEHOLDER"
+    },
+    "telegram": {
+      "bot_token": "7052533162:AAH-DEPLOY-ABVETOS-T",
+      "chat_id": "7868120279",
+      "notifications": [
+        "new_subscription",
+        "failed_payment",
+        "high_value_purchase"
+      ]
+    }
+  },
+  "deployment": {
+    "vercel": {
+      "project_id": "prj_qRyR3RAXSMfp1eocB2rw8rYT5vpN",
+      "team_id": "team_qZUhXYXqwqTG5FjVWRvJj7Kv",
+      "production_url": "tryonyou.app"
+    },
+    "netlify": {
+      "site_id": "PENDING_SETUP",
+      "production_url": "tryonyou.netlify.app"
+    }
+  },
+  "features": {
+    "lafayette_pilot": true,
+    "virtual_fitting": true,
+    "avatar_3d": false,
+    "biometric_payment": false,
+    "zero_tallas_system": true,
+    "i18n": true,
+    "languages": ["en", "es", "fr"]
+  }
+}
