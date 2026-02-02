@@ -2,7 +2,7 @@ import json, qrcode, os
 import pandas as pd
 
 try:
-    import google.generativeai as genai
+    from google import genai
 except ImportError:
     genai = None
 
@@ -21,15 +21,14 @@ class JulesAgent:
 
 class Agent70:
     def __init__(self):
-        api_key = os.getenv("GOOGLE_API_KEY")
-        if api_key and genai:
-            genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-pro')
+        self.api_key = os.getenv("GOOGLE_API_KEY")
+        if self.api_key and genai:
+            self.client = genai.Client(api_key=self.api_key)
         else:
-            self.model = None
+            self.client = None
 
     def generate_ai_narrative(self, user_vector, recommendations):
-        if not self.model:
+        if not self.client:
             return "Agent 70: Análisis completado. Selección basada en métricas de elasticidad."
 
         try:
@@ -41,7 +40,10 @@ class Agent70:
                 f"Recomienda brevemente por qué estos artículos son ideales: {items_desc}. "
                 f"Usa un tono sofisticado, exclusivo y técnico. Máximo 2 frases."
             )
-            response = self.model.generate_content(prompt)
+            response = self.client.models.generate_content(
+                model='gemini-1.5-flash',
+                contents=prompt
+            )
             return response.text
         except Exception as e:
             print(f"GenAI Error: {e}")
