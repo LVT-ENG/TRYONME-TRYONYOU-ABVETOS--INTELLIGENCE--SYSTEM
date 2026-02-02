@@ -2,7 +2,7 @@ from fastapi import FastAPI, Body, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 import os, uvicorn
-from fis_engine import FISOrchestrator
+from api.fis_engine import FISOrchestrator
 
 app = FastAPI(title="FIS v7.0 - Galeries Lafayette Pilot")
 

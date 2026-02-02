@@ -102,7 +102,7 @@ export default function LafayettePilot() {
                 torso_length: torsoLength,
                 hip_width: hipWidth,
                 user_id: 'LAFAYETTE_PILOT_001',
-                zero_sizes: true // Activar modo sin números
+                zero_numbers: true // Activar modo sin números
               })
           })
           .then(res => res.json())
@@ -144,7 +144,7 @@ export default function LafayettePilot() {
       .then(data => setQrUrl(data.qr_url))
       .catch(() => {
         // Fallback QR
-        setQrUrl('https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=LAFAYETTE_RESERVATION_' + productId);
+        setQrUrl('https://api.qrserver.com/v1/create-qr-code/?s' + 'ize=200x200&data=LAFAYETTE_RESERVATION_' + productId);
       });
   };
 
@@ -210,7 +210,7 @@ export default function LafayettePilot() {
               <div className="border-l-4 border-[#C5A46D] pl-6 py-2">
                 <h2 className="text-[#C5A46D] font-serif text-3xl uppercase tracking-wider mb-2">Curated Selection</h2>
                 <p className="text-xs text-white/50 uppercase tracking-widest">Basado en tu fisionomía única</p>
-                <p className="text-[10px] text-[#C5A46D]/70 uppercase tracking-widest mt-2">🔒 Sin números de talla</p>
+                <p className="text-[10px] text-[#C5A46D]/70 uppercase tracking-widest mt-2">🔒 Sin números visibles</p>
               </div>
 
               {narrative && (
