@@ -3,6 +3,10 @@
   publish = "dist"
   functions = "api"
 
+[build.environment]
+  NODE_VERSION = "20"
+  PYTHON_VERSION = "3.12"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
