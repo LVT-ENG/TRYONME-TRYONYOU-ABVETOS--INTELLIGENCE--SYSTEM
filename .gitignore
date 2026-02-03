@@ -24,3 +24,6 @@ yarn-error.log*
 # System
 .DS_Store
 .vercel
+
+# Generated QR codes
+static/reserves/*.png
