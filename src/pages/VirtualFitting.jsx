@@ -74,11 +74,27 @@ function Avatar3D({ measurements, currentGarment }) {
 export default function VirtualFitting() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const cameraInstanceRef = useRef(null);
+  const poseInstanceRef = useRef(null);
   const [step, setStep] = useState('intro'); // intro, scanning, avatar, fitting
   const [measurements, setMeasurements] = useState(null);
   const [currentGarment, setCurrentGarment] = useState(null);
   const [garments, setGarments] = useState([]);
   const hasFetched = useRef(false);
+
+  // Cleanup effect
+  useEffect(() => {
+    return () => {
+      if (cameraInstanceRef.current) {
+        cameraInstanceRef.current.stop();
+        cameraInstanceRef.current = null;
+      }
+      if (poseInstanceRef.current) {
+        poseInstanceRef.current.close();
+        poseInstanceRef.current = null;
+      }
+    };
+  }, []);
 
   // Catálogo de prendas
   const garmentCatalog = [
@@ -112,9 +128,14 @@ export default function VirtualFitting() {
   const startScanning = () => {
     setStep('scanning');
     
+    // Ensure previous instances are cleaned up if any
+    if (poseInstanceRef.current) poseInstanceRef.current.close();
+    if (cameraInstanceRef.current) cameraInstanceRef.current.stop();
+
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
     });
+    poseInstanceRef.current = pose;
 
     pose.setOptions({
       modelComplexity: 1,
@@ -170,6 +191,16 @@ export default function VirtualFitting() {
         
         // Transición suave a avatar
         setTimeout(() => {
+          // ⚡ Bolt Optimization: Stop camera and pose detection to save CPU/GPU
+          if (cameraInstanceRef.current) {
+            cameraInstanceRef.current.stop();
+            cameraInstanceRef.current = null;
+          }
+          if (poseInstanceRef.current) {
+            poseInstanceRef.current.close();
+            poseInstanceRef.current = null;
+          }
+
           setStep('avatar');
           setGarments(garmentCatalog);
           setCurrentGarment(garmentCatalog[0]);
@@ -181,6 +212,7 @@ export default function VirtualFitting() {
       onFrame: async () => { await pose.send({ image: videoRef.current }); },
       width: 1280, height: 720
     });
+    cameraInstanceRef.current = camera;
     camera.start();
   };
 
