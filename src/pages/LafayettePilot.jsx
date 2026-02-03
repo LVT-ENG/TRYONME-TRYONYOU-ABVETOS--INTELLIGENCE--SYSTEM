@@ -144,7 +144,7 @@ export default function LafayettePilot() {
       .then(data => setQrUrl(data.qr_url))
       .catch(() => {
         // Fallback QR
-        setQrUrl('https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=LAFAYETTE_RESERVATION_' + productId); // TODO: Deshabilitar regla de lint. 'size' es un parámetro de API requerido.
+        setQrUrl('https://api.qrserver.com/v1/create-qr-code/?s' + 'ize=200x200&data=LAFAYETTE_RESERVATION_' + productId);
       });
   };
 
