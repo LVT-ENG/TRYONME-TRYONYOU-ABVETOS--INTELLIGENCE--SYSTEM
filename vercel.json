@@ -14,6 +14,7 @@
       "destination": "/api/index.py"
     },
     {
+      "_comment": "Route all non-API, non-asset, non-file requests to index.html for SPA routing",
       "source": "/((?!api|assets|.*\\..*).*)",
       "destination": "/index.html"
     }
