@@ -3,9 +3,6 @@
   publish = "dist"
   functions = "api"
 
-[functions]
-  included_files = ["src/inventory_index.json", "TRYONYOU_CRM_MASTER_CLEAN-1.xlsx"]
-
 [build.environment]
   NODE_VERSION = "20"
   PYTHON_VERSION = "3.12"
