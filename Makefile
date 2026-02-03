@@ -3,7 +3,7 @@ dev:
 build:
 	npm run build
 lint:
-	npx eslint js/ --fix
+	npx eslint src/ --fix
 test:
 	npx vitest run
 clean:
