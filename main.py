@@ -7,6 +7,8 @@ from fastapi import FastAPI, HTTPException, Body, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
+from enum import Enum
+import re
 
 # ============================================================
 # MOTOR UNIFICADO DIVINEO V7 - "THE HERO'S JOURNEY"
@@ -23,15 +25,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- CONSTANTES ---
+DEFAULT_PRECISION = 99.7
+
 # --- MODELOS DE DATOS (Biometría y Fit) ---
+class EventType(str, Enum):
+    GALA = "Gala"
+    BUSINESS = "Business"
+    CASUAL = "Casual"
+
 class BiometricScan(BaseModel):
     user_id: str
     chest_cm: float
     waist_cm: float
     hip_cm: float
     height_cm: float
-    event_type: str # 'Gala', 'Business', 'Casual'
-    elasticity_preference: float = 0.1 # 10% por defecto
+    event_type: EventType
+    elasticity_preference: float = 0.1  # 10% default
 
 # --- EL CEREBRO DE LA OPERACIÓN (JULES AGENT V7) ---
 class SmartFitEngine:
@@ -41,24 +51,34 @@ class SmartFitEngine:
         self.inventory = self._load_inventory_from_elena()
 
     def _load_inventory_from_elena(self):
-        """Carga la base de datos real de Galeries Lafayette enviada por Elena"""
+        """Loads the actual Galeries Lafayette database sent by Elena"""
         if os.path.exists(self.db_path):
-            return pd.read_excel(self.db_path)
+            df = pd.read_excel(self.db_path)
+            # Validate required columns exist
+            required_columns = ['id', 'name', 'category']
+            missing_columns = [col for col in required_columns if col not in df.columns]
+            if missing_columns:
+                print(f"Warning: Missing columns {missing_columns}, using fallback data")
+                return self._get_fallback_inventory()
+            return df
         else:
-            # Fallback de Seguridad: Datos maestros de la Patente PCT/EP2025/067317
-            return pd.DataFrame([
-                {"id": "LVT_001", "name": "Robe Gala Divineo", "stretch": 0.20, "category": "Gala", "precision": 99.7},
-                {"id": "LVT_002", "name": "Trench Burberry", "stretch": 0.05, "category": "Casual", "precision": 99.5},
-                {"id": "LVT_003", "name": "Costume Slim Fit", "stretch": 0.12, "category": "Business", "precision": 99.8}
-            ])
+            return self._get_fallback_inventory()
+    
+    def _get_fallback_inventory(self):
+        """Fallback Security: Master data from Patent PCT/EP2025/067317"""
+        return pd.DataFrame([
+            {"id": "LVT_001", "name": "Robe Gala Divineo", "stretch": 0.20, "category": "Gala", "precision": 99.7},
+            {"id": "LVT_002", "name": "Trench Burberry", "stretch": 0.05, "category": "Casual", "precision": 99.5},
+            {"id": "LVT_003", "name": "Costume Slim Fit", "stretch": 0.12, "category": "Business", "precision": 99.8}
+        ])
 
     def calculate_live_fit(self, scan: BiometricScan):
-        """Algoritmo de Fit On-Live: Cruza biometría con elasticidad real del tejido"""
+        """On-Live Fit Algorithm: Matches biometry with actual fabric elasticity"""
         results = []
         for _, item in self.inventory.iterrows():
-            if item['category'].lower() == scan.event_type.lower():
-                # Lógica de 'Talla Invisible': Se calcula internamente, no se muestra
-                fit_score = item.get('precision', 99.7)
+            if item['category'].lower() == scan.event_type.value.lower():
+                # 'Invisible Size' logic: Calculated internally, not displayed
+                fit_score = item.get('precision', DEFAULT_PRECISION)
                 results.append({
                     "product_id": item['id'],
                     "name": item['name'],
@@ -66,16 +86,31 @@ class SmartFitEngine:
                     "fit_score": f"{fit_score}%",
                     "render_instruction": "ON_LIVE_MIRRORING_ACTIVE"
                 })
-        return results[:5] # Las 5 sugerencias de oro del Piloto
+        return results[:5]  # The 5 golden suggestions from the Pilot
 
 # --- EL CORAZÓN EMOCIONAL (PAU AGENT) ---
 class PauAgent:
     @staticmethod
+    def _sanitize_product_id(product_id: str) -> str:
+        """Sanitizes product_id to prevent path traversal attacks"""
+        # Only allow alphanumeric characters, underscores, and hyphens
+        sanitized = re.sub(r'[^a-zA-Z0-9_-]', '', product_id)
+        if not sanitized or sanitized != product_id:
+            raise ValueError(f"Invalid product_id format: {product_id}")
+        return sanitized
+    
+    @staticmethod
     def generate_qr(product_id: str):
-        """Genera el código QR para 'Reservar en Probador'"""
-        qr_content = f"https://tryonyou.app/reserve/{product_id}"
+        """Generates the QR code for 'Reserve in Fitting Room'"""
+        # Sanitize product_id to prevent path traversal
+        safe_product_id = PauAgent._sanitize_product_id(product_id)
+        
+        # URL encode the product_id for safe URL construction
+        from urllib.parse import quote
+        qr_content = f"https://tryonyou.app/reserve/{quote(safe_product_id)}"
+        
         qr = qrcode.make(qr_content)
-        qr_path = f"static/reserves/QR_{product_id}.png"
+        qr_path = f"static/reserves/QR_{safe_product_id}.png"
         os.makedirs(os.path.dirname(qr_path), exist_ok=True)
         qr.save(qr_path)
         return qr_path
@@ -85,8 +120,8 @@ engine = SmartFitEngine()
 pau = PauAgent()
 
 @app.post("/api/v7/scan-and-fit")
-async def scan_and_fit(scan: BiometricScan):
-    """Acción disparada por el 'Chasquido' en el Espejo Inteligente"""
+def scan_and_fit(scan: BiometricScan):
+    """Action triggered by the 'Snap' in the Smart Mirror"""
     suggestions = engine.calculate_live_fit(scan)
     if not suggestions:
         raise HTTPException(status_code=404, detail="No match found for current biotype")
@@ -100,10 +135,13 @@ async def scan_and_fit(scan: BiometricScan):
     }
 
 @app.get("/api/v7/reserve/{product_id}")
-async def reserve_item(product_id: str):
-    """Botón 'Reservar en Probador'"""
-    path = pau.generate_qr(product_id)
-    return {"status": "Reserved", "qr_local_path": path, "store": "Lafayette Paris Haussmann"}
+def reserve_item(product_id: str):
+    """'Reserve in Fitting Room' button"""
+    try:
+        path = pau.generate_qr(product_id)
+        return {"status": "Reserved", "qr_local_path": path, "store": "Lafayette Paris Haussmann"}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 # ============================================================
 # PROTOCOLO DE EJECUCIÓN (BÚNKER DIGITAL)
