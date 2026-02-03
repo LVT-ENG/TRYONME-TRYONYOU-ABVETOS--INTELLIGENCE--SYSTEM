@@ -1,8 +1,22 @@
 {
   "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "builds": [
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.py" },
-    { "source": "/static/(.*)", "destination": "/static/$1" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "_comment": "Route all non-API, non-asset, non-file requests to index.html for SPA routing",
+      "source": "/((?!api|assets|.*\\..*).*)",
+      "destination": "/index.html"
+    }
   ]
 }
