@@ -23,12 +23,12 @@ git rebase origin/main
 # --- 2. INYECCIÓN DE VARIABLES (ULTIMATUM) ---
 echo "🔑 Inyectando secretos en Vercel..."
 # Configura las keys en la nube para el piloto comercial
-echo -n "$GOOGLE_GENAI_KEY" | vercel env add GOOGLE_GENAI_KEY production --token "$VERCEL_TOKEN"
+echo -n "$GOOGLE_API_KEY" | vercel env add GOOGLE_API_KEY production --token "$VERCEL_TOKEN"
 echo -n "$STRIPE_SECRET_KEY" | vercel env add STRIPE_SECRET_KEY production --token "$VERCEL_TOKEN"
 
 # Genera el .env local para respaldo
 cat << EOF > .env
-GOOGLE_GENAI_KEY=$GOOGLE_GENAI_KEY
+GOOGLE_API_KEY=$GOOGLE_API_KEY
 STRIPE_SECRET_KEY=$STRIPE_SECRET_KEY
 EOF
 

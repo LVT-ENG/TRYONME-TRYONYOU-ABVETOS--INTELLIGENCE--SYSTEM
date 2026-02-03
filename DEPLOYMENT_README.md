@@ -17,14 +17,14 @@ Main orchestration script that handles the complete deployment workflow.
 The following environment variables must be set:
 - `GITHUB_TOKEN` - GitHub personal access token for repository access
 - `VERCEL_TOKEN` - Vercel authentication token
-- `GOOGLE_GENAI_KEY` - Google Generative AI API key
+- `GOOGLE_API_KEY` - Google Generative AI API key (Gemini 2.0 Flash)
 - `STRIPE_SECRET_KEY` - Stripe secret key for payment processing
 
 **Usage:**
 ```bash
 export GITHUB_TOKEN="your_github_token"
 export VERCEL_TOKEN="your_vercel_token"
-export GOOGLE_GENAI_KEY="your_google_genai_key"
+export GOOGLE_API_KEY="your_google_api_key"
 export STRIPE_SECRET_KEY="your_stripe_secret_key"
 
 ./sync_and_deploy.sh
@@ -99,7 +99,7 @@ These scripts can be integrated into CI/CD pipelines:
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    GOOGLE_GENAI_KEY: ${{ secrets.GOOGLE_GENAI_KEY }}
+    GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
     STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
   run: |
     chmod +x sync_and_deploy.sh

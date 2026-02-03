@@ -7,7 +7,7 @@ Before running the deployment scripts, ensure you have:
 1. **Required tokens and keys:**
    - GitHub Personal Access Token (with repo permissions)
    - Vercel Account Token (from vercel.com/account/tokens)
-   - Google Generative AI API Key
+   - Google API Key (for Gemini 2.0 Flash)
    - Stripe Secret Key
 
 2. **Required tools installed:**
@@ -23,7 +23,7 @@ Before running the deployment scripts, ensure you have:
 # Export all required environment variables
 export GITHUB_TOKEN="ghp_your_github_token_here"
 export VERCEL_TOKEN="your_vercel_token_here"
-export GOOGLE_GENAI_KEY="your_google_genai_key_here"
+export GOOGLE_API_KEY="your_google_api_key_here"
 export STRIPE_SECRET_KEY="sk_test_or_live_your_stripe_key_here"
 ```
 
@@ -33,7 +33,7 @@ export STRIPE_SECRET_KEY="sk_test_or_live_your_stripe_key_here"
 # .env.deployment (DO NOT COMMIT THIS FILE)
 export GITHUB_TOKEN="ghp_..."
 export VERCEL_TOKEN="..."
-export GOOGLE_GENAI_KEY="..."
+export GOOGLE_API_KEY="..."
 export STRIPE_SECRET_KEY="sk_..."
 ```
 
@@ -133,7 +133,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          GOOGLE_GENAI_KEY: ${{ secrets.GOOGLE_GENAI_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
         run: |
           chmod +x sync_and_deploy.sh

@@ -1,6 +1,7 @@
 import json, qrcode, os
 import pandas as pd
 
+# Updated for Google GenAI SDK (v1.0+) supporting Gemini 2.0
 try:
     from google import genai
 except ImportError:
@@ -23,6 +24,7 @@ class Agent70:
     def __init__(self):
         self.api_key = os.getenv("GOOGLE_API_KEY")
         if self.api_key and genai:
+            # Client initialization for the new Google GenAI SDK
             self.client = genai.Client(api_key=self.api_key)
         else:
             self.client = None
@@ -40,6 +42,7 @@ class Agent70:
                 f"Recomienda brevemente por qué estos artículos son ideales: {items_desc}. "
                 f"Usa un tono sofisticado, exclusivo y técnico. Máximo 2 frases."
             )
+            # Using Gemini 2.0 Flash for optimal performance and latency
             response = self.client.models.generate_content(
                 model='gemini-2.0-flash',
                 contents=prompt
