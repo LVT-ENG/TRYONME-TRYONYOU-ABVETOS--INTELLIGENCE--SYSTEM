@@ -174,9 +174,14 @@ run_build() {
     echo -e "${BLUE}🔨 PASO 6: Construcción del Proyecto${NC}"
     
     if [ -f "package.json" ]; then
-        echo "Ejecutando build..."
-        npm run build
-        echo -e "${GREEN}✅ Build completado exitosamente${NC}"
+        # Check if build script exists in package.json
+        if grep -q '"build"' package.json; then
+            echo "Ejecutando build..."
+            npm run build
+            echo -e "${GREEN}✅ Build completado exitosamente${NC}"
+        else
+            echo -e "${YELLOW}⚠️  Script 'build' no encontrado en package.json, omitiendo build${NC}"
+        fi
     else
         echo -e "${YELLOW}⚠️  package.json no encontrado, omitiendo build${NC}"
     fi
