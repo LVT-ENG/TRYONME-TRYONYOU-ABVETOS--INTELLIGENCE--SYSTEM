@@ -110,7 +110,7 @@ export default function LafayettePilot() {
               const recs = data.recommendations || (Array.isArray(data) ? data : []);
               setRecommendations(recs);
               if (data.narrative) setNarrative(data.narrative);
-              if (recs.length > 0) setSelectedItem(recs[0]);
+              if (recs.length > 0) setSelectedItem(null);
           })
           .catch(err => {
               console.error('Error fetching recommendations:', err);
@@ -125,7 +125,7 @@ export default function LafayettePilot() {
                 }
               ];
               setRecommendations(fallbackRecs);
-              setSelectedItem(fallbackRecs[0]);
+              setSelectedItem(null);
               setNarrative("Tu gemela digital ha encontrado el ajuste perfecto. Este blazer se adapta a tu silueta única.");
           });
       }
