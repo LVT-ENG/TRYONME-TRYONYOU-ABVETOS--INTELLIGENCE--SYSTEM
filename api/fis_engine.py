@@ -101,17 +101,19 @@ class Agent70:
 
 class PauAgent:
     def generate_qr(self, product_id):
-        # Asegurar directorio público para assets
-        output_dir = "public/assets"
-        if not os.path.exists(output_dir): os.makedirs(output_dir)
+        import io
+        import base64
 
-        qr_filename = f"qr_{product_id}.png"
-        qr_path = os.path.join(output_dir, qr_filename)
-
-        # Generamos un QR real para la reserva VIP
+        # Generamos un QR real para la reserva VIP en memoria (Serverless friendly)
         img = qrcode.make(f"https://tryonyou.app/reserve/{product_id}")
-        img.save(qr_path)
-        return f"/assets/{qr_filename}"
+
+        # Guardar en buffer de memoria
+        buffer = io.BytesIO()
+        img.save(buffer, format="PNG")
+        img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+        # Retornar Data URI
+        return f"data:image/png;base64,{img_str}"
 
 class FISOrchestrator:
     def __init__(self):
