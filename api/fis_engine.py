@@ -60,14 +60,11 @@ class Agent70:
         # Si es medio (80-100), elasticidad media (0.4-0.6)
         # Si es pequeño, estructura rígida (0.0-0.3)
 
-        CHEST_LARGE_THRESHOLD, CHEST_SMALL_THRESHOLD = 100, 85
-        ELASTICITY_HIGH, ELASTICITY_MEDIUM, ELASTICITY_LOW = 0.9, 0.5, 0.2
-
-        target_elasticity = ELASTICITY_MEDIUM
-        if chest > CHEST_LARGE_THRESHOLD:
-            target_elasticity = ELASTICITY_HIGH
-        elif chest < CHEST_SMALL_THRESHOLD:
-            target_elasticity = ELASTICITY_LOW
+        target_elasticity = 0.5
+        if chest > 100:
+            target_elasticity = 0.9
+        elif chest < 85:
+            target_elasticity = 0.2
 
         # Calculate score based on elasticity proximity
         for item in inventory:
@@ -89,11 +86,6 @@ class Agent70:
         top_picks = sorted_inventory[:6]
         
         # Determine narrative prefix
-        if not top_picks:
-            return {
-                "recommendations": [],
-                "narrative": "No se encontraron artículos que coincidan con tu perfil."
-            }
         best_fit = top_picks[0]['match_score']
         if best_fit > 0.9:
              narrative_prefix = "DIVINEO MATCH: Tejido de adaptación molecular. "
