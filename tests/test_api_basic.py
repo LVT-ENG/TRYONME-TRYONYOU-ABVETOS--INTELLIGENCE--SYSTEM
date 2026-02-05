@@ -23,7 +23,7 @@ def test_recommend_endpoint():
     }
     response = client.post("/api/recommend", json=payload)
     if response.status_code != 200:
-        print(f"Error: {response.text}")
+        print(f"Error: Status {response.status_code}, Response: {response.text}, Payload: {payload}")
     assert response.status_code == 200
     data = response.json()
     assert "recommendations" in data
