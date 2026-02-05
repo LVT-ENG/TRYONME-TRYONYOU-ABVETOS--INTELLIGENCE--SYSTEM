@@ -1,5 +1,6 @@
 import json, qrcode, os
 import pandas as pd
+import math
 
 try:
     from google import genai
@@ -9,7 +10,6 @@ except ImportError:
 class JulesAgent:
     def sanitize(self, raw_data):
         # Jules anonimiza y normaliza los datos biométricos
-        # La función sanitize_for_sharing rompe cualquier vínculo entre la imagen y los datos de peso/talla
         return {
             "vector": [
                 raw_data.get('chest', 0), 
@@ -29,15 +29,15 @@ class Agent70:
 
     def generate_ai_narrative(self, user_vector, recommendations):
         if not self.client:
-            return "Agent 70: Análisis completado. Selección basada en métricas de elasticidad."
+            return "Agent 70: Análisis completado. Selección basada en física de tejidos y elasticidad."
 
         try:
             # Construct a prompt
-            items_desc = ", ".join([f"{item.get('Title', 'Item')} ({item.get('Variant Price', 'N/A')} EUR)" for item in recommendations[:3]])
+            items_desc = ", ".join([f"{item.get('Title', 'Item')} (Elasticidad: {item.get('elasticidad', 'N/A')})" for item in recommendations[:3]])
             prompt = (
                 f"Actúa como un estilista de alta costura personal (Agent 70) para Galeries Lafayette. "
                 f"El usuario tiene una silueta con vector: {user_vector['vector']}. "
-                f"Recomienda brevemente por qué estos artículos son ideales: {items_desc}. "
+                f"Recomienda brevemente por qué estos artículos son ideales basándote en su elasticidad y caída: {items_desc}. "
                 f"Usa un tono sofisticado, exclusivo y técnico. Máximo 2 frases."
             )
             response = self.client.models.generate_content(
@@ -47,50 +47,50 @@ class Agent70:
             return response.text
         except Exception as e:
             print(f"GenAI Error: {e}")
-            return "Agent 70: Análisis completado. Selección óptima generada."
+            return "Agent 70: Análisis completado. Selección basada en física de tejidos."
+
+    def algoritmo_ajuste_invisible(self, vector, inventory):
+        """
+        Calcula la mejor prenda basándose en la física del tejido (elasticidad),
+        no en etiquetas de tallas.
+        """
+        # User "volume" proxy (average of chest/waist vs height normalized)
+        chest = vector['vector'][0]
+        # Si el pecho es muy grande (> 100), preferimos elasticidad alta (0.8-1.0)
+        # Si es medio (80-100), elasticidad media (0.4-0.6)
+        # Si es pequeño, estructura rígida (0.0-0.3)
+
+        target_elasticity = 0.5
+        if chest > 100:
+            target_elasticity = 0.9
+        elif chest < 85:
+            target_elasticity = 0.2
+
+        # Calculate score based on elasticity proximity
+        for item in inventory:
+            elasticity = item.get('elasticidad', 0.5)
+            # Diferencia menor es mejor
+            diff = abs(elasticity - target_elasticity)
+            # Score 0.0 a 1.0 (1.0 es match exacto)
+            item['match_score'] = 1.0 - diff
+            item['fit_reason'] = f"Elasticidad {elasticity} vs Objetivo {target_elasticity}"
+
+        # Sort desc
+        inventory.sort(key=lambda x: x['match_score'], reverse=True)
+        return inventory
 
     def match(self, vector, inventory):
-        # Algoritmo de matching basado en la elasticidad y medidas
-        recommendations = []
-        user_measure = vector['vector'][0]
+        # Delegate to invisible fit algorithm
+        sorted_inventory = self.algoritmo_ajuste_invisible(vector, inventory)
 
-        for item in inventory:
-            # Simulamos FitScore real (0.0 a 1.0)
-            # Asumimos que Variant Price es un proxy de medida para la demo
-            price = float(item.get('Variant Price', 0))
-            diff = abs((price / 10) - user_measure)
-            fit_score = 1.0 / (1.0 + (diff / 10.0)) # Normalización
-
-            recommendations.append({**item, "match_score": fit_score, "measure": fit_score})
-
-        # Ordenar por mejor FitScore (descendente)
-        recommendations.sort(key=lambda x: x['match_score'], reverse=True)
-        best_fit = recommendations[0]['match_score'] if recommendations else 0
-
-        top_picks = []
+        top_picks = sorted_inventory[:6]
         
-        # Lógica de Selección Dinámica
-        if best_fit > 0.95:
-            # Divineo: Perfect Match
-            top_picks = [r for r in recommendations if r['match_score'] > 0.95][:6]
-            narrative_prefix = "DIVINEO MATCH: Ajuste perfecto detectado. "
-        elif 0.85 <= best_fit <= 0.95:
-            # Lafayette: Catálogo Estándar
-            top_picks = recommendations[:6]
-            narrative_prefix = "LAFAYETTE SELECTION: Colección curada para tu silueta. "
+        # Determine narrative prefix
+        best_fit = top_picks[0]['match_score']
+        if best_fit > 0.9:
+             narrative_prefix = "DIVINEO MATCH: Tejido de adaptación molecular. "
         else:
-            # CAP: Generación Automática (Just-in-Time)
-            # Inyectamos item CAP
-            cap_item = {
-                "id": "CAP-GEN-001",
-                "Title": "CAP Bespoke Creation",
-                "Variant Price": "0",
-                "Image Src": "/assets/catalog/cap_generation.png", # Placeholder
-                "match_score": 0.99, # Artificialmente alto para CAP
-                "measure": 0.99
-            }
-            top_picks = [cap_item] + recommendations[:5]
-            narrative_prefix = "CAP ACTIVATED: Iniciando producción a medida. "
+             narrative_prefix = "LAFAYETTE SELECTION: Ajuste optimizado por caída. "
 
         narrative = narrative_prefix + self.generate_ai_narrative(vector, top_picks)
 
@@ -130,19 +130,30 @@ class FISOrchestrator:
                 else:
                     inv = json.load(open(inventory_file))
 
-                # Sustituimos URLs de imágenes locales si existen en nuestro catálogo descargado
+                # ENRICHMENT: Inject Elasticity Data for "Pro" Logic
                 for item in inv:
-                    handle = item.get('Handle', '')
-                    # Actualización de rutas a /assets/catalog/
-                    local_img = f"/assets/catalog/{handle}.png"
-
-                    # Para la demo, usamos mapeo determinista si no tenemos el archivo real checkeado
-                    # (Simplificado para evitar checks de sistema de archivos complejos en Vercel)
                     title = str(item.get('Title', '')).lower()
-                    if "dress" in title:
-                        item['Image Src'] = "/assets/catalog/red_dress_clean.png"
-                    elif "blazer" in title or "suit" in title or "trench" in title:
-                        item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
+
+                    # Default values
+                    item['elasticidad'] = 0.5
+                    item['caida'] = 'Regular'
+
+                    # Map specific items to Pro Logic attributes
+                    if "dress" in title or "seda" in title:
+                         item['elasticidad'] = 0.9
+                         item['caida'] = 'Fluida'
+                         item['Title'] = "Vestido Seda (Match Fluido)"
+                         item['Image Src'] = "/assets/catalog/red_dress_clean.png"
+                    elif "blazer" in title or "galeries" in title:
+                         item['elasticidad'] = 0.1
+                         item['caida'] = 'Estructurada'
+                         item['Title'] = "Blazer Galeries (Estructura)"
+                         item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
+                    elif "pant" in title or "leather" in title:
+                         item['elasticidad'] = 0.4
+                         item['caida'] = 'Ajustada'
+                         item['Title'] = "Pantalón Slim Fit (Adaptable)"
+                         item['Image Src'] = "/assets/catalog/lime_green_leather_suit.png"
                     else:
                         item['Image Src'] = "/assets/catalog/urban_male_model_app_demo.jpg"
 

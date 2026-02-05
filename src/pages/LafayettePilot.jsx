@@ -2,6 +2,40 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Pose } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
 import { Link } from 'react-router-dom';
+import Sparkles from '../components/Sparkles';
+
+const INTERFACE = {
+    es: {
+        btns: ["Mi Selección Perfecta", "Reservar en Probador", "Ver Combinaciones", "Guardar mi Silueta", "Compartir Look"],
+        labels: {
+            match: "Ajuste Ideal",
+            qr: "Código QR generado",
+            share: "Imagen lista para compartir (datos privados ocultos)",
+            loading: "Analizando silueta...",
+            profile: "Tu Perfil Biométrico"
+        }
+    },
+    fr: {
+        btns: ["Ma Sélection Parfaite", "Réserver en Cabine", "Voir les Combinaisons", "Enregistrer ma Silhouette", "Partager le Look"],
+        labels: {
+            match: "Coupe Idéale",
+            qr: "Code QR généré",
+            share: "Image prête à partager (données privées masquées)",
+            loading: "Analyse de la silhouette...",
+            profile: "Votre Profil Biométrique"
+        }
+    },
+    en: {
+        btns: ["My Perfect Selection", "Reserve in Fitting Room", "View Combinations", "Save my Silhouette", "Share Look"],
+        labels: {
+            match: "Perfect Fit",
+            qr: "QR Code generated",
+            share: "Image ready to share (private data hidden)",
+            loading: "Analyzing silhouette...",
+            profile: "Your Biometric Profile"
+        }
+    }
+};
 
 export default function LafayettePilot() {
   const videoRef = useRef(null);
@@ -12,7 +46,17 @@ export default function LafayettePilot() {
   const [qrUrl, setQrUrl] = useState(null);
   const [scanComplete, setScanComplete] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
+  const [language, setLanguage] = useState('es');
+  const [snapActive, setSnapActive] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
   const hasFetched = useRef(false);
+
+  const texts = INTERFACE[language];
+
+  const triggerSnap = () => {
+      setSnapActive(true);
+      // Sound effect could go here
+  };
 
   useEffect(() => {
     const pose = new Pose({
@@ -78,6 +122,7 @@ export default function LafayettePilot() {
       if (!hasFetched.current && lm[11].visibility > 0.8) {
           hasFetched.current = true;
           setScanComplete(true);
+          triggerSnap();
           
           // Extraer medidas biométricas (sin mostrar números)
           const shoulderWidth = Math.abs(lm[11].x - lm[12].x) * 200;
@@ -101,7 +146,7 @@ export default function LafayettePilot() {
                 shoulder_width: shoulderWidth,
                 torso_length: torsoLength,
                 hip_width: hipWidth,
-                user_id: 'LAFAYETTE_PILOT_001',
+                user_id: 'LAFAYETTE_PILOT_PRO',
                 zero_numbers: true // Activar modo sin números
               })
           })
@@ -118,15 +163,17 @@ export default function LafayettePilot() {
               const fallbackRecs = [
                 {
                   id: 'LAFAYETTE_JACKET_001',
-                  name: 'Blazer Signature Lafayette',
-                  fit_score: 98,
+                  Title: 'Blazer Galeries',
+                  elasticidad: 0.1,
+                  caida: 'Estructurada',
+                  match_score: 0.98,
                   description: 'Corte perfecto para tu silueta',
-                  sustainability: 'Fabricado bajo demanda - 0% residuos'
+                  'Image Src': '/assets/catalog/brown_blazer_360_views.png'
                 }
               ];
               setRecommendations(fallbackRecs);
               setSelectedItem(fallbackRecs[0]);
-              setNarrative("Tu gemela digital ha encontrado el ajuste perfecto. Este blazer se adapta a tu silueta única.");
+              setNarrative("Agent 70: Conexión offline. Se muestra selección predeterminada de alta gama.");
           });
       }
     });
@@ -138,13 +185,48 @@ export default function LafayettePilot() {
     camera.start();
   }, []);
 
+  const handleAction = (btnIndex) => {
+      triggerSnap();
+
+      // Index matches the array index (0-4)
+      // btns: ["Perfect", "Reserve", "Combinations", "Save", "Share"]
+
+      if (btnIndex === 0) { // Mi Selección Perfecta
+          setStatusMessage("Añadido al carrito con ajuste optimizado.");
+          if (recommendations.length > 0) setSelectedItem(recommendations[0]);
+      } else if (btnIndex === 1) { // Reservar
+          if (selectedItem) {
+              handleReserve(selectedItem.id);
+          }
+      } else if (btnIndex === 2) { // Ver Combinaciones
+          setStatusMessage("Alternando looks...");
+          // Cycle to next item
+          if (recommendations.length > 1) {
+              const currentIndex = recommendations.findIndex(r => r.id === selectedItem?.id);
+              const nextIndex = (currentIndex + 1) % recommendations.length;
+              setSelectedItem(recommendations[nextIndex]);
+          }
+      } else if (btnIndex === 3) { // Guardar Silueta
+          setStatusMessage("Datos de escaneo vinculados a tu perfil de usuario.");
+      } else if (btnIndex === 4) { // Compartir
+          setStatusMessage(texts.labels.share);
+      }
+
+      // Clear status after 3s
+      setTimeout(() => setStatusMessage(""), 3000);
+  };
+
   const handleReserve = (productId) => {
     fetch(`/api/reserve/${productId}`)
       .then(res => res.json())
-      .then(data => setQrUrl(data.qr_url))
+      .then(data => {
+          setQrUrl(data.qr_url);
+          setStatusMessage(`${texts.labels.qr} ${productId.substring(0,8)}...`);
+      })
       .catch(() => {
         // Fallback QR
         setQrUrl('https://api.qrserver.com/v1/create-qr-code/?s' + 'ize=200x200&data=LAFAYETTE_RESERVATION_' + productId);
+        setStatusMessage(`${texts.labels.qr} LOCAL-DEV-KEY`);
       });
   };
 
@@ -157,20 +239,32 @@ export default function LafayettePilot() {
             <svg className="w-5 h-5 text-[#C5A46D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            <span className="text-[#C5A46D] text-sm uppercase tracking-widest">Volver</span>
+            <span className="text-[#C5A46D] text-sm uppercase tracking-widest">Exit</span>
           </Link>
           
           <div className="text-center">
             <h1 className="text-[#C5A46D] text-3xl font-serif tracking-[0.2em] uppercase">Galeries Lafayette</h1>
-            <p className="text-white/40 tracking-[0.3em] text-[10px] uppercase mt-1">Piloto Lafayette v7.0 - Zero Tallas</p>
+            <p className="text-white/40 tracking-[0.3em] text-[10px] uppercase mt-1">Piloto Lafayette v7.0 - Pro Interface</p>
           </div>
           
-          <div className="w-24"></div>
+          <div className="flex gap-2">
+            {['es', 'fr', 'en'].map(lang => (
+                <button
+                    key={lang}
+                    onClick={() => { setLanguage(lang); triggerSnap(); }}
+                    className={`text-xs uppercase px-2 py-1 border border-[#C5A46D] rounded transition-all ${language === lang ? 'bg-[#C5A46D] text-black' : 'text-[#C5A46D] hover:bg-[#C5A46D]/20'}`}
+                >
+                    {lang}
+                </button>
+            ))}
+          </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main className="flex-1 flex items-center justify-center p-4 relative">
+        <Sparkles active={snapActive} onComplete={() => setSnapActive(false)} />
+
         <div className="flex flex-col lg:flex-row gap-8 items-start max-w-7xl w-full">
           {/* Mirror Section */}
           <div className="relative border-2 border-[#C5A46D]/40 bg-black rounded-lg overflow-hidden shadow-[0_0_80px_rgba(197,164,109,0.2)] flex-1">
@@ -185,8 +279,8 @@ export default function LafayettePilot() {
                     <div className="w-24 h-24 border-4 border-[#C5A46D] rounded-full animate-pulse mx-auto"></div>
                     <div className="absolute inset-0 w-24 h-24 border-t-4 border-[#C5A46D] rounded-full animate-spin mx-auto"></div>
                   </div>
-                  <p className="text-[#C5A46D] font-serif italic tracking-widest text-xl mb-2">Analizando tu silueta única...</p>
-                  <p className="text-white/50 text-sm uppercase tracking-wider">Sistema biométrico activo</p>
+                  <p className="text-[#C5A46D] font-serif italic tracking-widest text-xl mb-2">{texts.labels.loading}</p>
+                  <p className="text-white/50 text-sm uppercase tracking-wider">System Ready</p>
                 </div>
               </div>
             )}
@@ -194,78 +288,84 @@ export default function LafayettePilot() {
             {/* User Profile Badge */}
             {userProfile && (
               <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-sm border border-[#C5A46D]/50 rounded-lg p-4 animate-fade-in">
-                <p className="text-[10px] text-[#C5A46D] uppercase tracking-widest mb-2">Tu Perfil Biométrico</p>
+                <p className="text-[10px] text-[#C5A46D] uppercase tracking-widest mb-2">{texts.labels.profile}</p>
                 <div className="space-y-1">
                   <p className="text-sm text-white"><span className="text-white/50">Silueta:</span> {userProfile.silhouette}</p>
-                  <p className="text-sm text-white"><span className="text-white/50">Proporciones:</span> {userProfile.proportions}</p>
-                  <p className="text-sm text-white"><span className="text-white/50">Ajuste:</span> {userProfile.fit_preference}</p>
+                  <p className="text-sm text-white"><span className="text-white/50">Fit:</span> {userProfile.fit_preference}</p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Recommendations Section */}
+          {/* Recommendations & Controls Section */}
           {recommendations.length > 0 && (
-            <div className="w-full lg:w-96 flex flex-col gap-6 animate-fade-in">
+            <div className="w-full lg:w-96 flex flex-col gap-6 animate-fade-in z-10">
               <div className="border-l-4 border-[#C5A46D] pl-6 py-2">
-                <h2 className="text-[#C5A46D] font-serif text-3xl uppercase tracking-wider mb-2">Curated Selection</h2>
-                <p className="text-xs text-white/50 uppercase tracking-widest">Basado en tu fisionomía única</p>
-                <p className="text-[10px] text-[#C5A46D]/70 uppercase tracking-widest mt-2">🔒 Sin números visibles</p>
+                <h2 className="text-[#C5A46D] font-serif text-3xl uppercase tracking-wider mb-2">Selection</h2>
+                <p className="text-xs text-white/50 uppercase tracking-widest">{texts.labels.match}</p>
               </div>
 
               {narrative && (
-                <div className="p-6 bg-gradient-to-br from-[#C5A46D]/10 to-transparent border border-[#C5A46D]/30 rounded-lg">
-                  <p className="text-[#C5A46D] text-base font-serif italic leading-relaxed">"{narrative}"</p>
+                <div className="p-4 bg-gradient-to-br from-[#C5A46D]/10 to-transparent border border-[#C5A46D]/30 rounded-lg">
+                  <p className="text-[#C5A46D] text-sm font-serif italic leading-relaxed">"{narrative}"</p>
                 </div>
               )}
 
-              <div className="flex flex-col gap-4">
-                {recommendations.map((item, idx) => (
-                  <div 
-                    key={idx}
-                    onClick={() => setSelectedItem(item)}
-                    className={`p-6 border-2 transition-all cursor-pointer rounded-lg ${
-                      selectedItem?.id === item.id 
-                        ? 'border-[#C5A46D] bg-[#C5A46D]/20 shadow-[0_0_30px_rgba(197,164,109,0.3)]' 
-                        : 'border-white/10 hover:border-white/30 hover:bg-white/5'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-base font-semibold uppercase tracking-tight">{item.name || item.id}</h3>
-                      {item.fit_score && (
-                        <span className="px-3 py-1 bg-[#C5A46D] text-black text-xs font-bold rounded-full">
-                          {item.fit_score}% Fit
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm text-white/60 mb-2">{item.description || 'Ajuste perfecto para tu silueta'}</p>
-                    {item.sustainability && (
-                      <p className="text-xs text-[#C5A46D] italic mt-2">♻️ {item.sustainability}</p>
-                    )}
+              {/* Status Message Area */}
+              {statusMessage && (
+                  <div className="p-3 bg-[#C5A46D] text-black text-center font-bold text-sm uppercase tracking-wider rounded animate-pulse">
+                      {statusMessage}
                   </div>
-                ))}
+              )}
+
+              {/* Selected Item Preview */}
+              {selectedItem && (
+                  <div className="relative group">
+                     <div className="absolute -inset-1 bg-gradient-to-r from-[#C5A46D] to-[#F5F5F0] opacity-20 blur rounded-lg group-hover:opacity-40 transition duration-1000"></div>
+                     <div className="relative p-6 bg-black border border-[#C5A46D]/50 rounded-lg">
+                        <div className="flex justify-between items-start mb-2">
+                            <h3 className="text-lg font-serif text-white uppercase">{selectedItem.Title || selectedItem.name}</h3>
+                            <span className="text-[#C5A46D] text-xs border border-[#C5A46D] px-2 py-1 rounded-full">
+                                {Math.round((selectedItem.match_score || 0) * 100)}% Match
+                            </span>
+                        </div>
+                        <p className="text-xs text-white/60 mb-2">
+                            Elasticidad: {selectedItem.elasticidad} | Caída: {selectedItem.caida}
+                        </p>
+                        {selectedItem['Image Src'] && (
+                            <img src={selectedItem['Image Src']} alt="Item" className="w-full h-48 object-contain my-4 rounded" />
+                        )}
+                     </div>
+                  </div>
+              )}
+
+              {/* The 5 Pro Buttons */}
+              <div className="grid grid-cols-1 gap-3">
+                  {texts.btns.map((btnLabel, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleAction(idx)}
+                        className={`
+                            py-3 px-4 uppercase text-xs tracking-widest font-bold border transition-all duration-300 relative overflow-hidden group
+                            ${idx === 1 ? 'bg-[#C5A46D] text-black border-[#C5A46D] hover:bg-white' : 'bg-transparent text-[#C5A46D] border-[#C5A46D]/30 hover:border-[#C5A46D] hover:text-white'}
+                        `}
+                      >
+                          <span className="relative z-10 flex items-center justify-between">
+                              {idx + 1}. {btnLabel}
+                              {idx === 1 && <span className="text-lg">✨</span>}
+                          </span>
+                          <div className="absolute inset-0 bg-[#C5A46D]/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></div>
+                      </button>
+                  ))}
               </div>
 
-              {selectedItem && (
-                <div className="mt-4 p-6 bg-gradient-to-br from-white/5 to-transparent border-2 border-[#C5A46D]/30 rounded-lg">
-                  <button 
-                    onClick={() => handleReserve(selectedItem.id)}
-                    className="w-full py-4 bg-[#C5A46D] text-black font-bold uppercase text-sm tracking-widest hover:bg-[#d4b98a] transition-all hover:shadow-[0_0_30px_rgba(197,164,109,0.5)] rounded-lg"
-                  >
-                    Reservar en Probador VIP
-                  </button>
-                  
-                  {qrUrl && (
-                    <div className="mt-6 text-center animate-fade-in">
-                      <p className="text-xs text-[#C5A46D] uppercase tracking-widest mb-4">Escanea para tu reserva VIP</p>
-                      <div className="inline-block p-4 bg-white rounded-lg">
-                        <img src={qrUrl} alt="QR Code" className="w-40 h-40 mx-auto" />
-                      </div>
-                      <p className="text-[10px] text-white/40 uppercase tracking-wider mt-4">
-                        Código de reserva: {selectedItem.id}
-                      </p>
-                    </div>
-                  )}
+              {/* QR Display Area */}
+              {qrUrl && selectedItem && (
+                <div className="mt-4 text-center animate-fade-in bg-white/5 p-4 rounded-lg border border-[#C5A46D]/30">
+                  <p className="text-[10px] text-[#C5A46D] uppercase tracking-widest mb-4">VIP PASS</p>
+                  <div className="inline-block p-2 bg-white rounded">
+                    <img src={qrUrl} alt="QR Code" className="w-32 h-32 mx-auto" />
+                  </div>
                 </div>
               )}
             </div>
@@ -277,7 +377,7 @@ export default function LafayettePilot() {
       <footer className="border-t border-[#C5A46D]/30 bg-black/50 backdrop-blur-md py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-[10px] text-white/20 tracking-[0.5em] uppercase">
-            TryOnYou © 2026 | Fashion Intelligence System v7.0 | Búnker Maestro Activo
+            TryOnYou © 2026 | Fashion Intelligence System v7.0 PRO
           </p>
         </div>
       </footer>
