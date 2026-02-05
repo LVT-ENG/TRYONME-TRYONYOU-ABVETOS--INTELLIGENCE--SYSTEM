@@ -1,4 +1,4 @@
-import json, qrcode, os
+import json, qrcode, os, math
 import pandas as pd
 
 try:
@@ -57,7 +57,7 @@ class Agent70:
         for item in inventory:
             # Simulamos FitScore real (0.0 a 1.0)
             # Asumimos que Variant Price es un proxy de medida para la demo
-            price = float(item.get('Variant Price', 0))
+            price = item.get('_parsed_price', 0.0)
             diff = abs((price / 10) - user_measure)
             fit_score = 1.0 / (1.0 + (diff / 10.0)) # Normalización
 
@@ -124,14 +124,23 @@ class FISOrchestrator:
                 inv = self._inventory_cache[inventory_file]
             else:
                 if inventory_file.endswith(".csv"):
-                    inv = pd.read_csv(inventory_file).to_dict('records')
+                    inv = pd.read_csv(inventory_file).fillna('').to_dict('records')
                 elif inventory_file.endswith(".xlsx"):
-                    inv = pd.read_excel(inventory_file).to_dict('records')
+                    inv = pd.read_excel(inventory_file).fillna('').to_dict('records')
                 else:
                     inv = json.load(open(inventory_file))
 
                 # Sustituimos URLs de imágenes locales si existen en nuestro catálogo descargado
                 for item in inv:
+                    # Pre-calculate price for performance (Bolt Optimization)
+                    try:
+                        val = float(item.get('Variant Price', 0))
+                        if math.isnan(val):
+                            val = 0.0
+                        item['_parsed_price'] = val
+                    except (ValueError, TypeError):
+                        item['_parsed_price'] = 0.0
+
                     handle = item.get('Handle', '')
                     # Actualización de rutas a /assets/catalog/
                     local_img = f"/assets/catalog/{handle}.png"
