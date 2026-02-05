@@ -1,5 +1,5 @@
 [build]
-  command = "./scripts/build_netlify.sh"
+  command = "chmod +x ./scripts/build_netlify.sh && ./scripts/build_netlify.sh"
   publish = "dist"
   functions = "api"
 
@@ -30,11 +30,5 @@
 # Asset Caching
 [[headers]]
   for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Public Image Caching
-[[headers]]
-  for = "/public/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
