@@ -12,7 +12,7 @@
   to = "/index.html"
   status = 200
 
-# Headers de seguridad y CORS
+# Security Headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -26,21 +26,14 @@
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Content-Type, Authorization"
 
-# Cache para assets estáticos
+# Asset Caching
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Cache para imágenes
+# Public Image Caching
 [[headers]]
   for = "/public/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-# Variables de entorno (configurar en Netlify UI)
-# VITE_GOOGLE_API_KEY
-# VITE_PILOT_MODE
-# VITE_ENVIRONMENT
-# VITE_STRIPE_PUBLIC_KEY
-# VITE_ANALYTICS_ID
