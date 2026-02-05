@@ -14,7 +14,7 @@
     "react-dom": "^18.3.1",
     "@mediapipe/pose": "^0.5.1675469404",
     "@mediapipe/camera_utils": "^0.3.1675466862",
-    "axios": "^1.13.4"
+    "axios": "^1.7.2"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",
