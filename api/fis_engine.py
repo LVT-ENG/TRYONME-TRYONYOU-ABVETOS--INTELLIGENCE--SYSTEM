@@ -86,6 +86,11 @@ class Agent70:
         top_picks = sorted_inventory[:6]
         
         # Determine narrative prefix
+        if not top_picks:
+            return {
+                "recommendations": [],
+                "narrative": "No se encontraron artículos que coincidan con tu perfil."
+            }
         best_fit = top_picks[0]['match_score']
         if best_fit > 0.9:
              narrative_prefix = "DIVINEO MATCH: Tejido de adaptación molecular. "
