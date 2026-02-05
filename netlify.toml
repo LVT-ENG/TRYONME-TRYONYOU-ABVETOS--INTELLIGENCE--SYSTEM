@@ -1,46 +1,40 @@
 [build]
-  command = "npm run build"
+  command = "./scripts/build_netlify.sh"
   publish = "dist"
   functions = "api"
 
 [build.environment]
   NODE_VERSION = "20"
   PYTHON_VERSION = "3.12"
+  NPM_FLAGS = "--legacy-peer-deps"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
-# Headers de seguridad y CORS
+# Security Headers
 [[headers]]
   for = "/*"
-    [headers.values]
-      X-Frame-Options = "DENY"
-      X-XSS-Protection = "1; mode=block"
-      X-Content-Type-Options = "nosniff"
-      Referrer-Policy = "strict-origin-when-cross-origin"
-      Content-Security-Policy = "upgrade-insecure-requests"
-      Permissions-Policy = "camera=*, microphone=*"
-      Access-Control-Allow-Origin = "*"
-      Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
-      Access-Control-Allow-Headers = "Content-Type, Authorization"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "upgrade-insecure-requests"
+    Permissions-Policy = "camera=*, microphone=*"
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
 
-# Cache para assets estáticos
+# Asset Caching
 [[headers]]
   for = "/assets/*"
-    [headers.values]
-      Cache-Control = "public, max-age=31536000, immutable"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
 
-# Cache para imágenes
+# Public Image Caching
 [[headers]]
   for = "/public/*"
-    [headers.values]
-      Cache-Control = "public, max-age=31536000, immutable"
-
-# Variables de entorno (configurar en Netlify UI)
-# VITE_GOOGLE_API_KEY
-# VITE_PILOT_MODE
-# VITE_ENVIRONMENT
-# VITE_STRIPE_PUBLIC_KEY
-# VITE_ANALYTICS_ID
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
