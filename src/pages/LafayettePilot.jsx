@@ -162,7 +162,7 @@ export default function LafayettePilot() {
           
           <div className="text-center">
             <h1 className="text-[#C5A46D] text-3xl font-serif tracking-[0.2em] uppercase">Galeries Lafayette</h1>
-            <p className="text-white/40 tracking-[0.3em] text-[10px] uppercase mt-1">Piloto Lafayette v7.0 - Zero Tallas</p>
+            <p className="text-white/40 tracking-[0.3em] text-[10px] uppercase mt-1">Piloto Lafayette v7.1 - Zero Tallas</p>
           </div>
           
           <div className="w-24"></div>
@@ -277,7 +277,7 @@ export default function LafayettePilot() {
       <footer className="border-t border-[#C5A46D]/30 bg-black/50 backdrop-blur-md py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-[10px] text-white/20 tracking-[0.5em] uppercase">
-            TryOnYou © 2026 | Fashion Intelligence System v7.0 | Búnker Maestro Activo
+            TryOnYou © 2026 | Fashion Intelligence System v7.1 | Búnker Maestro Activo
           </p>
         </div>
       </footer>
