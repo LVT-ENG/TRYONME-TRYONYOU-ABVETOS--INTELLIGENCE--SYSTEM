@@ -5,11 +5,7 @@ from fastapi.testclient import TestClient
 # Add root directory to python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-try:
-    from api.index import app
-except ImportError:
-    import api.index as api_module
-    app = api_module.app
+from api.index import app
 
 client = TestClient(app)
 
