@@ -76,7 +76,7 @@ class Agent70:
         # Clean NaN values from the output to ensure JSON compliance
         def clean_nans(obj):
             if isinstance(obj, float):
-                return 0.0 if obj != obj else obj
+                return 0.0 if not math.isfinite(obj) else obj
             if isinstance(obj, dict):
                 return {k: clean_nans(v) for k, v in obj.items()}
             if isinstance(obj, list):
