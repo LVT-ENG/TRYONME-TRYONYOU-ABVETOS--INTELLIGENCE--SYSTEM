@@ -9,7 +9,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<VirtualFitting />} />
+        <Route path="/" element={<LafayettePilot />} />
         <Route path="/pilot/lafayette-v7" element={<LafayettePilot />} />
       </Routes>
     </BrowserRouter>
