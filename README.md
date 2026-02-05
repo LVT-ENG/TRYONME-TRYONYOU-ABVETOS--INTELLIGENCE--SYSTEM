@@ -20,6 +20,26 @@ This repository is updated with the latest Google platforms technologies:
 
 ## Quick Start
 
+### Local Development
+
+To run the application locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git
+cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+The application will be available at `http://localhost:5173/`
+
+### Deployment
+
 For deployment and environment setup instructions, please refer to [QUICK_START.md](QUICK_START.md).
 
 ## Configuration
