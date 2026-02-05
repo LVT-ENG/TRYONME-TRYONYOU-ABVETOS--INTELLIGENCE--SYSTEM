@@ -21,7 +21,7 @@ class JulesAgent:
 
 class Agent70:
     def __init__(self):
-        self.api_key = os.getenv("GOOGLE_API_KEY")
+        self.api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GOOGLE_GENAI_KEY")
         if self.api_key and genai:
             self.client = genai.Client(api_key=self.api_key)
         else:
