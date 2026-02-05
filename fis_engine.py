@@ -53,7 +53,18 @@ class Agent70:
         recommendations = []
         for item in inventory:
             # Simulamos una lógica de matching real basada en el precio o categoría si no hay medidas exactas
-            price = float(item.get('Variant Price', 0))
+            try:
+                price_val = item.get('Variant Price', 0)
+                if price_val == "" or pd.isna(price_val):
+                    price = 0.0
+                else:
+                    price = float(price_val)
+            except (ValueError, TypeError):
+                price = 0.0
+
+            # Ensure price is not NaN/Infinity
+            if price != price: price = 0.0 # NaN check
+
             score = abs(price / 10 - vector['vector'][0])
             recommendations.append({**item, "match_score": score})
         
@@ -62,10 +73,20 @@ class Agent70:
 
         narrative = self.generate_ai_narrative(vector, top_picks)
 
-        return {
+        # Clean NaN values from the output to ensure JSON compliance
+        def clean_nans(obj):
+            if isinstance(obj, float):
+                return 0.0 if obj != obj else obj
+            if isinstance(obj, dict):
+                return {k: clean_nans(v) for k, v in obj.items()}
+            if isinstance(obj, list):
+                return [clean_nans(i) for i in obj]
+            return obj
+
+        return clean_nans({
             "recommendations": top_picks,
             "narrative": narrative
-        }
+        })
 
 class PauAgent:
     def generate_qr(self, product_id):
