@@ -25,7 +25,7 @@ python3 regenerate_inventory.py
 
 # Limpieza de temporales para asegurar build limpio
 echo "🧹 Limpiando caché, node_modules y builds antiguos..."
-rm -rf dist .next node_modules
+rm -rf dist .next
 
 # Git: Sincronización
 echo "📦 Sincronizando con GitHub..."
