@@ -40,7 +40,10 @@ The application will be available at `http://localhost:5173/`
 
 ### Deployment
 
-For deployment and environment setup instructions, please refer to [QUICK_START.md](QUICK_START.md).
+For deployment and environment setup instructions, please refer to:
+- [QUICK_START.md](QUICK_START.md) - Quick start guide with deployment steps
+- [GITHUB_TOKEN_SETUP.md](GITHUB_TOKEN_SETUP.md) - GitHub token generation guide
+- [DEPLOYMENT_README.md](DEPLOYMENT_README.md) - Detailed deployment documentation
 
 ## Configuration
 

@@ -5,7 +5,7 @@
 Before running the deployment scripts, ensure you have:
 
 1. **Required tokens and keys:**
-   - GitHub Personal Access Token (with repo permissions)
+   - GitHub Personal Access Token (with repo permissions) - [Setup Guide](GITHUB_TOKEN_SETUP.md)
    - Vercel Account Token (from vercel.com/account/tokens)
    - Google Generative AI API Key
    - Stripe Secret Key
@@ -159,6 +159,7 @@ jobs:
 
 Refer to:
 - [DEPLOYMENT_README.md](DEPLOYMENT_README.md) - Full documentation
+- [GITHUB_TOKEN_SETUP.md](GITHUB_TOKEN_SETUP.md) - GitHub token generation guide
 - [Vercel Documentation](https://vercel.com/docs)
 - [GitHub Token Documentation](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
