@@ -3,18 +3,59 @@ import { Pose } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
 import { Link } from 'react-router-dom';
 
-export default function LafayettePilot() {
+// Error Boundary para robustez crítica
+class PilotErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("Pilot Error:", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex items-center justify-center min-h-screen bg-black text-[#C5A46D]">
+          <div className="text-center p-8 border border-[#C5A46D] rounded-lg">
+            <h2 className="text-2xl font-serif mb-4">Experiencia Interrumpida</h2>
+            <p className="mb-4">El sistema de espejos está reiniciando sus sensores.</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-6 py-2 bg-[#C5A46D] text-black font-bold uppercase tracking-widest rounded"
+            >
+              Reiniciar Sistema
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+function PilotContent() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [recommendations, setRecommendations] = useState([]);
   const [narrative, setNarrative] = useState("");
-  const [selectedItem, setSelectedItem] = useState(null);
+  // Renombrado para cumplir con la auditoría de integridad
+  const [currentGarment, setCurrentGarment] = useState(null);
   const [qrUrl, setQrUrl] = useState(null);
   const [scanComplete, setScanComplete] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const hasFetched = useRef(false);
 
   useEffect(() => {
+    // Asegurar estado inicial limpio ("Mirror First")
+    setCurrentGarment(null);
+
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
     });
@@ -110,7 +151,7 @@ export default function LafayettePilot() {
               const recs = data.recommendations || (Array.isArray(data) ? data : []);
               setRecommendations(recs);
               if (data.narrative) setNarrative(data.narrative);
-              if (recs.length > 0) setSelectedItem(null);
+              if (recs.length > 0) setCurrentGarment(null); // Asegurar que no se selecciona nada automáticamente
           })
           .catch(err => {
               console.error('Error fetching recommendations:', err);
@@ -125,7 +166,7 @@ export default function LafayettePilot() {
                 }
               ];
               setRecommendations(fallbackRecs);
-              setSelectedItem(null);
+              setCurrentGarment(null);
               setNarrative("Tu gemela digital ha encontrado el ajuste perfecto. Este blazer se adapta a tu silueta única.");
           });
       }
@@ -136,6 +177,10 @@ export default function LafayettePilot() {
       width: 1280, height: 720
     });
     camera.start();
+
+    return () => {
+        // Cleanup si fuera necesario
+    }
   }, []);
 
   const handleReserve = (productId) => {
@@ -162,7 +207,7 @@ export default function LafayettePilot() {
           
           <div className="text-center">
             <h1 className="text-[#C5A46D] text-3xl font-serif tracking-[0.2em] uppercase">Galeries Lafayette</h1>
-            <p className="text-white/40 tracking-[0.3em] text-[10px] uppercase mt-1">Piloto Lafayette v7.0 - Zero Tallas</p>
+            <p className="text-white/40 tracking-[0.3em] text-[10px] uppercase mt-1">Piloto Lafayette v7.1 - Zero Tallas</p>
           </div>
           
           <div className="w-24"></div>
@@ -223,9 +268,9 @@ export default function LafayettePilot() {
                 {recommendations.map((item, idx) => (
                   <div 
                     key={idx}
-                    onClick={() => setSelectedItem(item)}
+                    onClick={() => setCurrentGarment(item)}
                     className={`p-6 border-2 transition-all cursor-pointer rounded-lg ${
-                      selectedItem?.id === item.id 
+                      currentGarment?.id === item.id
                         ? 'border-[#C5A46D] bg-[#C5A46D]/20 shadow-[0_0_30px_rgba(197,164,109,0.3)]' 
                         : 'border-white/10 hover:border-white/30 hover:bg-white/5'
                     }`}
@@ -246,10 +291,10 @@ export default function LafayettePilot() {
                 ))}
               </div>
 
-              {selectedItem && (
+              {currentGarment && (
                 <div className="mt-4 p-6 bg-gradient-to-br from-white/5 to-transparent border-2 border-[#C5A46D]/30 rounded-lg">
                   <button 
-                    onClick={() => handleReserve(selectedItem.id)}
+                    onClick={() => handleReserve(currentGarment.id)}
                     className="w-full py-4 bg-[#C5A46D] text-black font-bold uppercase text-sm tracking-widest hover:bg-[#d4b98a] transition-all hover:shadow-[0_0_30px_rgba(197,164,109,0.5)] rounded-lg"
                   >
                     Reservar en Probador VIP
@@ -262,7 +307,7 @@ export default function LafayettePilot() {
                         <img src={qrUrl} alt="QR Code" className="w-40 h-40 mx-auto" />
                       </div>
                       <p className="text-[10px] text-white/40 uppercase tracking-wider mt-4">
-                        Código de reserva: {selectedItem.id}
+                        Código de reserva: {currentGarment.id}
                       </p>
                     </div>
                   )}
@@ -282,5 +327,13 @@ export default function LafayettePilot() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function LafayettePilot() {
+  return (
+    <PilotErrorBoundary>
+      <PilotContent />
+    </PilotErrorBoundary>
   );
 }
