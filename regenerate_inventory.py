@@ -10,7 +10,7 @@ def regenerate_inventory():
 
     if not os.path.exists(SOURCE_DIR):
         print(f"❌ Error: Source directory '{SOURCE_DIR}' not found.")
-        return
+        sys.exit(1)
 
     inventory = []
 
