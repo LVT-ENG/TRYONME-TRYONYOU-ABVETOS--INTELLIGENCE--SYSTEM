@@ -146,20 +146,20 @@ class FISOrchestrator:
 
                     # Map specific items to Pro Logic attributes
                     if "dress" in title or "seda" in title:
-                         item['elasticidad'] = 0.9
-                         item['caida'] = 'Fluida'
-                         item['Title'] = "Vestido Seda (Match Fluido)"
-                         item['Image Src'] = "/assets/catalog/red_dress_clean.png"
+                        item['elasticidad'] = 0.9
+                        item['caida'] = 'Fluida'
+                        item['Title'] = "Vestido Seda (Match Fluido)"
+                        item['Image Src'] = "/assets/catalog/red_dress_clean.png"
                     elif "blazer" in title or "galeries" in title:
-                         item['elasticidad'] = 0.1
-                         item['caida'] = 'Estructurada'
-                         item['Title'] = "Blazer Galeries (Estructura)"
-                         item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
+                        item['elasticidad'] = 0.1
+                        item['caida'] = 'Estructurada'
+                        item['Title'] = "Blazer Galeries (Estructura)"
+                        item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
                     elif "pant" in title or "leather" in title:
-                         item['elasticidad'] = 0.4
-                         item['caida'] = 'Ajustada'
-                         item['Title'] = "Pantalón Slim Fit (Adaptable)"
-                         item['Image Src'] = "/assets/catalog/lime_green_leather_suit.png"
+                        item['elasticidad'] = 0.4
+                        item['caida'] = 'Ajustada'
+                        item['Title'] = "Pantalón Slim Fit (Adaptable)"
+                        item['Image Src'] = "/assets/catalog/lime_green_leather_suit.png"
                     else:
                         item['Image Src'] = "/assets/catalog/urban_male_model_app_demo.jpg"
 
