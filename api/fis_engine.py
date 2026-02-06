@@ -85,6 +85,12 @@ class Agent70:
 
         top_picks = sorted_inventory[:6]
         
+        # If there are no items to recommend, return a safe default response
+        if not top_picks:
+            return {
+                "recommendations": [],
+                "narrative": "No items available"
+            }
         # Determine narrative prefix
         best_fit = top_picks[0]['match_score']
         if best_fit > 0.9:
