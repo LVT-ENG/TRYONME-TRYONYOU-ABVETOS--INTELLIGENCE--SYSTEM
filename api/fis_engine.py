@@ -1,6 +1,5 @@
 import json, qrcode, os
 import pandas as pd
-import math
 
 try:
     from google import genai
