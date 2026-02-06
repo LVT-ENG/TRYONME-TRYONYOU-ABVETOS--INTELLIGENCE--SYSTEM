@@ -15,7 +15,7 @@ Main orchestration script that handles the complete deployment workflow.
 
 **Prerequisites:**
 The following environment variables must be set:
-- `GITHUB_TOKEN` - GitHub personal access token for repository access
+- `GITHUB_TOKEN` - GitHub personal access token for repository access ([Setup Guide](GITHUB_TOKEN_SETUP.md))
 - `VERCEL_TOKEN` - Vercel authentication token
 - `GOOGLE_GENAI_KEY` - Google Generative AI API key
 - `STRIPE_SECRET_KEY` - Stripe secret key for payment processing
@@ -124,6 +124,11 @@ Legacy script for local development and testing. This script remains unchanged a
 
 **Issue:** Safety lint failures
 - **Solution:** Remove prohibited terms from source code before deployment
+
+## Additional Documentation
+
+- [GitHub Token Setup Guide](GITHUB_TOKEN_SETUP.md) - Detailed instructions for generating GitHub Personal Access Tokens
+- [Quick Start Guide](QUICK_START.md) - Quick deployment instructions
 
 ## Support
 For issues or questions, please refer to the project documentation or contact the development team.
