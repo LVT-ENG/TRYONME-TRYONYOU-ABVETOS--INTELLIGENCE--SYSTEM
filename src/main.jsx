@@ -1,17 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import './styles/Main.css'
-import VirtualFitting from './pages/VirtualFitting.jsx'
-import LafayettePilot from './pages/LafayettePilot.jsx'
+import Home from './pages/Home'
+import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LafayettePilot />} />
-        <Route path="/pilot/lafayette-v7" element={<LafayettePilot />} />
-      </Routes>
-    </BrowserRouter>
+    <Home />
   </React.StrictMode>,
 )
