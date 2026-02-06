@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './styles/Main.css'
-import VirtualFitting from './pages/VirtualFitting.jsx'
 import LafayettePilot from './pages/LafayettePilot.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
