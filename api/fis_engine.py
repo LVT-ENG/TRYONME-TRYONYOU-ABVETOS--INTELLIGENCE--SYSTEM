@@ -21,7 +21,7 @@ class JulesAgent:
 
 class Agent70:
     def __init__(self):
-        self.api_key = os.getenv("GOOGLE_API_KEY")
+        self.api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GOOGLE_GENAI_KEY")
         if self.api_key and genai:
             self.client = genai.Client(api_key=self.api_key)
         else:
@@ -57,7 +57,7 @@ class Agent70:
         for item in inventory:
             # Simulamos FitScore real (0.0 a 1.0)
             # Asumimos que Variant Price es un proxy de medida para la demo
-            price = float(item.get('Variant Price', 0))
+            price = item.get('_parsed_price', 0.0)
             diff = abs((price / 10) - user_measure)
             fit_score = 1.0 / (1.0 + (diff / 10.0)) # Normalización
 
@@ -101,17 +101,19 @@ class Agent70:
 
 class PauAgent:
     def generate_qr(self, product_id):
-        # Asegurar directorio público para assets
-        output_dir = "public/assets"
-        if not os.path.exists(output_dir): os.makedirs(output_dir)
+        import io
+        import base64
 
-        qr_filename = f"qr_{product_id}.png"
-        qr_path = os.path.join(output_dir, qr_filename)
-
-        # Generamos un QR real para la reserva VIP
+        # Generamos un QR real para la reserva VIP en memoria (Serverless friendly)
         img = qrcode.make(f"https://tryonyou.app/reserve/{product_id}")
-        img.save(qr_path)
-        return f"/assets/{qr_filename}"
+
+        # Guardar en buffer de memoria
+        buffer = io.BytesIO()
+        img.save(buffer, format="PNG")
+        img_str = base64.b64encode(buffer.getvalue()).decode("utf-8")
+
+        # Retornar Data URI
+        return f"data:image/png;base64,{img_str}"
 
 class FISOrchestrator:
     def __init__(self):
@@ -132,6 +134,12 @@ class FISOrchestrator:
 
                 # Sustituimos URLs de imágenes locales si existen en nuestro catálogo descargado
                 for item in inv:
+                    # Pre-calculate price for performance (Bolt Optimization)
+                    try:
+                        item['_parsed_price'] = float(item.get('Variant Price', 0))
+                    except (ValueError, TypeError):
+                        item['_parsed_price'] = 0.0
+
                     handle = item.get('Handle', '')
                     # Actualización de rutas a /assets/catalog/
                     local_img = f"/assets/catalog/{handle}.png"

@@ -4,6 +4,14 @@
 
 El Sistema FIS v7.0 (Fashion Intelligence System) es una solución innovadora diseñada para el piloto de Galeries Lafayette, con el objetivo de ofrecer una experiencia de prueba virtual avanzada y personalizada. Este sistema integra tecnologías de escaneo corporal, inteligencia artificial para recomendaciones y una gestión eficiente del inventario, todo ello enfocado en la privacidad y la comodidad del usuario.
 
+## Novedades: Integración con Plataformas Google
+
+Este repositorio se ha actualizado con las últimas tecnologías de la plataforma Google, potenciando la inteligencia y el rendimiento del sistema FIS:
+
+*   **Google Gemini 2.0 Flash:** El sistema utiliza el modelo de vanguardia **Gemini 2.0 Flash** para generar las narrativas del estilista "Agent 70", proporcionando asesoramiento de moda instantáneo, sofisticado y consciente del contexto.
+*   **google-genai SDK:** La integración del backend se basa en el moderno SDK de Python `google-genai`, asegurando un rendimiento óptimo y compatibilidad con los últimos modelos Gemini.
+*   **MediaPipe:** El seguimiento corporal en tiempo real y las mediciones "Zero Tallas" (Cero Tallas) están impulsados por **Google MediaPipe**, ejecutándose en el lado del cliente para garantizar privacidad y velocidad.
+
 ## El Kit de Despliegue de Manu: Protocolo de 3 Pasos
 
 La activación del sistema FIS v7.0 sigue un protocolo de despliegue simplificado en tres etapas clave para asegurar su correcto funcionamiento en producción.
