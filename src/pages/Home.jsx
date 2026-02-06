@@ -1,86 +1,88 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Home() {
+const Home = () => {
+  const [view, setView] = useState('landing');
+  const [recommendedOutfit, setRecommendedOutfit] = useState(null);
+  const [pauMessage, setPauMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSnap = async () => {
+    setLoading(true);
+    console.log("⚡ Iniciando Protocolo Divineo...");
+    
+    try {
+      const response = await fetch('/api/snap', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gender: 'female', height: 170 })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setRecommendedOutfit(data.prenda);
+        setPauMessage(data.prenda.mensaje);
+        setView('result');
+      }
+    } catch (error) {
+      console.error("❌ Error conectando con los agentes:", error);
+      setPauMessage("Conectando con el servidor de estilo... (Modo Offline)");
+      // Fallback por si la API falla en plena demo
+      setRecommendedOutfit({
+          nombre: "Blazer Ivory Elena (Offline)",
+          mensaje: "Modo de contingencia activado."
+      });
+      setView('result');
+    } finally {
+        setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F5F5F0] via-[#E8E4D9] to-[#C5A46D] flex items-center justify-center p-4">
-      <div className="max-w-6xl w-full">
-        <div className="text-center mb-16">
-          <h1 className="text-7xl md:text-9xl font-serif text-[#2C2C2C] tracking-[0.3em] uppercase mb-6 animate-fade-in">
-            TryOnYou
-          </h1>
-          <p className="text-xl md:text-2xl text-[#2C2C2C]/60 tracking-[0.2em] uppercase font-light">
-            Fashion Intelligence System
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* Lafayette Pilot Card */}
-          <Link 
-            to="/pilot/lafayette-v7"
-            className="group relative overflow-hidden bg-white/80 backdrop-blur-sm border-2 border-[#C5A46D] rounded-lg p-8 hover:shadow-2xl transition-all duration-500 hover:scale-105"
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#141619] text-[#F5EFE6] font-sans">
+      <AnimatePresence mode="wait">
+        {view === 'landing' && (
+          <motion.div 
+            key="landing"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+            className="text-center"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-[#C5A46D]/10 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700"></div>
-            
-            <div className="relative z-10">
-              <div className="mb-4">
-                <span className="inline-block px-4 py-1 bg-[#C5A46D] text-white text-xs uppercase tracking-widest rounded-full">
-                  Active Pilot
-                </span>
-              </div>
-              
-              <h2 className="text-3xl font-serif text-[#2C2C2C] mb-4 tracking-wider">
-                Galeries Lafayette
-              </h2>
-              
-              <p className="text-[#2C2C2C]/70 mb-6 leading-relaxed">
-                Sistema de medición biométrica sin números. Primera experiencia Zero Tallas con FIS v7.0.
-              </p>
-              
-              <div className="flex items-center text-[#C5A46D] font-semibold group-hover:translate-x-2 transition-transform">
-                <span className="mr-2">Acceder al piloto</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
+            <h1 className="text-5xl mb-8 text-[#C5A46D]">GALERIES LAFAYETTE</h1>
+            <div className="relative w-64 h-64 mx-auto mb-8 bg-[#006D77] rounded-full flex items-center justify-center cursor-pointer" onClick={handleSnap}>
+               {loading ? (
+                   <span className="animate-pulse text-xl">ANALIZANDO...</span>
+               ) : (
+                   <span className="text-xl">HAZ CLICK (CHASQUIDO)</span>
+               )}
             </div>
-          </Link>
+            <p className="text-sm tracking-widest">PATENT PCT/EP2025/067317</p>
+          </motion.div>
+        )}
 
-          {/* Coming Soon Card */}
-          <div className="relative overflow-hidden bg-white/40 backdrop-blur-sm border-2 border-[#2C2C2C]/20 rounded-lg p-8 opacity-60">
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent to-[#2C2C2C]/5"></div>
-            
-            <div className="relative z-10">
-              <div className="mb-4">
-                <span className="inline-block px-4 py-1 bg-[#2C2C2C]/20 text-[#2C2C2C] text-xs uppercase tracking-widest rounded-full">
-                  Coming Soon
-                </span>
-              </div>
-              
-              <h2 className="text-3xl font-serif text-[#2C2C2C] mb-4 tracking-wider">
-                Global Expansion
-              </h2>
-              
-              <p className="text-[#2C2C2C]/60 mb-6 leading-relaxed">
-                Próximos pilotos en desarrollo para retailers internacionales.
-              </p>
-              
-              <div className="flex items-center text-[#2C2C2C]/40 font-semibold">
-                <span className="mr-2">Próximamente</span>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
+        {view === 'result' && recommendedOutfit && (
+          <motion.div 
+            key="result"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="text-center p-8 border border-[#C5A46D] rounded-lg max-w-md"
+          >
+            <h2 className="text-3xl text-[#C5A46D] mb-4">{recommendedOutfit.nombre}</h2>
+            <p className="text-xl mb-6 italic">"{pauMessage}"</p>
+            <div className="grid grid-cols-2 gap-4 text-sm mb-6">
+                <div>TIPO: {recommendedOutfit.tipo}</div>
+                <div>ELASTICIDAD: {recommendedOutfit.elasticidad}</div>
             </div>
-          </div>
-        </div>
-
-        <footer className="mt-20 text-center">
-          <p className="text-[#2C2C2C]/40 text-xs uppercase tracking-[0.5em]">
-            TryOnYou © 2026 | Búnker Maestro Activo
-          </p>
-        </footer>
-      </div>
+            <button 
+                onClick={() => setView('landing')}
+                className="px-6 py-2 border border-[#F5EFE6] rounded hover:bg-[#C5A46D] hover:text-[#141619] transition"
+            >
+                REINICIAR
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
-}
+};
+
+export default Home;
