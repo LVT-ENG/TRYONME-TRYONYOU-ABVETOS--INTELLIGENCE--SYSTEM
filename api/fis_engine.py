@@ -72,7 +72,7 @@ class Agent70:
             # Diferencia menor es mejor
             diff = abs(elasticity - target_elasticity)
             # Score 0.0 a 1.0 (1.0 es match exacto)
-            item['match_score'] = 1.0 - diff
+            item['match_score'] = max(0.0, 1.0 - diff)
             item['fit_reason'] = f"Elasticidad {elasticity} vs Objetivo {target_elasticity}"
 
         # Sort desc
