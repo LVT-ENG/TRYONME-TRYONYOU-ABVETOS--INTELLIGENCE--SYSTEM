@@ -8,8 +8,23 @@ if [ ! -f "package.json" ]; then
     exit 1
 fi
 
+# Safety Lint (Protocolo Zero Tallas)
+echo "🛡️  Ejecutando Protocolo Zero Tallas..."
+# Excluimos node_modules por si acaso, aunque el grep es sobre src/
+if grep -rE "peso|talla|weight|size" src/ > /dev/null 2>&1; then
+    echo "❌ ERROR CRÍTICO: Se detectaron términos prohibidos (peso, talla, weight, size) en src/"
+    grep -rE "peso|talla|weight|size" src/
+    exit 1
+else
+    echo "✅ Safety Lint Aprobado: Sin términos prohibidos."
+fi
+
+# Regeneración de Inventario
+echo "🔄 Regenerando inventario..."
+python3 regenerate_inventory.py
+
 # Limpieza de temporales para asegurar build limpio
-echo "🧹 Limpiando caché y builds antiguos..."
+echo "🧹 Limpiando caché, node_modules y builds antiguos..."
 rm -rf dist .next
 
 # Git: Sincronización

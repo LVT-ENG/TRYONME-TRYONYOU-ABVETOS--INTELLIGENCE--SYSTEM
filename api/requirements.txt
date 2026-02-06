@@ -1,7 +1,4 @@
 fastapi
 uvicorn
-pandas
-openpyxl
-qrcode[pil]
-Pillow
-google-genai
+mangum
+pydantic
