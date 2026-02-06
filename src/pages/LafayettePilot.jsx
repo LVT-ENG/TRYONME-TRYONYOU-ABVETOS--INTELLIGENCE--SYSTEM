@@ -253,6 +253,7 @@ export default function LafayettePilot() {
                     key={lang}
                     onClick={() => { setLanguage(lang); triggerSnap(); }}
                     className={`text-xs uppercase px-2 py-1 border border-[#C5A46D] rounded transition-all ${language === lang ? 'bg-[#C5A46D] text-black' : 'text-[#C5A46D] hover:bg-[#C5A46D]/20'}`}
+                    aria-label={`Switch to ${lang === 'es' ? 'Spanish' : lang === 'fr' ? 'French' : 'English'}`}
                 >
                     {lang}
                 </button>
