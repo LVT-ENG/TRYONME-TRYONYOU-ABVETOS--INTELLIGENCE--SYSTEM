@@ -143,9 +143,9 @@ export default function LafayettePilot() {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ 
-                shoulder_width: shoulderWidth,
-                torso_length: torsoLength,
-                hip_width: hipWidth,
+                chest: shoulderWidth,
+                height: torsoLength,
+                waist: hipWidth,
                 user_id: 'LAFAYETTE_PILOT_PRO',
                 zero_numbers: true // Activar modo sin números
               })
