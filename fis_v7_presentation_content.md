@@ -49,6 +49,14 @@ La función `sanitize_for_sharing` es una característica crítica que rompe cua
 
 El **Agent 70** ha sido actualizado para ir más allá de la simple comparación numérica de medidas. Ahora, incorpora una lógica de elasticidad que calcula cómo se adapta una prenda al cuerpo del usuario, considerando factores como el tipo de tejido y el corte. Esto resulta en recomendaciones de ajuste más precisas y personalizadas, sin mostrar números al usuario.
 
+## Novedades: Integración con Plataformas Google
+
+Este repositorio ha sido actualizado con las últimas tecnologías de la plataforma Google:
+
+*   **Google Gemini 2.0 Flash:** El sistema utiliza el modelo de vanguardia **Gemini 2.0 Flash** para generar narrativas de estilista "Agent 70", proporcionando consejos de moda instantáneos, sofisticados y conscientes del contexto.
+*   **SDK google-genai:** La integración del backend se basa en el moderno SDK de Python `google-genai`, asegurando un rendimiento óptimo y compatibilidad con los últimos modelos de Gemini.
+*   **MediaPipe:** El seguimiento corporal en tiempo real y las mediciones "Zero Tallas" (Zero Sizes) funcionan con **Google MediaPipe**, ejecutándose en el cliente para garantizar privacidad y velocidad.
+
 ## Arquitectura Técnica: El Búnker Maestro (main.py)
 
 El archivo `main.py` es el corazón del sistema, actuando como el "Búnker Maestro" que consolida todas las funcionalidades y asegura la seguridad técnica.
