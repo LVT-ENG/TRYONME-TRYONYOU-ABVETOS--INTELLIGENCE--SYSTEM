@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from mangum import Mangum
 import random
 
 app = FastAPI()
+handler = Mangum(app)
 
 # BASE DE DATOS DE ELENA (Inyectada como constante para velocidad de piloto)
 # Estos son los datos REALES que el espejo debe mostrar.
