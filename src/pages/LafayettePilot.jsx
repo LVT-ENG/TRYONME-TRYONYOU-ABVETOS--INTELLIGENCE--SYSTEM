@@ -92,9 +92,9 @@ export default function LafayettePilot() {
 
       // PHYSICAL OVERLAY (SuperCommit V8.1)
       // Real-Time Garment Overlay anchored to landmarks
-      if (garmentImageRef.current && lm[11].visibility > 0.5 && lm[12].visibility > 0.5) {
-        const leftShoulder = lm[11];
-        const rightShoulder = lm[12];
+      if (garmentImageRef.current && lm[POSE_LANDMARKS.LEFT_SHOULDER].visibility > 0.5 && lm[POSE_LANDMARKS.RIGHT_SHOULDER].visibility > 0.5) {
+        const leftShoulder = lm[POSE_LANDMARKS.LEFT_SHOULDER];
+        const rightShoulder = lm[POSE_LANDMARKS.RIGHT_SHOULDER];
 
         // Calculate dimensions
         const shoulderDist = Math.sqrt(
