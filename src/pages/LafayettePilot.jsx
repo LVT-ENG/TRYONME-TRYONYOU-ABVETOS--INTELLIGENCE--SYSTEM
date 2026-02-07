@@ -13,6 +13,21 @@ export default function LafayettePilot() {
   const [scanComplete, setScanComplete] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
   const hasFetched = useRef(false);
+  const garmentImageRef = useRef(null);
+
+  useEffect(() => {
+    if (selectedItem) {
+      const imgSrc = selectedItem['Image Src'] || selectedItem.image || (selectedItem.id === 'LAFAYETTE_JACKET_001' ? '/assets/catalog/brown_blazer_360_views.png' : null);
+      if (imgSrc) {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = imgSrc;
+        img.onload = () => {
+          garmentImageRef.current = img;
+        };
+      }
+    }
+  }, [selectedItem]);
 
   useEffect(() => {
     const pose = new Pose({
@@ -74,6 +89,40 @@ export default function LafayettePilot() {
         ctx.lineWidth = 2;
         ctx.stroke();
       });
+
+      // PHYSICAL OVERLAY (SuperCommit V8.1)
+      // Real-Time Garment Overlay anchored to landmarks
+      if (garmentImageRef.current && lm[11].visibility > 0.5 && lm[12].visibility > 0.5) {
+        const leftShoulder = lm[11];
+        const rightShoulder = lm[12];
+
+        // Calculate dimensions
+        const shoulderDist = Math.sqrt(
+          Math.pow((leftShoulder.x - rightShoulder.x) * width, 2) +
+          Math.pow((leftShoulder.y - rightShoulder.y) * height, 2)
+        );
+
+        // Center X is average of shoulders
+        const centerX = ((leftShoulder.x + rightShoulder.x) / 2) * width;
+        // Top Y is shoulder level (adjusted up for neck/collar)
+        const topY = ((leftShoulder.y + rightShoulder.y) / 2) * height;
+
+        // Dynamic scaling based on garment type logic (simplified for V8.1)
+        const scaleFactor = 2.8; // Wide fit for blazers/dresses
+        const overlayWidth = shoulderDist * scaleFactor;
+        const overlayHeight = overlayWidth * (garmentImageRef.current.height / garmentImageRef.current.width);
+
+        ctx.save();
+        // Translate to center to handle rotation if needed later, currently just simple overlay
+        ctx.drawImage(
+          garmentImageRef.current,
+          centerX - (overlayWidth / 2),
+          topY - (overlayHeight * 0.15), // Offset up slightly
+          overlayWidth,
+          overlayHeight
+        );
+        ctx.restore();
+      }
 
       if (!hasFetched.current && lm[11].visibility > 0.8) {
           hasFetched.current = true;
