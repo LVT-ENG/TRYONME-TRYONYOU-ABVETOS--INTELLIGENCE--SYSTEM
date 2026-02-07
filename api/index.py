@@ -1,15 +1,18 @@
 import os
 from fastapi import FastAPI, Body
+from functools import lru_cache
 from fastapi.concurrency import run_in_threadpool
 from .fis_engine import FISOrchestrator
 
-# Optimize: Resolve inventory path once at module load
-# This prevents redundant filesystem checks on every request
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CRM_PATH = os.path.join(ROOT_DIR, "TRYONYOU_CRM_MASTER_CLEAN-1.xlsx")
-FALLBACK_PATH = os.path.join(ROOT_DIR, "src/inventory_index.json")
+# Optimize: Cache inventory path resolution using lru_cache
+# This prevents redundant filesystem checks on every request while ensuring safe lazy loading
+@lru_cache(maxsize=1)
+def get_inventory_path():
+    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    crm_path = os.path.join(root_dir, "TRYONYOU_CRM_MASTER_CLEAN-1.xlsx")
+    fallback_path = os.path.join(root_dir, "src/inventory_index.json")
 
-INVENTORY_PATH = CRM_PATH if os.path.exists(CRM_PATH) else FALLBACK_PATH
+    return crm_path if os.path.exists(crm_path) else fallback_path
 
 app = FastAPI()
 orchestrator = FISOrchestrator()
@@ -22,7 +25,7 @@ async def health():
 async def recommend(data: dict = Body(...)):
     # ⚡ Bolt Optimization: Offload synchronous blocking call (GenAI + File I/O) to threadpool
     # This prevents blocking the main asyncio event loop
-    return await run_in_threadpool(orchestrator.run_experience, data, INVENTORY_PATH)
+    return await run_in_threadpool(orchestrator.run_experience, data, get_inventory_path())
 
 @app.get("/api/reserve/{product_id}")
 async def reserve(product_id: str):
