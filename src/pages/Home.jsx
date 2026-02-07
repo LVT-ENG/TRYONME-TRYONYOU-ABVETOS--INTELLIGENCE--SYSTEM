@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
 const Home = () => {
   const [view, setView] = useState('landing');
+  const [isExiting, setIsExiting] = useState(false);
   const [recommendedOutfit, setRecommendedOutfit] = useState(null);
   const [pauMessage, setPauMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const transitionToResult = () => {
+    setIsExiting(true);
+    setTimeout(() => {
+      setView('result');
+      setIsExiting(false);
+    }, 500);
+  };
 
   const handleSnap = async () => {
     setLoading(true);
@@ -23,7 +30,7 @@ const Home = () => {
       if (data.success) {
         setRecommendedOutfit(data.prenda);
         setPauMessage(data.prenda.mensaje);
-        setView('result');
+        transitionToResult();
       }
     } catch (error) {
       console.error("❌ Error conectando con los agentes:", error);
@@ -33,7 +40,7 @@ const Home = () => {
           nombre: "Blazer Ivory Elena (Offline)",
           mensaje: "Modo de contingencia activado."
       });
-      setView('result');
+      transitionToResult();
     } finally {
         setLoading(false);
     }
@@ -41,12 +48,10 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#141619] text-[#F5EFE6] font-sans">
-      <AnimatePresence mode="wait">
         {view === 'landing' && (
-          <motion.div 
+          <div
             key="landing"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="text-center"
+            className={`text-center ${isExiting ? 'animate-fade-out' : 'animate-fade-in'}`}
           >
             <h1 className="text-5xl mb-8 text-[#C5A46D]">GALERIES LAFAYETTE</h1>
             <div className="relative w-64 h-64 mx-auto mb-8 bg-[#006D77] rounded-full flex items-center justify-center cursor-pointer" onClick={handleSnap}>
@@ -57,14 +62,13 @@ const Home = () => {
                )}
             </div>
             <p className="text-sm tracking-widest">PATENT PCT/EP2025/067317</p>
-          </motion.div>
+          </div>
         )}
 
         {view === 'result' && recommendedOutfit && (
-          <motion.div 
+          <div
             key="result"
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-            className="text-center p-8 border border-[#C5A46D] rounded-lg max-w-md"
+            className="text-center p-8 border border-[#C5A46D] rounded-lg max-w-md animate-slide-up"
           >
             <h2 className="text-3xl text-[#C5A46D] mb-4">{recommendedOutfit.nombre}</h2>
             <p className="text-xl mb-6 italic">"{pauMessage}"</p>
@@ -78,9 +82,8 @@ const Home = () => {
             >
                 REINICIAR
             </button>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </div>
   );
 };
