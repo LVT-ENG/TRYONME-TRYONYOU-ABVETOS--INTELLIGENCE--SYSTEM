@@ -224,8 +224,10 @@ export default function LafayettePilot() {
           setStatusMessage(texts.labels.share);
       }
 
-      // Clear status after 3s
-      setTimeout(() => setStatusMessage(""), 3000);
+      // Clear status after 3s (skip for Reserve, which clears after its async response)
+      if (btnIndex !== 1) {
+          setTimeout(() => setStatusMessage(""), 3000);
+      }
   };
 
   const handleReserve = (productId) => {
@@ -235,11 +237,13 @@ export default function LafayettePilot() {
       .then(data => {
           setQrUrl(data.qr_url);
           setStatusMessage(`${texts.labels.qr} ${pid.substring(0,8)}...`);
+          setTimeout(() => setStatusMessage(""), 3000);
       })
       .catch(() => {
         // Fallback QR
         setQrUrl('https://api.qrserver.com/v1/create-qr-code/?s' + 'ize=200x200&data=LAFAYETTE_RESERVATION_' + pid);
         setStatusMessage(`${texts.labels.qr} LOCAL-DEV-KEY`);
+        setTimeout(() => setStatusMessage(""), 3000);
       });
   };
 
