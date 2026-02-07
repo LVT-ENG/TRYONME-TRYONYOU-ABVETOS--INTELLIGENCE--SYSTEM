@@ -1,60 +1,124 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Body
+from fastapi.responses import JSONResponse
 from mangum import Mangum
-import random
+import os
+
+try:
+    from api._fis_engine import FISOrchestrator, PauAgent
+except ImportError:
+    # Fallback for local testing if run directly
+    from _fis_engine import FISOrchestrator, PauAgent
 
 app = FastAPI()
 handler = Mangum(app)
 
-# BASE DE DATOS DE ELENA (Inyectada como constante para velocidad de piloto)
-# Estos son los datos REALES que el espejo debe mostrar.
+# Fallback inventory (Mock Data)
 INVENTARIO_ELENA = [
     {
         "id": "GL-001",
-        "nombre": "Blazer Ivory Elena",
-        "tipo": "Fitted",
-        "elasticidad": "Media",
-        "mensaje": "La caída de este tejido estructura tus hombros sin rigidez.",
-        "imagen": "/assets/catalog/blazer_ivory.png" 
+        "name": "Blazer Ivory Elena",
+        "Title": "Blazer Ivory Elena",
+        "Variant Price": "890",
+        "Image Src": "/assets/catalog/blazer_ivory.png",
+        "match_score": 0.98,
+        "measure": 0.98
     },
     {
         "id": "GL-002",
-        "nombre": "Robe Soie Lafayette",
-        "tipo": "Fluid",
-        "elasticidad": "Alta",
-        "mensaje": "Seda líquida que se adapta a tu movimiento natural.",
-        "imagen": "/assets/catalog/red_dress_minimal.png"
+        "name": "Robe Soie Lafayette",
+        "Title": "Robe Soie Lafayette",
+        "Variant Price": "1200",
+        "Image Src": "/assets/catalog/red_dress_minimal.png",
+        "match_score": 0.95,
+        "measure": 0.95
     },
     {
         "id": "GL-003",
-        "nombre": "Pantalon Noir Premium",
-        "tipo": "Relaxed",
-        "elasticidad": "Baja",
-        "mensaje": "Corte sartorial que respeta tu silueta.",
-        "imagen": "/assets/catalog/pantalon_noir.png"
+        "name": "Pantalon Noir Premium",
+        "Title": "Pantalon Noir Premium",
+        "Variant Price": "550",
+        "Image Src": "/assets/catalog/pantalon_noir.png",
+        "match_score": 0.92,
+        "measure": 0.92
     }
 ]
 
-class SnapRequest(BaseModel):
-    gender: str
-    height: int = 0
+# Global instances (lazy initialization pattern for Serverless)
+_orchestrator = None
+_pau_agent = None
+_INVENTORY_PATH_CACHE = None
+
+def get_orchestrator():
+    global _orchestrator
+    if _orchestrator is None:
+        _orchestrator = FISOrchestrator()
+    return _orchestrator
+
+def get_pau_agent():
+    global _pau_agent
+    if _pau_agent is None:
+        _pau_agent = PauAgent()
+    return _pau_agent
+
+def get_inventory_path():
+    global _INVENTORY_PATH_CACHE
+    if _INVENTORY_PATH_CACHE:
+        return _INVENTORY_PATH_CACHE
+    
+    # Priority 1: src/inventory_index.json (Auto-generated from public/assets/catalog)
+    candidates = [
+        "src/inventory_index.json",
+        "TRYONYOU_CRM_MASTER_CLEAN-1.xlsx",
+        "external_inventory.json"
+    ]
+    
+    for path in candidates:
+        if os.path.exists(path):
+            _INVENTORY_PATH_CACHE = path
+            print(f"Inventory loaded from: {path}")
+            return path
+
+    # Fallback if nothing found
+    print("WARNING: No inventory file found. Using memory fallback.")
+    return None
 
 @app.get("/api/health")
 def health_check():
-    return {"status": "VIVO", "sistema": "Divineo V7"}
+    return {
+        "status": "VIVO",
+        "sistema": "Divineo V7",
+        "inventory": get_inventory_path() or "MEMORY_FALLBACK"
+    }
+
+@app.post("/api/recommend")
+async def recommend(user_data: dict = Body(...)):
+    """
+    Recibe medidas del usuario y retorna recomendaciones usando Agent 70.
+    """
+    orch = get_orchestrator()
+    inv_path = get_inventory_path()
+
+    if not inv_path:
+        # Fallback to mock data if no inventory file exists
+        print("Using INVENTARIO_ELENA fallback.")
+        narrative = "Agent 70 (Fallback): Sistema en modo demostración. Inventario simulado activo."
+        return {
+            "recommendations": INVENTARIO_ELENA,
+            "narrative": narrative
+        }
+
+    result = orch.run_experience(user_data, inv_path)
+    return result
+
+@app.get("/api/reserve/{product_id}")
+async def reserve_product(product_id: str):
+    """
+    Genera un QR para reservar el producto en probador VIP.
+    """
+    pau = get_pau_agent()
+    qr_data_uri = pau.generate_qr(product_id)
+    return {"product_id": product_id, "qr_url": qr_data_uri}
 
 @app.post("/api/snap")
-def procesar_chasquido(datos: SnapRequest):
-    # Lógica de selección "Inteligente" para la demo
-    # En producción esto usaría ML, aquí usamos reglas de negocio básicas
-    
-    seleccion = random.choice(INVENTARIO_ELENA)
-    
-    return {
-        "success": True,
-        "prenda": seleccion,
-        "meta": {
-            "fit_score": 99.7,
-            "agent_id": "Agente-007-Stylist"
-        }
-    }
+def procesar_chasquido(datos: dict):
+    return {"message": "Deprecated. Use /api/recommend"}

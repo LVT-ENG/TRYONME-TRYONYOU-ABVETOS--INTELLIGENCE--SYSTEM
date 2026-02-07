@@ -11,7 +11,13 @@
     "framer-motion": "^11.0.0",
     "lucide-react": "^0.300.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "@mediapipe/pose": "^0.5.1675469404",
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "three": "^0.162.0",
+    "@react-three/fiber": "^8.15.19",
+    "@react-three/drei": "^9.102.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
