@@ -117,7 +117,7 @@ export default function LafayettePilot() {
         ctx.drawImage(
           garmentImageRef.current,
           centerX - (overlayWidth / 2),
-          topY - (overlayHeight * 0.15), // Offset up slightly
+          topY - (overlayHeight * GARMENT_VERTICAL_OFFSET_RATIO), // Offset up slightly
           overlayWidth,
           overlayHeight
         );
