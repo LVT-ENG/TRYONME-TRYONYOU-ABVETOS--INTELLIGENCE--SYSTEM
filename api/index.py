@@ -1,8 +1,21 @@
 import os
+import sys
+
+# Ensure current directory is in sys.path for Vercel/Netlify environments
+# This fixes import errors when the function is executed in a different context
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
+
 from fastapi import FastAPI, Body
 from functools import lru_cache
 from fastapi.concurrency import run_in_threadpool
-from .fis_engine import FISOrchestrator
+
+try:
+    from .fis_engine import FISOrchestrator
+except ImportError:
+    # Fallback for when executed as a script or different package context
+    from fis_engine import FISOrchestrator
 
 # Optimize: Cache inventory path resolution using lru_cache
 # This prevents redundant filesystem checks on every request while ensuring safe lazy loading
