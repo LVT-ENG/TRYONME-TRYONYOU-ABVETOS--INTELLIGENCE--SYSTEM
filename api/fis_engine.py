@@ -148,14 +148,14 @@ class FISOrchestrator:
                         item['elasticidad'] = 0.9
                         item['caida'] = 'Fluida'
                         item.setdefault('Image Src', "/assets/catalog/red_dress_clean.png")
-                    elif "blazer" in title or "galeries" in title:
-                        item['elasticidad'] = 0.1
-                        item['caida'] = 'Estructurada'
-                        item.setdefault('Image Src', "/assets/catalog/brown_blazer_360_views.png")
                     elif "pant" in title or "leather" in title:
                         item['elasticidad'] = 0.4
                         item['caida'] = 'Ajustada'
                         item.setdefault('Image Src', "/assets/catalog/lime_green_leather_suit.png")
+                    elif "blazer" in title or "galeries" in title or "suit" in title or "trench" in title:
+                        item['elasticidad'] = 0.1
+                        item['caida'] = 'Estructurada'
+                        item.setdefault('Image Src', "/assets/catalog/brown_blazer_360_views.png")
                     else:
                         item.setdefault('Image Src', "/assets/catalog/urban_male_model_app_demo.jpg")
 

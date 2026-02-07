@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Pose } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
 import { Link } from 'react-router-dom';
@@ -61,6 +61,8 @@ export default function LafayettePilot() {
   const hasFetched = useRef(false);
 
   const texts = INTERFACE[language];
+
+  const handleSparkleComplete = useCallback(() => setSnapActive(false), []);
 
   const triggerSnap = () => {
       setSnapActive(true);
@@ -205,13 +207,14 @@ export default function LafayettePilot() {
           if (recommendations.length > 0) setSelectedItem(recommendations[0]);
       } else if (btnIndex === 1) { // Reservar
           if (selectedItem) {
-              handleReserve(selectedItem.id);
+              handleReserve(selectedItem.Handle || selectedItem.id);
           }
       } else if (btnIndex === 2) { // Ver Combinaciones
           setStatusMessage(texts.labels.switchingLooks);
           // Cycle to next item
           if (recommendations.length > 1) {
-              const currentIndex = recommendations.findIndex(r => r.id === selectedItem?.id);
+              const selectedKey = selectedItem?.Handle || selectedItem?.id;
+              const currentIndex = recommendations.findIndex(r => (r.Handle || r.id) === selectedKey);
               const nextIndex = (currentIndex + 1) % recommendations.length;
               setSelectedItem(recommendations[nextIndex]);
           }
@@ -226,15 +229,16 @@ export default function LafayettePilot() {
   };
 
   const handleReserve = (productId) => {
-    fetch(`/api/reserve/${productId}`)
+    const pid = productId || 'UNKNOWN';
+    fetch(`/api/reserve/${pid}`)
       .then(res => res.json())
       .then(data => {
           setQrUrl(data.qr_url);
-          setStatusMessage(`${texts.labels.qr} ${productId.substring(0,8)}...`);
+          setStatusMessage(`${texts.labels.qr} ${pid.substring(0,8)}...`);
       })
       .catch(() => {
         // Fallback QR
-        setQrUrl('https://api.qrserver.com/v1/create-qr-code/?s' + 'ize=200x200&data=LAFAYETTE_RESERVATION_' + productId);
+        setQrUrl('https://api.qrserver.com/v1/create-qr-code/?s' + 'ize=200x200&data=LAFAYETTE_RESERVATION_' + pid);
         setStatusMessage(`${texts.labels.qr} LOCAL-DEV-KEY`);
       });
   };
@@ -273,7 +277,7 @@ export default function LafayettePilot() {
 
       {/* Main Content */}
       <main className="flex-1 flex items-center justify-center p-4 relative">
-        <Sparkles active={snapActive} onComplete={() => setSnapActive(false)} />
+        <Sparkles active={snapActive} onComplete={handleSparkleComplete} />
 
         <div className="flex flex-col lg:flex-row gap-8 items-start max-w-7xl w-full">
           {/* Mirror Section */}
