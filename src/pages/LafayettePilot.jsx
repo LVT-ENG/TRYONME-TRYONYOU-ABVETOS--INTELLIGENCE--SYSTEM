@@ -108,7 +108,7 @@ export default function LafayettePilot() {
         const topY = ((leftShoulder.y + rightShoulder.y) / 2) * height;
 
         // Dynamic scaling based on garment type logic (simplified for V8.1)
-        const scaleFactor = 2.8; // Wide fit for blazers/dresses
+        const scaleFactor = GARMENT_SCALE_FACTOR; // Wide fit for blazers/dresses
         const overlayWidth = shoulderDist * scaleFactor;
         const overlayHeight = overlayWidth * (garmentImageRef.current.height / garmentImageRef.current.width);
 
