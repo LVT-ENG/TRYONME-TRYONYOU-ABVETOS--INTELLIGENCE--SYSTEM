@@ -2,3 +2,8 @@ fastapi
 uvicorn
 mangum
 pydantic
+google-genai
+qrcode
+pandas
+openpyxl
+Pillow

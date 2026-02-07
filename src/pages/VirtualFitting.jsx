@@ -1,32 +1,56 @@
-import React, { useEffect, useRef, useState, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei';
+import React, { useEffect, useRef, useState, Suspense, useMemo } from 'react';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { OrbitControls, Environment, useTexture } from '@react-three/drei';
 import { Pose } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
 import * as THREE from 'three';
+
+// --- Garment Texture Component ---
+function GarmentTexture({ url, measurements }) {
+  const texture = useTexture(url);
+  const { shoulderWidth = 0.45, torsoLength = 0.7 } = measurements || {};
+
+  return (
+    <mesh position={[0, 0, 0.11]} castShadow>
+      <planeGeometry args={[shoulderWidth * 1.5, torsoLength * 1.2]} />
+      <meshStandardMaterial
+        map={texture}
+        transparent
+        opacity={0.95}
+        roughness={0.3}
+        metalness={0.1}
+        side={THREE.DoubleSide}
+      />
+    </mesh>
+  );
+}
 
 // Avatar 3D Component
 function Avatar3D({ measurements, currentGarment }) {
   const meshRef = useRef();
   
   // Crear geometría del avatar basada en medidas
-  const avatarGeometry = React.useMemo(() => {
+  const avatarGeometry = useMemo(() => {
     const { shoulderWidth = 0.45, torsoLength = 0.7, hipWidth = 0.4 } = measurements || {};
     
     // Crear forma humanoide básica
     const shape = new THREE.Shape();
     
-    // Torso
-    shape.moveTo(-shoulderWidth/2, 0);
-    shape.lineTo(-shoulderWidth/2, -torsoLength * 0.6);
-    shape.lineTo(-hipWidth/2, -torsoLength);
-    shape.lineTo(hipWidth/2, -torsoLength);
-    shape.lineTo(shoulderWidth/2, -torsoLength * 0.6);
-    shape.lineTo(shoulderWidth/2, 0);
-    shape.lineTo(-shoulderWidth/2, 0);
+    // Torso (Simplified)
+    const w = shoulderWidth / 2;
+    const h = torsoLength;
+    const hw = hipWidth / 2;
+
+    shape.moveTo(-w, 0);
+    shape.lineTo(-w, -h * 0.6);
+    shape.lineTo(-hw, -h);
+    shape.lineTo(hw, -h);
+    shape.lineTo(w, -h * 0.6);
+    shape.lineTo(w, 0);
+    shape.lineTo(-w, 0);
     
     const extrudeSettings = {
-      depth: 0.2,
+      depth: 0.15,
       bevelEnabled: true,
       bevelThickness: 0.02,
       bevelSize: 0.02,
@@ -47,18 +71,27 @@ function Avatar3D({ measurements, currentGarment }) {
         />
       </mesh>
       
-      {/* Prenda virtual superpuesta */}
-      {currentGarment && (
+      {/* Prenda virtual superpuesta (Texture or Color) */}
+      {currentGarment && currentGarment['Image Src'] ? (
+        <Suspense fallback={
+            <mesh position={[0, 0, 0.11]}>
+                 <planeGeometry args={[0.5, 0.8]} />
+                 <meshStandardMaterial color="#C5A46D" wireframe />
+            </mesh>
+        }>
+           <GarmentTexture url={currentGarment['Image Src']} measurements={measurements} />
+        </Suspense>
+      ) : (
+        currentGarment && (
         <mesh position={[0, 0, 0.11]} castShadow>
-          <boxGeometry args={[measurements?.shoulderWidth || 0.45, measurements?.torsoLength || 0.7, 0.05]} />
+          <planeGeometry args={[0.5, 0.8]} />
           <meshStandardMaterial 
-            color={currentGarment.color || "#C5A46D"}
+            color="#C5A46D"
             transparent
-            opacity={0.9}
-            roughness={0.3}
-            metalness={0.2}
+            opacity={0.8}
           />
         </mesh>
+        )
       )}
       
       {/* Cabeza */}
@@ -70,68 +103,48 @@ function Avatar3D({ measurements, currentGarment }) {
   );
 }
 
-// Componente principal
 export default function VirtualFitting() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const cameraInstanceRef = useRef(null);
   const poseInstanceRef = useRef(null);
-  const [step, setStep] = useState('intro'); // intro, scanning, avatar, fitting
+
+  const [step, setStep] = useState('intro'); // intro, scanning, result
   const [measurements, setMeasurements] = useState(null);
-  const [currentGarment, setCurrentGarment] = useState(null);
-  const [garments, setGarments] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+  const [currentGarmentIndex, setCurrentGarmentIndex] = useState(0);
+  const [narrative, setNarrative] = useState("");
+  const [qrUrl, setQrUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null);
   const hasFetched = useRef(false);
 
-  // Cleanup effect
+  const currentGarment = recommendations[currentGarmentIndex];
+
+  // Logic to determine category
+  const getCategory = (score) => {
+      if (score > 0.95) return { name: 'DIVINEO', class: 'text-amber-400', badge: 'MATCH PERFECTO' };
+      if (score >= 0.85) return { name: 'LAFAYETTE', class: 'text-gray-200', badge: 'COLECCIÓN CURADA' };
+      return { name: 'CAP', class: 'text-blue-400', badge: 'BESPOKE CREATION' };
+  };
+
+  const category = currentGarment ? getCategory(currentGarment.match_score || currentGarment.fit_score || 0) : null;
+
+  // Cleanup
   useEffect(() => {
     return () => {
-      if (cameraInstanceRef.current) {
-        cameraInstanceRef.current.stop();
-        cameraInstanceRef.current = null;
-      }
-      if (poseInstanceRef.current) {
-        poseInstanceRef.current.close();
-        poseInstanceRef.current = null;
-      }
+       if (cameraInstanceRef.current) cameraInstanceRef.current.stop();
+       if (poseInstanceRef.current) poseInstanceRef.current.close();
     };
   }, []);
 
-  // Catálogo de prendas
-  const garmentCatalog = [
-    {
-      id: 'blazer_001',
-      name: 'Blazer Signature',
-      color: '#2C2C2C',
-      fitScore: 99.7,
-      description: 'Corte perfecto para tu silueta',
-      price: '€890'
-    },
-    {
-      id: 'dress_001',
-      name: 'Robe Élégante',
-      color: '#8B4513',
-      fitScore: 98.2,
-      description: 'Diseño fluido y sofisticado',
-      price: '€1,200'
-    },
-    {
-      id: 'coat_001',
-      name: 'Manteau Classique',
-      color: '#1A1A1A',
-      fitScore: 97.8,
-      description: 'Elegancia atemporal',
-      price: '€1,500'
-    }
-  ];
-
-  // Iniciar escaneo
   const startScanning = () => {
     setStep('scanning');
+    setRecommendations([]);
+    setQrUrl(null);
+    hasFetched.current = false;
     
-    // Ensure previous instances are cleaned up if any
-    if (poseInstanceRef.current) poseInstanceRef.current.close();
-    if (cameraInstanceRef.current) cameraInstanceRef.current.stop();
-
+    // Initialize MediaPipe
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
     });
@@ -144,215 +157,248 @@ export default function VirtualFitting() {
       minTrackingConfidence: 0.5
     });
 
-    pose.onResults((results) => {
+    pose.onResults(onResults);
+
+    if (videoRef.current) {
+        const camera = new Camera(videoRef.current, {
+          onFrame: async () => { await pose.send({ image: videoRef.current }); },
+          width: 1280, height: 720
+        });
+        cameraInstanceRef.current = camera;
+        camera.start();
+    }
+  };
+
+  const onResults = (results) => {
       if (!canvasRef.current || !results.poseLandmarks) return;
       const ctx = canvasRef.current.getContext('2d');
       const { width, height } = canvasRef.current;
-
-      ctx.clearRect(0, 0, width, height);
       
-      // Espejo
+      // Draw video
       ctx.save();
+      ctx.clearRect(0, 0, width, height);
       ctx.scale(-1, 1);
       ctx.translate(-width, 0);
       ctx.drawImage(results.image, 0, 0, width, height);
       ctx.restore();
 
+      // Draw landmarks
       const lm = results.poseLandmarks;
       
-      // Efecto de escaneo con líneas
+      // Scanning Effect
       ctx.strokeStyle = '#C5A46D';
       ctx.lineWidth = 2;
-      ctx.shadowBlur = 20;
-      ctx.shadowColor = '#C5A46D';
-      
-      // Líneas de escaneo horizontales animadas
-      const scanY = (Date.now() % 2000) / 2000 * height;
       ctx.beginPath();
-      ctx.moveTo(0, scanY);
-      ctx.lineTo(width, scanY);
+      ctx.moveTo(lm[11].x * width, lm[11].y * height);
+      ctx.lineTo(lm[12].x * width, lm[12].y * height);
+      ctx.lineTo(lm[24].x * width, lm[24].y * height);
+      ctx.lineTo(lm[23].x * width, lm[23].y * height);
+      ctx.closePath();
       ctx.stroke();
-      
-      ctx.shadowBlur = 0;
 
-      if (!hasFetched.current && lm[11].visibility > 0.8) {
-        hasFetched.current = true;
-        
-        // Extraer medidas
-        const shoulderWidth = Math.abs(lm[11].x - lm[12].x);
-        const torsoLength = Math.abs(lm[11].y - lm[23].y);
-        const hipWidth = Math.abs(lm[23].x - lm[24].x);
-        
-        setMeasurements({
-          shoulderWidth,
-          torsoLength,
-          hipWidth
-        });
-        
-        // Transición suave a avatar
-        setTimeout(() => {
-          // ⚡ Bolt Optimization: Stop camera and pose detection to save CPU/GPU
-          if (cameraInstanceRef.current) {
-            cameraInstanceRef.current.stop();
-            cameraInstanceRef.current = null;
-          }
-          if (poseInstanceRef.current) {
-            poseInstanceRef.current.close();
-            poseInstanceRef.current = null;
-          }
+      // Check for stability/fetch condition
+      if (!hasFetched.current && lm[11].visibility > 0.8 && lm[12].visibility > 0.8) {
+          // Calculate measurements (Normalized)
+          const shoulderWidth = Math.abs(lm[11].x - lm[12].x);
+          const torsoLength = Math.abs(lm[11].y - lm[23].y);
+          const hipWidth = Math.abs(lm[23].x - lm[24].x);
 
-          setStep('avatar');
-          setGarments(garmentCatalog);
-          setCurrentGarment(garmentCatalog[0]);
-        }, 2000);
+          // Heuristic conversion to approximate cm (assuming 2m height frame)
+          const chest = shoulderWidth * 200;
+          const waist = hipWidth * 200;
+          const heightCalc = torsoLength * 300;
+
+          hasFetched.current = true;
+          setMeasurements({ shoulderWidth, torsoLength, hipWidth });
+
+          // Delay to show scanning effect briefly
+          setTimeout(() => {
+              fetchRecommendations(chest, waist, heightCalc);
+          }, 1000);
       }
-    });
-
-    const camera = new Camera(videoRef.current, {
-      onFrame: async () => { await pose.send({ image: videoRef.current }); },
-      width: 1280, height: 720
-    });
-    cameraInstanceRef.current = camera;
-    camera.start();
   };
 
+  const fetchRecommendations = async (chest, waist, height) => {
+      setLoading(true);
+      try {
+          const res = await fetch('/api/recommend', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ chest, waist, height, user_id: 'PILOT_DEMO' })
+          });
+          const data = await res.json();
+          if (data.recommendations && data.recommendations.length > 0) {
+              setRecommendations(data.recommendations);
+              setNarrative(data.narrative || "");
+              setStep('result');
+              // Stop camera to save resources
+              if (cameraInstanceRef.current) cameraInstanceRef.current.stop();
+              if (poseInstanceRef.current) poseInstanceRef.current.close();
+          } else {
+              // Retry or error
+              hasFetched.current = false;
+          }
+      } catch (e) {
+          console.error("Error fetching recommendations", e);
+          hasFetched.current = false;
+      } finally {
+          setLoading(false);
+      }
+  };
+
+  // Buttons Handlers
+  const handleSelect = () => {
+      if (!currentGarment) return;
+      setToast(`Añadido al carrito: ${currentGarment.Title || currentGarment.name}`);
+      setTimeout(() => setToast(null), 3000);
+  };
+
+  const handleReserve = async () => {
+       if (!currentGarment) return;
+       try {
+           const res = await fetch(`/api/reserve/${currentGarment.id}`);
+           const data = await res.json();
+           if (data.qr_url) setQrUrl(data.qr_url);
+       } catch (e) {
+           console.error(e);
+       }
+  };
+
+  const handleNext = () => {
+      setCurrentGarmentIndex((prev) => (prev + 1) % recommendations.length);
+      setQrUrl(null); // Reset QR on change
+  };
+
+  const handleSave = () => {
+      setToast("Perfil Biométrico Guardado (Simulado)");
+      setTimeout(() => setToast(null), 3000);
+  };
+
+  const handleShare = () => {
+      setToast("Captura de pantalla guardada");
+      setTimeout(() => setToast(null), 3000);
+  };
+
+  // Render ...
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F5F5F0] via-[#E8E4D9] to-[#C5A46D] flex items-center justify-center p-4">
-      {/* Intro Screen */}
-      {step === 'intro' && (
-        <div className="max-w-2xl text-center animate-fade-in">
-          <h1 className="text-6xl md:text-8xl font-serif text-[#2C2C2C] tracking-[0.3em] uppercase mb-6">
-            TryOnYou
-          </h1>
-          <p className="text-xl text-[#2C2C2C]/70 mb-12 tracking-wider">
-            Virtual Fitting AI - Experiencia de Probador 3D
-          </p>
-          
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-8 mb-8">
-            <h2 className="text-2xl font-serif text-[#2C2C2C] mb-4">Cómo funciona</h2>
-            <div className="space-y-4 text-left text-[#2C2C2C]/80">
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#C5A46D] flex items-center justify-center flex-shrink-0 text-white font-bold">1</div>
-                <p>Escaneo biométrico de tu silueta en tiempo real</p>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#C5A46D] flex items-center justify-center flex-shrink-0 text-white font-bold">2</div>
-                <p>Generación de tu avatar 3D personalizado</p>
-              </div>
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-[#C5A46D] flex items-center justify-center flex-shrink-0 text-white font-bold">3</div>
-                <p>Prueba virtual de prendas con ajuste perfecto</p>
-              </div>
-            </div>
-          </div>
-          
-          <button
-            onClick={startScanning}
-            className="px-12 py-4 bg-[#C5A46D] text-white font-bold uppercase text-lg tracking-widest hover:bg-[#d4b98a] transition-all hover:shadow-2xl rounded-lg"
-          >
-            Comenzar Escaneo
-          </button>
+    <div className="relative min-h-screen bg-black text-[#F5F5F0] overflow-hidden font-sans">
+        {/* Badge */}
+        <div className="absolute top-4 right-4 z-50 bg-red-600 px-3 py-1 rounded text-xs font-bold tracking-widest animate-pulse shadow-[0_0_10px_rgba(220,38,38,0.7)]">
+            PILOTO ACTIVO
         </div>
-      )}
 
-      {/* Scanning Screen */}
-      {step === 'scanning' && (
-        <div className="w-full max-w-6xl">
-          <div className="relative border-4 border-[#C5A46D] rounded-lg overflow-hidden shadow-2xl">
-            <video ref={videoRef} className="hidden" />
-            <canvas ref={canvasRef} width="1280" height="720" className="w-full h-auto" />
-            
-            <div className="absolute top-8 left-1/2 transform -translate-x-1/2 bg-black/80 backdrop-blur-sm px-8 py-4 rounded-lg">
-              <p className="text-[#C5A46D] font-serif italic text-xl tracking-wider">
-                Analizando tu silueta...
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Avatar 3D + Try-On Screen */}
-      {step === 'avatar' && (
-        <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-8">
-          {/* Vista 3D */}
-          <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-2xl" style={{ height: '600px' }}>
-            <Suspense fallback={
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-[#C5A46D] text-xl">Generando avatar...</div>
-              </div>
-            }>
-              <Canvas shadows>
-                <PerspectiveCamera makeDefault position={[0, 0, 2]} />
-                <OrbitControls 
-                  enableZoom={true}
-                  enablePan={false}
-                  minDistance={1.5}
-                  maxDistance={3}
-                />
-                
-                <ambientLight intensity={0.5} />
-                <directionalLight 
-                  position={[5, 5, 5]} 
-                  intensity={1}
-                  castShadow
-                  shadow-mapSize-width={1024}
-                  shadow-mapSize-height={1024}
-                />
-                <spotLight position={[-5, 5, 5]} intensity={0.5} />
-                
-                <Avatar3D measurements={measurements} currentGarment={currentGarment} />
-                
-                <Environment preset="studio" />
-                
-                {/* Plataforma */}
-                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.9, 0]} receiveShadow>
-                  <circleGeometry args={[1, 64]} />
-                  <meshStandardMaterial color="#E8E4D9" />
-                </mesh>
-              </Canvas>
-            </Suspense>
-          </div>
-
-          {/* Panel de prendas */}
-          <div className="w-full lg:w-96 space-y-6">
-            <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6">
-              <h2 className="text-2xl font-serif text-[#2C2C2C] mb-4 tracking-wider">Curated Selection</h2>
-              <p className="text-sm text-[#2C2C2C]/60 mb-6">Prendas perfectas para tu avatar</p>
-              
-              <div className="space-y-4">
-                {garments.map((garment) => (
-                  <div
-                    key={garment.id}
-                    onClick={() => setCurrentGarment(garment)}
-                    className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                      currentGarment?.id === garment.id
-                        ? 'border-[#C5A46D] bg-[#C5A46D]/10 shadow-lg'
-                        : 'border-[#2C2C2C]/20 hover:border-[#C5A46D]/50'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-semibold text-[#2C2C2C]">{garment.name}</h3>
-                      <span className="px-3 py-1 bg-[#C5A46D] text-white text-xs font-bold rounded-full">
-                        {garment.fitScore}% Fit
-                      </span>
-                    </div>
-                    <p className="text-sm text-[#2C2C2C]/70 mb-2">{garment.description}</p>
-                    <p className="text-lg font-bold text-[#C5A46D]">{garment.price}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {currentGarment && (
-              <div className="bg-white/80 backdrop-blur-sm rounded-lg p-6">
-                <button className="w-full py-4 bg-[#C5A46D] text-white font-bold uppercase tracking-widest hover:bg-[#d4b98a] transition-all rounded-lg">
-                  Añadir al Carrito
+        {/* Main Content */}
+        {step === 'intro' && (
+            // Intro UI
+            <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-gray-900 to-black">
+                <h1 className="text-6xl md:text-8xl font-serif text-[#C5A46D] mb-4 tracking-widest">TRYONYOU</h1>
+                <p className="text-xl text-white/50 mb-12 tracking-[0.5em] uppercase">Digital Mirror Experience</p>
+                <button
+                    onClick={startScanning}
+                    className="px-12 py-4 border border-[#C5A46D] text-[#C5A46D] font-bold text-xl rounded hover:bg-[#C5A46D] hover:text-black transition-all duration-300 hover:shadow-[0_0_30px_rgba(197,164,109,0.5)]"
+                >
+                    INICIAR ESPEJO
                 </button>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+            </div>
+        )}
+
+        {step === 'scanning' && (
+            // Scanning UI
+             <div className="relative w-full h-screen flex items-center justify-center bg-black">
+                <video ref={videoRef} className="hidden" />
+                <canvas ref={canvasRef} width="1280" height="720" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none bg-black/30">
+                    <div className="w-24 h-24 border-t-4 border-[#C5A46D] rounded-full animate-spin mb-4"></div>
+                    <p className="text-2xl text-[#C5A46D] animate-pulse tracking-widest font-serif">ESCANEANDO SILUETA...</p>
+                </div>
+             </div>
+        )}
+
+        {step === 'result' && (
+            <div className="flex flex-col lg:flex-row h-screen animate-fade-in">
+                {/* 3D View */}
+                <div className="flex-1 relative bg-gradient-to-b from-gray-900 to-black overflow-hidden">
+                     <Canvas shadows camera={{ position: [0, 0, 2.5], fov: 45 }}>
+                        <ambientLight intensity={0.6} />
+                        <spotLight position={[5, 10, 5]} angle={0.2} penumbra={1} intensity={1.5} castShadow />
+                        <Environment preset="studio" />
+                        <Suspense fallback={null}>
+                             <Avatar3D measurements={measurements} currentGarment={currentGarment} />
+                        </Suspense>
+                        <OrbitControls enableZoom={true} enablePan={false} minPolarAngle={Math.PI/3} maxPolarAngle={Math.PI/2} />
+                     </Canvas>
+
+                     {/* Category Overlay */}
+                     {category && (
+                         <div className="absolute top-8 left-8 z-10">
+                             <h2 className={`text-4xl md:text-6xl font-serif ${category.class} drop-shadow-lg`}>{category.name}</h2>
+                             <div className="h-1 w-24 bg-[#C5A46D] my-2"></div>
+                             <p className="text-sm tracking-[0.4em] uppercase text-white/80">{category.badge}</p>
+                         </div>
+                     )}
+                </div>
+                
+                {/* Sidebar Controls */}
+                <div className="w-full lg:w-96 bg-black/90 p-8 border-l border-[#C5A46D]/20 flex flex-col gap-6 z-20 overflow-y-auto backdrop-blur-md shadow-2xl">
+                    {/* Narrative */}
+                    <div className="p-6 bg-[#C5A46D]/5 border border-[#C5A46D]/30 rounded-lg">
+                        <p className="italic text-sm text-[#C5A46D] leading-relaxed">"{narrative}"</p>
+                    </div>
+
+                    {/* Item Info */}
+                    {currentGarment && (
+                        <div className="animate-slide-up">
+                            <h3 className="text-xl font-bold uppercase tracking-wider text-white">{currentGarment.Title || currentGarment.name}</h3>
+                            <p className="text-gray-400 text-xs mt-2 uppercase tracking-wide">{currentGarment.description || "Prenda seleccionada por IA"}</p>
+                            <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+                                <span className="text-2xl font-serif text-[#C5A46D]">{currentGarment['Variant Price'] || currentGarment.price} €</span>
+                                <div className="flex flex-col items-end">
+                                    <span className="text-[10px] text-gray-500 uppercase">Compatibility</span>
+                                    <span className="text-sm font-bold text-white">{(currentGarment.match_score || 0) * 100}% FIT</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Buttons */}
+                    <div className="grid grid-cols-2 gap-3 mt-auto">
+                        <button onClick={handleSelect} className="col-span-2 bg-[#C5A46D] text-black py-4 font-bold uppercase tracking-widest text-sm hover:bg-white transition-all rounded shadow-lg hover:shadow-[#C5A46D]/50">
+                            SELECCIONAR
+                        </button>
+                        <button onClick={handleReserve} className="border border-[#C5A46D] py-3 text-[#C5A46D] text-xs font-bold uppercase tracking-wider hover:bg-[#C5A46D] hover:text-black transition-all rounded">
+                            RESERVAR (QR)
+                        </button>
+                        <button onClick={handleNext} className="border border-white/20 py-3 text-white/70 text-xs uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all rounded">
+                            COMBINAR
+                        </button>
+                        <button onClick={handleSave} className="border border-white/20 py-3 text-white/70 text-xs uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all rounded">
+                            SILUETA
+                        </button>
+                        <button onClick={handleShare} className="col-span-2 border border-white/20 py-3 text-white/70 text-xs uppercase tracking-wider hover:bg-white/10 hover:text-white transition-all rounded">
+                            COMPARTIR LOOK
+                        </button>
+                    </div>
+
+                    {/* QR Overlay */}
+                    {qrUrl && (
+                        <div className="absolute inset-0 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center z-50 animate-fade-in p-8" onClick={() => setQrUrl(null)}>
+                            <div className="bg-white p-4 rounded-xl shadow-[0_0_50px_rgba(197,164,109,0.3)]">
+                                <img src={qrUrl} alt="QR" className="w-48 h-48" />
+                            </div>
+                            <p className="mt-6 text-[#C5A46D] font-serif text-xl tracking-widest uppercase">Reserva VIP</p>
+                            <p className="text-xs text-gray-500 mt-2 uppercase tracking-wider">(Click para cerrar)</p>
+                        </div>
+                    )}
+
+                    {/* Toast */}
+                    {toast && (
+                        <div className="fixed bottom-8 left-1/2 lg:left-auto lg:right-96 lg:translate-x-0 transform -translate-x-1/2 bg-[#C5A46D] text-black px-6 py-3 rounded-lg font-bold shadow-[0_0_20px_rgba(197,164,109,0.5)] z-50 animate-bounce uppercase text-xs tracking-widest">
+                            {toast}
+                        </div>
+                    )}
+                </div>
+            </div>
+        )}
     </div>
   );
 }

@@ -2,12 +2,83 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from mangum import Mangum
 import random
+import os
+import sys
+
+# Ensure api directory is in path for imports
+try:
+    from api._fis_engine import FISOrchestrator
+except ImportError:
+    # When running as lambda or from api directory
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from _fis_engine import FISOrchestrator
 
 app = FastAPI()
 handler = Mangum(app)
 
+# Initialize Orchestrator
+orchestrator = FISOrchestrator()
+
+# --- Models ---
+class RecommendRequest(BaseModel):
+    chest: float
+    waist: float
+    height: float
+    user_id: str = "PILOT_USER"
+
+class SnapRequest(BaseModel):
+    gender: str
+    height: int = 0
+
+# --- Routes ---
+
+@app.get("/api/health")
+def health_check():
+    return {"status": "VIVO", "sistema": "Divineo V7"}
+
+@app.post("/api/recommend")
+def recommend(data: RecommendRequest):
+    # Locate inventory file
+    # Try different paths depending on environment (local vs lambda)
+    possible_paths = [
+        os.path.join(os.getcwd(), 'src', 'inventory_index.json'),
+        os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'src', 'inventory_index.json'),
+        'src/inventory_index.json'
+    ]
+
+    inventory_path = None
+    for path in possible_paths:
+        if os.path.exists(path):
+            inventory_path = path
+            break
+
+    if not inventory_path:
+        return {"error": "Inventory file not found", "paths_checked": possible_paths}
+
+    user_data = {
+        "chest": data.chest,
+        "waist": data.waist,
+        "height": data.height,
+        "user_id": data.user_id
+    }
+
+    # Run Orchestrator
+    try:
+        result = orchestrator.run_experience(user_data, inventory_path)
+        return result
+    except Exception as e:
+        return {"error": str(e)}
+
+@app.get("/api/reserve/{product_id}")
+def reserve(product_id: str):
+    try:
+        qr_url = orchestrator.pau.generate_qr(product_id)
+        return {"qr_url": qr_url}
+    except Exception as e:
+        return {"error": str(e)}
+
+# --- Legacy / Home Snap Route (Keep functional for Landing Page) ---
 # BASE DE DATOS DE ELENA (Inyectada como constante para velocidad de piloto)
-# Estos son los datos REALES que el espejo debe mostrar.
 INVENTARIO_ELENA = [
     {
         "id": "GL-001",
@@ -35,19 +106,9 @@ INVENTARIO_ELENA = [
     }
 ]
 
-class SnapRequest(BaseModel):
-    gender: str
-    height: int = 0
-
-@app.get("/api/health")
-def health_check():
-    return {"status": "VIVO", "sistema": "Divineo V7"}
-
 @app.post("/api/snap")
 def procesar_chasquido(datos: SnapRequest):
-    # Lógica de selección "Inteligente" para la demo
-    # En producción esto usaría ML, aquí usamos reglas de negocio básicas
-    
+    # Lógica de selección "Inteligente" para la demo landing page
     seleccion = random.choice(INVENTARIO_ELENA)
     
     return {
