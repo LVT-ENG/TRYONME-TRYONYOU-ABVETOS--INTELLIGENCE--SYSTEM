@@ -1,31 +1,21 @@
 import os
-import sys
-
-# Ensure current directory is in sys.path for Vercel/Netlify environments
-# This fixes import errors when the function is executed in a different context
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.append(current_dir)
-
 from fastapi import FastAPI, Body
-from functools import lru_cache
 from fastapi.concurrency import run_in_threadpool
+from .fis_engine import FISOrchestrator
 
-try:
-    from .fis_engine import FISOrchestrator
-except ImportError:
-    # Fallback for when executed as a script or different package context
-    from fis_engine import FISOrchestrator
+# Optimize: Cache inventory path using a simple lazy global variable
+# This ensures path resolution happens only once, safely inside the request context
+_INVENTORY_PATH_CACHE = None
 
-# Optimize: Cache inventory path resolution using lru_cache
-# This prevents redundant filesystem checks on every request while ensuring safe lazy loading
-@lru_cache(maxsize=1)
 def get_inventory_path():
-    root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    crm_path = os.path.join(root_dir, "TRYONYOU_CRM_MASTER_CLEAN-1.xlsx")
-    fallback_path = os.path.join(root_dir, "src/inventory_index.json")
+    global _INVENTORY_PATH_CACHE
+    if _INVENTORY_PATH_CACHE is None:
+        root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        crm_path = os.path.join(root_dir, "TRYONYOU_CRM_MASTER_CLEAN-1.xlsx")
+        fallback_path = os.path.join(root_dir, "src/inventory_index.json")
+        _INVENTORY_PATH_CACHE = crm_path if os.path.exists(crm_path) else fallback_path
 
-    return crm_path if os.path.exists(crm_path) else fallback_path
+    return _INVENTORY_PATH_CACHE
 
 app = FastAPI()
 orchestrator = FISOrchestrator()
