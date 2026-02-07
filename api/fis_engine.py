@@ -1,4 +1,4 @@
-import json, qrcode, os
+import copy, json, qrcode, os
 import pandas as pd
 
 try:
@@ -147,23 +147,20 @@ class FISOrchestrator:
                     if "dress" in title or "seda" in title:
                         item['elasticidad'] = 0.9
                         item['caida'] = 'Fluida'
-                        item['Title'] = "Vestido Seda (Match Fluido)"
-                        item['Image Src'] = "/assets/catalog/red_dress_clean.png"
+                        item.setdefault('Image Src', "/assets/catalog/red_dress_clean.png")
                     elif "blazer" in title or "galeries" in title:
                         item['elasticidad'] = 0.1
                         item['caida'] = 'Estructurada'
-                        item['Title'] = "Blazer Galeries (Estructura)"
-                        item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
+                        item.setdefault('Image Src', "/assets/catalog/brown_blazer_360_views.png")
                     elif "pant" in title or "leather" in title:
                         item['elasticidad'] = 0.4
                         item['caida'] = 'Ajustada'
-                        item['Title'] = "Pantalón Slim Fit (Adaptable)"
-                        item['Image Src'] = "/assets/catalog/lime_green_leather_suit.png"
+                        item.setdefault('Image Src', "/assets/catalog/lime_green_leather_suit.png")
                     else:
-                        item['Image Src'] = "/assets/catalog/urban_male_model_app_demo.jpg"
+                        item.setdefault('Image Src', "/assets/catalog/urban_male_model_app_demo.jpg")
 
                 self._inventory_cache[inventory_file] = inv
 
-            return self.a70.match(self.jules.sanitize(user_data), inv)
+            return self.a70.match(self.jules.sanitize(user_data), copy.deepcopy(inv))
         except Exception as e: 
             return {"error": str(e)}

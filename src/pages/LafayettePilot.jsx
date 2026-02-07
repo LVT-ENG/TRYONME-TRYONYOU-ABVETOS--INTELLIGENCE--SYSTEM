@@ -12,7 +12,10 @@ const INTERFACE = {
             qr: "Código QR generado",
             share: "Imagen lista para compartir (datos privados ocultos)",
             loading: "Analizando silueta...",
-            profile: "Tu Perfil Biométrico"
+            profile: "Tu Perfil Biométrico",
+            addedToCart: "Añadido al carrito con ajuste optimizado.",
+            switchingLooks: "Alternando looks...",
+            scanLinked: "Datos de escaneo vinculados a tu perfil de usuario."
         }
     },
     fr: {
@@ -22,7 +25,10 @@ const INTERFACE = {
             qr: "Code QR généré",
             share: "Image prête à partager (données privées masquées)",
             loading: "Analyse de la silhouette...",
-            profile: "Votre Profil Biométrique"
+            profile: "Votre Profil Biométrique",
+            addedToCart: "Ajouté au panier avec coupe optimisée.",
+            switchingLooks: "Alternance de looks...",
+            scanLinked: "Données de scan liées à votre profil utilisateur."
         }
     },
     en: {
@@ -32,7 +38,10 @@ const INTERFACE = {
             qr: "QR Code generated",
             share: "Image ready to share (private data hidden)",
             loading: "Analyzing silhouette...",
-            profile: "Your Biometric Profile"
+            profile: "Your Biometric Profile",
+            addedToCart: "Added to cart with optimized fit.",
+            switchingLooks: "Switching looks...",
+            scanLinked: "Scan data linked to your user profile."
         }
     }
 };
@@ -192,14 +201,14 @@ export default function LafayettePilot() {
       // btns: ["Perfect", "Reserve", "Combinations", "Save", "Share"]
 
       if (btnIndex === 0) { // Mi Selección Perfecta
-          setStatusMessage("Añadido al carrito con ajuste optimizado.");
+          setStatusMessage(texts.labels.addedToCart);
           if (recommendations.length > 0) setSelectedItem(recommendations[0]);
       } else if (btnIndex === 1) { // Reservar
           if (selectedItem) {
               handleReserve(selectedItem.id);
           }
       } else if (btnIndex === 2) { // Ver Combinaciones
-          setStatusMessage("Alternando looks...");
+          setStatusMessage(texts.labels.switchingLooks);
           // Cycle to next item
           if (recommendations.length > 1) {
               const currentIndex = recommendations.findIndex(r => r.id === selectedItem?.id);
@@ -207,7 +216,7 @@ export default function LafayettePilot() {
               setSelectedItem(recommendations[nextIndex]);
           }
       } else if (btnIndex === 3) { // Guardar Silueta
-          setStatusMessage("Datos de escaneo vinculados a tu perfil de usuario.");
+          setStatusMessage(texts.labels.scanLinked);
       } else if (btnIndex === 4) { // Compartir
           setStatusMessage(texts.labels.share);
       }
