@@ -17,7 +17,7 @@ export default function LafayettePilot() {
 
   useEffect(() => {
     if (selectedItem) {
-      const imgSrc = selectedItem['Image Src'] || selectedItem.image || (selectedItem.id === 'LAFAYETTE_JACKET_001' ? '/assets/catalog/brown_blazer_360_views.png' : null);
+      const imgSrc = getGarmentImageUrl(selectedItem);
       if (imgSrc) {
         const img = new Image();
         img.crossOrigin = "Anonymous";
