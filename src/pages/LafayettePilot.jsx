@@ -97,9 +97,9 @@ export default function LafayettePilot() {
         const rightShoulder = lm[POSE_LANDMARKS.RIGHT_SHOULDER];
 
         // Calculate dimensions
-        const shoulderDist = Math.sqrt(
-          Math.pow((leftShoulder.x - rightShoulder.x) * width, 2) +
-          Math.pow((leftShoulder.y - rightShoulder.y) * height, 2)
+        const shoulderDist = Math.hypot(
+          (leftShoulder.x - rightShoulder.x) * width,
+          (leftShoulder.y - rightShoulder.y) * height
         );
 
         // Center X is average of shoulders
