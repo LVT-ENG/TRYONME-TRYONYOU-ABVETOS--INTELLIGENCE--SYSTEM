@@ -6,4 +6,3 @@ google-genai
 pandas
 openpyxl
 qrcode[pil]
-Pillow
