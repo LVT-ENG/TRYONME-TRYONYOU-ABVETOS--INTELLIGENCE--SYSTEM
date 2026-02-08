@@ -67,7 +67,7 @@ def recommend(data: RecommendRequest):
         result = orchestrator.run_experience(user_data, inventory_path)
         return result
     except Exception as e:
-        return {"error": str(e)}
+raise HTTPException(status_code=500, detail="An internal server error occurred.")
 
 @app.get("/api/reserve/{product_id}")
 def reserve(product_id: str):
