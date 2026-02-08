@@ -175,8 +175,8 @@ export default function VirtualFitting() {
       const { width, height } = canvasRef.current;
       
       // Draw video
-      ctx.save();
       ctx.clearRect(0, 0, width, height);
+      ctx.save();
       ctx.scale(-1, 1);
       ctx.translate(-width, 0);
       ctx.drawImage(results.image, 0, 0, width, height);
