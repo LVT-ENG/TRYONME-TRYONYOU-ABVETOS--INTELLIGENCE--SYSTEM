@@ -119,6 +119,20 @@ async def reserve_product(product_id: str):
     qr_data_uri = pau.generate_qr(product_id)
     return {"product_id": product_id, "qr_url": qr_data_uri}
 
-@app.post("/api/snap")
-def procesar_chasquido(datos: dict):
-    return {"message": "Deprecated. Use /api/recommend"}
+@app.post("/api/snap", deprecated=True)
+async def procesar_chasquido(datos: dict):
+    """
+    Endpoint deprecated. Use /api/recommend instead.
+    """
+    headers = {
+        "Deprecation": "true",
+        "Sunset": "Wed, 31 Dec 2025 23:59:59 GMT",
+        'Link': '</api/recommend>; rel="successor-version"',
+    }
+    return JSONResponse(
+        status_code=410,
+        content={
+            "detail": "This endpoint is deprecated and no longer available. Use /api/recommend instead."
+        },
+        headers=headers,
+    )
