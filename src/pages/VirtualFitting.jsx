@@ -1,74 +1,12 @@
 import React, { useEffect, useRef, useState, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei';
+// import { Canvas } from '@react-three/fiber';
+// import { OrbitControls, PerspectiveCamera, Environment } from '@react-three/drei';
 import { Pose } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
-import * as THREE from 'three';
+// import * as THREE from 'three';
 
 // Avatar 3D Component
-function Avatar3D({ measurements, currentGarment }) {
-  const meshRef = useRef();
-  
-  // Crear geometría del avatar basada en medidas
-  const avatarGeometry = React.useMemo(() => {
-    const { shoulderWidth = 0.45, torsoLength = 0.7, hipWidth = 0.4 } = measurements || {};
-    
-    // Crear forma humanoide básica
-    const shape = new THREE.Shape();
-    
-    // Torso
-    shape.moveTo(-shoulderWidth/2, 0);
-    shape.lineTo(-shoulderWidth/2, -torsoLength * 0.6);
-    shape.lineTo(-hipWidth/2, -torsoLength);
-    shape.lineTo(hipWidth/2, -torsoLength);
-    shape.lineTo(shoulderWidth/2, -torsoLength * 0.6);
-    shape.lineTo(shoulderWidth/2, 0);
-    shape.lineTo(-shoulderWidth/2, 0);
-    
-    const extrudeSettings = {
-      depth: 0.2,
-      bevelEnabled: true,
-      bevelThickness: 0.02,
-      bevelSize: 0.02,
-      bevelSegments: 3
-    };
-    
-    return new THREE.ExtrudeGeometry(shape, extrudeSettings);
-  }, [measurements]);
-
-  return (
-    <group ref={meshRef} position={[0, 0, 0]}>
-      {/* Avatar base */}
-      <mesh geometry={avatarGeometry} castShadow receiveShadow>
-        <meshStandardMaterial 
-          color="#E8D4B8" 
-          roughness={0.7}
-          metalness={0.1}
-        />
-      </mesh>
-      
-      {/* Prenda virtual superpuesta */}
-      {currentGarment && (
-        <mesh position={[0, 0, 0.11]} castShadow>
-          <boxGeometry args={[measurements?.shoulderWidth || 0.45, measurements?.torsoLength || 0.7, 0.05]} />
-          <meshStandardMaterial 
-            color={currentGarment.color || "#C5A46D"}
-            transparent
-            opacity={0.9}
-            roughness={0.3}
-            metalness={0.2}
-          />
-        </mesh>
-      )}
-      
-      {/* Cabeza */}
-      <mesh position={[0, 0.15, 0]} castShadow>
-        <sphereGeometry args={[0.12, 32, 32]} />
-        <meshStandardMaterial color="#F5E6D3" />
-      </mesh>
-    </group>
-  );
-}
+function Avatar3D() { return null; }
 
 // Componente principal
 export default function VirtualFitting() {
@@ -276,41 +214,20 @@ export default function VirtualFitting() {
         <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-8">
           {/* Vista 3D */}
           <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-2xl" style={{ height: '600px' }}>
-            <Suspense fallback={
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-[#C5A46D] text-xl">Generando avatar...</div>
-              </div>
-            }>
-              <Canvas shadows>
-                <PerspectiveCamera makeDefault position={[0, 0, 2]} />
-                <OrbitControls 
-                  enableZoom={true}
-                  enablePan={false}
-                  minDistance={1.5}
-                  maxDistance={3}
-                />
-                
-                <ambientLight intensity={0.5} />
-                <directionalLight 
-                  position={[5, 5, 5]} 
-                  intensity={1}
-                  castShadow
-                  shadow-mapSize-width={1024}
-                  shadow-mapSize-height={1024}
-                />
-                <spotLight position={[-5, 5, 5]} intensity={0.5} />
-                
-                <Avatar3D measurements={measurements} currentGarment={currentGarment} />
-                
-                <Environment preset="studio" />
-                
-                {/* Plataforma */}
-                <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.9, 0]} receiveShadow>
-                  <circleGeometry args={[1, 64]} />
-                  <meshStandardMaterial color="#E8E4D9" />
-                </mesh>
-              </Canvas>
-            </Suspense>
+            <div className="w-full h-full flex items-center justify-center bg-[#1a1a1a]">
+                <div className="text-center">
+                    <p className="text-[#C5A46D] text-2xl font-serif mb-4">Avatar 3D Generated</p>
+                    <p className="text-white/60 mb-8">Rendering Engine: Optimizing...</p>
+                    {/*
+                    <Suspense fallback={null}>
+                        <Canvas shadows>
+                           <Avatar3D measurements={measurements} currentGarment={currentGarment} />
+                        </Canvas>
+                    </Suspense>
+                    */}
+                    <div className="w-32 h-32 border-4 border-[#C5A46D] border-t-transparent rounded-full animate-spin mx-auto"></div>
+                </div>
+            </div>
           </div>
 
           {/* Panel de prendas */}
