@@ -10,11 +10,17 @@ class JulesAgent:
     def sanitize(self, raw_data):
         # Jules anonimiza y normaliza los datos biométricos
         # La función sanitize_for_sharing rompe cualquier vínculo entre la imagen y los datos de peso/talla
+
+        # Support both legacy/generic keys and new Pilot keys (Zero Tallas Protocol)
+        chest = raw_data.get('chest', raw_data.get('shoulder_width', 0))
+        waist = raw_data.get('waist', raw_data.get('hip_width', 0))
+        height = raw_data.get('height', raw_data.get('torso_length', 170))
+
         return {
             "vector": [
-                raw_data.get('chest', 0), 
-                raw_data.get('waist', 0),
-                raw_data.get('height', 170)
+                chest,
+                waist,
+                height
             ], 
             "id": raw_data.get('user_id', 'ANON_USER')
         }
