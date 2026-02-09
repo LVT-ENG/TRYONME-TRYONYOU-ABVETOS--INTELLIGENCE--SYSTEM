@@ -1,1 +1,0 @@
-const totalInventory = 166;

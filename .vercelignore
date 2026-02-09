@@ -1,23 +1,13 @@
-# Ignorar todo por defecto
-*
-
-# Permitir archivos raíz necesarios
-!index.html
-!vercel.json
-!package.json
-!package-lock.json
-!main.py
-!fis_engine.py
-!TRYONYOU_CRM_MASTER_CLEAN-1.xlsx
-
-# Permitir directorios necesarios
-!src/**
-!api/**
-!assets/**
-!static/**
-
-# Ignorar basura
-node_modules
+# Ignorar archivos innecesarios
 .git
+node_modules
 __pycache__
 *.log
+*.py
+*.sh
+.env.local
+.jules
+AUDIT_READY_BACKUP
+DATABASE_ELENA
+logs
+scripts

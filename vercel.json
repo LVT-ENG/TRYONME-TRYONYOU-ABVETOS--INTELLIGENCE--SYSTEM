@@ -2,7 +2,6 @@
   "framework": "vite",
   "buildCommand": "CI=false npm run build",
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.py" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
