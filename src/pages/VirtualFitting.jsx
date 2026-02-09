@@ -354,7 +354,7 @@ export default function VirtualFitting() {
                                 <span className="text-2xl font-serif text-[#C5A46D]">{currentGarment['Variant Price'] || currentGarment.price} €</span>
                                 <div className="flex flex-col items-end">
                                     <span className="text-[10px] text-gray-500 uppercase">Compatibility</span>
-                                    <span className="text-sm font-bold text-white">{(currentGarment.match_score || 0) * 100}% FIT</span>
+                                    <span className="text-sm font-bold text-white">{((currentGarment.match_score ?? currentGarment.fit_score ?? 0) * 100)}% FIT</span>
                                 </div>
                             </div>
                         </div>
