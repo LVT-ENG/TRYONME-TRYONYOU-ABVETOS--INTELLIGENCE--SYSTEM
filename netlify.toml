@@ -1,0 +1,25 @@
+# Netlify Deployment Configuration
+
+[build]
+  # Explicitly set the base directory to the root
+  base = "."
+  # Command to run (install dependencies and build)
+  command = "npm install && npm run build"
+  # Directory where the build artifacts are located
+  publish = "dist"
+
+# Handle SPA routing - redirect all traffic to index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security Headers
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    # Essential for camera access in MediaPipe
+    Permissions-Policy = "camera=*, microphone=*"

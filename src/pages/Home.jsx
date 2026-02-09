@@ -56,7 +56,8 @@ const CURATED_COLLECTION = [
 ];
 
 // ─── SELECTOR DE IDIOMA ───
-const LangSelector = ({ lang, setLang }) => {
+// ⚡ Bolt Optimization: Memoized to prevent re-renders during high-frequency scanning updates
+const LangSelector = React.memo(({ lang, setLang }) => {
   const langs = [
     { code: 'en', flag: '🇬🇧', label: 'EN' },
     { code: 'fr', flag: '🇫🇷', label: 'FR' },
@@ -80,7 +81,7 @@ const LangSelector = ({ lang, setLang }) => {
       ))}
     </div>
   );
-};
+});
 
 // ─── COMPONENTE PRINCIPAL ───
 const Home = () => {
@@ -246,7 +247,13 @@ const Home = () => {
                 '/assets/ui/lafayette_hero_banner.png',
               ].map((src, i) => (
                 <div key={i} className="overflow-hidden border border-white/5 hover:border-[#C5A46D]/40 transition-all duration-500">
-                  <img src={src} alt="" className="w-full h-64 object-cover hover:scale-105 transition-transform duration-700" />
+                  {/* ⚡ Bolt Optimization: Lazy load images below the fold */}
+                  <img
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    className="w-full h-64 object-cover hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
               ))}
             </div>
@@ -259,10 +266,12 @@ const Home = () => {
             <h2 className="font-serif text-2xl text-[#C5A46D] mb-8 tracking-wider">
               {t.seeInAction}
             </h2>
+            {/* ⚡ Bolt Optimization: Preload none to save bandwidth on initial load */}
             <video
               src="/assets/video/tryonyou_demo_reel.mp4"
               controls
               playsInline
+              preload="none"
               className="w-full rounded-sm border border-[#C5A46D]/20 shadow-[0_0_60px_rgba(197,164,109,0.1)]"
               poster="/assets/ui/hero_banner_complete.png"
             />
