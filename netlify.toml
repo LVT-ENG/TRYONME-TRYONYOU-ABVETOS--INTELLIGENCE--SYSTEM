@@ -1,7 +1,11 @@
 # Netlify Deployment Configuration
 
 [build]
-  command = "npm run build"
+  # Explicitly set the base directory to the root
+  base = "."
+  # Command to run (install dependencies and build)
+  command = "npm install && npm run build"
+  # Directory where the build artifacts are located
   publish = "dist"
 
 # Handle SPA routing - redirect all traffic to index.html
