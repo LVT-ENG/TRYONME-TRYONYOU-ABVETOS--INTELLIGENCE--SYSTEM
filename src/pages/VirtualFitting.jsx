@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, Suspense, useMemo } from 'react';
-import { Canvas, useLoader } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, useTexture } from '@react-three/drei';
 import { Pose } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
