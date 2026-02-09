@@ -7,7 +7,7 @@ const translations = {
     // Welcome
     subtitle: 'Galeries Lafayette \u00B7 Pilot Pro Max',
     tagline1: 'See how it really looks on you.',
-    tagline2: 'No sizes. No numbers. Just confidence.',
+    tagline2: 'No labels. No numbers. Just confidence.',
     startExperience: 'Start Experience',
     patent: 'Patent PCT/EP2025/067317 \u00B7 22 Claims Protected',
 
@@ -104,7 +104,7 @@ const translations = {
   es: {
     subtitle: 'Galeries Lafayette \u00B7 Piloto Pro Max',
     tagline1: 'Mira cómo te queda de verdad.',
-    tagline2: 'Sin tallas. Sin números. Solo confianza.',
+    tagline2: 'Sin etiquetas. Sin números. Solo confianza.',
     startExperience: 'Iniciar Experiencia',
     patent: 'Patente PCT/EP2025/067317 \u00B7 22 Reivindicaciones Protegidas',
 
