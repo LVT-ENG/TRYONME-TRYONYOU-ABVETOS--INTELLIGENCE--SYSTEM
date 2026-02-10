@@ -231,6 +231,53 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Google Platforms Integration */}
+        <div className="bg-[#0a0a0a] py-20 px-6 border-t border-white/5">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="font-serif text-3xl md:text-4xl text-[#C5A46D] text-center mb-4 tracking-wider">
+              {t.googleTitle}
+            </h2>
+            <p className="text-center text-white/40 text-sm tracking-widest uppercase mb-16">
+              {t.googleSubtitle}
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {/* Gemini */}
+              <div className="text-center group">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full border border-[#C5A46D]/40 flex items-center justify-center group-hover:border-[#C5A46D] transition-colors duration-500">
+                  <svg className="w-8 h-8 text-[#C5A46D]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" />
+                  </svg>
+                </div>
+                <h3 className="font-serif text-xl text-white mb-3 tracking-wider">{t.geminiTitle}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{t.geminiDesc}</p>
+              </div>
+
+              {/* SDK */}
+              <div className="text-center group">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full border border-[#C5A46D]/40 flex items-center justify-center group-hover:border-[#C5A46D] transition-colors duration-500">
+                  <svg className="w-8 h-8 text-[#C5A46D]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+                  </svg>
+                </div>
+                <h3 className="font-serif text-xl text-white mb-3 tracking-wider">{t.sdkTitle}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{t.sdkDesc}</p>
+              </div>
+
+              {/* MediaPipe */}
+              <div className="text-center group">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full border border-[#C5A46D]/40 flex items-center justify-center group-hover:border-[#C5A46D] transition-colors duration-500">
+                  <svg className="w-8 h-8 text-[#C5A46D]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                  </svg>
+                </div>
+                <h3 className="font-serif text-xl text-white mb-3 tracking-wider">{t.mediaPipeTitle}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{t.mediaPipeDesc}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Galería de Demo Mirrors */}
         <div className="bg-[#0f0f0f] py-20 px-6">
           <div className="max-w-6xl mx-auto">

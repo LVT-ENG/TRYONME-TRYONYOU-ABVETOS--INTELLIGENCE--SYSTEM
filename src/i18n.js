@@ -21,6 +21,16 @@ const translations = {
     cinematicTitle: 'Cinematic Fit',
     cinematicDesc: 'The garment follows your body in motion. Posture changes, dynamic draping. The clothes follow you, not the other way around.',
 
+    // Google Integration
+    googleTitle: 'Powered by Google',
+    googleSubtitle: 'Next-Gen AI & Computer Vision',
+    geminiTitle: 'Gemini 2.0 Flash',
+    geminiDesc: 'Real-time style narratives by "Agent 70" with <500ms latency.',
+    sdkTitle: 'google-genai SDK',
+    sdkDesc: 'Optimized backend infrastructure for maximum efficiency.',
+    mediaPipeTitle: 'Google MediaPipe',
+    mediaPipeDesc: 'Client-side body tracking with 33 keypoints. 100% Private.',
+
     // Gallery
     virtualMirror: 'The Virtual Mirror',
     seeInAction: 'See It In Action',
@@ -72,6 +82,16 @@ const translations = {
     cinematicTitle: 'Cinematic Fit',
     cinematicDesc: 'Le vêtement suit votre corps en mouvement. Changements de posture, drapé dynamique. Les vêtements vous suivent, pas l\'inverse.',
 
+    // Google Integration
+    googleTitle: 'Propulsé par Google',
+    googleSubtitle: 'IA et Vision par Ordinateur Nouvelle Génération',
+    geminiTitle: 'Gemini 2.0 Flash',
+    geminiDesc: 'Narrations de style en temps réel par "Agent 70" avec latence <500ms.',
+    sdkTitle: 'SDK google-genai',
+    sdkDesc: 'Infrastructure backend optimisée pour une efficacité maximale.',
+    mediaPipeTitle: 'Google MediaPipe',
+    mediaPipeDesc: 'Suivi corporel côté client avec 33 points clés. 100% Privé.',
+
     virtualMirror: 'Le Miroir Virtuel',
     seeInAction: 'Voir en Action',
 
@@ -116,6 +136,16 @@ const translations = {
     liveARDesc: 'La prenda se proyecta como una capa digital viva sobre tu cuerpo real. No te ves probando. Te ves vestida.',
     cinematicTitle: 'Cinematic Fit',
     cinematicDesc: 'La prenda sigue tu cuerpo en movimiento. Cambios de postura, caída dinámica. La ropa te sigue a ti, no al revés.',
+
+    // Google Integration
+    googleTitle: 'Impulsado por Google',
+    googleSubtitle: 'IA y Visión por Computadora de Nueva Generación',
+    geminiTitle: 'Gemini 2.0 Flash',
+    geminiDesc: 'Narrativas de estilo en tiempo real por "Agent 70" con latencia <500ms.',
+    sdkTitle: 'SDK google-genai',
+    sdkDesc: 'Infraestructura backend optimizada para máxima eficiencia.',
+    mediaPipeTitle: 'Google MediaPipe',
+    mediaPipeDesc: 'Seguimiento corporal en el cliente con 33 puntos clave. 100% Privado.',
 
     virtualMirror: 'El Espejo Virtual',
     seeInAction: 'Míralo en Acción',
