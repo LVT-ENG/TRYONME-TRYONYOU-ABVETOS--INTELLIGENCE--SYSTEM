@@ -38,7 +38,7 @@ export default function LafayettePilot() {
 
       // ⚡ Bolt Optimization: Reuse cached context to avoid getContext() overhead
       if (!contextRef.current) {
-        contextRef.current = canvasRef.current.getContext('2d');
+        contextRef.current = canvasRef.current.getContext('2d', { desynchronized: true });
       }
       const ctx = contextRef.current;
       const { width, height } = canvasRef.current;
