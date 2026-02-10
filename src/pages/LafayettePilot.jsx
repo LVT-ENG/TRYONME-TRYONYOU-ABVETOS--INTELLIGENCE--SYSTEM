@@ -16,6 +16,25 @@ export default function LafayettePilot() {
   const [userProfile, setUserProfile] = useState(null);
   const hasFetched = useRef(false);
 
+  // Refs para acceso dentro del loop de MediaPipe
+  const selectedItemRef = useRef(null);
+  const garmentImageRef = useRef(null);
+
+  // Sincronizar selectedItem con refs y cargar imagen
+  useEffect(() => {
+    selectedItemRef.current = selectedItem;
+    if (selectedItem) {
+      const imgPath = selectedItem.Image_Src || selectedItem.image_url || `/assets/catalog/${selectedItem.id}.png`;
+      const img = new Image();
+      img.src = imgPath;
+      img.onload = () => {
+        garmentImageRef.current = img;
+      };
+    } else {
+      garmentImageRef.current = null;
+    }
+  }, [selectedItem]);
+
   useEffect(() => {
     const pose = new Pose({
       locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`,
@@ -43,15 +62,18 @@ export default function LafayettePilot() {
       ctx.drawImage(results.image, 0, 0, width, height);
       ctx.restore();
 
-      // DIBUJAR AURA DE ESCANEO (Efecto premium)
       const lm = results.poseLandmarks;
       
+      // Función helper para invertir X (espejo)
+      const getX = (x) => (1 - x) * width;
+
+      // DIBUJAR AURA DE ESCANEO (Efecto premium)
       // Aura dorada alrededor del cuerpo
       ctx.beginPath();
-      ctx.moveTo(lm[11].x * width, lm[11].y * height);
-      ctx.lineTo(lm[12].x * width, lm[12].y * height);
-      ctx.lineTo(lm[24].x * width, lm[24].y * height);
-      ctx.lineTo(lm[23].x * width, lm[23].y * height);
+      ctx.moveTo(getX(lm[11].x), lm[11].y * height);
+      ctx.lineTo(getX(lm[12].x), lm[12].y * height);
+      ctx.lineTo(getX(lm[24].x), lm[24].y * height);
+      ctx.lineTo(getX(lm[23].x), lm[23].y * height);
       ctx.closePath();
       
       // Efecto de brillo pulsante
@@ -70,13 +92,45 @@ export default function LafayettePilot() {
       keyPoints.forEach(idx => {
         const point = lm[idx];
         ctx.beginPath();
-        ctx.arc(point.x * width, point.y * height, 8, 0, 2 * Math.PI);
+        ctx.arc(getX(point.x), point.y * height, 8, 0, 2 * Math.PI);
         ctx.fillStyle = '#C5A46D';
         ctx.fill();
         ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 2;
         ctx.stroke();
       });
+
+      // DIBUJAR PRENDA VIRTUAL (OVERLAY)
+      if (garmentImageRef.current && lm[11].visibility > 0.5 && lm[12].visibility > 0.5) {
+        const img = garmentImageRef.current;
+
+        // Calcular centro de hombros
+        const shoulderLeftX = getX(lm[11].x);
+        const shoulderRightX = getX(lm[12].x);
+        const shoulderY = (lm[11].y + lm[12].y) / 2 * height;
+
+        const centerX = (shoulderLeftX + shoulderRightX) / 2;
+
+        // Calcular escala basada en ancho de hombros
+        const shoulderWidth = Math.abs(shoulderLeftX - shoulderRightX);
+        const garmentWidth = shoulderWidth * 3.8; // Factor ajustado para cubrir torso
+        const scale = garmentWidth / img.width;
+        const garmentHeight = img.height * scale;
+
+        ctx.save();
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 15;
+
+        // Dibujar imagen centrada en los hombros, ajustando offset vertical
+        ctx.drawImage(
+          img,
+          centerX - garmentWidth / 2,
+          shoulderY - (garmentHeight * 0.18), // Ajuste vertical para cuello
+          garmentWidth,
+          garmentHeight
+        );
+        ctx.restore();
+      }
 
       if (!hasFetched.current && lm[11].visibility > 0.8) {
           hasFetched.current = true;
