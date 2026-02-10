@@ -3,11 +3,15 @@ import { Pose } from '@mediapipe/pose';
 import { Camera } from '@mediapipe/camera_utils';
 import { Link } from 'react-router-dom';
 
+// ⚡ Bolt Optimization: Moved constant array outside render loop to prevent reallocation
+const KEY_POINTS = [11, 12, 23, 24]; // Hombros y caderas
+
 export default function LafayettePilot() {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const poseInstanceRef = useRef(null);
   const cameraInstanceRef = useRef(null);
+  const contextRef = useRef(null); // ⚡ Bolt Optimization: Cache 2D context
   const [recommendations, setRecommendations] = useState([]);
   const [narrative, setNarrative] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
@@ -31,7 +35,12 @@ export default function LafayettePilot() {
 
     pose.onResults((results) => {
       if (!canvasRef.current || !results.poseLandmarks) return;
-      const ctx = canvasRef.current.getContext('2d');
+
+      // ⚡ Bolt Optimization: Reuse cached context to avoid getContext() overhead
+      if (!contextRef.current) {
+        contextRef.current = canvasRef.current.getContext('2d', { desynchronized: true });
+      }
+      const ctx = contextRef.current;
       const { width, height } = canvasRef.current;
 
       ctx.clearRect(0, 0, width, height);
@@ -66,8 +75,8 @@ export default function LafayettePilot() {
       ctx.shadowBlur = 0;
 
       // Landmarks clave con efecto dorado
-      const keyPoints = [11, 12, 23, 24]; // Hombros y caderas
-      keyPoints.forEach(idx => {
+      // ⚡ Bolt Optimization: Use module-level constant array
+      KEY_POINTS.forEach(idx => {
         const point = lm[idx];
         ctx.beginPath();
         ctx.arc(point.x * width, point.y * height, 8, 0, 2 * Math.PI);
