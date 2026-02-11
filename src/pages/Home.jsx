@@ -236,6 +236,40 @@ const Home = () => {
           </div>
         </div>
 
+        {/* Powered by Google */}
+        <div className="bg-[#0f0f0f] py-20 px-6 border-t border-white/5">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="font-serif text-3xl text-[#C5A46D] text-center mb-4 tracking-wider">{t.googleTitle}</h2>
+            <p className="text-center text-white/40 text-sm tracking-widest uppercase mb-16">{t.googleSubtitle}</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {/* Gemini 2.0 */}
+              <div className="text-center group p-6 bg-white/5 rounded-sm border border-white/5 hover:border-[#C5A46D]/40 transition-all duration-500">
+                <div className="h-12 mb-6 flex items-center justify-center">
+                   <span className="text-4xl">✨</span>
+                </div>
+                <h3 className="font-serif text-xl text-white mb-3 tracking-wider">{t.geminiTitle}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{t.geminiDesc}</p>
+              </div>
+              {/* Google GenAI */}
+              <div className="text-center group p-6 bg-white/5 rounded-sm border border-white/5 hover:border-[#C5A46D]/40 transition-all duration-500">
+                <div className="h-12 mb-6 flex items-center justify-center">
+                   <span className="text-4xl">🐍</span>
+                </div>
+                <h3 className="font-serif text-xl text-white mb-3 tracking-wider">{t.genaiTitle}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{t.genaiDesc}</p>
+              </div>
+              {/* MediaPipe */}
+              <div className="text-center group p-6 bg-white/5 rounded-sm border border-white/5 hover:border-[#C5A46D]/40 transition-all duration-500">
+                <div className="h-12 mb-6 flex items-center justify-center">
+                   <span className="text-4xl">🧬</span>
+                </div>
+                <h3 className="font-serif text-xl text-white mb-3 tracking-wider">{t.mediapipeTitle}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{t.mediapipeDesc}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Galería */}
         <div className="bg-[#0f0f0f] py-20 px-6">
           <div className="max-w-6xl mx-auto">
