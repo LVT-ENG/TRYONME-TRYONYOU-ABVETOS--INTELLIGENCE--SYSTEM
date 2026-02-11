@@ -44,6 +44,11 @@ export default function LafayettePilot() {
   const [hormaResult, setHormaResult] = useState(null);
   const [lang, setLang] = useState('fr'); // Francés por defecto para Lafayette
 
+  // Refs for stable access in animation loop
+  const phaseRef = useRef(phase);
+  const currentRef = useRef(null); // Will be synced with current
+  const footScanActiveRef = useRef(footScanActive);
+
   const hasFetched = useRef(false);
 
   // ─── TRADUCCIONES INLINE (5 botones en francés) ───
@@ -179,6 +184,13 @@ export default function LafayettePilot() {
 
   const current = displayItems[currentIdx] || displayItems[0];
 
+  // Sync refs with state
+  useEffect(() => {
+    phaseRef.current = phase;
+    currentRef.current = current;
+    footScanActiveRef.current = footScanActive;
+  }, [phase, current, footScanActive]);
+
   // ═══════════════════════════════════════════════════════════════
   // MEDIAPIPE POSE — Inicialización y loop de detección
   // ═══════════════════════════════════════════════════════════════
@@ -204,7 +216,8 @@ export default function LafayettePilot() {
       const ctx = contextRef.current;
       const { width, height } = canvasRef.current;
 
-      ctx.clearRect(0, 0, width, height);
+      // ⚡ Bolt: Removed redundant clearRect (drawImage overwrites full canvas)
+      // ctx.clearRect(0, 0, width, height);
 
       // Espejo
       ctx.save();
@@ -217,15 +230,20 @@ export default function LafayettePilot() {
       landmarksRef.current = lm;
       animFrameRef.current++;
 
+      // ⚡ Bolt: Use refs to avoid stale closures in animation loop
+      const currentVal = currentRef.current;
+      const phaseVal = phaseRef.current;
+      const footScanActiveVal = footScanActiveRef.current;
+
       // ── OVERLAY DORADO anclado a hombros/cintura (Vision Engine) ──
       drawBodyOverlay(ctx, lm, width, height, {
-        fitScore: current?.fitScore || 0,
-        phase: phase === 'scanning' ? 'scanning' : phase === 'fitting' ? 'matched' : 'transition',
+        fitScore: currentVal?.fitScore || 0,
+        phase: phaseVal === 'scanning' ? 'scanning' : phaseVal === 'fitting' ? 'matched' : 'transition',
         animationFrame: animFrameRef.current,
       });
 
       // ── ESCÁNER DE PIES (Horma Ángel) ──
-      if (footScanActive) {
+      if (footScanActiveVal) {
         drawFootScanner(ctx, lm, width, height, {
           animationFrame: animFrameRef.current,
           active: true,
