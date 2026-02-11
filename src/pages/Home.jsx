@@ -422,7 +422,7 @@ const Home = () => {
             <p className="font-serif text-lg text-[#C5A46D] italic leading-relaxed">"{pauLine}"</p>
           </div>
 
-          {/* Garment info — SIN TALLAS, SIN NÚMEROS */}
+          {/* Garment info — SIN ETIQUETAS, SIN NÚMEROS */}
           <div className="border-l-2 border-[#C5A46D] pl-5 mb-6">
             <h2 className="font-serif text-2xl text-white tracking-wide mb-1">{current?.name}</h2>
             <p className="text-xs text-white/40 tracking-widest uppercase">{current?.designer}</p>

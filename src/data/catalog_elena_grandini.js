@@ -1,7 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════
 // CATÁLOGO ELENA GRANDINI — 50 REFERENCIAS INTEGRADAS
 // Fusión Base de Datos: 35 Ropa + 15 Calzado
-// Parámetros Técnicos Robert: Caída (peso), Elasticidad (stretch), Horma (fit)
+// Parámetros Técnicos Robert: Caída (gramaje), Elasticidad (stretch), Horma (fit)
 // Patent PCT/EP2025/067317 — TryOnYou Intelligence System
 // ═══════════════════════════════════════════════════════════════════
 
@@ -37,7 +37,7 @@ export const SUBCATEGORIES = {
 };
 
 // ─── PARÁMETROS TÉCNICOS ROBERT ───
-// Caída (peso): Cómo cae la tela por gravedad (g/m²)
+// Caída (gramaje): Cómo cae la tela por gravedad (g/m²)
 //   - Ultraligera: < 100 g/m²
 //   - Ligera: 100-200 g/m²
 //   - Media: 200-350 g/m²
@@ -757,7 +757,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.D,
     gender: 'M',
     season: 'AW26',
-    sizes: [39, 40, 41, 42, 43, 44, 45, 46],
+    variants: [39, 40, 41, 42, 43, 44, 45, 46],
     pauLine: { en: 'The gentleman\'s foundation.', fr: 'La base du gentleman.', es: 'La base del caballero.' },
   },
   {
@@ -776,7 +776,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.E,
     gender: 'M',
     season: 'SS26',
-    sizes: [39, 40, 41, 42, 43, 44, 45],
+    variants: [39, 40, 41, 42, 43, 44, 45],
     pauLine: { en: 'Relaxed luxury for every step.', fr: 'Luxe décontracté à chaque pas.', es: 'Lujo relajado en cada paso.' },
   },
   {
@@ -795,7 +795,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.D,
     gender: 'U',
     season: 'SS26',
-    sizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
+    variants: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
     pauLine: { en: 'Clean lines, pure comfort.', fr: 'Lignes épurées, confort pur.', es: 'Líneas limpias, confort puro.' },
   },
   {
@@ -814,7 +814,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.F,
     gender: 'M',
     season: 'AW26',
-    sizes: [40, 41, 42, 43, 44, 45, 46],
+    variants: [40, 41, 42, 43, 44, 45, 46],
     pauLine: { en: 'Urban edge, refined soul.', fr: 'Tranchant urbain, âme raffinée.', es: 'Filo urbano, alma refinada.' },
   },
   {
@@ -833,7 +833,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.C,
     gender: 'M',
     season: 'AW26',
-    sizes: [39, 40, 41, 42, 43, 44, 45],
+    variants: [39, 40, 41, 42, 43, 44, 45],
     pauLine: { en: 'Formal perfection.', fr: 'Perfection formelle.', es: 'Perfección formal.' },
   },
   {
@@ -852,7 +852,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.B,
     gender: 'F',
     season: 'SS26',
-    sizes: [35, 36, 37, 38, 39, 40, 41],
+    variants: [35, 36, 37, 38, 39, 40, 41],
     pauLine: { en: 'The ultimate finishing touch.', fr: 'La touche finale ultime.', es: 'El toque final definitivo.' },
   },
   {
@@ -871,7 +871,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.E,
     gender: 'M',
     season: 'AW26',
-    sizes: [39, 40, 41, 42, 43, 44, 45, 46],
+    variants: [39, 40, 41, 42, 43, 44, 45, 46],
     pauLine: { en: 'Desert-born, city-ready.', fr: 'Né du désert, prêt pour la ville.', es: 'Nacido del desierto, listo para la ciudad.' },
   },
   {
@@ -890,7 +890,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.A,
     gender: 'F',
     season: 'SS26',
-    sizes: [35, 36, 37, 38, 39, 40],
+    variants: [35, 36, 37, 38, 39, 40],
     pauLine: { en: 'Red carpet ready.', fr: 'Prête pour le tapis rouge.', es: 'Lista para la alfombra roja.' },
   },
   {
@@ -909,7 +909,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.G,
     gender: 'M',
     season: 'SS26',
-    sizes: [39, 40, 41, 42, 43, 44, 45],
+    variants: [39, 40, 41, 42, 43, 44, 45],
     pauLine: { en: 'Weekend freedom.', fr: 'Liberté du week-end.', es: 'Libertad de fin de semana.' },
   },
   {
@@ -928,7 +928,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.C,
     gender: 'F',
     season: 'SS26',
-    sizes: [35, 36, 37, 38, 39, 40, 41],
+    variants: [35, 36, 37, 38, 39, 40, 41],
     pauLine: { en: 'Effortless glamour.', fr: 'Glamour sans effort.', es: 'Glamour sin esfuerzo.' },
   },
   {
@@ -947,7 +947,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.H,
     gender: 'M',
     season: 'AW26',
-    sizes: [40, 41, 42, 43, 44, 45, 46, 47],
+    variants: [40, 41, 42, 43, 44, 45, 46, 47],
     pauLine: { en: 'Built for adventure.', fr: "Construit pour l'aventure.", es: 'Construido para la aventura.' },
   },
   {
@@ -966,7 +966,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.B,
     gender: 'F',
     season: 'SS26',
-    sizes: [35, 36, 37, 38, 39, 40],
+    variants: [35, 36, 37, 38, 39, 40],
     pauLine: { en: 'Delicate strength.', fr: 'Force délicate.', es: 'Fuerza delicada.' },
   },
   {
@@ -985,7 +985,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.D,
     gender: 'M',
     season: 'AW26',
-    sizes: [39, 40, 41, 42, 43, 44, 45],
+    variants: [39, 40, 41, 42, 43, 44, 45],
     pauLine: { en: 'Distinguished detail.', fr: 'Détail distingué.', es: 'Detalle distinguido.' },
   },
   {
@@ -1004,7 +1004,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.F,
     gender: 'F',
     season: 'SS26',
-    sizes: [35, 36, 37, 38, 39, 40, 41, 42],
+    variants: [35, 36, 37, 38, 39, 40, 41, 42],
     pauLine: { en: 'Walk on clouds, shine like stars.', fr: 'Marchez sur les nuages, brillez comme les étoiles.', es: 'Camina sobre nubes, brilla como estrellas.' },
   },
   {
@@ -1023,7 +1023,7 @@ const FOOTWEAR_CATALOG = [
     hormaAngel: HORMA_ANGEL.E,
     gender: 'M',
     season: 'SS26',
-    sizes: [39, 40, 41, 42, 43, 44, 45],
+    variants: [39, 40, 41, 42, 43, 44, 45],
     pauLine: { en: 'Casual mastery.', fr: 'Maîtrise décontractée.', es: 'Maestría casual.' },
   },
 ];

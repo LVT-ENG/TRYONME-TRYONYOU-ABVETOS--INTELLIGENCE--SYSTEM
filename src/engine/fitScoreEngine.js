@@ -10,9 +10,9 @@ import { FULL_CATALOG, HORMA_ANGEL, filterByGender } from '../data/catalog_elena
 // ─── CONSTANTES ───
 const MIN_ACCEPTABLE_SCORE = 95;
 const MAX_RECALC_ITERATIONS = 10;
-const WEIGHT_CAIDA = 0.35;
-const WEIGHT_ELASTICIDAD = 0.35;
-const WEIGHT_HORMA = 0.30;
+const FACTOR_CAIDA = 0.35;
+const FACTOR_ELASTICIDAD = 0.35;
+const FACTOR_HORMA = 0.30;
 
 // ─── EVENT BUS (para persistencia y trazabilidad) ───
 const eventLog = [];
@@ -234,9 +234,9 @@ function calculateSingleFitScore(item, profile) {
   }
 
   // ── SCORE PONDERADO ──
-  const rawScore = (caidaScore * WEIGHT_CAIDA) +
-                   (elasticidadScore * WEIGHT_ELASTICIDAD) +
-                   (hormaScore * WEIGHT_HORMA);
+  const rawScore = (caidaScore * FACTOR_CAIDA) +
+                   (elasticidadScore * FACTOR_ELASTICIDAD) +
+                   (hormaScore * FACTOR_HORMA);
 
   return {
     total: Math.round(Math.min(rawScore, 100) * 10) / 10,
@@ -249,7 +249,7 @@ function calculateSingleFitScore(item, profile) {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// RECÁLCULO INTERNO — Si Fit Score < 95%, ajusta pesos hasta match
+// RECÁLCULO INTERNO — Si Fit Score < 95%, ajusta factores hasta match
 // ═══════════════════════════════════════════════════════════════════
 
 function recalculateForOptimalMatch(item, profile, initialScore) {

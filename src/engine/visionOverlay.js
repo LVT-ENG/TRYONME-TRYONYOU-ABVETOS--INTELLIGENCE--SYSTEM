@@ -302,8 +302,8 @@ export function extractFootMeasurements(landmarks) {
     estimatedMetatarsalWidth,
     estimatedInstepHeight,
     footLength: avgFootLength,
-    // Talla EU estimada (fórmula estándar)
-    estimatedEUSize: Math.round((avgFootLength * 1.5 + 2) * 2) / 2,
+    // Índice EU estimado (fórmula estándar)
+    estimatedEUIndex: Math.round((avgFootLength * 1.5 + 2) * 2) / 2,
   };
 }
 
