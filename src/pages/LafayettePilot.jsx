@@ -14,7 +14,7 @@ import { drawBodyOverlay, drawFootScanner, extractFootMeasurements } from '../en
 // Flujo: Landing Pau (Chasquido) → Escáner Dorado (Sin números)
 //        → Overlay Real anclado hombros/cintura → 5 Botones de Valor
 //
-// Motor Robert AI: Caída (peso) · Elasticidad (stretch) · Horma (fit)
+// Motor Robert AI: Caída (gramaje) · Elasticidad (stretch) · Horma (fit)
 // Base de datos: 50 referencias Elena Grandini (35 ropa + 15 calzado)
 // Horma Ángel: 8 hormas (A-H) · Metatarso + Empeine
 // ═══════════════════════════════════════════════════════════════════
