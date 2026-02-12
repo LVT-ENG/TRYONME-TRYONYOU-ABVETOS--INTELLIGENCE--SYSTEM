@@ -8,9 +8,23 @@ TRYONYOU ULTRA V7.0 is a state-of-the-art Fashion Intelligence System (FIS) desi
 
 This repository is updated with the latest Google platforms technologies:
 
--   **Google Gemini 2.0 Flash:** The system utilizes the cutting-edge **Gemini 2.0 Flash** model for generating "Agent 70" stylist narratives, providing instant, sophisticated, and context-aware fashion advice.
--   **google-genai SDK:** The backend integration is built on the modern `google-genai` Python SDK, ensuring optimal performance and compatibility with the latest Gemini models.
--   **MediaPipe:** Real-time body tracking and "Zero Tallas" (Zero Sizes) measurements are powered by **Google MediaPipe**, running client-side for privacy and speed.
+### 1. Google Gemini 2.0 Flash
+The new "Agent 70" architecture uses the **Gemini 2.0 Flash** model to generate real-time style narratives.
+-   **Speed:** Instant responses (<500ms) for a fluid user experience.
+-   **Multimodal Context:** Ability to understand both garment images and user preferences.
+-   **Creativity:** Generation of persuasive and personalized fashion advice ("Lafayette Pilot").
+
+### 2. google-genai SDK
+The backend has migrated to the new `google-genai` Python SDK, optimizing communication with Google Cloud AI infrastructure.
+-   **Efficiency:** Significant reduction in resource usage and network latency.
+-   **Future-proof:** Prepared for upcoming Gemini platform features.
+-   **Security:** Improved API key and access token management.
+
+### 3. Google MediaPipe
+The "Zero Tallas" functionality is powered by **MediaPipe** for body tracking.
+-   **Privacy:** All biometric processing occurs in the client's browser (Client-Side), ensuring data privacy.
+-   **Precision:** Detection of 33 body key points for precise virtual fitting.
+-   **Performance:** Optimized execution on mobile and desktop devices without specialized hardware.
 
 ## Architecture
 
