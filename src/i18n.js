@@ -21,6 +21,16 @@ const translations = {
     cinematicTitle: 'Cinematic Fit',
     cinematicDesc: 'The garment follows your body in motion. Posture changes, dynamic draping. The clothes follow you, not the other way around.',
 
+    // Google Integration
+    googleTitle: 'Powered by Google Cloud AI',
+    googleSubtitle: 'The most advanced fashion intelligence infrastructure.',
+    geminiTitle: 'Gemini 2.0 Flash',
+    geminiDesc: 'Agent 70 architecture generating real-time style narratives with multimodal context.',
+    genaiTitle: 'Google GenAI SDK',
+    genaiDesc: 'Optimized Python SDK for ultra-low latency and secure enterprise deployment.',
+    mediapipeTitle: 'MediaPipe Magic',
+    mediapipeDesc: 'Privacy-first client-side body tracking. No images ever leave your device.',
+
     // Gallery
     virtualMirror: 'The Virtual Mirror',
     seeInAction: 'See It In Action',
@@ -72,6 +82,16 @@ const translations = {
     cinematicTitle: 'Cinematic Fit',
     cinematicDesc: 'Le vêtement suit votre corps en mouvement. Changements de posture, drapé dynamique. Les vêtements vous suivent, pas l\'inverse.',
 
+    // Google Integration
+    googleTitle: 'Propulsé par Google Cloud AI',
+    googleSubtitle: 'L\'infrastructure d\'intelligence mode la plus avancée.',
+    geminiTitle: 'Gemini 2.0 Flash',
+    geminiDesc: 'Architecture Agent 70 générant des récits de style en temps réel avec un contexte multimodal.',
+    genaiTitle: 'Google GenAI SDK',
+    genaiDesc: 'SDK Python optimisé pour une latence ultra-faible et un déploiement d\'entreprise sécurisé.',
+    mediapipeTitle: 'Magie MediaPipe',
+    mediapipeDesc: 'Suivi corporel côté client axé sur la confidentialité. Aucune image ne quitte votre appareil.',
+
     virtualMirror: 'Le Miroir Virtuel',
     seeInAction: 'Voir en Action',
 
@@ -116,6 +136,16 @@ const translations = {
     liveARDesc: 'La prenda se proyecta como una capa digital viva sobre tu cuerpo real. No te ves probando. Te ves vestida.',
     cinematicTitle: 'Cinematic Fit',
     cinematicDesc: 'La prenda sigue tu cuerpo en movimiento. Cambios de postura, caída dinámica. La ropa te sigue a ti, no al revés.',
+
+    // Google Integration
+    googleTitle: 'Impulsado por Google Cloud AI',
+    googleSubtitle: 'La infraestructura de inteligencia de moda más avanzada.',
+    geminiTitle: 'Gemini 2.0 Flash',
+    geminiDesc: 'Arquitectura Agent 70 generando narrativas de estilo en tiempo real con contexto multimodal.',
+    genaiTitle: 'Google GenAI SDK',
+    genaiDesc: 'SDK de Python optimizado para latencia ultra baja y despliegue empresarial seguro.',
+    mediapipeTitle: 'Magia MediaPipe',
+    mediapipeDesc: 'Tracking corporal Client-Side con privacidad total. Ninguna imagen sale de tu dispositivo.',
 
     virtualMirror: 'El Espejo Virtual',
     seeInAction: 'Míralo en Acción',
