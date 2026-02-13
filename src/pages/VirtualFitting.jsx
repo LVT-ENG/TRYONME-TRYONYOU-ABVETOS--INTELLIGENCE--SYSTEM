@@ -10,7 +10,7 @@ export default function VirtualFitting() {
     <div className="min-h-screen bg-black text-[#C5A46D] flex flex-col items-center justify-center p-4 text-center">
       <h1 className="text-4xl font-serif mb-4">VIRTUAL FITTING</h1>
       <p className="text-xl tracking-widest">SYSTEM MAINTENANCE</p>
-      <p className="mt-4 text-sm text-white/50">Pilot Lafayette V7.1 - Module Reloading...</p>
+      <p className="mt-4 text-sm text-white/50">Pilot Lafayette V9.0 - Ready for Deployment</p>
     </div>
   );
 }

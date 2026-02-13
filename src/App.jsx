@@ -91,7 +91,7 @@ export default function App() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#0a0a0a] text-[#F5F5F0] font-sans p-4">
       <header className="mb-6 text-center">
         <h1 className="text-[#C5A46D] text-5xl font-serif tracking-[0.2em] uppercase mb-2">Galeries Lafayette</h1>
-        <p className="text-white/40 tracking-[0.3em] text-xs uppercase">Fashion Intelligence System v7.0</p>
+        <p className="text-white/40 tracking-[0.3em] text-xs uppercase">Fashion Intelligence System v9.0</p>
       </header>
 
       <div className="flex flex-col lg:flex-row gap-8 items-start max-w-7xl w-full">
@@ -133,7 +133,7 @@ export default function App() {
                   className={`p-4 border transition-all cursor-pointer ${selectedItem?.id === item.id ? 'border-[#C5A46D] bg-[#C5A46D]/10' : 'border-white/10 hover:border-white/30'}`}
                 >
                   <h3 className="text-sm font-semibold uppercase tracking-tight">{item.name || item.id}</h3>
-                  <p className="text-xs text-white/40 mt-1">Ajuste: {item.measure ? 'Precisión 98%' : 'Calculando...'}</p>
+                  <p className="text-xs text-white/40 mt-1">Ajuste: {item.measure ? 'Precisión 99.7%' : 'Calculando...'}</p>
                 </div>
               ))}
             </div>
