@@ -146,6 +146,21 @@ const Home = () => {
     return (
       <div className="min-h-screen bg-[#0a0a0a] text-[#F5EFE6] flex flex-col">
         <div className="relative w-full h-screen flex flex-col items-center justify-center overflow-hidden">
+          {/* Lafayette Logo Badge - Shining at the top */}
+          <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30">
+            <div className="relative group">
+              <div className="absolute inset-0 bg-[#C5A46D] blur-xl opacity-50 group-hover:opacity-70 animate-pulse" />
+              <div className="relative bg-gradient-to-r from-[#C5A46D] via-[#d4b98a] to-[#C5A46D] px-8 py-3 rounded-sm border-2 border-[#C5A46D] shadow-[0_0_30px_rgba(197,164,109,0.6)]">
+                <h2 className="font-serif text-2xl md:text-3xl tracking-[0.3em] text-[#0a0a0a] font-bold">
+                  GALERIES LAFAYETTE
+                </h2>
+                <p className="text-[10px] tracking-[0.4em] text-[#0a0a0a]/70 uppercase text-center mt-1">
+                  Pilot Pro Max
+                </p>
+              </div>
+            </div>
+          </div>
+          
           <div className="absolute top-4 right-4 z-20">
             <LangSelector lang={lang} setLang={setLang} />
           </div>
