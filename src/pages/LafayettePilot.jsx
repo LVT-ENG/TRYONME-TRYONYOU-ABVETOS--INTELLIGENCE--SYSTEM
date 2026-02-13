@@ -228,12 +228,11 @@ export default function LafayettePilot() {
       // ⚡ Bolt: Removed redundant clearRect (drawImage overwrites full canvas)
       // ctx.clearRect(0, 0, width, height);
 
-      // Espejo
-      ctx.save();
+      // Espejo (Optimized: avoid save/restore state stack)
       ctx.scale(-1, 1);
       ctx.translate(-width, 0);
       ctx.drawImage(results.image, 0, 0, width, height);
-      ctx.restore();
+      ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform immediately
 
       const lm = results.poseLandmarks;
       landmarksRef.current = lm;

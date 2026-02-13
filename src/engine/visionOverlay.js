@@ -72,16 +72,23 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     const pulse = Math.sin(animationFrame * 0.05) * 0.5 + 0.5;
 
     // Aura dorada pulsante alrededor del cuerpo
+    const auraRadius = shoulderWidth * 1.5;
     const auraGradient = ctx.createRadialGradient(
       torsoCenter.x, torsoCenter.y, shoulderWidth * 0.3,
-      torsoCenter.x, torsoCenter.y, shoulderWidth * 1.5
+      torsoCenter.x, torsoCenter.y, auraRadius
     );
     auraGradient.addColorStop(0, `rgba(197, 164, 109, ${0.15 + pulse * 0.1})`);
     auraGradient.addColorStop(0.5, `rgba(197, 164, 109, ${0.05 + pulse * 0.05})`);
     auraGradient.addColorStop(1, 'rgba(197, 164, 109, 0)');
 
     ctx.fillStyle = auraGradient;
-    ctx.fillRect(0, 0, width, height);
+    // ⚡ Bolt Optimization: Constrain fillRect to gradient bounds
+    ctx.fillRect(
+      torsoCenter.x - auraRadius,
+      torsoCenter.y - auraRadius,
+      auraRadius * 2,
+      auraRadius * 2
+    );
 
     // Contorno dorado del torso (anclado a hombros + cintura)
     ctx.beginPath();
@@ -97,12 +104,16 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     );
     ctx.closePath();
 
+    // ⚡ Bolt Optimization: Manual glow (multi-pass stroke) instead of expensive shadowBlur
+    // Glow pass
+    ctx.strokeStyle = `rgba(197, 164, 109, ${0.3 + pulse * 0.2})`;
+    ctx.lineWidth = (2 + pulse) + 12; // Thicker for glow
+    ctx.stroke();
+
+    // Core pass
     ctx.strokeStyle = COLORS.GOLD;
     ctx.lineWidth = 2 + pulse;
-    ctx.shadowBlur = 20 + pulse * 15;
-    ctx.shadowColor = COLORS.GOLD;
     ctx.stroke();
-    ctx.shadowBlur = 0;
 
     // Relleno sutil
     ctx.fillStyle = `rgba(197, 164, 109, ${0.05 + pulse * 0.05})`;
@@ -139,16 +150,23 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     const pulse = Math.sin(animationFrame * 0.03) * 0.5 + 0.5;
 
     // Aura de éxito dorada
+    const matchRadius = shoulderWidth * 2;
     const matchGradient = ctx.createRadialGradient(
       torsoCenter.x, torsoCenter.y, 0,
-      torsoCenter.x, torsoCenter.y, shoulderWidth * 2
+      torsoCenter.x, torsoCenter.y, matchRadius
     );
     matchGradient.addColorStop(0, `rgba(197, 164, 109, ${glowIntensity})`);
     matchGradient.addColorStop(0.4, `rgba(197, 164, 109, ${glowIntensity * 0.4})`);
     matchGradient.addColorStop(1, 'rgba(197, 164, 109, 0)');
 
     ctx.fillStyle = matchGradient;
-    ctx.fillRect(0, 0, width, height);
+    // ⚡ Bolt Optimization: Constrain fillRect
+    ctx.fillRect(
+      torsoCenter.x - matchRadius,
+      torsoCenter.y - matchRadius,
+      matchRadius * 2,
+      matchRadius * 2
+    );
 
     // Contorno del cuerpo con glow premium
     ctx.beginPath();
@@ -158,12 +176,16 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     ctx.lineTo(leftHip.x, leftHip.y);
     ctx.closePath();
 
+    // ⚡ Bolt Optimization: Manual glow (multi-pass stroke)
+    // Glow pass
+    ctx.strokeStyle = `rgba(197, 164, 109, ${glowIntensity + pulse * 0.2})`;
+    ctx.lineWidth = 1.5 + 20; // Wide glow
+    ctx.stroke();
+
+    // Core pass
     ctx.strokeStyle = COLORS.GOLD;
     ctx.lineWidth = 1.5;
-    ctx.shadowBlur = 30 + pulse * 20;
-    ctx.shadowColor = COLORS.GOLD;
     ctx.stroke();
-    ctx.shadowBlur = 0;
   }
 
   // ── FASE: TRANSICIÓN (difusión suave — enmascaramiento de latencia) ──
@@ -236,12 +258,15 @@ export function drawFootScanner(ctx, landmarks, width, height, options = {}) {
     ctx.lineTo(foot.ankle.x, foot.ankle.y);
     ctx.lineTo(foot.toe.x, foot.toe.y);
     ctx.closePath();
+
+    // ⚡ Bolt Optimization: Manual glow
+    ctx.strokeStyle = `rgba(197, 164, 109, 0.3)`;
+    ctx.lineWidth = 1.5 + 8;
+    ctx.stroke();
+
     ctx.strokeStyle = COLORS.GOLD;
     ctx.lineWidth = 1.5;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = COLORS.GOLD;
     ctx.stroke();
-    ctx.shadowBlur = 0;
 
     // Indicador de ancho metatarso (línea horizontal)
     const metatarsalY = foot.ankle.y + (foot.toe.y - foot.ankle.y) * 0.6;
