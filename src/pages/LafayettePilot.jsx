@@ -18,7 +18,7 @@ import { createReservationQR, sanitizeForSharing, generateShareURL, copyToClipbo
 //
 // Motor Robert AI V9: Caída (gramaje) · Elasticidad (stretch) · Horma (fit)
 //   - Precisión: 99.7% calibrada
-//   - Zero-Display: Sin números de peso/talla visibles
+//   - Zero-Display: Sin métricas sensibles visibles
 //   - O2O Conversion: QR Code para reserva en cabina física
 //
 // Base de datos: 50 referencias Elena Grandini (35 ropa + 15 calzado)

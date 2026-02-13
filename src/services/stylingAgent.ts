@@ -18,7 +18,7 @@ export const BIOMETRIC_PRECISION = 99.7; // Precisión validada en %
 // Basado en análisis de gramaje, caída y elasticidad real
 export interface FabricPhysics {
   type: string;
-  weight: number; // Gramaje en g/m²
+  grammage: number; // Gramaje en g/m²
   drape: number; // Coeficiente de caída (0-100)
   stretch: number; // Elasticidad en % (0-30)
   stiffness: number; // Rigidez (0-100)
@@ -29,7 +29,7 @@ export interface FabricPhysics {
 export const FABRIC_PHYSICS_DATABASE: Record<string, FabricPhysics> = {
   silk: {
     type: 'silk',
-    weight: 120, // g/m² - Ligera
+    grammage: 120, // g/m² - Ligera
     drape: 95, // Alta caída (fluida)
     stretch: 2, // Mínima elasticidad
     stiffness: 15, // Muy flexible
@@ -37,7 +37,7 @@ export const FABRIC_PHYSICS_DATABASE: Record<string, FabricPhysics> = {
   },
   cotton: {
     type: 'cotton',
-    weight: 180, // g/m² - Media
+    grammage: 180, // g/m² - Media
     drape: 65, // Caída media
     stretch: 5, // Baja elasticidad (sin mezcla)
     stiffness: 40, // Rigidez moderada
@@ -45,7 +45,7 @@ export const FABRIC_PHYSICS_DATABASE: Record<string, FabricPhysics> = {
   },
   'cotton-stretch': {
     type: 'cotton-stretch',
-    weight: 200, // g/m² - Media-alta (con elastano)
+    grammage: 200, // g/m² - Media-alta (con elastano)
     drape: 60, // Caída media-baja
     stretch: 20, // Alta elasticidad
     stiffness: 35, // Rigidez baja
@@ -53,7 +53,7 @@ export const FABRIC_PHYSICS_DATABASE: Record<string, FabricPhysics> = {
   },
   linen: {
     type: 'linen',
-    weight: 150, // g/m² - Media-ligera
+    grammage: 150, // g/m² - Media-ligera
     drape: 55, // Caída estructurada
     stretch: 1, // Sin elasticidad
     stiffness: 65, // Alta rigidez
@@ -61,7 +61,7 @@ export const FABRIC_PHYSICS_DATABASE: Record<string, FabricPhysics> = {
   },
   wool: {
     type: 'wool',
-    weight: 280, // g/m² - Pesada
+    grammage: 280, // g/m² - Pesada
     drape: 75, // Buena caída
     stretch: 8, // Elasticidad natural moderada
     stiffness: 50, // Rigidez media
@@ -69,7 +69,7 @@ export const FABRIC_PHYSICS_DATABASE: Record<string, FabricPhysics> = {
   },
   polyester: {
     type: 'polyester',
-    weight: 160, // g/m² - Media-ligera
+    grammage: 160, // g/m² - Media-ligera
     drape: 50, // Caída limitada
     stretch: 12, // Elasticidad sintética
     stiffness: 55, // Rigidez media-alta
