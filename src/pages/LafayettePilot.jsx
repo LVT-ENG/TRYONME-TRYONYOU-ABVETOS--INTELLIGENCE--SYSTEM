@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { FULL_CATALOG, CATEGORIES, filterByGender } from '../data/catalog_elena_grandini.js';
 import { smartMatch, extractUserProfile, selectHormaAngel } from '../engine/fitScoreEngine.js';
 import { drawBodyOverlay, drawFootScanner, extractFootMeasurements } from '../engine/visionOverlay.js';
+import { createReservationQR, sanitizeForSharing, generateShareURL, copyToClipboard } from '../utils/qrGenerator';
 
 // ═══════════════════════════════════════════════════════════════════
 // GALERIES LAFAYETTE — DIVINEO SMART MIRROR V9.0
@@ -48,6 +49,9 @@ export default function LafayettePilot() {
   const [footScanActive, setFootScanActive] = useState(false);
   const [hormaResult, setHormaResult] = useState(null);
   const [lang, setLang] = useState('fr'); // Francés por defecto para Lafayette
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [qrCodeURL, setQRCodeURL] = useState('');
+  const [shareMessage, setShareMessage] = useState('');
 
   // Refs for stable access in animation loop
   const phaseRef = useRef(phase);
@@ -354,6 +358,49 @@ export default function LafayettePilot() {
     }, 400);
   }, []);
 
+  // ─── NUEVO V9: RESERVAR EN CABINA (QR Code Generation) ───
+  const reserveInCabin = useCallback(() => {
+    if (!current) return;
+    
+    const fitLabel = current.fitScore >= 95 ? "L'Ajustement Parfait" : 
+                     current.fitScore >= 85 ? "Excellent Fit" : "Made-to-Measure";
+    
+    const reservationData = {
+      productId: current.id,
+      productName: current.name,
+      designer: current.designer,
+      horma: hormaResult?.horma,
+      timestamp: Date.now(),
+      location: 'Galeries Lafayette Paris Haussmann',
+      fitQuality: fitLabel,
+    };
+    
+    const qrURL = createReservationQR(reservationData);
+    setQRCodeURL(qrURL);
+    setShowQRModal(true);
+  }, [current, hormaResult]);
+
+  // ─── NUEVO V9: COMPARTIR LOOK (Clean Export) ───
+  const shareLook = useCallback(async () => {
+    if (!current) return;
+    
+    const sanitizedData = sanitizeForSharing(current, true);
+    const shareURL = generateShareURL(sanitizedData, 'whatsapp');
+    
+    const message = `✨ ${sanitizedData.productName} by ${sanitizedData.designer} - ${sanitizedData.fitLabel} ✨\n\nGaleries Lafayette × TryOnYou\n#FashionTech #PerfectFit`;
+    
+    const copied = await copyToClipboard(message);
+    if (copied) {
+      setShareMessage(tx.lang === 'fr' ? 'Copié! Prêt à partager' : 'Copied! Ready to share');
+      setTimeout(() => setShareMessage(''), 3000);
+    }
+    
+    // Intentar abrir WhatsApp si es móvil
+    if (shareURL.startsWith('https://')) {
+      window.open(shareURL, '_blank');
+    }
+  }, [current, tx, lang]);
+
   // ═══════════════════════════════════════════════════════════════
   // LANDING PAU — Chasquido de inicio
   // ═══════════════════════════════════════════════════════════════
@@ -644,10 +691,12 @@ export default function LafayettePilot() {
               className="w-full py-3.5 bg-[#C5A46D] text-[#0a0a0a] uppercase tracking-[0.2em] text-xs font-bold hover:bg-[#d4b98a] transition-all duration-300">
               {tx.btn1}
             </button>
-            <button className="w-full py-3 border border-[#C5A46D] text-[#C5A46D] uppercase tracking-[0.2em] text-xs font-semibold hover:bg-[#C5A46D]/10 transition-all duration-300">
+            <button onClick={reserveInCabin}
+              className="w-full py-3 border border-[#C5A46D] text-[#C5A46D] uppercase tracking-[0.2em] text-xs font-semibold hover:bg-[#C5A46D]/10 transition-all duration-300">
               {tx.btn2}
             </button>
-            <button className="w-full py-3 border border-white/20 text-white/60 uppercase tracking-[0.2em] text-xs hover:border-[#C5A46D]/40 hover:text-[#C5A46D] transition-all duration-300">
+            <button onClick={shareLook}
+              className="w-full py-3 border border-white/20 text-white/60 uppercase tracking-[0.2em] text-xs hover:border-[#C5A46D]/40 hover:text-[#C5A46D] transition-all duration-300">
               {tx.btn3}
             </button>
             <button onClick={() => setShowExplore(!showExplore)}
@@ -658,6 +707,13 @@ export default function LafayettePilot() {
               {tx.btn5}
             </button>
           </div>
+
+          {/* Share message toast */}
+          {shareMessage && (
+            <div className="mt-2 text-center text-[10px] text-[#C5A46D] tracking-widest uppercase animate-pulse">
+              {shareMessage}
+            </div>
+          )}
 
           {/* Indicadores de posición */}
           <div className="flex justify-center gap-1.5 mt-4">
@@ -701,6 +757,38 @@ export default function LafayettePilot() {
         <p className="text-[9px] text-white/15 tracking-[0.3em] uppercase">{tx.patent}</p>
         <p className="text-[9px] text-white/15 tracking-[0.3em] uppercase">TryOnYou \u00A9 2026 \u2022 Elena Grandini \u2022 Galeries Lafayette</p>
       </footer>
+
+      {/* QR Modal - Réservation Cabine */}
+      {showQRModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setShowQRModal(false)}>
+          <div className="bg-[#0a0a0a] border-2 border-[#C5A46D] rounded-sm p-8 max-w-md mx-4" onClick={(e) => e.stopPropagation()}>
+            <div className="text-center">
+              <h3 className="font-serif text-2xl text-[#C5A46D] mb-4">{lang === 'fr' ? 'Réservation Cabine' : 'Fitting Room Reservation'}</h3>
+              <p className="text-sm text-white/60 mb-6">{lang === 'fr' ? 'Scannez ce QR code en cabine' : 'Scan this QR code in the fitting room'}</p>
+              
+              {/* QR Code */}
+              <div className="bg-white p-4 rounded-sm mb-6 inline-block">
+                <img src={qrCodeURL} alt="QR Code" className="w-64 h-64" />
+              </div>
+              
+              {/* Product info */}
+              <div className="border-t border-white/10 pt-4 text-left">
+                <p className="text-sm text-white/80 mb-1">{current?.name}</p>
+                <p className="text-xs text-white/40">{current?.designer}</p>
+                {hormaResult && (
+                  <p className="text-xs text-[#C5A46D] mt-2">Horma: {hormaResult.horma}</p>
+                )}
+              </div>
+              
+              {/* Close button */}
+              <button onClick={() => setShowQRModal(false)}
+                className="mt-6 w-full py-3 border border-[#C5A46D] text-[#C5A46D] uppercase tracking-[0.2em] text-xs font-semibold hover:bg-[#C5A46D]/10 transition-all duration-300">
+                {lang === 'fr' ? 'Fermer' : 'Close'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
