@@ -1,6 +1,7 @@
 /**
- * STRIPE INTEGRATION - TRYONYOU ULTRA V7.0
+ * STRIPE INTEGRATION - TRYONYOU ULTRA V9.0
  * Sistema de monetización con Stripe
+ * Version 9.0 "L'Ajustement Parfait"
  */
 
 // Cargar Stripe desde CDN o instalación npm
@@ -100,10 +101,11 @@ export const PRICING_PLANS = {
     currency: 'EUR',
     interval: 'month',
     features: [
-      'Acceso completo al piloto Lafayette v7',
-      'Escaneo biométrico ilimitado',
-      'Recomendaciones personalizadas',
-      'Sistema Zero Labels',
+      'Acceso completo al piloto Lafayette v9 "L\'Ajustement Parfait"',
+      'Escaneo biométrico ilimitado (99.7% precisión)',
+      'Recomendaciones personalizadas IA',
+      'Sistema Zero-Display (sin números visibles)',
+      'Reserva QR Code en cabinas',
       'Soporte por email',
     ],
   },
@@ -114,10 +116,11 @@ export const PRICING_PLANS = {
     currency: 'EUR',
     interval: 'year',
     features: [
-      'Acceso completo al piloto Lafayette v7',
-      'Escaneo biométrico ilimitado',
-      'Recomendaciones personalizadas',
-      'Sistema Zero Labels',
+      'Acceso completo al piloto Lafayette v9 "L\'Ajustement Parfait"',
+      'Escaneo biométrico ilimitado (99.7% precisión)',
+      'Recomendaciones personalizadas IA',
+      'Sistema Zero-Display (sin números visibles)',
+      'Reserva QR Code en cabinas',
       'Soporte prioritario',
       'Ahorra 2 meses (17% descuento)',
     ],

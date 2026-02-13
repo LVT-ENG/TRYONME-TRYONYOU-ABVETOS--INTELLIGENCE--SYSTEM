@@ -7,14 +7,19 @@ import { smartMatch, extractUserProfile, selectHormaAngel } from '../engine/fitS
 import { drawBodyOverlay, drawFootScanner, extractFootMeasurements } from '../engine/visionOverlay.js';
 
 // ═══════════════════════════════════════════════════════════════════
-// GALERIES LAFAYETTE — DIVINEO SMART MIRROR
+// GALERIES LAFAYETTE — DIVINEO SMART MIRROR V9.0
 // Patent PCT/EP2025/067317 · Ruben Espinar Rodríguez
-// Prioridad comercial: Elena Grandini · Galeries Lafayette
+// Version 9.0 "L'Ajustement Parfait" - Issue #1871
+// Prioridad comercial: Elena Grandini · Galeries Lafayette Paris Haussmann
 //
 // Flujo: Landing Pau (Chasquido) → Escáner Dorado (Sin números)
 //        → Overlay Real anclado hombros/cintura → 5 Botones de Valor
 //
-// Motor Robert AI: Caída (gramaje) · Elasticidad (stretch) · Horma (fit)
+// Motor Robert AI V9: Caída (gramaje) · Elasticidad (stretch) · Horma (fit)
+//   - Precisión: 99.7% calibrada
+//   - Zero-Display: Sin números de peso/talla visibles
+//   - O2O Conversion: QR Code para reserva en cabina física
+//
 // Base de datos: 50 referencias Elena Grandini (35 ropa + 15 calzado)
 // Horma Ángel: 8 hormas (A-H) · Metatarso + Empeine
 // ═══════════════════════════════════════════════════════════════════

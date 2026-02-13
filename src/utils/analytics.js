@@ -1,6 +1,7 @@
 /**
- * ANALYTICS SYSTEM - TRYONYOU ULTRA V7.0
+ * ANALYTICS SYSTEM - TRYONYOU ULTRA V9.0
  * Sistema de métricas y análisis de comportamiento
+ * Version 9.0 "L'Ajustement Parfait" - Enhanced O2O Tracking
  */
 
 // Configuración de Analytics
