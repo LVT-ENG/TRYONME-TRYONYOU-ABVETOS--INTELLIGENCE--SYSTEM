@@ -11,6 +11,8 @@
 // - Integración de elasticidad real de textiles
 // - Análisis de gramaje para cálculo de caída (drape)
 // - Reducción de retornos proyectada: < 5%
+// - torsoScaleBoost: 1.05 aplicado (línea 59)
+// - Algoritmo de física de telas para seda y algodón (stylingAgent.ts)
 // ═══════════════════════════════════════════════════════════════════
 
 import { FULL_CATALOG, HORMA_ANGEL, filterByGender } from '../data/catalog_elena_grandini.js';
@@ -53,9 +55,12 @@ export function extractUserProfile(landmarks) {
 
   const lm = landmarks;
 
+  // V9.0: Factor de escala TORSO_SCALE_BOOST = 1.05 (Issue #1871)
+  const TORSO_SCALE_BOOST = 1.05;
+
   // Medidas corporales desde landmarks
   const shoulderWidth = Math.abs(lm[11].x - lm[12].x) * 200;
-  const torsoLength = Math.abs(lm[11].y - lm[23].y) * 150;
+  const torsoLength = Math.abs(lm[11].y - lm[23].y) * 150 * TORSO_SCALE_BOOST; // V9: Boost aplicado
   const hipWidth = Math.abs(lm[23].x - lm[24].x) * 200;
   const armLength = Math.abs(lm[11].y - lm[15].y) * 150;
   const legLength = Math.abs(lm[23].y - lm[27].y) * 150;
