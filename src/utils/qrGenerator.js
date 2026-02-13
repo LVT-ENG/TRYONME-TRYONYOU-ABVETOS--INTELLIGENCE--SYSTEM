@@ -16,7 +16,7 @@
  * Genera un código QR usando API pública de qrcode
  * Retorna la URL del QR generado
  */
-export function generateQRCode(data: string): string {
+export function generateQRCode(data) {
   // Usando API de qrcode.show (sin dependencias externas)
   const encoded = encodeURIComponent(data);
   return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encoded}`;
@@ -26,17 +26,7 @@ export function generateQRCode(data: string): string {
  * Genera datos de reserva para QR
  * Incluye solo: producto, horma, timestamp (sin datos biométricos)
  */
-export interface ReservationData {
-  productId: string;
-  productName: string;
-  designer: string;
-  horma?: string;
-  timestamp: number;
-  location: string; // Galeries Lafayette Paris Haussmann
-  fitQuality: string; // Solo etiqueta: "L'Ajustement Parfait", no números
-}
-
-export function createReservationQR(data: ReservationData): string {
+export function createReservationQR(data) {
   const reservationPayload = {
     product: data.productName,
     designer: data.designer,
@@ -55,19 +45,7 @@ export function createReservationQR(data: ReservationData): string {
  * Sanitiza datos para compartir en redes sociales
  * Elimina cualquier dato sensible (peso, altura, medidas biométricas)
  */
-export interface ShareableImageData {
-  productName: string;
-  designer: string;
-  fabric?: string;
-  fitLabel: string; // "L'Ajustement Parfait" o "Excellent Fit", NO números
-  pauMessage?: string;
-  timestamp: number;
-}
-
-export function sanitizeForSharing(
-  productData: any,
-  includeMetadata: boolean = false
-): ShareableImageData {
+export function sanitizeForSharing(productData, includeMetadata = false) {
   return {
     productName: productData.name,
     designer: productData.designer,
@@ -87,10 +65,7 @@ export function sanitizeForSharing(
  * Genera una URL para compartir en redes sociales
  * Datos totalmente limpios y Zero-Display compliant
  */
-export function generateShareURL(
-  imageData: ShareableImageData,
-  platform: 'whatsapp' | 'twitter' | 'facebook' | 'instagram' = 'whatsapp'
-): string {
+export function generateShareURL(imageData, platform = 'whatsapp') {
   const baseText = `✨ ${imageData.productName} by ${imageData.designer} - ${imageData.fitLabel} ✨`;
   const hashtags = 'TryOnYou,GaleriesLafayette,FashionTech';
   
@@ -113,7 +88,7 @@ export function generateShareURL(
 /**
  * Copia texto al portapapeles (para compartir)
  */
-export async function copyToClipboard(text: string): Promise<boolean> {
+export async function copyToClipboard(text) {
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(text);
@@ -139,7 +114,7 @@ export async function copyToClipboard(text: string): Promise<boolean> {
 /**
  * Descarga QR code como imagen
  */
-export function downloadQRCode(qrURL: string, filename: string = 'reservation-qr.png'): void {
+export function downloadQRCode(qrURL, filename = 'reservation-qr.png') {
   const link = document.createElement('a');
   link.href = qrURL;
   link.download = filename;
