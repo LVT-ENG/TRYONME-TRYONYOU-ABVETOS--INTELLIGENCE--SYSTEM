@@ -18,8 +18,8 @@ Este script automatiza completamente el proceso de deployment a Git y Vercel, re
 
 1. Ve a GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens
 2. Crea un nuevo token con estos permisos mínimos:
-   - **Contents**: Read and write
-   - **Metadata**: Read (si es necesario)
+   - **Contents**: Read and write (requerido para push)
+   - **Metadata**: Read (requerido automáticamente por GitHub)
 3. Copia el token generado
 
 ### Opción B: SSH (Alternativa)
@@ -142,9 +142,14 @@ vercel switch [team-name]
 Si prefieres hacer el deployment manualmente:
 
 ```bash
-# 1. Configurar remote con token
+# 1. Configurar remote con token (desde variable de entorno)
+# IMPORTANTE: Usa variable de entorno, no pegues el token directamente
 export GITHUB_TOKEN="tu_token"
 git remote set-url origin "https://${GITHUB_TOKEN}@github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git"
+
+# ALTERNATIVA MÁS SEGURA: Usa Git credential helper
+# git config --global credential.helper store
+# git push origin main  # Te pedirá el token solo la primera vez
 
 # 2. Commit y push
 git add -A

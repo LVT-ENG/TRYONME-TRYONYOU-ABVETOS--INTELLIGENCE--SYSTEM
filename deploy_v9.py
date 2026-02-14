@@ -53,6 +53,10 @@ def ensure_git_remote_https_with_token():
     """
     Usa GITHUB_TOKEN si existe para setear origin con auth.
     Si no existe, deja el origin normal y tú autenticas por git credential manager.
+    
+    NOTA: El token en la URL es temporal y solo existe durante la ejecución.
+    Git puede mostrar logs con el token visible. Para mayor seguridad,
+    considera usar SSH keys o Git credential helpers.
     """
     token = os.getenv("GITHUB_TOKEN", "").strip()
 
@@ -61,9 +65,11 @@ def ensure_git_remote_https_with_token():
 
     if token:
         # Importante: token en env, no hardcode
+        # ADVERTENCIA: El token puede aparecer en logs de git (git remote -v)
         authed = REPO_URL.replace("https://", f"https://{token}@")
         run(f"git remote add origin {authed}")
         print("✅ origin configurado con GITHUB_TOKEN (temporal en env).")
+        print("⚠️  NOTA: El token puede aparecer en 'git remote -v'. Para mayor seguridad usa SSH.")
     else:
         run(f"git remote add origin {REPO_URL}")
         print("ℹ️ No hay GITHUB_TOKEN. Usaré origin normal (te pedirá login/credential manager).")
@@ -82,7 +88,7 @@ def commit_and_push():
     if res.returncode == 0:
         print("ℹ️ No hay cambios para commitear.")
     else:
-        ts = datetime.now().strftime("%Y-%m-%d %H:%M")
+        ts = datetime.now().strftime("%Y-%m-%d_%H-%M")
         run(f'git commit -m "V9 auto sync {ts}"')
 
     # push
