@@ -23,6 +23,10 @@ This repository is updated with the latest Google platforms technologies, delive
     -   **Precision:** Detection of **33 keypoints** for precise virtual fitting.
     -   **Privacy:** "Zero Tallas" measurements run entirely client-side.
 
+For more details on the V9.0 updates:
+-   [Read the full release notes (English)](NEWS.md)
+-   [Lire les notes de mise à jour (Français)](NEWS_FR.md)
+
 ## Architecture
 
 -   **Frontend:** React (Vite) with TailwindCSS.
