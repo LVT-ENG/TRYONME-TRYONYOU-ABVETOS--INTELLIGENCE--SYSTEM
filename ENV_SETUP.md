@@ -93,12 +93,22 @@ Set environment variables in the Netlify dashboard:
 ### Google API Key
 1. Go to [Google Cloud Console](https://console.cloud.google.com/)
 2. Create a new project or select an existing one
-3. Enable required APIs (e.g., Gemini AI)
-4. Create credentials → API Key
+3. Enable required APIs (e.g., Gemini AI, Generative Language API)
+4. Go to "APIs & Services" → "Credentials"
+5. Create credentials → API Key
+6. **Important:** Click "Edit API key" and:
+   - Restrict the key to specific APIs (Generative Language API)
+   - Add application restrictions (HTTP referrers for web apps, or IP addresses for servers)
+   - This prevents unauthorized use if the key is exposed
 
 ### Vercel Token
 1. Go to Vercel dashboard → Settings → Tokens
-2. Create a new token with appropriate scope
+2. Create a new token with the following scopes:
+   - **Deployment**: Required for deploying applications
+   - **Project**: Read/write access to projects
+   - **Team**: If deploying to a team project
+3. Copy the token immediately (it won't be shown again)
+4. Set an appropriate expiration date for security
 
 ### Telegram Bot
 1. Message [@BotFather](https://t.me/BotFather) on Telegram
