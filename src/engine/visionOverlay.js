@@ -72,16 +72,18 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     const pulse = Math.sin(animationFrame * 0.05) * 0.5 + 0.5;
 
     // Aura dorada pulsante alrededor del cuerpo
+    const radius = shoulderWidth * 1.5;
     const auraGradient = ctx.createRadialGradient(
       torsoCenter.x, torsoCenter.y, shoulderWidth * 0.3,
-      torsoCenter.x, torsoCenter.y, shoulderWidth * 1.5
+      torsoCenter.x, torsoCenter.y, radius
     );
     auraGradient.addColorStop(0, `rgba(197, 164, 109, ${0.15 + pulse * 0.1})`);
     auraGradient.addColorStop(0.5, `rgba(197, 164, 109, ${0.05 + pulse * 0.05})`);
     auraGradient.addColorStop(1, 'rgba(197, 164, 109, 0)');
 
     ctx.fillStyle = auraGradient;
-    ctx.fillRect(0, 0, width, height);
+    // ⚡ Bolt: Constrain fill to bounding box (Performance)
+    ctx.fillRect(torsoCenter.x - radius, torsoCenter.y - radius, radius * 2, radius * 2);
 
     // Contorno dorado del torso (anclado a hombros + cintura)
     ctx.beginPath();
@@ -139,16 +141,18 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     const pulse = Math.sin(animationFrame * 0.03) * 0.5 + 0.5;
 
     // Aura de éxito dorada
+    const matchRadius = shoulderWidth * 2;
     const matchGradient = ctx.createRadialGradient(
       torsoCenter.x, torsoCenter.y, 0,
-      torsoCenter.x, torsoCenter.y, shoulderWidth * 2
+      torsoCenter.x, torsoCenter.y, matchRadius
     );
     matchGradient.addColorStop(0, `rgba(197, 164, 109, ${glowIntensity})`);
     matchGradient.addColorStop(0.4, `rgba(197, 164, 109, ${glowIntensity * 0.4})`);
     matchGradient.addColorStop(1, 'rgba(197, 164, 109, 0)');
 
     ctx.fillStyle = matchGradient;
-    ctx.fillRect(0, 0, width, height);
+    // ⚡ Bolt: Constrain fill to bounding box (Performance)
+    ctx.fillRect(torsoCenter.x - matchRadius, torsoCenter.y - matchRadius, matchRadius * 2, matchRadius * 2);
 
     // Contorno del cuerpo con glow premium
     ctx.beginPath();
@@ -175,14 +179,16 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     ctx.fillRect(0, 0, width, height);
 
     // Silueta borrosa dorada
+    const blurRadius = shoulderWidth * 1.2;
     const blurGradient = ctx.createRadialGradient(
       torsoCenter.x, torsoCenter.y, 0,
-      torsoCenter.x, torsoCenter.y, shoulderWidth * 1.2
+      torsoCenter.x, torsoCenter.y, blurRadius
     );
     blurGradient.addColorStop(0, `rgba(197, 164, 109, ${0.2 * (1 - fadeProgress)})`);
     blurGradient.addColorStop(1, 'rgba(197, 164, 109, 0)');
     ctx.fillStyle = blurGradient;
-    ctx.fillRect(0, 0, width, height);
+    // ⚡ Bolt: Constrain fill to bounding box (Performance)
+    ctx.fillRect(torsoCenter.x - blurRadius, torsoCenter.y - blurRadius, blurRadius * 2, blurRadius * 2);
   }
 }
 
