@@ -10,8 +10,12 @@ dist/
 build/
 .next/
 
-# Environment
+# Environment - Never commit actual credentials!
 .env
+.env.local
+.env.development
+.env.production
+.env.test
 .env*.local
 
 # Logs
