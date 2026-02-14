@@ -43,7 +43,7 @@ export function createReservationQR(data) {
 
 /**
  * Sanitiza datos para compartir en redes sociales
- * Elimina cualquier dato sensible (peso, altura, medidas biométricas)
+ * Elimina cualquier dato sensible
  */
 export function sanitizeForSharing(productData, includeMetadata = false) {
   return {
