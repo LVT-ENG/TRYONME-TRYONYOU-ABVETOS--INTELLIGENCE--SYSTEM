@@ -1,5 +1,6 @@
 import json, qrcode, os
 import pandas as pd
+import numpy as np
 
 try:
     from google import genai
@@ -50,33 +51,42 @@ class Agent70:
             return "Agent 70: Análisis completado. Selección óptima generada."
 
     def match(self, vector, inventory):
-        # Algoritmo de matching basado en la elasticidad y medidas
-        recommendations = []
+        # Algoritmo de matching basado en la elasticidad y medidas optimizado con Pandas
         user_measure = vector['vector'][0]
-
-        for item in inventory:
-            # Simulamos FitScore real (0.0 a 1.0)
-            # Asumimos que Variant Price es un proxy de medida para la demo
-            price = float(item.get('Variant Price', 0))
-            diff = abs((price / 10) - user_measure)
-            fit_score = 1.0 / (1.0 + (diff / 10.0)) # Normalización
-
-            recommendations.append({**item, "match_score": fit_score, "measure": fit_score})
-
-        # Ordenar por mejor FitScore (descendente)
-        recommendations.sort(key=lambda x: x['match_score'], reverse=True)
-        best_fit = recommendations[0]['match_score'] if recommendations else 0
-
-        top_picks = []
         
+        # Asumimos que Variant Price es un proxy de medida para la demo
+        # Convertimos a numérico de forma segura
+        prices = pd.to_numeric(inventory['Variant Price'], errors='coerce').fillna(0)
+
+        # Cálculo vectorizado del FitScore
+        diff = (prices / 10.0 - user_measure).abs()
+        scores = 1.0 / (1.0 + (diff / 10.0))
+
+        if scores.empty:
+            best_fit = 0
+            top_picks = []
+        else:
+            best_fit = scores.max()
+            # Obtenemos los índices de los 6 mejores scores
+            top_indices = scores.nlargest(6).index
+
+            # Extraemos solo los items necesarios y convertimos a dict
+            top_picks_df = inventory.loc[top_indices].copy()
+            top_picks = top_picks_df.to_dict('records')
+
+            # Asignamos scores a los items seleccionados
+            for item, idx in zip(top_picks, top_indices):
+                s = float(scores[idx])
+                item['match_score'] = s
+                item['measure'] = s
+
         # Lógica de Selección Dinámica
         if best_fit > 0.95:
             # Divineo: Perfect Match
-            top_picks = [r for r in recommendations if r['match_score'] > 0.95][:6]
+            top_picks = [r for r in top_picks if r['match_score'] > 0.95]
             narrative_prefix = "DIVINEO MATCH: Ajuste perfecto detectado. "
         elif 0.85 <= best_fit <= 0.95:
             # Lafayette: Catálogo Estándar
-            top_picks = recommendations[:6]
             narrative_prefix = "LAFAYETTE SELECTION: Colección curada para tu silueta. "
         else:
             # CAP: Generación Automática (Just-in-Time)
@@ -89,7 +99,7 @@ class Agent70:
                 "match_score": 0.99, # Artificialmente alto para CAP
                 "measure": 0.99
             }
-            top_picks = [cap_item] + recommendations[:5]
+            top_picks = [cap_item] + top_picks[:5]
             narrative_prefix = "CAP ACTIVATED: Iniciando producción a medida. "
 
         narrative = narrative_prefix + self.generate_ai_narrative(vector, top_picks)
@@ -124,29 +134,34 @@ class FISOrchestrator:
                 inv = self._inventory_cache[inventory_file]
             else:
                 if inventory_file.endswith(".csv"):
-                    inv = pd.read_csv(inventory_file).to_dict('records')
+                    df = pd.read_csv(inventory_file)
                 elif inventory_file.endswith(".xlsx"):
-                    inv = pd.read_excel(inventory_file).to_dict('records')
+                    df = pd.read_excel(inventory_file)
                 else:
-                    inv = json.load(open(inventory_file))
+                    with open(inventory_file) as f:
+                        df = pd.DataFrame(json.load(f))
 
-                # Sustituimos URLs de imágenes locales si existen en nuestro catálogo descargado
-                for item in inv:
-                    handle = item.get('Handle', '')
-                    # Actualización de rutas a /assets/catalog/
-                    local_img = f"/assets/catalog/{handle}.png"
+                # Optimización vectorial con Pandas para sustitución de imágenes
+                # Normalizamos títulos a minúsculas para la búsqueda
+                titles_lower = df['Title'].astype(str).str.lower()
 
-                    # Para la demo, usamos mapeo determinista si no tenemos el archivo real checkeado
-                    # (Simplificado para evitar checks de sistema de archivos complejos en Vercel)
-                    title = str(item.get('Title', '')).lower()
-                    if "dress" in title:
-                        item['Image Src'] = "/assets/catalog/red_dress_clean.png"
-                    elif "blazer" in title or "suit" in title or "trench" in title:
-                        item['Image Src'] = "/assets/catalog/brown_blazer_360_views.png"
-                    else:
-                        item['Image Src'] = "/assets/catalog/urban_male_model_app_demo.jpg"
+                # Definimos condiciones vectoriales
+                conditions = [
+                    titles_lower.str.contains("dress", na=False),
+                    titles_lower.str.contains("blazer|suit|trench", na=False)
+                ]
 
-                self._inventory_cache[inventory_file] = inv
+                # Definimos elecciones correspondientes
+                choices = [
+                    "/assets/catalog/red_dress_clean.png",
+                    "/assets/catalog/brown_blazer_360_views.png"
+                ]
+
+                # Aplicamos la lógica vectorizada (np.select es mucho más rápido que iterar)
+                df['Image Src'] = np.select(conditions, choices, default="/assets/catalog/urban_male_model_app_demo.jpg")
+
+                self._inventory_cache[inventory_file] = df
+                inv = df
 
             return self.a70.match(self.jules.sanitize(user_data), inv)
         except Exception as e: 
