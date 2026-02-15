@@ -26,7 +26,7 @@ cd /path/to/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
 
 ```bash
 git add .
-git commit -m "V9 sync"
+git commit -m "deploy: sync V9 changes to production"
 git push origin main
 ```
 
