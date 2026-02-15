@@ -99,12 +99,20 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     );
     ctx.closePath();
 
+    // ⚡ Bolt: Multi-pass stroke instead of shadowBlur (Performance)
+    ctx.globalAlpha = 0.15;
+    ctx.lineWidth = (2 + pulse) * 4;
     ctx.strokeStyle = COLORS.GOLD;
-    ctx.lineWidth = 2 + pulse;
-    ctx.shadowBlur = 20 + pulse * 15;
-    ctx.shadowColor = COLORS.GOLD;
     ctx.stroke();
-    ctx.shadowBlur = 0;
+
+    ctx.globalAlpha = 0.3;
+    ctx.lineWidth = (2 + pulse) * 2;
+    ctx.stroke();
+
+    ctx.globalAlpha = 1.0;
+    ctx.lineWidth = 2 + pulse;
+    ctx.strokeStyle = COLORS.GOLD;
+    ctx.stroke();
 
     // Relleno sutil
     ctx.fillStyle = `rgba(197, 164, 109, ${0.05 + pulse * 0.05})`;
@@ -162,12 +170,19 @@ export function drawBodyOverlay(ctx, landmarks, width, height, options = {}) {
     ctx.lineTo(leftHip.x, leftHip.y);
     ctx.closePath();
 
+    // ⚡ Bolt: Multi-pass stroke for Matched Phase
+    ctx.globalAlpha = 0.2;
+    ctx.lineWidth = 6; // Wide glow
     ctx.strokeStyle = COLORS.GOLD;
-    ctx.lineWidth = 1.5;
-    ctx.shadowBlur = 30 + pulse * 20;
-    ctx.shadowColor = COLORS.GOLD;
     ctx.stroke();
-    ctx.shadowBlur = 0;
+
+    ctx.globalAlpha = 0.4;
+    ctx.lineWidth = 3; // Medium glow
+    ctx.stroke();
+
+    ctx.globalAlpha = 1.0;
+    ctx.lineWidth = 1.5; // Core line
+    ctx.stroke();
   }
 
   // ── FASE: TRANSICIÓN (difusión suave — enmascaramiento de latencia) ──
@@ -242,12 +257,16 @@ export function drawFootScanner(ctx, landmarks, width, height, options = {}) {
     ctx.lineTo(foot.ankle.x, foot.ankle.y);
     ctx.lineTo(foot.toe.x, foot.toe.y);
     ctx.closePath();
+    // ⚡ Bolt: Multi-pass stroke for Foot Scanner
+    ctx.globalAlpha = 0.2;
+    ctx.lineWidth = 4.5;
     ctx.strokeStyle = COLORS.GOLD;
-    ctx.lineWidth = 1.5;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = COLORS.GOLD;
     ctx.stroke();
-    ctx.shadowBlur = 0;
+
+    ctx.globalAlpha = 1.0;
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = COLORS.GOLD;
+    ctx.stroke();
 
     // Indicador de ancho metatarso (línea horizontal)
     const metatarsalY = foot.ankle.y + (foot.toe.y - foot.ankle.y) * 0.6;
