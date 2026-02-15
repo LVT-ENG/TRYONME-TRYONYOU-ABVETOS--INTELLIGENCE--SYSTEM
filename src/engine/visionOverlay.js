@@ -260,7 +260,7 @@ export function drawFootScanner(ctx, landmarks, width, height, options = {}) {
     ctx.closePath();
 
     // ⚡ Bolt Optimization: Manual glow
-    ctx.strokeStyle = `rgba(197, 164, 109, 0.3)`;
+    ctx.strokeStyle = COLORS.GOLD_MEDIUM;
     ctx.lineWidth = 1.5 + 8;
     ctx.stroke();
 
