@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+qrcode[pil]
+requests
+python-multipart
