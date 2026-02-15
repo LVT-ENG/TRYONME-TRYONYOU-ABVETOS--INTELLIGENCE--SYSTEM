@@ -140,7 +140,7 @@ const Home = () => {
   }, []);
 
   // ═══════════════════════════════════════════════════════════════
-  // PANTALLA DE BIENVENIDA — Landing Pau (Chasquido)
+  // VISTA DE BIENVENIDA — Landing Pau (Chasquido)
   // ═══════════════════════════════════════════════════════════════
   if (phase === 'welcome') {
     return (
@@ -334,7 +334,7 @@ const Home = () => {
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // PANTALLA DE ESCANEO — Escáner Dorado (Sin números)
+  // VISTA DE ESCANEO — Escáner Dorado (Sin números)
   // ═══════════════════════════════════════════════════════════════
   if (phase === 'scanning') {
     return (
@@ -384,7 +384,7 @@ const Home = () => {
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // PANTALLA DE REVELACIÓN — Pau anuncia el match
+  // VISTA DE REVELACIÓN — Pau anuncia el match
   // ═══════════════════════════════════════════════════════════════
   if (phase === 'reveal') {
     return (
@@ -402,7 +402,7 @@ const Home = () => {
   }
 
   // ═══════════════════════════════════════════════════════════════
-  // PANTALLA DE FITTING — Overlay Real + 5 Botones de Valor
+  // VISTA DE FITTING — Overlay Real + 5 Botones de Valor
   // ═══════════════════════════════════════════════════════════════
   return (
     <div className={`min-h-screen bg-[#0a0a0a] text-[#F5EFE6] flex flex-col transition-opacity duration-500 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>

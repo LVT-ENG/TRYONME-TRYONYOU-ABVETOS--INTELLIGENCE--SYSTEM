@@ -52,7 +52,7 @@ export const SUBCATEGORIES = {
 //   - Muy alta: > 30%
 //
 // Horma (fit): Patrón de ajuste corporal
-//   - Ropa: slim, regular, relaxed, oversized, body-conscious
+//   - Ropa: slim, regular, relaxed, voluminous, body-conscious
 //   - Calzado: 8 hormas Ángel (A-H) basadas en ancho metatarso + altura empeine
 
 export const HORMA_ANGEL = {
@@ -214,7 +214,7 @@ const CLOTHING_CATALOG = [
     robert: {
       caida: { value: 520, unit: 'g/m²', label: 'Muy pesada' },
       elasticidad: { value: 2, unit: '%', label: 'Rígida' },
-      horma: 'oversized',
+      horma: 'voluminous',
     },
     gender: 'M',
     season: 'AW26',
@@ -423,7 +423,7 @@ const CLOTHING_CATALOG = [
     robert: {
       caida: { value: 400, unit: 'g/m²', label: 'Pesada' },
       elasticidad: { value: 20, unit: '%', label: 'Alta' },
-      horma: 'oversized',
+      horma: 'voluminous',
     },
     gender: 'U',
     season: 'AW26',
