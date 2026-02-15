@@ -44,6 +44,10 @@ To run the application locally:
 git clone https://github.com/LVT-ENG/TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM.git
 cd TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM
 
+# Set up environment variables
+cp .env.example .env
+# Edit .env and add your API keys (see ENV_SETUP.md for details)
+
 # Install dependencies
 npm install
 
@@ -53,18 +57,23 @@ npm run dev
 
 The application will be available at `http://localhost:5173/`
 
+**Important:** Before running the application, you must configure your environment variables. See [ENV_SETUP.md](ENV_SETUP.md) for detailed instructions.
+
 ### Deployment
 
 For deployment and environment setup instructions, please refer to:
+- [ENV_SETUP.md](ENV_SETUP.md) - **Environment variables configuration guide** (required setup)
 - [QUICK_START.md](QUICK_START.md) - Quick start guide with deployment steps
 - [GITHUB_TOKEN_SETUP.md](GITHUB_TOKEN_SETUP.md) - GitHub token generation guide
 - [DEPLOYMENT_README.md](DEPLOYMENT_README.md) - Detailed deployment documentation
 
 ## Configuration
 
-To enable the AI features, ensure one of the following environment variables is set:
+Environment variables are required for the application to function properly. The system uses:
 
--   `GOOGLE_GENAI_KEY`: The API key for Google Gemini (preferred for deployment).
--   `GOOGLE_API_KEY`: Alternative variable name supported by the SDK.
+-   `GOOGLE_API_KEY` / `VITE_GOOGLE_API_KEY`: Google API key for Gemini AI services
+-   `VITE_VERCEL_TOKEN`: Vercel deployment token (production)
+-   `TELEGRAM_BOT_TOKEN`: Telegram bot for notifications (production)
+-   Additional variables listed in [ENV_SETUP.md](ENV_SETUP.md)
 
-See `QUICK_START.md` for full environment setup.
+**See [ENV_SETUP.md](ENV_SETUP.md) for complete environment setup instructions.**
