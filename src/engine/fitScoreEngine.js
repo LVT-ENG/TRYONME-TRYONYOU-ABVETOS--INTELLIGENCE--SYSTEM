@@ -118,7 +118,7 @@ export function extractUserProfile(landmarks) {
       idealHormas = ['relaxed', 'body-conscious'];
       break;
     default:
-      idealHormas = ['slim', 'regular', 'relaxed', 'body-conscious', 'oversized'];
+      idealHormas = ['slim', 'regular', 'relaxed', 'body-conscious', 'voluminous'];
   }
 
   const profile = {

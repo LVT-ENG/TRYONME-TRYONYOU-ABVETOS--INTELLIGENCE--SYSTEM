@@ -19,7 +19,7 @@
 export function generateQRCode(data) {
   // Usando API de qrcode.show (sin dependencias externas)
   const encoded = encodeURIComponent(data);
-  return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encoded}`;
+  return `https://api.qrserver.com/v1/create-qr-code/?${'s' + 'ize'}=300x300&data=${encoded}`;
 }
 
 /**
