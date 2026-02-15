@@ -11,3 +11,23 @@ AUDIT_READY_BACKUP
 DATABASE_ELENA
 logs
 scripts
+
+# Python artifacts - prevent Vercel from detecting Python backend
+requirements.txt
+pyproject.toml
+uv.lock
+*.pyc
+*.pyo
+*.pyd
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Deploy scripts
+deploy_*.py
+deploy_*.sh
+fatality_*.py
+MANUS_*.py
+regenerate_*.py
+verification_*.py
+*.sh
