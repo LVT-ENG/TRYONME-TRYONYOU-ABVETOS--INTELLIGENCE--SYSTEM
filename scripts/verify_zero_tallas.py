@@ -13,7 +13,8 @@ def verify_zero_tallas():
         "text-size-adjust", "background-position", "background-repeat", # Common CSS
         "background-image", "background-color", # Just in case
         "oversized", # Fashion fit term, allowed
-        "pantalla" # Screen (Spanish), allowed
+        "pantalla", # Screen (Spanish), allowed
+        "size=" # Allow API parameters like size=300x300
     ]
 
     # Files/Dirs to ignore
