@@ -26,6 +26,7 @@ This repository is updated with the latest Google platforms technologies, delive
 For more details on the V9.0 updates:
 -   [Read the full release notes (English)](NEWS.md)
 -   [Lire les notes de mise à jour (Français)](NEWS_FR.md)
+-   [Leer las notas de la versión (Español)](NEWS_ES.md)
 
 ## Architecture
 

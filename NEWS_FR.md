@@ -10,14 +10,14 @@ Ce document détaille les avancées techniques de la version 9.0 du système TRY
 * **Date de Certification:** Février 2026
 * **Client Prioritaire:** Elena Grandini, Galeries Lafayette Paris Haussmann
 
-## Nouveautés V9.0: Intégration avec Plataformes Google
+## Nouveautés V9.0: Intégration avec Plateformes Google
 
 Cette version consolide l'intégralité de la logique biométrique et commerciale avec les technologies les plus avancées de Google.
 
 ### 1. Intelligence Prédictive - 99.7% de Précision
 La nouvelle architecture d'analyse textile intègre:
 - **Calibration Avancée:** Prise en compte de l'élasticité réelle des textiles pour un tombé impeccable
-- **Analyse Gramaje:** Évaluation du poids du tissu et de sa capacité de drape
+- **Analyse du Grammage:** Évaluation du poids du tissu et de sa capacité de drape
 - **Prédiction Sans Essayage:** Garantie d'ajustement parfait sans essayage physique
 - **Réduction des Retours:** Objectif < 5% grâce à la précision algorithmique
 
@@ -49,7 +49,7 @@ Le backend a migré vers le nouveau SDK Python `google-genai`, optimisant la com
 
 ### 6. Google MediaPipe - "Zero Tallas"
 La fonctionnalité de "Zero Tallas" est alimentée par **MediaPipe** pour le tracking corporel.
-- **Privacité:** Tout le traitement biométrique se fait dans le navigateur du client (Client-Side), garantissant la confidentialité des données.
+- **Confidentialité:** Tout le traitement biométrique se fait dans le navigateur du client (Client-Side), garantissant la confidentialité des données.
 - **Précision:** Détection de 33 points clés du corps pour un ajustement virtuel précis.
 - **Performance:** Exécution optimisée sur appareils mobiles et de bureau sans matériel spécialisé.
 
