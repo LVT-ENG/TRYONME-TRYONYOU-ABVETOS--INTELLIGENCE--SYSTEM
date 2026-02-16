@@ -17,6 +17,9 @@
 
 import { FULL_CATALOG, HORMA_ANGEL, filterByGender } from '../data/catalog_elena_grandini.js';
 
+// ⚡ Bolt: Pre-calculate HORMA_ANGEL entries to avoid object allocation in loop
+const HORMA_ANGEL_ENTRIES = Object.entries(HORMA_ANGEL);
+
 // ─── CONSTANTES V9.0 CALIBRADAS ───
 const MIN_ACCEPTABLE_SCORE = 95;  // Threshold para "Perfect Fit"
 const MAX_RECALC_ITERATIONS = 10;
@@ -135,6 +138,9 @@ export function extractUserProfile(landmarks) {
     },
   };
 
+  // ⚡ Bolt: Pre-calculate horma string to avoid repetitive lookup
+  profile.foot.horma = selectHormaAngel(profile.foot);
+
   emitEvent('PROFILE_EXTRACTED', { silhouette, proportions });
   return profile;
 }
@@ -161,7 +167,8 @@ export function selectHormaAngel(footData) {
   else instepClass = 'high';
 
   // Buscar horma que coincida
-  const match = Object.entries(HORMA_ANGEL).find(([_, h]) =>
+  // ⚡ Bolt: Use cached entries
+  const match = HORMA_ANGEL_ENTRIES.find(([_, h]) =>
     h.width === widthClass && h.instep === instepClass
   );
 
@@ -171,7 +178,7 @@ export function selectHormaAngel(footData) {
   }
 
   // Fallback: buscar la más cercana
-  const fallback = Object.entries(HORMA_ANGEL).find(([_, h]) =>
+  const fallback = HORMA_ANGEL_ENTRIES.find(([_, h]) =>
     h.width === widthClass
   );
   const result = fallback ? fallback[0] : 'D'; // D = Estándar Media por defecto
@@ -234,7 +241,8 @@ function calculateSingleFitScore(item, profile) {
     }
   } else {
     // Calzado: comparar Horma Ángel
-    const userHorma = selectHormaAngel(profile.foot);
+    // ⚡ Bolt: Use pre-calculated horma if available
+    const userHorma = profile.foot.horma || selectHormaAngel(profile.foot);
     if (item.robert.horma === userHorma) {
       hormaScore = 100;
     } else {
