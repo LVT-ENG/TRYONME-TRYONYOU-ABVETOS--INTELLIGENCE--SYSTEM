@@ -1,0 +1,45 @@
+name: SuperCommit Max Deploy
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  supercommit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Needed for commit/push if script does it
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }} # Or a PAT if pushing to protected branch
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python Dependencies
+        run: |
+          pip install pandas numpy google-generativeai || true # Basic dependencies if needed by regenerate_inventory.py, though it uses only stdlib (os, json) based on my implementation.
+          # regenerate_inventory.py only uses standard library modules based on my implementation.
+
+      - name: Configure Git Identity
+        run: |
+          git config --global user.name "SuperCommit Bot"
+          git config --global user.email "bot@supercommit.max"
+
+      - name: Run SuperCommit Max
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          chmod +x scripts/supercommit.all.sh
+          ./scripts/supercommit.all.sh
