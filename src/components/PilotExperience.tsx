@@ -3,6 +3,7 @@ import Webcam from 'react-webcam';
 import { Link } from 'react-router-dom';
 import BusinessModal from './BusinessModal';
 import ScanningOverlay from './ScanningOverlay';
+import BiometricStatus from './BiometricStatus';
 
 // --- LAFAYETTE INVENTORY INTEGRATION ---
 const LAFAYETTE_INVENTORY = [
@@ -78,6 +79,9 @@ const PilotExperience = () => {
 
   return (
     <div className="bg-[#141619] min-h-screen text-[#F0F0F0] overflow-x-hidden font-sans">
+      
+      {/* Biometric Engine Status */}
+      <BiometricStatus />
       
       {/* LUXURY HEADER */}
       <header className="floating-logo">
