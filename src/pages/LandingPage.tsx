@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'wouter';
+import BiometricStatus from '../components/BiometricStatus';
 
 const LandingPage = () => {
   return (
@@ -9,13 +10,23 @@ const LandingPage = () => {
         <img src="/images/logo-peacock.png" alt="TryOnYou Logo" className="h-16 drop-shadow-lg" />
       </header>
 
-      {/* Hero Section: Model + Snap Concept */}
+      {/* Lafayette Pilot Active Banner */}
+      <div className="fixed top-20 left-0 right-0 z-40 flex justify-center pointer-events-none">
+        <div className="bg-[#C5A46D] text-[#141619] px-8 py-2 text-xs font-bold uppercase tracking-[0.3em] shadow-[0_0_30px_rgba(197,164,109,0.5)]">
+          🦚 PILOTO LAFAYETTE ACTIVO
+        </div>
+      </div>
+
+      {/* Biometric Engine Status */}
+      <BiometricStatus />
+
+      {/* Hero Section: Lafayette Gallery + Snap Concept */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        {/* Background Image: Model facing mirror/digital interface */}
+        {/* Background Image: Lafayette Gallery */}
         <div className="absolute inset-0 z-0">
           <img 
-            src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1974&auto=format&fit=crop" 
-            alt="Model facing mirror" 
+            src="/assets/ui/lafayette_hero_banner.png" 
+            alt="Galeries Lafayette" 
             className="w-full h-full object-cover opacity-60"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#141619] via-transparent to-[#141619]/50"></div>
@@ -36,6 +47,15 @@ const LandingPage = () => {
               Try The Experience
             </button>
           </Link>
+        </div>
+
+        {/* Pau Mascot - Lower Left Corner */}
+        <div className="absolute bottom-8 left-8 z-20">
+          <img 
+            src="/assets/branding/pau_tuxedo_agent.png" 
+            alt="Pau Agent" 
+            className="h-32 md:h-40 drop-shadow-2xl opacity-90"
+          />
         </div>
       </section>
 
