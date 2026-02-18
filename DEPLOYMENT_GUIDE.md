@@ -4,6 +4,8 @@
 
 Este paquete contiene el proyecto **TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATUM** completamente configurado y listo para producción.
 
+> **🎯 IMPORTANTE:** Después del despliegue, usa la [Guía de Validación Lafayette](./LAFAYETTE_VALIDATION_GUIDE.md) para verificar que todo funciona correctamente antes de presentar a Galeries Lafayette.
+
 ---
 
 ## ✅ Contenido del Paquete
@@ -69,9 +71,13 @@ En "Environment Variables", añade:
 
 | Key | Value | Environments |
 |-----|-------|--------------|
-| `VITE_GOOGLE_API_KEY` | `AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM` | Production, Preview, Development |
-| `VITE_PORKBUN_API` | `pk1_a9500f30e15d4e48cde89418d500` | Production, Preview, Development |
+| `VITE_GOOGLE_API_KEY` | `your_google_api_key_here` | Production, Preview, Development |
+| `VITE_PORKBUN_API` | `your_porkbun_api_key_here` | Production, Preview, Development |
 | `VITE_PILOT_MODE` | `LAFAYETTE_ACTIVE` | Production, Preview, Development |
+
+**Obtén las API keys:**
+- Google Gemini: https://makersuite.google.com/app/apikey
+- Porkbun: https://porkbun.com/account/api
 
 ### 2.4 Configurar Dominio:
 
@@ -119,12 +125,23 @@ TRYONME-TRYONYOU-ABVETOS--INTELLIGENCE--SYSTEM/
 
 ## 🎯 Verificación Post-Despliegue
 
-Una vez desplegado, verifica:
+Una vez desplegado, usa la **[Guía de Validación Lafayette](./LAFAYETTE_VALIDATION_GUIDE.md)** para verificar los 3 puntos críticos:
 
-1. ✅ URL funciona: https://tryonyou.app
-2. ✅ Assets cargan correctamente
-3. ✅ No hay errores en consola del navegador
-4. ✅ Variables de entorno están activas (prueba funcionalidad IA)
+### 1. 🎨 Identidad Visual "Divineo"
+- ✅ Fondo antracita oscuro (#141619) y detalles en oro (#C5A46D)
+- ✅ Banner "PILOTO LAFAYETTE ACTIVO" visible
+- ✅ Imagen de galerías Lafayette como fondo
+- ✅ Mascota Pau con esmoquin en esquina inferior izquierda
+
+### 2. 🛡️ Motor Biométrico
+- ✅ Indicador de estado visible (verde = online, rojo = offline)
+- ✅ Si offline: configurar `VITE_GOOGLE_API_KEY` en Vercel
+
+### 3. 🌐 Dominio Oficial
+- ✅ URL `tryonyou.app` funcionando (no solo `...vercel.app`)
+- ✅ DNS configurado correctamente en Porkbun
+
+**Ver detalles completos en:** [LAFAYETTE_VALIDATION_GUIDE.md](./LAFAYETTE_VALIDATION_GUIDE.md)
 
 ---
 
