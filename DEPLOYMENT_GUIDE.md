@@ -18,6 +18,37 @@ Este paquete contiene el proyecto **TRYONYOU–ABVETOS–ULTRA–PLUS–ULTIMATU
 
 ---
 
+## 🖥️ Paso 0: Configuración Local (Desarrollo)
+
+Si vas a trabajar en el proyecto localmente, primero configura las variables de entorno:
+
+### 0.1 Crear archivo de configuración local:
+
+```bash
+# Copia el template de variables de entorno
+cp .env.template .env.local
+
+# Edita .env.local y añade tu Google API Key
+# Reemplaza 'your_google_api_key_here' con tu clave real
+```
+
+**Contenido mínimo de `.env.local`:**
+```bash
+VITE_GOOGLE_API_KEY=AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM
+VITE_PILOT_MODE=LAFAYETTE_ACTIVE
+```
+
+### 0.2 Instalar dependencias y ejecutar:
+
+```bash
+npm install
+npm run dev
+```
+
+⚠️ **Nota:** El archivo `.env.local` está en `.gitignore` y NO se subirá a GitHub por seguridad.
+
+---
+
 ## 🔧 Paso 1: Subir a GitHub
 
 ### 1.1 Desde tu terminal local:
@@ -67,6 +98,10 @@ git push origin master:main
 
 ### 2.3 Variables de Entorno (CRÍTICO):
 
+⚠️ **IMPORTANTE:** El motor biométrico NO funcionará sin `VITE_GOOGLE_API_KEY`. Debes configurarlo obligatoriamente.
+
+#### Opción A: Mediante la interfaz web de Vercel
+
 En "Environment Variables", añade:
 
 | Key | Value | Environments |
@@ -74,6 +109,19 @@ En "Environment Variables", añade:
 | `VITE_GOOGLE_API_KEY` | `your_google_api_key_here` | Production, Preview, Development |
 | `VITE_PORKBUN_API` | `your_porkbun_api_key_here` | Production, Preview, Development |
 | `VITE_PILOT_MODE` | `LAFAYETTE_ACTIVE` | Production, Preview, Development |
+
+#### Opción B: Mediante Vercel CLI
+
+Si tienes instalado Vercel CLI, puedes añadir las variables con:
+
+```bash
+vercel env add VITE_GOOGLE_API_KEY
+# Cuando te pregunte el valor, introduce: AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM
+# Selecciona todos los entornos: Production, Preview, Development
+
+vercel env add VITE_PILOT_MODE
+# Valor: LAFAYETTE_ACTIVE
+```
 
 **Obtén las API keys:**
 - Google Gemini: https://makersuite.google.com/app/apikey
