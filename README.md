@@ -23,6 +23,12 @@ Copy `.env.template` to `.env.local` and configure the required variables:
 - 🏛️ **Lafayette Integration**: Branded experience for Galeries Lafayette pilot
 - 🦚 **Pau Agent**: Interactive mascot guide
 
+## 📰 Release Notes (V9.0)
+
+- [English (NEWS.md)](./NEWS.md)
+- [Español (NEWS_ES.md)](./NEWS_ES.md)
+- [Français (NEWS_FR.md)](./NEWS_FR.md)
+
 ## 🛠️ Development
 
 ```bash
@@ -43,7 +49,8 @@ npm run preview
 - Vite 7.3.1
 - TypeScript
 - Tailwind CSS
-- Google Gemini AI
+- Google Gemini 2.0 Flash
+- Google MediaPipe
 
 ---
 
