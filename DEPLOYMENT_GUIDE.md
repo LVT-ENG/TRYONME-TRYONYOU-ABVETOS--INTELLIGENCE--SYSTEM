@@ -71,8 +71,8 @@ En "Environment Variables", añade:
 
 | Key | Value | Environments |
 |-----|-------|--------------|
-| `VITE_GOOGLE_API_KEY` | `<tu-api-key-de-google-gemini>` | Production, Preview, Development |
-| `VITE_PORKBUN_API` | `<tu-api-key-de-porkbun>` | Production, Preview, Development |
+| `VITE_GOOGLE_API_KEY` | `your_google_api_key_here` | Production, Preview, Development |
+| `VITE_PORKBUN_API` | `your_porkbun_api_key_here` | Production, Preview, Development |
 | `VITE_PILOT_MODE` | `LAFAYETTE_ACTIVE` | Production, Preview, Development |
 
 **Obtén las API keys:**
