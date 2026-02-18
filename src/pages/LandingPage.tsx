@@ -86,6 +86,42 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Powered by Google Section */}
+      <section className="py-24 bg-[#141619] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+          <h2 className="text-3xl text-[#C5A46D] mb-4 tracking-wider">Powered by Google</h2>
+          <p className="text-gray-400 max-w-2xl mx-auto mb-16 font-light">
+            Engineered with Gemini 2.0 Flash, Agent 70, and MediaPipe for unparalleled precision and speed.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center justify-items-center opacity-80">
+            {/* Gemini 2.0 Flash */}
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">G</div>
+              <h3 className="text-white text-lg font-medium tracking-wide">Gemini 2.0 Flash</h3>
+              <p className="text-gray-500 text-xs uppercase tracking-widest">Real-Time Narrative</p>
+            </div>
+
+            {/* Agent 70 */}
+            <div className="flex flex-col items-center space-y-4 transform scale-110">
+              <div className="w-20 h-20 border-2 border-[#C5A46D] rounded-full flex items-center justify-center text-[#C5A46D] text-3xl font-serif">70</div>
+              <h3 className="text-white text-xl font-medium tracking-wide">Agent 70</h3>
+              <p className="text-gray-500 text-xs uppercase tracking-widest">Style Intelligence</p>
+            </div>
+
+            {/* MediaPipe */}
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 bg-gray-800 rounded-lg flex items-center justify-center text-white text-2xl font-bold">MP</div>
+              <h3 className="text-white text-lg font-medium tracking-wide">MediaPipe</h3>
+              <p className="text-gray-500 text-xs uppercase tracking-widest">On-Device Privacy</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Background Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#C5A46D]/5 rounded-full blur-[100px] pointer-events-none"></div>
+      </section>
+
       {/* Footer */}
       <footer className="py-12 border-t border-white/5 text-center bg-[#141619]">
         <p className="text-gray-600 text-[10px] uppercase tracking-[0.3em]">
