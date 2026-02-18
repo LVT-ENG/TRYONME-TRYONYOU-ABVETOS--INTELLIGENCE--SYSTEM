@@ -15,6 +15,8 @@ if os.path.exists(CATALOG_DIR):
                 "path": f"/assets/catalog/{filename}"
             })
 
+inventory.sort(key=lambda x: x["id"])
+
 with open(OUTPUT_FILE, "w") as f:
     json.dump(inventory, f, indent=2)
 
