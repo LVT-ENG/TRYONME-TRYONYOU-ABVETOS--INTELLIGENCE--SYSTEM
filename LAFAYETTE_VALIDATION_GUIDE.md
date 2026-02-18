@@ -72,8 +72,10 @@ Missing VITE_GOOGLE_API_KEY in environment variables.
 
 2. **Add the API Key**:
    - Key: `VITE_GOOGLE_API_KEY`
-   - Value: `AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM`
+   - Value: `<your-google-gemini-api-key>`
    - Environments: ✓ Production, ✓ Preview, ✓ Development
+   
+   **Get your API key at:** https://makersuite.google.com/app/apikey
 
 3. **Redeploy**:
    - After saving, go to "Deployments"

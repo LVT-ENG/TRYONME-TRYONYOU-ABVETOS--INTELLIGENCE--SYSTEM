@@ -50,11 +50,11 @@ const LandingPage = () => {
         </div>
 
         {/* Pau Mascot - Lower Left Corner */}
-        <div className="absolute bottom-8 left-8 z-20 pointer-events-none">
+        <div className="absolute bottom-8 left-8 z-20">
           <img 
             src="/assets/branding/pau_tuxedo_agent.png" 
             alt="Pau Agent" 
-            className="h-32 md:h-40 drop-shadow-2xl opacity-90 hover:opacity-100 transition-opacity duration-300"
+            className="h-32 md:h-40 drop-shadow-2xl opacity-90"
           />
         </div>
       </section>

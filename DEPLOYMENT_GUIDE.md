@@ -71,9 +71,13 @@ En "Environment Variables", añade:
 
 | Key | Value | Environments |
 |-----|-------|--------------|
-| `VITE_GOOGLE_API_KEY` | `AIzaSyBuKZh-SJtXOi4lHE3bA_K437xcKL0a9RM` | Production, Preview, Development |
-| `VITE_PORKBUN_API` | `pk1_a9500f30e15d4e48cde89418d500` | Production, Preview, Development |
+| `VITE_GOOGLE_API_KEY` | `<tu-api-key-de-google-gemini>` | Production, Preview, Development |
+| `VITE_PORKBUN_API` | `<tu-api-key-de-porkbun>` | Production, Preview, Development |
 | `VITE_PILOT_MODE` | `LAFAYETTE_ACTIVE` | Production, Preview, Development |
+
+**Obtén las API keys:**
+- Google Gemini: https://makersuite.google.com/app/apikey
+- Porkbun: https://porkbun.com/account/api
 
 ### 2.4 Configurar Dominio:
 
