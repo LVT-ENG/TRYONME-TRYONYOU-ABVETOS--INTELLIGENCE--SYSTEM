@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Webcam from 'react-webcam';
-import { Link } from 'react-router-dom';
 import BusinessModal from './BusinessModal';
 import ScanningOverlay from './ScanningOverlay';
 import BiometricStatus from './BiometricStatus';
