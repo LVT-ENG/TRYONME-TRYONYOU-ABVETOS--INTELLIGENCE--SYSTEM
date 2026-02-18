@@ -1,15 +1,53 @@
-# React + Vite
+# 🦚 TRYONYOU - Lafayette Pilot System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**TRYONYOU–ABVETOS–ULTIMATUM** - Sistema de prueba virtual inteligente para Galeries Lafayette.
 
-Currently, two official plugins are available:
+## 🚀 Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Deployment
+See [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) for complete deployment instructions.
 
-## Expanding the ESLint configuration
+### Validation
+After deployment, use [LAFAYETTE_VALIDATION_GUIDE.md](./LAFAYETTE_VALIDATION_GUIDE.md) to validate the production deployment.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Environment Variables
+Copy `.env.template` to `.env.local` and configure the required variables:
+- `VITE_GOOGLE_API_KEY` - Google Gemini API for biometric analysis (REQUIRED)
+- `VITE_PILOT_MODE` - Set to `LAFAYETTE_ACTIVE` for Lafayette branding
+- `VITE_PORKBUN_API` - For domain management (optional)
+
+## 🎨 Key Features
+
+- ✨ **Biometric Analysis**: AI-powered fashion recommendations
+- 🎯 **Zero Tallas**: Size-free fashion philosophy
+- 🏛️ **Lafayette Integration**: Branded experience for Galeries Lafayette pilot
+- 🦚 **Pau Agent**: Interactive mascot guide
+
+## 🛠️ Development
+
+```bash
+npm install
+npm run dev
+```
+
+## 📦 Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## 📋 Technical Stack
+
+- React 19.1.1
+- Vite 7.3.1
+- TypeScript
+- Tailwind CSS
+- Google Gemini AI
+
+---
+
+## Validation History
 Last Validated: Tue Feb 17 16:06:15 UTC 2026
 Last Validated: Tue Feb 17 17:47:59 UTC 2026
 Last Validated: Tue Feb 17 18:38:40 UTC 2026
