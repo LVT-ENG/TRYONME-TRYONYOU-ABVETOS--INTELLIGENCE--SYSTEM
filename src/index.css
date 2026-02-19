@@ -16,3 +16,12 @@
 .hero-snap {
   @apply relative h-screen w-full flex items-center justify-center overflow-hidden;
 }
+
+@keyframes scan-line {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+.animate-scan-line {
+  animation: scan-line 5s linear forwards;
+}
