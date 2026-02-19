@@ -1,27 +1,27 @@
 [
   {
+    "id": "burberry_trench",
+    "path": "/assets/catalog/burberry_trench.png"
+  },
+  {
     "id": "red_dress_minimal",
     "path": "/assets/catalog/red_dress_minimal.png"
   },
   {
-    "id": "black_gown_avant",
-    "path": "/assets/catalog/black_gown_avant.png"
+    "id": "red_dress_fur",
+    "path": "/assets/catalog/red_dress_fur.png"
   },
   {
     "id": "pink_tweed_suit",
     "path": "/assets/catalog/pink_tweed_suit.png"
   },
   {
+    "id": "black_gown_avant",
+    "path": "/assets/catalog/black_gown_avant.png"
+  },
+  {
     "id": "burberry_trench_original",
     "path": "/assets/catalog/burberry_trench_original.png"
-  },
-  {
-    "id": "burberry_trench",
-    "path": "/assets/catalog/burberry_trench.png"
-  },
-  {
-    "id": "red_dress_fur",
-    "path": "/assets/catalog/red_dress_fur.png"
   },
   {
     "id": "red_dress_minimal_original",
