@@ -1,6 +1,7 @@
-# 🦚 TRYONYOU - Lafayette Pilot System
+# 🦚 TRYONYOU Ultra V9.0 - Lafayette Pilot System
 
 **TRYONYOU–ABVETOS–ULTIMATUM** - Sistema de prueba virtual inteligente para Galeries Lafayette.
+Powered by **Google Gemini 2.0 Flash** and **Agent 70**.
 
 ## 🚀 Quick Start
 
@@ -18,10 +19,14 @@ Copy `.env.template` to `.env.local` and configure the required variables:
 
 ## 🎨 Key Features
 
-- ✨ **Biometric Analysis**: AI-powered fashion recommendations
+- ✨ **Agent 70**: Advanced style intelligence engine for hyper-personalized recommendations
+- 🚀 **Gemini 2.0 Flash**: Real-time style narratives with <500ms response times
+- 🔒 **MediaPipe**: Privacy-first on-device biometric processing
 - 🎯 **Zero Tallas**: Size-free fashion philosophy
 - 🏛️ **Lafayette Integration**: Branded experience for Galeries Lafayette pilot
 - 🦚 **Pau Agent**: Interactive mascot guide
+
+👉 **See [NEWS.md](./NEWS.md) for full V9.0 Release Notes.**
 
 ## 🛠️ Development
 
@@ -43,7 +48,8 @@ npm run preview
 - Vite 7.3.1
 - TypeScript
 - Tailwind CSS
-- Google Gemini AI
+- Google Gemini 2.0 Flash SDK
+- Google MediaPipe
 
 ---
 
