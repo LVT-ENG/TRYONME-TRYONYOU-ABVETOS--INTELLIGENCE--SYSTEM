@@ -123,10 +123,21 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-white/5 text-center bg-[#141619]">
-        <p className="text-gray-600 text-[10px] uppercase tracking-[0.3em]">
-          &copy; 2026 TryOnYou Pilot Experience
-        </p>
+      <footer className="py-12 border-t border-white/5 bg-[#141619]">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <p className="text-gray-600 text-[10px] uppercase tracking-[0.3em]">
+            &copy; 2026 TryOnYou Pilot Experience
+          </p>
+          <div className="flex flex-col md:flex-row gap-4 md:gap-8 text-gray-500 text-xs tracking-wide">
+            <a href="mailto:contact@tryonyou.app" className="hover:text-[#C5A46D] transition-colors duration-300">
+              contact@tryonyou.app
+            </a>
+            <a href="https://tryonyou.app" target="_blank" rel="noopener noreferrer" className="hover:text-[#C5A46D] transition-colors duration-300">
+              tryonyou.app
+            </a>
+            <span>Paris, France</span>
+          </div>
+        </div>
       </footer>
     </div>
   );
