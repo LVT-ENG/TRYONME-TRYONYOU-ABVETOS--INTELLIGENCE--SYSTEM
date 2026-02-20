@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Webcam from 'react-webcam';
 import { Link } from 'react-router-dom';
+import MemoizedWebcam from './MemoizedWebcam';
 import BusinessModal from './BusinessModal';
 import ScanningOverlay from './ScanningOverlay';
 import BiometricStatus from './BiometricStatus';
@@ -102,7 +103,7 @@ const PilotExperience = () => {
               
               {/* LEFT: VISUAL (Webcam/Scan) */}
               <div className="photo-container border border-white/10">
-                <Webcam
+                <MemoizedWebcam
                   audio={false}
                   ref={webcamRef}
                   screenshotFormat="image/jpeg"
