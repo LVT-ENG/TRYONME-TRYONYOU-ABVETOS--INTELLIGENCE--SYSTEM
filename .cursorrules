@@ -1,0 +1,36 @@
+# TRYONYOU: MASTER SYSTEM INSTRUCTIONS (DIVINEO PILOT - LAFAYETTE)
+
+## 1. PROJECT IDENTITY & CORE CONTEXT
+- **Project:** TRYONYOU - Fashion Intelligence System (Piloto Galeries Lafayette).
+- **Patent:** PCT/EP2025/067317 (LVT-ENG). Founder: Rubén Espinar Rodríguez.
+- **Goal:** Eliminate fashion e-commerce returns (30-40%) through Biometric Certainty and "Zero-Size" philosophy.
+
+## 2. THE PRIME DIRECTIVE: "ZERO-SIZE" PROTOCOL (STRICT ENFORCEMENT)
+- **CRITICAL:** NEVER output, render, or process raw size labels (e.g., XS, S, M, L, XL, 36, 40) or biometric numbers (kg, lbs, cm, height, weight) to the user interface.
+- **Action:** Replace all sizes with mathematical "Fit Scores" (e.g., 99.7% Match) and internal `fit_id`.
+- **Reasoning:** Protect the user's mental health. We sell certainty, not judgment. All responses must be sanitized by the `PrivacyFirewall`.
+
+## 3. TECH STACK & ARCHITECTURE (NO DEVIATION)
+- **Frontend:** React 18.3.1 + Vite 7.x (Single Page Application). 
+- **DO NOT USE NEXT.JS.** (App router and SSR cause conflicts with the current setup).
+- **Styling:** Tailwind CSS + Framer Motion (for fluid, 60fps "Slow Tech" animations).
+- **Backend:** Python 3.9+ Serverless Functions (FastAPI) hosted on Vercel (`/api/*`).
+- **Vision/AR:** `react-webcam` + MediaPipe Pose for Live AR processing.
+
+## 4. AGENTIC ORCHESTRATION (A2A)
+The codebase must reflect the interaction of three distinct AI roles:
+1. **Agent 70 (The Physics Engine):** Resides in backend. Calculates fabric elasticity, shoulder drape, and computes the `fit_score` via deep chain-of-thought.
+2. **Pau Agent (Emotional UI):** Resides in frontend. The Peacock avatar. Generates the QR code for VIP fitting room reservations and speaks with elegant, high-end "Drame Chic" tone.
+3. **Jules Agent V7 (Logistics/CRM):** Resides in `api/index.py`. Handles asynchronous tasks: IMAP/SMTP email automation, Google Sheets CRM sync (`Divineo_Leads_DB`), and Telegram bot notifications (`@abvet_deploy_bot`).
+
+## 5. UI/UX GUIDELINES (LUXE NUMÉRIQUE)
+- **Palette:** - Background: Anthracite (`#141619`)
+  - Accents: Luxury Gold (`#C5A46D`)
+  - Interaction: Peacock Blue (`#006D77`)
+  - Text: Light Beige (`#F5EFE6`)
+- **Aesthetic:** Glassmorphism, floating elements, clean layouts. No cartoonish or childish UI components. Maximum high-end fashion realism.
+
+## 6. DEPLOYMENT PROTOCOL
+- Deployment target: Vercel (`vercel.json` configured for SPA rewrites and Python serverless).
+- Production URL: `https://tryonyou.app`.
+- CLI Command: `npx vercel --prod --yes --force`.
