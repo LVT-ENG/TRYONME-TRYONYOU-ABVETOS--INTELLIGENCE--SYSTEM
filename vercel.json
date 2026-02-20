@@ -1,5 +1,6 @@
 {
   "framework": "vite",
+  "alias": ["tryonyou.app"],
   "regions": ["fra1", "hnd1", "iad1"],
   "headers": [
     {
