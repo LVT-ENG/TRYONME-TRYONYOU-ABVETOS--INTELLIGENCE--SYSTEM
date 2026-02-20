@@ -1,0 +1,31 @@
+name: Shopify Make.com Trigger
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  notify-make:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions: {}
+
+    steps:
+      - name: Notify Make.com via Webhook
+        env:
+          MAKE_WEBHOOK_URL: ${{ secrets.MAKE_WEBHOOK_URL }}
+          PR_PAYLOAD: >-
+            {
+              "event": "pr_merged",
+              "repository": ${{ toJSON(github.repository) }},
+              "pr_number": ${{ github.event.pull_request.number }},
+              "pr_title": ${{ toJSON(github.event.pull_request.title) }},
+              "merged_by": ${{ toJSON(github.event.pull_request.merged_by.login) }},
+              "branch": ${{ toJSON(github.event.pull_request.base.ref) }}
+            }
+        run: |
+          curl --fail -X POST "$MAKE_WEBHOOK_URL" \
+            -H "Content-Type: application/json" \
+            -d "$PR_PAYLOAD" || exit 1
