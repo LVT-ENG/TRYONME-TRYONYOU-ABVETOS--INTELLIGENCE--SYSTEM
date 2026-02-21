@@ -1,7 +1,8 @@
 {
   "name": "tryonyou-system",
   "private": true,
-  "version": "0.0.0",
+  "version": "9.0.0",
+  "description": "TryOnYou Ultra V9.0 - Powered by Google Gemini 2.0 & MediaPipe",
   "type": "module",
   "scripts": {
     "dev": "vite",

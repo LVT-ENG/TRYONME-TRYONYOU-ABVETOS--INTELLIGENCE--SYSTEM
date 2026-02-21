@@ -3,10 +3,7 @@ import { Route, Switch } from "wouter";
 import LandingPage from "./pages/LandingPage";
 import PilotExperience from "./components/PilotExperience";
 import AbvetCheckout from "./components/AbvetCheckout";
-
-// Mock Contexts to satisfy component dependencies if any
-export const LanguageContext = React.createContext({ t: (key) => key, language: 'en' });
-export const useLanguage = () => React.useContext(LanguageContext);
+import { LanguageContext } from "./contexts/LanguageContext";
 
 function Router() {
   return (
