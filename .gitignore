@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+public/assets/lafayette/
+*.png
+*.jpg
+*.pdf
+*.mp4
+.DS_Store

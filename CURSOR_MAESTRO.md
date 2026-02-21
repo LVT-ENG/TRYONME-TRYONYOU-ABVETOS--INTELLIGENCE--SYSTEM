@@ -1,0 +1,1 @@
+# 🚀 INSTRUCCIONES\n1. Lee scripts/bridge_orchestrator.py\n2. Finaliza docs/legal/Convertible_Note_2026.md

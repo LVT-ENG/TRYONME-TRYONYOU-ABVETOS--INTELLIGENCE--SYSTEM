@@ -1,0 +1,1 @@
+# 💎 TRYONYOU Bridge Round\n15.000€ | 20% Discount | 1.5M Cap
