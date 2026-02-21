@@ -79,7 +79,7 @@ export const getAIRecommendation = async (userMood: string, userBodyType: string
       return lafayetteDB[0]; // Fallback
     }
 
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
     const prompt = `Act as a high-end fashion stylist for Galeries Lafayette. 
     User Mood: ${userMood}. 
     Body Type: ${userBodyType}. 

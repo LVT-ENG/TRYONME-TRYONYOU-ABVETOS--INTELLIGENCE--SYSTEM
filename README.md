@@ -1,12 +1,33 @@
-# React + Vite
+# TryOnYou Ultra V9.0 - Powered by Google Gemini 2.0 & MediaPipe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is the official repository for the TryOnYou Ultra V9.0 pilot, featuring advanced AI integrations.
 
-Currently, two official plugins are available:
+## What's New in V9.0
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+We have integrated the latest Google platforms to power our recommendation engine and biometric processing:
 
-## Expanding the ESLint configuration
+- **Google Gemini 2.0 Flash**: Delivers real-time fashion advice with sub-500ms latency.
+- **Agent 70**: Advanced orchestration for hyper-personalized styling.
+- **Google MediaPipe**: Privacy-first, client-side body measurement.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+For detailed release notes, please see:
+- [Release Notes (English)](NEWS.md)
+- [Notes de Version (Français)](NEWS_FR.md)
+- [Notas de la Versión (Español)](NEWS_ES.md)
+
+## Tech Stack
+
+- React 19
+- Vite
+- Google Gemini 2.0 Flash (via `@google/generative-ai`)
+- MediaPipe
+
+## Getting Started
+
+1.  Clone the repository.
+2.  Install dependencies: `npm install`
+3.  Run the development server: `npm run dev`
+
+---
+
+*Powered by Google Gemini 2.0 & MediaPipe*
