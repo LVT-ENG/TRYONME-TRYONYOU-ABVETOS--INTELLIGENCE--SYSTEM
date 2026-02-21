@@ -1,0 +1,42 @@
+name: Jules — Supercommit Max + Deploy
+
+on:
+  workflow_dispatch:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  supercommit:
+    if: github.event_name == 'workflow_dispatch' || github.event.issue.number == 1811
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Configure Git
+        run: |
+          git config user.name "Jules"
+          git config user.email "jules@tryonyou.ai"
+
+      - name: Run Supercommit Max
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          chmod +x scripts/supercommit_max.sh
+          ./scripts/supercommit_max.sh
