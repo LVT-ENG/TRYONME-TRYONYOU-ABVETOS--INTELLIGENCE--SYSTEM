@@ -47,8 +47,7 @@ const LAFAYETTE_INVENTORY = [
 ];
 
 const PilotExperience = () => {
-  const [step, setStep] = useState<'scan' | 'result'>('scan');
-  // scanningProgress logic moved to ScanningOverlay to prevent re-renders
+  const [step, setStep] = useState<'input' | 'scanning' | 'result'>('input');
   const webcamRef = useRef<Webcam>(null);
   
   // Inputs
@@ -59,24 +58,34 @@ const PilotExperience = () => {
   const [recommendation, setRecommendation] = useState(LAFAYETTE_INVENTORY[0]);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
 
-  // --- RECOMMENDATION ENGINE ---
-  const handleFinishScan = () => {
+  // --- TRANSITION LOGIC ---
+  const handleStartScan = () => {
     if (occasion && feeling) {
-      // Logic: Filter by Intention AND Feeling (Cut)
-      const match = LAFAYETTE_INVENTORY.find(item => 
-        item.intention.includes(occasion.toLowerCase()) && 
-        item.cut.toLowerCase() === feeling.toLowerCase()
-      );
-      
-      // Fallback logic if no exact match
-      const fallback = LAFAYETTE_INVENTORY.find(item => 
-        item.cut.toLowerCase() === feeling.toLowerCase()
-      );
-
-      setRecommendation(match || fallback || LAFAYETTE_INVENTORY[0]);
-      setStep('result');
+       setStep('scanning');
     }
   };
+
+  useEffect(() => {
+    if (step === 'scanning') {
+      const timer = setTimeout(() => {
+        // Logic: Filter by Intention AND Feeling (Cut)
+        const match = LAFAYETTE_INVENTORY.find(item =>
+          item.intention.includes(occasion.toLowerCase()) &&
+          item.cut.toLowerCase() === feeling.toLowerCase()
+        );
+
+        // Fallback logic if no exact match
+        const fallback = LAFAYETTE_INVENTORY.find(item =>
+          item.cut.toLowerCase() === feeling.toLowerCase()
+        );
+
+        setRecommendation(match || fallback || LAFAYETTE_INVENTORY[0]);
+        setStep('result');
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [step, occasion, feeling]);
 
   return (
     <div className="bg-[#141619] min-h-screen text-[#F0F0F0] overflow-x-hidden font-sans">
@@ -88,7 +97,7 @@ const PilotExperience = () => {
       <header className="floating-logo">
         <div className="luxury-logo">TRYONYOU</div>
         <nav className="mt-6 flex justify-center space-x-12">
-          <span className={`nav-link ${step === 'scan' ? 'text-[#C5A46D]' : ''}`}>Studio</span>
+          <span className={`nav-link ${step === 'input' || step === 'scanning' ? 'text-[#C5A46D]' : ''}`}>Studio</span>
           <span className={`nav-link ${step === 'result' ? 'text-[#C5A46D]' : ''}`}>Wardrobe</span>
           <span className="nav-link">Checkout</span>
         </nav>
@@ -97,7 +106,7 @@ const PilotExperience = () => {
       <main className="snap-y snap-mandatory h-screen overflow-y-scroll">
         
         {/* SECTION 1: STUDIO (SCAN & INPUTS) */}
-        {step === 'scan' && (
+        {(step === 'input' || step === 'scanning') && (
           <section className="main-stage snap-start">
             <div className="visual-content-split">
               
@@ -109,8 +118,8 @@ const PilotExperience = () => {
                   screenshotFormat="image/jpeg"
                   className="w-full h-full object-cover opacity-80"
                 />
-                {/* Scan Overlay */}
-                <ScanningOverlay />
+                {/* Scan Overlay - Only visible during scanning */}
+                {step === 'scanning' && <ScanningOverlay />}
               </div>
 
               {/* RIGHT: TEXT & INPUTS */}
@@ -118,50 +127,52 @@ const PilotExperience = () => {
                 <div>
                   <h2 className="text-[#C5A46D] text-xs tracking-[0.3em] uppercase mb-4">Silent Precision</h2>
                   <p className="text-3xl font-light tracking-tight leading-tight text-white">
-                    "Precision is calibrated with real store data."
+                    {step === 'scanning' ? "Analyse biométrique en cours..." : "Precision is calibrated with real store data."}
                   </p>
                 </div>
 
-                {/* Voice/Text Inputs */}
-                <div className="space-y-8 pt-8 border-t border-white/5">
-                  <div className="space-y-4">
-                    <label className="text-gray-500 text-[10px] uppercase tracking-widest">Occasion</label>
-                    <div className="flex gap-3">
-                      {['Work', 'Event', 'Daily'].map(opt => (
-                        <button 
-                          key={opt}
-                          onClick={() => setOccasion(opt)}
-                          className={`px-6 py-3 border ${occasion === opt ? 'bg-[#C5A46D] text-black border-[#C5A46D]' : 'border-white/20 text-gray-400'} text-[10px] uppercase tracking-wider transition-all`}
-                        >
-                          {opt}
-                        </button>
-                      ))}
+                {/* Voice/Text Inputs - Hidden during scanning */}
+                {step === 'input' && (
+                  <div className="space-y-8 pt-8 border-t border-white/5">
+                    <div className="space-y-4">
+                      <label className="text-gray-500 text-[10px] uppercase tracking-widest">Occasion</label>
+                      <div className="flex gap-3">
+                        {['Work', 'Event', 'Daily'].map(opt => (
+                          <button
+                            key={opt}
+                            onClick={() => setOccasion(opt)}
+                            className={`px-6 py-3 border ${occasion === opt ? 'bg-[#C5A46D] text-black border-[#C5A46D]' : 'border-white/20 text-gray-400'} text-[10px] uppercase tracking-wider transition-all`}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="space-y-4">
-                    <label className="text-gray-500 text-[10px] uppercase tracking-widest">Feeling</label>
-                    <div className="flex gap-3">
-                      {['Fitted', 'Fluid', 'Relaxed'].map(opt => (
-                        <button 
-                          key={opt}
-                          onClick={() => setFeeling(opt)}
-                          className={`px-6 py-3 border ${feeling === opt ? 'bg-[#C5A46D] text-black border-[#C5A46D]' : 'border-white/20 text-gray-400'} text-[10px] uppercase tracking-wider transition-all`}
-                        >
-                          {opt}
-                        </button>
-                      ))}
+                    <div className="space-y-4">
+                      <label className="text-gray-500 text-[10px] uppercase tracking-widest">Feeling</label>
+                      <div className="flex gap-3">
+                        {['Fitted', 'Fluid', 'Relaxed'].map(opt => (
+                          <button
+                            key={opt}
+                            onClick={() => setFeeling(opt)}
+                            className={`px-6 py-3 border ${feeling === opt ? 'bg-[#C5A46D] text-black border-[#C5A46D]' : 'border-white/20 text-gray-400'} text-[10px] uppercase tracking-wider transition-all`}
+                          >
+                            {opt}
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  <button 
-                    onClick={handleFinishScan}
-                    disabled={!occasion || !feeling}
-                    className="w-full py-4 bg-white text-black text-[10px] uppercase tracking-[0.3em] hover:bg-[#C5A46D] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Reveal Recommendation
-                  </button>
-                </div>
+                    <button
+                      onClick={handleStartScan}
+                      disabled={!occasion || !feeling}
+                      className="w-full py-4 bg-white text-black text-[10px] uppercase tracking-[0.3em] hover:bg-[#C5A46D] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      Lancer l'Analyse
+                    </button>
+                  </div>
+                )}
               </div>
 
             </div>
@@ -181,30 +192,32 @@ const PilotExperience = () => {
                   alt={recommendation.name} 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c0e] via-transparent to-transparent"></div>
+
+                {/* MATCH BADGE */}
+                 <div className="absolute top-10 left-10 bg-[#D3B26A] text-black px-4 py-2 text-[10px] uppercase tracking-widest font-bold">
+                  Match 99.7%
+                </div>
               </div>
 
-              {/* RIGHT: HUMAN MESSAGE */}
+              {/* RIGHT: HUMAN MESSAGE - STANDARDIZED FRENCH */}
               <div className="order-1 lg:order-2 space-y-8 animate-fadeIn">
-                <h3 className="text-[#C5A46D] text-[10px] tracking-[0.4em] uppercase">Personalized Recommendation</h3>
+                <h3 className="text-[#C5A46D] text-[10px] tracking-[0.4em] uppercase">Recommandation Personnalisée</h3>
                 <p className="text-4xl font-serif text-white uppercase leading-tight">
-                  "{recommendation.name}"
+                  "Robe de Soirée Soie"
                 </p>
                 <p className="text-xl text-white font-light italic tracking-wide leading-relaxed max-w-md border-l-2 border-[#C5A46D] pl-6">
-                  "{recommendation.human_message}"
-                </p>
-                <p className="text-gray-500 text-xs uppercase tracking-widest pt-4">
-                  ID: {recommendation.id} · Cut: {recommendation.cut}
+                  "Tissu avec 12% d'élasticité qui épouse vos hanches sans serrer."
                 </p>
                 
                 <div className="pt-8 flex gap-4">
                   <button className="px-8 py-3 bg-[#C5A46D] text-black text-[10px] uppercase tracking-[0.2em]">
-                    Shop Now
+                    Réserver en cabine
                   </button>
                   <button 
-                    onClick={() => setStep('scan')}
+                    onClick={() => setStep('input')}
                     className="px-8 py-3 border border-white/20 text-white text-[10px] uppercase tracking-[0.2em]"
                   >
-                    Restart
+                    Annuler
                   </button>
                   <button 
                     onClick={() => setShowBusinessModal(true)}
