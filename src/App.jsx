@@ -3,7 +3,7 @@ import { Route, Switch } from "wouter";
 import LandingPage from "./pages/LandingPage";
 import PilotExperience from "./components/PilotExperience";
 import AbvetCheckout from "./components/AbvetCheckout";
-import { LanguageContext } from "./contexts/LanguageContext";
+import { LanguageProvider } from "./i18n/LanguageContext";
 
 function Router() {
   return (
@@ -18,9 +18,9 @@ function Router() {
 
 function App() {
   return (
-    <LanguageContext.Provider value={{ t: (k) => k, language: 'en' }}>
+    <LanguageProvider>
       <Router />
-    </LanguageContext.Provider>
+    </LanguageProvider>
   );
 }
 
