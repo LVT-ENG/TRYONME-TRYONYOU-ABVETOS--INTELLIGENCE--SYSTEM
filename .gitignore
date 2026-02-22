@@ -7,3 +7,4 @@ public/assets/lafayette/
 *.pdf
 *.mp4
 .DS_Store
+logs/
