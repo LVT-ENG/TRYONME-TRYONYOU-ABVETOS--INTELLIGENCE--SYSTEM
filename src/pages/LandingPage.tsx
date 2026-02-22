@@ -67,9 +67,12 @@ const LandingPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-white/5 text-center bg-[#141619]">
+      <footer className="py-12 border-t border-white/5 text-center bg-[#141619] space-y-4">
         <p className="text-gray-600 text-[10px] uppercase tracking-[0.3em]">
           &copy; 2026 TryOnYou Pilot Experience
+        </p>
+        <p className="text-gray-500 text-[10px] uppercase tracking-[0.2em]">
+          Powered by <span className="text-white">Google Gemini 2.0</span> & <span className="text-white">MediaPipe</span>
         </p>
       </footer>
     </div>
