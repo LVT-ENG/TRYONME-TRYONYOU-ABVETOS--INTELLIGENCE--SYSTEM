@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 import { Link } from 'react-router-dom';
 import BusinessModal from './BusinessModal';
@@ -45,7 +45,6 @@ const LAFAYETTE_INVENTORY = [
 
 const PilotExperience = () => {
   const [step, setStep] = useState<'scan' | 'result'>('scan');
-  const [scanningProgress, setScanningProgress] = useState(0);
   const webcamRef = useRef<Webcam>(null);
   
   // Inputs
@@ -55,19 +54,6 @@ const PilotExperience = () => {
   // Recommendation State
   const [recommendation, setRecommendation] = useState(LAFAYETTE_INVENTORY[0]);
   const [showBusinessModal, setShowBusinessModal] = useState(false);
-
-  // Scanning Logic
-  useEffect(() => {
-    if (step === 'scan') {
-      const interval = setInterval(() => {
-        setScanningProgress(prev => {
-          if (prev >= 100) return 100;
-          return prev + 1; 
-        });
-      }, 50);
-      return () => clearInterval(interval);
-    }
-  }, [step]);
 
   // --- RECOMMENDATION ENGINE ---
   const handleFinishScan = () => {
@@ -119,8 +105,7 @@ const PilotExperience = () => {
                 {/* Scan Overlay */}
                 <div className="absolute inset-0 z-10 pointer-events-none">
                   <div 
-                    className="absolute w-full h-[1px] bg-[#C5A46D] shadow-[0_0_15px_#C5A46D]"
-                    style={{ top: `${scanningProgress}%`, transition: 'top 0.1s linear' }}
+                    className="absolute w-full h-[1px] bg-[#C5A46D] shadow-[0_0_15px_#C5A46D] animate-scan"
                   ></div>
                   <div className="absolute inset-0 flex items-center justify-center opacity-40">
                      <svg width="200" height="400" viewBox="0 0 100 200" fill="none" stroke="#C5A46D" strokeWidth="0.5">
