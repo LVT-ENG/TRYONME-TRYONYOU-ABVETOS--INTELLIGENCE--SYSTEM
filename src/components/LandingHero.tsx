@@ -4,12 +4,18 @@ import { Link } from 'wouter';
 export const LandingHero = () => (
   <div className="hero-snap">
     <div className="absolute inset-0 z-0">
-      {/* Placeholder for the 'Snap' moment image */}
-      <img 
-        src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop" 
-        className="w-full h-full object-cover opacity-60" 
-        alt="Model Snap Moment"
-      />
+      {/* Background Video: Parade / Golden Dust (hero_video.mp4 in public/assets/) */}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        aria-label="Background video showing model snap moment"
+        poster="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop"
+        className="w-full h-full object-cover opacity-60"
+      >
+        <source src="/assets/hero_video.mp4" type="video/mp4" />
+      </video>
       <div className="absolute inset-0 bg-black/40"></div>
     </div>
     <div className="z-10 text-center space-y-6 px-4 animate-fadeIn">

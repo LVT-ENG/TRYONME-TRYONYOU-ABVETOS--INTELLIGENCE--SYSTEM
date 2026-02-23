@@ -11,13 +11,19 @@ const LandingPage = () => {
 
       {/* Hero Section: Model + Snap Concept */}
       <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
-        {/* Background Image: Model facing mirror/digital interface */}
+        {/* Background Video: Parade / Golden Dust */}
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1974&auto=format&fit=crop" 
-            alt="Model facing mirror" 
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-label="Background video showing parade with golden dust"
+            poster="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=1974&auto=format&fit=crop"
             className="w-full h-full object-cover opacity-60"
-          />
+          >
+            <source src="/assets/hero_video.mp4" type="video/mp4" />
+          </video>
           <div className="absolute inset-0 bg-gradient-to-t from-[#141619] via-transparent to-[#141619]/50"></div>
         </div>
 

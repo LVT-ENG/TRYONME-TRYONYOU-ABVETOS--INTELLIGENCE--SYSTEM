@@ -6,4 +6,5 @@ public/assets/lafayette/
 *.jpg
 *.pdf
 *.mp4
+!public/assets/hero_video.mp4
 .DS_Store
