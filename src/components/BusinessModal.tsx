@@ -1,3 +1,15 @@
+/**
+ * BusinessModal.tsx — B2B partnership offer modal.
+ *
+ * Displays when a brand or retailer clicks "Partner" or "Finalizar & Partner".
+ * Presents two integration tiers:
+ *   - SaaS Pilot  : Pay-per-try e-commerce plugin (quick start)
+ *   - Full License: Complete "Divineo" system for physical retail (patent protected)
+ *
+ * Props:
+ *   isOpen  — controls visibility
+ *   onClose — callback to dismiss the modal
+ */
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, ShieldCheck, Zap } from 'lucide-react';

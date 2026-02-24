@@ -1,3 +1,12 @@
+/**
+ * LandingPage.tsx — Marketing landing page.
+ *
+ * Structure:
+ *   1. Fixed header  — peacock logo
+ *   2. Hero section  — full-screen video, headline, primary CTA → /demo
+ *   3. Claims grid   — three value pillars (Confidence, Time Saved, Precision)
+ *   4. Footer        — copyright notice
+ */
 import React from 'react';
 import { Link } from 'react-router-dom';
 

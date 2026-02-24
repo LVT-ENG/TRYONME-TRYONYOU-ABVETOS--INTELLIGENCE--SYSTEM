@@ -1,3 +1,10 @@
+/**
+ * LandingHero.tsx — Hero section sub-component.
+ *
+ * Renders the full-screen video hero with the primary CTA button.
+ * Used as a composable hero block; the full LandingPage assembles it
+ * together with the claims grid and footer.
+ */
 import React from 'react';
 import { Link } from 'react-router-dom';
 

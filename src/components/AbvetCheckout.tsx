@@ -1,3 +1,13 @@
+/**
+ * AbvetCheckout.tsx — Biometric, friction-less checkout (3-step flow).
+ *
+ * Steps:
+ *   1 · Scan   — Confirms the user's biometric identity (PAU profile).
+ *   2 · Select — Intelligent item selection with auto-optimized shipping.
+ *   3 · Go     — Order confirmed; optionally opens the BusinessModal.
+ *
+ * Uses framer-motion for smooth step transitions.
+ */
 import React, { useState } from 'react';
 import BusinessModal from './BusinessModal';
 import { motion } from 'framer-motion';

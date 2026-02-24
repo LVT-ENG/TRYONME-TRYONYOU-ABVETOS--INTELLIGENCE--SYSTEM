@@ -1,3 +1,16 @@
+/**
+ * PilotExperience.tsx — Virtual try-on studio (core experience).
+ *
+ * Two-step flow:
+ *   scan   — Webcam feed + body-scan overlay, occasion & feeling inputs.
+ *            On submit, the recommendation engine selects the best item
+ *            from LAFAYETTE_INVENTORY using cut × intention matching.
+ *   result — Displays the recommended garment with its empathetic message
+ *            and actions (Shop Now, Restart, Partner).
+ *
+ * Inventory is defined locally for the pilot; extend by replacing
+ * LAFAYETTE_INVENTORY with a call to `lafayetteDB` from RecommendationEngine.
+ */
 import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 import { Link } from 'react-router-dom';
