@@ -1,6 +1,9 @@
 {
   "framework": "vite",
   "regions": ["fra1", "hnd1", "iad1"],
+  "rewrites": [
+    { "source": "/((?!.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|mp4|webm|glb)).*)", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/(.*)",

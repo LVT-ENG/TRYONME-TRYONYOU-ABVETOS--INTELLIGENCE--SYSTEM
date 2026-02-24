@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'wouter';
+import { Link } from 'react-router-dom';
 
 export const LandingHero = () => (
   <div className="hero-snap">

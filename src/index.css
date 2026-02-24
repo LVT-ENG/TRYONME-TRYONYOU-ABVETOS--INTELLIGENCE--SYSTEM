@@ -17,6 +17,36 @@
   @apply relative h-screen w-full flex items-center justify-center overflow-hidden;
 }
 
+/* PilotExperience layout utilities */
+.floating-logo {
+  @apply fixed top-0 left-0 w-full z-50 pt-8 pb-6 flex flex-col items-center;
+  background: linear-gradient(to bottom, #141619 60%, transparent);
+}
+
+.luxury-logo {
+  @apply text-[#C5A46D] font-black text-2xl tracking-[0.4em] uppercase;
+}
+
+.nav-link {
+  @apply text-gray-500 text-[10px] uppercase tracking-[0.25em] cursor-pointer hover:text-[#C5A46D] transition-colors duration-300;
+}
+
+.main-stage {
+  @apply relative min-h-screen w-full flex items-center justify-center px-6 py-24;
+}
+
+.visual-content-split {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 w-full max-w-7xl mx-auto items-center;
+}
+
+.photo-container {
+  @apply relative w-full aspect-[3/4] overflow-hidden;
+}
+
+.photo-fill {
+  @apply w-full h-full object-cover;
+}
+
 @keyframes scan {
   0% { top: 0%; }
   100% { top: 100%; }
@@ -24,4 +54,13 @@
 
 .animate-scan {
   animation: scan 5s linear forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-out forwards;
 }

@@ -225,7 +225,7 @@ const PilotExperience = () => {
       
       {/* Business Modal Integration */}
       {showBusinessModal && (
-        <BusinessModal onClose={() => setShowBusinessModal(false)} />
+        <BusinessModal isOpen={showBusinessModal} onClose={() => setShowBusinessModal(false)} />
       )}
     </div>
   );
