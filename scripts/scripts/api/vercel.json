@@ -1,0 +1,13 @@
+cat << 'EOF' > vercel.json
+{
+  "version": 2,
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/abvetos.py" },
+    { "source": "/api", "destination": "/api/abvetos.py" },
+    { "source": "/health", "destination": "/api/abvetos.py" },
+    { "source": "/v1/:path*", "destination": "/api/abvetos.py" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
+EOF
