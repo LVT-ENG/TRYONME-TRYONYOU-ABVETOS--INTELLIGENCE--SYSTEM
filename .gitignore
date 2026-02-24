@@ -10,3 +10,4 @@ public/assets/lafayette/
 *.mp4
 !public/assets/hero_video.mp4
 .DS_Store
+*.log
