@@ -1,6 +1,9 @@
 {
   "framework": "vite",
   "regions": ["fra1", "hnd1", "iad1"],
+  "rewrites": [
+    {"source": "/(.*)", "destination": "/index.html"}
+  ],
   "headers": [
     {
       "source": "/(.*)",
