@@ -198,7 +198,7 @@ const PilotExperience = () => {
                   ID: {recommendation.id} · Cut: {recommendation.cut}
                 </p>
                 
-                <div className="pt-8 flex gap-4">
+                <div className="pt-8 flex gap-4 flex-wrap">
                   <button className="px-8 py-3 bg-[#C5A46D] text-black text-[10px] uppercase tracking-[0.2em]">
                     Shop Now
                   </button>
@@ -214,6 +214,11 @@ const PilotExperience = () => {
                   >
                     Partner
                   </button>
+                  <Link to={`/verdad-suprema?mood=${encodeURIComponent(feeling)}&body=${encodeURIComponent(occasion)}`}>
+                    <button className="px-8 py-3 bg-white text-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#C5A46D] transition-all">
+                      Verdad Suprema
+                    </button>
+                  </Link>
                 </div>
               </div>
 
