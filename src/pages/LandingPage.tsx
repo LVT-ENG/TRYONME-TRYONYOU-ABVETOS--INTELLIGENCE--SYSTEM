@@ -66,7 +66,7 @@ const LandingPage = () => {
             <div className="text-[#C5A46D] text-4xl mb-4">🎯</div>
             <h3 className="text-xl font-serif text-white">Precision</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Calibrated with real store data. It's not just AI, it's your personal tailor.
+              Calibrated with real store data. Powered by <strong className="text-[#C5A46D]">Google Gemini 2.0</strong> & <strong className="text-[#C5A46D]">MediaPipe</strong>.
             </p>
           </div>
         </div>
@@ -74,8 +74,11 @@ const LandingPage = () => {
 
       {/* Footer */}
       <footer className="py-12 border-t border-white/5 text-center bg-[#141619]">
-        <p className="text-gray-600 text-[10px] uppercase tracking-[0.3em]">
+        <p className="text-gray-600 text-[10px] uppercase tracking-[0.3em] mb-2">
           &copy; 2026 TryOnYou Pilot Experience
+        </p>
+        <p className="text-gray-700 text-[8px] uppercase tracking-[0.2em]">
+          Powered by Google Gemini 2.0 & MediaPipe
         </p>
       </footer>
     </div>
