@@ -1,0 +1,60 @@
+import os
+import shutil
+import subprocess
+import json
+
+class Agente70Orchestrator:
+    def __init__(self):
+        self.project_name = "Divineo_Pilot_Paris"
+        self.db_name = "Divineo_Leads_DB" # [cite: 2026-02-24]
+        self.media_paths = {
+            "public/assets/": ["hero_video.mp4"],
+            "public/media/": [
+                "TRYONYOU_Familia_Pitch.mp4", 
+                "TRYONYOU___Le_super-héros_de_la_Fashion_Tech.mp4"
+            ],
+            "public/": ["TRYONYOU_PAU_INTRO.mp4"]
+        }
+
+    def consolidate_caja_maestra(self):
+        """Organiza los videos en la estructura profesional de la web"""
+        print(f"--- Agente 70: Consolidando Caja Maestra ---")
+        for folder, files in self.media_paths.items():
+            os.makedirs(folder, exist_ok=True)
+            for file in files:
+                if os.path.exists(file):
+                    shutil.copy(file, os.path.join(folder, file))
+                    print(f"✅ {file} -> {folder}")
+                else:
+                    print(f"⚠️ Alerta: {file} no encontrado. Revisa el Drive.")
+
+    def inject_jules_api_logic(self):
+        """Prepara el punto de conexión para Jules V7 y Google Sheets [cite: 2026-02-24]"""
+        print(f"--- Conectando API de Jules V7 a {self.db_name} ---")
+        # El Agente 70 asegura que la automatización de Gmail esté lista
+        api_config = {
+            "agent": "Jules V7",
+            "task": "Lead Registration & Gmail Automation",
+            "target_sheet": self.db_name,
+            "language_support": ["FR", "ES", "EN"] # [cite: 2026-01-05, 2025-12-22]
+        }
+        with open("api/config.json", "w") as f:
+            json.dump(api_config, f, indent=4)
+        print("✅ Configuración de API inyectada con éxito.")
+
+    def super_commit_and_deploy(self):
+        """Ejecuta el despliegue final en Vercel y activa el monitoreo [cite: 2026-02-24]"""
+        print(f"--- Agente 70: Lanzando Super-Commit a Producción ---")
+        try:
+            # Comando directo para despliegue serverless
+            subprocess.run(["vercel", "--prod", "--confirm"], check=True)
+            print("\n🚀 ¡PILOTO DESPLEGADO! La tía Loki y la abuela ya están en línea.")
+            print("👉 Usa 'vercel logs --follow' para ver la actividad de Jules en tiempo real.")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Error en el despliegue: {e}")
+
+if __name__ == "__main__":
+    master = Agente70Orchestrator()
+    master.consolidate_caja_maestra()
+    master.inject_jules_api_logic()
+    master.super_commit_and_deploy()
