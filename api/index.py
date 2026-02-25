@@ -8,7 +8,18 @@ import smtplib
 from email.mime.text import MIMEText
 
 app = Flask(__name__)
-CORS(app)
+frontend_origin = os.environ.get("FRONTEND_ORIGIN")
+if frontend_origin:
+    CORS(
+        app,
+        resources={
+            r"/api/scan": {
+                "origins": frontend_origin,
+                "methods": ["POST"],
+                "allow_headers": ["Content-Type"],
+            }
+        },
+    )
 
 # --- CONFIGURACIÓN DE CRUCIAL ---
 # Las credenciales se cargan desde variables de entorno en Vercel por seguridad
