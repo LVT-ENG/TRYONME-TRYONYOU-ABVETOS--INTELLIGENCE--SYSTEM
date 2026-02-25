@@ -4,8 +4,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
-import smtplib
-from email.mime.text import MIMEText
 
 app = Flask(__name__)
 frontend_origin = os.environ.get("FRONTEND_ORIGIN")
