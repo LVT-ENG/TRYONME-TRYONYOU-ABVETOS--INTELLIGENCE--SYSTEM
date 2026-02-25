@@ -1,0 +1,31 @@
+# ====================================================
+# 🛡️ LAB 18 - MASTER SECURITY VAULT (DIVINEO V9)
+# ====================================================
+# ATENCIÓN: Este archivo contiene las llaves del Lab 18.
+# Cualquier acceso sin firma ABVET activará el Protocolo Pollo Gordo.
+# ====================================================
+
+# 👁️🎙️ FIRMAS BIOMÉTRICAS ABVET (Ángel)
+# Firma dual de voz e iris validada por el sistema Abvetos.
+ABVET_MASTER_KEY="ABVET_V9_ANGEL_EYE_VOICE_SIG_SECURE_ALPHA"
+
+# 🧠 CEREBRO DEL AGENTE JULES V7
+# Acceso al modelo para procesamiento de leads y lógica Zero-Size.
+GOOGLE_AI_STUDIO_KEY="TU_API_KEY_DE_GEMINI_AQUI"
+
+# 👁️ MOTOR DE VISIÓN (Frontend)
+# Escaneo de siluetas para Galeries Lafayette (Sin tallas, solo vectores) [cite: 2026-01-05].
+VITE_GOOGLE_API_KEY="TU_API_KEY_DE_GOOGLE_VISION_AQUI"
+
+# 🚀 ORQUESTACIÓN Y DESPLIEGUE (Vercel Serverless)
+# Token para gestión de despliegues y acceso a 'vercel logs --follow' [cite: 2026-02-24].
+VERCEL_TOKEN="TU_VERCEL_TOKEN_AQUI"
+
+# 🥜 PROTOCOLO "POLLO GORDO" (Alertas de Intrusión)
+# Jules notificará aquí cada vez que alguien intente "comer cáscaras" en el Lab 13.
+TELEGRAM_BOT_TOKEN="TU_TOKEN_DEL_GALLO_BOT"
+TELEGRAM_CHAT_ID="TU_CHAT_ID"
+
+# 📂 BASE DE DATOS DE LEADS (Google Sheets)
+# ID de la hoja 'Divineo_Leads_DB' para el registro automático [cite: 2026-02-24].
+GOOGLE_SHEET_ID="TU_GOOGLE_SHEET_ID_DE_DIVINEO_LEADS_DB"
