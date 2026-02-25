@@ -4,20 +4,11 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from google.oauth2.service_account import Credentials
 from googleapiclient.discovery import build
+import smtplib
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
-frontend_origin = os.environ.get("FRONTEND_ORIGIN")
-if frontend_origin:
-    CORS(
-        app,
-        resources={
-            r"/api/scan": {
-                "origins": frontend_origin,
-                "methods": ["POST"],
-                "allow_headers": ["Content-Type"],
-            }
-        },
-    )
+CORS(app)
 
 # --- CONFIGURACIÓN DE CRUCIAL ---
 # Las credenciales se cargan desde variables de entorno en Vercel por seguridad
@@ -26,18 +17,7 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 def get_google_service():
     creds_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
-    if not creds_json:
-        raise RuntimeError(
-            "GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable is not set or is empty. "
-            "Please configure it with valid Google service account JSON credentials."
-        )
-    try:
-        creds_info = json.loads(creds_json)
-    except json.JSONDecodeError as e:
-        raise RuntimeError(
-            "GOOGLE_APPLICATION_CREDENTIALS_JSON contains invalid JSON. "
-            "Please ensure it is a valid JSON-encoded Google service account key."
-        ) from e
+    creds_info = json.loads(creds_json)
     creds = Credentials.from_service_account_info(creds_info, scopes=SCOPES)
     return build('sheets', 'v4', credentials=creds)
 
