@@ -17,7 +17,18 @@ SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
 def get_google_service():
     creds_json = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS_JSON")
-    creds_info = json.loads(creds_json)
+    if not creds_json:
+        raise RuntimeError(
+            "GOOGLE_APPLICATION_CREDENTIALS_JSON environment variable is not set or is empty. "
+            "Please configure it with valid Google service account JSON credentials."
+        )
+    try:
+        creds_info = json.loads(creds_json)
+    except json.JSONDecodeError as e:
+        raise RuntimeError(
+            "GOOGLE_APPLICATION_CREDENTIALS_JSON contains invalid JSON. "
+            "Please ensure it is a valid JSON-encoded Google service account key."
+        ) from e
     creds = Credentials.from_service_account_info(creds_info, scopes=SCOPES)
     return build('sheets', 'v4', credentials=creds)
 
