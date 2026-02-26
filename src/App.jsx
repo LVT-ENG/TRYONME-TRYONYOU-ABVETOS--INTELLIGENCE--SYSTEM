@@ -29,7 +29,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/demo" element={<PilotExperience />} />
           <Route path="/checkout" element={<AbvetCheckout />} />
-          {/* Catch-all: redirect unknown routes back to the landing page */}
+          {/* Catch-all: render LandingPage for unknown routes (no URL redirect) */}
           <Route path="*" element={<LandingPage />} />
         </Routes>
       </BrowserRouter>
