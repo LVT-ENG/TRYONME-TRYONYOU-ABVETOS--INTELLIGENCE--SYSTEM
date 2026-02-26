@@ -119,8 +119,8 @@ export const getAIRecommendation = async (userMood: string, userBodyType: string
     const response = await result.response;
     const text = response.text();
     
-    // Extract the first JSON object from the model response
-    const jsonMatch = text.match(/\{.*\}/s);
+    // Attempt to extract the first JSON object from the model response using a non-greedy match
+    const jsonMatch = text.match(/\{[\s\S]*?\}/);
     if (jsonMatch) {
       const data = JSON.parse(jsonMatch[0]);
       return lafayetteDB.find(i => i.id === data.recommendedId) || lafayetteDB[0];
